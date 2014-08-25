@@ -15,14 +15,19 @@
 		305DD82819A63517006514BD /* MCLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD82719A63517006514BD /* MCLAppDelegate.m */; };
 		305DD82B19A63517006514BD /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 305DD82919A63517006514BD /* Main_iPhone.storyboard */; };
 		305DD82E19A63517006514BD /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 305DD82C19A63517006514BD /* Main_iPad.storyboard */; };
-		305DD83119A63517006514BD /* MCLMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD83019A63517006514BD /* MCLMasterViewController.m */; };
-		305DD83419A63517006514BD /* MCLDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD83319A63517006514BD /* MCLDetailViewController.m */; };
+		305DD83119A63517006514BD /* MCLBoardListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD83019A63517006514BD /* MCLBoardListTableViewController.m */; };
+		305DD83419A63517006514BD /* MCLMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD83319A63517006514BD /* MCLMessageViewController.m */; };
 		305DD83619A63517006514BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 305DD83519A63517006514BD /* Images.xcassets */; };
 		305DD83D19A63517006514BD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD83C19A63517006514BD /* XCTest.framework */; };
 		305DD83E19A63517006514BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81719A63517006514BD /* Foundation.framework */; };
 		305DD83F19A63517006514BD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81B19A63517006514BD /* UIKit.framework */; };
 		305DD84719A63517006514BD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 305DD84519A63517006514BD /* InfoPlist.strings */; };
 		305DD84919A63517006514BD /* mclientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD84819A63517006514BD /* mclientTests.m */; };
+		305DD85419AB2970006514BD /* MCLMessageListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85319AB2970006514BD /* MCLMessageListTableViewController.m */; };
+		305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85619AB2A7C006514BD /* MCLThreadListTableViewController.m */; };
+		305DD85D19AB300F006514BD /* MCLBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85C19AB300F006514BD /* MCLBoard.m */; };
+		305DD86019AB3031006514BD /* MCLThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85F19AB3031006514BD /* MCLThread.m */; };
+		305DD86319AB380C006514BD /* MCLMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD86219AB380C006514BD /* MCLMessage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,16 +53,26 @@
 		305DD82719A63517006514BD /* MCLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLAppDelegate.m; sourceTree = "<group>"; };
 		305DD82A19A63517006514BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		305DD82D19A63517006514BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		305DD82F19A63517006514BD /* MCLMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMasterViewController.h; sourceTree = "<group>"; };
-		305DD83019A63517006514BD /* MCLMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLMasterViewController.m; sourceTree = "<group>"; };
-		305DD83219A63517006514BD /* MCLDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLDetailViewController.h; sourceTree = "<group>"; };
-		305DD83319A63517006514BD /* MCLDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLDetailViewController.m; sourceTree = "<group>"; };
+		305DD82F19A63517006514BD /* MCLBoardListTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLBoardListTableViewController.h; sourceTree = "<group>"; };
+		305DD83019A63517006514BD /* MCLBoardListTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLBoardListTableViewController.m; sourceTree = "<group>"; };
+		305DD83219A63517006514BD /* MCLMessageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMessageViewController.h; sourceTree = "<group>"; };
+		305DD83319A63517006514BD /* MCLMessageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLMessageViewController.m; sourceTree = "<group>"; };
 		305DD83519A63517006514BD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		305DD83B19A63517006514BD /* mclientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mclientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		305DD83C19A63517006514BD /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		305DD84419A63517006514BD /* mclientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "mclientTests-Info.plist"; sourceTree = "<group>"; };
 		305DD84619A63517006514BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		305DD84819A63517006514BD /* mclientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mclientTests.m; sourceTree = "<group>"; };
+		305DD85219AB2970006514BD /* MCLMessageListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageListTableViewController.h; sourceTree = "<group>"; };
+		305DD85319AB2970006514BD /* MCLMessageListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListTableViewController.m; sourceTree = "<group>"; };
+		305DD85519AB2A7C006514BD /* MCLThreadListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLThreadListTableViewController.h; sourceTree = "<group>"; };
+		305DD85619AB2A7C006514BD /* MCLThreadListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLThreadListTableViewController.m; sourceTree = "<group>"; };
+		305DD85B19AB300F006514BD /* MCLBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLBoard.h; sourceTree = "<group>"; };
+		305DD85C19AB300F006514BD /* MCLBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLBoard.m; sourceTree = "<group>"; };
+		305DD85E19AB3031006514BD /* MCLThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLThread.h; sourceTree = "<group>"; };
+		305DD85F19AB3031006514BD /* MCLThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLThread.m; sourceTree = "<group>"; };
+		305DD86119AB380C006514BD /* MCLMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessage.h; sourceTree = "<group>"; };
+		305DD86219AB380C006514BD /* MCLMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,15 +132,14 @@
 		305DD81D19A63517006514BD /* mclient */ = {
 			isa = PBXGroup;
 			children = (
-				305DD82619A63517006514BD /* MCLAppDelegate.h */,
-				305DD82719A63517006514BD /* MCLAppDelegate.m */,
+				305DD85A19AB2F07006514BD /* Model */,
+				305DD85819AB2EE0006514BD /* Controller */,
+				305DD85919AB2EFE006514BD /* View */,
+				305DD83519A63517006514BD /* Images.xcassets */,
 				305DD82919A63517006514BD /* Main_iPhone.storyboard */,
 				305DD82C19A63517006514BD /* Main_iPad.storyboard */,
-				305DD82F19A63517006514BD /* MCLMasterViewController.h */,
-				305DD83019A63517006514BD /* MCLMasterViewController.m */,
-				305DD83219A63517006514BD /* MCLDetailViewController.h */,
-				305DD83319A63517006514BD /* MCLDetailViewController.m */,
-				305DD83519A63517006514BD /* Images.xcassets */,
+				305DD82619A63517006514BD /* MCLAppDelegate.h */,
+				305DD82719A63517006514BD /* MCLAppDelegate.m */,
 				305DD81E19A63517006514BD /* Supporting Files */,
 			);
 			path = mclient;
@@ -158,6 +172,41 @@
 				305DD84519A63517006514BD /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		305DD85819AB2EE0006514BD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				305DD82F19A63517006514BD /* MCLBoardListTableViewController.h */,
+				305DD83019A63517006514BD /* MCLBoardListTableViewController.m */,
+				305DD85219AB2970006514BD /* MCLMessageListTableViewController.h */,
+				305DD85319AB2970006514BD /* MCLMessageListTableViewController.m */,
+				305DD83219A63517006514BD /* MCLMessageViewController.h */,
+				305DD83319A63517006514BD /* MCLMessageViewController.m */,
+				305DD85519AB2A7C006514BD /* MCLThreadListTableViewController.h */,
+				305DD85619AB2A7C006514BD /* MCLThreadListTableViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		305DD85919AB2EFE006514BD /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		305DD85A19AB2F07006514BD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				305DD85B19AB300F006514BD /* MCLBoard.h */,
+				305DD85C19AB300F006514BD /* MCLBoard.m */,
+				305DD85E19AB3031006514BD /* MCLThread.h */,
+				305DD85F19AB3031006514BD /* MCLThread.m */,
+				305DD86119AB380C006514BD /* MCLMessage.h */,
+				305DD86219AB380C006514BD /* MCLMessage.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,10 +308,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				305DD86019AB3031006514BD /* MCLThread.m in Sources */,
+				305DD86319AB380C006514BD /* MCLMessage.m in Sources */,
 				305DD82419A63517006514BD /* main.m in Sources */,
 				305DD82819A63517006514BD /* MCLAppDelegate.m in Sources */,
-				305DD83419A63517006514BD /* MCLDetailViewController.m in Sources */,
-				305DD83119A63517006514BD /* MCLMasterViewController.m in Sources */,
+				305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */,
+				305DD85D19AB300F006514BD /* MCLBoard.m in Sources */,
+				305DD83419A63517006514BD /* MCLMessageViewController.m in Sources */,
+				305DD85419AB2970006514BD /* MCLMessageListTableViewController.m in Sources */,
+				305DD83119A63517006514BD /* MCLBoardListTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

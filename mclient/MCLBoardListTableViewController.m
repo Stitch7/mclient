@@ -1,21 +1,21 @@
 //
-//  MCLMasterViewController.m
+//  MCLBoardListTableViewController.m
 //  mclient
 //
 //  Created by Christopher Reitz on 21.08.14.
 //  Copyright (c) 2014 Christopher Reitz. All rights reserved.
 //
 
-#import "MCLMasterViewController.h"
+#import "MCLBoardListTableViewController.h"
 
-#import "MCLDetailViewController.h"
+#import "MCLMessageViewController.h"
 
-@interface MCLMasterViewController () {
+@interface MCLBoardListTableViewController () {
     NSMutableArray *_objects;
 }
 @end
 
-@implementation MCLMasterViewController
+@implementation MCLBoardListTableViewController
 
 - (void)awakeFromNib
 {
@@ -34,7 +34,7 @@
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
-    self.detailViewController = (MCLDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    self.detailViewController = (MCLMessageViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
 - (void)didReceiveMemoryWarning

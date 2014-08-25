@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Christopher Reitz. All rights reserved.
 //
 
-#import "MCLDetailViewController.h"
+#import "MCLMessageViewController.h"
 
-@interface MCLDetailViewController ()
+@interface MCLMessageViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 @end
 
-@implementation MCLDetailViewController
+@implementation MCLMessageViewController
 
 #pragma mark - Managing the detail item
 
