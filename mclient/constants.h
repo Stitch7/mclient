@@ -7,7 +7,7 @@
 //
 
 #ifdef DEBUG
-    #define kMServiceBaseURL @"http://reitz.re:8000/"
+    #define kMServiceBaseURL @"http://localhost:8000/"
 #else
     #define kMServiceBaseURL @"http://reitz.re:8000/"
 #endif

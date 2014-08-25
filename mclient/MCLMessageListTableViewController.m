@@ -61,12 +61,13 @@
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     for (id object in json) {
         int messageId = [[object objectForKey:@"id"] integerValue];
+        int level = [[object objectForKey:@"level"] integerValue];
         NSString *author = [object objectForKey:@"author"];
         NSString *subject = [object objectForKey:@"subject"];
         NSString *date = [object objectForKey:@"date"];
         NSString *text = [object objectForKey:@"text"];
         
-        MCLMessage *message = [MCLMessage messageWithId:messageId author:author subject:subject date:date text:text];
+        MCLMessage *message = [MCLMessage messageWithId:messageId level:level author:author subject:subject date:date text:text];
         [self.messages addObject:message];
     }
     
@@ -94,9 +95,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    MCLMessage *message = self.messages[indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MessageCell" forIndexPath:indexPath];
     
     // Configure the cell...
+    cell.textLabel.text = message.subject;
     
     return cell;
 }

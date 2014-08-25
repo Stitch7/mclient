@@ -11,11 +11,12 @@
 @interface MCLMessage : NSObject
 
 @property (assign) int id;
+@property (assign) int level;
 @property (strong) NSString *author;
 @property (strong) NSString *subject;
 @property (strong) NSString *date;
 @property (strong) NSString *text;
 
-+ (id) messageWithId:(int)inId author:(NSString *)inAuthor subject:(NSString *)inSubject date:(NSString *)inDate text:(NSString *)inText;
++ (id) messageWithId:(int)inId level:(int)inLevel author:(NSString *)inAuthor subject:(NSString *)inSubject date:(NSString *)inDate text:(NSString *)inText;
 
 @end
