@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class MCLBoard;
+
 @interface MCLThreadListTableViewController : UITableViewController
+
+@property (strong) MCLBoard *board;
 
 @end

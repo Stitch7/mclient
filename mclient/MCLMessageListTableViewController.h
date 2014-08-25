@@ -1,5 +1,5 @@
 //
-//  MCLMessagesTableViewController.h
+//  MCLMessageListTableViewController.h
 //  mclient
 //
 //  Created by Christopher Reitz on 25.08.14.
@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class MCLThread;
+
 @interface MCLMessageListTableViewController : UITableViewController
+
+@property (strong) MCLThread *thread;
 
 @end

@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class MCLMessageViewController;
+@class MCLThreadListTableViewController;
 
 @interface MCLBoardListTableViewController : UITableViewController
 
-@property (strong, nonatomic) MCLMessageViewController *detailViewController;
+@property (strong, nonatomic) MCLThreadListTableViewController *threadListTableViewController;
 
 @end

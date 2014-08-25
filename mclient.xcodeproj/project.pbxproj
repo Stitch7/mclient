@@ -41,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		301FD00F19AB73160028C5C8 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
 		305DD81419A63517006514BD /* mclient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mclient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		305DD81719A63517006514BD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		305DD81919A63517006514BD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -132,15 +133,16 @@
 		305DD81D19A63517006514BD /* mclient */ = {
 			isa = PBXGroup;
 			children = (
-				305DD85A19AB2F07006514BD /* Model */,
+				301FD00F19AB73160028C5C8 /* constants.h */,
 				305DD85819AB2EE0006514BD /* Controller */,
-				305DD85919AB2EFE006514BD /* View */,
 				305DD83519A63517006514BD /* Images.xcassets */,
-				305DD82919A63517006514BD /* Main_iPhone.storyboard */,
 				305DD82C19A63517006514BD /* Main_iPad.storyboard */,
+				305DD82919A63517006514BD /* Main_iPhone.storyboard */,
 				305DD82619A63517006514BD /* MCLAppDelegate.h */,
 				305DD82719A63517006514BD /* MCLAppDelegate.m */,
+				305DD85A19AB2F07006514BD /* Model */,
 				305DD81E19A63517006514BD /* Supporting Files */,
+				305DD85919AB2EFE006514BD /* View */,
 			);
 			path = mclient;
 			sourceTree = "<group>";
@@ -531,6 +533,7 @@
 				305DD84E19A63517006514BD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		305DD84F19A63517006514BD /* Build configuration list for PBXNativeTarget "mclientTests" */ = {
 			isa = XCConfigurationList;
@@ -539,6 +542,7 @@
 				305DD85119A63517006514BD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
