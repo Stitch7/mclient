@@ -10,6 +10,7 @@
 #import "MCLMessageListTableViewController.h"
 #import "MCLThread.h"
 #import "MCLMessage.h"
+#import "MCLMessageTableViewCell.h"
 
 @interface MCLMessageListTableViewController ()
 
@@ -96,10 +97,22 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MCLMessage *message = self.messages[indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MessageCell" forIndexPath:indexPath];
+    MCLMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MessageCell" forIndexPath:indexPath];
     
     // Configure the cell...
-    cell.textLabel.text = message.subject;
+    cell.messageSubjectLabel.text = message.subject;
+    cell.messageAuthorLabel.text = message.author;
+    cell.messageDateLabel.text = [NSString stringWithFormat:@" - %@", message.date];
+    
+    //cell.imageView
+    
+    [cell.messageAuthorLabel sizeToFit];
+    [cell.messageDateLabel sizeToFit];
+    
+    // Place dateLabel after authorLabel
+    CGRect dateLabelFrame = cell.messageDateLabel.frame;
+    dateLabelFrame.origin = CGPointMake(cell.messageAuthorLabel.frame.origin.x + cell.messageAuthorLabel.frame.size.width, dateLabelFrame.origin.y);
+    cell.messageDateLabel.frame = dateLabelFrame;
     
     return cell;
 }

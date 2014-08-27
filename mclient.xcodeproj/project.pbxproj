@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */; };
+		301FD01519ACA0D70028C5C8 /* TDBadgedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01419ACA0D70028C5C8 /* TDBadgedCell.m */; };
+		301FD01819ACE3D10028C5C8 /* MCLMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01719ACE3D10028C5C8 /* MCLMessageTableViewCell.m */; };
 		305DD81819A63517006514BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81719A63517006514BD /* Foundation.framework */; };
 		305DD81A19A63517006514BD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81919A63517006514BD /* CoreGraphics.framework */; };
 		305DD81C19A63517006514BD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81B19A63517006514BD /* UIKit.framework */; };
@@ -42,6 +45,12 @@
 
 /* Begin PBXFileReference section */
 		301FD00F19AB73160028C5C8 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		301FD01019AC794E0028C5C8 /* MCLThreadTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLThreadTableViewCell.h; sourceTree = "<group>"; };
+		301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLThreadTableViewCell.m; sourceTree = "<group>"; };
+		301FD01319ACA0D70028C5C8 /* TDBadgedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDBadgedCell.h; sourceTree = "<group>"; };
+		301FD01419ACA0D70028C5C8 /* TDBadgedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDBadgedCell.m; sourceTree = "<group>"; };
+		301FD01619ACE3D10028C5C8 /* MCLMessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageTableViewCell.h; sourceTree = "<group>"; };
+		301FD01719ACE3D10028C5C8 /* MCLMessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageTableViewCell.m; sourceTree = "<group>"; };
 		305DD81419A63517006514BD /* mclient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mclient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		305DD81719A63517006514BD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		305DD81919A63517006514BD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -194,6 +203,12 @@
 		305DD85919AB2EFE006514BD /* View */ = {
 			isa = PBXGroup;
 			children = (
+				301FD01319ACA0D70028C5C8 /* TDBadgedCell.h */,
+				301FD01419ACA0D70028C5C8 /* TDBadgedCell.m */,
+				301FD01019AC794E0028C5C8 /* MCLThreadTableViewCell.h */,
+				301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */,
+				301FD01619ACE3D10028C5C8 /* MCLMessageTableViewCell.h */,
+				301FD01719ACE3D10028C5C8 /* MCLMessageTableViewCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -310,10 +325,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				301FD01819ACE3D10028C5C8 /* MCLMessageTableViewCell.m in Sources */,
 				305DD86019AB3031006514BD /* MCLThread.m in Sources */,
 				305DD86319AB380C006514BD /* MCLMessage.m in Sources */,
 				305DD82419A63517006514BD /* main.m in Sources */,
+				301FD01519ACA0D70028C5C8 /* TDBadgedCell.m in Sources */,
 				305DD82819A63517006514BD /* MCLAppDelegate.m in Sources */,
+				301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */,
 				305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */,
 				305DD85D19AB300F006514BD /* MCLBoard.m in Sources */,
 				305DD83419A63517006514BD /* MCLMessageViewController.m in Sources */,

@@ -11,6 +11,7 @@
 #import "MCLMessageListTableViewController.h"
 #import "MCLThread.h"
 #import "MCLBoard.h"
+#import "MCLThreadTableViewCell.h"
 
 @interface MCLThreadListTableViewController ()
 
@@ -32,8 +33,6 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    
-    self.threads = [NSMutableArray array];
 }
 
 - (void)viewDidLoad
@@ -42,12 +41,17 @@
     
     self.title = self.board.name;
     
+    // Init refresh control
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to refresh..."];
+    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"threadlist/%i", self.board.id]];
-        
-        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
-        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:[self loadData] waitUntilDone:YES];
     });
+    
+    //[self.tableView reloadData];
     
     
     // Uncomment the following line to preserve selection between presentations.
@@ -57,19 +61,56 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (void)stopRefresh
+{
+    [self.refreshControl endRefreshing];
+}
+
+- (NSData *)loadData
+{
+    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"threadlist/%i", self.board.id]];
+    
+    NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
+    [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+    
+    return data;
+}
+
+- (void)reloadData
+{
+    [self loadData];
+    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:1.5]; // 2.5
+}
+
+
 - (void)fetchedData:(NSData *)responseData
 {
+    self.threads = [NSMutableArray array];
+    
     NSError* error;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     for (id object in json) {
         int threadId = [[object objectForKey:@"id"] integerValue];
+        BOOL sticky = [[object objectForKey:@"sticky"] boolValue];
+        BOOL closed = [[object objectForKey:@"closed"] boolValue];
+        BOOL mod = [[object objectForKey:@"mod"] boolValue];
         NSString *author = [object objectForKey:@"author"];
         NSString *subject = [object objectForKey:@"subject"];
         NSString *date = [object objectForKey:@"date"];
         NSString *answerCount = [object objectForKey:@"answerCount"];
         NSString *answerDate = [object objectForKey:@"answerDate"];
         
-        MCLThread *thread = [MCLThread threadWithId:threadId firstMessageId:0 author:author subject:subject date:date answerCount:answerCount answerDate:answerDate];
+        MCLThread *thread = [MCLThread threadWithId:threadId
+                                     firstMessageId:0
+                                             sticky:sticky
+                                             closed:closed
+                                                mod:mod
+                                             author:author
+                                            subject:subject
+                                               date:date
+                                        answerCount:answerCount
+                                         answerDate:answerDate];
+        
         [self.threads addObject:thread];
     }
     
@@ -98,14 +139,34 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MCLThread *thread = self.threads[indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ThreadCell" forIndexPath:indexPath];
+    MCLThreadTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ThreadCell" forIndexPath:indexPath];
+        
+    cell.threadSubjectLabel.text = thread.subject;
+    float subjectSize = cell.threadSubjectLabel.font.pointSize;
+    cell.threadSubjectLabel.font = thread.isSticky ? [UIFont boldSystemFontOfSize:subjectSize] : [UIFont systemFontOfSize:subjectSize];
     
-    // Configure the cell...
-    cell.textLabel.text = thread.subject;
+    cell.threadAuthorLabel.text = thread.author;
+    cell.threadAuthorLabel.textColor = thread.isMod ? [UIColor redColor] : [UIColor blackColor];
+    [cell.threadAuthorLabel sizeToFit];
+    
+    cell.threadDateLabel.text = [NSString stringWithFormat:@" - %@", thread.date];
+    [cell.threadDateLabel sizeToFit];
+    
+    // Place dateLabel after authorLabel
+    CGRect dateLabelFrame = cell.threadDateLabel.frame;
+    dateLabelFrame.origin = CGPointMake(cell.threadAuthorLabel.frame.origin.x + cell.threadAuthorLabel.frame.size.width, dateLabelFrame.origin.y);
+    cell.threadDateLabel.frame = dateLabelFrame;
+    
+    cell.badgeString = thread.answerCount;
     
     return cell;
 }
 
+/*
+-(void)tableView:(UITableView *)tableView willDisplayCell:(MCLThreadTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+}
+*/
 
 /*
 // Override to support conditional editing of the table view.

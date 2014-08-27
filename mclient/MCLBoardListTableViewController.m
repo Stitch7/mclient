@@ -91,7 +91,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BoardCell" forIndexPath:indexPath];
     
     cell.textLabel.text = board.name;
-
+    
     return cell;
 }
 

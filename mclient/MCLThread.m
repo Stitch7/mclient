@@ -10,12 +10,15 @@
 
 @implementation MCLThread
 
-+ (id) threadWithId:(int)inId firstMessageId:(int)inFirstMessageId author:(NSString *)inAuthor subject:(NSString *)inSubject date:(NSString *)inDate answerCount:(NSString *)inAnswerCount answerDate:(NSString *)inAnswerDate
++ (id) threadWithId:(int)inId firstMessageId:(int)inFirstMessageId sticky:(BOOL)inSticky closed:(BOOL)inClosed mod:(BOOL)inMod author:(NSString *)inAuthor subject:(NSString *)inSubject date:(NSString *)inDate answerCount:(NSString *)inAnswerCount answerDate:(NSString *)inAnswerDate
 {
     MCLThread *thread = [[MCLThread alloc] init];
     
     thread.id = inId;
     thread.firstMessageId = inFirstMessageId;
+    thread.sticky = inSticky;
+    thread.closed = inClosed;
+    thread.mod = inMod;
     thread.author = inAuthor;
     thread.subject = inSubject;
     thread.date = inDate;
