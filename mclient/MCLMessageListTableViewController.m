@@ -42,18 +42,49 @@
     
     self.title = self.thread.subject;
     
+    // Init refresh control
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to refresh..."];
+    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"thread/%i", self.thread.id]];
-        
-        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
-        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:[self loadData] waitUntilDone:YES];
     });
+    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"thread/%i", self.thread.id]];
+//        
+//        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
+//        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+//    });
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)stopRefresh
+{
+    [self.refreshControl endRefreshing];
+}
+
+- (NSData *)loadData
+{
+    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"thread/%i", self.thread.id]];
+    
+    NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
+    [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+    
+    return data;
+}
+
+- (void)reloadData
+{
+    [self loadData];
+    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:1.5]; // 2.5
 }
 
 - (void)fetchedData:(NSData *)responseData
@@ -73,6 +104,20 @@
     }
     
     [self.tableView reloadData];
+}
+
+- (NSString*)loadMessageText:(int)messageId
+{
+    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"message/%i", messageId]];
+    
+    NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
+    
+    NSError* error;
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    
+    NSString *messageText = [json objectForKey:@"text"];
+    
+    return messageText;
 }
 
 - (void)didReceiveMemoryWarning
@@ -116,6 +161,55 @@
     
     return cell;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if ([tableView indexPathsForSelectedRows].count) {
+        
+		if ([[tableView indexPathsForSelectedRows] indexOfObject:indexPath] != NSNotFound) {
+			return 120; // Expanded height
+		}
+        
+        return 60; // Normal height
+	}
+    
+    return 60; // Normal height
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    [self updateTableView];
+    
+    MCLMessage *message = self.messages[indexPath.row];
+//    MCLMessageTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    [self.tableView beginUpdates];
+
+
+    if (!message.text) {
+        NSLog(@"Loading Message ID: %i", message.id);
+        message.text = [self loadMessageText:message.id];        
+    }
+    NSLog(@"%@", message.text);
+    
+    
+    
+    [self.tableView endUpdates];
+    
+    
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self updateTableView];
+}
+
+- (void)updateTableView
+{
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+}
+
 
 
 /*
