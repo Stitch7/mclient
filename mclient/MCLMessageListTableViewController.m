@@ -15,6 +15,7 @@
 @interface MCLMessageListTableViewController ()
 
 @property (strong) NSMutableArray *messages;
+@property (strong) NSMutableArray *cells;
 
 @end
 
@@ -33,7 +34,7 @@
 {
     [super awakeFromNib];
     
-    self.messages = [NSMutableArray array];
+    self.cells = [NSMutableArray array];
 }
 
 - (void)viewDidLoad
@@ -51,14 +52,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self performSelectorOnMainThread:@selector(fetchedData:) withObject:[self loadData] waitUntilDone:YES];
     });
-    
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"thread/%i", self.thread.id]];
-//        
-//        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
-//        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
-//    });
-    
+   
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -73,7 +67,7 @@
 
 - (NSData *)loadData
 {
-    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"thread/%i", self.thread.id]];
+    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"thread/%i", self.thread.threadId]];
     
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
     [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
@@ -89,6 +83,8 @@
 
 - (void)fetchedData:(NSData *)responseData
 {
+    self.messages = [NSMutableArray array];
+    
     NSError* error;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     for (id object in json) {
@@ -117,6 +113,9 @@
     
     NSString *messageText = [json objectForKey:@"text"];
     
+//    NSString *newLineStr = @"\n";
+//    [messageText stringByReplacingOccurrencesOfString:@"\\n" withString:newLineStr];
+    
     return messageText;
 }
 
@@ -144,12 +143,18 @@
     MCLMessage *message = self.messages[indexPath.row];
     MCLMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MessageCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    if (self.cells.count <= indexPath.row) {
+        [self.cells addObject:cell];
+    }
+    
+    [cell setClipsToBounds:YES];
+    
+    [self indentLabel:cell.messageSubjectLabel withLevel:message.level];
+    [self indentLabel:cell.messageAuthorLabel withLevel:message.level];
+    
     cell.messageSubjectLabel.text = message.subject;
     cell.messageAuthorLabel.text = message.author;
     cell.messageDateLabel.text = [NSString stringWithFormat:@" - %@", message.date];
-    
-    //cell.imageView
     
     [cell.messageAuthorLabel sizeToFit];
     [cell.messageDateLabel sizeToFit];
@@ -159,57 +164,57 @@
     dateLabelFrame.origin = CGPointMake(cell.messageAuthorLabel.frame.origin.x + cell.messageAuthorLabel.frame.size.width, dateLabelFrame.origin.y);
     cell.messageDateLabel.frame = dateLabelFrame;
     
+    cell.messageTextLabel.text = message.text;
+    
     return cell;
+}
+
+- (void)indentLabel:(UILabel *)label withLevel:(int)level
+{
+    int indention = 10;
+    
+    CGRect frame = label.frame;
+    frame.origin = CGPointMake((indention * 2) + (indention * level), frame.origin.y);
+    label.frame = frame;
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ([tableView indexPathsForSelectedRows].count) {
-        
 		if ([[tableView indexPathsForSelectedRows] indexOfObject:indexPath] != NSNotFound) {
-			return 120; // Expanded height
+            MCLMessageTableViewCell *cell = self.cells[indexPath.row];
+			return 60 + 20 + cell.messageTextLabel.frame.size.height; // Expanded height
 		}
         
         return 60; // Normal height
 	}
-    
+
     return 60; // Normal height
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [self updateTableView];
+    [self.tableView beginUpdates];
     
     MCLMessage *message = self.messages[indexPath.row];
-//    MCLMessageTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    [self.tableView beginUpdates];
-
-
     if (!message.text) {
-        NSLog(@"Loading Message ID: %i", message.id);
-        message.text = [self loadMessageText:message.id];        
+        message.text = [self loadMessageText:message.id];
+//        [self.messages replaceObjectAtIndex:indexPath.row withObject:message];
     }
-    NSLog(@"%@", message.text);
     
-    
+    MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    cell.messageTextLabel.text = message.text;
+    [cell.messageTextLabel sizeToFit];
     
     [self.tableView endUpdates];
-    
-    
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self updateTableView];
-}
-
-- (void)updateTableView
-{
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
 }
-
 
 
 /*

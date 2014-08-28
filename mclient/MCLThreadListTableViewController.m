@@ -51,9 +51,7 @@
         [self performSelectorOnMainThread:@selector(fetchedData:) withObject:[self loadData] waitUntilDone:YES];
     });
     
-    //[self.tableView reloadData];
-    
-    
+   
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -97,11 +95,10 @@
         NSString *author = [object objectForKey:@"author"];
         NSString *subject = [object objectForKey:@"subject"];
         NSString *date = [object objectForKey:@"date"];
-        NSString *answerCount = [object objectForKey:@"answerCount"];
+        int answerCount = [[object objectForKey:@"answerCount"] integerValue];
         NSString *answerDate = [object objectForKey:@"answerDate"];
         
         MCLThread *thread = [MCLThread threadWithId:threadId
-                                     firstMessageId:0
                                              sticky:sticky
                                              closed:closed
                                                 mod:mod
@@ -157,7 +154,7 @@
     dateLabelFrame.origin = CGPointMake(cell.threadAuthorLabel.frame.origin.x + cell.threadAuthorLabel.frame.size.width, dateLabelFrame.origin.y);
     cell.threadDateLabel.frame = dateLabelFrame;
     
-    cell.badgeString = thread.answerCount;
+    cell.badgeString = [@(thread.answerCount) stringValue];
     
     return cell;
 }

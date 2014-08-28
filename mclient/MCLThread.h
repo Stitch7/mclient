@@ -10,17 +10,16 @@
 
 @interface MCLThread : NSObject
 
-@property (assign) int id;
-@property (assign) int firstMessageId;
+@property (assign) int threadId;
 @property (nonatomic, assign, getter=isSticky) BOOL sticky;
 @property (nonatomic, assign, getter=isClosed) BOOL closed;
 @property (nonatomic, assign, getter=isMod) BOOL mod;
 @property (strong) NSString *author;
 @property (strong) NSString *subject;
 @property (strong) NSString *date;
-@property (strong) NSString *answerCount;
+@property (assign) int answerCount;
 @property (strong) NSString *answerDate;
 
-+ (id) threadWithId:(int)inId firstMessageId:(int)inFirstMessageId sticky:(BOOL)inSticky closed:(BOOL)inClosed mod:(BOOL)inMod author:(NSString *)inAuthor subject:(NSString *)inSubject date:(NSString *)inDate answerCount:(NSString *)inAnswerCount answerDate:(NSString *)inAnswerDate;
++ (id) threadWithId:(int)inId sticky:(BOOL)inSticky closed:(BOOL)inClosed mod:(BOOL)inMod author:(NSString*)inAuthor subject:(NSString*)inSubject date:(NSString*)inDate answerCount:(int)inAnswerCount answerDate:(NSString*)inAnswerDate;
 
 @end

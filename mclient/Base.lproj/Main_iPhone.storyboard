@@ -66,7 +66,7 @@
         <scene sceneID="q0A-GN-Tyn">
             <objects>
                 <tableViewController id="xgu-SS-2ak" customClass="MCLMessageListTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="djI-We-nM3">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="159" sectionHeaderHeight="22" sectionFooterHeight="22" id="djI-We-nM3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -97,12 +97,20 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kBe-Vj-ZM6">
+                                            <rect key="frame" x="20" y="68" width="280" height="21"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="messageAuthorLabel" destination="nzD-Bl-rvo" id="0nm-93-lwa"/>
                                     <outlet property="messageDateLabel" destination="haa-6K-IxE" id="H2y-yG-fdW"/>
                                     <outlet property="messageSubjectLabel" destination="L5u-Vx-CHc" id="XRg-Gt-NZP"/>
+                                    <outlet property="messageTextLabel" destination="kBe-Vj-ZM6" id="nA4-Wt-5uR"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
