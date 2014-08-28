@@ -13,6 +13,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *messageSubjectLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageAuthorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageDateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *messageTextLabel;
+@property (weak, nonatomic) IBOutlet UIWebView *messageTextWebView;
 
 @end

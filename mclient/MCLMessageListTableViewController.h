@@ -10,7 +10,7 @@
 
 @class MCLThread;
 
-@interface MCLMessageListTableViewController : UITableViewController
+@interface MCLMessageListTableViewController : UITableViewController <UIWebViewDelegate>
 
 @property (strong) MCLThread *thread;
 

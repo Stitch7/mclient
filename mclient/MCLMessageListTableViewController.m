@@ -65,6 +65,16 @@
     [self.refreshControl endRefreshing];
 }
 
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Data methods
+
 - (NSData *)loadData
 {
     NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"thread/%i", self.thread.threadId]];
@@ -116,14 +126,21 @@
 //    NSString *newLineStr = @"\n";
 //    [messageText stringByReplacingOccurrencesOfString:@"\\n" withString:newLineStr];
     
+    NSString *css = @""
+        "<style>"
+        "   * {"
+        "       font-family: \"Helvetica Neue\";"
+        "       font-size: 14px;"
+        "       margin: 0px;"
+        "   }"
+        "</style>"
+    ;
+    
+    messageText = [css stringByAppendingString:messageText];
+    
     return messageText;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - Table view data source
 
@@ -164,7 +181,8 @@
     dateLabelFrame.origin = CGPointMake(cell.messageAuthorLabel.frame.origin.x + cell.messageAuthorLabel.frame.size.width, dateLabelFrame.origin.y);
     cell.messageDateLabel.frame = dateLabelFrame;
     
-    cell.messageTextLabel.text = message.text;
+//    cell.messageTextLabel.text = message.text;
+    [cell.messageTextWebView setDelegate:self];
     
     return cell;
 }
@@ -184,7 +202,9 @@
 	if ([tableView indexPathsForSelectedRows].count) {
 		if ([[tableView indexPathsForSelectedRows] indexOfObject:indexPath] != NSNotFound) {
             MCLMessageTableViewCell *cell = self.cells[indexPath.row];
-			return 60 + 20 + cell.messageTextLabel.frame.size.height; // Expanded height
+            NSLog(@"heightForRowAtIndexPath");
+			// return 60 + 20 + cell.messageTextWebView.frame.size.height; // Expanded height
+            return 60 + 20 + cell.messageTextWebView.scrollView.contentSize.height; // Expanded height
 		}
         
         return 60; // Normal height
@@ -204,8 +224,8 @@
     }
     
     MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
-    cell.messageTextLabel.text = message.text;
-    [cell.messageTextLabel sizeToFit];
+    [cell.messageTextWebView loadHTMLString:message.text baseURL:nil];
+    [cell.messageTextWebView sizeToFit];
     
     [self.tableView endUpdates];
 }
@@ -254,6 +274,44 @@
     return YES;
 }
 */
+
+
+#pragma mark - UIWebView delegate
+
+-(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
+    if ( inType == UIWebViewNavigationTypeLinkClicked ) {
+        [[UIApplication sharedApplication] openURL:[inRequest URL]];
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    CGRect frame = webView.frame;
+    frame.size.height = 5.0f;
+    webView.frame = frame;
+}
+
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    CGSize mWebViewTextSize = [webView sizeThatFits:CGSizeMake(1.0f, 1.0f)];  // Pass about any size
+    CGRect mWebViewFrame = webView.frame;
+    mWebViewFrame.size.height = mWebViewTextSize.height;
+    webView.frame = mWebViewFrame;
+    
+    //Disable bouncing in webview
+    for (id subview in webView.subviews) {
+        if ([[subview class] isSubclassOfClass: [UIScrollView class]]) {
+            [subview setBounces:NO];
+        }
+    }
+    
+    NSLog(@"webViewDidFinishLoad");
+}
+
 
 /*
 #pragma mark - Navigation
