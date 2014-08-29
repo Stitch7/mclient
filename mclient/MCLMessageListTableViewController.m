@@ -160,9 +160,9 @@
     MCLMessage *message = self.messages[indexPath.row];
     MCLMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MessageCell" forIndexPath:indexPath];
     
-    if (self.cells.count <= indexPath.row) {
-        [self.cells addObject:cell];
-    }
+    [self.cells setObject:cell atIndexedSubscript:indexPath.row];
+    
+    cell.tag = indexPath.row;
     
     [cell setClipsToBounds:YES];
     
@@ -181,7 +181,6 @@
     dateLabelFrame.origin = CGPointMake(cell.messageAuthorLabel.frame.origin.x + cell.messageAuthorLabel.frame.size.width, dateLabelFrame.origin.y);
     cell.messageDateLabel.frame = dateLabelFrame;
     
-//    cell.messageTextLabel.text = message.text;
     [cell.messageTextWebView setDelegate:self];
     
     return cell;
@@ -199,38 +198,36 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if ([tableView indexPathsForSelectedRows].count) {
-		if ([[tableView indexPathsForSelectedRows] indexOfObject:indexPath] != NSNotFound) {
-            MCLMessageTableViewCell *cell = self.cells[indexPath.row];
-            NSLog(@"heightForRowAtIndexPath");
-			// return 60 + 20 + cell.messageTextWebView.frame.size.height; // Expanded height
-            return 60 + 20 + cell.messageTextWebView.scrollView.contentSize.height; // Expanded height
-		}
-        
-        return 60; // Normal height
+    CGFloat height = 60;
+    
+	if ([tableView indexPathsForSelectedRows].count && [[tableView indexPathsForSelectedRows] indexOfObject:indexPath] != NSNotFound) {
+        MCLMessageTableViewCell *cell = self.cells[indexPath.row];
+        CGFloat webViewHeight = cell.messageTextWebView.scrollView.contentSize.height;
+        height = 60 + 20 + webViewHeight;
+        NSLog(@"heightForRowAtIndexPath(%i - %i): %f  -  %f", cell.tag, indexPath.row, cell.messageTextWebView.frame.size.height, webViewHeight);
 	}
 
-    return 60; // Normal height
+    return height;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.tableView beginUpdates];
-    
     MCLMessage *message = self.messages[indexPath.row];
     if (!message.text) {
         message.text = [self loadMessageText:message.id];
-//        [self.messages replaceObjectAtIndex:indexPath.row withObject:message];
     }
     
     MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
     [cell.messageTextWebView loadHTMLString:message.text baseURL:nil];
-    [cell.messageTextWebView sizeToFit];
-    
-    [self.tableView endUpdates];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self updateTableView];
+
+}
+
+- (void)updateTableView
 {
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
@@ -294,22 +291,22 @@
     webView.frame = frame;
 }
 
-
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    CGSize mWebViewTextSize = [webView sizeThatFits:CGSizeMake(1.0f, 1.0f)];  // Pass about any size
-    CGRect mWebViewFrame = webView.frame;
-    mWebViewFrame.size.height = mWebViewTextSize.height;
-    webView.frame = mWebViewFrame;
+    CGSize webViewTextSize = [webView sizeThatFits:CGSizeMake(1.0f, 1.0f)];
+    CGRect webViewFrame = webView.frame;
+    webViewFrame.size.height = webViewTextSize.height;
+    webView.frame = webViewFrame;
     
-    //Disable bouncing in webview
+    // Disable bouncing in webview
     for (id subview in webView.subviews) {
         if ([[subview class] isSubclassOfClass: [UIScrollView class]]) {
             [subview setBounces:NO];
         }
     }
-    
-    NSLog(@"webViewDidFinishLoad");
+
+    NSLog(@"webViewDidFinishLoad(%i): %f", webView.superview.superview.superview.tag ,webViewTextSize.height);
+    [self updateTableView];
 }
 
 
