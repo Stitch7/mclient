@@ -161,6 +161,10 @@
     dateLabelFrame.origin = CGPointMake(cell.threadAuthorLabel.frame.origin.x + cell.threadAuthorLabel.frame.size.width, dateLabelFrame.origin.y);
     cell.threadDateLabel.frame = dateLabelFrame;
     
+    if ([self.messagesReadList containsObject:thread.messageId]) {
+        [cell markRead];
+    }
+    
     cell.badgeString = [@(thread.answerCount) stringValue];
     
     return cell;
