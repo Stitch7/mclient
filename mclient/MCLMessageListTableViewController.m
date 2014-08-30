@@ -16,6 +16,7 @@
 
 @property (strong) NSMutableArray *messages;
 @property (strong) NSMutableArray *cells;
+@property (strong) NSMutableArray *messagesReadList;
 
 @end
 
@@ -35,6 +36,7 @@
     [super awakeFromNib];
     
     self.cells = [NSMutableArray array];
+    self.messagesReadList = [[NSMutableArray alloc] initWithContentsOfFile:[self getReadListFileName]];
 }
 
 - (void)viewDidLoad
@@ -77,7 +79,7 @@
 
 - (NSData *)loadData
 {
-    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"thread/%i", self.thread.threadId]];
+    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"thread/%@", self.thread.threadId]];
     
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
     [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
@@ -98,7 +100,7 @@
     NSError* error;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     for (id object in json) {
-        int messageId = [[object objectForKey:@"id"] integerValue];
+        NSNumber *messageId = [object objectForKey:@"id"];
         int level = [[object objectForKey:@"level"] integerValue];
         NSString *author = [object objectForKey:@"author"];
         NSString *subject = [object objectForKey:@"subject"];
@@ -112,19 +114,12 @@
     [self.tableView reloadData];
 }
 
-- (NSString*)loadMessageText:(int)messageId
+- (NSString *)loadMessageText:(NSNumber *)messageId
 {
-    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"message/%i", messageId]];
-    
+    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"message/%@", messageId]];
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
-    
     NSError* error;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    
-    NSString *messageText = [json objectForKey:@"text"];
-    
-//    NSString *newLineStr = @"\n";
-//    [messageText stringByReplacingOccurrencesOfString:@"\\n" withString:newLineStr];
     
     NSString *css = @""
         "<style>"
@@ -133,8 +128,8 @@
         "       font-size: 14px;"
         "       margin: 0px;"
         "   }"
-        "</style>"
-    ;
+        "</style>";
+    NSString *messageText = [json objectForKey:@"text"];
     
     messageText = [css stringByAppendingString:messageText];
     
@@ -162,12 +157,13 @@
     
     [self.cells setObject:cell atIndexedSubscript:indexPath.row];
     
-    cell.tag = indexPath.row;
+    cell.tag = indexPath.row; //TODO not needed, i think...
     
     [cell setClipsToBounds:YES];
     
-    [self indentLabel:cell.messageSubjectLabel withLevel:message.level];
-    [self indentLabel:cell.messageAuthorLabel withLevel:message.level];
+    [self indentView:cell.messageSubjectLabel withLevel:message.level];
+    [self indentView:cell.messageAuthorLabel withLevel:message.level];
+    [self indentView:(UIView*)cell.readSymbolView withLevel:message.level];
     
     cell.messageSubjectLabel.text = message.subject;
     cell.messageAuthorLabel.text = message.author;
@@ -183,16 +179,21 @@
     
     [cell.messageTextWebView setDelegate:self];
     
+    if ([self.messagesReadList containsObject:message.messageId]) {
+        [cell markRead];
+    }
+    
     return cell;
 }
 
-- (void)indentLabel:(UILabel *)label withLevel:(int)level
-{
+- (void)indentView:(UIView *)view withLevel:(int)level
+{//TODO make level = NSNumber
     int indention = 10;
     
-    CGRect frame = label.frame;
-    frame.origin = CGPointMake((indention * 2) + (indention * level), frame.origin.y);
-    label.frame = frame;
+    CGRect frame = view.frame;
+//    frame.origin = CGPointMake((indention * 2) + (indention * level), frame.origin.y);
+    frame.origin = CGPointMake(frame.origin.x + (indention * level), frame.origin.y);
+    view.frame = frame;
     
 }
 
@@ -204,7 +205,7 @@
         MCLMessageTableViewCell *cell = self.cells[indexPath.row];
         CGFloat webViewHeight = cell.messageTextWebView.scrollView.contentSize.height;
         height = 60 + 20 + webViewHeight;
-        NSLog(@"heightForRowAtIndexPath(%i - %i): %f  -  %f", cell.tag, indexPath.row, cell.messageTextWebView.frame.size.height, webViewHeight);
+//        NSLog(@"heightForRowAtIndexPath(%i - %i): %f  -  %f", cell.tag, indexPath.row, cell.messageTextWebView.frame.size.height, webViewHeight);
 	}
 
     return height;
@@ -214,11 +215,14 @@
 {
     MCLMessage *message = self.messages[indexPath.row];
     if (!message.text) {
-        message.text = [self loadMessageText:message.id];
+        message.text = [self loadMessageText:message.messageId];
     }
     
     MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    [cell markRead];
     [cell.messageTextWebView loadHTMLString:message.text baseURL:nil];
+    
+    [self addToMessageReadList:message.messageId];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -232,6 +236,23 @@
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
 }
+
+
+- (void)addToMessageReadList:(NSNumber *)messageId
+{
+    [self.messagesReadList addObject:messageId];
+    [self.messagesReadList writeToFile:[self getReadListFileName] atomically:YES];
+}
+
+- (NSString *)getReadListFileName
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *fileName = [documentsDirectory stringByAppendingPathComponent:@"readlist.dat"];
+    
+    return fileName;
+}
+
 
 
 /*
@@ -305,7 +326,7 @@
         }
     }
 
-    NSLog(@"webViewDidFinishLoad(%i): %f", webView.superview.superview.superview.tag ,webViewTextSize.height);
+    NSLog(@"webViewDidFinishLoad(%i): %f", webView.superview.superview.superview.tag, webViewTextSize.height);
     [self updateTableView];
 }
 

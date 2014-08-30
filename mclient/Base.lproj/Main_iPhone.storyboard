@@ -102,6 +102,11 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </webView>
+                                        <view contentMode="scaleToFill" id="Ax4-hn-U4P" customClass="MCLReadSymbolView">
+                                            <rect key="frame" x="5" y="15" width="10" height="10"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        </view>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
@@ -109,6 +114,7 @@
                                     <outlet property="messageDateLabel" destination="haa-6K-IxE" id="H2y-yG-fdW"/>
                                     <outlet property="messageSubjectLabel" destination="L5u-Vx-CHc" id="XRg-Gt-NZP"/>
                                     <outlet property="messageTextWebView" destination="LxT-Lq-OWV" id="w74-04-6Sm"/>
+                                    <outlet property="readSymbolView" destination="Ax4-hn-U4P" id="dsR-pc-xa0"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -159,9 +165,15 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view contentMode="scaleToFill" id="KLT-NR-d1T" customClass="MCLReadSymbolView">
+                                            <rect key="frame" x="5" y="15" width="10" height="10"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        </view>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="readSymbolView" destination="KLT-NR-d1T" id="Tos-vx-T5v"/>
                                     <outlet property="threadAuthorLabel" destination="iUx-A4-fuF" id="Fjw-4t-Fia"/>
                                     <outlet property="threadDateLabel" destination="heT-Kd-h0p" id="yJy-VZ-xK1"/>
                                     <outlet property="threadSubjectLabel" destination="Qdd-BZ-Lg5" id="bD4-ja-Pg7"/>

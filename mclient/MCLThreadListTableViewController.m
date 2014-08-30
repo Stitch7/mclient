@@ -16,6 +16,7 @@
 @interface MCLThreadListTableViewController ()
 
 @property (strong) NSMutableArray *threads;
+@property (strong) NSMutableArray *messagesReadList;
 
 @end
 
@@ -33,6 +34,8 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+    
+    self.messagesReadList = [[NSMutableArray alloc] initWithContentsOfFile:[self getReadListFileName]];
 }
 
 - (void)viewDidLoad
@@ -88,7 +91,8 @@
     NSError* error;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     for (id object in json) {
-        int threadId = [[object objectForKey:@"id"] integerValue];
+        NSNumber *threadId = [object objectForKey:@"id"];
+        NSNumber *messageId = [object objectForKey:@"messageId"];
         BOOL sticky = [[object objectForKey:@"sticky"] boolValue];
         BOOL closed = [[object objectForKey:@"closed"] boolValue];
         BOOL mod = [[object objectForKey:@"mod"] boolValue];
@@ -99,6 +103,7 @@
         NSString *answerDate = [object objectForKey:@"answerDate"];
         
         MCLThread *thread = [MCLThread threadWithId:threadId
+                                          messageId:messageId
                                              sticky:sticky
                                              closed:closed
                                                 mod:mod
@@ -135,6 +140,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+//    NSLog(@"cellForRowAtIndexPath: %i", indexPath.row);
+    
     MCLThread *thread = self.threads[indexPath.row];
     MCLThreadTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ThreadCell" forIndexPath:indexPath];
         
@@ -157,6 +164,16 @@
     cell.badgeString = [@(thread.answerCount) stringValue];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MCLThread *thread = self.threads[indexPath.row];
+    
+    MCLThreadTableViewCell *cell = (MCLThreadTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    [cell markRead];
+    
+    [self addToMessageReadList:thread.messageId];
 }
 
 /*
@@ -202,6 +219,23 @@
     return YES;
 }
 */
+
+
+- (void)addToMessageReadList:(NSNumber *)messageId
+{
+    [self.messagesReadList addObject:messageId];
+    [self.messagesReadList writeToFile:[self getReadListFileName] atomically:YES];
+}
+
+- (NSString *)getReadListFileName
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *fileName = [documentsDirectory stringByAppendingPathComponent:@"readlist.dat"];
+    
+    return fileName;
+}
+
 
 
 #pragma mark - Navigation

@@ -7,28 +7,32 @@
 //
 
 #import "MCLMessageTableViewCell.h"
+#import "MCLReadSymbolView.h"
 
 @implementation MCLMessageTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+//        self.readSymbol = [[MCLReadSymbolView alloc] initWithFrame:CGRectZero];
     }
+    
     return self;
-}
-
-- (void)awakeFromNib
-{
-    // Initialization code
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
+}
 
-    // Configure the view for the selected state
+- (void)markRead
+{
+    self.readSymbolView.hidden = YES;
+}
+
+- (void)markUnread
+{
+    self.readSymbolView.hidden = NO;
 }
 
 @end

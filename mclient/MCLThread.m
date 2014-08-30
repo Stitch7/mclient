@@ -10,11 +10,12 @@
 
 @implementation MCLThread
 
-+ (id) threadWithId:(int)inId sticky:(BOOL)inSticky closed:(BOOL)inClosed mod:(BOOL)inMod author:(NSString*)inAuthor subject:(NSString*)inSubject date:(NSString*)inDate answerCount:(int)inAnswerCount answerDate:(NSString*)inAnswerDate
++ (id)threadWithId:(NSNumber *)inThreadId messageId:(NSNumber *)inMessageId sticky:(BOOL)inSticky closed:(BOOL)inClosed mod:(BOOL)inMod author:(NSString*)inAuthor subject:(NSString*)inSubject date:(NSString*)inDate answerCount:(int)inAnswerCount answerDate:(NSString*)inAnswerDate
 {
     MCLThread *thread = [[MCLThread alloc] init];
     
-    thread.threadId = inId;
+    thread.threadId = inThreadId;
+    thread.messageId = inMessageId;
     thread.sticky = inSticky;
     thread.closed = inClosed;
     thread.mod = inMod;

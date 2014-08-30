@@ -31,6 +31,7 @@
 		305DD85D19AB300F006514BD /* MCLBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85C19AB300F006514BD /* MCLBoard.m */; };
 		305DD86019AB3031006514BD /* MCLThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85F19AB3031006514BD /* MCLThread.m */; };
 		305DD86319AB380C006514BD /* MCLMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD86219AB380C006514BD /* MCLMessage.m */; };
+		307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D797519B0B3B30096A217 /* MCLReadSymbolView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,8 @@
 		305DD85F19AB3031006514BD /* MCLThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLThread.m; sourceTree = "<group>"; };
 		305DD86119AB380C006514BD /* MCLMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessage.h; sourceTree = "<group>"; };
 		305DD86219AB380C006514BD /* MCLMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessage.m; sourceTree = "<group>"; };
+		307D797419B0B3B30096A217 /* MCLReadSymbolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadSymbolView.h; sourceTree = "<group>"; };
+		307D797519B0B3B30096A217 /* MCLReadSymbolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadSymbolView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +212,8 @@
 				301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */,
 				301FD01619ACE3D10028C5C8 /* MCLMessageTableViewCell.h */,
 				301FD01719ACE3D10028C5C8 /* MCLMessageTableViewCell.m */,
+				307D797419B0B3B30096A217 /* MCLReadSymbolView.h */,
+				307D797519B0B3B30096A217 /* MCLReadSymbolView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -336,6 +341,7 @@
 				305DD85D19AB300F006514BD /* MCLBoard.m in Sources */,
 				305DD83419A63517006514BD /* MCLMessageViewController.m in Sources */,
 				305DD85419AB2970006514BD /* MCLMessageListTableViewController.m in Sources */,
+				307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */,
 				305DD83119A63517006514BD /* MCLBoardListTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
