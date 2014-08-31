@@ -33,6 +33,7 @@
 		305DD86319AB380C006514BD /* MCLMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD86219AB380C006514BD /* MCLMessage.m */; };
 		307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D797519B0B3B30096A217 /* MCLReadSymbolView.m */; };
 		30E8B89619B33C070067DD1F /* MCLReadList.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89519B33C070067DD1F /* MCLReadList.m */; };
+		30E8B89919B3CBF40067DD1F /* MCLAddThreadTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89819B3CBF40067DD1F /* MCLAddThreadTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,8 @@
 		307D797519B0B3B30096A217 /* MCLReadSymbolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadSymbolView.m; sourceTree = "<group>"; };
 		30E8B89419B33C070067DD1F /* MCLReadList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadList.h; sourceTree = "<group>"; };
 		30E8B89519B33C070067DD1F /* MCLReadList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadList.m; sourceTree = "<group>"; };
+		30E8B89719B3CBF40067DD1F /* MCLAddThreadTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLAddThreadTableViewController.h; sourceTree = "<group>"; };
+		30E8B89819B3CBF40067DD1F /* MCLAddThreadTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLAddThreadTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +197,8 @@
 		305DD85819AB2EE0006514BD /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				30E8B89719B3CBF40067DD1F /* MCLAddThreadTableViewController.h */,
+				30E8B89819B3CBF40067DD1F /* MCLAddThreadTableViewController.m */,
 				305DD82F19A63517006514BD /* MCLBoardListTableViewController.h */,
 				305DD83019A63517006514BD /* MCLBoardListTableViewController.m */,
 				305DD85219AB2970006514BD /* MCLMessageListTableViewController.h */,
@@ -340,6 +345,7 @@
 				305DD86319AB380C006514BD /* MCLMessage.m in Sources */,
 				305DD82419A63517006514BD /* main.m in Sources */,
 				301FD01519ACA0D70028C5C8 /* TDBadgedCell.m in Sources */,
+				30E8B89919B3CBF40067DD1F /* MCLAddThreadTableViewController.m in Sources */,
 				305DD82819A63517006514BD /* MCLAppDelegate.m in Sources */,
 				301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */,
 				305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */,
