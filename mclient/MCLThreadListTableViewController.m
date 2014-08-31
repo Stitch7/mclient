@@ -9,14 +9,16 @@
 #import "constants.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLMessageListTableViewController.h"
+#import "MCLThreadTableViewCell.h"
 #import "MCLThread.h"
 #import "MCLBoard.h"
-#import "MCLThreadTableViewCell.h"
+#import "MCLReadList.h"
+
 
 @interface MCLThreadListTableViewController ()
 
 @property (strong) NSMutableArray *threads;
-@property (strong) NSMutableArray *messagesReadList;
+@property (strong) MCLReadList *readList;
 
 @end
 
@@ -24,10 +26,10 @@
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
-    self = [super initWithStyle:style];
-    if (self) {
+    if (self = [super initWithStyle:style]) {
         // Custom initialization
     }
+    
     return self;
 }
 
@@ -35,7 +37,7 @@
 {
     [super awakeFromNib];
     
-    self.messagesReadList = [[NSMutableArray alloc] initWithContentsOfFile:[self getReadListFileName]];
+    self.readList = [[MCLReadList alloc] init];
 }
 
 - (void)viewDidLoad
@@ -161,23 +163,15 @@
     dateLabelFrame.origin = CGPointMake(cell.threadAuthorLabel.frame.origin.x + cell.threadAuthorLabel.frame.size.width, dateLabelFrame.origin.y);
     cell.threadDateLabel.frame = dateLabelFrame;
     
-    if ([self.messagesReadList containsObject:thread.messageId]) {
+    if ([self.readList messageIdIsRead:thread.messageId]) {
         [cell markRead];
+    } else {
+        [cell markUnread];
     }
     
     cell.badgeString = [@(thread.answerCount) stringValue];
     
     return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    MCLThread *thread = self.threads[indexPath.row];
-    
-    MCLThreadTableViewCell *cell = (MCLThreadTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
-    [cell markRead];
-    
-    [self addToMessageReadList:thread.messageId];
 }
 
 /*
@@ -225,30 +219,19 @@
 */
 
 
-- (void)addToMessageReadList:(NSNumber *)messageId
-{
-    [self.messagesReadList addObject:messageId];
-    [self.messagesReadList writeToFile:[self getReadListFileName] atomically:YES];
-}
-
-- (NSString *)getReadListFileName
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *fileName = [documentsDirectory stringByAppendingPathComponent:@"readlist.dat"];
-    
-    return fileName;
-}
-
-
-
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"PushToMessageList"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        MCLThread *thread = self.threads[indexPath.row];        
+        
+        MCLThread *thread = self.threads[indexPath.row];
+        [self.readList addMessageId:thread.messageId];
+        
+        MCLThreadTableViewCell *cell = (MCLThreadTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+        [cell markRead];
+        
         [segue.destinationViewController setThread:thread];
     }    
 }

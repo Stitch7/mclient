@@ -8,15 +8,17 @@
 
 #import "constants.h"
 #import "MCLMessageListTableViewController.h"
+#import "MCLMessageTableViewCell.h"
 #import "MCLThread.h"
 #import "MCLMessage.h"
-#import "MCLMessageTableViewCell.h"
+#import "MCLReadList.h"
+
 
 @interface MCLMessageListTableViewController ()
 
 @property (strong) NSMutableArray *messages;
 @property (strong) NSMutableArray *cells;
-@property (strong) NSMutableArray *messagesReadList;
+@property (strong) MCLReadList *readList;
 
 @end
 
@@ -24,10 +26,10 @@
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
-    self = [super initWithStyle:style];
-    if (self) {
+    if (self = [super initWithStyle:style]) {
         // Custom initialization
     }
+    
     return self;
 }
 
@@ -36,7 +38,7 @@
     [super awakeFromNib];
     
     self.cells = [NSMutableArray array];
-    self.messagesReadList = [[NSMutableArray alloc] initWithContentsOfFile:[self getReadListFileName]];
+    self.readList = [[MCLReadList alloc] init];
 }
 
 - (void)viewDidLoad
@@ -161,9 +163,9 @@
     
     [cell setClipsToBounds:YES];
     
-    [self indentView:cell.messageSubjectLabel withLevel:message.level];
-    [self indentView:cell.messageAuthorLabel withLevel:message.level];
-    [self indentView:(UIView*)cell.readSymbolView withLevel:message.level];
+    [self indentView:cell.messageSubjectLabel withLevel:message.level startingAtX:20];
+    [self indentView:cell.messageAuthorLabel withLevel:message.level startingAtX:20];
+    [self indentView:(UIView*)cell.readSymbolView withLevel:message.level startingAtX:5];
     
     cell.messageSubjectLabel.text = message.subject;
     cell.messageAuthorLabel.text = message.author;
@@ -179,20 +181,23 @@
     
     [cell.messageTextWebView setDelegate:self];
     
-    if ([self.messagesReadList containsObject:message.messageId]) {
+    if ([self.readList messageIdIsRead:message.messageId] || indexPath.row == 0) {
         [cell markRead];
+    } else {
+        [cell markUnread];
     }
     
     return cell;
 }
 
-- (void)indentView:(UIView *)view withLevel:(int)level
+- (void)indentView:(UIView *)view withLevel:(int)level startingAtX:(CGFloat)x
 {//TODO make level = NSNumber
     int indention = 10;
     
     CGRect frame = view.frame;
 //    frame.origin = CGPointMake((indention * 2) + (indention * level), frame.origin.y);
-    frame.origin = CGPointMake(frame.origin.x + (indention * level), frame.origin.y);
+//    frame.origin = CGPointMake(frame.origin.x + (indention * level), frame.origin.y);
+    frame.origin = CGPointMake(x + (indention * level), frame.origin.y);
     view.frame = frame;
     
 }
@@ -222,7 +227,7 @@
     [cell markRead];
     [cell.messageTextWebView loadHTMLString:message.text baseURL:nil];
     
-    [self addToMessageReadList:message.messageId];
+    [self.readList addMessageId:message.messageId];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -236,23 +241,6 @@
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
 }
-
-
-- (void)addToMessageReadList:(NSNumber *)messageId
-{
-    [self.messagesReadList addObject:messageId];
-    [self.messagesReadList writeToFile:[self getReadListFileName] atomically:YES];
-}
-
-- (NSString *)getReadListFileName
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *fileName = [documentsDirectory stringByAppendingPathComponent:@"readlist.dat"];
-    
-    return fileName;
-}
-
 
 
 /*
