@@ -66,6 +66,19 @@
     */
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    for (id key in @[@"username", @"password", @"signatureEnabled", @"signatureText", @"nightMode", @"syncReadStatus"]) {
+        NSLog(@"%@: %@", key, [userDefaults objectForKey:key]);
+    }
+    
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

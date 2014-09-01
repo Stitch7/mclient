@@ -19,6 +19,7 @@
 @property (strong) NSMutableArray *messages;
 @property (strong) NSMutableArray *cells;
 @property (strong) MCLReadList *readList;
+@property (weak, nonatomic) NSUserDefaults *userDefaults;
 
 @end
 
@@ -39,6 +40,7 @@
     
     self.cells = [NSMutableArray array];
     self.readList = [[MCLReadList alloc] init];
+    self.userDefaults = [NSUserDefaults standardUserDefaults];
 }
 
 - (void)viewDidLoad
@@ -59,9 +61,6 @@
    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)stopRefresh
@@ -123,23 +122,23 @@
     NSError* error;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     
-    NSString *css = @""
-        "<style>"
-        "   * {"
-        "       font-family: \"Helvetica Neue\";"
-        "       font-size: 14px;"
-        "       margin: 0px;"
-        "   }"
-        "</style>";
+//    NSString *css = @""
+//        "<style>"
+//        "   * {"
+//        "       font-family: \"Helvetica Neue\";"
+//        "       font-size: 14px;"
+//        "       margin: 0px;"
+//        "   }"
+//        "</style>";
     NSString *messageText = [json objectForKey:@"text"];
     
-    messageText = [css stringByAppendingString:messageText];
+//      messageText = [css stringByAppendingString:messageText];
     
     return messageText;
 }
 
 
-#pragma mark - Table view data source
+#pragma mark - UIWebViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -154,6 +153,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+//    NSLog(@"cellForRowAtIndexPath: %i", indexPath.row);
+    
     MCLMessage *message = self.messages[indexPath.row];
     MCLMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MessageCell" forIndexPath:indexPath];
     
@@ -169,6 +170,15 @@
     
     cell.messageSubjectLabel.text = message.subject;
     cell.messageAuthorLabel.text = message.author;
+    
+    if ([message.author isEqualToString:[self.userDefaults objectForKey:@"username"]]) {
+        cell.messageAuthorLabel.textColor = [UIColor blueColor];
+//    } else if (thread.isMod) {
+//        cell.threadAuthorLabel.textColor = [UIColor redColor];
+    } else {
+        cell.messageAuthorLabel.textColor = [UIColor blackColor];
+    }
+        
     cell.messageDateLabel.text = [NSString stringWithFormat:@" - %@", message.date];
     
     [cell.messageAuthorLabel sizeToFit];
@@ -186,6 +196,8 @@
     } else {
         [cell markUnread];
     }
+    
+    [cell.messageToolbar setHidden:YES];
     
     return cell;
 }
@@ -209,7 +221,8 @@
 	if ([tableView indexPathsForSelectedRows].count && [[tableView indexPathsForSelectedRows] indexOfObject:indexPath] != NSNotFound) {
         MCLMessageTableViewCell *cell = self.cells[indexPath.row];
         CGFloat webViewHeight = cell.messageTextWebView.scrollView.contentSize.height;
-        height = 60 + 20 + webViewHeight;
+        CGFloat toolbarHeight = cell.messageToolbar.frame.size.height;
+        height = 60 + 20 + webViewHeight + toolbarHeight;
 //        NSLog(@"heightForRowAtIndexPath(%i - %i): %f  -  %f", cell.tag, indexPath.row, cell.messageTextWebView.frame.size.height, webViewHeight);
 	}
 
@@ -218,22 +231,47 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+//    NSIndexPath *selectedRowIndexPath = [tableView indexPathForSelectedRow];
+//    NSLog(@"indexPath: %i  -  selectedRowIndexPath:%i", indexPath.row, selectedRowIndexPath.row);
+    
     MCLMessage *message = self.messages[indexPath.row];
     if (!message.text) {
         message.text = [self loadMessageText:message.messageId];
     }
     
     MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    
+    UIColor *veryLightGrey = [UIColor colorWithRed:240/255.0f green:240/255.0f blue:240/255.0f alpha:1.0f];
+    [cell setBackgroundColor:veryLightGrey];
+    [cell.messageTextWebView setBackgroundColor:veryLightGrey];
+    
     [cell markRead];
-    [cell.messageTextWebView loadHTMLString:message.text baseURL:nil];
+    cell.messageText = message.text;
+    
+    NSString *messageHtml = [@""
+        "<style>"
+        "   * {"
+        "       font-family: \"Helvetica Neue\";"
+        "       font-size: 14px;"
+        "       margin: 0px;"
+        "   }"
+        "</style>" stringByAppendingString:message.text];
+    [cell.messageTextWebView loadHTMLString:messageHtml baseURL:nil];
     
     [self.readList addMessageId:message.messageId];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    
+    [cell setBackgroundColor:[UIColor clearColor]];
+    [cell.messageTextWebView setBackgroundColor:[UIColor clearColor]];
+    
+    [cell.messageToolbar setHidden:YES];
+    
     [self updateTableView];
-
 }
 
 - (void)updateTableView
@@ -243,54 +281,18 @@
 }
 
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-
 #pragma mark - UIWebView delegate
 
 -(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
-    if ( inType == UIWebViewNavigationTypeLinkClicked ) {
+    BOOL shouldStartLoad = YES;
+    
+    // Open links in Safari
+    if (inType == UIWebViewNavigationTypeLinkClicked) {
         [[UIApplication sharedApplication] openURL:[inRequest URL]];
-        return NO;
+        shouldStartLoad = NO;
     }
     
-    return YES;
+    return shouldStartLoad;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
@@ -302,6 +304,7 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    // Resize text view to content heigt
     CGSize webViewTextSize = [webView sizeThatFits:CGSizeMake(1.0f, 1.0f)];
     CGRect webViewFrame = webView.frame;
     webViewFrame.size.height = webViewTextSize.height;
@@ -314,9 +317,24 @@
         }
     }
 
-    NSLog(@"webViewDidFinishLoad(%i): %f", webView.superview.superview.superview.tag, webViewTextSize.height);
+    // Resize table cell
     [self updateTableView];
+
+    // Show toolbar after short delay to avoid skidding through text
+    MCLMessageTableViewCell *cell = (MCLMessageTableViewCell *)webView.superview.superview.superview;
+    [cell.messageToolbar performSelector:@selector(setHidden:) withObject:NO afterDelay:0.5];
 }
+
+
+#pragma mark - Actions
+
+//- (IBAction)speakAction:(id)sender
+//{
+//    UIBarButtonItem *speakButton = sender;
+//    
+//    NSLog(@"Speak: %@", speakButton.superview);
+//}
+
 
 
 /*

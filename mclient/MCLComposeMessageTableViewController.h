@@ -1,5 +1,5 @@
 //
-//  MCLAddThreadTableViewController.h
+//  MCLComposeMessageTableViewController.h
 //  mclient
 //
 //  Created by Christopher Reitz on 31.08.14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MCLAddThreadTableViewController : UITableViewController <UITextFieldDelegate, UITextViewDelegate>
+@interface MCLComposeMessageTableViewController : UITableViewController <UITextFieldDelegate, UITextViewDelegate>
 
 @end

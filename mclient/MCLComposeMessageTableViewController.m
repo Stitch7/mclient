@@ -1,21 +1,23 @@
 //
-//  MCLAddThreadTableViewController.m
+//  MCLComposeMessageTableViewController.m
 //  mclient
 //
 //  Created by Christopher Reitz on 31.08.14.
 //  Copyright (c) 2014 Christopher Reitz. All rights reserved.
 //
 
-#import "MCLAddThreadTableViewController.h"
+#import "MCLComposeMessageTableViewController.h"
 
-@interface MCLAddThreadTableViewController ()
+@interface MCLComposeMessageTableViewController ()
 
-@property (weak, nonatomic) IBOutlet UITextField *threadSubjectTextField;
-@property (weak, nonatomic) IBOutlet UITextView *threadTextTextField;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *composeCancelButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *composeSendButton;
+@property (weak, nonatomic) IBOutlet UITextField *composeSubjectTextField;
+@property (weak, nonatomic) IBOutlet UITextView *composeTextTextField;
 
 @end
 
-@implementation MCLAddThreadTableViewController
+@implementation MCLComposeMessageTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -32,8 +34,8 @@
     
 //    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     
-    self.threadSubjectTextField.delegate = self;
-    [self.threadSubjectTextField becomeFirstResponder];
+    self.composeSubjectTextField.delegate = self;
+    [self.composeSubjectTextField becomeFirstResponder];
     
 //    self.threadTextTextField.layer.borderWidth = 0.5f;
 
@@ -50,9 +52,9 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if (textField == self.threadSubjectTextField) {
+    if (textField == self.composeSubjectTextField) {
         [textField resignFirstResponder];
-        [self.threadTextTextField becomeFirstResponder];
+        [self.composeTextTextField becomeFirstResponder];
     }
     
     return NO;
@@ -66,7 +68,8 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)saveAction:(id)sender {
+- (IBAction)saveAction:(id)sender
+{
 }
 
 

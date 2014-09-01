@@ -19,6 +19,7 @@
 
 @property (strong) NSMutableArray *threads;
 @property (strong) MCLReadList *readList;
+@property (weak, nonatomic) NSUserDefaults *userDefaults;
 
 @end
 
@@ -38,6 +39,7 @@
     [super awakeFromNib];
     
     self.readList = [[MCLReadList alloc] init];
+    self.userDefaults = [NSUserDefaults standardUserDefaults];
 }
 
 - (void)viewDidLoad
@@ -128,7 +130,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
+
+#pragma mark - UIWebViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -152,7 +155,16 @@
     cell.threadSubjectLabel.font = thread.isSticky ? [UIFont boldSystemFontOfSize:subjectSize] : [UIFont systemFontOfSize:subjectSize];
     
     cell.threadAuthorLabel.text = thread.author;
-    cell.threadAuthorLabel.textColor = thread.isMod ? [UIColor redColor] : [UIColor blackColor];
+    
+    if ([thread.author isEqualToString:[self.userDefaults objectForKey:@"username"]]) {
+//        cell.threadAuthorLabel.textColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0]; //TODO make const
+        cell.threadAuthorLabel.textColor = [UIColor blueColor]; //TODO make const
+    } else if (thread.isMod) {
+        cell.threadAuthorLabel.textColor = [UIColor redColor];
+    } else {
+        cell.threadAuthorLabel.textColor = [UIColor blackColor];
+    }
+    
     [cell.threadAuthorLabel sizeToFit];
     
     cell.threadDateLabel.text = [NSString stringWithFormat:@" - %@", thread.date];
@@ -173,50 +185,6 @@
     
     return cell;
 }
-
-/*
--(void)tableView:(UITableView *)tableView willDisplayCell:(MCLThreadTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-}
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 #pragma mark - Navigation

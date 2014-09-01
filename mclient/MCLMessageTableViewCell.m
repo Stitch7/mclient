@@ -14,7 +14,6 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-//        self.readSymbol = [[MCLReadSymbolView alloc] initWithFrame:CGRectZero];
     }
     
     return self;
@@ -33,6 +32,11 @@
 - (void)markUnread
 {
     self.readSymbolView.hidden = NO;
+}
+
+- (IBAction)speakAction:(id)sender
+{
+    NSLog(@"speak from cell: %@", self.messageText);
 }
 
 @end

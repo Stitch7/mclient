@@ -16,7 +16,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *messageAuthorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageDateLabel;
 @property (weak, nonatomic) IBOutlet UIWebView *messageTextWebView;
+@property (weak, nonatomic) NSString *messageText;
 @property (weak, nonatomic) IBOutlet MCLReadSymbolView *readSymbolView;
+@property (weak, nonatomic) IBOutlet UIToolbar *messageToolbar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *messageSpeakButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *messageReplyButton;
 
 - (void)markRead;
 - (void)markUnread;
