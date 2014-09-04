@@ -8,7 +8,9 @@
 
 #import "constants.h"
 #import "MCLMessageListTableViewController.h"
+#import "MCLComposeMessageTableViewController.h"
 #import "MCLMessageTableViewCell.h"
+#import "MCLBoard.h"
 #import "MCLThread.h"
 #import "MCLMessage.h"
 #import "MCLReadList.h"
@@ -138,7 +140,7 @@
 }
 
 
-#pragma mark - UIWebViewDelegate
+#pragma mark - UITableViewDelegate + UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -153,14 +155,21 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSLog(@"cellForRowAtIndexPath: %i", indexPath.row);
+    NSInteger i = indexPath.row;
+//    NSLog(@"cellForRowAtIndexPath: %i", i);
     
-    MCLMessage *message = self.messages[indexPath.row];
+    NSString *username = [self.userDefaults objectForKey:@"username"];
+    
+    MCLMessage *message = self.messages[i];
+    MCLMessage *nextMessage = nil;
+    if (indexPath.row < ([self.messages count] - 1)) {
+        nextMessage = self.messages[i + 1];
+    }
     MCLMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MessageCell" forIndexPath:indexPath];
     
-    [self.cells setObject:cell atIndexedSubscript:indexPath.row];
+    [self.cells setObject:cell atIndexedSubscript:i];
     
-    cell.tag = indexPath.row; //TODO not needed, i think...
+    cell.tag = i; //TODO not needed, i think...
     
     [cell setClipsToBounds:YES];
     
@@ -171,7 +180,7 @@
     cell.messageSubjectLabel.text = message.subject;
     cell.messageAuthorLabel.text = message.author;
     
-    if ([message.author isEqualToString:[self.userDefaults objectForKey:@"username"]]) {
+    if ([message.author isEqualToString:username]) {
         cell.messageAuthorLabel.textColor = [UIColor blueColor];
 //    } else if (thread.isMod) {
 //        cell.threadAuthorLabel.textColor = [UIColor redColor];
@@ -191,10 +200,18 @@
     
     [cell.messageTextWebView setDelegate:self];
     
-    if ([self.readList messageIdIsRead:message.messageId] || indexPath.row == 0) {
+    if (i == 0 || [self.readList messageIdIsRead:message.messageId]) {
         [cell markRead];
     } else {
         [cell markUnread];
+    }
+    
+    if ([message.author isEqualToString:username] && nextMessage.level <= message.level) {
+        [cell.messageEditButton setEnabled:YES];
+        [cell.messageEditButton setTintColor:nil];
+    } else {
+        [cell.messageEditButton setEnabled:NO];
+        [cell.messageEditButton setTintColor: [UIColor clearColor]];
     }
     
     [cell.messageToolbar setHidden:YES];
@@ -250,12 +267,24 @@
     cell.messageText = message.text;
     
     NSString *messageHtml = [@""
+        "<script type=\"text/javascript\">"
+        "    function spoiler(obj) {"
+        "        if (obj.nextSibling.style.display === 'none') {"
+        "            obj.nextSibling.style.display = 'inline';"
+        "        } else {"
+        "            obj.nextSibling.style.display = 'none';"
+        "        }"
+        "    }"
+        "</script>"
         "<style>"
-        "   * {"
-        "       font-family: \"Helvetica Neue\";"
-        "       font-size: 14px;"
-        "       margin: 0px;"
-        "   }"
+        "    * {"
+        "        font-family: \"Helvetica Neue\";"
+        "        font-size: 14px;"
+        "        margin: 0px;"
+        "    }"
+        "    button > img {"
+        "        content:url(\"http://www.maniac-forum.de/forum/images/spoiler.png\");"
+        "    }"
         "</style>" stringByAppendingString:message.text];
     [cell.messageTextWebView loadHTMLString:messageHtml baseURL:nil];
     
@@ -270,6 +299,11 @@
     [cell.messageTextWebView setBackgroundColor:[UIColor clearColor]];
     
     [cell.messageToolbar setHidden:YES];
+    
+    if (cell.speechSynthesizer.speaking) {
+        [cell.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
+        cell.messageSpeakButton.image = [UIImage imageNamed:@"speakButton.png"];
+    }
     
     [self updateTableView];
 }
@@ -326,26 +360,33 @@
 }
 
 
-#pragma mark - Actions
+#pragma mark - Seque
 
-//- (IBAction)speakAction:(id)sender
-//{
-//    UIBarButtonItem *speakButton = sender;
-//    
-//    NSLog(@"Speak: %@", speakButton.superview);
-//}
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    MCLComposeMessageTableViewController *destinationViewController = ((MCLComposeMessageTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    MCLMessage *message = self.messages[indexPath.row];
+    NSString *subject = message.subject;
+    
+    if ([segue.identifier isEqualToString:@"ModalToComposeReply"]) {
+        [destinationViewController setTitle:@"Reply"];
+        NSString *subjectReplyPrefix = @"Re:";
+        if ([subject length] < 3 || ![[subject substringToIndex:3] isEqualToString:subjectReplyPrefix]) {
+            subject = [subjectReplyPrefix stringByAppendingString:subject];
+        }
+    } else if ([segue.identifier isEqualToString:@"ModalToEditReply"]) {
+        [destinationViewController setTitle:@"Edit"];
+        
+        MCLMessageTableViewCell *cell = (MCLMessageTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        NSString *text = [cell.messageTextWebView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"body\")[0].textContent;"];
+        [destinationViewController setText:text];
+    }
+    
+    [destinationViewController setBoardId:self.board.boardId];
+    [destinationViewController setMessageId:message.messageId];
+    [destinationViewController setSubject:subject];
 }
-*/
+
 
 @end

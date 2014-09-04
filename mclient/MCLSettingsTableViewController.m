@@ -7,6 +7,7 @@
 //
 
 #import "MCLSettingsTableViewController.h"
+#import "MCLMServiceConnector.h"
 
 @interface MCLSettingsTableViewController ()
 
@@ -58,6 +59,32 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)testLogin
+{
+    NSString *username = self.settingsUsernameTextField.text;
+    NSString *password = self.settingsPasswordTextField.text;
+    
+    if (username != nil && password != nil) {
+        NSString *title, *message;
+        
+        MCLMServiceConnector *mServiceConnector = [[MCLMServiceConnector alloc] init];
+        if ([mServiceConnector testLoginWIthUsername:username password:password]) {
+            title = @"Login succeed";
+            message = @"You are now able to create postings";
+        } else {
+            title = @"Login failed";
+            message = @"Please verifiy username and password";
+        }
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
 #pragma mark - Actions
 
 - (IBAction)settingsDoneAction:(UIBarButtonItem *)sender
@@ -68,11 +95,13 @@
 - (IBAction)settingsUsernameEditingDidEndAction:(UITextField *)sender
 {
     [self.userDefaults setObject:sender.text forKey:@"username"];
+    [self testLogin];
 }
 
 - (IBAction)settingsPasswordEditingDidEndAction:(UITextField *)sender
 {
     [self.userDefaults setObject:sender.text forKey:@"password"];
+    [self testLogin];
 }
 
 - (IBAction)settingsSignatureEnabledSwitchValueChangedAction:(UISwitch *)sender

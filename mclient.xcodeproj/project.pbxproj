@@ -30,6 +30,11 @@
 		305DD85D19AB300F006514BD /* MCLBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85C19AB300F006514BD /* MCLBoard.m */; };
 		305DD86019AB3031006514BD /* MCLThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85F19AB3031006514BD /* MCLThread.m */; };
 		305DD86319AB380C006514BD /* MCLMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD86219AB380C006514BD /* MCLMessage.m */; };
+		307A80DD19B5EBD8001B538D /* MCLMServiceConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 307A80DC19B5EBD8001B538D /* MCLMServiceConnector.m */; };
+		307A80E619B7736A001B538D /* settingsButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 307A80E519B7736A001B538D /* settingsButton@2x.png */; };
+		307A80E819B7B899001B538D /* speakButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 307A80E719B7B899001B538D /* speakButton@2x.png */; };
+		307A80EA19B7B962001B538D /* stopButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 307A80E919B7B962001B538D /* stopButton@2x.png */; };
+		307A80EC19B7B993001B538D /* editButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 307A80EB19B7B993001B538D /* editButton@2x.png */; };
 		307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D797519B0B3B30096A217 /* MCLReadSymbolView.m */; };
 		30A1BFAD19B4A8D4002439FE /* MCLSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */; };
 		30E8B89619B33C070067DD1F /* MCLReadList.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89519B33C070067DD1F /* MCLReadList.m */; };
@@ -84,6 +89,12 @@
 		305DD85F19AB3031006514BD /* MCLThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLThread.m; sourceTree = "<group>"; };
 		305DD86119AB380C006514BD /* MCLMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessage.h; sourceTree = "<group>"; };
 		305DD86219AB380C006514BD /* MCLMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessage.m; sourceTree = "<group>"; };
+		307A80DB19B5EBD8001B538D /* MCLMServiceConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMServiceConnector.h; sourceTree = "<group>"; };
+		307A80DC19B5EBD8001B538D /* MCLMServiceConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMServiceConnector.m; sourceTree = "<group>"; };
+		307A80E519B7736A001B538D /* settingsButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsButton@2x.png"; sourceTree = "<group>"; };
+		307A80E719B7B899001B538D /* speakButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "speakButton@2x.png"; sourceTree = "<group>"; };
+		307A80E919B7B962001B538D /* stopButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stopButton@2x.png"; sourceTree = "<group>"; };
+		307A80EB19B7B993001B538D /* editButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editButton@2x.png"; sourceTree = "<group>"; };
 		307D797419B0B3B30096A217 /* MCLReadSymbolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadSymbolView.h; sourceTree = "<group>"; };
 		307D797519B0B3B30096A217 /* MCLReadSymbolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadSymbolView.m; sourceTree = "<group>"; };
 		30A1BFAB19B4A8D4002439FE /* MCLSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLSettingsTableViewController.h; sourceTree = "<group>"; };
@@ -151,6 +162,7 @@
 		305DD81D19A63517006514BD /* mclient */ = {
 			isa = PBXGroup;
 			children = (
+				307A80DE19B75F29001B538D /* Images */,
 				301FD00F19AB73160028C5C8 /* constants.h */,
 				305DD85819AB2EE0006514BD /* Controller */,
 				305DD83519A63517006514BD /* Images.xcassets */,
@@ -158,6 +170,8 @@
 				305DD82919A63517006514BD /* Main_iPhone.storyboard */,
 				305DD82619A63517006514BD /* MCLAppDelegate.h */,
 				305DD82719A63517006514BD /* MCLAppDelegate.m */,
+				307A80DB19B5EBD8001B538D /* MCLMServiceConnector.h */,
+				307A80DC19B5EBD8001B538D /* MCLMServiceConnector.m */,
 				305DD85A19AB2F07006514BD /* Model */,
 				305DD81E19A63517006514BD /* Supporting Files */,
 				305DD85919AB2EFE006514BD /* View */,
@@ -241,6 +255,17 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		307A80DE19B75F29001B538D /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				307A80EB19B7B993001B538D /* editButton@2x.png */,
+				307A80E519B7736A001B538D /* settingsButton@2x.png */,
+				307A80E719B7B899001B538D /* speakButton@2x.png */,
+				307A80E919B7B962001B538D /* stopButton@2x.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -322,6 +347,10 @@
 				305DD83619A63517006514BD /* Images.xcassets in Resources */,
 				305DD82B19A63517006514BD /* Main_iPhone.storyboard in Resources */,
 				305DD82219A63517006514BD /* InfoPlist.strings in Resources */,
+				307A80EC19B7B993001B538D /* editButton@2x.png in Resources */,
+				307A80E819B7B899001B538D /* speakButton@2x.png in Resources */,
+				307A80EA19B7B962001B538D /* stopButton@2x.png in Resources */,
+				307A80E619B7736A001B538D /* settingsButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +375,7 @@
 				305DD82419A63517006514BD /* main.m in Sources */,
 				301FD01519ACA0D70028C5C8 /* TDBadgedCell.m in Sources */,
 				30E8B89919B3CBF40067DD1F /* MCLComposeMessageTableViewController.m in Sources */,
+				307A80DD19B5EBD8001B538D /* MCLMServiceConnector.m in Sources */,
 				305DD82819A63517006514BD /* MCLAppDelegate.m in Sources */,
 				301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */,
 				305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */,

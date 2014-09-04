@@ -10,4 +10,9 @@
 
 @interface MCLComposeMessageTableViewController : UITableViewController <UITextFieldDelegate, UITextViewDelegate>
 
+@property (strong, nonatomic) NSNumber *boardId;
+@property (strong, nonatomic) NSNumber *messageId;
+@property (strong, nonatomic) NSString *subject;
+@property (strong, nonatomic) NSString *text;
+
 @end

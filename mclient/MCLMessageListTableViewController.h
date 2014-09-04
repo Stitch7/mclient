@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class MCLBoard;
 @class MCLThread;
 
 @interface MCLMessageListTableViewController : UITableViewController <UIWebViewDelegate>
 
-@property (strong) MCLThread *thread;
+@property (strong, nonatomic) MCLBoard *board;
+@property (strong, nonatomic) MCLThread *thread;
 
 @end

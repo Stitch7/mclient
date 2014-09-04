@@ -12,6 +12,6 @@
 
 @interface MCLThreadListTableViewController : UITableViewController
 
-@property (strong) MCLBoard *board;
+@property (strong, nonatomic) MCLBoard *board;
 
 @end

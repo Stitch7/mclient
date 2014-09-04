@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 @class MCLReadSymbolView;
 
-@interface MCLMessageTableViewCell : UITableViewCell
+@interface MCLMessageTableViewCell : UITableViewCell <AVSpeechSynthesizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *messageSubjectLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageAuthorLabel;
@@ -20,7 +21,9 @@
 @property (weak, nonatomic) IBOutlet MCLReadSymbolView *readSymbolView;
 @property (weak, nonatomic) IBOutlet UIToolbar *messageToolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *messageSpeakButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *messageEditButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *messageReplyButton;
+@property (strong, nonatomic) AVSpeechSynthesizer *speechSynthesizer;
 
 - (void)markRead;
 - (void)markUnread;

@@ -58,7 +58,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Boards" id="tQt-TN-PWz">
-                        <barButtonItem key="rightBarButtonItem" title="Settings" id="j6v-UX-TxA">
+                        <barButtonItem key="rightBarButtonItem" image="settingsButton.png" id="j6v-UX-TxA">
                             <connections>
                                 <segue destination="oWl-0r-dBp" kind="modal" identifier="ModalToEditSettings" id="BHk-rd-0oo"/>
                             </connections>
@@ -120,12 +120,17 @@
                                             <rect key="frame" x="20" y="202" width="280" height="44"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                             <items>
-                                                <barButtonItem systemItem="play" id="rhW-ts-D2m">
+                                                <barButtonItem image="speakButton.png" id="rhW-ts-D2m">
                                                     <connections>
-                                                        <action selector="speakAction:" destination="Rsb-PI-AzJ" id="9Dt-y7-3fQ"/>
+                                                        <action selector="speakAction:" destination="Rsb-PI-AzJ" id="9kI-yj-n8Z"/>
                                                     </connections>
                                                 </barButtonItem>
                                                 <barButtonItem style="plain" systemItem="flexibleSpace" id="Fbk-sc-Wox"/>
+                                                <barButtonItem image="editButton.png" id="oeu-gq-kVG">
+                                                    <connections>
+                                                        <segue destination="hrY-h7-g5I" kind="modal" identifier="ModalToEditReply" id="Qom-pl-pI0"/>
+                                                    </connections>
+                                                </barButtonItem>
                                                 <barButtonItem systemItem="reply" id="ekV-hQ-CJB">
                                                     <connections>
                                                         <segue destination="hrY-h7-g5I" kind="modal" identifier="ModalToComposeReply" id="ixj-x7-EDb"/>
@@ -138,6 +143,7 @@
                                 <connections>
                                     <outlet property="messageAuthorLabel" destination="nzD-Bl-rvo" id="0nm-93-lwa"/>
                                     <outlet property="messageDateLabel" destination="haa-6K-IxE" id="H2y-yG-fdW"/>
+                                    <outlet property="messageEditButton" destination="oeu-gq-kVG" id="mPe-8K-AXD"/>
                                     <outlet property="messageReplyButton" destination="ekV-hQ-CJB" id="2ce-Ng-HCm"/>
                                     <outlet property="messageSpeakButton" destination="rhW-ts-D2m" id="ha1-Zl-G26"/>
                                     <outlet property="messageSubjectLabel" destination="L5u-Vx-CHc" id="XRg-Gt-NZP"/>
@@ -177,7 +183,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Subject" minimumFontSize="17" id="gLr-fQ-gVh">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Subject" minimumFontSize="17" clearButtonMode="whileEditing" id="gLr-fQ-gVh">
                                                     <rect key="frame" x="20" y="7" width="280" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -226,8 +232,8 @@
                     <connections>
                         <outlet property="composeCancelButton" destination="mNV-No-xeu" id="GnI-cY-Gvu"/>
                         <outlet property="composeSendButton" destination="dWC-OY-YeX" id="v54-VD-b9f"/>
-                        <outlet property="composeSubjectTextField" destination="gLr-fQ-gVh" id="ghQ-Rx-2x8"/>
-                        <outlet property="composeTextTextField" destination="Tpw-OV-kLg" id="HYi-FG-x4y"/>
+                        <outlet property="composeSubjectTextField" destination="gLr-fQ-gVh" id="V8F-ux-4gm"/>
+                        <outlet property="composeTextTextField" destination="Tpw-OV-kLg" id="sCJ-eO-cNs"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JEb-zc-Jxp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -510,12 +516,17 @@
             <point key="canvasLocation" x="907" y="64"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="editButton.png" width="25" height="25"/>
+        <image name="settingsButton.png" width="26" height="26"/>
+        <image name="speakButton.png" width="30" height="30"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="zga-ee-uGB"/>
+        <segue reference="Qom-pl-pI0"/>
     </inferredMetricsTieBreakers>
 </document>

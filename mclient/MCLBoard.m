@@ -10,11 +10,11 @@
 
 @implementation MCLBoard
 
-+ (id) boardWithId:(int)inId name:(NSString *)inName
++ (id)boardWithId:(NSNumber *)inBoardId name:(NSString *)inName
 {
     MCLBoard *board = [[MCLBoard alloc] init];
 
-    board.id = inId;
+    board.boardId = inBoardId;
     board.name = inName;
     
     return board;

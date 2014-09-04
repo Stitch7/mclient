@@ -9,6 +9,7 @@
 #import "constants.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLMessageListTableViewController.h"
+#import "MCLComposeMessageTableViewController.h"
 #import "MCLThreadTableViewCell.h"
 #import "MCLThread.h"
 #import "MCLBoard.h"
@@ -73,7 +74,7 @@
 
 - (NSData *)loadData
 {
-    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"threadlist/%i", self.board.id]];
+    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"threadlist/%@", self.board.boardId]];
     
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
     [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
@@ -187,7 +188,7 @@
 }
 
 
-#pragma mark - Navigation
+#pragma mark - Seque
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -200,8 +201,11 @@
         MCLThreadTableViewCell *cell = (MCLThreadTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
         [cell markRead];
         
+        [segue.destinationViewController setBoard:self.board];
         [segue.destinationViewController setThread:thread];
-    }    
+    } else if ([segue.identifier isEqualToString:@"ModalToComposeThread"]) {
+        [((MCLComposeMessageTableViewController*)[[segue.destinationViewController viewControllers] objectAtIndex:0]) setBoardId:self.board.boardId];
+    }
 }
 
 

@@ -35,10 +35,17 @@
 //    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     
     self.composeSubjectTextField.delegate = self;
-    [self.composeSubjectTextField becomeFirstResponder];
+    if (self.subject) {
+        self.composeSubjectTextField.text = self.subject;
+        [self.composeTextTextField becomeFirstResponder];
+    } else {
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        [self.composeSubjectTextField becomeFirstResponder];
+    }
     
-//    self.threadTextTextField.layer.borderWidth = 0.5f;
-
+    if (self.text) {
+        self.composeTextTextField.text = self.text;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,6 +67,18 @@
     return NO;
 }
 
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSUInteger length = self.composeSubjectTextField.text.length - range.length + string.length;
+    if (length > 0) {
+        self.composeSendButton.enabled = YES;
+    } else {
+        self.composeSendButton.enabled = NO;
+    }
+    
+    return YES;
+}
+
 
 #pragma mark - Actions
 
@@ -70,18 +89,18 @@
 
 - (IBAction)saveAction:(id)sender
 {
+    NSLog(@"boardId: %@", self.boardId);
+    NSLog(@"messageId: %@", self.messageId);
 }
 
+//- (IBAction)composeSubjectValueChangedAction:(UITextField *)sender
+//{
+//    NSLog(@"%@", sender.text);
+//    
+//    if (sender.text != nil) {
+//        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+//    }
+//}
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

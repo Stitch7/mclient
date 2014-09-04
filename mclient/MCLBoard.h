@@ -10,9 +10,9 @@
 
 @interface MCLBoard : NSObject
 
-@property (assign) int id;
-@property (strong) NSString *name;
+@property (strong, nonatomic) NSNumber *boardId;
+@property (strong, nonatomic) NSString *name;
 
-+ (id) boardWithId:(int)inId name:(NSString *)inName;
++ (id)boardWithId:(NSNumber *)inBoardId name:(NSString *)inName;
 
 @end

@@ -41,7 +41,7 @@
     NSError* error;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];    
     for (id object in json) {
-        int boardId = [[object objectForKey:@"id"] integerValue];
+        NSNumber *boardId = [object objectForKey:@"id"];
         NSString *boardName = [object objectForKey:@"text"];
         
         MCLBoard *board = [MCLBoard boardWithId:boardId name:boardName];
