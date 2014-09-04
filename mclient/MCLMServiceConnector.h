@@ -10,6 +10,29 @@
 
 @interface MCLMServiceConnector : NSObject
 
-- (BOOL)testLoginWIthUsername:(NSString *)inUsername password:(NSString *)inPassword;
+- (BOOL)testLoginWIthUsername:(NSString *)inUsername
+                     password:(NSString *)inPassword;
+
+- (BOOL)postThreadToBoardId:(NSNumber *)inBoardId
+                    subject:(NSString *)inSubject
+                       text:(NSString *)inText
+                   username:(NSString *)inUsername
+                   password:(NSString *)inPassword
+               notification:(BOOL)inNotification;
+
+- (BOOL)postReplyToMessageId:(NSNumber *)inMessageId
+                     boardId:(NSNumber *)inBoardId
+                     subject:(NSString *)inSubject
+                        text:(NSString *)inText
+                    username:(NSString *)inUsername
+                    password:(NSString *)inPassword
+                notification:(BOOL)inNotification;
+
+- (BOOL)postEditToMessageId:(NSNumber *)inMessageId
+                    boardId:(NSNumber *)inBoardId
+                    subject:(NSString *)inSubject
+                       text:(NSString *)inText
+                   username:(NSString *)inUsername
+                   password:(NSString *)inPassword;
 
 @end

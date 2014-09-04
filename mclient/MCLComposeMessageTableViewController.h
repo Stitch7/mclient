@@ -8,8 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+// typedef NS_ENUM(NSUInteger, kComposeType) {
+typedef enum kComposeType : NSUInteger {
+    kComposeTypeThread,
+    kComposeTypeReply,
+    kComposeTypeEdit
+  
+} kComposeType;
+
 @interface MCLComposeMessageTableViewController : UITableViewController <UITextFieldDelegate, UITextViewDelegate>
 
+@property (assign) NSUInteger type;
 @property (strong, nonatomic) NSNumber *boardId;
 @property (strong, nonatomic) NSNumber *messageId;
 @property (strong, nonatomic) NSString *subject;

@@ -6,10 +6,13 @@
 //  Copyright (c) 2014 Christopher Reitz. All rights reserved.
 //
 
+#import "KeychainItemWrapper.h"
 #import "MCLSettingsTableViewController.h"
 #import "MCLMServiceConnector.h"
 
 @interface MCLSettingsTableViewController ()
+
+@property (strong, nonatomic) KeychainItemWrapper *keychainItem;
 
 @property (weak, nonatomic) NSUserDefaults *userDefaults;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsDoneButton;
@@ -39,8 +42,17 @@
     
     self.userDefaults = [NSUserDefaults standardUserDefaults];
     
-    self.settingsUsernameTextField.text = [self.userDefaults objectForKey:@"username"];
-    self.settingsPasswordTextField.text = [self.userDefaults objectForKey:@"password"];
+    // Reading username + password from keychain
+    self.keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"M!client" accessGroup:nil];
+    [self.keychainItem setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
+    NSData *passwordData = [self.keychainItem objectForKey:(__bridge id)(kSecValueData)];
+    NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
+    NSString *username = [self.keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
+    NSLog(@"read from keychain: username=%@ - password=%@", username, password);
+
+    
+    self.settingsUsernameTextField.text = username;
+    self.settingsPasswordTextField.text = password;
     self.settingsSignatureEnabledSwitch.on = [self.userDefaults boolForKey:@"signatureEnabled"];
     self.settingsNightModeSwitch.on = [self.userDefaults boolForKey:@"nightMode"];
     self.settingsSyncReadStatusSwitch.on = [self.userDefaults boolForKey:@"syncReadStatus"];
@@ -69,8 +81,10 @@
         
         MCLMServiceConnector *mServiceConnector = [[MCLMServiceConnector alloc] init];
         if ([mServiceConnector testLoginWIthUsername:username password:password]) {
+            [self.keychainItem setObject:username forKey:(__bridge id)(kSecAttrAccount)];
+            [self.keychainItem setObject:password forKey:(__bridge id)(kSecValueData)];
             title = @"Login succeed";
-            message = @"You are now able to create postings";
+            message = @"You credentials have been securely saved into the keychain of this device";
         } else {
             title = @"Login failed";
             message = @"Please verifiy username and password";

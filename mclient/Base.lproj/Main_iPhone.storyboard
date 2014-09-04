@@ -204,7 +204,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -518,8 +518,8 @@
     </scenes>
     <resources>
         <image name="editButton.png" width="25" height="25"/>
-        <image name="settingsButton.png" width="26" height="26"/>
-        <image name="speakButton.png" width="30" height="30"/>
+        <image name="settingsButton.png" width="25" height="25"/>
+        <image name="speakButton.png" width="25" height="25"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

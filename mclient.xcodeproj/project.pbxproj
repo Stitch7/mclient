@@ -35,6 +35,8 @@
 		307A80E819B7B899001B538D /* speakButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 307A80E719B7B899001B538D /* speakButton@2x.png */; };
 		307A80EA19B7B962001B538D /* stopButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 307A80E919B7B962001B538D /* stopButton@2x.png */; };
 		307A80EC19B7B993001B538D /* editButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 307A80EB19B7B993001B538D /* editButton@2x.png */; };
+		307A80EF19B8800E001B538D /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 307A80EE19B8800E001B538D /* KeychainItemWrapper.m */; };
+		307A80F119B8804F001B538D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307A80F019B8804F001B538D /* Security.framework */; };
 		307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D797519B0B3B30096A217 /* MCLReadSymbolView.m */; };
 		30A1BFAD19B4A8D4002439FE /* MCLSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */; };
 		30E8B89619B33C070067DD1F /* MCLReadList.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89519B33C070067DD1F /* MCLReadList.m */; };
@@ -95,6 +97,9 @@
 		307A80E719B7B899001B538D /* speakButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "speakButton@2x.png"; sourceTree = "<group>"; };
 		307A80E919B7B962001B538D /* stopButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stopButton@2x.png"; sourceTree = "<group>"; };
 		307A80EB19B7B993001B538D /* editButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editButton@2x.png"; sourceTree = "<group>"; };
+		307A80ED19B8800E001B538D /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
+		307A80EE19B8800E001B538D /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
+		307A80F019B8804F001B538D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		307D797419B0B3B30096A217 /* MCLReadSymbolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadSymbolView.h; sourceTree = "<group>"; };
 		307D797519B0B3B30096A217 /* MCLReadSymbolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadSymbolView.m; sourceTree = "<group>"; };
 		30A1BFAB19B4A8D4002439FE /* MCLSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLSettingsTableViewController.h; sourceTree = "<group>"; };
@@ -110,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				307A80F119B8804F001B538D /* Security.framework in Frameworks */,
 				305DD81A19A63517006514BD /* CoreGraphics.framework in Frameworks */,
 				305DD81C19A63517006514BD /* UIKit.framework in Frameworks */,
 				305DD81819A63517006514BD /* Foundation.framework in Frameworks */,
@@ -151,6 +157,7 @@
 		305DD81619A63517006514BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				307A80F019B8804F001B538D /* Security.framework */,
 				305DD81719A63517006514BD /* Foundation.framework */,
 				305DD81919A63517006514BD /* CoreGraphics.framework */,
 				305DD81B19A63517006514BD /* UIKit.framework */,
@@ -162,10 +169,12 @@
 		305DD81D19A63517006514BD /* mclient */ = {
 			isa = PBXGroup;
 			children = (
-				307A80DE19B75F29001B538D /* Images */,
 				301FD00F19AB73160028C5C8 /* constants.h */,
 				305DD85819AB2EE0006514BD /* Controller */,
+				307A80DE19B75F29001B538D /* Images */,
 				305DD83519A63517006514BD /* Images.xcassets */,
+				307A80ED19B8800E001B538D /* KeychainItemWrapper.h */,
+				307A80EE19B8800E001B538D /* KeychainItemWrapper.m */,
 				305DD82C19A63517006514BD /* Main_iPad.storyboard */,
 				305DD82919A63517006514BD /* Main_iPhone.storyboard */,
 				305DD82619A63517006514BD /* MCLAppDelegate.h */,
@@ -383,6 +392,7 @@
 				305DD85D19AB300F006514BD /* MCLBoard.m in Sources */,
 				30A1BFAD19B4A8D4002439FE /* MCLSettingsTableViewController.m in Sources */,
 				305DD85419AB2970006514BD /* MCLMessageListTableViewController.m in Sources */,
+				307A80EF19B8800E001B538D /* KeychainItemWrapper.m in Sources */,
 				307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */,
 				305DD83119A63517006514BD /* MCLBoardListTableViewController.m in Sources */,
 			);

@@ -7,6 +7,7 @@
 //
 
 #import "constants.h"
+#import "KeychainItemWrapper.h"
 #import "MCLMessageListTableViewController.h"
 #import "MCLComposeMessageTableViewController.h"
 #import "MCLMessageTableViewCell.h"
@@ -21,7 +22,7 @@
 @property (strong) NSMutableArray *messages;
 @property (strong) NSMutableArray *cells;
 @property (strong) MCLReadList *readList;
-@property (weak, nonatomic) NSUserDefaults *userDefaults;
+@property (strong) NSString *username;
 
 @end
 
@@ -42,7 +43,9 @@
     
     self.cells = [NSMutableArray array];
     self.readList = [[MCLReadList alloc] init];
-    self.userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"M!client" accessGroup:nil];
+    self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
 }
 
 - (void)viewDidLoad
@@ -158,8 +161,6 @@
     NSInteger i = indexPath.row;
 //    NSLog(@"cellForRowAtIndexPath: %i", i);
     
-    NSString *username = [self.userDefaults objectForKey:@"username"];
-    
     MCLMessage *message = self.messages[i];
     MCLMessage *nextMessage = nil;
     if (indexPath.row < ([self.messages count] - 1)) {
@@ -180,7 +181,7 @@
     cell.messageSubjectLabel.text = message.subject;
     cell.messageAuthorLabel.text = message.author;
     
-    if ([message.author isEqualToString:username]) {
+    if ([message.author isEqualToString:self.username]) {
         cell.messageAuthorLabel.textColor = [UIColor blueColor];
 //    } else if (thread.isMod) {
 //        cell.threadAuthorLabel.textColor = [UIColor redColor];
@@ -206,7 +207,7 @@
         [cell markUnread];
     }
     
-    if ([message.author isEqualToString:username] && nextMessage.level <= message.level) {
+    if ([message.author isEqualToString:self.username] && nextMessage.level <= message.level) {
         [cell.messageEditButton setEnabled:YES];
         [cell.messageEditButton setTintColor:nil];
     } else {
@@ -281,6 +282,9 @@
         "        font-family: \"Helvetica Neue\";"
         "        font-size: 14px;"
         "        margin: 0px;"
+        "    }"
+        "    img {"
+        "        width: 300px;"
         "    }"
         "    button > img {"
         "        content:url(\"http://www.maniac-forum.de/forum/images/spoiler.png\");"
@@ -370,13 +374,13 @@
     NSString *subject = message.subject;
     
     if ([segue.identifier isEqualToString:@"ModalToComposeReply"]) {
-        [destinationViewController setTitle:@"Reply"];
+        [destinationViewController setType:kComposeTypeReply];
         NSString *subjectReplyPrefix = @"Re:";
         if ([subject length] < 3 || ![[subject substringToIndex:3] isEqualToString:subjectReplyPrefix]) {
             subject = [subjectReplyPrefix stringByAppendingString:subject];
         }
     } else if ([segue.identifier isEqualToString:@"ModalToEditReply"]) {
-        [destinationViewController setTitle:@"Edit"];
+        [destinationViewController setType:kComposeTypeEdit];
         
         MCLMessageTableViewCell *cell = (MCLMessageTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         NSString *text = [cell.messageTextWebView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"body\")[0].textContent;"];

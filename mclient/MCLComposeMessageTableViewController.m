@@ -7,6 +7,8 @@
 //
 
 #import "MCLComposeMessageTableViewController.h"
+#import "MCLMServiceConnector.h"
+#import "KeychainItemWrapper.h"
 
 @interface MCLComposeMessageTableViewController ()
 
@@ -33,6 +35,20 @@
     [super viewDidLoad];
     
 //    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    
+    switch (self.type) {
+        case kComposeTypeThread:
+            self.title = @"Create Thread";
+            break;
+        
+        case kComposeTypeReply:
+            self.title = @"Reply";
+            break;
+            
+        case kComposeTypeEdit:
+            self.title = @"Edit";
+            break;
+    }
     
     self.composeSubjectTextField.delegate = self;
     if (self.subject) {
@@ -89,18 +105,42 @@
 
 - (IBAction)saveAction:(id)sender
 {
-    NSLog(@"boardId: %@", self.boardId);
-    NSLog(@"messageId: %@", self.messageId);
+    MCLMServiceConnector *mServiceConnector = [[MCLMServiceConnector alloc] init];
+
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"M!client" accessGroup:nil];
+    NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
+    NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
+    NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
+    
+    switch (self.type) {
+        case kComposeTypeThread:
+            [mServiceConnector postThreadToBoardId:self.boardId
+                                           subject:self.composeSubjectTextField.text
+                                              text:self.composeTextTextField.text
+                                          username:username
+                                          password:password
+                                      notification:YES];
+            break;
+        case kComposeTypeReply:
+            [mServiceConnector postReplyToMessageId:self.messageId
+                                            boardId:self.boardId
+                                            subject:self.composeSubjectTextField.text
+                                               text:self.composeTextTextField.text
+                                           username:username
+                                           password:password
+                                       notification:NO];
+            break;
+        case kComposeTypeEdit:
+            [mServiceConnector postEditToMessageId:self.messageId
+                                            boardId:self.boardId
+                                            subject:self.composeSubjectTextField.text
+                                               text:self.composeTextTextField.text
+                                           username:username
+                                           password:password];
+            break;
+    }
+    
+    
 }
-
-//- (IBAction)composeSubjectValueChangedAction:(UITextField *)sender
-//{
-//    NSLog(@"%@", sender.text);
-//    
-//    if (sender.text != nil) {
-//        [self.navigationItem.rightBarButtonItem setEnabled:YES];
-//    }
-//}
-
 
 @end

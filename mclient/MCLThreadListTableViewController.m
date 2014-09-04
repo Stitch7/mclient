@@ -7,6 +7,7 @@
 //
 
 #import "constants.h"
+#import "KeychainItemWrapper.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLMessageListTableViewController.h"
 #import "MCLComposeMessageTableViewController.h"
@@ -20,7 +21,7 @@
 
 @property (strong) NSMutableArray *threads;
 @property (strong) MCLReadList *readList;
-@property (weak, nonatomic) NSUserDefaults *userDefaults;
+@property (strong) NSString *username;
 
 @end
 
@@ -40,7 +41,9 @@
     [super awakeFromNib];
     
     self.readList = [[MCLReadList alloc] init];
-    self.userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"M!client" accessGroup:nil];
+    self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
 }
 
 - (void)viewDidLoad
@@ -157,7 +160,7 @@
     
     cell.threadAuthorLabel.text = thread.author;
     
-    if ([thread.author isEqualToString:[self.userDefaults objectForKey:@"username"]]) {
+    if ([thread.author isEqualToString:self.username]) {
 //        cell.threadAuthorLabel.textColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0]; //TODO make const
         cell.threadAuthorLabel.textColor = [UIColor blueColor]; //TODO make const
     } else if (thread.isMod) {
@@ -204,7 +207,9 @@
         [segue.destinationViewController setBoard:self.board];
         [segue.destinationViewController setThread:thread];
     } else if ([segue.identifier isEqualToString:@"ModalToComposeThread"]) {
-        [((MCLComposeMessageTableViewController*)[[segue.destinationViewController viewControllers] objectAtIndex:0]) setBoardId:self.board.boardId];
+        MCLComposeMessageTableViewController *destinationViewController = ((MCLComposeMessageTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
+        [destinationViewController setType:kComposeTypeThread];
+        [destinationViewController setBoardId:self.board.boardId];
     }
 }
 
