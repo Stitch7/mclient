@@ -18,7 +18,7 @@
                        text:(NSString *)inText
                    username:(NSString *)inUsername
                    password:(NSString *)inPassword
-               notification:(BOOL)inNotification;
+               notification:(NSNumber *)inNotification;
 
 - (BOOL)postReplyToMessageId:(NSNumber *)inMessageId
                      boardId:(NSNumber *)inBoardId
@@ -26,7 +26,7 @@
                         text:(NSString *)inText
                     username:(NSString *)inUsername
                     password:(NSString *)inPassword
-                notification:(BOOL)inNotification;
+                notification:(NSNumber *)inNotification;
 
 - (BOOL)postEditToMessageId:(NSNumber *)inMessageId
                     boardId:(NSNumber *)inBoardId

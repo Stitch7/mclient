@@ -62,6 +62,16 @@
     if (self.text) {
         self.composeTextTextField.text = self.text;
     }
+    
+    NSArray *customMenuItems = @[[[UIMenuItem alloc] initWithTitle:@"B" action:@selector(formatBold:)],
+                                 [[UIMenuItem alloc] initWithTitle:@"I" action:@selector(formatItalic:)],
+                                 [[UIMenuItem alloc] initWithTitle:@"U" action:@selector(formatUnderline:)],
+                                 [[UIMenuItem alloc] initWithTitle:@"S" action:@selector(formatStroke:)],
+                                 [[UIMenuItem alloc] initWithTitle:@"Spoiler" action:@selector(formatSpoiler:)],
+                                 [[UIMenuItem alloc] initWithTitle:@"Link" action:@selector(formatLink:)],
+                                 [[UIMenuItem alloc] initWithTitle:@"IMG" action:@selector(formatImage:)]];
+                                 
+    [[UIMenuController sharedMenuController] setMenuItems:customMenuItems];
 }
 
 - (void)didReceiveMemoryWarning
@@ -98,6 +108,71 @@
 
 #pragma mark - Actions
 
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+    if (action == @selector(formatBold:) ||
+        action == @selector(formatItalic:) ||
+        action == @selector(formatUnderline:) ||
+        action == @selector(formatStroke:) ||
+        action == @selector(formatSpoiler:) ||
+        action == @selector(formatLink:) ||
+        action == @selector(formatImage:)
+    ) {
+        return self.composeTextTextField.selectedRange.length > 0;
+    }
+    
+    return NO;
+}
+
+- (IBAction)formatBold:(id)sender
+{
+    [self formatSelectionWith:@"[b:%@]"];
+}
+
+- (IBAction)formatItalic:(id)sender
+{
+    [self formatSelectionWith:@"[i:%@]"];
+}
+
+- (IBAction)formatUnderline:(id)sender
+{
+    [self formatSelectionWith:@"[u:%@]"];
+}
+
+- (IBAction)formatStroke:(id)sender
+{
+    [self formatSelectionWith:@"[s:%@]"];
+}
+
+- (IBAction)formatSpoiler:(id)sender
+{
+    [self formatSelectionWith:@"[h:%@]"];
+}
+
+- (IBAction)formatLink:(id)sender
+{
+    [self formatSelectionWith:@"[%@]"];
+}
+
+- (IBAction)formatImage:(id)sender
+{
+    [self formatSelectionWith:@"[img:%@]"];
+}
+
+- (void)formatSelectionWith:(NSString *)formatString
+{
+    NSRange range = [self.composeTextTextField selectedRange];
+    NSString *selected = [self.composeTextTextField.text substringWithRange:range];
+    
+    NSString *textViewContent = self.composeTextTextField.text;
+    NSString *replacement = [NSString stringWithFormat:formatString, selected];
+    NSString *newContent = [textViewContent stringByReplacingCharactersInRange:range withString:replacement];
+    self.composeTextTextField.text = newContent;
+}
+
+
+
+
+
 - (IBAction)cancelAction:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -119,7 +194,7 @@
                                               text:self.composeTextTextField.text
                                           username:username
                                           password:password
-                                      notification:YES];
+                                      notification:@1];
             break;
         case kComposeTypeReply:
             [mServiceConnector postReplyToMessageId:self.messageId
@@ -128,7 +203,7 @@
                                                text:self.composeTextTextField.text
                                            username:username
                                            password:password
-                                       notification:NO];
+                                       notification:@0];
             break;
         case kComposeTypeEdit:
             [mServiceConnector postEditToMessageId:self.messageId
