@@ -76,7 +76,7 @@
     NSString *username = self.settingsUsernameTextField.text;
     NSString *password = self.settingsPasswordTextField.text;
     
-    if (username != nil && password != nil) {
+    if (username.length > 0 && password.length > 0) {
         NSString *title, *message;
         
         MCLMServiceConnector *mServiceConnector = [[MCLMServiceConnector alloc] init];
