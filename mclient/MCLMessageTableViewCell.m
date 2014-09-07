@@ -42,7 +42,7 @@
 
 #pragma mark - Actions
 
-- (IBAction)speakAction:(id)sender
+- (IBAction)speakAction:(UIBarButtonItem *)sender
 {
     if (self.speechSynthesizer == nil) {
         self.speechSynthesizer = [[AVSpeechSynthesizer alloc] init];
@@ -71,6 +71,10 @@
         [utterance setRate:AVSpeechUtteranceDefaultSpeechRate];
         [self.speechSynthesizer speakUtterance:utterance];
     }
+}
+
+- (IBAction)notificationAction:(UIBarButtonItem *)sender
+{
 }
 
 @end

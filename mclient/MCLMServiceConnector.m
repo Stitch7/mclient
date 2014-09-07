@@ -12,7 +12,7 @@
 
 - (BOOL)testLoginWIthUsername:(NSString *)inUsername password:(NSString *)inPassword
 {
-    BOOL success = NO;    
+    BOOL success = NO;
     
     NSString *urlString = @"http://localhost:8000/test-login";
     
@@ -39,6 +39,16 @@
     
     return success;
 }
+
+- (NSInteger)quoteForMessageId:(NSNumber *)inMessageId boardId:(NSNumber *)inBoardId
+{
+    NSInteger code;
+    
+    
+    
+    return code;
+}
+
 
 - (BOOL)postThreadToBoardId:(NSNumber *)inBoardId subject:(NSString *)inSubject text:(NSString *)inText username:(NSString *)inUsername password:(NSString *)inPassword notification:(NSNumber *)inNotification
 {

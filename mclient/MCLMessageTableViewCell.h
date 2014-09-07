@@ -20,7 +20,9 @@
 @property (weak, nonatomic) NSString *messageText;
 @property (weak, nonatomic) IBOutlet MCLReadSymbolView *readSymbolView;
 @property (weak, nonatomic) IBOutlet UIToolbar *messageToolbar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *messageProfileButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *messageSpeakButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *messageNotificationButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *messageEditButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *messageReplyButton;
 @property (strong, nonatomic) AVSpeechSynthesizer *speechSynthesizer;

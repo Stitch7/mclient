@@ -72,10 +72,10 @@
     
     
     
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    for (id key in @[@"signatureEnabled", @"signatureText", @"nightMode", @"syncReadStatus"]) {
-        NSLog(@"%@: %@", key, [userDefaults objectForKey:key]);
-    }
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    for (id key in @[@"signatureEnabled", @"signatureText", @"nightMode", @"syncReadStatus"]) {
+//        NSLog(@"%@: %@", key, [userDefaults objectForKey:key]);
+//    }
     
 }
 

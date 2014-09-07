@@ -13,6 +13,9 @@
 - (BOOL)testLoginWIthUsername:(NSString *)inUsername
                      password:(NSString *)inPassword;
 
+- (NSInteger)quoteForMessageId:(NSNumber *)inMessageId
+                       boardId:(NSNumber *)inBoardId;
+
 - (BOOL)postThreadToBoardId:(NSNumber *)inBoardId
                     subject:(NSString *)inSubject
                        text:(NSString *)inText

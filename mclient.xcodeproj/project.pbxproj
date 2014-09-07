@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		301E24AF19BAE3E500943EC6 /* profileButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301E24AE19BAE3E500943EC6 /* profileButton@2x.png */; };
+		301E24B219BAE86200943EC6 /* notificationButtonDisabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301E24B019BAE86200943EC6 /* notificationButtonDisabled@2x.png */; };
+		301E24B319BAE86200943EC6 /* notificationButtonEnabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301E24B119BAE86200943EC6 /* notificationButtonEnabled@2x.png */; };
+		301E24B619BB02EB00943EC6 /* MCLProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 301E24B519BB02EB00943EC6 /* MCLProfileTableViewController.m */; };
 		301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */; };
 		301FD01519ACA0D70028C5C8 /* TDBadgedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01419ACA0D70028C5C8 /* TDBadgedCell.m */; };
 		301FD01819ACE3D10028C5C8 /* MCLMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01719ACE3D10028C5C8 /* MCLMessageTableViewCell.m */; };
@@ -30,6 +34,7 @@
 		305DD85D19AB300F006514BD /* MCLBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85C19AB300F006514BD /* MCLBoard.m */; };
 		305DD86019AB3031006514BD /* MCLThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85F19AB3031006514BD /* MCLThread.m */; };
 		305DD86319AB380C006514BD /* MCLMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD86219AB380C006514BD /* MCLMessage.m */; };
+		306F8C3519BA0F2C00376A58 /* quoteButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 306F8C3419BA0F2C00376A58 /* quoteButton@2x.png */; };
 		307A80DD19B5EBD8001B538D /* MCLMServiceConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 307A80DC19B5EBD8001B538D /* MCLMServiceConnector.m */; };
 		307A80E619B7736A001B538D /* settingsButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 307A80E519B7736A001B538D /* settingsButton@2x.png */; };
 		307A80E819B7B899001B538D /* speakButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 307A80E719B7B899001B538D /* speakButton@2x.png */; };
@@ -54,6 +59,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		301E24AE19BAE3E500943EC6 /* profileButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profileButton@2x.png"; sourceTree = "<group>"; };
+		301E24B019BAE86200943EC6 /* notificationButtonDisabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notificationButtonDisabled@2x.png"; sourceTree = "<group>"; };
+		301E24B119BAE86200943EC6 /* notificationButtonEnabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notificationButtonEnabled@2x.png"; sourceTree = "<group>"; };
+		301E24B419BB02EB00943EC6 /* MCLProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLProfileTableViewController.h; sourceTree = "<group>"; };
+		301E24B519BB02EB00943EC6 /* MCLProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLProfileTableViewController.m; sourceTree = "<group>"; };
 		301FD00F19AB73160028C5C8 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
 		301FD01019AC794E0028C5C8 /* MCLThreadTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLThreadTableViewCell.h; sourceTree = "<group>"; };
 		301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLThreadTableViewCell.m; sourceTree = "<group>"; };
@@ -91,6 +101,7 @@
 		305DD85F19AB3031006514BD /* MCLThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLThread.m; sourceTree = "<group>"; };
 		305DD86119AB380C006514BD /* MCLMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessage.h; sourceTree = "<group>"; };
 		305DD86219AB380C006514BD /* MCLMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessage.m; sourceTree = "<group>"; };
+		306F8C3419BA0F2C00376A58 /* quoteButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quoteButton@2x.png"; sourceTree = "<group>"; };
 		307A80DB19B5EBD8001B538D /* MCLMServiceConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMServiceConnector.h; sourceTree = "<group>"; };
 		307A80DC19B5EBD8001B538D /* MCLMServiceConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMServiceConnector.m; sourceTree = "<group>"; };
 		307A80E519B7736A001B538D /* settingsButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsButton@2x.png"; sourceTree = "<group>"; };
@@ -226,6 +237,8 @@
 				30E8B89819B3CBF40067DD1F /* MCLComposeMessageTableViewController.m */,
 				305DD85219AB2970006514BD /* MCLMessageListTableViewController.h */,
 				305DD85319AB2970006514BD /* MCLMessageListTableViewController.m */,
+				301E24B419BB02EB00943EC6 /* MCLProfileTableViewController.h */,
+				301E24B519BB02EB00943EC6 /* MCLProfileTableViewController.m */,
 				30A1BFAB19B4A8D4002439FE /* MCLSettingsTableViewController.h */,
 				30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */,
 				305DD85519AB2A7C006514BD /* MCLThreadListTableViewController.h */,
@@ -268,6 +281,10 @@
 			isa = PBXGroup;
 			children = (
 				307A80EB19B7B993001B538D /* editButton@2x.png */,
+				301E24B019BAE86200943EC6 /* notificationButtonDisabled@2x.png */,
+				301E24B119BAE86200943EC6 /* notificationButtonEnabled@2x.png */,
+				301E24AE19BAE3E500943EC6 /* profileButton@2x.png */,
+				306F8C3419BA0F2C00376A58 /* quoteButton@2x.png */,
 				307A80E519B7736A001B538D /* settingsButton@2x.png */,
 				307A80E719B7B899001B538D /* speakButton@2x.png */,
 				307A80E919B7B962001B538D /* stopButton@2x.png */,
@@ -355,10 +372,14 @@
 				305DD82E19A63517006514BD /* Main_iPad.storyboard in Resources */,
 				305DD83619A63517006514BD /* Images.xcassets in Resources */,
 				305DD82B19A63517006514BD /* Main_iPhone.storyboard in Resources */,
+				306F8C3519BA0F2C00376A58 /* quoteButton@2x.png in Resources */,
 				305DD82219A63517006514BD /* InfoPlist.strings in Resources */,
 				307A80EC19B7B993001B538D /* editButton@2x.png in Resources */,
+				301E24B319BAE86200943EC6 /* notificationButtonEnabled@2x.png in Resources */,
+				301E24B219BAE86200943EC6 /* notificationButtonDisabled@2x.png in Resources */,
 				307A80E819B7B899001B538D /* speakButton@2x.png in Resources */,
 				307A80EA19B7B962001B538D /* stopButton@2x.png in Resources */,
+				301E24AF19BAE3E500943EC6 /* profileButton@2x.png in Resources */,
 				307A80E619B7736A001B538D /* settingsButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -380,6 +401,7 @@
 			files = (
 				301FD01819ACE3D10028C5C8 /* MCLMessageTableViewCell.m in Sources */,
 				305DD86019AB3031006514BD /* MCLThread.m in Sources */,
+				301E24B619BB02EB00943EC6 /* MCLProfileTableViewController.m in Sources */,
 				305DD86319AB380C006514BD /* MCLMessage.m in Sources */,
 				305DD82419A63517006514BD /* main.m in Sources */,
 				301FD01519ACA0D70028C5C8 /* TDBadgedCell.m in Sources */,

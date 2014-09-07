@@ -120,17 +120,30 @@
                                             <rect key="frame" x="20" y="202" width="280" height="44"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                             <items>
+                                                <barButtonItem image="profileButton.png" id="djM-Cu-w05">
+                                                    <connections>
+                                                        <segue destination="Qa0-uv-dtr" kind="modal" identifier="ModalToShowProfile" id="fQb-Tw-eMv"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                                <barButtonItem style="plain" systemItem="flexibleSpace" id="Fbk-sc-Wox"/>
                                                 <barButtonItem image="speakButton.png" id="rhW-ts-D2m">
                                                     <connections>
                                                         <action selector="speakAction:" destination="Rsb-PI-AzJ" id="9kI-yj-n8Z"/>
                                                     </connections>
                                                 </barButtonItem>
-                                                <barButtonItem style="plain" systemItem="flexibleSpace" id="Fbk-sc-Wox"/>
+                                                <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="52c-x9-JW5"/>
+                                                <barButtonItem image="notificationButtonDisabled.png" id="I75-Ma-je7">
+                                                    <connections>
+                                                        <action selector="notificationAction:" destination="Rsb-PI-AzJ" id="QuA-pT-n2j"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                                <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="XVY-Wf-UIo"/>
                                                 <barButtonItem image="editButton.png" id="oeu-gq-kVG">
                                                     <connections>
                                                         <segue destination="hrY-h7-g5I" kind="modal" identifier="ModalToEditReply" id="Qom-pl-pI0"/>
                                                     </connections>
                                                 </barButtonItem>
+                                                <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="mXF-Lk-8di"/>
                                                 <barButtonItem systemItem="reply" id="ekV-hQ-CJB">
                                                     <connections>
                                                         <segue destination="hrY-h7-g5I" kind="modal" identifier="ModalToComposeReply" id="ixj-x7-EDb"/>
@@ -144,6 +157,8 @@
                                     <outlet property="messageAuthorLabel" destination="nzD-Bl-rvo" id="0nm-93-lwa"/>
                                     <outlet property="messageDateLabel" destination="haa-6K-IxE" id="H2y-yG-fdW"/>
                                     <outlet property="messageEditButton" destination="oeu-gq-kVG" id="mPe-8K-AXD"/>
+                                    <outlet property="messageNotificationButton" destination="I75-Ma-je7" id="dxr-mn-nGf"/>
+                                    <outlet property="messageProfileButton" destination="djM-Cu-w05" id="qNk-fZ-cUX"/>
                                     <outlet property="messageReplyButton" destination="ekV-hQ-CJB" id="2ce-Ng-HCm"/>
                                     <outlet property="messageSpeakButton" destination="rhW-ts-D2m" id="ha1-Zl-G26"/>
                                     <outlet property="messageSubjectLabel" destination="L5u-Vx-CHc" id="XRg-Gt-NZP"/>
@@ -163,6 +178,73 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Alz-XG-YeO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1344" y="64"/>
+        </scene>
+        <!--Profile Table View Controller - Profile-->
+        <scene sceneID="8Nb-Og-Ixb">
+            <objects>
+                <tableViewController id="v44-Yb-1LO" customClass="MCLProfileTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="eSZ-uc-n1Z">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProfileCell" textLabel="LdW-et-OT0" detailTextLabel="VwF-48-eFr" style="IBUITableViewCellStyleSubtitle" id="h2y-yc-sQO">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h2y-yc-sQO" id="CIG-n7-E6l">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LdW-et-OT0">
+                                            <rect key="frame" x="15" y="6" width="24" height="15"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VwF-48-eFr">
+                                            <rect key="frame" x="15" y="21" width="50" height="17"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="v44-Yb-1LO" id="T4k-d0-CXH"/>
+                            <outlet property="delegate" destination="v44-Yb-1LO" id="iTg-fX-IYc"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Profile" id="240-7X-jUo">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="Dyb-Lh-Lgx">
+                            <connections>
+                                <action selector="doneAction:" destination="v44-Yb-1LO" id="BD7-tU-hXj"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Send PM" id="Uyj-2J-92j"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DUN-4l-J7u" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1781" y="-723"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="h1L-33-L73">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="Qa0-uv-dtr" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="PUA-GJ-8Va">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="v44-Yb-1LO" kind="relationship" relationship="rootViewController" id="79v-rP-MD2"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T9W-QK-OOl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1351" y="-723"/>
         </scene>
         <!--Compose Message Table View Controller - Create Thread-->
         <scene sceneID="Ceq-Kw-BTl">
@@ -184,11 +266,19 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Subject" minimumFontSize="17" clearButtonMode="whileEditing" id="gLr-fQ-gVh">
-                                                    <rect key="frame" x="20" y="7" width="280" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <rect key="frame" x="20" y="7" width="252" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                                 </textField>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vgq-ls-JFe">
+                                                    <rect key="frame" x="283" y="9" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" image="quoteButton.png"/>
+                                                    <connections>
+                                                        <action selector="quoteButtonTouchUpInside:" destination="rnP-sm-fcM" eventType="touchUpInside" id="mQU-rk-YE2"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -223,7 +313,7 @@
                                 <action selector="cancelAction:" destination="rnP-sm-fcM" id="nPI-Or-HPH"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="dWC-OY-YeX">
+                        <barButtonItem key="rightBarButtonItem" title="Send" id="dWC-OY-YeX">
                             <connections>
                                 <action selector="saveAction:" destination="rnP-sm-fcM" id="blY-dc-VLM"/>
                             </connections>
@@ -231,6 +321,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="composeCancelButton" destination="mNV-No-xeu" id="GnI-cY-Gvu"/>
+                        <outlet property="composeQuoteButton" destination="vgq-ls-JFe" id="PVe-hd-KId"/>
                         <outlet property="composeSendButton" destination="dWC-OY-YeX" id="v54-VD-b9f"/>
                         <outlet property="composeSubjectTextField" destination="gLr-fQ-gVh" id="V8F-ux-4gm"/>
                         <outlet property="composeTextTextField" destination="Tpw-OV-kLg" id="sCJ-eO-cNs"/>
@@ -518,6 +609,9 @@
     </scenes>
     <resources>
         <image name="editButton.png" width="25" height="25"/>
+        <image name="notificationButtonDisabled.png" width="25" height="25"/>
+        <image name="profileButton.png" width="25" height="25"/>
+        <image name="quoteButton.png" width="25" height="25"/>
         <image name="settingsButton.png" width="25" height="25"/>
         <image name="speakButton.png" width="25" height="25"/>
     </resources>
@@ -527,6 +621,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Qom-pl-pI0"/>
+        <segue reference="ixj-x7-EDb"/>
     </inferredMetricsTieBreakers>
 </document>

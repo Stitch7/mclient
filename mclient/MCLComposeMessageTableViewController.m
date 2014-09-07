@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Christopher Reitz. All rights reserved.
 //
 
+#import "constants.h"
 #import "MCLComposeMessageTableViewController.h"
 #import "MCLMServiceConnector.h"
 #import "KeychainItemWrapper.h"
@@ -14,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *composeCancelButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *composeSendButton;
+@property (weak, nonatomic) IBOutlet UIButton *composeQuoteButton;
 @property (weak, nonatomic) IBOutlet UITextField *composeSubjectTextField;
 @property (weak, nonatomic) IBOutlet UITextView *composeTextTextField;
 
@@ -33,12 +35,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-//    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
-    
+
     switch (self.type) {
         case kComposeTypeThread:
             self.title = @"Create Thread";
+            [self.composeQuoteButton setHidden:YES];
             break;
         
         case kComposeTypeReply:
@@ -47,6 +48,7 @@
             
         case kComposeTypeEdit:
             self.title = @"Edit";
+            [self.composeQuoteButton setHidden:YES];
             break;
     }
     
@@ -169,9 +171,28 @@
     self.composeTextTextField.text = newContent;
 }
 
+- (IBAction)quoteButtonTouchUpInside:(UIButton *)sender
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"/board/%@/quote/%@", self.boardId, self.messageId]];
+        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
+        [self performSelectorOnMainThread:@selector(fetchQuoteData:) withObject:data waitUntilDone:YES];
+    });
+}
 
+- (void)fetchQuoteData:(NSData *)responseData
+{
+    NSError* error;
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
 
-
+    if (error == nil) {
+        NSString *textViewContent = [@"\n\n" stringByAppendingString:self.composeTextTextField.text];
+        self.composeTextTextField.text = [[json objectForKey:@"quote"] stringByAppendingString:textViewContent];
+    } else {
+        NSLog(@"ERROR!");
+    }
+}
 
 - (IBAction)cancelAction:(id)sender
 {
@@ -214,8 +235,6 @@
                                            password:password];
             break;
     }
-    
-    
 }
 
 @end

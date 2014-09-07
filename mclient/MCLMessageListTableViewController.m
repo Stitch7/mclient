@@ -10,6 +10,7 @@
 #import "KeychainItemWrapper.h"
 #import "MCLMessageListTableViewController.h"
 #import "MCLComposeMessageTableViewController.h"
+#import "MCLProfileTableViewController.h"
 #import "MCLMessageTableViewCell.h"
 #import "MCLBoard.h"
 #import "MCLThread.h"
@@ -85,7 +86,7 @@
 
 - (NSData *)loadData
 {
-    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"thread/%@", self.thread.threadId]];
+    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"board/%@/thread/%@", self.board.boardId, self.thread.threadId]];
     
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
     [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
@@ -106,40 +107,27 @@
     NSError* error;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     for (id object in json) {
-        NSNumber *messageId = [object objectForKey:@"id"];
-        int level = [[object objectForKey:@"level"] integerValue];
-        NSString *author = [object objectForKey:@"author"];
-        NSString *subject = [object objectForKey:@"subject"];
-        NSString *date = [object objectForKey:@"date"];
-        NSString *text = [object objectForKey:@"text"];
+        NSNumber *messageId = [object objectForKey:@"messageId"];
+        NSUInteger level    = [[object objectForKey:@"level"] integerValue];
+        NSString *username  = [object objectForKey:@"username"];
+        NSString *subject   = [object objectForKey:@"subject"];
+        NSString *date      = [object objectForKey:@"date"];
         
-        MCLMessage *message = [MCLMessage messageWithId:messageId level:level author:author subject:subject date:date text:text];
+        MCLMessage *message = [MCLMessage messageWithId:messageId level:level userId:nil username:username subject:subject date:date text:nil];
         [self.messages addObject:message];
     }
     
     [self.tableView reloadData];
 }
 
-- (NSString *)loadMessageText:(NSNumber *)messageId
+- (void)completeMessage:(MCLMessage *)message
 {
-    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"message/%@", messageId]];
+    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"board/%@/message/%@", self.board.boardId, message.messageId]];
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
     NSError* error;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    
-//    NSString *css = @""
-//        "<style>"
-//        "   * {"
-//        "       font-family: \"Helvetica Neue\";"
-//        "       font-size: 14px;"
-//        "       margin: 0px;"
-//        "   }"
-//        "</style>";
-    NSString *messageText = [json objectForKey:@"text"];
-    
-//      messageText = [css stringByAppendingString:messageText];
-    
-    return messageText;
+    message.userId = [json objectForKey:@"userId"];
+    message.text = [json objectForKey:@"text"];
 }
 
 
@@ -179,9 +167,9 @@
     [self indentView:(UIView*)cell.readSymbolView withLevel:message.level startingAtX:5];
     
     cell.messageSubjectLabel.text = message.subject;
-    cell.messageAuthorLabel.text = message.author;
+    cell.messageAuthorLabel.text = message.username;
     
-    if ([message.author isEqualToString:self.username]) {
+    if ([message.username isEqualToString:self.username]) {
         cell.messageAuthorLabel.textColor = [UIColor blueColor];
 //    } else if (thread.isMod) {
 //        cell.threadAuthorLabel.textColor = [UIColor redColor];
@@ -207,7 +195,7 @@
         [cell markUnread];
     }
     
-    if ([message.author isEqualToString:self.username] && nextMessage.level <= message.level) {
+    if ([message.username isEqualToString:self.username] && nextMessage.level <= message.level) {
         [cell.messageEditButton setEnabled:YES];
         [cell.messageEditButton setTintColor:nil];
     } else {
@@ -255,7 +243,7 @@
     
     MCLMessage *message = self.messages[indexPath.row];
     if (!message.text) {
-        message.text = [self loadMessageText:message.messageId];
+        [self completeMessage:message];
     }
     
     MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
@@ -284,10 +272,11 @@
         "        margin: 0px;"
         "    }"
         "    img {"
-        "        width: 300px;"
+        "        width: 100%;"
         "    }"
         "    button > img {"
         "        content:url(\"http://www.maniac-forum.de/forum/images/spoiler.png\");"
+        "        width: 17px;"
         "    }"
         "</style>" stringByAppendingString:message.text];
     [cell.messageTextWebView loadHTMLString:messageHtml baseURL:nil];
@@ -368,28 +357,38 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    MCLComposeMessageTableViewController *destinationViewController = ((MCLComposeMessageTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     MCLMessage *message = self.messages[indexPath.row];
-    NSString *subject = message.subject;
     
     if ([segue.identifier isEqualToString:@"ModalToComposeReply"]) {
-        [destinationViewController setType:kComposeTypeReply];
+        MCLComposeMessageTableViewController *destinationViewController = ((MCLComposeMessageTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
+        NSString *subject = message.subject;
+        
         NSString *subjectReplyPrefix = @"Re:";
         if ([subject length] < 3 || ![[subject substringToIndex:3] isEqualToString:subjectReplyPrefix]) {
             subject = [subjectReplyPrefix stringByAppendingString:subject];
         }
+        
+        [destinationViewController setType:kComposeTypeReply];
+        [destinationViewController setBoardId:self.board.boardId];
+        [destinationViewController setMessageId:message.messageId];
+        [destinationViewController setSubject:subject];
     } else if ([segue.identifier isEqualToString:@"ModalToEditReply"]) {
-        [destinationViewController setType:kComposeTypeEdit];
+        MCLComposeMessageTableViewController *destinationViewController = ((MCLComposeMessageTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         
         MCLMessageTableViewCell *cell = (MCLMessageTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         NSString *text = [cell.messageTextWebView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"body\")[0].textContent;"];
+        
+        [destinationViewController setType:kComposeTypeEdit];
+        [destinationViewController setBoardId:self.board.boardId];
+        [destinationViewController setMessageId:message.messageId];
+        [destinationViewController setSubject:message.subject];
         [destinationViewController setText:text];
+    } else if ([segue.identifier isEqualToString:@"ModalToShowProfile"]) {
+        MCLProfileTableViewController *destinationViewController = ((MCLProfileTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);      
+        [destinationViewController setUserId:message.userId];
+        [destinationViewController setUsername:message.username];
     }
-    
-    [destinationViewController setBoardId:self.board.boardId];
-    [destinationViewController setMessageId:message.messageId];
-    [destinationViewController setSubject:subject];
 }
 
 

@@ -77,7 +77,7 @@
 
 - (NSData *)loadData
 {
-    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"threadlist/%@", self.board.boardId]];
+    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"board/%@/threadlist", self.board.boardId]];
     
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
     [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
@@ -115,7 +115,7 @@
                                              sticky:sticky
                                              closed:closed
                                                 mod:mod
-                                             author:author
+                                             username:author
                                             subject:subject
                                                date:date
                                         answerCount:answerCount
@@ -158,9 +158,9 @@
     float subjectSize = cell.threadSubjectLabel.font.pointSize;
     cell.threadSubjectLabel.font = thread.isSticky ? [UIFont boldSystemFontOfSize:subjectSize] : [UIFont systemFontOfSize:subjectSize];
     
-    cell.threadAuthorLabel.text = thread.author;
+    cell.threadAuthorLabel.text = thread.username;
     
-    if ([thread.author isEqualToString:self.username]) {
+    if ([thread.username isEqualToString:self.username]) {
 //        cell.threadAuthorLabel.textColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0]; //TODO make const
         cell.threadAuthorLabel.textColor = [UIColor blueColor]; //TODO make const
     } else if (thread.isMod) {

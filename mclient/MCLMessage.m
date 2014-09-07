@@ -10,13 +10,14 @@
 
 @implementation MCLMessage
 
-+ (id)messageWithId:(NSNumber *)inId level:(int)inLevel author:(NSString *)inAuthor subject:(NSString *)inSubject date:(NSString *)inDate text:(NSString *)inText
++ (id)messageWithId:(NSNumber *)inMessageId level:(NSUInteger)inLevel userId:(NSNumber *)inUserId username:(NSString *)inUsername subject:(NSString *)inSubject date:(NSString *)inDate text:(NSString *)inText
 {
     MCLMessage *message = [[MCLMessage alloc] init];
     
-    message.messageId = inId;
+    message.messageId = inMessageId;
     message.level = inLevel;
-    message.author = inAuthor;
+    message.userId = inUserId;
+    message.username = inUsername;
     message.subject = inSubject;
     message.date = inDate;
     message.text = inText;
