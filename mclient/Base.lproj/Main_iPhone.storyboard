@@ -154,7 +154,6 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="messageAuthorLabel" destination="nzD-Bl-rvo" id="0nm-93-lwa"/>
                                     <outlet property="messageDateLabel" destination="haa-6K-IxE" id="H2y-yG-fdW"/>
                                     <outlet property="messageEditButton" destination="oeu-gq-kVG" id="mPe-8K-AXD"/>
                                     <outlet property="messageNotificationButton" destination="I75-Ma-je7" id="dxr-mn-nGf"/>
@@ -164,6 +163,7 @@
                                     <outlet property="messageSubjectLabel" destination="L5u-Vx-CHc" id="XRg-Gt-NZP"/>
                                     <outlet property="messageTextWebView" destination="LxT-Lq-OWV" id="w74-04-6Sm"/>
                                     <outlet property="messageToolbar" destination="o33-Dv-hV1" id="dmG-Hm-k0r"/>
+                                    <outlet property="messageUsernameLabel" destination="nzD-Bl-rvo" id="3kR-Gg-g7b"/>
                                     <outlet property="readSymbolView" destination="Ax4-hn-U4P" id="dsR-pc-xa0"/>
                                 </connections>
                             </tableViewCell>

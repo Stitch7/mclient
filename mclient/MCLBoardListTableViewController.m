@@ -64,6 +64,9 @@
     self.navigationItem.rightBarButtonItem = addButton;
     self.threadListTableViewController = (MCLThreadListTableViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     */
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSLog(@"login: %hhd", [userDefaults boolForKey:@"login"]);
 }
 
 - (void)viewDidAppear:(BOOL)animated

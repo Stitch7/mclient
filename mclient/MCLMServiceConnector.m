@@ -40,6 +40,47 @@
     return success;
 }
 
+- (NSInteger)notificationStatusForMessageId:(NSNumber *)inMessageId boardId:(NSNumber *)inBoardId username:(NSString *)inUsername password:(NSString *)inPassword
+{
+    NSInteger notificationEnabled = -1;
+    
+    NSDictionary *vars = @{@"username":inUsername, @"password":inPassword};
+    
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://localhost:8000/board/%@/notification-status/%@", inBoardId, inMessageId];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    NSString *requestFields = @"";
+    for (id key in vars) {
+        requestFields = [requestFields stringByAppendingFormat:@"%@=%@&", key, [vars objectForKey:key]];
+    }
+    requestFields = [requestFields stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSData *requestData = [requestFields dataUsingEncoding:NSUTF8StringEncoding];
+    request.HTTPBody = requestData;
+    request.HTTPMethod = @"POST";
+    
+    NSHTTPURLResponse *response = nil;
+    NSError *error = nil;
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    
+    if (error == nil && response.statusCode == 200) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+        notificationEnabled = [[json objectForKey:@"notificationEnabled"] integerValue];
+    } else {
+        NSLog(@"ERROR!");
+    }
+    
+    return notificationEnabled;
+}
+
+- (NSInteger)notificationForMessageId:(NSNumber *)inMessageId boardId:(NSNumber *)inBoardId username:(NSString *)inUsername password:(NSString *)inPassword
+{
+    NSString *urlString = [NSString stringWithFormat:@"board/%@/notification/%@", inBoardId, inMessageId];
+    return [self post:urlString withVars:@{@"username":inUsername, @"password":inPassword}];
+}
+
+
 - (NSInteger)quoteForMessageId:(NSNumber *)inMessageId boardId:(NSNumber *)inBoardId
 {
     NSInteger code;
@@ -87,8 +128,7 @@
 {
     NSUInteger success = 1;
     
-    NSString *urlString = [NSString stringWithFormat:@"http://localhost:8000/%@", action];
-    
+    NSString *urlString = [NSString stringWithFormat:@"http://localhost:8000/%@", action];    
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     

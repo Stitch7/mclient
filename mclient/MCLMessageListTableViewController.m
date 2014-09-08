@@ -8,6 +8,7 @@
 
 #import "constants.h"
 #import "KeychainItemWrapper.h"
+#import "MCLMServiceConnector.h"
 #import "MCLMessageListTableViewController.h"
 #import "MCLComposeMessageTableViewController.h"
 #import "MCLProfileTableViewController.h"
@@ -20,10 +21,12 @@
 
 @interface MCLMessageListTableViewController ()
 
+@property (strong) MCLMServiceConnector *mServiceConnector;
 @property (strong) NSMutableArray *messages;
 @property (strong) NSMutableArray *cells;
 @property (strong) MCLReadList *readList;
 @property (strong) NSString *username;
+@property (strong) NSString *password;
 
 @end
 
@@ -42,11 +45,15 @@
 {
     [super awakeFromNib];
     
+    self.mServiceConnector = [[MCLMServiceConnector alloc] init];
     self.cells = [NSMutableArray array];
     self.readList = [[MCLReadList alloc] init];
     
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"M!client" accessGroup:nil];
     self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
+    NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
+    self.password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
+
 }
 
 - (void)viewDidLoad
@@ -158,33 +165,35 @@
     
     [self.cells setObject:cell atIndexedSubscript:i];
     
+    [cell setBoardId:self.board.boardId];
+    [cell setMessageId:message.messageId];
     cell.tag = i; //TODO not needed, i think...
     
     [cell setClipsToBounds:YES];
     
     [self indentView:cell.messageSubjectLabel withLevel:message.level startingAtX:20];
-    [self indentView:cell.messageAuthorLabel withLevel:message.level startingAtX:20];
+    [self indentView:cell.messageUsernameLabel withLevel:message.level startingAtX:20];
     [self indentView:(UIView*)cell.readSymbolView withLevel:message.level startingAtX:5];
     
     cell.messageSubjectLabel.text = message.subject;
-    cell.messageAuthorLabel.text = message.username;
+    cell.messageUsernameLabel.text = message.username;
     
     if ([message.username isEqualToString:self.username]) {
-        cell.messageAuthorLabel.textColor = [UIColor blueColor];
+        cell.messageUsernameLabel.textColor = [UIColor blueColor];
 //    } else if (thread.isMod) {
 //        cell.threadAuthorLabel.textColor = [UIColor redColor];
     } else {
-        cell.messageAuthorLabel.textColor = [UIColor blackColor];
+        cell.messageUsernameLabel.textColor = [UIColor blackColor];
     }
         
     cell.messageDateLabel.text = [NSString stringWithFormat:@" - %@", message.date];
     
-    [cell.messageAuthorLabel sizeToFit];
+    [cell.messageUsernameLabel sizeToFit];
     [cell.messageDateLabel sizeToFit];
     
     // Place dateLabel after authorLabel
     CGRect dateLabelFrame = cell.messageDateLabel.frame;
-    dateLabelFrame.origin = CGPointMake(cell.messageAuthorLabel.frame.origin.x + cell.messageAuthorLabel.frame.size.width, dateLabelFrame.origin.y);
+    dateLabelFrame.origin = CGPointMake(cell.messageUsernameLabel.frame.origin.x + cell.messageUsernameLabel.frame.size.width, dateLabelFrame.origin.y);
     cell.messageDateLabel.frame = dateLabelFrame;
     
     [cell.messageTextWebView setDelegate:self];
@@ -195,13 +204,24 @@
         [cell markUnread];
     }
     
-    if ([message.username isEqualToString:self.username] && nextMessage.level <= message.level) {
-        [cell.messageEditButton setEnabled:YES];
-        [cell.messageEditButton setTintColor:nil];
-    } else {
-        [cell.messageEditButton setEnabled:NO];
-        [cell.messageEditButton setTintColor: [UIColor clearColor]];
+    BOOL hideNotificationButton = ! [message.username isEqualToString:self.username];
+    [self barButton:cell.messageNotificationButton hide:hideNotificationButton];
+    
+    if ( ! hideNotificationButton) {
+        NSInteger notificationStatus = [self.mServiceConnector notificationStatusForMessageId:message.messageId boardId:self.board.boardId username:self.username password:self.password];
+        [cell enableNotificationButton:notificationStatus];
     }
+    
+    BOOL hideEditButton = ! ([message.username isEqualToString:self.username] && nextMessage.level <= message.level);
+    [self barButton:cell.messageEditButton hide:hideEditButton];
+    
+//    if ([message.username isEqualToString:self.username] && nextMessage.level <= message.level) {
+//        [cell.messageEditButton setEnabled:YES];
+//        [cell.messageEditButton setTintColor:nil];
+//    } else {
+//        [cell.messageEditButton setEnabled:NO];
+//        [cell.messageEditButton setTintColor: [UIColor clearColor]];
+//    }
     
     [cell.messageToolbar setHidden:YES];
     
@@ -218,6 +238,17 @@
     frame.origin = CGPointMake(x + (indention * level), frame.origin.y);
     view.frame = frame;
     
+}
+
+-(void)barButton:(UIBarButtonItem *)barButton hide:(BOOL)hide
+{
+    if (hide) {
+        [barButton setEnabled:NO];
+        [barButton setTintColor: [UIColor clearColor]];
+    } else {
+        [barButton setEnabled:YES];
+        [barButton setTintColor:nil];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -378,6 +409,7 @@
         
         MCLMessageTableViewCell *cell = (MCLMessageTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         NSString *text = [cell.messageTextWebView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"body\")[0].textContent;"];
+        text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         
         [destinationViewController setType:kComposeTypeEdit];
         [destinationViewController setBoardId:self.board.boardId];

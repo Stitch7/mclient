@@ -13,6 +13,16 @@
 - (BOOL)testLoginWIthUsername:(NSString *)inUsername
                      password:(NSString *)inPassword;
 
+- (NSInteger)notificationStatusForMessageId:(NSNumber *)inMessageId
+                                    boardId:(NSNumber *)inBoardId
+                                   username:(NSString *)inUsername
+                                   password:(NSString *)inPassword;
+
+- (NSInteger)notificationForMessageId:(NSNumber *)inMessageId
+                              boardId:(NSNumber *)inBoardId
+                             username:(NSString *)inUsername
+                             password:(NSString *)inPassword;
+
 - (NSInteger)quoteForMessageId:(NSNumber *)inMessageId
                        boardId:(NSNumber *)inBoardId;
 

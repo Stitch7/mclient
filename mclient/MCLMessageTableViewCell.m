@@ -8,6 +8,8 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "MCLMessageTableViewCell.h"
+#import "KeychainItemWrapper.h"
+#import "MCLMServiceConnector.h"
 #import "MCLReadSymbolView.h"
 
 @implementation MCLMessageTableViewCell
@@ -26,6 +28,18 @@
 {
     self.readSymbolView.hidden = NO;
 }
+
+- (void)enableNotificationButton:(BOOL)enable
+{
+    self.messageNotification = enable;
+    
+    if (enable) {
+        self.messageNotificationButton.image = [UIImage imageNamed:@"notificationButtonEnabled.png"];
+    } else {
+        self.messageNotificationButton.image = [UIImage imageNamed:@"notificationButtonDisabled.png"];
+    }
+}
+
 
 #pragma mark - AVSpeechSynthesizerDelegate
 
@@ -60,7 +74,7 @@
         [self.messageTextWebView stringByEvaluatingJavaScriptFromString:@"var fontTags = document.getElementsByTagName(\"font\"); for (var i=0; i < fontTags.length; x++) { fontTags[i].remove() };"];
         NSString *text = [self.messageTextWebView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"body\")[0].textContent;"];
         text = [[self.messageSubjectLabel.text  stringByAppendingString:@"..."] stringByAppendingString:text];
-        text = [[NSString stringWithFormat:@"Von %@...", self.messageAuthorLabel.text] stringByAppendingString:text];
+        text = [[NSString stringWithFormat:@"Von %@...", self.messageUsernameLabel.text] stringByAppendingString:text];
 
         // Restoring backuped original content
         [self.messageTextWebView loadHTMLString:webviewTextBackup baseURL:nil];
@@ -75,6 +89,36 @@
 
 - (IBAction)notificationAction:(UIBarButtonItem *)sender
 {
+    NSString *alertTitle, *alertMessage;
+
+    if (self.messageNotification) {
+        [self enableNotificationButton:NO];
+        alertTitle = @"Message notification disabled";
+        alertMessage = @"You will no longer receive Emails if anyone replies to this post.";
+    } else {
+        [self enableNotificationButton:YES];
+        alertTitle = @"Message notification enabled";
+        alertMessage = @"You will receive an Email if anyone answers to this post.";
+    }
+    
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"M!client" accessGroup:nil];
+    NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
+    NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
+    NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
+    
+    MCLMServiceConnector *mServiceConnector = [[MCLMServiceConnector alloc] init];
+    [mServiceConnector notificationForMessageId:self.messageId boardId:self.boardId username:username password:password];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
+                                                    message:alertMessage
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+
 }
+
+
+
 
 @end
