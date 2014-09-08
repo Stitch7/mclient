@@ -155,4 +155,37 @@
     return success;
 }
 
+- (NSData *)searchOnBoard:(NSNumber *)inBoardId withPhrase:(NSString *)inPhrase
+{
+    
+    NSDictionary *vars = @{@"phrase":inPhrase};
+    
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://localhost:8000/board/%@/search", inBoardId];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    NSString *requestFields = @"";
+    for (id key in vars) {
+        requestFields = [requestFields stringByAppendingFormat:@"%@=%@&", key, [vars objectForKey:key]];
+    }
+    requestFields = [requestFields stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSData *requestData = [requestFields dataUsingEncoding:NSUTF8StringEncoding];
+    request.HTTPBody = requestData;
+    request.HTTPMethod = @"POST";
+    
+    NSHTTPURLResponse *response = nil;
+    NSError *error = nil;
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    
+    if (error == nil && response.statusCode == 200) {
+//        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+//        notificationEnabled = [[json objectForKey:@"notificationEnabled"] integerValue];
+    } else {
+        NSLog(@"ERROR!");
+    }
+    
+    return responseData;    
+}
+
 @end

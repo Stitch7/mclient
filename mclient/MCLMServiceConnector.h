@@ -48,4 +48,6 @@
                    username:(NSString *)inUsername
                    password:(NSString *)inPassword;
 
+- (NSData *)searchOnBoard:(NSNumber *)inBoardId withPhrase:(NSString *)inPhrase;
+
 @end

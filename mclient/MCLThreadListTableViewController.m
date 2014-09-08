@@ -8,6 +8,7 @@
 
 #import "constants.h"
 #import "KeychainItemWrapper.h"
+#import "MCLMServiceConnector.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLMessageListTableViewController.h"
 #import "MCLComposeMessageTableViewController.h"
@@ -20,6 +21,7 @@
 @interface MCLThreadListTableViewController ()
 
 @property (strong) NSMutableArray *threads;
+@property (strong) NSMutableArray *searchResults;
 @property (strong) MCLReadList *readList;
 @property (strong) NSString *username;
 
@@ -62,12 +64,8 @@
         [self performSelectorOnMainThread:@selector(fetchedData:) withObject:[self loadData] waitUntilDone:YES];
     });
     
-   
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)stopRefresh
@@ -96,35 +94,38 @@
 {
     self.threads = [NSMutableArray array];
     
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    NSError *error;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     for (id object in json) {
-        NSNumber *threadId = [object objectForKey:@"id"];
-        NSNumber *messageId = [object objectForKey:@"messageId"];
-        BOOL sticky = [[object objectForKey:@"sticky"] boolValue];
-        BOOL closed = [[object objectForKey:@"closed"] boolValue];
-        BOOL mod = [[object objectForKey:@"mod"] boolValue];
-        NSString *author = [object objectForKey:@"author"];
-        NSString *subject = [object objectForKey:@"subject"];
-        NSString *date = [object objectForKey:@"date"];
-        int answerCount = [[object objectForKey:@"answerCount"] integerValue];
-        NSString *answerDate = [object objectForKey:@"answerDate"];
-        
-        MCLThread *thread = [MCLThread threadWithId:threadId
-                                          messageId:messageId
-                                             sticky:sticky
-                                             closed:closed
-                                                mod:mod
-                                             username:author
-                                            subject:subject
-                                               date:date
-                                        answerCount:answerCount
-                                         answerDate:answerDate];
-        
-        [self.threads addObject:thread];
+        [self.threads addObject:[self threadFromJSON:object]];
     }
     
     [self.tableView reloadData];
+}
+
+- (MCLThread *)threadFromJSON:(id)object
+{
+    NSNumber *threadId = [object objectForKey:@"id"];
+    NSNumber *messageId = [object objectForKey:@"messageId"];
+    BOOL sticky = [[object objectForKey:@"sticky"] boolValue];
+    BOOL closed = [[object objectForKey:@"closed"] boolValue];
+    BOOL mod = [[object objectForKey:@"mod"] boolValue];
+    NSString *author = [object objectForKey:@"author"];
+    NSString *subject = [object objectForKey:@"subject"];
+    NSString *date = [object objectForKey:@"date"];
+    int answerCount = [[object objectForKey:@"answerCount"] integerValue];
+    NSString *answerDate = [object objectForKey:@"answerDate"];
+    
+    return  [MCLThread threadWithId:threadId
+                          messageId:messageId
+                             sticky:sticky
+                             closed:closed
+                                mod:mod
+                           username:author
+                            subject:subject
+                               date:date
+                        answerCount:answerCount
+                         answerDate:answerDate];
 }
 
 - (void)didReceiveMemoryWarning
@@ -135,7 +136,7 @@
 }
 
 
-#pragma mark - UIWebViewDelegate
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -144,16 +145,29 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.threads count];
+    NSInteger count;
+    
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        count = [self.searchResults count];
+    } else {
+        count = [self.threads count];
+    }
+    
+    return count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSLog(@"cellForRowAtIndexPath: %i", indexPath.row);
+    MCLThread *thread = nil;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        thread = self.searchResults[indexPath.row];
+    } else {
+        thread = self.threads[indexPath.row];
+    }
+
+    static NSString *CellIdentifier = @"ThreadCell";
+    MCLThreadTableViewCell *cell = (MCLThreadTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    MCLThread *thread = self.threads[indexPath.row];
-    MCLThreadTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ThreadCell" forIndexPath:indexPath];
-        
     cell.threadSubjectLabel.text = thread.subject;
     float subjectSize = cell.threadSubjectLabel.font.pointSize;
     cell.threadSubjectLabel.font = thread.isSticky ? [UIFont boldSystemFontOfSize:subjectSize] : [UIFont systemFontOfSize:subjectSize];
@@ -161,8 +175,7 @@
     cell.threadAuthorLabel.text = thread.username;
     
     if ([thread.username isEqualToString:self.username]) {
-//        cell.threadAuthorLabel.textColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0]; //TODO make const
-        cell.threadAuthorLabel.textColor = [UIColor blueColor]; //TODO make const
+        cell.threadAuthorLabel.textColor = [UIColor blueColor];
     } else if (thread.isMod) {
         cell.threadAuthorLabel.textColor = [UIColor redColor];
     } else {
@@ -190,18 +203,50 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    self.searchResults = [NSMutableArray array];
+    
+    MCLMServiceConnector *mServiceConnector = [[MCLMServiceConnector alloc] init];
+    NSData *responseData = [mServiceConnector searchOnBoard:self.board.boardId withPhrase:searchBar.text];
+   
+    NSError *error;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    for (id object in json) {
+        [self.searchResults addObject:[self threadFromJSON:object]];
+    }
+    
+    [self.searchDisplayController.searchResultsTableView reloadData];
+}
+
 
 #pragma mark - Seque
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"PushToMessageList"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSIndexPath *indexPath = nil;
+        MCLThread *thread = nil;
+        MCLThreadTableViewCell *cell = nil;
+        if (self.searchDisplayController.active) {
+            indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
+            thread = self.searchResults[indexPath.row];
+            cell = (MCLThreadTableViewCell*)[self.searchDisplayController.searchResultsTableView cellForRowAtIndexPath:indexPath];
+        } else {
+            indexPath = [self.tableView indexPathForSelectedRow];
+            thread = self.threads[indexPath.row];
+            cell = (MCLThreadTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+        }
         
-        MCLThread *thread = self.threads[indexPath.row];
-        [self.readList addMessageId:thread.messageId];
-        
-        MCLThreadTableViewCell *cell = (MCLThreadTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+        [self.readList addMessageId:thread.messageId];        
         [cell markRead];
         
         [segue.destinationViewController setBoard:self.board];
@@ -212,6 +257,5 @@
         [destinationViewController setBoardId:self.board.boardId];
     }
 }
-
 
 @end

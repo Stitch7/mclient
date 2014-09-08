@@ -10,7 +10,7 @@
 
 @class MCLBoard;
 
-@interface MCLThreadListTableViewController : UITableViewController
+@interface MCLThreadListTableViewController : UITableViewController <UISearchBarDelegate>
 
 @property (strong, nonatomic) MCLBoard *board;
 
