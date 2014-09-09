@@ -77,8 +77,8 @@
         [self performSelectorOnMainThread:@selector(fetchedData:) withObject:[self loadData] waitUntilDone:YES];
     });
    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    // Preserve selection between presentations.
+    self.clearsSelectionOnViewWillAppear = NO;
 }
 
 - (void)stopRefresh
