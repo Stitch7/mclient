@@ -7,6 +7,7 @@
 //
 
 #import <AVFoundation/AVFoundation.h>
+#import "constants.h"
 #import "MCLMessageTableViewCell.h"
 #import "KeychainItemWrapper.h"
 #import "MCLMServiceConnector.h"
@@ -55,6 +56,21 @@
 
 
 #pragma mark - Actions
+
+- (IBAction)copyLinkAction:(UIBarButtonItem *)sender
+{
+    NSString *link = [NSString stringWithFormat:@"%@?mode=message&brdid=%@&msgid=%@", kManiacForumURL, self.boardId, self.messageId];
+    
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = link;
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
+                                                    message:@"Copied link to this message to clipboard"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
 
 - (IBAction)speakAction:(UIBarButtonItem *)sender
 {

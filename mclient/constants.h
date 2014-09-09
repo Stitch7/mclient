@@ -11,3 +11,5 @@
 #else
     #define kMServiceBaseURL @"http://reitz.re:8000/"
 #endif
+
+#define kManiacForumURL @"http://www.maniac-forum.de/forum/pxmboard.php"
