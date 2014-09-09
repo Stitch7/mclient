@@ -27,6 +27,7 @@
 @property (strong) MCLReadList *readList;
 @property (strong) NSString *username;
 @property (strong) NSString *password;
+@property (strong) NSDateFormatter *dateFormatter;
 
 @end
 
@@ -53,7 +54,11 @@
     self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
     NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
     self.password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
-
+    
+    self.dateFormatter = [[NSDateFormatter alloc] init];
+    [self.dateFormatter setDoesRelativeDateFormatting:YES];
+    [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [self.dateFormatter setTimeStyle:NSDateFormatterShortStyle];
 }
 
 - (void)viewDidLoad
@@ -111,6 +116,12 @@
 {
     self.messages = [NSMutableArray array];
     
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"d.MM.yy H:m"];
+    
+
+
+    
     NSError* error;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     for (id object in json) {
@@ -118,7 +129,7 @@
         NSUInteger level    = [[object objectForKey:@"level"] integerValue];
         NSString *username  = [object objectForKey:@"username"];
         NSString *subject   = [object objectForKey:@"subject"];
-        NSString *date      = [object objectForKey:@"date"];
+        NSDate *date = [dateFormat dateFromString:[object objectForKey:@"date"]];
         
         MCLMessage *message = [MCLMessage messageWithId:messageId level:level userId:nil username:username subject:subject date:date text:nil];
         [self.messages addObject:message];
@@ -185,8 +196,8 @@
     } else {
         cell.messageUsernameLabel.textColor = [UIColor blackColor];
     }
-        
-    cell.messageDateLabel.text = [NSString stringWithFormat:@" - %@", message.date];
+    
+    cell.messageDateLabel.text = [NSString stringWithFormat:@" - %@", [self.dateFormatter stringFromDate:message.date]];
     
     [cell.messageUsernameLabel sizeToFit];
     [cell.messageDateLabel sizeToFit];
@@ -214,14 +225,6 @@
     
     BOOL hideEditButton = ! ([message.username isEqualToString:self.username] && nextMessage.level <= message.level);
     [self barButton:cell.messageEditButton hide:hideEditButton];
-    
-//    if ([message.username isEqualToString:self.username] && nextMessage.level <= message.level) {
-//        [cell.messageEditButton setEnabled:YES];
-//        [cell.messageEditButton setTintColor:nil];
-//    } else {
-//        [cell.messageEditButton setEnabled:NO];
-//        [cell.messageEditButton setTintColor: [UIColor clearColor]];
-//    }
     
     [cell.messageToolbar setHidden:YES];
     
