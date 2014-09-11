@@ -98,7 +98,7 @@
 
 - (NSData *)loadData
 {
-    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"board/%@/thread/%@", self.board.boardId, self.thread.threadId]];
+    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"board/%@/messagelist/%@", self.board.boardId, self.thread.threadId]];
     
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
     [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
@@ -116,20 +116,19 @@
 {
     self.messages = [NSMutableArray array];
     
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"d.MM.yy H:m"];
-    
-
-
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+    [dateFormatter setLocale:enUSPOSIXLocale];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
     
     NSError* error;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     for (id object in json) {
         NSNumber *messageId = [object objectForKey:@"messageId"];
-        NSUInteger level    = [[object objectForKey:@"level"] integerValue];
-        NSString *username  = [object objectForKey:@"username"];
-        NSString *subject   = [object objectForKey:@"subject"];
-        NSDate *date = [dateFormat dateFromString:[object objectForKey:@"date"]];
+        NSUInteger level = [[object objectForKey:@"level"] integerValue];
+        NSString *username = [object objectForKey:@"username"];
+        NSString *subject = [object objectForKey:@"subject"];
+        NSDate *date = [dateFormatter dateFromString:[object objectForKey:@"date"]];
         
         MCLMessage *message = [MCLMessage messageWithId:messageId level:level userId:nil username:username subject:subject date:date text:nil];
         [self.messages addObject:message];

@@ -24,6 +24,7 @@
 @property (strong) NSMutableArray *searchResults;
 @property (strong) MCLReadList *readList;
 @property (strong) NSString *username;
+@property (strong) NSDateFormatter *dateFormatter;
 
 @end
 
@@ -46,6 +47,11 @@
     
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"M!client" accessGroup:nil];
     self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
+    
+    self.dateFormatter = [[NSDateFormatter alloc] init];
+    [self.dateFormatter setDoesRelativeDateFormatting:YES];
+    [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [self.dateFormatter setTimeStyle:NSDateFormatterShortStyle];
 }
 
 - (void)viewDidLoad
@@ -105,6 +111,12 @@
 
 - (MCLThread *)threadFromJSON:(id)object
 {
+    //TODO move this outside
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+    [dateFormatter setLocale:enUSPOSIXLocale];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+    
     NSNumber *threadId = [object objectForKey:@"id"];
     NSNumber *messageId = [object objectForKey:@"messageId"];
     BOOL sticky = [[object objectForKey:@"sticky"] boolValue];
@@ -112,9 +124,9 @@
     BOOL mod = [[object objectForKey:@"mod"] boolValue];
     NSString *author = [object objectForKey:@"author"];
     NSString *subject = [object objectForKey:@"subject"];
-    NSString *date = [object objectForKey:@"date"];
+    NSDate *date = [dateFormatter dateFromString:[object objectForKey:@"date"]];
     int answerCount = [[object objectForKey:@"answerCount"] integerValue];
-    NSString *answerDate = [object objectForKey:@"answerDate"];
+    NSDate *answerDate = [dateFormatter dateFromString:[object objectForKey:@"answerDate"]];
     
     return  [MCLThread threadWithId:threadId
                           messageId:messageId
@@ -184,7 +196,7 @@
     
     [cell.threadAuthorLabel sizeToFit];
     
-    cell.threadDateLabel.text = [NSString stringWithFormat:@" - %@", thread.date];
+    cell.threadDateLabel.text = [NSString stringWithFormat:@" - %@", [self.dateFormatter stringFromDate:thread.date]];
     [cell.threadDateLabel sizeToFit];
     
     // Place dateLabel after authorLabel
