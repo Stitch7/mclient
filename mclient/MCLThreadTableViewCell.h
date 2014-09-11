@@ -15,9 +15,8 @@
 @interface MCLThreadTableViewCell : TDBadgedCell
 
 @property (weak, nonatomic) IBOutlet UILabel *threadSubjectLabel;
-@property (weak, nonatomic) IBOutlet UILabel *threadAuthorLabel;
+@property (weak, nonatomic) IBOutlet UILabel *threadUsernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *threadDateLabel;
-//@property (strong) MCLReadSymbolView *readSymbol;
 @property (weak, nonatomic) IBOutlet MCLReadSymbolView *readSymbolView;
 
 - (void)markRead;

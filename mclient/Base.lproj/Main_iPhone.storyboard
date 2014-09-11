@@ -596,9 +596,9 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="readSymbolView" destination="KLT-NR-d1T" id="Tos-vx-T5v"/>
-                                    <outlet property="threadAuthorLabel" destination="iUx-A4-fuF" id="Fjw-4t-Fia"/>
                                     <outlet property="threadDateLabel" destination="heT-Kd-h0p" id="yJy-VZ-xK1"/>
                                     <outlet property="threadSubjectLabel" destination="Qdd-BZ-Lg5" id="bD4-ja-Pg7"/>
+                                    <outlet property="threadUsernameLabel" destination="iUx-A4-fuF" id="FMY-gT-4t9"/>
                                     <segue destination="xgu-SS-2ak" kind="push" identifier="PushToMessageList" id="63T-R0-Tv7"/>
                                 </connections>
                             </tableViewCell>

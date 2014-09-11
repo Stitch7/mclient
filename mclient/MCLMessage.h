@@ -13,11 +13,19 @@
 @property (strong) NSNumber *messageId;
 @property (assign) NSUInteger level;
 @property (strong) NSNumber *userId;
+@property (nonatomic, assign, getter=isMod) BOOL mod;
 @property (strong) NSString *username;
 @property (strong) NSString *subject;
 @property (strong) NSDate *date;
 @property (strong) NSString *text;
 
-+ (id)messageWithId:(NSNumber *)inMessageId level:(NSUInteger)inLevel userId:(NSNumber *)inUserId username:(NSString *)inUsername subject:(NSString *)inSubject date:(NSDate *)inDate text:(NSString *)inText;
++ (id)messageWithId:(NSNumber *)inMessageId
+              level:(NSUInteger)inLevel
+             userId:(NSNumber *)inUserId
+                mod:(BOOL)inMod
+           username:(NSString *)inUsername
+            subject:(NSString *)inSubject
+               date:(NSDate *)inDate
+               text:(NSString *)inText;
 
 @end

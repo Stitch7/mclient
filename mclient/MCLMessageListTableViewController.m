@@ -98,7 +98,7 @@
 
 - (NSData *)loadData
 {
-    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"board/%@/messagelist/%@", self.board.boardId, self.thread.threadId]];
+    NSString *urlString = [NSString stringWithFormat:@"%@board/%@/messagelist/%@", kMServiceBaseURL, self.board.boardId, self.thread.threadId];
     
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
     [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
@@ -126,11 +126,19 @@
     for (id object in json) {
         NSNumber *messageId = [object objectForKey:@"messageId"];
         NSUInteger level = [[object objectForKey:@"level"] integerValue];
+        BOOL mod = [[object objectForKey:@"mod"] boolValue];
         NSString *username = [object objectForKey:@"username"];
         NSString *subject = [object objectForKey:@"subject"];
         NSDate *date = [dateFormatter dateFromString:[object objectForKey:@"date"]];
         
-        MCLMessage *message = [MCLMessage messageWithId:messageId level:level userId:nil username:username subject:subject date:date text:nil];
+        MCLMessage *message = [MCLMessage messageWithId:messageId
+                                                  level:level
+                                                 userId:nil
+                                                    mod:mod
+                                               username:username
+                                                subject:subject
+                                                   date:date
+                                                   text:nil];
         [self.messages addObject:message];
     }
     
@@ -139,7 +147,7 @@
 
 - (void)completeMessage:(MCLMessage *)message
 {
-    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"board/%@/message/%@", self.board.boardId, message.messageId]];
+    NSString *urlString = [NSString stringWithFormat:@"%@board/%@/message/%@", kMServiceBaseURL, self.board.boardId, message.messageId];
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
     NSError* error;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
@@ -190,8 +198,8 @@
     
     if ([message.username isEqualToString:self.username]) {
         cell.messageUsernameLabel.textColor = [UIColor blueColor];
-//    } else if (thread.isMod) {
-//        cell.threadAuthorLabel.textColor = [UIColor redColor];
+    } else if (message.isMod) {
+        cell.messageUsernameLabel.textColor = [UIColor redColor];
     } else {
         cell.messageUsernameLabel.textColor = [UIColor blackColor];
     }

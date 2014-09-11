@@ -184,24 +184,24 @@
     float subjectSize = cell.threadSubjectLabel.font.pointSize;
     cell.threadSubjectLabel.font = thread.isSticky ? [UIFont boldSystemFontOfSize:subjectSize] : [UIFont systemFontOfSize:subjectSize];
     
-    cell.threadAuthorLabel.text = thread.username;
+    cell.threadUsernameLabel.text = thread.username;
     
     if ([thread.username isEqualToString:self.username]) {
-        cell.threadAuthorLabel.textColor = [UIColor blueColor];
+        cell.threadUsernameLabel.textColor = [UIColor blueColor];
     } else if (thread.isMod) {
-        cell.threadAuthorLabel.textColor = [UIColor redColor];
+        cell.threadUsernameLabel.textColor = [UIColor redColor];
     } else {
-        cell.threadAuthorLabel.textColor = [UIColor blackColor];
+        cell.threadUsernameLabel.textColor = [UIColor blackColor];
     }
     
-    [cell.threadAuthorLabel sizeToFit];
+    [cell.threadUsernameLabel sizeToFit];
     
     cell.threadDateLabel.text = [NSString stringWithFormat:@" - %@", [self.dateFormatter stringFromDate:thread.date]];
     [cell.threadDateLabel sizeToFit];
     
     // Place dateLabel after authorLabel
     CGRect dateLabelFrame = cell.threadDateLabel.frame;
-    dateLabelFrame.origin = CGPointMake(cell.threadAuthorLabel.frame.origin.x + cell.threadAuthorLabel.frame.size.width, dateLabelFrame.origin.y);
+    dateLabelFrame.origin = CGPointMake(cell.threadUsernameLabel.frame.origin.x + cell.threadUsernameLabel.frame.size.width, dateLabelFrame.origin.y);
     cell.threadDateLabel.frame = dateLabelFrame;
     
     if ([self.readList messageIdIsRead:thread.messageId]) {
