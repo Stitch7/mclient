@@ -10,6 +10,7 @@
 #import "MCLBoardListTableViewController.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLBoard.h"
+#import "MCLLoadingView.h"
 
 @interface MCLBoardListTableViewController ()
 
@@ -27,35 +28,13 @@
     }
     
     [super awakeFromNib];
-    
-    self.boards = [NSMutableArray array];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: kMServiceBaseURL]];
-        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
-    });
-}
-
-- (void)fetchedData:(NSData *)responseData
-{
-    NSError *error;
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    for (id object in json) {
-        NSNumber *boardId = [object objectForKey:@"id"];
-        NSString *boardName = [object objectForKey:@"text"];
-        
-        MCLBoard *board = [MCLBoard boardWithId:boardId name:boardName];
-        [self.boards addObject:board];
-    }
-    
-    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-	
+
     /*
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
@@ -72,8 +51,23 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    
+
+        NSLog(@"color: %@", [self.tableView separatorColor]);
+
+    if ([self.boards count] == 0) {
+        [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
+
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: kMServiceBaseURL]];
+            [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+
+            // Remove loading view on main thread
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[self.view.subviews lastObject] removeFromSuperview];
+            });
+        });
+    }
+
     
 //    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 //    for (id key in @[@"signatureEnabled", @"signatureText", @"nightMode", @"syncReadStatus"]) {
@@ -86,6 +80,24 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (void)fetchedData:(NSData *)responseData
+{
+    self.boards = [NSMutableArray array];
+
+    NSError *error;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    for (id object in json) {
+        NSNumber *boardId = [object objectForKey:@"id"];
+        NSString *boardName = [object objectForKey:@"text"];
+
+        MCLBoard *board = [MCLBoard boardWithId:boardId name:boardName];
+        [self.boards addObject:board];
+    }
+
+    [self.tableView reloadData];
 }
 
 

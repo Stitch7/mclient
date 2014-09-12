@@ -12,6 +12,7 @@
 #import "MCLMessageListTableViewController.h"
 #import "MCLComposeMessageTableViewController.h"
 #import "MCLProfileTableViewController.h"
+#import "MCLLoadingView.h"
 #import "MCLMessageTableViewCell.h"
 #import "MCLBoard.h"
 #import "MCLThread.h"
@@ -65,7 +66,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
+    // Cache original tables separatorColor and set to clear to avoid flickering loading view
+    UIColor *tableSeparatorColor = [self.tableView separatorColor];
+    [self.tableView setSeparatorColor:[UIColor clearColor]];
+
+    // Set title to threads subject
     self.title = self.thread.subject;
     
     // Init refresh control
@@ -73,13 +79,28 @@
     refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to refresh..."];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:[self loadData] waitUntilDone:YES];
-    });
-   
+
     // Preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = NO;
+
+    // Add loading view
+    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
+
+    // Load data async
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:[self loadData] waitUntilDone:YES];
+
+        // Remove loading view on main thread
+        dispatch_async(dispatch_get_main_queue(), ^{
+            for (id subview in self.view.subviews) {
+                if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
+                    [subview removeFromSuperview];
+                }
+            }
+            // Restore tables separatorColor
+            [self.tableView setSeparatorColor:tableSeparatorColor];
+        });
+    });
 }
 
 - (void)stopRefresh

@@ -14,6 +14,7 @@
 		301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */; };
 		301FD01519ACA0D70028C5C8 /* TDBadgedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01419ACA0D70028C5C8 /* TDBadgedCell.m */; };
 		301FD01819ACE3D10028C5C8 /* MCLMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01719ACE3D10028C5C8 /* MCLMessageTableViewCell.m */; };
+		301FD9A319C32FC600E36A5B /* MCLLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9A219C32FC600E36A5B /* MCLLoadingView.m */; };
 		302F462519BF443A00DC77D8 /* copyLinkButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */; };
 		305DD81819A63517006514BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81719A63517006514BD /* Foundation.framework */; };
 		305DD81A19A63517006514BD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81919A63517006514BD /* CoreGraphics.framework */; };
@@ -72,6 +73,8 @@
 		301FD01419ACA0D70028C5C8 /* TDBadgedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDBadgedCell.m; sourceTree = "<group>"; };
 		301FD01619ACE3D10028C5C8 /* MCLMessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageTableViewCell.h; sourceTree = "<group>"; };
 		301FD01719ACE3D10028C5C8 /* MCLMessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageTableViewCell.m; sourceTree = "<group>"; };
+		301FD9A119C32FC600E36A5B /* MCLLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLLoadingView.h; sourceTree = "<group>"; };
+		301FD9A219C32FC600E36A5B /* MCLLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLLoadingView.m; sourceTree = "<group>"; };
 		302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copyLinkButton@2x.png"; sourceTree = "<group>"; };
 		305DD81419A63517006514BD /* mclient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mclient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		305DD81719A63517006514BD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -252,14 +255,16 @@
 		305DD85919AB2EFE006514BD /* View */ = {
 			isa = PBXGroup;
 			children = (
-				301FD01319ACA0D70028C5C8 /* TDBadgedCell.h */,
-				301FD01419ACA0D70028C5C8 /* TDBadgedCell.m */,
-				301FD01019AC794E0028C5C8 /* MCLThreadTableViewCell.h */,
-				301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */,
+				301FD9A119C32FC600E36A5B /* MCLLoadingView.h */,
+				301FD9A219C32FC600E36A5B /* MCLLoadingView.m */,
 				301FD01619ACE3D10028C5C8 /* MCLMessageTableViewCell.h */,
 				301FD01719ACE3D10028C5C8 /* MCLMessageTableViewCell.m */,
 				307D797419B0B3B30096A217 /* MCLReadSymbolView.h */,
 				307D797519B0B3B30096A217 /* MCLReadSymbolView.m */,
+				301FD01019AC794E0028C5C8 /* MCLThreadTableViewCell.h */,
+				301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */,
+				301FD01319ACA0D70028C5C8 /* TDBadgedCell.h */,
+				301FD01419ACA0D70028C5C8 /* TDBadgedCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -416,6 +421,7 @@
 				305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */,
 				30E8B89619B33C070067DD1F /* MCLReadList.m in Sources */,
 				305DD85D19AB300F006514BD /* MCLBoard.m in Sources */,
+				301FD9A319C32FC600E36A5B /* MCLLoadingView.m in Sources */,
 				30A1BFAD19B4A8D4002439FE /* MCLSettingsTableViewController.m in Sources */,
 				305DD85419AB2970006514BD /* MCLMessageListTableViewController.m in Sources */,
 				307A80EF19B8800E001B538D /* KeychainItemWrapper.m in Sources */,
