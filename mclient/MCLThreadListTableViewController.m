@@ -45,7 +45,8 @@
     
     self.readList = [[MCLReadList alloc] init];
     
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"M!client" accessGroup:nil];
+    NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
     self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
     
     self.dateFormatter = [[NSDateFormatter alloc] init];
@@ -228,10 +229,11 @@
     self.searchResults = [NSMutableArray array];
     
     MCLMServiceConnector *mServiceConnector = [[MCLMServiceConnector alloc] init];
-    NSData *responseData = [mServiceConnector searchOnBoard:self.board.boardId withPhrase:searchBar.text];
+    NSError *mServiceError;
+    NSData *responseData = [mServiceConnector searchOnBoard:self.board.boardId withPhrase:searchBar.text error:&mServiceError];
    
-    NSError *error;
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    NSError *jsonError;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&jsonError];
     for (id object in json) {
         [self.searchResults addObject:[self threadFromJSON:object]];
     }

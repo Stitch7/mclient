@@ -201,39 +201,63 @@
 
 - (IBAction)saveAction:(id)sender
 {
+    BOOL success = NO;
     MCLMServiceConnector *mServiceConnector = [[MCLMServiceConnector alloc] init];
 
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"M!client" accessGroup:nil];
+    NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
     NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
     NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
     NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
+    NSError *mServiceError;
     
     switch (self.type) {
         case kComposeTypeThread:
-            [mServiceConnector postThreadToBoardId:self.boardId
-                                           subject:self.composeSubjectTextField.text
-                                              text:self.composeTextTextField.text
-                                          username:username
-                                          password:password
-                                      notification:@1];
+            success = [mServiceConnector postThreadToBoardId:self.boardId
+                                                     subject:self.composeSubjectTextField.text
+                                                        text:self.composeTextTextField.text
+                                                    username:username
+                                                    password:password
+                                                       error:&mServiceError];
             break;
         case kComposeTypeReply:
-            [mServiceConnector postReplyToMessageId:self.messageId
-                                            boardId:self.boardId
-                                            subject:self.composeSubjectTextField.text
-                                               text:self.composeTextTextField.text
-                                           username:username
-                                           password:password
-                                       notification:@0];
+            success = [mServiceConnector postReplyToMessageId:self.messageId
+                                                      boardId:self.boardId
+                                                      subject:self.composeSubjectTextField.text
+                                                         text:self.composeTextTextField.text
+                                                     username:username
+                                                     password:password
+                                                        error:&mServiceError];
             break;
         case kComposeTypeEdit:
-            [mServiceConnector postEditToMessageId:self.messageId
-                                            boardId:self.boardId
-                                            subject:self.composeSubjectTextField.text
-                                               text:self.composeTextTextField.text
-                                           username:username
-                                           password:password];
+            success = [mServiceConnector postEditToMessageId:self.messageId
+                                                     boardId:self.boardId
+                                                     subject:self.composeSubjectTextField.text
+                                                        text:self.composeTextTextField.text
+                                                    username:username
+                                                    password:password
+                                                       error:&mServiceError];
             break;
+    }
+
+    if (success) {
+        dispatch_block_t completion = ^{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
+                                                            message:@"Message was posted"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        };
+
+        [self dismissViewControllerAnimated:YES completion:completion];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[mServiceError localizedDescription]
+                                                        message:[mServiceError localizedFailureReason]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
     }
 }
 

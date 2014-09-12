@@ -10,28 +10,34 @@
 
 @interface MCLMServiceConnector : NSObject
 
-- (BOOL)testLoginWIthUsername:(NSString *)inUsername
-                     password:(NSString *)inPassword;
+- (NSArray *)errorMessages;
 
-- (NSInteger)notificationStatusForMessageId:(NSNumber *)inMessageId
+- (BOOL)testLoginWIthUsername:(NSString *)inUsername
+                     password:(NSString *)inPassword
+                        error:(NSError **)errorPtr;
+
+- (BOOL)notificationStatusForMessageId:(NSNumber *)inMessageId
                                     boardId:(NSNumber *)inBoardId
                                    username:(NSString *)inUsername
-                                   password:(NSString *)inPassword;
+                                   password:(NSString *)inPassword
+                                      error:(NSError **)errorPtr;
 
-- (NSInteger)notificationForMessageId:(NSNumber *)inMessageId
+- (BOOL)notificationForMessageId:(NSNumber *)inMessageId
                               boardId:(NSNumber *)inBoardId
                              username:(NSString *)inUsername
-                             password:(NSString *)inPassword;
+                             password:(NSString *)inPassword
+                                error:(NSError **)errorPtr;
 
-- (NSInteger)quoteForMessageId:(NSNumber *)inMessageId
-                       boardId:(NSNumber *)inBoardId;
+- (BOOL)quoteForMessageId:(NSNumber *)inMessageId
+                       boardId:(NSNumber *)inBoardId
+                         error:(NSError **)errorPtr;
 
 - (BOOL)postThreadToBoardId:(NSNumber *)inBoardId
                     subject:(NSString *)inSubject
                        text:(NSString *)inText
                    username:(NSString *)inUsername
                    password:(NSString *)inPassword
-               notification:(NSNumber *)inNotification;
+                      error:(NSError **)errorPtr;
 
 - (BOOL)postReplyToMessageId:(NSNumber *)inMessageId
                      boardId:(NSNumber *)inBoardId
@@ -39,15 +45,18 @@
                         text:(NSString *)inText
                     username:(NSString *)inUsername
                     password:(NSString *)inPassword
-                notification:(NSNumber *)inNotification;
+                       error:(NSError **)errorPtr;
 
 - (BOOL)postEditToMessageId:(NSNumber *)inMessageId
                     boardId:(NSNumber *)inBoardId
                     subject:(NSString *)inSubject
                        text:(NSString *)inText
                    username:(NSString *)inUsername
-                   password:(NSString *)inPassword;
+                   password:(NSString *)inPassword
+                      error:(NSError **)errorPtr;
 
-- (NSData *)searchOnBoard:(NSNumber *)inBoardId withPhrase:(NSString *)inPhrase;
+- (NSData *)searchOnBoard:(NSNumber *)inBoardId
+               withPhrase:(NSString *)inPhrase
+                    error:(NSError **)errorPtr;
 
 @end

@@ -38,8 +38,8 @@
 
 - (void)fetchedData:(NSData *)responseData
 {
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];    
+    NSError *error;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     for (id object in json) {
         NSNumber *boardId = [object objectForKey:@"id"];
         NSString *boardName = [object objectForKey:@"text"];

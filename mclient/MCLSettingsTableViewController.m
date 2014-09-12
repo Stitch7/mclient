@@ -43,13 +43,12 @@
     self.userDefaults = [NSUserDefaults standardUserDefaults];
     
     // Reading username + password from keychain
-    self.keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"M!client" accessGroup:nil];
+    NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
+    self.keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
     [self.keychainItem setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
     NSData *passwordData = [self.keychainItem objectForKey:(__bridge id)(kSecValueData)];
     NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
     NSString *username = [self.keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
-    NSLog(@"read from keychain: username=%@ - password=%@", username, password);
-
     
     self.settingsUsernameTextField.text = username;
     self.settingsPasswordTextField.text = password;
@@ -80,7 +79,9 @@
         NSString *title, *message;
         
         MCLMServiceConnector *mServiceConnector = [[MCLMServiceConnector alloc] init];
-        if ([mServiceConnector testLoginWIthUsername:username password:password]) {
+        NSError *error;
+        
+        if ([mServiceConnector testLoginWIthUsername:username password:password error:&error]) {
             [self.keychainItem setObject:username forKey:(__bridge id)(kSecAttrAccount)];
             [self.keychainItem setObject:password forKey:(__bridge id)(kSecValueData)];
             title = @"Login succeed";

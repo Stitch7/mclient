@@ -50,7 +50,8 @@
     self.cells = [NSMutableArray array];
     self.readList = [[MCLReadList alloc] init];
     
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"M!client" accessGroup:nil];
+    NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
     self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
     NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
     self.password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
@@ -226,7 +227,12 @@
     [self barButton:cell.messageNotificationButton hide:hideNotificationButton];
     
     if ( ! hideNotificationButton) {
-        NSInteger notificationStatus = [self.mServiceConnector notificationStatusForMessageId:message.messageId boardId:self.board.boardId username:self.username password:self.password];
+        NSError *mServiceError;
+        NSInteger notificationStatus = [self.mServiceConnector notificationStatusForMessageId:message.messageId
+                                                                                      boardId:self.board.boardId
+                                                                                     username:self.username
+                                                                                     password:self.password
+                                                                                        error:&mServiceError];
         [cell enableNotificationButton:notificationStatus];
     }
     

@@ -105,9 +105,22 @@
 
 - (IBAction)notificationAction:(UIBarButtonItem *)sender
 {
+    NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
+    NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
+    NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
+    NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
+    
+    MCLMServiceConnector *mServiceConnector = [[MCLMServiceConnector alloc] init];
+    NSError *mServiceError;
+    BOOL success = [mServiceConnector notificationForMessageId:self.messageId boardId:self.boardId username:username password:password error:&mServiceError];
+
     NSString *alertTitle, *alertMessage;
 
-    if (self.messageNotification) {
+    if ( ! success) {
+        alertTitle = [mServiceError localizedDescription];
+        alertMessage = [mServiceError localizedFailureReason];
+    } else if (self.messageNotification) {
         [self enableNotificationButton:NO];
         alertTitle = @"Message notification disabled";
         alertMessage = @"You will no longer receive Emails if anyone replies to this post.";
@@ -116,25 +129,12 @@
         alertTitle = @"Message notification enabled";
         alertMessage = @"You will receive an Email if anyone answers to this post.";
     }
-    
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"M!client" accessGroup:nil];
-    NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
-    NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
-    NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
-    
-    MCLMServiceConnector *mServiceConnector = [[MCLMServiceConnector alloc] init];
-    [mServiceConnector notificationForMessageId:self.messageId boardId:self.boardId username:username password:password];
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
-                                                    message:alertMessage
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
 
+    [[[UIAlertView alloc] initWithTitle:alertTitle
+                                message:alertMessage
+                               delegate:nil
+                      cancelButtonTitle:@"OK"
+                      otherButtonTitles:nil] show];
 }
-
-
-
 
 @end
