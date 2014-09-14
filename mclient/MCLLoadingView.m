@@ -63,16 +63,13 @@
 	// Calculate label size
     CGSize labelSize = [self.label.text boundingRectWithSize:CGSizeMake(280.0f, MAXFLOAT)
                                               options:NSStringDrawingUsesLineFragmentOrigin
-                                           attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:[UIFont systemFontSize]]}
+                                           attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:[UIFont systemFontSize]]}
                                               context:nil].size;
 
 	CGRect labelFrame;
 	labelFrame.size = labelSize;
 	self.label.frame = labelFrame;
 
-	// Set y position
-    spinnerFrame.origin.y = 150;
-	labelFrame.origin.y = 150;
 
 	// Allign label and spinner horizontaly
 	labelFrame = self.label.frame;
@@ -80,6 +77,10 @@
 	CGFloat totalWidth = spinnerFrame.size.width + SPACE_BETWEEN_SPINNER_AND_LABEL + labelSize.width;
 	spinnerFrame.origin.x = self.bounds.origin.x + (self.bounds.size.width - totalWidth) / 2;
 	labelFrame.origin.x = spinnerFrame.origin.x + spinnerFrame.size.width + SPACE_BETWEEN_SPINNER_AND_LABEL;
+
+	// Set y position
+    spinnerFrame.origin.y = 150;
+	labelFrame.origin.y = 150;
 
 	self.label.frame = labelFrame;
 	self.spinner.frame = spinnerFrame;

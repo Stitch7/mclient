@@ -12,6 +12,7 @@
 #import "MCLThreadListTableViewController.h"
 #import "MCLMessageListTableViewController.h"
 #import "MCLComposeMessageTableViewController.h"
+#import "MCLErrorView.h"
 #import "MCLLoadingView.h"
 #import "MCLThreadTableViewCell.h"
 #import "MCLThread.h"
@@ -21,6 +22,8 @@
 
 @interface MCLThreadListTableViewController ()
 
+@property (assign, nonatomic) UIColor *tableSeparatorColor;
+@property (assign, nonatomic) CGRect tableViewBounds;
 @property (strong) NSMutableArray *threads;
 @property (strong) NSMutableArray *searchResults;
 @property (strong) MCLReadList *readList;
@@ -61,7 +64,7 @@
     [super viewDidLoad];
 
     // Cache original tables separatorColor and set to clear to avoid flickering loading view
-    UIColor *tableSeparatorColor = [self.tableView separatorColor];
+    self.tableSeparatorColor = [self.tableView separatorColor];
     [self.tableView setSeparatorColor:[UIColor clearColor]];
 
     // Set title to board name
@@ -73,23 +76,26 @@
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
 
+    self.tableViewBounds = self.view.bounds;
+
     // Add loading view
-    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
+    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.tableViewBounds]];
 
     // Load data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:[self loadData] waitUntilDone:YES];
+        NSData *data = [self loadData];
+        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
 
-        // Remove loading view on main thread
-        dispatch_async(dispatch_get_main_queue(), ^{
-            for (id subview in self.view.subviews) {
-                if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
-                    [subview removeFromSuperview];
-                }
-            }
-            // Restore tables separatorColor
-            [self.tableView setSeparatorColor:tableSeparatorColor];
-        });
+//        // Remove loading view on main thread
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            for (id subview in self.view.subviews) {
+//                if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
+//                    [subview removeFromSuperview];
+//                }
+//            }
+//            // Restore tables separatorColor
+//            [self.tableView setSeparatorColor:tableSeparatorColor];
+//        });
     });
 }
 
@@ -101,31 +107,54 @@
 - (NSData *)loadData
 {
     NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"board/%@/threadlist", self.board.boardId]];
-    
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
-    [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
-    
+
     return data;
 }
 
 - (void)reloadData
 {
-    [self loadData];
-    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:1.5]; // 2.5
+    NSData *data = [self loadData];
+    [self fetchedData:data];
+    [self stopRefresh];
 }
 
 
-- (void)fetchedData:(NSData *)responseData
+- (void)fetchedData:(NSData *)data
 {
-    self.threads = [NSMutableArray array];
-    
-    NSError *error;
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    for (id object in json) {
-        [self.threads addObject:[self threadFromJSON:object]];
+    if ( ! data) {
+        BOOL errorViewPresent = NO;
+        for (id subview in self.view.subviews) {
+            if ([[subview class] isSubclassOfClass: [MCLErrorView class]]) {
+                errorViewPresent = YES;
+            }
+        }
+
+        if ( ! errorViewPresent) {
+            [self.view addSubview:[[MCLErrorView alloc] initWithFrame:self.tableViewBounds]];
+        }
+    } else {
+        self.threads = [NSMutableArray array];
+        
+        NSError *error;
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        for (id object in json) {
+            [self.threads addObject:[self threadFromJSON:object]];
+        }
+
+        for (id subview in self.view.subviews) {
+            if ([[subview class] isSubclassOfClass: [MCLErrorView class]]) {
+                [subview removeFromSuperview];
+            } else if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
+                [subview removeFromSuperview];
+            }
+        }
+
+        // Restore tables separatorColor
+        [self.tableView setSeparatorColor:self.tableSeparatorColor];
+
+        [self.tableView reloadData];
     }
-    
-    [self.tableView reloadData];
 }
 
 - (MCLThread *)threadFromJSON:(id)object

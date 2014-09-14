@@ -10,11 +10,13 @@
 #import "MCLBoardListTableViewController.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLBoard.h"
+#import "MCLErrorView.h"
 #import "MCLLoadingView.h"
 
 @interface MCLBoardListTableViewController ()
 
-@property (strong) NSMutableArray *boards;
+@property (assign, nonatomic) CGRect tableViewBounds;
+@property (strong, nonatomic) NSMutableArray *boards;
 
 @end
 
@@ -34,46 +36,34 @@
 {
     [super viewDidLoad];
 
-
     /*
-    // Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
     self.threadListTableViewController = (MCLThreadListTableViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     */
-    
-//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//    NSLog(@"login: %hhd", [userDefaults boolForKey:@"login"]);
+
+    // Init refresh control
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to refresh..."];
+    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+
+    self.tableViewBounds = self.view.bounds;
+
+    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.tableViewBounds]];
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [self loadData];
+        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+    });
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
 
-        NSLog(@"color: %@", [self.tableView separatorColor]);
-
-    if ([self.boards count] == 0) {
-        [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
-
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: kMServiceBaseURL]];
-            [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
-
-            // Remove loading view on main thread
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[self.view.subviews lastObject] removeFromSuperview];
-            });
-        });
-    }
-
-    
 //    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 //    for (id key in @[@"signatureEnabled", @"signatureText", @"nightMode", @"syncReadStatus"]) {
 //        NSLog(@"%@: %@", key, [userDefaults objectForKey:key]);
 //    }
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,22 +72,61 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-- (void)fetchedData:(NSData *)responseData
+- (NSData *)loadData
 {
-    self.boards = [NSMutableArray array];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: kMServiceBaseURL]];
 
-    NSError *error;
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    for (id object in json) {
-        NSNumber *boardId = [object objectForKey:@"id"];
-        NSString *boardName = [object objectForKey:@"text"];
+    return data;
+}
 
-        MCLBoard *board = [MCLBoard boardWithId:boardId name:boardName];
-        [self.boards addObject:board];
+- (void)stopRefresh
+{
+    [self.refreshControl endRefreshing];
+}
+
+- (void)reloadData
+{
+    NSData *data = [self loadData];
+    [self fetchedData:data];
+//    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:1.5]; // 1.5
+    [self stopRefresh];
+}
+
+- (void)fetchedData:(NSData *)data
+{
+    if ( ! data) {
+        BOOL errorViewPresent = NO;
+        for (id subview in self.view.subviews) {
+            if ([[subview class] isSubclassOfClass: [MCLErrorView class]]) {
+                errorViewPresent = YES;
+            }
+        }
+
+        if ( ! errorViewPresent) {
+            [self.view addSubview:[[MCLErrorView alloc] initWithFrame:self.tableViewBounds]];
+        }
+    } else {
+        self.boards = [NSMutableArray array];
+
+        NSError *error;
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        for (id object in json) {
+            NSNumber *boardId = [object objectForKey:@"id"];
+            NSString *boardName = [object objectForKey:@"text"];
+
+            MCLBoard *board = [MCLBoard boardWithId:boardId name:boardName];
+            [self.boards addObject:board];
+        }
+
+        for (id subview in self.view.subviews) {
+            if ([[subview class] isSubclassOfClass: [MCLErrorView class]]) {
+                [subview removeFromSuperview];
+            } else if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
+                [subview removeFromSuperview];
+            }
+        }
+        [self.tableView reloadData];
     }
-
-    [self.tableView reloadData];
 }
 
 
@@ -139,21 +168,6 @@
     }
 }
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Navigation
 
