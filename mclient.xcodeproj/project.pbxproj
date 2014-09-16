@@ -18,6 +18,7 @@
 		301FD9A619C411D400E36A5B /* MCLErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9A519C411D400E36A5B /* MCLErrorView.m */; };
 		301FD9A819C419DE00E36A5B /* errorResponse@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301FD9A719C419DE00E36A5B /* errorResponse@2x.png */; };
 		301FD9AA19C4D8D800E36A5B /* errorConnection@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301FD9A919C4D8D800E36A5B /* errorConnection@2x.png */; };
+		301FD9AD19C5C79000E36A5B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9AC19C5C79000E36A5B /* Reachability.m */; };
 		302F462519BF443A00DC77D8 /* copyLinkButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */; };
 		305DD81819A63517006514BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81719A63517006514BD /* Foundation.framework */; };
 		305DD81A19A63517006514BD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81919A63517006514BD /* CoreGraphics.framework */; };
@@ -82,6 +83,8 @@
 		301FD9A519C411D400E36A5B /* MCLErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLErrorView.m; sourceTree = "<group>"; };
 		301FD9A719C419DE00E36A5B /* errorResponse@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "errorResponse@2x.png"; sourceTree = "<group>"; };
 		301FD9A919C4D8D800E36A5B /* errorConnection@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "errorConnection@2x.png"; sourceTree = "<group>"; };
+		301FD9AB19C5C79000E36A5B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		301FD9AC19C5C79000E36A5B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copyLinkButton@2x.png"; sourceTree = "<group>"; };
 		305DD81419A63517006514BD /* mclient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mclient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		305DD81719A63517006514BD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -205,6 +208,8 @@
 				307A80DB19B5EBD8001B538D /* MCLMServiceConnector.h */,
 				307A80DC19B5EBD8001B538D /* MCLMServiceConnector.m */,
 				305DD85A19AB2F07006514BD /* Model */,
+				301FD9AB19C5C79000E36A5B /* Reachability.h */,
+				301FD9AC19C5C79000E36A5B /* Reachability.m */,
 				305DD81E19A63517006514BD /* Supporting Files */,
 				305DD85919AB2EFE006514BD /* View */,
 			);
@@ -431,6 +436,7 @@
 				30E8B89919B3CBF40067DD1F /* MCLComposeMessageTableViewController.m in Sources */,
 				307A80DD19B5EBD8001B538D /* MCLMServiceConnector.m in Sources */,
 				305DD82819A63517006514BD /* MCLAppDelegate.m in Sources */,
+				301FD9AD19C5C79000E36A5B /* Reachability.m in Sources */,
 				301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */,
 				305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */,
 				30E8B89619B33C070067DD1F /* MCLReadList.m in Sources */,

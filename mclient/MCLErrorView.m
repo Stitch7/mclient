@@ -31,7 +31,8 @@
 - (UIImageView *)image
 {
 	if ( ! _image) {
-        _image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"errorResponse.png"]];
+//        _image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"errorResponse.png"]];
+        _image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"errorConnection.png"]];
     }
 
 	return _image;
@@ -60,13 +61,10 @@
 - (id)initWithFrame:(CGRect)frame
 {
 	if (self = [super initWithFrame:frame]) {
-
-		[self setBackgroundColor:[UIColor colorWithRed:224/255.0 green:224/255.0 blue:224/255.0 alpha:1.0]];
         [self setBackgroundColor:[UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0]];
-//        [self setBackgroundColor:[UIColor whiteColor]];
 
-
-		self.label.text = @"Unable not load data";
+//        self.label.text = @"Unable not load data";
+		self.label.text = @"No Internet Connection";
 		self.label.textColor = [UIColor darkGrayColor];
 
         self.subLabel.text = @"Try pull to refresh…";

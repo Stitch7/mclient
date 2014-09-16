@@ -12,11 +12,13 @@
 #import "MCLBoard.h"
 #import "MCLErrorView.h"
 #import "MCLLoadingView.h"
+#import "Reachability.h"
 
 @interface MCLBoardListTableViewController ()
 
 @property (assign, nonatomic) CGRect tableViewBounds;
 @property (strong, nonatomic) NSMutableArray *boards;
+@property (strong, nonatomic) Reachability *reachability;
 
 @end
 
@@ -40,11 +42,8 @@
     self.threadListTableViewController = (MCLThreadListTableViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     */
 
-    // Init refresh control
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to refresh..."];
-    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl = refreshControl;
+    [self setupReachability];
+    [self setupRefreshControl];
 
     self.tableViewBounds = self.view.bounds;
 
@@ -77,6 +76,18 @@
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: kMServiceBaseURL]];
 
     return data;
+}
+
+- (void)setupRefreshControl
+{
+    if ( ! self.refreshControl) {
+        self.tableView.bounces = YES;
+
+        UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+        refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to refresh..."];
+        [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+        self.refreshControl = refreshControl;
+    }
 }
 
 - (void)stopRefresh
@@ -152,19 +163,51 @@
     return cell;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+
+#pragma mark - Reachability
+
+- (void)setupReachability
 {
-    // Return NO if you do not want the specified item to be editable.
-    return NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+	self.reachability = [Reachability reachabilityWithHostName:@"www.google.com"];
+	[self.reachability startNotifier];
+	[self updateInterfaceWithReachability:self.reachability];
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void) reachabilityChanged:(NSNotification *)note
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.boards removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+    NSLog(@"reachabilityChanged");
+
+	Reachability* curReach = [note object];
+	NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
+	[self updateInterfaceWithReachability:curReach];
+}
+
+- (void)updateInterfaceWithReachability:(Reachability *)reachability
+{
+    NetworkStatus netStatus = [reachability currentReachabilityStatus];
+
+    NSLog(@"#NetworkStatus = %i", netStatus);
+
+    switch (netStatus) {
+        case NotReachable:
+            NSLog(@"-- NotReachable");
+            [self.view addSubview:[[MCLErrorView alloc] initWithFrame:self.tableViewBounds]];
+            self.refreshControl = nil;
+            self.tableView.bounces = NO;
+            break;
+
+
+        case ReachableViaWWAN:
+        case ReachableViaWiFi:
+            NSLog(@"-- ReachableVia");
+            for (id subview in self.view.subviews) {
+                if ([[subview class] isSubclassOfClass: [MCLErrorView class]]) {
+                    [subview removeFromSuperview];
+                    [self setupRefreshControl];
+                }
+            }
+            break;
     }
 }
 
