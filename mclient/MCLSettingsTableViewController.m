@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *settingsPasswordTextField;
 @property (weak, nonatomic) IBOutlet UISwitch *settingsSignatureEnabledSwitch;
 @property (weak, nonatomic) IBOutlet UITextView *settingsSignatureTextView;
+@property (weak, nonatomic) IBOutlet UISwitch *settingsFrameStyleSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *settingsNightModeSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *settingsSyncReadStatusSwitch;
 
@@ -53,6 +54,7 @@
     self.settingsUsernameTextField.text = username;
     self.settingsPasswordTextField.text = password;
     self.settingsSignatureEnabledSwitch.on = [self.userDefaults boolForKey:@"signatureEnabled"];
+    self.settingsFrameStyleSwitch.on = [self.userDefaults boolForKey:@"frameStyle"];
     self.settingsNightModeSwitch.on = [self.userDefaults boolForKey:@"nightMode"];
     self.settingsSyncReadStatusSwitch.on = [self.userDefaults boolForKey:@"syncReadStatus"];
 }
@@ -122,6 +124,11 @@
 - (IBAction)settingsSignatureEnabledSwitchValueChangedAction:(UISwitch *)sender
 {
     [self.userDefaults setBool:sender.on forKey:@"signatureEnabled"];
+}
+
+- (IBAction)frameStyleEnabledSwitchValueChangedAction:(UISwitch *)sender
+{
+    [self.userDefaults setBool:sender.on forKey:@"frameStyle"];
 }
 
 - (IBAction)settingsNightModeSwitchValueChangedAction:(UISwitch *)sender

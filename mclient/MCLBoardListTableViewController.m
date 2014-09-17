@@ -60,7 +60,7 @@
     [super viewDidAppear:animated];
 
 //    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//    for (id key in @[@"signatureEnabled", @"signatureText", @"nightMode", @"syncReadStatus"]) {
+//    for (id key in @[@"signatureEnabled", @"signatureText", @"frameStyle", @"nightMode", @"syncReadStatus"]) {
 //        NSLog(@"%@: %@", key, [userDefaults objectForKey:key]);
 //    }
 }
@@ -176,7 +176,7 @@
 
 - (void) reachabilityChanged:(NSNotification *)note
 {
-    NSLog(@"reachabilityChanged");
+//    NSLog(@"reachabilityChanged");
 
 	Reachability* curReach = [note object];
 	NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
@@ -187,11 +187,11 @@
 {
     NetworkStatus netStatus = [reachability currentReachabilityStatus];
 
-    NSLog(@"#NetworkStatus = %i", netStatus);
+//    NSLog(@"#NetworkStatus = %i", netStatus);
 
     switch (netStatus) {
         case NotReachable:
-            NSLog(@"-- NotReachable");
+//            NSLog(@"-- NotReachable");
             [self.view addSubview:[[MCLErrorView alloc] initWithFrame:self.tableViewBounds]];
             self.refreshControl = nil;
             self.tableView.bounces = NO;
@@ -200,7 +200,7 @@
 
         case ReachableViaWWAN:
         case ReachableViaWiFi:
-            NSLog(@"-- ReachableVia");
+//            NSLog(@"-- ReachableVia");
             for (id subview in self.view.subviews) {
                 if ([[subview class] isSubclassOfClass: [MCLErrorView class]]) {
                     [subview removeFromSuperview];

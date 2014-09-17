@@ -263,9 +263,14 @@
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+    NSString *identifier = @"PushToMessageList";
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"frameStyle"]) {
+        identifier = @"PushToMessageList2FrameStyle";
+    }
+
+    [self performSegueWithIdentifier:identifier sender:[self.tableView cellForRowAtIndexPath:indexPath]];
 }
 
 
@@ -293,7 +298,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"PushToMessageList"]) {
+    if ([segue.identifier isEqualToString:@"PushToMessageList"] || [segue.identifier isEqualToString:@"PushToMessageList2FrameStyle"]) {
         NSIndexPath *indexPath = nil;
         MCLThread *thread = nil;
         MCLThreadTableViewCell *cell = nil;
@@ -309,7 +314,7 @@
         
         [self.readList addMessageId:thread.messageId];        
         [cell markRead];
-        
+
         [segue.destinationViewController setBoard:self.board];
         [segue.destinationViewController setThread:thread];
     } else if ([segue.identifier isEqualToString:@"ModalToComposeThread"]) {

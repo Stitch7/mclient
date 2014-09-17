@@ -157,7 +157,7 @@
             NSString *imageURLString = [self.profileData objectForKey:key];
             if (imageURLString.length) {
                 NSURL *imageURL = [NSURL URLWithString:imageURLString];
-                self.profileImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
+                self.profileImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]]; //TODO Replace with UIWebView to support animated GIFs
             }
         }
 
