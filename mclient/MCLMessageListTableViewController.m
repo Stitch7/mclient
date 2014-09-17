@@ -22,6 +22,8 @@
 
 @interface MCLMessageListTableViewController ()
 
+@property (strong, nonatomic) UIPopoverController *masterPopoverController;
+
 @property (strong) MCLMServiceConnector *mServiceConnector;
 @property (strong) NSMutableArray *messages;
 @property (strong) NSMutableArray *cells;
@@ -118,19 +120,54 @@
 
 #pragma mark - Data methods
 
+- (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard
+{
+    self.thread = inThread;
+    self.board = inBoard;
+
+    // Close thread list in portrait mode
+    if (self.masterPopoverController) {
+        [self.masterPopoverController dismissPopoverAnimated:YES];
+    }
+
+    // Add loading view
+    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
+
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    if (selectedIndexPath) {
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
+        [self tableView:self.tableView didDeselectRowAtIndexPath:selectedIndexPath];
+    }
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [self loadData];
+        [self fetchedData:data];
+
+        // Remove loading view on main thread
+        dispatch_async(dispatch_get_main_queue(), ^{
+            for (id subview in self.view.subviews) {
+                if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
+                    [subview removeFromSuperview];
+                }
+            }
+            // Scrool table to top
+            [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+        });
+    });
+}
+
 - (NSData *)loadData
 {
     NSString *urlString = [NSString stringWithFormat:@"%@board/%@/messagelist/%@", kMServiceBaseURL, self.board.boardId, self.thread.threadId];
-    
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
-    [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
-    
+
     return data;
 }
 
 - (void)reloadData
 {
-    [self loadData];
+    NSData *data = [self loadData];
+    [self fetchedData:data];
     [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:1.5]; // 2.5
 }
 
@@ -340,7 +377,7 @@
         "        margin: 0px;"
         "    }"
         "    img {"
-        "        width: 100%;"
+        "        max-width: 100%;"
         "    }"
         "    button > img {"
         "        content:url(\"http://www.maniac-forum.de/forum/images/spoiler.png\");"
@@ -376,7 +413,7 @@
 }
 
 
-#pragma mark - UIWebView delegate
+#pragma mark - UIWebViewDelegate
 
 -(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
     BOOL shouldStartLoad = YES;
@@ -421,7 +458,24 @@
 }
 
 
-#pragma mark - Seque
+#pragma mark - UISplitViewControllerDelegate
+
+- (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
+{
+    barButtonItem.title = @"Threads";
+    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
+    self.masterPopoverController = popoverController;
+}
+
+- (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    // Called when the view is shown again in the split view, invalidating the button and popover controller.
+    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
+    self.masterPopoverController = nil;
+}
+
+
+#pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

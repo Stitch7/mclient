@@ -285,14 +285,25 @@
         } else {
             badgeSize = [self.badgeString sizeWithFont:font];
         }
-        
-		CGRect badgeframe = CGRectMake(self.contentView.frame.size.width - (badgeSize.width + 13 + self.badgeRightOffset),
-									   /* BEGIN CHANGES CRE */
-                                       //(CGFloat)round((self.contentView.frame.size.height - (badgeSize.height + (50/badgeSize.height))) / 2),
-                                       35,
-                                       /* END CHANGES CRE */
+
+        /* BEGIN CHANGES CRE */
+        /*
+        CGRect badgeframe = CGRectMake(self.contentView.frame.size.width - (badgeSize.width + 13 + self.badgeRightOffset),
+									   (CGFloat)round((self.contentView.frame.size.height - (badgeSize.height + (50/badgeSize.height))) / 2),
 									   badgeSize.width + 13, badgeSize.height + (50/badgeSize.height));
-		
+         */
+
+        CGRect badgeframe = CGRectMake(self.contentView.frame.size.width - (badgeSize.width + 13 + self.badgeRightOffset),
+                                       35,
+                                       badgeSize.width + 13, badgeSize.height + (50/badgeSize.height));
+
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+             badgeframe = CGRectMake(self.contentView.frame.size.width - (badgeSize.width + 20 + self.badgeRightOffset),
+                                     35,
+                                     badgeSize.width + 13, badgeSize.height + (50/badgeSize.height));
+        }
+        /* END CHANGES CRE */
+
         // Enable shadows if we want them
 		if(self.showShadow)
 			[self.badge setShowShadow:YES];

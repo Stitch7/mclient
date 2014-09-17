@@ -14,10 +14,10 @@
 //@interface MCLThreadTableViewCell : UITableViewCell
 @interface MCLThreadTableViewCell : TDBadgedCell
 
+@property (weak, nonatomic) IBOutlet MCLReadSymbolView *readSymbolView;
 @property (weak, nonatomic) IBOutlet UILabel *threadSubjectLabel;
 @property (weak, nonatomic) IBOutlet UILabel *threadUsernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *threadDateLabel;
-@property (weak, nonatomic) IBOutlet MCLReadSymbolView *readSymbolView;
 
 - (void)markRead;
 - (void)markUnread;

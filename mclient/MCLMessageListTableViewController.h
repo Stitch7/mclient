@@ -11,9 +11,11 @@
 @class MCLBoard;
 @class MCLThread;
 
-@interface MCLMessageListTableViewController : UITableViewController <UIWebViewDelegate>
+@interface MCLMessageListTableViewController : UITableViewController <UIWebViewDelegate, UISplitViewControllerDelegate>
 
 @property (strong, nonatomic) MCLBoard *board;
 @property (strong, nonatomic) MCLThread *thread;
+
+- (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard;
 
 @end

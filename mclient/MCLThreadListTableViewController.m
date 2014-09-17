@@ -63,6 +63,8 @@
 {
     [super viewDidLoad];
 
+    self.messageListTableViewController = (MCLMessageListTableViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+
     // Cache original tables separatorColor and set to clear to avoid flickering loading view
     self.tableSeparatorColor = [self.tableView separatorColor];
     [self.tableView setSeparatorColor:[UIColor clearColor]];
@@ -265,12 +267,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *identifier = @"PushToMessageList";
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"frameStyle"]) {
-        identifier = @"PushToMessageList2FrameStyle";
-    }
+    MCLThread *selectedThread = self.threads[indexPath.row];
+    MCLThreadTableViewCell *selectedCell = (MCLThreadTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
 
-    [self performSegueWithIdentifier:identifier sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+    [self.readList addMessageId:selectedThread.messageId];
+    [selectedCell markRead];
+
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [self.messageListTableViewController loadThread:selectedThread fromBoard:self.board];
+    } else {
+        NSString *identifier = @"PushToMessageList";
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"frameStyle"]) {
+            identifier = @"PushToMessageList2FrameStyle";
+        }
+
+        [self performSegueWithIdentifier:identifier sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+    }
 }
 
 
@@ -294,7 +306,7 @@
 }
 
 
-#pragma mark - Seque
+#pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -312,8 +324,8 @@
             cell = (MCLThreadTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
         }
         
-        [self.readList addMessageId:thread.messageId];        
-        [cell markRead];
+//        [self.readList addMessageId:thread.messageId];        
+//        [cell markRead];
 
         [segue.destinationViewController setBoard:self.board];
         [segue.destinationViewController setThread:thread];
