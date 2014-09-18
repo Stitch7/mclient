@@ -21,7 +21,6 @@
 		301FD9AD19C5C79000E36A5B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9AC19C5C79000E36A5B /* Reachability.m */; };
 		301FD9B019C83A9C00E36A5B /* MCLMessageList2FrameStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9AF19C83A9C00E36A5B /* MCLMessageList2FrameStyleViewController.m */; };
 		301FD9B219C8666100E36A5B /* replyButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301FD9B119C8666100E36A5B /* replyButton@2x.png */; };
-		301FD9B819C8776D00E36A5B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 301FD9B719C8776D00E36A5B /* Settings.bundle */; };
 		302F462519BF443A00DC77D8 /* copyLinkButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */; };
 		305DD81819A63517006514BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81719A63517006514BD /* Foundation.framework */; };
 		305DD81A19A63517006514BD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81919A63517006514BD /* CoreGraphics.framework */; };
@@ -91,7 +90,6 @@
 		301FD9AE19C83A9C00E36A5B /* MCLMessageList2FrameStyleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageList2FrameStyleViewController.h; sourceTree = "<group>"; };
 		301FD9AF19C83A9C00E36A5B /* MCLMessageList2FrameStyleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageList2FrameStyleViewController.m; sourceTree = "<group>"; };
 		301FD9B119C8666100E36A5B /* replyButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "replyButton@2x.png"; sourceTree = "<group>"; };
-		301FD9B719C8776D00E36A5B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copyLinkButton@2x.png"; sourceTree = "<group>"; };
 		305DD81419A63517006514BD /* mclient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mclient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		305DD81719A63517006514BD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -175,7 +173,6 @@
 				305DD81D19A63517006514BD /* mclient */,
 				305DD84219A63517006514BD /* mclientTests */,
 				305DD81519A63517006514BD /* Products */,
-				301FD9B719C8776D00E36A5B /* Settings.bundle */,
 			);
 			sourceTree = "<group>";
 		};
@@ -405,7 +402,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				305DD82E19A63517006514BD /* Main_iPad.storyboard in Resources */,
-				301FD9B819C8776D00E36A5B /* Settings.bundle in Resources */,
 				305DD83619A63517006514BD /* Images.xcassets in Resources */,
 				301FD9AA19C4D8D800E36A5B /* errorConnection@2x.png in Resources */,
 				301FD9A819C419DE00E36A5B /* errorResponse@2x.png in Resources */,
