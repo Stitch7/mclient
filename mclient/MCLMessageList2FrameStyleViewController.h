@@ -11,7 +11,7 @@
 @class MCLBoard;
 @class MCLThread;
 
-@interface MCLMessageList2FrameStyleViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, AVSpeechSynthesizerDelegate>
+@interface MCLMessageList2FrameStyleViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, AVSpeechSynthesizerDelegate, UISplitViewControllerDelegate>
 
 @property (strong, nonatomic) MCLBoard *board;
 @property (strong, nonatomic) MCLThread *thread;

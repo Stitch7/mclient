@@ -13,7 +13,7 @@
 #import "constants.h"
 #import "KeychainItemWrapper.h"
 #import "MCLMServiceConnector.h"
-#import "MCLComposeMessageTableViewController.h"
+#import "MCLComposeMessageViewController.h"
 #import "MCLProfileTableViewController.h"
 #import "MCLLoadingView.h"
 #import "MCLMessageTableViewCell.h"
@@ -24,6 +24,8 @@
 
 #pragma mark - Private Stuff
 @interface MCLMessageList2FrameStyleViewController ()
+
+@property (strong, nonatomic) UIPopoverController *masterPopoverController;
 
 @property (strong) MCLMServiceConnector *mServiceConnector;
 @property (strong) NSMutableArray *messages;
@@ -101,27 +103,43 @@
     [self.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
 
-    // Add loading view
-    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
 
-    // Load data async
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:[self loadData] waitUntilDone:YES];
+    if (self.board && self.thread) {
+        // Add loading view
+        [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
 
-        // Remove loading view on main thread
-        dispatch_async(dispatch_get_main_queue(), ^{
-            for (id subview in self.view.subviews) {
-                if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
-                    [subview removeFromSuperview];
+        // Load data async
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSData *data = [self loadData];
+            [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+
+            // Remove loading view on main thread
+            dispatch_async(dispatch_get_main_queue(), ^{
+                for (id subview in self.view.subviews) {
+                    if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
+                        [subview removeFromSuperview];
+                    }
                 }
-            }
+            });
         });
-    });
+    }
 }
 
 - (CGFloat)fullViewheight
 {
-    return self.view.bounds.size.height - self.navigationController.navigationBar.bounds.size.height - [UIApplication sharedApplication].statusBarFrame.size.height;
+    CGFloat statusBarHeight = 0.0f;
+    if ([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft ||
+        [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight
+    ) {
+        statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
+    } else {
+        statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    }
+
+    return self.view.bounds.size.height - self.navigationController.navigationBar.bounds.size.height - statusBarHeight;
+
+
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -132,6 +150,42 @@
 
 
 #pragma mark - Data methods
+
+- (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard
+{
+    self.thread = inThread;
+    self.board = inBoard;
+
+    // Set title
+    self.title = inThread.subject;
+
+    // Close thread list in portrait mode
+    if (self.masterPopoverController) {
+        [self.masterPopoverController dismissPopoverAnimated:YES];
+    }
+
+    self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+
+    // Add loading view
+    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [self loadData];
+        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+
+        // Remove loading view on main thread
+        dispatch_async(dispatch_get_main_queue(), ^{
+            for (id subview in self.view.subviews) {
+                if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
+                    [subview removeFromSuperview];
+                }
+            }
+
+            // Scrool table to top
+            [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+        });
+    });
+}
 
 - (NSData *)loadData
 {
@@ -190,6 +244,7 @@
 
     [self.tableView reloadData];
 
+    // Select first message
     [self.tableView selectRowAtIndexPath:self.selectedIndexPath animated:NO scrollPosition:0];
     [self tableView:self.tableView didSelectRowAtIndexPath:self.selectedIndexPath];
 }
@@ -326,7 +381,7 @@
                              "        padding: 0px;"
                              "    }"
                              "    img {"
-                             "        width: 100%;"
+                             "        max-width: 100%;"
                              "    }"
                              "    a {"
                              "        word-break: break-all;"
@@ -400,6 +455,9 @@
 {
     self.messageView.layer.needsDisplayOnBoundsChange = YES;
     self.messageView.contentMode = UIViewContentModeRedraw;
+
+//    NSLog(@"fullViewheight: %f", [self fullViewheight]);
+//    NSLog(@"self.messageView.bounds.size.height: %f", self.messageView.bounds.size.height);
 
     // Cache initial height
     [self.messageView setTag:self.messageView.bounds.size.height];
@@ -521,6 +579,24 @@
                       otherButtonTitles:nil] show];
 }
 
+
+#pragma mark - UISplitViewControllerDelegate
+
+- (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
+{
+    barButtonItem.title = @"Threads";
+    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
+    self.masterPopoverController = popoverController;
+}
+
+- (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    // Called when the view is shown again in the split view, invalidating the button and popover controller.
+    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
+    self.masterPopoverController = nil;
+}
+
+
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -529,7 +605,7 @@
     MCLMessage *message = self.messages[indexPath.row];
 
     if ([segue.identifier isEqualToString:@"ModalToComposeReply"]) {
-        MCLComposeMessageTableViewController *destinationViewController = ((MCLComposeMessageTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
+        MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         NSString *subject = message.subject;
 
         NSString *subjectReplyPrefix = @"Re:";
@@ -542,7 +618,7 @@
         [destinationViewController setMessageId:message.messageId];
         [destinationViewController setSubject:subject];
     } else if ([segue.identifier isEqualToString:@"ModalToEditReply"]) {
-        MCLComposeMessageTableViewController *destinationViewController = ((MCLComposeMessageTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
+        MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
 
         NSString *text = [self.webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"body\")[0].textContent;"]; //TODO looses Images...
         text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];

@@ -10,7 +10,7 @@
 #import "KeychainItemWrapper.h"
 #import "MCLMServiceConnector.h"
 #import "MCLMessageListTableViewController.h"
-#import "MCLComposeMessageTableViewController.h"
+#import "MCLComposeMessageViewController.h"
 #import "MCLProfileTableViewController.h"
 #import "MCLLoadingView.h"
 #import "MCLMessageTableViewCell.h"
@@ -135,7 +135,7 @@
 
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     if (selectedIndexPath) {
-        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES]; //TODO needed?
         [self tableView:self.tableView didDeselectRowAtIndexPath:selectedIndexPath];
     }
 
@@ -483,7 +483,7 @@
     MCLMessage *message = self.messages[indexPath.row];
     
     if ([segue.identifier isEqualToString:@"ModalToComposeReply"]) {
-        MCLComposeMessageTableViewController *destinationViewController = ((MCLComposeMessageTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
+        MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         NSString *subject = message.subject;
         
         NSString *subjectReplyPrefix = @"Re:";
@@ -496,7 +496,7 @@
         [destinationViewController setMessageId:message.messageId];
         [destinationViewController setSubject:subject];
     } else if ([segue.identifier isEqualToString:@"ModalToEditReply"]) {
-        MCLComposeMessageTableViewController *destinationViewController = ((MCLComposeMessageTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
+        MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         
         MCLMessageTableViewCell *cell = (MCLMessageTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         NSString *text = [cell.messageTextWebView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"body\")[0].textContent;"];

@@ -11,7 +11,7 @@
 #import "MCLMServiceConnector.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLMessageListTableViewController.h"
-#import "MCLComposeMessageTableViewController.h"
+#import "MCLComposeMessageViewController.h"
 #import "MCLErrorView.h"
 #import "MCLLoadingView.h"
 #import "MCLThreadTableViewCell.h"
@@ -330,7 +330,7 @@
         [segue.destinationViewController setBoard:self.board];
         [segue.destinationViewController setThread:thread];
     } else if ([segue.identifier isEqualToString:@"ModalToComposeThread"]) {
-        MCLComposeMessageTableViewController *destinationViewController = ((MCLComposeMessageTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
+        MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         [destinationViewController setType:kComposeTypeThread];
         [destinationViewController setBoardId:self.board.boardId];
     }

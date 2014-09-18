@@ -252,91 +252,6 @@
             </objects>
             <point key="canvasLocation" x="637" y="-695"/>
         </scene>
-        <!--Compose Message Table View Controller - Create Thread-->
-        <scene sceneID="Ceq-Kw-BTl">
-            <objects>
-                <tableViewController id="rnP-sm-fcM" customClass="MCLComposeMessageTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="28Q-jE-aHc">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        <sections>
-                            <tableViewSection id="reM-Kx-3pX">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" id="rv2-Iz-lMx">
-                                        <rect key="frame" x="0.0" y="64" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rv2-Iz-lMx" id="xlq-jX-1JH">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Subject" minimumFontSize="17" clearButtonMode="whileEditing" id="gLr-fQ-gVh">
-                                                    <rect key="frame" x="20" y="7" width="252" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" returnKeyType="next"/>
-                                                </textField>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vgq-ls-JFe">
-                                                    <rect key="frame" x="283" y="9" width="25" height="25"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" image="quoteButton.png"/>
-                                                    <connections>
-                                                        <action selector="quoteButtonTouchUpInside:" destination="rnP-sm-fcM" eventType="touchUpInside" id="mQU-rk-YE2"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" rowHeight="243" id="JZ1-md-xnG">
-                                        <rect key="frame" x="0.0" y="108" width="320" height="243"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JZ1-md-xnG" id="5mX-vO-RiG">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="242"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Tpw-OV-kLg">
-                                                    <rect key="frame" x="20" y="7" width="280" height="227"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="rnP-sm-fcM" id="Dtp-QD-bJH"/>
-                            <outlet property="delegate" destination="rnP-sm-fcM" id="p36-gE-xgM"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Create Thread" id="4bg-FS-wog">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="mNV-No-xeu">
-                            <connections>
-                                <action selector="cancelAction:" destination="rnP-sm-fcM" id="nPI-Or-HPH"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Send" id="dWC-OY-YeX">
-                            <connections>
-                                <action selector="saveAction:" destination="rnP-sm-fcM" id="blY-dc-VLM"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="composeCancelButton" destination="mNV-No-xeu" id="GnI-cY-Gvu"/>
-                        <outlet property="composeQuoteButton" destination="vgq-ls-JFe" id="PVe-hd-KId"/>
-                        <outlet property="composeSendButton" destination="dWC-OY-YeX" id="v54-VD-b9f"/>
-                        <outlet property="composeSubjectTextField" destination="gLr-fQ-gVh" id="V8F-ux-4gm"/>
-                        <outlet property="composeTextTextField" destination="Tpw-OV-kLg" id="sCJ-eO-cNs"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="JEb-zc-Jxp" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1067" y="1540"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="URj-u2-cIZ">
             <objects>
@@ -346,7 +261,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="rnP-sm-fcM" kind="relationship" relationship="rootViewController" id="bAG-B2-Mpx"/>
+                        <segue destination="Lm5-LM-3Mr" kind="relationship" relationship="rootViewController" id="CGE-TU-X0R"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OuU-Z9-Ajz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -791,6 +706,73 @@
             </objects>
             <point key="canvasLocation" x="637" y="794"/>
         </scene>
+        <!--Compose Message View Controller-->
+        <scene sceneID="lEV-X2-pT2">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Lm5-LM-3Mr" customClass="MCLComposeMessageViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="v1B-Ar-lzP">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" keyboardDismissMode="interactive" id="Yfo-0k-yIi">
+                                <rect key="frame" x="20" y="115" width="280" height="433"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" id="UbW-b5-AmA">
+                                <rect key="frame" x="84" y="71" width="188" height="30"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PQv-Cr-prB">
+                                <rect key="frame" x="20" y="75" width="56" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qc6-x2-MYp">
+                                <rect key="frame" x="280" y="67" width="40" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="quoteButton.png"/>
+                                <connections>
+                                    <action selector="quoteButtonTouchUpInside:" destination="Lm5-LM-3Mr" eventType="touchUpInside" id="XC5-NX-wdM"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" id="7JZ-tq-SnY">
+                                <rect key="frame" x="20" y="105" width="300" height="1"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.78431379800000001" green="0.78039222959999999" blue="0.80000007149999997" alpha="1" colorSpace="deviceRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="pko-K6-kdO">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="szs-kd-thu">
+                            <connections>
+                                <action selector="cancelAction:" destination="Lm5-LM-3Mr" id="I4Q-rX-IqQ"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Send" id="RXe-Zd-aaP">
+                            <connections>
+                                <action selector="saveAction:" destination="Lm5-LM-3Mr" id="0n6-2H-oHq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="composeQuoteButton" destination="qc6-x2-MYp" id="HKk-aw-d92"/>
+                        <outlet property="composeSendButton" destination="RXe-Zd-aaP" id="iiV-6A-bQc"/>
+                        <outlet property="composeSubjectTextField" destination="UbW-b5-AmA" id="YLC-M3-RT3"/>
+                        <outlet property="composeTextTextField" destination="Yfo-0k-yIi" id="1eD-2F-3ii"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ax2-fh-izI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1088" y="1540"/>
+        </scene>
     </scenes>
     <resources>
         <image name="copyLinkButton.png" width="25" height="25"/>
@@ -808,7 +790,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ixj-x7-EDb"/>
         <segue reference="fQb-Tw-eMv"/>
+        <segue reference="ejO-Yt-GIM"/>
     </inferredMetricsTieBreakers>
 </document>

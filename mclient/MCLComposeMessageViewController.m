@@ -7,13 +7,12 @@
 //
 
 #import "constants.h"
-#import "MCLComposeMessageTableViewController.h"
+#import "MCLComposeMessageViewController.h"
 #import "MCLMServiceConnector.h"
 #import "KeychainItemWrapper.h"
 
-@interface MCLComposeMessageTableViewController ()
+@interface MCLComposeMessageViewController ()
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *composeCancelButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *composeSendButton;
 @property (weak, nonatomic) IBOutlet UIButton *composeQuoteButton;
 @property (weak, nonatomic) IBOutlet UITextField *composeSubjectTextField;
@@ -21,20 +20,16 @@
 
 @end
 
-@implementation MCLComposeMessageTableViewController
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    if (self = [super initWithStyle:style]) {
-        // Custom initialization
-    }
-    
-    return self;
-}
+@implementation MCLComposeMessageViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.composeTextTextField.delegate = self;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
     switch (self.type) {
         case kComposeTypeThread:
@@ -80,6 +75,61 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - UITextViewDelegate
+
+- (void)textViewDidChange:(UITextView *)textView {
+    [self showTextViewCaretPosition:textView];
+}
+
+- (void)textViewDidChangeSelection:(UITextView *)textView {
+    [self showTextViewCaretPosition:textView];
+}
+
+
+- (void)showTextViewCaretPosition:(UITextView *)textView {
+    CGRect caretRect = [textView caretRectForPosition:self.composeTextTextField.selectedTextRange.end];
+    [textView scrollRectToVisible:caretRect animated:NO];
+}
+
+
+#pragma mark - Keyboard notifications
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    CGRect keyboardFrame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    NSTimeInterval animationDuration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+
+    BOOL isPortrait = UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
+    CGFloat keyboardHeight = isPortrait ? keyboardFrame.size.height : keyboardFrame.size.width;
+
+    UIEdgeInsets contentInset = self.composeTextTextField.contentInset;
+    contentInset.bottom = keyboardHeight;
+
+
+    UIEdgeInsets scrollIndicatorInsets = self.composeTextTextField.scrollIndicatorInsets;
+    scrollIndicatorInsets.bottom = keyboardHeight;
+
+    [UIView animateWithDuration:animationDuration animations:^{
+        self.composeTextTextField.contentInset = contentInset;
+        self.composeTextTextField.scrollIndicatorInsets = scrollIndicatorInsets;
+    }];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    NSTimeInterval animationDuration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+
+    UIEdgeInsets contentInset = self.composeTextTextField.contentInset;
+    contentInset.bottom = 0;
+
+    UIEdgeInsets scrollIndicatorInsets = self.composeTextTextField.scrollIndicatorInsets;
+    scrollIndicatorInsets.bottom = 0;
+
+    [UIView animateWithDuration:animationDuration animations:^{
+        self.composeTextTextField.contentInset = contentInset;
+        self.composeTextTextField.scrollIndicatorInsets = scrollIndicatorInsets;
+    }];
 }
 
 

@@ -16,7 +16,7 @@ typedef enum kComposeType : NSUInteger {
   
 } kComposeType;
 
-@interface MCLComposeMessageTableViewController : UITableViewController <UITextFieldDelegate, UITextViewDelegate>
+@interface MCLComposeMessageViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate>
 
 @property (assign) NSUInteger type;
 @property (strong, nonatomic) NSNumber *boardId;
