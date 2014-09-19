@@ -10,7 +10,8 @@
 #import "KeychainItemWrapper.h"
 #import "MCLMServiceConnector.h"
 #import "MCLThreadListTableViewController.h"
-#import "MCLMessageListTableViewController.h"
+#import "MCLMessageListViewController.h" //TODO
+#import "MCLDetailViewController.h"
 #import "MCLComposeMessageViewController.h"
 #import "MCLErrorView.h"
 #import "MCLLoadingView.h"
@@ -24,6 +25,11 @@
 
 @property (assign, nonatomic) UIColor *tableSeparatorColor;
 @property (assign, nonatomic) CGRect tableViewBounds;
+
+@property (strong, nonatomic) MCLDetailViewController *detailViewController;
+@property (strong, nonatomic) UIPopoverController *masterPopoverController;
+
+
 @property (strong) NSMutableArray *threads;
 @property (strong) NSMutableArray *searchResults;
 @property (strong) MCLReadList *readList;
@@ -34,23 +40,18 @@
 
 @implementation MCLThreadListTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    if (self = [super initWithStyle:style]) {
-        // Custom initialization
-    }
-    
-    return self;
-}
-
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    
+
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        self.clearsSelectionOnViewWillAppear = NO;
+    }
+
     self.readList = [[MCLReadList alloc] init];
     
-    NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
+    NSString *keychainIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:keychainIdentifier accessGroup:nil];
     self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
     
     self.dateFormatter = [[NSDateFormatter alloc] init];
@@ -63,7 +64,21 @@
 {
     [super viewDidLoad];
 
-    self.messageListTableViewController = (MCLMessageListTableViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    // On iPad replace splitviews detailViewController with MessageListViewController type depending on users settings
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        NSString *storyboardIdentifier = @"MessageListView";
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"frameStyle"]) {
+            storyboardIdentifier = @"MessageList2FrameStyleView";
+        }
+        self.detailViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardIdentifier];
+
+        UINavigationController *navController = [self.splitViewController.viewControllers lastObject];
+        MCLDetailViewController *oldController = [navController.viewControllers firstObject];
+        [navController setViewControllers:[NSArray arrayWithObjects:self.detailViewController, nil]];
+        UIBarButtonItem *splitViewButton = oldController.navigationItem.leftBarButtonItem;
+        self.masterPopoverController = oldController.masterPopoverController;
+        [self.detailViewController setSplitViewButton:splitViewButton forPopoverController:self.masterPopoverController];
+    }
 
     // Cache original tables separatorColor and set to clear to avoid flickering loading view
     self.tableSeparatorColor = [self.tableView separatorColor];
@@ -87,17 +102,6 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [self loadData];
         [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
-
-//        // Remove loading view on main thread
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            for (id subview in self.view.subviews) {
-//                if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
-//                    [subview removeFromSuperview];
-//                }
-//            }
-//            // Restore tables separatorColor
-//            [self.tableView setSeparatorColor:tableSeparatorColor];
-//        });
     });
 }
 
@@ -265,23 +269,40 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self.tableView rowHeight];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MCLThread *selectedThread = self.threads[indexPath.row];
-    MCLThreadTableViewCell *selectedCell = (MCLThreadTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    MCLThread *thread = nil;
+    MCLThreadTableViewCell *cell = nil;
+    if (self.searchDisplayController.active) {
+        thread = self.searchResults[indexPath.row];
+        cell = (MCLThreadTableViewCell*)[self.searchDisplayController.searchResultsTableView cellForRowAtIndexPath:indexPath];
+    } else {
+        thread = self.threads[indexPath.row];
+        cell = (MCLThreadTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+    }
 
-    [self.readList addMessageId:selectedThread.messageId];
-    [selectedCell markRead];
+    [self.readList addMessageId:thread.messageId];
+    [cell markRead];
 
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        [self.messageListTableViewController loadThread:selectedThread fromBoard:self.board];
+        // Hide popoverController in portrait mode
+        if ( ! UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
+            [self.masterPopoverController dismissPopoverAnimated:YES];
+        }
+
+        [self.detailViewController loadThread:thread fromBoard:self.board];
     } else {
         NSString *identifier = @"PushToMessageList";
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"frameStyle"]) {
             identifier = @"PushToMessageList2FrameStyle";
         }
 
-        [self performSegueWithIdentifier:identifier sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+        [self performSegueWithIdentifier:identifier sender:cell];
     }
 }
 
@@ -323,9 +344,6 @@
             thread = self.threads[indexPath.row];
             cell = (MCLThreadTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
         }
-        
-//        [self.readList addMessageId:thread.messageId];        
-//        [cell markRead];
 
         [segue.destinationViewController setBoard:self.board];
         [segue.destinationViewController setThread:thread];

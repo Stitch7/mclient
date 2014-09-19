@@ -15,6 +15,7 @@
 #import "MCLMServiceConnector.h"
 #import "MCLComposeMessageViewController.h"
 #import "MCLProfileTableViewController.h"
+#import "MCLDetailView.h"
 #import "MCLLoadingView.h"
 #import "MCLMessageTableViewCell.h"
 #import "MCLBoard.h"
@@ -26,7 +27,7 @@
 @interface MCLMessageList2FrameStyleViewController ()
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
-
+@property (strong, nonatomic) AVSpeechSynthesizer *speechSynthesizer;
 @property (strong) MCLMServiceConnector *mServiceConnector;
 @property (strong) NSMutableArray *messages;
 @property (strong) NSMutableArray *cells;
@@ -40,14 +41,11 @@
 @property (weak, nonatomic) IBOutlet UIView *messageView;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarButtonSpeak;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarButtonNotification;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarButtonEdit;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarButtonReply;
-
-@property (strong, nonatomic) AVSpeechSynthesizer *speechSynthesizer;
 
 @end
 
@@ -78,9 +76,6 @@
 {
     [super viewDidLoad];
 
-    // Set title to threads subject
-    self.title = self.thread.subject;
-
     self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 
     // WebView setup
@@ -103,8 +98,10 @@
     [self.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
 
-
     if (self.board && self.thread) {
+        // Set title to threads subject
+        self.title = self.thread.subject;
+
         // Add loading view
         [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
 
@@ -122,6 +119,9 @@
                 }
             });
         });
+    } else {
+        self.title = @"M!client";
+        [self.view addSubview:[[MCLDetailView alloc] initWithFrame:self.view.bounds]];
     }
 }
 
@@ -137,9 +137,6 @@
     }
 
     return self.view.bounds.size.height - self.navigationController.navigationBar.bounds.size.height - statusBarHeight;
-
-
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -177,6 +174,8 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             for (id subview in self.view.subviews) {
                 if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
+                    [subview removeFromSuperview];
+                } else if ([[subview class] isSubclassOfClass: [MCLDetailView class]]) {
                     [subview removeFromSuperview];
                 }
             }
@@ -577,23 +576,6 @@
                                delegate:nil
                       cancelButtonTitle:@"OK"
                       otherButtonTitles:nil] show];
-}
-
-
-#pragma mark - UISplitViewControllerDelegate
-
-- (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
-{
-    barButtonItem.title = @"Threads";
-    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
-    self.masterPopoverController = popoverController;
-}
-
-- (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
-{
-    // Called when the view is shown again in the split view, invalidating the button and popover controller.
-    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
-    self.masterPopoverController = nil;
 }
 
 

@@ -79,9 +79,10 @@
 	labelFrame.origin.x = spinnerFrame.origin.x + spinnerFrame.size.width + SPACE_BETWEEN_SPINNER_AND_LABEL;
 
 	// Set y position
-    spinnerFrame.origin.y = 150;
-	labelFrame.origin.y = 150;
+    spinnerFrame.origin.y = (self.bounds.size.height - spinnerFrame.size.height) / 2;
+	labelFrame.origin.y = spinnerFrame.origin.y;
 
+    // Pass back modiefied frames
 	self.label.frame = labelFrame;
 	self.spinner.frame = spinnerFrame;
 }

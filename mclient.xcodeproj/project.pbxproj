@@ -37,7 +37,7 @@
 		305DD83F19A63517006514BD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81B19A63517006514BD /* UIKit.framework */; };
 		305DD84719A63517006514BD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 305DD84519A63517006514BD /* InfoPlist.strings */; };
 		305DD84919A63517006514BD /* mclientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD84819A63517006514BD /* mclientTests.m */; };
-		305DD85419AB2970006514BD /* MCLMessageListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85319AB2970006514BD /* MCLMessageListTableViewController.m */; };
+		305DD85419AB2970006514BD /* MCLMessageListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85319AB2970006514BD /* MCLMessageListViewController.m */; };
 		305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85619AB2A7C006514BD /* MCLThreadListTableViewController.m */; };
 		305DD85D19AB300F006514BD /* MCLBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85C19AB300F006514BD /* MCLBoard.m */; };
 		305DD86019AB3031006514BD /* MCLThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85F19AB3031006514BD /* MCLThread.m */; };
@@ -51,6 +51,10 @@
 		307A80EF19B8800E001B538D /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 307A80EE19B8800E001B538D /* KeychainItemWrapper.m */; };
 		307A80F119B8804F001B538D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307A80F019B8804F001B538D /* Security.framework */; };
 		307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D797519B0B3B30096A217 /* MCLReadSymbolView.m */; };
+		308EC3D819CC4DE800A0869F /* MCLDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 308EC3D619CC4DE800A0869F /* MCLDetailViewController.m */; };
+		308EC3DA19CC6F9000A0869F /* downButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 308EC3D919CC6F9000A0869F /* downButton@2x.png */; };
+		308EC3DD19CC7BA600A0869F /* MCLDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 308EC3DC19CC7BA600A0869F /* MCLDetailView.m */; };
+		308EC3E119CC809000A0869F /* logoDetailView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 308EC3E019CC809000A0869F /* logoDetailView@2x.png */; };
 		30A1BFAD19B4A8D4002439FE /* MCLSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */; };
 		30E8B89619B33C070067DD1F /* MCLReadList.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89519B33C070067DD1F /* MCLReadList.m */; };
 		30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */; };
@@ -111,8 +115,8 @@
 		305DD84419A63517006514BD /* mclientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "mclientTests-Info.plist"; sourceTree = "<group>"; };
 		305DD84619A63517006514BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		305DD84819A63517006514BD /* mclientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mclientTests.m; sourceTree = "<group>"; };
-		305DD85219AB2970006514BD /* MCLMessageListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageListTableViewController.h; sourceTree = "<group>"; };
-		305DD85319AB2970006514BD /* MCLMessageListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListTableViewController.m; sourceTree = "<group>"; };
+		305DD85219AB2970006514BD /* MCLMessageListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageListViewController.h; sourceTree = "<group>"; };
+		305DD85319AB2970006514BD /* MCLMessageListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListViewController.m; sourceTree = "<group>"; };
 		305DD85519AB2A7C006514BD /* MCLThreadListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLThreadListTableViewController.h; sourceTree = "<group>"; };
 		305DD85619AB2A7C006514BD /* MCLThreadListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLThreadListTableViewController.m; sourceTree = "<group>"; };
 		305DD85B19AB300F006514BD /* MCLBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLBoard.h; sourceTree = "<group>"; };
@@ -133,6 +137,13 @@
 		307A80F019B8804F001B538D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		307D797419B0B3B30096A217 /* MCLReadSymbolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadSymbolView.h; sourceTree = "<group>"; };
 		307D797519B0B3B30096A217 /* MCLReadSymbolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadSymbolView.m; sourceTree = "<group>"; };
+		308EC3D519CC4DE800A0869F /* MCLDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLDetailViewController.h; sourceTree = "<group>"; };
+		308EC3D619CC4DE800A0869F /* MCLDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLDetailViewController.m; sourceTree = "<group>"; };
+		308EC3D719CC4DE800A0869F /* SplitViewButtonHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitViewButtonHandler.h; sourceTree = "<group>"; };
+		308EC3D919CC6F9000A0869F /* downButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downButton@2x.png"; sourceTree = "<group>"; };
+		308EC3DB19CC7BA600A0869F /* MCLDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLDetailView.h; sourceTree = "<group>"; };
+		308EC3DC19CC7BA600A0869F /* MCLDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLDetailView.m; sourceTree = "<group>"; };
+		308EC3E019CC809000A0869F /* logoDetailView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logoDetailView@2x.png"; sourceTree = "<group>"; };
 		30A1BFAB19B4A8D4002439FE /* MCLSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLSettingsTableViewController.h; sourceTree = "<group>"; };
 		30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsTableViewController.m; sourceTree = "<group>"; };
 		30E8B89419B33C070067DD1F /* MCLReadList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadList.h; sourceTree = "<group>"; };
@@ -200,6 +211,7 @@
 		305DD81D19A63517006514BD /* mclient */ = {
 			isa = PBXGroup;
 			children = (
+				308EC3D719CC4DE800A0869F /* SplitViewButtonHandler.h */,
 				301FD00F19AB73160028C5C8 /* constants.h */,
 				305DD85819AB2EE0006514BD /* Controller */,
 				307A80DE19B75F29001B538D /* Images */,
@@ -257,10 +269,12 @@
 				305DD83019A63517006514BD /* MCLBoardListTableViewController.m */,
 				30E8B89719B3CBF40067DD1F /* MCLComposeMessageViewController.h */,
 				30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */,
+				308EC3D519CC4DE800A0869F /* MCLDetailViewController.h */,
+				308EC3D619CC4DE800A0869F /* MCLDetailViewController.m */,
 				301FD9AE19C83A9C00E36A5B /* MCLMessageList2FrameStyleViewController.h */,
 				301FD9AF19C83A9C00E36A5B /* MCLMessageList2FrameStyleViewController.m */,
-				305DD85219AB2970006514BD /* MCLMessageListTableViewController.h */,
-				305DD85319AB2970006514BD /* MCLMessageListTableViewController.m */,
+				305DD85219AB2970006514BD /* MCLMessageListViewController.h */,
+				305DD85319AB2970006514BD /* MCLMessageListViewController.m */,
 				301E24B419BB02EB00943EC6 /* MCLProfileTableViewController.h */,
 				301E24B519BB02EB00943EC6 /* MCLProfileTableViewController.m */,
 				30A1BFAB19B4A8D4002439FE /* MCLSettingsTableViewController.h */,
@@ -276,6 +290,8 @@
 			children = (
 				301FD9A419C411D400E36A5B /* MCLErrorView.h */,
 				301FD9A519C411D400E36A5B /* MCLErrorView.m */,
+				308EC3DB19CC7BA600A0869F /* MCLDetailView.h */,
+				308EC3DC19CC7BA600A0869F /* MCLDetailView.m */,
 				301FD9A119C32FC600E36A5B /* MCLLoadingView.h */,
 				301FD9A219C32FC600E36A5B /* MCLLoadingView.m */,
 				301FD01619ACE3D10028C5C8 /* MCLMessageTableViewCell.h */,
@@ -308,7 +324,9 @@
 		307A80DE19B75F29001B538D /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				308EC3E019CC809000A0869F /* logoDetailView@2x.png */,
 				302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */,
+				308EC3D919CC6F9000A0869F /* downButton@2x.png */,
 				307A80EB19B7B993001B538D /* editButton@2x.png */,
 				301FD9A919C4D8D800E36A5B /* errorConnection@2x.png */,
 				301FD9A719C419DE00E36A5B /* errorResponse@2x.png */,
@@ -414,8 +432,10 @@
 				301E24B219BAE86200943EC6 /* notificationButtonDisabled@2x.png in Resources */,
 				307A80E819B7B899001B538D /* speakButton@2x.png in Resources */,
 				307A80EA19B7B962001B538D /* stopButton@2x.png in Resources */,
+				308EC3E119CC809000A0869F /* logoDetailView@2x.png in Resources */,
 				302F462519BF443A00DC77D8 /* copyLinkButton@2x.png in Resources */,
 				301E24AF19BAE3E500943EC6 /* profileButton@2x.png in Resources */,
+				308EC3DA19CC6F9000A0869F /* downButton@2x.png in Resources */,
 				307A80E619B7736A001B538D /* settingsButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -437,11 +457,13 @@
 			files = (
 				301FD01819ACE3D10028C5C8 /* MCLMessageTableViewCell.m in Sources */,
 				305DD86019AB3031006514BD /* MCLThread.m in Sources */,
+				308EC3D819CC4DE800A0869F /* MCLDetailViewController.m in Sources */,
 				301E24B619BB02EB00943EC6 /* MCLProfileTableViewController.m in Sources */,
 				305DD86319AB380C006514BD /* MCLMessage.m in Sources */,
 				305DD82419A63517006514BD /* main.m in Sources */,
 				301FD01519ACA0D70028C5C8 /* TDBadgedCell.m in Sources */,
 				301FD9A619C411D400E36A5B /* MCLErrorView.m in Sources */,
+				308EC3DD19CC7BA600A0869F /* MCLDetailView.m in Sources */,
 				30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */,
 				301FD9B019C83A9C00E36A5B /* MCLMessageList2FrameStyleViewController.m in Sources */,
 				307A80DD19B5EBD8001B538D /* MCLMServiceConnector.m in Sources */,
@@ -453,7 +475,7 @@
 				305DD85D19AB300F006514BD /* MCLBoard.m in Sources */,
 				301FD9A319C32FC600E36A5B /* MCLLoadingView.m in Sources */,
 				30A1BFAD19B4A8D4002439FE /* MCLSettingsTableViewController.m in Sources */,
-				305DD85419AB2970006514BD /* MCLMessageListTableViewController.m in Sources */,
+				305DD85419AB2970006514BD /* MCLMessageListViewController.m in Sources */,
 				307A80EF19B8800E001B538D /* KeychainItemWrapper.m in Sources */,
 				307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */,
 				305DD83119A63517006514BD /* MCLBoardListTableViewController.m in Sources */,

@@ -9,9 +9,10 @@
 #import "constants.h"
 #import "KeychainItemWrapper.h"
 #import "MCLMServiceConnector.h"
-#import "MCLMessageListTableViewController.h"
+#import "MCLMessageListViewController.h"
 #import "MCLComposeMessageViewController.h"
 #import "MCLProfileTableViewController.h"
+#import "MCLDetailView.h"
 #import "MCLLoadingView.h"
 #import "MCLMessageTableViewCell.h"
 #import "MCLBoard.h"
@@ -20,10 +21,13 @@
 #import "MCLReadList.h"
 
 
-@interface MCLMessageListTableViewController ()
+@interface MCLMessageListViewController ()
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong) UIRefreshControl *refreshControl;
+@property (strong) UIColor *tableSeparatorColor;
 @property (strong) MCLMServiceConnector *mServiceConnector;
 @property (strong) NSMutableArray *messages;
 @property (strong) NSMutableArray *cells;
@@ -34,16 +38,7 @@
 
 @end
 
-@implementation MCLMessageListTableViewController
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    if (self = [super initWithStyle:style]) {
-        // Custom initialization
-    }
-    
-    return self;
-}
+@implementation MCLMessageListViewController
 
 - (void)awakeFromNib
 {
@@ -70,39 +65,45 @@
     [super viewDidLoad];
 
     // Cache original tables separatorColor and set to clear to avoid flickering loading view
-    UIColor *tableSeparatorColor = [self.tableView separatorColor];
+    self.tableSeparatorColor = [self.tableView separatorColor];
     [self.tableView setSeparatorColor:[UIColor clearColor]];
 
-    // Set title to threads subject
-    self.title = self.thread.subject;
-    
     // Init refresh control
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to refresh..."];
-    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl = refreshControl;
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to refresh..."];
+    [self.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refreshControl];
 
-    // Preserve selection between presentations.
-    self.clearsSelectionOnViewWillAppear = NO;
+    if (self.board && self.thread) {
+        // Set title to threads subject
+        self.title = self.thread.subject;
 
-    // Add loading view
-    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
+        // Preserve selection between presentations.
+        //    self.clearsSelectionOnViewWillAppear = NO; //TODO
 
-    // Load data async
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:[self loadData] waitUntilDone:YES];
+        // Add loading view
+        [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
 
-        // Remove loading view on main thread
-        dispatch_async(dispatch_get_main_queue(), ^{
-            for (id subview in self.view.subviews) {
-                if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
-                    [subview removeFromSuperview];
+        // Load data async
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSData *data = [self loadData];
+            [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+
+            // Remove loading view on main thread
+            dispatch_async(dispatch_get_main_queue(), ^{
+                for (id subview in self.view.subviews) {
+                    if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
+                        [subview removeFromSuperview];
+                    }
                 }
-            }
-            // Restore tables separatorColor
-            [self.tableView setSeparatorColor:tableSeparatorColor];
+                // Restore tables separatorColor
+                [self.tableView setSeparatorColor:self.tableSeparatorColor];
+            });
         });
-    });
+    } else {
+        self.title = @"M!client";
+        [self.view addSubview:[[MCLDetailView alloc] initWithFrame:self.view.bounds]];
+    }
 }
 
 - (void)stopRefresh
@@ -125,6 +126,9 @@
     self.thread = inThread;
     self.board = inBoard;
 
+    // Set title
+    self.title = inThread.subject;
+
     // Close thread list in portrait mode
     if (self.masterPopoverController) {
         [self.masterPopoverController dismissPopoverAnimated:YES];
@@ -141,15 +145,20 @@
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [self loadData];
-        [self fetchedData:data];
+        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
 
         // Remove loading view on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
             for (id subview in self.view.subviews) {
-                if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
+                if ([[subview class] isSubclassOfClass: [MCLLoadingView class]] ||
+                    [[subview class] isSubclassOfClass: [MCLDetailView class]]
+                ) {
                     [subview removeFromSuperview];
                 }
             }
+            // Restore tables separatorColor
+            [self.tableView setSeparatorColor:self.tableSeparatorColor];
+
             // Scrool table to top
             [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
         });
@@ -244,8 +253,8 @@
     
     [cell setBoardId:self.board.boardId];
     [cell setMessageId:message.messageId];
-    cell.tag = i; //TODO not needed, i think...
-    
+//    cell.tag = i; //TODO not needed, i think...
+
     [cell setClipsToBounds:YES];
     
     [self indentView:cell.messageSubjectLabel withLevel:message.level startingAtX:20];
@@ -328,7 +337,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height = 60;
-    
+
 	if ([tableView indexPathsForSelectedRows].count && [[tableView indexPathsForSelectedRows] indexOfObject:indexPath] != NSNotFound) {
         MCLMessageTableViewCell *cell = self.cells[indexPath.row];
         CGFloat webViewHeight = cell.messageTextWebView.scrollView.contentSize.height;

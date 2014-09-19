@@ -9,6 +9,7 @@
 #import "constants.h"
 #import "MCLBoardListTableViewController.h"
 #import "MCLThreadListTableViewController.h"
+#import "MCLDetailViewController.h"
 #import "MCLBoard.h"
 #import "MCLErrorView.h"
 #import "MCLLoadingView.h"
@@ -26,12 +27,13 @@
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+
+    [self.splitViewController setDelegate:self];
+
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        self.clearsSelectionOnViewWillAppear = NO;
         self.preferredContentSize = CGSizeMake(320.0, 600.0);
     }
-    
-    [super awakeFromNib];
 }
 
 - (void)viewDidLoad
@@ -161,6 +163,23 @@
     cell.textLabel.text = board.name;
     
     return cell;
+}
+
+
+#pragma mark - UISplitViewControllerDelegate
+
+- (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
+{
+    UINavigationController *navController = [[[self splitViewController ] viewControllers ] lastObject ];
+    MCLDetailViewController *detailViewController = [[navController viewControllers] firstObject];
+    [detailViewController setSplitViewButton:barButtonItem forPopoverController:popoverController];
+}
+
+- (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    UINavigationController *navController = [[[self splitViewController ] viewControllers ] lastObject ];
+    MCLDetailViewController *detailViewController = [[navController viewControllers] firstObject];
+    [detailViewController setSplitViewButton:nil forPopoverController:nil];
 }
 
 

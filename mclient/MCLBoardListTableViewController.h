@@ -10,7 +10,7 @@
 
 @class MCLThreadListTableViewController;
 
-@interface MCLBoardListTableViewController : UITableViewController
+@interface MCLBoardListTableViewController : UITableViewController <UISplitViewControllerDelegate>
 
 @property (strong, nonatomic) MCLThreadListTableViewController *threadListTableViewController;
 
