@@ -634,7 +634,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Threads" id="YMe-WV-lzb">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="compose" id="xw3-ID-q1X">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="xw3-ID-q1X">
                             <connections>
                                 <segue destination="Nb5-ih-IpS" kind="modal" identifier="ModalToComposeThread" modalPresentationStyle="pageSheet" id="BBe-Jw-dPy"/>
                             </connections>
@@ -865,7 +865,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="MHm-mc-WTK"/>
+        <segue reference="BBe-Jw-dPy"/>
         <segue reference="OzD-Bs-DyH"/>
     </inferredMetricsTieBreakers>
 </document>

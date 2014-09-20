@@ -22,6 +22,8 @@
 
 @implementation MCLComposeMessageViewController
 
+#define SUBJECT_MAXLENGTH 56
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -147,14 +149,23 @@
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    NSUInteger length = self.composeSubjectTextField.text.length - range.length + string.length;
-    if (length > 0) {
-        self.composeSendButton.enabled = YES;
-    } else {
-        self.composeSendButton.enabled = NO;
+    BOOL shouldChangeCharacters = YES;
+
+    // Limit subject field to characters defined in SUBJECT_MAXLENGTH
+    if (textField == self.composeSubjectTextField) {
+        NSUInteger oldLength = [textField.text length];
+        NSUInteger replacementLength = [string length];
+        NSUInteger rangeLength = range.length;
+
+        NSUInteger newLength = oldLength - rangeLength + replacementLength;
+
+        // Disable send button if subject field is empty
+        self.composeSendButton.enabled = newLength > 0;
+
+        shouldChangeCharacters = newLength <= SUBJECT_MAXLENGTH || [string rangeOfString: @"\n"].location != NSNotFound;
     }
-    
-    return YES;
+
+    return shouldChangeCharacters;
 }
 
 
