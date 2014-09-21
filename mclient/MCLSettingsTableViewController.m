@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Christopher Reitz. All rights reserved.
 //
 
+#import "constants.h"
 #import "KeychainItemWrapper.h"
 #import "MCLSettingsTableViewController.h"
 #import "MCLMServiceConnector.h"
@@ -20,22 +21,18 @@
 @property (weak, nonatomic) IBOutlet UITextField *settingsPasswordTextField;
 @property (weak, nonatomic) IBOutlet UISwitch *settingsSignatureEnabledSwitch;
 @property (weak, nonatomic) IBOutlet UITextView *settingsSignatureTextView;
-@property (weak, nonatomic) IBOutlet UISwitch *settingsFrameStyleSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *settingsNightModeSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *settingsSyncReadStatusSwitch;
+
+@property (assign, nonatomic) int threadView;
+@property (assign, nonatomic) int showImages;
 
 @end
 
 @implementation MCLSettingsTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    if (self = [super initWithStyle:style]) {
-        // Custom initialization
-    }
-    
-    return self;
-}
+#define THREADVIEW_SECTION 2;
+#define IMAGES_SECTION 3;
 
 - (void)viewDidLoad
 {
@@ -53,10 +50,47 @@
     
     self.settingsUsernameTextField.text = username;
     self.settingsPasswordTextField.text = password;
-    self.settingsSignatureEnabledSwitch.on = [self.userDefaults boolForKey:@"signatureEnabled"];
-    self.settingsFrameStyleSwitch.on = [self.userDefaults boolForKey:@"frameStyle"];
+
+    BOOL signatureEnabled = [self.userDefaults boolForKey:@"signatureEnabled"];
+    self.settingsSignatureEnabledSwitch.on = signatureEnabled;
+    [self signatureTextViewEnabled:signatureEnabled];
+
+    self.settingsSignatureTextView.delegate = self;
+    self.settingsSignatureTextView.text = [self.userDefaults objectForKey:@"signature"] ?: @"sent from M!client for iOS";
+
     self.settingsNightModeSwitch.on = [self.userDefaults boolForKey:@"nightMode"];
     self.settingsSyncReadStatusSwitch.on = [self.userDefaults boolForKey:@"syncReadStatus"];
+
+    int threadViewSection = THREADVIEW_SECTION;
+    self.threadView = [self.userDefaults integerForKey:@"threadView"];
+    self.threadView = self.threadView ? self.threadView : kMCLSettingsThreadViewDefault;
+
+    int imagesSection = IMAGES_SECTION;
+    self.showImages = [self.userDefaults integerForKey:@"showImages"];
+    self.showImages = self.showImages ? self.showImages : kMCLSettingsShowImagesAlways;
+
+    for (int section = 0; section < [self.tableView numberOfSections]; section++) {
+        for (int row = 0; row < [self.tableView numberOfRowsInSection:section]; row++) {
+            NSIndexPath* cellPath = [NSIndexPath indexPathForRow:row inSection:section];
+            UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:cellPath];
+
+            if (section == threadViewSection) {
+                if (self.threadView == row) {
+                    [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+                } else {
+                    [cell setAccessoryType:UITableViewCellAccessoryNone];
+                }
+            } else if (section == imagesSection) {
+                if (self.showImages == row) {
+                    [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+                } else {
+                    [cell setAccessoryType:UITableViewCellAccessoryNone];
+                }
+            } else {
+                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            }
+        }
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -102,6 +136,56 @@
     }
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    int threadViewSection = THREADVIEW_SECTION;
+    if (indexPath.section == threadViewSection) {
+        for (int row = 0; row < [self.tableView numberOfRowsInSection:threadViewSection]; row++) {
+            NSIndexPath* cellPath = [NSIndexPath indexPathForRow:row inSection:threadViewSection];
+            UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:cellPath];
+            if (row == indexPath.row) {
+                [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+                self.threadView = row;
+                [self.userDefaults setInteger:row forKey:@"threadView"];
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            } else {
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
+            }
+        }
+    }
+
+    int imagesSection = IMAGES_SECTION;
+    if (indexPath.section == imagesSection) {
+        for (int row = 0; row < [self.tableView numberOfRowsInSection:imagesSection]; row++) {
+            NSIndexPath* cellPath = [NSIndexPath indexPathForRow:row inSection:imagesSection];
+            UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:cellPath];
+            if (row == indexPath.row) {
+                [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+                self.showImages = row;
+                [self.userDefaults setInteger:row forKey:@"showImages"];
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            } else {
+                [cell setAccessoryType:UITableViewCellAccessoryNone];
+            }
+        }
+    }
+}
+
+- (void)signatureTextViewEnabled:(BOOL)enable
+{
+    // Color can only be changed if TextView is editable!
+    if (enable) {
+        [self.settingsSignatureTextView setEditable:YES];
+        [self.settingsSignatureTextView setSelectable:YES];
+        [self.settingsSignatureTextView setTextColor:[UIColor blackColor]];
+    } else {
+        [self.settingsSignatureTextView setTextColor:[UIColor lightGrayColor]];
+        [self.settingsSignatureTextView setEditable:NO];
+        [self.settingsSignatureTextView setSelectable:NO];
+    }
+}
+
+
 #pragma mark - Actions
 
 - (IBAction)settingsDoneAction:(UIBarButtonItem *)sender
@@ -124,11 +208,8 @@
 - (IBAction)settingsSignatureEnabledSwitchValueChangedAction:(UISwitch *)sender
 {
     [self.userDefaults setBool:sender.on forKey:@"signatureEnabled"];
-}
+    [self signatureTextViewEnabled:sender.on];
 
-- (IBAction)frameStyleEnabledSwitchValueChangedAction:(UISwitch *)sender
-{
-    [self.userDefaults setBool:sender.on forKey:@"frameStyle"];
 }
 
 - (IBAction)settingsNightModeSwitchValueChangedAction:(UISwitch *)sender
@@ -145,7 +226,9 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
-    NSLog(@"DidEndEditing");
+    if (textView == self.settingsSignatureTextView) {
+        [self.userDefaults setObject:textView.text forKey:@"signature"];
+    }
 }
 
 @end

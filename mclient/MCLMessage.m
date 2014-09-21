@@ -18,6 +18,8 @@
             subject:(NSString *)inSubject
                date:(NSDate *)inDate
                text:(NSString *)inText
+           textHtml:(NSString *)inTextHtml
+ textHtmlWithImages:(NSString *)inTextHtmlWithImages
 {
     MCLMessage *message = [[MCLMessage alloc] init];
     
@@ -29,6 +31,8 @@
     message.subject = inSubject;
     message.date = inDate;
     message.text = inText;
+    message.textHtml = inTextHtml;
+    message.textHtmlWithImages = inTextHtmlWithImages;
     
     return message;
 }

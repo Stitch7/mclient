@@ -8,6 +8,7 @@
 
 #import "constants.h"
 #import "KeychainItemWrapper.h"
+#import "Reachability.h"
 #import "MCLMServiceConnector.h"
 #import "MCLMessageListViewController.h"
 #import "MCLComposeMessageViewController.h"
@@ -34,6 +35,7 @@
 @property (strong) MCLReadList *readList;
 @property (strong) NSString *username;
 @property (strong) NSString *password;
+@property (strong) UIColor *veryLightGreyColor;
 @property (strong) NSDateFormatter *dateFormatter;
 
 @end
@@ -53,6 +55,8 @@
     self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
     NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
     self.password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
+
+    self.veryLightGreyColor = [UIColor colorWithRed:240/255.0f green:240/255.0f blue:240/255.0f alpha:1.0f];
     
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDoesRelativeDateFormatting:YES];
@@ -206,7 +210,9 @@
                                                username:username
                                                 subject:subject
                                                    date:date
-                                                   text:nil];
+                                                   text:nil
+                                               textHtml:nil
+                                     textHtmlWithImages:nil];
         [self.messages addObject:message];
     }
     
@@ -221,6 +227,8 @@
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     message.userId = [json objectForKey:@"userId"];
     message.text = [json objectForKey:@"text"];
+    message.textHtml = [json objectForKey:@"textHtml"];
+    message.textHtmlWithImages = [json objectForKey:@"textHtmlWithImages"];
 }
 
 
@@ -247,13 +255,16 @@
     if (indexPath.row < ([self.messages count] - 1)) {
         nextMessage = self.messages[i + 1];
     }
-    MCLMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MessageCell" forIndexPath:indexPath];
-    
+
+    static NSString *cellIdentifier = @"MessageCell";
+    MCLMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+
+//    cell.backgroundColor = [cell isSelected] ? self.veryLightGreyColor : [UIColor clearColor];
+
     [self.cells setObject:cell atIndexedSubscript:i];
     
     [cell setBoardId:self.board.boardId];
     [cell setMessageId:message.messageId];
-//    cell.tag = i; //TODO not needed, i think...
 
     [cell setClipsToBounds:YES];
     
@@ -342,59 +353,78 @@
         MCLMessageTableViewCell *cell = self.cells[indexPath.row];
         CGFloat webViewHeight = cell.messageTextWebView.scrollView.contentSize.height;
         CGFloat toolbarHeight = cell.messageToolbar.frame.size.height;
-        height = 60 + 20 + webViewHeight + toolbarHeight;
+        height = height + 20 + webViewHeight + toolbarHeight;
 //        NSLog(@"heightForRowAtIndexPath(%i - %i): %f  -  %f", cell.tag, indexPath.row, cell.messageTextWebView.frame.size.height, webViewHeight);
 	}
 
     return height;
 }
 
+- (NSString *)messageHtml:(MCLMessage *)message
+{
+    NSString *messageHtml = @"";
+    switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"showImages"]) {
+        case kMCLSettingsShowImagesAlways:
+        default:
+            messageHtml = message.textHtmlWithImages;
+            break;
+
+        case kMCLSettingsShowImagesWifi: {
+            Reachability *wifiReach = [Reachability reachabilityForLocalWiFi];
+            messageHtml = [wifiReach currentReachabilityStatus] == ReachableViaWiFi ? message.textHtmlWithImages : message.textHtml;
+            break;
+        }
+        case kMCLSettingsShowImagesNever:
+            messageHtml = message.textHtml;
+            break;
+    }
+
+    messageHtml = [messageHtml stringByAppendingString:@""
+                   "<script type=\"text/javascript\">"
+                   "    function spoiler(obj) {"
+                   "        if (obj.nextSibling.style.display === 'none') {"
+                   "            obj.nextSibling.style.display = 'inline';"
+                   "        } else {"
+                   "            obj.nextSibling.style.display = 'none';"
+                   "        }"
+                   "    }"
+                   "</script>"
+                   "<style>"
+                   "    * {"
+                   "        font-family: \"Helvetica Neue\";"
+                   "        font-size: 14px;"
+                   "    }"
+                   "    body {"
+                   "        margin: 10px;"
+                   "        padding: 0px;"
+                   "    }"
+                   "    img {"
+                   "        max-width: 100%;"
+                   "    }"
+                   "    button > img {"
+                   "        content:url(\"http://www.maniac-forum.de/forum/images/spoiler.png\");"
+                   "        width: 17px;"
+                   "    }"
+                   "</style>"];
+
+    return messageHtml;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-//    NSIndexPath *selectedRowIndexPath = [tableView indexPathForSelectedRow];
-//    NSLog(@"indexPath: %i  -  selectedRowIndexPath:%i", indexPath.row, selectedRowIndexPath.row);
-    
     MCLMessage *message = self.messages[indexPath.row];
     if (!message.text) {
         [self completeMessage:message];
     }
     
     MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
-    
-    UIColor *veryLightGrey = [UIColor colorWithRed:240/255.0f green:240/255.0f blue:240/255.0f alpha:1.0f];
-    [cell setBackgroundColor:veryLightGrey];
-    [cell.messageTextWebView setBackgroundColor:veryLightGrey];
-    
-    [cell markRead];
+
+    [cell setBackgroundColor:self.veryLightGreyColor];
+    [cell.messageTextWebView setBackgroundColor:self.veryLightGreyColor];
+    [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
     cell.messageText = message.text;
-    
-    NSString *messageHtml = [@""
-        "<script type=\"text/javascript\">"
-        "    function spoiler(obj) {"
-        "        if (obj.nextSibling.style.display === 'none') {"
-        "            obj.nextSibling.style.display = 'inline';"
-        "        } else {"
-        "            obj.nextSibling.style.display = 'none';"
-        "        }"
-        "    }"
-        "</script>"
-        "<style>"
-        "    * {"
-        "        font-family: \"Helvetica Neue\";"
-        "        font-size: 14px;"
-        "        margin: 0px;"
-        "    }"
-        "    img {"
-        "        max-width: 100%;"
-        "    }"
-        "    button > img {"
-        "        content:url(\"http://www.maniac-forum.de/forum/images/spoiler.png\");"
-        "        width: 17px;"
-        "    }"
-        "</style>" stringByAppendingString:message.text];
-    [cell.messageTextWebView loadHTMLString:messageHtml baseURL:nil];
-    
+
+    [cell markRead];
     [self.readList addMessageId:message.messageId];
 }
 

@@ -12,6 +12,7 @@
 
 #import "constants.h"
 #import "KeychainItemWrapper.h"
+#import "Reachability.h"
 #import "MCLMServiceConnector.h"
 #import "MCLComposeMessageViewController.h"
 #import "MCLProfileTableViewController.h"
@@ -236,7 +237,9 @@
                                                username:username
                                                 subject:subject
                                                    date:date
-                                                   text:nil];
+                                                   text:nil
+                                               textHtml:nil
+                                     textHtmlWithImages:nil];
         [self.messages addObject:message];
     }
 
@@ -256,6 +259,8 @@
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     message.userId = [json objectForKey:@"userId"];
     message.text = [json objectForKey:@"text"];
+    message.textHtml = [json objectForKey:@"textHtml"];
+    message.textHtmlWithImages = [json objectForKey:@"textHtmlWithImages"];
 }
 
 
@@ -280,15 +285,16 @@
     if (indexPath.row < ([self.messages count] - 1)) {
         nextMessage = self.messages[i + 1];
     }
-    MCLMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MessageCell" forIndexPath:indexPath];
+
+    static NSString *cellIdentifier = @"MessageCell";
+    MCLMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
 
     [self.cells setObject:cell atIndexedSubscript:i];
 
     [cell setBoardId:self.board.boardId];
     [cell setMessageId:message.messageId];
-//    cell.tag = i; //TODO not needed, i think...
 
-    [cell setClipsToBounds:YES];
+    [cell setClipsToBounds:YES]; //TODO effect?
 
     [self indentView:cell.messageSubjectLabel withLevel:message.level startingAtX:20];
     [self indentView:cell.messageUsernameLabel withLevel:message.level startingAtX:20];
@@ -339,6 +345,56 @@
 
 #pragma mark - UITableViewDelegate
 
+- (NSString *)messageHtml:(MCLMessage *)message
+{
+    NSString *messageHtml = @"";
+    switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"showImages"]) {
+        case kMCLSettingsShowImagesAlways:
+        default:
+            messageHtml = message.textHtmlWithImages;
+            break;
+
+        case kMCLSettingsShowImagesWifi: {
+            Reachability *wifiReach = [Reachability reachabilityForLocalWiFi];
+            messageHtml = [wifiReach currentReachabilityStatus] == ReachableViaWiFi ? message.textHtmlWithImages : message.textHtml;
+            break;
+        }
+        case kMCLSettingsShowImagesNever:
+            messageHtml = message.textHtml;
+            break;
+    }
+
+    messageHtml = [messageHtml stringByAppendingString:@""
+                   "<script type=\"text/javascript\">"
+                   "    function spoiler(obj) {"
+                   "        if (obj.nextSibling.style.display === 'none') {"
+                   "            obj.nextSibling.style.display = 'inline';"
+                   "        } else {"
+                   "            obj.nextSibling.style.display = 'none';"
+                   "        }"
+                   "    }"
+                   "</script>"
+                   "<style>"
+                   "    * {"
+                   "        font-family: \"Helvetica Neue\";"
+                   "        font-size: 14px;"
+                   "    }"
+                   "    body {"
+                   "        margin: 10px;"
+                   "        padding: 0px;"
+                   "    }"
+                   "    img {"
+                   "        max-width: 100%;"
+                   "    }"
+                   "    button > img {"
+                   "        content:url(\"http://www.maniac-forum.de/forum/images/spoiler.png\");"
+                   "        width: 17px;"
+                   "    }"
+                   "</style>"];
+    
+    return messageHtml;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.selectedIndexPath = indexPath;
@@ -356,43 +412,11 @@
 
     MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
 
+    cell.messageText = message.text;
+    [self.webView loadHTMLString:[self messageHtml:message] baseURL:nil];
+
     [cell markRead];
     [self.readList addMessageId:message.messageId];
-    cell.messageText = message.text;
-
-    NSString *messageHtml = [@""
-                             "<script type=\"text/javascript\">"
-                             "    function spoiler(obj) {"
-                             "        if (obj.nextSibling.style.display === 'none') {"
-                             "            obj.nextSibling.style.display = 'inline';"
-                             "        } else {"
-                             "            obj.nextSibling.style.display = 'none';"
-                             "        }"
-                             "    }"
-                             "</script>"
-                             "<style>"
-                             "    * {"
-                             "        font-family: \"Helvetica Neue\";"
-                             "        font-size: 14px;"
-                             "    }"
-                             "    body {"
-                             "        margin: 10px;"
-                             "        padding: 0px;"
-                             "    }"
-                             "    img {"
-                             "        max-width: 100%;"
-                             "    }"
-                             "    a {"
-                             "        word-break: break-all;"
-                             "    }"
-                             "    button > img {"
-                             "        content:url(\"http://www.maniac-forum.de/forum/images/spoiler.png\");"
-                             "        width: 17px;"
-                             "    }"
-                             "</style>" stringByAppendingString:message.text];
-    [self.webView loadHTMLString:messageHtml baseURL:nil];
-
-
 
     BOOL enableNotificationButton = [message.username isEqualToString:self.username];
     [self.toolbarButtonNotification setEnabled:enableNotificationButton];
@@ -404,7 +428,6 @@
                                                                                      username:self.username
                                                                                      password:self.password
                                                                                         error:&mServiceError];
-
         if (notificationStatus) {
             self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonEnabled.png"];
             self.toolbarButtonNotification.tag = 1;
@@ -609,7 +632,7 @@
         [destinationViewController setBoardId:self.board.boardId];
         [destinationViewController setMessageId:message.messageId];
         [destinationViewController setSubject:message.subject];
-        [destinationViewController setText:text];
+        [destinationViewController setText:message.text]; // TODO charset fuckup
     } else if ([segue.identifier isEqualToString:@"ModalToShowProfile"]) {
         MCLProfileTableViewController *destinationViewController = ((MCLProfileTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         [destinationViewController setUserId:message.userId];

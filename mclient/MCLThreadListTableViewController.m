@@ -66,9 +66,16 @@
 
     // On iPad replace splitviews detailViewController with MessageListViewController type depending on users settings
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        NSString *storyboardIdentifier = @"MessageListView";
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"frameStyle"]) {
-            storyboardIdentifier = @"MessageList2FrameStyleView";
+        NSString *storyboardIdentifier = nil;
+        switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"threadView"]) {
+            case kMCLSettingsThreadViewDefault:
+            default:
+                storyboardIdentifier = @"MessageListView";
+                break;
+
+            case kMCLSettingsThreadViewFrame:
+                storyboardIdentifier = @"MessageList2FrameStyleView";
+                break;
         }
         self.detailViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardIdentifier];
 
@@ -231,8 +238,8 @@
         thread = self.threads[indexPath.row];
     }
 
-    static NSString *CellIdentifier = @"ThreadCell";
-    MCLThreadTableViewCell *cell = (MCLThreadTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *cellIdentifier = @"ThreadCell";
+    MCLThreadTableViewCell *cell = (MCLThreadTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     cell.threadSubjectLabel.text = thread.subject;
     float subjectSize = cell.threadSubjectLabel.font.pointSize;
@@ -297,12 +304,19 @@
 
         [self.detailViewController loadThread:thread fromBoard:self.board];
     } else {
-        NSString *identifier = @"PushToMessageList";
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"frameStyle"]) {
-            identifier = @"PushToMessageList2FrameStyle";
+        NSString *segueIdentifier = nil;
+        switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"threadView"]) {
+            case kMCLSettingsThreadViewDefault:
+            default:
+                segueIdentifier = @"PushToMessageList";
+                break;
+
+            case kMCLSettingsThreadViewFrame:
+                segueIdentifier = @"PushToMessageList2FrameStyle";
+                break;
         }
 
-        [self performSegueWithIdentifier:identifier sender:cell];
+        [self performSegueWithIdentifier:segueIdentifier sender:cell];
     }
 }
 

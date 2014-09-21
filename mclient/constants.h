@@ -13,3 +13,14 @@
 #endif
 
 #define kManiacForumURL @"http://www.maniac-forum.de/forum/pxmboard.php"
+
+typedef NS_ENUM(NSUInteger, kMCLSettingsThreadView) {
+    kMCLSettingsThreadViewDefault,
+    kMCLSettingsThreadViewFrame
+};
+
+typedef NS_ENUM(NSUInteger, kMCLSettingsShowImages) {
+    kMCLSettingsShowImagesAlways,
+    kMCLSettingsShowImagesWifi,
+    kMCLSettingsShowImagesNever
+};

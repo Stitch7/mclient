@@ -7,19 +7,20 @@
 //
 
 #import "constants.h"
+#import "Reachability.h"
 #import "MCLBoardListTableViewController.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLDetailViewController.h"
 #import "MCLBoard.h"
 #import "MCLErrorView.h"
 #import "MCLLoadingView.h"
-#import "Reachability.h"
 
 @interface MCLBoardListTableViewController ()
 
 @property (assign, nonatomic) CGRect tableViewBounds;
 @property (strong, nonatomic) NSMutableArray *boards;
 @property (strong, nonatomic) Reachability *reachability;
+@property (strong, nonatomic) NSDictionary *images;
 
 @end
 
@@ -34,6 +35,13 @@
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.preferredContentSize = CGSizeMake(320.0, 600.0);
     }
+
+    self.images = @{ @1: @"boardSmalltalk.png",
+                     @2: @"boardForSale.png",
+                     @4: @"boardTechNCheats.png",
+                     @6: @"boardOT.png",
+                    @26: @"boardKulturbeutel.png",
+                     @8: @"boardOnlineGaming.png"};
 }
 
 - (void)viewDidLoad
@@ -158,10 +166,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MCLBoard *board = self.boards[indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BoardCell" forIndexPath:indexPath];
-    
+
+    static NSString *cellIdentifier = @"BoardCell";
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+
+    NSString *imageName = [self.images objectForKey:board.boardId];
+    cell.imageView.image = imageName ? [UIImage imageNamed:imageName] : [UIImage imageNamed:@"boardDefault.png"];
+
     cell.textLabel.text = board.name;
-    
+
     return cell;
 }
 

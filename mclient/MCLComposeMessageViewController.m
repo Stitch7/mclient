@@ -271,12 +271,19 @@
     NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
     NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
     NSError *mServiceError;
+
+    NSString *messageText = self.composeTextTextField.text;
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if ([userDefaults boolForKey:@"signatureEnabled"]) {
+        messageText = [messageText stringByAppendingString:@"\n\n"];
+        messageText = [messageText stringByAppendingString:[userDefaults objectForKey:@"signature"]];
+    }
     
     switch (self.type) {
         case kComposeTypeThread:
             success = [mServiceConnector postThreadToBoardId:self.boardId
                                                      subject:self.composeSubjectTextField.text
-                                                        text:self.composeTextTextField.text
+                                                        text:messageText
                                                     username:username
                                                     password:password
                                                        error:&mServiceError];
@@ -285,7 +292,7 @@
             success = [mServiceConnector postReplyToMessageId:self.messageId
                                                       boardId:self.boardId
                                                       subject:self.composeSubjectTextField.text
-                                                         text:self.composeTextTextField.text
+                                                         text:messageText
                                                      username:username
                                                      password:password
                                                         error:&mServiceError];
