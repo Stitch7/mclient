@@ -11,7 +11,6 @@
 #import "Reachability.h"
 #import "MCLMServiceConnector.h"
 #import "MCLMessageListViewController.h"
-#import "MCLComposeMessageViewController.h"
 #import "MCLProfileTableViewController.h"
 #import "MCLDetailView.h"
 #import "MCLLoadingView.h"
@@ -514,6 +513,14 @@
 }
 
 
+#pragma mark - MCLComposeMessageViewControllerDelegate
+
+- (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController
+{
+    [self.tableView reloadData];
+}
+
+
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -529,7 +536,8 @@
         if ([subject length] < 3 || ![[subject substringToIndex:3] isEqualToString:subjectReplyPrefix]) {
             subject = [subjectReplyPrefix stringByAppendingString:subject];
         }
-        
+
+        [destinationViewController setDelegate:self];
         [destinationViewController setType:kComposeTypeReply];
         [destinationViewController setBoardId:self.board.boardId];
         [destinationViewController setMessageId:message.messageId];
@@ -537,15 +545,16 @@
     } else if ([segue.identifier isEqualToString:@"ModalToEditReply"]) {
         MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         
-        MCLMessageTableViewCell *cell = (MCLMessageTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        NSString *text = [cell.messageTextWebView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"body\")[0].textContent;"];
-        text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        
+//        MCLMessageTableViewCell *cell = (MCLMessageTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+//        NSString *text = [cell.messageTextWebView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"body\")[0].textContent;"];
+//        text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+
+        [destinationViewController setDelegate:self];
         [destinationViewController setType:kComposeTypeEdit];
         [destinationViewController setBoardId:self.board.boardId];
         [destinationViewController setMessageId:message.messageId];
         [destinationViewController setSubject:message.subject];
-        [destinationViewController setText:text];
+        [destinationViewController setText:message.text];
     } else if ([segue.identifier isEqualToString:@"ModalToShowProfile"]) {
         MCLProfileTableViewController *destinationViewController = ((MCLProfileTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);      
         [destinationViewController setUserId:message.userId];

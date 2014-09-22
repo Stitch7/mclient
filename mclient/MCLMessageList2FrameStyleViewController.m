@@ -14,7 +14,6 @@
 #import "KeychainItemWrapper.h"
 #import "Reachability.h"
 #import "MCLMServiceConnector.h"
-#import "MCLComposeMessageViewController.h"
 #import "MCLProfileTableViewController.h"
 #import "MCLDetailView.h"
 #import "MCLLoadingView.h"
@@ -470,6 +469,13 @@
 }
 
 
+#pragma mark - MCLComposeMessageViewControllerDelegate
+
+- (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController
+{
+    [self.tableView reloadData];
+}
+
 
 #pragma mark - Actions
 
@@ -618,6 +624,7 @@
             subject = [subjectReplyPrefix stringByAppendingString:subject];
         }
 
+        [destinationViewController setDelegate:self];
         [destinationViewController setType:kComposeTypeReply];
         [destinationViewController setBoardId:self.board.boardId];
         [destinationViewController setMessageId:message.messageId];
@@ -625,14 +632,15 @@
     } else if ([segue.identifier isEqualToString:@"ModalToEditReply"]) {
         MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
 
-        NSString *text = [self.webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"body\")[0].textContent;"]; //TODO looses Images...
-        text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+//        NSString *text = [self.webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"body\")[0].textContent;"]; //TODO looses Images...
+//        text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
+        [destinationViewController setDelegate:self];
         [destinationViewController setType:kComposeTypeEdit];
         [destinationViewController setBoardId:self.board.boardId];
         [destinationViewController setMessageId:message.messageId];
         [destinationViewController setSubject:message.subject];
-        [destinationViewController setText:message.text]; // TODO charset fuckup
+        [destinationViewController setText:message.text];
     } else if ([segue.identifier isEqualToString:@"ModalToShowProfile"]) {
         MCLProfileTableViewController *destinationViewController = ((MCLProfileTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         [destinationViewController setUserId:message.userId];

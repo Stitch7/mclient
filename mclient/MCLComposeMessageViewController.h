@@ -8,20 +8,28 @@
 
 #import <UIKit/UIKit.h>
 
-// typedef NS_ENUM(NSUInteger, kComposeType) {
-typedef enum kComposeType : NSUInteger {
+@protocol MCLComposeMessageViewControllerDelegate;
+
+typedef NS_ENUM(NSUInteger, kComposeType) {
     kComposeTypeThread,
     kComposeTypeReply,
     kComposeTypeEdit
-  
-} kComposeType;
+};
 
 @interface MCLComposeMessageViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate>
+
+@property (weak) id<MCLComposeMessageViewControllerDelegate> delegate;
 
 @property (assign) NSUInteger type;
 @property (strong, nonatomic) NSNumber *boardId;
 @property (strong, nonatomic) NSNumber *messageId;
 @property (strong, nonatomic) NSString *subject;
 @property (strong, nonatomic) NSString *text;
+
+@end
+
+@protocol MCLComposeMessageViewControllerDelegate <NSObject>
+
+- (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController;
 
 @end

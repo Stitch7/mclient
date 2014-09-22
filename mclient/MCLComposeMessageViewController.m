@@ -310,6 +310,8 @@
 
     if (success) {
         dispatch_block_t completion = ^{
+            [self.delegate composeMessageViewControllerDidFinish:self];
+
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
                                                             message:@"Message was posted"
                                                            delegate:nil

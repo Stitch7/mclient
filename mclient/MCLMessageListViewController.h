@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "MCLDetailViewController.h"
+#import "MCLComposeMessageViewController.h"
 
 @class MCLBoard;
 @class MCLThread;
 
-@interface MCLMessageListViewController : MCLDetailViewController <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
+@interface MCLMessageListViewController : MCLDetailViewController <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, MCLComposeMessageViewControllerDelegate>
 
 @property (strong, nonatomic) MCLBoard *board;
 @property (strong, nonatomic) MCLThread *thread;
