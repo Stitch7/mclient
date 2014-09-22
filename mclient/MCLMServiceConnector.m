@@ -34,7 +34,7 @@
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
-    NSString *requestFields = [NSString stringWithFormat:@"username=%@&password=%@", inUsername, inPassword];
+    NSString *requestFields = [NSString stringWithFormat:@"username=%@&password=%@", [self percentEscapeString:inUsername], [self percentEscapeString:inPassword]];
     
     requestFields = [requestFields stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSData *requestData = [requestFields dataUsingEncoding:NSUTF8StringEncoding];
@@ -63,7 +63,8 @@
 {
     NSInteger notificationEnabled = -1;
     
-    NSDictionary *vars = @{@"username":inUsername, @"password":inPassword};
+    NSDictionary *vars = @{@"username":[self percentEscapeString:inUsername],
+                           @"password":[self percentEscapeString:inPassword]};
     
     
     NSString *urlString = [NSString stringWithFormat:@"http://localhost:8000/board/%@/notification-status/%@", inBoardId, inMessageId];
@@ -74,7 +75,7 @@
     for (id key in vars) {
         requestFields = [requestFields stringByAppendingFormat:@"%@=%@&", key, [vars objectForKey:key]];
     }
-    requestFields = [requestFields stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    // requestFields = [requestFields stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSData *requestData = [requestFields dataUsingEncoding:NSUTF8StringEncoding];
     request.HTTPBody = requestData;
     request.HTTPMethod = @"POST";
@@ -94,13 +95,17 @@
 }
 
 - (BOOL)notificationForMessageId:(NSNumber *)inMessageId
-                              boardId:(NSNumber *)inBoardId
-                             username:(NSString *)inUsername
-                             password:(NSString *)inPassword
-                                error:(NSError **)errorPtr
+                         boardId:(NSNumber *)inBoardId
+                        username:(NSString *)inUsername
+                        password:(NSString *)inPassword
+                           error:(NSError **)errorPtr
 {
     NSString *urlString = [NSString stringWithFormat:@"board/%@/notification/%@", inBoardId, inMessageId];
-    return [self post:urlString withVars:@{@"username":inUsername, @"password":inPassword} error:errorPtr];
+
+    NSDictionary *vars = @{@"username":[self percentEscapeString:inUsername],
+                           @"password":[self percentEscapeString:inPassword]};
+
+    return [self post:urlString withVars:vars error:errorPtr];
 }
 
 
@@ -125,10 +130,10 @@
 {
     NSDictionary *vars = @{@"boardId":inBoardId,
                            @"messageId":@"",
-                           @"subject":inSubject,
-                           @"text":inText,
-                           @"username":inUsername,
-                           @"password":inPassword,
+                           @"subject":[self percentEscapeString:inSubject],
+                           @"text":[self percentEscapeString:inText],
+                           @"username":[self percentEscapeString:inUsername],
+                           @"password":[self percentEscapeString:inPassword],
                            @"notification":@0};
     
     return [self post:@"post" withVars:vars error:errorPtr];
@@ -144,10 +149,10 @@
 {
     NSDictionary *vars = @{@"boardId":inBoardId,
                            @"messageId":inMessageId,
-                           @"subject":inSubject,
-                           @"text":inText,
-                           @"username":inUsername,
-                           @"password":inPassword,
+                           @"subject":[self percentEscapeString:inSubject],
+                           @"text":[self percentEscapeString:inText],
+                           @"username":[self percentEscapeString:inUsername],
+                           @"password":[self percentEscapeString:inPassword],
                            @"notification":@0};
     
     return [self post:@"post" withVars:vars error:errorPtr];
@@ -163,10 +168,10 @@
 {
     NSDictionary *vars = @{@"boardId":inBoardId,
                            @"messageId":inMessageId,
-                           @"subject":inSubject,
-                           @"text":inText,
-                           @"username":inUsername,
-                           @"password":inPassword,
+                           @"subject":[self percentEscapeString:inSubject],
+                           @"text":[self percentEscapeString:inText],
+                           @"username":[self percentEscapeString:inUsername],
+                           @"password":[self percentEscapeString:inPassword],
                            @"notification":@0};
     
     return [self post:@"edit" withVars:vars error:errorPtr];
@@ -177,8 +182,7 @@
                     error:(NSError **)errorPtr
 {
     
-    NSDictionary *vars = @{@"phrase":inPhrase};
-    
+    NSDictionary *vars = @{@"phrase":[self percentEscapeString:inPhrase]};
     
     NSString *urlString = [NSString stringWithFormat:@"http://localhost:8000/board/%@/search", inBoardId];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -188,7 +192,7 @@
     for (id key in vars) {
         requestFields = [requestFields stringByAppendingFormat:@"%@=%@&", key, [vars objectForKey:key]];
     }
-    requestFields = [requestFields stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    // requestFields = [requestFields stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSData *requestData = [requestFields dataUsingEncoding:NSUTF8StringEncoding];
     request.HTTPBody = requestData;
     request.HTTPMethod = @"POST";
@@ -220,8 +224,8 @@
     NSString *requestFields = @"";
     for (id key in vars) {
         requestFields = [requestFields stringByAppendingFormat:@"%@=%@&", key, [vars objectForKey:key]];
-    }    
-    requestFields = [requestFields stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    }
+    // requestFields = [requestFields stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSData *requestData = [requestFields dataUsingEncoding:NSUTF8StringEncoding];
     request.HTTPBody = requestData;
     request.HTTPMethod = @"POST";
@@ -259,6 +263,16 @@
     }
 
     return success;
+}
+
+- (NSString *)percentEscapeString:(NSString *)string
+{
+    NSString *result = CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                                 (CFStringRef)string,
+                                                                                 (CFStringRef)@" ",
+                                                                                 (CFStringRef)@":/?@!$&'()*+,;=",
+                                                                                 kCFStringEncodingUTF8));
+    return [result stringByReplacingOccurrencesOfString:@" " withString:@"%2B"];
 }
 
 @end
