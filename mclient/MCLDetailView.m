@@ -80,16 +80,16 @@
 
 - (void)configureWithSubLabelText:(NSString *)subLabelText
 {
-    [self setBackgroundColor:[UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0]];
+//    [self setBackgroundColor:[UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0]];
 
-    self.label.text = @"Welcome Stitch";
-    self.label.textColor = [UIColor darkGrayColor];
+//    self.label.text = @"Welcome Stitch";
+//    self.label.textColor = [UIColor darkGrayColor];
 
     self.subLabel.text = subLabelText;
-    self.subLabel.textColor = [UIColor lightGrayColor];
+
 
     [self addSubview:self.image];
-    [self addSubview:self.label];
+//    [self addSubview:self.label];
     [self addSubview:self.subLabel];
 
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -132,7 +132,7 @@
 	// Set y position
     imageFrame.origin.y = (self.bounds.size.height - imageFrame.size.height) / 2;
 	labelFrame.origin.y = imageFrame.origin.y - 25;
-    subLabelFrame.origin.y = imageFrame.origin.y + imageFrame.size.height + 10;
+    subLabelFrame.origin.y = imageFrame.origin.y + imageFrame.size.height + 20;
 
     // Pass back modiefied frames
 	self.image.frame = imageFrame;
