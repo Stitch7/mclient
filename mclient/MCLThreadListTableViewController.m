@@ -11,6 +11,7 @@
 #import "MCLMServiceConnector.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLMessageListViewController.h" //TODO
+#import "MCLMessageList2FrameStyleViewController.h" //TODO
 #import "MCLDetailViewController.h"
 #import "MCLComposeMessageViewController.h"
 #import "MCLErrorView.h"
@@ -348,19 +349,26 @@
     if ([segue.identifier isEqualToString:@"PushToMessageList"] || [segue.identifier isEqualToString:@"PushToMessageList2FrameStyle"]) {
         NSIndexPath *indexPath = nil;
         MCLThread *thread = nil;
-        MCLThreadTableViewCell *cell = nil;
+//        MCLThreadTableViewCell *cell = nil;
         if (self.searchDisplayController.active) {
             indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
             thread = self.searchResults[indexPath.row];
-            cell = (MCLThreadTableViewCell*)[self.searchDisplayController.searchResultsTableView cellForRowAtIndexPath:indexPath];
+//            cell = (MCLThreadTableViewCell*)[self.searchDisplayController.searchResultsTableView cellForRowAtIndexPath:indexPath];
         } else {
             indexPath = [self.tableView indexPathForSelectedRow];
             thread = self.threads[indexPath.row];
-            cell = (MCLThreadTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+//            cell = (MCLThreadTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
         }
 
-        [segue.destinationViewController setBoard:self.board];
-        [segue.destinationViewController setThread:thread];
+        MCLMessageList2FrameStyleViewController *destinationViewController;
+        if ([segue.destinationViewController isKindOfClass:[UINavigationController class]]) {
+            destinationViewController = (MCLMessageList2FrameStyleViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0];
+        } else {
+            destinationViewController = segue.destinationViewController;
+        }
+
+        [destinationViewController setBoard:self.board];
+        [destinationViewController setThread:thread];
     } else if ([segue.identifier isEqualToString:@"ModalToComposeThread"]) {
         MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         [destinationViewController setType:kComposeTypeThread];

@@ -17,6 +17,7 @@
 
 @interface MCLBoardListTableViewController ()
 
+@property (assign, nonatomic) BOOL preselectedBoardSequePerformed;
 @property (assign, nonatomic) CGRect tableViewBounds;
 @property (strong, nonatomic) NSMutableArray *boards;
 @property (strong, nonatomic) Reachability *reachability;
@@ -44,13 +45,19 @@
                      @8: @"boardOnlineGaming.png"};
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    if (self.preselectedBoard && ! self.preselectedBoardSequePerformed) { // Method is called twice
+        self.preselectedBoardSequePerformed = YES;
+        [self performSegueWithIdentifier:@"PushToThreadListNoAnimation" sender:nil];
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    /*
-    self.threadListTableViewController = (MCLThreadListTableViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
-    */
 
     [self setupReachability];
     [self setupRefreshControl];
@@ -246,20 +253,17 @@
 
 #pragma mark - Navigation
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        MCLBoard *board = self.boards[indexPath.row];
-        [self.threadListTableViewController setBoard: board];
-    }
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"PushToThreadList"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         MCLBoard *board = self.boards[indexPath.row];
         [segue.destinationViewController setBoard:board];
+    }
+
+
+    if ([segue.identifier isEqualToString:@"PushToThreadListNoAnimation"]) {
+        [segue.destinationViewController setBoard:self.preselectedBoard];
     }
 }
 

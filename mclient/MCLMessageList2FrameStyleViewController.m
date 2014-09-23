@@ -6,14 +6,13 @@
 //  Copyright (c) 2014 Christopher Reitz. All rights reserved.
 //
 
-#import <AVFoundation/AVFoundation.h>
-
 #import "MCLMessageList2FrameStyleViewController.h"
 
 #import "constants.h"
 #import "KeychainItemWrapper.h"
 #import "Reachability.h"
 #import "MCLMServiceConnector.h"
+#import "MCLBoardListTableViewController.h"
 #import "MCLProfileTableViewController.h"
 #import "MCLDetailView.h"
 #import "MCLLoadingView.h"
@@ -75,6 +74,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        UIButton *backButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchDown];
+        [backButton setImage:[UIImage imageNamed:@"backButton.png"] forState:UIControlStateNormal];
+        [backButton setImageEdgeInsets:UIEdgeInsetsMake(0, -30, 0, 0)];
+
+        if ([self.thread.subject length] <= 25) {
+            UIColor *globalTintColor = [UIApplication sharedApplication].delegate.window.tintColor;
+            [backButton setTitle:@"Back" forState:UIControlStateNormal];
+            [backButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -30, 0, 0)];
+            [backButton setTitleColor:globalTintColor forState:UIControlStateNormal];
+            [backButton.titleLabel setFont:[UIFont systemFontOfSize:17]];
+        }
+
+        [backButton sizeToFit];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    }
 
     self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 
@@ -446,7 +463,7 @@
 
 #pragma mark - UIWebView delegate
 
--(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
+-(BOOL)webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
     BOOL shouldStartLoad = YES;
 
     // Open links in Safari
@@ -481,6 +498,11 @@
 
 
 #pragma mark - Actions
+
+- (void)backAction
+{
+    [self performSegueWithIdentifier:@"PushBackToThreadList" sender:nil];
+}
 
 - (void)slideMessageViewDownAction
 {
@@ -648,6 +670,9 @@
         MCLProfileTableViewController *destinationViewController = ((MCLProfileTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         [destinationViewController setUserId:message.userId];
         [destinationViewController setUsername:message.username];
+    } else if ([segue.identifier isEqualToString:@"PushBackToThreadList"]) {
+        MCLBoardListTableViewController *destinationViewController = ((MCLBoardListTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
+        [destinationViewController setPreselectedBoard:self.board];
     }
 }
 

@@ -489,7 +489,7 @@
 
 #pragma mark - UIWebViewDelegate
 
--(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
+-(BOOL)webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
     BOOL shouldStartLoad = YES;
     
     // Open links in Safari
@@ -571,12 +571,10 @@
     if ([segue.identifier isEqualToString:@"ModalToComposeReply"]) {
         MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         NSString *subject = message.subject;
-        
         NSString *subjectReplyPrefix = @"Re:";
         if ([subject length] < 3 || ![[subject substringToIndex:3] isEqualToString:subjectReplyPrefix]) {
             subject = [subjectReplyPrefix stringByAppendingString:subject];
         }
-
         [destinationViewController setDelegate:self];
         [destinationViewController setType:kComposeTypeReply];
         [destinationViewController setBoardId:self.board.boardId];
@@ -584,11 +582,6 @@
         [destinationViewController setSubject:subject];
     } else if ([segue.identifier isEqualToString:@"ModalToEditReply"]) {
         MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
-        
-//        MCLMessageTableViewCell *cell = (MCLMessageTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-//        NSString *text = [cell.messageTextWebView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"body\")[0].textContent;"];
-//        text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-
         [destinationViewController setDelegate:self];
         [destinationViewController setType:kComposeTypeEdit];
         [destinationViewController setBoardId:self.board.boardId];

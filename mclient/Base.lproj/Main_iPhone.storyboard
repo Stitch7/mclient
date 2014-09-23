@@ -64,10 +64,28 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="gdS-bb-itx" kind="push" identifier="PushToThreadListNoAnimation" id="osz-X3-0Wl"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-248" y="410"/>
+        </scene>
+        <!--Portrait Only Navigation Controller-->
+        <scene sceneID="iFD-KC-3Hx">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="a7o-zG-9Rv" customClass="MCLPortraitOnlyNavigationController" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Vmw-yK-cDt">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="hau-nR-2Oc" kind="relationship" relationship="rootViewController" id="Cqy-TK-cSf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HqN-CB-XtW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="637" y="795"/>
         </scene>
         <!--Message List View Controller - Messages-->
         <scene sceneID="q0A-GN-Tyn">
@@ -359,8 +377,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="searchDisplayController" destination="3TB-hP-UET" id="Zf6-JL-d5U"/>
-                        <segue destination="hau-nR-2Oc" kind="push" identifier="PushToMessageList2FrameStyle" id="w5d-jU-JIm"/>
                         <segue destination="xgu-SS-2ak" kind="push" identifier="PushToMessageList" id="uX6-fX-7Db"/>
+                        <segue destination="a7o-zG-9Rv" kind="custom" identifier="PushToMessageList2FrameStyle" customClass="MCLFakePushForwardStoryboardSegue" id="UTU-hc-vFD"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D4V-kw-bQP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -376,7 +394,7 @@
             </objects>
             <point key="canvasLocation" x="200" y="410"/>
         </scene>
-        <!--Message List2 Frame Style View Controller-->
+        <!--Message List2 Frame Style View Controller - Messages-->
         <scene sceneID="SJN-2W-Rsl">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="hau-nR-2Oc" customClass="MCLMessageList2FrameStyleViewController" sceneMemberID="viewController">
@@ -493,7 +511,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Bwc-CG-aG7"/>
+                    <navigationItem key="navigationItem" title="Messages" id="Bwc-CG-aG7"/>
                     <connections>
                         <outlet property="messageView" destination="prI-2j-YWC" id="1XW-U5-r7p"/>
                         <outlet property="tableView" destination="gjf-Mq-EUZ" id="qOr-Qm-PYH"/>
@@ -503,11 +521,12 @@
                         <outlet property="toolbarButtonReply" destination="Tdf-tL-f2u" id="hRP-Ek-gQv"/>
                         <outlet property="toolbarButtonSpeak" destination="we6-7c-cah" id="n5Y-bn-Lev"/>
                         <outlet property="webView" destination="yVh-lp-8sb" id="sEw-eB-2qP"/>
+                        <segue destination="rS3-R9-Ivy" kind="custom" identifier="PushBackToThreadList" customClass="MCLFakePushBackwardStoryboardSegue" id="FWN-bg-26m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LDs-WW-uZ7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="637" y="794"/>
+            <point key="canvasLocation" x="1088" y="795"/>
         </scene>
         <!--Compose Message View Controller-->
         <scene sceneID="lEV-X2-pT2">
@@ -861,7 +880,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ejO-Yt-GIM"/>
-        <segue reference="yx8-yu-q67"/>
+        <segue reference="ixj-x7-EDb"/>
+        <segue reference="osz-X3-0Wl"/>
+        <segue reference="fQb-Tw-eMv"/>
     </inferredMetricsTieBreakers>
 </document>
