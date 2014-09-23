@@ -231,7 +231,7 @@
 }
 
 
-#pragma mark - UITableViewDelegate + UITableViewDataSource
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -258,7 +258,14 @@
     static NSString *cellIdentifier = @"MessageCell";
     MCLMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
 
-//    cell.backgroundColor = [cell isSelected] ? self.veryLightGreyColor : [UIColor clearColor];
+    if ([cell isSelected]) {
+        cell.backgroundColor = self.veryLightGreyColor;
+        [cell.messageTextWebView setBackgroundColor:self.veryLightGreyColor];
+        [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
+    } else {
+        cell.backgroundColor = [UIColor clearColor];
+        [cell.messageToolbar setHidden:YES];
+    }
 
     [self.cells setObject:cell atIndexedSubscript:i];
     
@@ -315,9 +322,7 @@
     
     BOOL hideEditButton = ! ([message.username isEqualToString:self.username] && nextMessage.level <= message.level);
     [self barButton:cell.messageEditButton hide:hideEditButton];
-    
-    [cell.messageToolbar setHidden:YES];
-    
+
     return cell;
 }
 
@@ -344,6 +349,9 @@
     }
 }
 
+
+#pragma mark - UITableViewDelegate
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height = 60;
@@ -352,7 +360,7 @@
         MCLMessageTableViewCell *cell = self.cells[indexPath.row];
         CGFloat webViewHeight = cell.messageTextWebView.scrollView.contentSize.height;
         CGFloat toolbarHeight = cell.messageToolbar.frame.size.height;
-        height = height + 20 + webViewHeight + toolbarHeight;
+        height = height + 10 + webViewHeight + toolbarHeight;
 //        NSLog(@"heightForRowAtIndexPath(%i - %i): %f  -  %f", cell.tag, indexPath.row, cell.messageTextWebView.frame.size.height, webViewHeight);
 	}
 
@@ -378,7 +386,8 @@
             break;
     }
 
-    messageHtml = [messageHtml stringByAppendingString:@""
+    messageHtml = [NSString stringWithFormat:@""
+                   "<head>"
                    "<script type=\"text/javascript\">"
                    "    function spoiler(obj) {"
                    "        if (obj.nextSibling.style.display === 'none') {"
@@ -394,19 +403,34 @@
                    "        font-size: 14px;"
                    "    }"
                    "    body {"
-                   "        margin: 10px;"
+                   "        margin: 0 20px 10px 20px;"
                    "        padding: 0px;"
                    "    }"
                    "    img {"
-                   "        max-width: 100%;"
+                   "        max-width: 100%%;"
                    "    }"
                    "    button > img {"
                    "        content:url(\"http://www.maniac-forum.de/forum/images/spoiler.png\");"
                    "        width: 17px;"
                    "    }"
-                   "</style>"];
+                   "</style>"
+                   "</head>"
+                   "<body>%@</body>", messageHtml];
 
     return messageHtml;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    BOOL isSelected = [cell isSelected];
+
+    if (isSelected) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
+    }
+
+    return isSelected ? nil : indexPath;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -425,6 +449,8 @@
 
     [cell markRead];
     [self.readList addMessageId:message.messageId];
+
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -433,7 +459,7 @@
     
     [cell setBackgroundColor:[UIColor clearColor]];
     [cell.messageTextWebView setBackgroundColor:[UIColor clearColor]];
-    
+
     [cell.messageToolbar setHidden:YES];
     
     if (cell.speechSynthesizer.speaking) {
@@ -450,6 +476,16 @@
     [self.tableView endUpdates];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    if (indexPath) {
+        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+        [self.tableView.delegate tableView:self.tableView didDeselectRowAtIndexPath:indexPath];
+        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+    }
+}
 
 #pragma mark - UIWebViewDelegate
 
@@ -488,11 +524,15 @@
     }
 
     // Resize table cell
-    [self updateTableView];
+//    [self updateTableView];
 
     // Show toolbar after short delay to avoid skidding through text
     MCLMessageTableViewCell *cell = (MCLMessageTableViewCell *)webView.superview.superview.superview;
-    [cell.messageToolbar performSelector:@selector(setHidden:) withObject:NO afterDelay:0.5];
+    [cell.messageToolbar performSelector:@selector(setHidden:) withObject:NO afterDelay:0.2];
+//    [cell.messageToolbar setHidden:NO];
+
+    // Resize table cell
+    [self updateTableView];
 }
 
 

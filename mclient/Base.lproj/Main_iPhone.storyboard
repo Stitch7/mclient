@@ -111,7 +111,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <webView opaque="NO" contentMode="scaleToFill" id="LxT-Lq-OWV">
-                                            <rect key="frame" x="20" y="64" width="280" height="128"/>
+                                            <rect key="frame" x="0.0" y="64" width="320" height="138"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <dataDetectorType key="dataDetectorTypes" link="YES"/>
@@ -441,7 +441,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <webView contentMode="scaleToFill" id="yVh-lp-8sb">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="256"/>
+                                        <rect key="frame" x="0.0" y="10" width="320" height="246"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <dataDetectorType key="dataDetectorTypes" link="YES"/>
@@ -861,7 +861,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="fQb-Tw-eMv"/>
-        <segue reference="ixj-x7-EDb"/>
+        <segue reference="ejO-Yt-GIM"/>
+        <segue reference="yx8-yu-q67"/>
     </inferredMetricsTieBreakers>
 </document>

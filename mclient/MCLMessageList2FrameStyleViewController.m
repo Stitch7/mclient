@@ -363,7 +363,8 @@
             break;
     }
 
-    messageHtml = [messageHtml stringByAppendingString:@""
+    messageHtml = [NSString stringWithFormat:@""
+                   "<head>"
                    "<script type=\"text/javascript\">"
                    "    function spoiler(obj) {"
                    "        if (obj.nextSibling.style.display === 'none') {"
@@ -379,18 +380,20 @@
                    "        font-size: 14px;"
                    "    }"
                    "    body {"
-                   "        margin: 10px;"
+                   "        margin: 0 20px 10px 20px;"
                    "        padding: 0px;"
                    "    }"
                    "    img {"
-                   "        max-width: 100%;"
+                   "        max-width: 100%%;"
                    "    }"
                    "    button > img {"
                    "        content:url(\"http://www.maniac-forum.de/forum/images/spoiler.png\");"
                    "        width: 17px;"
                    "    }"
-                   "</style>"];
-    
+                   "</style>"
+                   "</head>"
+                   "<body>%@</body>", messageHtml];
+
     return messageHtml;
 }
 

@@ -85,7 +85,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <webView contentMode="scaleToFill" id="7J9-2Y-eHt">
-                                        <rect key="frame" x="0.0" y="0.0" width="1023" height="325"/>
+                                        <rect key="frame" x="0.0" y="10" width="1023" height="315"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <dataDetectorType key="dataDetectorTypes" link="YES"/>
@@ -204,7 +204,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <webView opaque="NO" contentMode="scaleToFill" id="Zyf-Vm-Xg9">
-                                                    <rect key="frame" x="20" y="64" width="984" height="128"/>
+                                                    <rect key="frame" x="0.0" y="64" width="1024" height="138"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <dataDetectorType key="dataDetectorTypes" link="YES"/>
