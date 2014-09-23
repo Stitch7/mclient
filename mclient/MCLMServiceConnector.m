@@ -272,7 +272,7 @@
                                                                                  (CFStringRef)@" ",
                                                                                  (CFStringRef)@":/?@!$&'()*+,;=",
                                                                                  kCFStringEncodingUTF8));
-    return [result stringByReplacingOccurrencesOfString:@" " withString:@"%2B"];
+    return [result stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 }
 
 @end
