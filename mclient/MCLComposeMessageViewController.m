@@ -6,17 +6,19 @@
 //  Copyright (c) 2014 Christopher Reitz. All rights reserved.
 //
 
-#import "constants.h"
 #import "MCLComposeMessageViewController.h"
+
+#import "constants.h"
 #import "MCLMServiceConnector.h"
 #import "KeychainItemWrapper.h"
+#import "MCLMessageTextView.h"
 
 @interface MCLComposeMessageViewController ()
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *composeSendButton;
 @property (weak, nonatomic) IBOutlet UIButton *composeQuoteButton;
 @property (weak, nonatomic) IBOutlet UITextField *composeSubjectTextField;
-@property (weak, nonatomic) IBOutlet UITextView *composeTextTextField;
+@property (weak, nonatomic) IBOutlet MCLMessageTextView *composeTextTextField;
 
 @end
 
@@ -27,11 +29,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.composeTextTextField.delegate = self;
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
     switch (self.type) {
         case kComposeTypeThread:
@@ -61,77 +58,12 @@
     if (self.text) {
         self.composeTextTextField.text = self.text;
     }
-    
-    NSArray *customMenuItems = @[[[UIMenuItem alloc] initWithTitle:@"B" action:@selector(formatBold:)],
-                                 [[UIMenuItem alloc] initWithTitle:@"I" action:@selector(formatItalic:)],
-                                 [[UIMenuItem alloc] initWithTitle:@"U" action:@selector(formatUnderline:)],
-                                 [[UIMenuItem alloc] initWithTitle:@"S" action:@selector(formatStroke:)],
-                                 [[UIMenuItem alloc] initWithTitle:@"Spoiler" action:@selector(formatSpoiler:)],
-                                 [[UIMenuItem alloc] initWithTitle:@"Link" action:@selector(formatLink:)],
-                                 [[UIMenuItem alloc] initWithTitle:@"IMG" action:@selector(formatImage:)]];
-                                 
-    [[UIMenuController sharedMenuController] setMenuItems:customMenuItems];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-
-#pragma mark - UITextViewDelegate
-
-- (void)textViewDidChange:(UITextView *)textView {
-    [self showTextViewCaretPosition:textView];
-}
-
-- (void)textViewDidChangeSelection:(UITextView *)textView {
-    [self showTextViewCaretPosition:textView];
-}
-
-
-- (void)showTextViewCaretPosition:(UITextView *)textView {
-    CGRect caretRect = [textView caretRectForPosition:self.composeTextTextField.selectedTextRange.end];
-    [textView scrollRectToVisible:caretRect animated:NO];
-}
-
-
-#pragma mark - Keyboard notifications
-
-- (void)keyboardWillShow:(NSNotification *)notification {
-    CGRect keyboardFrame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    NSTimeInterval animationDuration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-
-    BOOL isPortrait = UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
-    CGFloat keyboardHeight = isPortrait ? keyboardFrame.size.height : keyboardFrame.size.width;
-
-    UIEdgeInsets contentInset = self.composeTextTextField.contentInset;
-    contentInset.bottom = keyboardHeight;
-
-
-    UIEdgeInsets scrollIndicatorInsets = self.composeTextTextField.scrollIndicatorInsets;
-    scrollIndicatorInsets.bottom = keyboardHeight;
-
-    [UIView animateWithDuration:animationDuration animations:^{
-        self.composeTextTextField.contentInset = contentInset;
-        self.composeTextTextField.scrollIndicatorInsets = scrollIndicatorInsets;
-    }];
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification {
-    NSTimeInterval animationDuration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-
-    UIEdgeInsets contentInset = self.composeTextTextField.contentInset;
-    contentInset.bottom = 0;
-
-    UIEdgeInsets scrollIndicatorInsets = self.composeTextTextField.scrollIndicatorInsets;
-    scrollIndicatorInsets.bottom = 0;
-
-    [UIView animateWithDuration:animationDuration animations:^{
-        self.composeTextTextField.contentInset = contentInset;
-        self.composeTextTextField.scrollIndicatorInsets = scrollIndicatorInsets;
-    }];
 }
 
 
@@ -147,7 +79,7 @@
     return NO;
 }
 
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     BOOL shouldChangeCharacters = YES;
 
@@ -171,71 +103,9 @@
 
 #pragma mark - Actions
 
-- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
-    if (action == @selector(formatBold:) ||
-        action == @selector(formatItalic:) ||
-        action == @selector(formatUnderline:) ||
-        action == @selector(formatStroke:) ||
-        action == @selector(formatSpoiler:) ||
-        action == @selector(formatLink:) ||
-        action == @selector(formatImage:)
-    ) {
-        return self.composeTextTextField.selectedRange.length > 0;
-    }
-    
-    return NO;
-}
-
-- (IBAction)formatBold:(id)sender
-{
-    [self formatSelectionWith:@"[b:%@]"];
-}
-
-- (IBAction)formatItalic:(id)sender
-{
-    [self formatSelectionWith:@"[i:%@]"];
-}
-
-- (IBAction)formatUnderline:(id)sender
-{
-    [self formatSelectionWith:@"[u:%@]"];
-}
-
-- (IBAction)formatStroke:(id)sender
-{
-    [self formatSelectionWith:@"[s:%@]"];
-}
-
-- (IBAction)formatSpoiler:(id)sender
-{
-    [self formatSelectionWith:@"[h:%@]"];
-}
-
-- (IBAction)formatLink:(id)sender
-{
-    [self formatSelectionWith:@"[%@]"];
-}
-
-- (IBAction)formatImage:(id)sender
-{
-    [self formatSelectionWith:@"[img:%@]"];
-}
-
-- (void)formatSelectionWith:(NSString *)formatString
-{
-    NSRange range = [self.composeTextTextField selectedRange];
-    NSString *selected = [self.composeTextTextField.text substringWithRange:range];
-    
-    NSString *textViewContent = self.composeTextTextField.text;
-    NSString *replacement = [NSString stringWithFormat:formatString, selected];
-    NSString *newContent = [textViewContent stringByReplacingCharactersInRange:range withString:replacement];
-    self.composeTextTextField.text = newContent;
-}
-
 - (IBAction)quoteButtonTouchUpInside:(UIButton *)sender
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
         NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"/board/%@/quote/%@", self.boardId, self.messageId]];
         NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
         [self performSelectorOnMainThread:@selector(fetchQuoteData:) withObject:data waitUntilDone:YES];

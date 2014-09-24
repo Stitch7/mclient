@@ -16,7 +16,7 @@ typedef NS_ENUM(NSUInteger, kComposeType) {
     kComposeTypeEdit
 };
 
-@interface MCLComposeMessageViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate>
+@interface MCLComposeMessageViewController : UIViewController <UITextFieldDelegate>
 
 @property (weak) id<MCLComposeMessageViewControllerDelegate> delegate;
 
