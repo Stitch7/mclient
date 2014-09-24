@@ -81,6 +81,7 @@
 - (void)configureWithSubLabelText:(NSString *)subLabelText
 {
 //    [self setBackgroundColor:[UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0]];
+    [self setBackgroundColor:[UIColor whiteColor]];
 
 //    self.label.text = @"Welcome Stitch";
 //    self.label.textColor = [UIColor darkGrayColor];

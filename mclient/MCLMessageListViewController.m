@@ -273,10 +273,13 @@
     [cell setMessageId:message.messageId];
 
     [cell setClipsToBounds:YES];
-    
-    [self indentView:cell.messageSubjectLabel withLevel:message.level startingAtX:20];
-    [self indentView:cell.messageUsernameLabel withLevel:message.level startingAtX:20];
-    [self indentView:(UIView*)cell.readSymbolView withLevel:message.level startingAtX:5];
+
+    [self indentView:(UIView *)cell.readSymbolView withLevel:message.level startingAtX:5];
+    [self indentView:(UIView *)cell.messageIndentionImageView withLevel:message.level startingAtX:20];
+    [self indentView:cell.messageSubjectLabel withLevel:message.level startingAtX:30];
+    [self indentView:cell.messageUsernameLabel withLevel:message.level startingAtX:30];
+
+    cell.messageIndentionImageView.hidden = (i == 0);
     
     cell.messageSubjectLabel.text = message.subject;
     cell.messageUsernameLabel.text = message.username;
@@ -510,29 +513,35 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    // Resize text view to content heigt
-    CGSize webViewTextSize = [webView sizeThatFits:CGSizeMake(1.0f, 1.0f)];
-    CGRect webViewFrame = webView.frame;
-    webViewFrame.size.height = webViewTextSize.height;
-    webView.frame = webViewFrame;
-    
-    // Disable bouncing in webview
-    for (id subview in webView.subviews) {
-        if ([[subview class] isSubclassOfClass: [UIScrollView class]]) {
-            [subview setBounces:NO];
+    // UIWebView object has fully loaded.
+    if ([[webView stringByEvaluatingJavaScriptFromString:@"document.readyState"] isEqualToString:@"complete"]) {
+        // Resize text view to content height
+        int height = [[webView stringByEvaluatingJavaScriptFromString:@"Math.max(document.body.scrollHeight, "
+                                                                                "document.body.offsetHeight, "
+                                                                                "document.documentElement.clientHeight, "
+                                                                                "document.documentElement.scrollHeight, "
+                                                                                "document.documentElement.offsetHeight);"] integerValue];
+        CGRect webViewFrame = webView.frame;
+        webViewFrame.size.height = height;
+        webView.frame = webViewFrame;
+        
+        // Disable bouncing in webview
+        for (id subview in webView.subviews) {
+            if ([[subview class] isSubclassOfClass: [UIScrollView class]]) {
+                [subview setBounces:NO];
+            }
         }
+
+        // Show toolbar after short delay to avoid skidding through text
+        MCLMessageTableViewCell *cell = (MCLMessageTableViewCell *)webView.superview.superview.superview;
+        [cell.messageToolbar performSelector:@selector(setHidden:) withObject:NO afterDelay:0.2];
+        // [cell.messageToolbar setHidden:NO];
+
+        NSLog(@"webViewDidFinishLoad - id:%@", cell.messageId);
+
+        // Resize table cell
+        [self updateTableView];
     }
-
-    // Resize table cell
-//    [self updateTableView];
-
-    // Show toolbar after short delay to avoid skidding through text
-    MCLMessageTableViewCell *cell = (MCLMessageTableViewCell *)webView.superview.superview.superview;
-    [cell.messageToolbar performSelector:@selector(setHidden:) withObject:NO afterDelay:0.2];
-//    [cell.messageToolbar setHidden:NO];
-
-    // Resize table cell
-    [self updateTableView];
 }
 
 

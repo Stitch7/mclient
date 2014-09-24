@@ -45,21 +45,25 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                 </view>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="messageIndention.png" id="dTH-aJ-0iN">
+                                                    <rect key="frame" x="20" y="10" width="5" height="40"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Sb4-qC-CTs">
-                                                    <rect key="frame" x="20" y="9" width="854" height="21"/>
+                                                    <rect key="frame" x="30" y="9" width="974" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Q6J-58-GXh">
-                                                    <rect key="frame" x="20" y="35" width="42" height="21"/>
+                                                    <rect key="frame" x="30" y="35" width="42" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iTq-I9-36q">
-                                                    <rect key="frame" x="70" y="35" width="42" height="21"/>
+                                                    <rect key="frame" x="80" y="35" width="42" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -69,6 +73,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="messageDateLabel" destination="iTq-I9-36q" id="aLd-Ya-AvD"/>
+                                            <outlet property="messageIndentionImageView" destination="dTH-aJ-0iN" id="mUV-M7-v0T"/>
                                             <outlet property="messageSubjectLabel" destination="Sb4-qC-CTs" id="sEx-c4-O3K"/>
                                             <outlet property="messageUsernameLabel" destination="Q6J-58-GXh" id="8JH-NG-g2B"/>
                                             <outlet property="readSymbolView" destination="ueX-Ls-l6A" id="E2H-Hf-yiN"/>
@@ -184,20 +189,24 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                 </view>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="messageIndention.png" id="S84-gI-XLL">
+                                                    <rect key="frame" x="20" y="10" width="5" height="40"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="c8v-Eb-Qk0">
-                                                    <rect key="frame" x="20" y="9" width="984" height="21"/>
+                                                    <rect key="frame" x="30" y="9" width="974" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jdd-pR-aNS">
-                                                    <rect key="frame" x="20" y="35" width="42" height="21"/>
+                                                    <rect key="frame" x="30" y="35" width="42" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HiK-cf-yA9">
-                                                    <rect key="frame" x="70" y="35" width="42" height="21"/>
+                                                    <rect key="frame" x="80" y="35" width="42" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -255,6 +264,7 @@
                                         <connections>
                                             <outlet property="messageDateLabel" destination="HiK-cf-yA9" id="bJV-MF-XWv"/>
                                             <outlet property="messageEditButton" destination="Lsr-1Y-cpt" id="T7K-6g-Rng"/>
+                                            <outlet property="messageIndentionImageView" destination="S84-gI-XLL" id="rZz-P2-dgG"/>
                                             <outlet property="messageNotificationButton" destination="ef7-vD-qfd" id="gYO-x8-TDi"/>
                                             <outlet property="messageProfileButton" destination="iAj-W5-ORe" id="g0V-BE-W9b"/>
                                             <outlet property="messageReplyButton" destination="VAi-UU-uu5" id="UjL-su-Kit"/>
@@ -918,6 +928,7 @@
         <image name="copyLinkButton.png" width="25" height="25"/>
         <image name="downButton.png" width="24" height="24"/>
         <image name="editButton.png" width="25" height="25"/>
+        <image name="messageIndention.png" width="5" height="40"/>
         <image name="notificationButtonDisabled.png" width="25" height="25"/>
         <image name="profileButton.png" width="25" height="25"/>
         <image name="quoteButton.png" width="25" height="25"/>
@@ -931,7 +942,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="dz1-oT-aTf"/>
-        <segue reference="zlL-gJ-Ao9"/>
+        <segue reference="tPe-uH-qWP"/>
+        <segue reference="OzD-Bs-DyH"/>
     </inferredMetricsTieBreakers>
 </document>

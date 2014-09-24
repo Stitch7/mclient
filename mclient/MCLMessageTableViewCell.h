@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSString *messageText;
 @property (assign, nonatomic) BOOL messageNotification;
 
+@property (weak, nonatomic) IBOutlet UIImageView *messageIndentionImageView;
 @property (weak, nonatomic) IBOutlet UILabel *messageSubjectLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageUsernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageDateLabel;

@@ -312,9 +312,12 @@
 
     [cell setClipsToBounds:YES]; //TODO effect?
 
-    [self indentView:cell.messageSubjectLabel withLevel:message.level startingAtX:20];
-    [self indentView:cell.messageUsernameLabel withLevel:message.level startingAtX:20];
-    [self indentView:(UIView*)cell.readSymbolView withLevel:message.level startingAtX:5];
+    [self indentView:(UIView *)cell.readSymbolView withLevel:message.level startingAtX:5];
+    [self indentView:(UIView *)cell.messageIndentionImageView withLevel:message.level startingAtX:20];
+    [self indentView:cell.messageSubjectLabel withLevel:message.level startingAtX:30];
+    [self indentView:cell.messageUsernameLabel withLevel:message.level startingAtX:30];
+
+    cell.messageIndentionImageView.hidden = (i == 0);
 
     cell.messageSubjectLabel.text = message.subject;
     cell.messageUsernameLabel.text = message.username;

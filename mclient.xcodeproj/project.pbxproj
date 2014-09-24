@@ -55,6 +55,7 @@
 		3086427D19D13BAE0027F932 /* MCLFakePushForwardStoryboardSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3086427C19D13BAE0027F932 /* MCLFakePushForwardStoryboardSegue.m */; };
 		3086428019D13C830027F932 /* MCLFakePushBackwardStoryboardSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3086427F19D13C830027F932 /* MCLFakePushBackwardStoryboardSegue.m */; };
 		3086428219D149A50027F932 /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3086428119D149A50027F932 /* backButton@2x.png */; };
+		3086428419D18ED10027F932 /* messageIndention@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3086428319D18ED10027F932 /* messageIndention@2x.png */; };
 		308EC3D819CC4DE800A0869F /* MCLDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 308EC3D619CC4DE800A0869F /* MCLDetailViewController.m */; };
 		308EC3DA19CC6F9000A0869F /* downButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 308EC3D919CC6F9000A0869F /* downButton@2x.png */; };
 		308EC3DD19CC7BA600A0869F /* MCLDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 308EC3DC19CC7BA600A0869F /* MCLDetailView.m */; };
@@ -155,6 +156,7 @@
 		3086427E19D13C830027F932 /* MCLFakePushBackwardStoryboardSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLFakePushBackwardStoryboardSegue.h; sourceTree = "<group>"; };
 		3086427F19D13C830027F932 /* MCLFakePushBackwardStoryboardSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLFakePushBackwardStoryboardSegue.m; sourceTree = "<group>"; };
 		3086428119D149A50027F932 /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backButton@2x.png"; sourceTree = "<group>"; };
+		3086428319D18ED10027F932 /* messageIndention@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messageIndention@2x.png"; sourceTree = "<group>"; };
 		308EC3D519CC4DE800A0869F /* MCLDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLDetailViewController.h; sourceTree = "<group>"; };
 		308EC3D619CC4DE800A0869F /* MCLDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLDetailViewController.m; sourceTree = "<group>"; };
 		308EC3D719CC4DE800A0869F /* SplitViewButtonHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitViewButtonHandler.h; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 		307A80DE19B75F29001B538D /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				3086428319D18ED10027F932 /* messageIndention@2x.png */,
 				3086428119D149A50027F932 /* backButton@2x.png */,
 				308EC3E419CE69A400A0869F /* boardDefault@2x.png */,
 				308EC3E619CE72F300A0869F /* boardForSale@2x.png */,
@@ -465,6 +468,7 @@
 				308EC3EE19CE72FC00A0869F /* boardOnlineGaming@2x.png in Resources */,
 				301FD9AA19C4D8D800E36A5B /* errorConnection@2x.png in Resources */,
 				301FD9A819C419DE00E36A5B /* errorResponse@2x.png in Resources */,
+				3086428419D18ED10027F932 /* messageIndention@2x.png in Resources */,
 				308EC3F019CE72FC00A0869F /* boardSmalltalk@2x.png in Resources */,
 				308EC3E719CE72F300A0869F /* boardForSale@2x.png in Resources */,
 				305DD82B19A63517006514BD /* Main_iPhone.storyboard in Resources */,
