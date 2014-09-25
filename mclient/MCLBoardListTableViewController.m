@@ -34,9 +34,8 @@
 {
     [super awakeFromNib];
 
-    [self.splitViewController setDelegate:self];
-
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [self.splitViewController setDelegate:self];
         self.preferredContentSize = CGSizeMake(320.0, 600.0);
     }
 
@@ -109,11 +108,11 @@
     // Load data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *error;
-        BOOL loggedIN = ([[[MCLMServiceConnector alloc] init] testLoginWIthUsername:username password:password error:&error]);
+        BOOL login = ([[[MCLMServiceConnector alloc] init] testLoginWIthUsername:username password:password error:&error]);
 
         // Remove loading view on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (loggedIN) {
+            if (login) {
                 [navToolbarView loginStatusWithUsername:username];
             } else {
                 [navToolbarView loginStausNoLogin];

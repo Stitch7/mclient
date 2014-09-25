@@ -354,13 +354,21 @@
     int indention = 10;
 
     CGRect frame = view.frame;
-    //    frame.origin = CGPointMake((indention * 2) + (indention * level), frame.origin.y);
-    //    frame.origin = CGPointMake(frame.origin.x + (indention * level), frame.origin.y);
     frame.origin = CGPointMake(x + (indention * level), frame.origin.y);
     view.frame = frame;
 
 }
 
+-(void)barButton:(UIBarButtonItem *)barButton hide:(BOOL)hide
+{
+    if (hide) {
+        [barButton setEnabled:NO];
+        [barButton setTintColor: [UIColor clearColor]];
+    } else {
+        [barButton setEnabled:YES];
+        [barButton setTintColor:nil];
+    }
+}
 
 #pragma mark - UITableViewDelegate
 
@@ -440,10 +448,9 @@
     [cell markRead];
     [self.readList addMessageId:message.messageId];
 
-    BOOL enableNotificationButton = [message.username isEqualToString:self.username];
-    [self.toolbarButtonNotification setEnabled:enableNotificationButton];
-
-    if (enableNotificationButton) {
+    BOOL hideNotificationButton = ! [message.username isEqualToString:self.username];
+    [self barButton:self.toolbarButtonNotification hide:hideNotificationButton];
+    if ( ! hideNotificationButton) {
         NSError *mServiceError;
         NSInteger notificationStatus = [self.mServiceConnector notificationStatusForMessageId:message.messageId
                                                                                       boardId:self.board.boardId
@@ -459,8 +466,8 @@
         }
     }
 
-    BOOL enableEditButton = [message.username isEqualToString:self.username] && nextMessage.level <= message.level;
-    [self.toolbarButtonEdit setEnabled:enableEditButton];
+    BOOL hideEditButton = ! ([message.username isEqualToString:self.username] && nextMessage.level <= message.level);
+    [self barButton:self.toolbarButtonEdit hide:hideEditButton];
 }
 
 

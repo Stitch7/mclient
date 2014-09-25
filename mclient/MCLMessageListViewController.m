@@ -242,12 +242,10 @@
     return [self.messages count];
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger i = indexPath.row;
-//    NSLog(@"cellForRowAtIndexPath: %i", i);
-    
+
     MCLMessage *message = self.messages[i];
     MCLMessage *nextMessage = nil;
     if (indexPath.row < ([self.messages count] - 1)) {
@@ -333,8 +331,6 @@
     int indention = 10;
     
     CGRect frame = view.frame;
-//    frame.origin = CGPointMake((indention * 2) + (indention * level), frame.origin.y);
-//    frame.origin = CGPointMake(frame.origin.x + (indention * level), frame.origin.y);
     frame.origin = CGPointMake(x + (indention * level), frame.origin.y);
     view.frame = frame;
     
@@ -363,7 +359,6 @@
         CGFloat webViewHeight = cell.messageTextWebView.scrollView.contentSize.height;
         CGFloat toolbarHeight = cell.messageToolbar.frame.size.height;
         height = height + 10 + webViewHeight + toolbarHeight;
-//        NSLog(@"heightForRowAtIndexPath(%i - %i): %f  -  %f", cell.tag, indexPath.row, cell.messageTextWebView.frame.size.height, webViewHeight);
 	}
 
     return height;
@@ -535,8 +530,6 @@
         MCLMessageTableViewCell *cell = (MCLMessageTableViewCell *)webView.superview.superview.superview;
         [cell.messageToolbar performSelector:@selector(setHidden:) withObject:NO afterDelay:0.2];
         // [cell.messageToolbar setHidden:NO];
-
-        NSLog(@"webViewDidFinishLoad - id:%@", cell.messageId);
 
         // Resize table cell
         [self updateTableView];
