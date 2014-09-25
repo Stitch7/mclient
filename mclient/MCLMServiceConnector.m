@@ -49,9 +49,11 @@
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
         success = [[json objectForKey:@"success"] boolValue];
     } else {
-        NSLog(@"ERROR!");
+        *errorPtr = [NSError errorWithDomain:[[NSBundle mainBundle] bundleIdentifier]
+                                        code:error.code
+                                    userInfo:error.userInfo];
     }
-    
+
     return success;
 }
 

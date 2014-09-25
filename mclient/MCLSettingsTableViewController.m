@@ -19,13 +19,18 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsDoneButton;
 @property (weak, nonatomic) IBOutlet UITextField *settingsUsernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *settingsPasswordTextField;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *settingsLoginDataStatusSpinner;
+@property (weak, nonatomic) IBOutlet UILabel *settingsLoginDataStatusLabel;
+@property (weak, nonatomic) IBOutlet UITableViewCell *settingsLoginDataStatusTableViewCell;
 @property (weak, nonatomic) IBOutlet UISwitch *settingsSignatureEnabledSwitch;
 @property (weak, nonatomic) IBOutlet UITextView *settingsSignatureTextView;
 @property (weak, nonatomic) IBOutlet UISwitch *settingsNightModeSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *settingsSyncReadStatusSwitch;
-
 @property (assign, nonatomic) int threadView;
 @property (assign, nonatomic) int showImages;
+
+@property (strong, nonatomic) NSString *lastUsernameTextFieldValue;
+@property (strong, nonatomic) NSString *lastPasswordTextFieldValue;
 
 @end
 
@@ -41,15 +46,23 @@
     self.userDefaults = [NSUserDefaults standardUserDefaults];
     
     // Reading username + password from keychain
-    NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
-    self.keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
+    NSString *keychainIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    self.keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:keychainIdentifier accessGroup:nil];
     [self.keychainItem setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
     NSData *passwordData = [self.keychainItem objectForKey:(__bridge id)(kSecValueData)];
     NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
     NSString *username = [self.keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
-    
     self.settingsUsernameTextField.text = username;
     self.settingsPasswordTextField.text = password;
+    self.lastUsernameTextFieldValue = username;
+    self.lastPasswordTextFieldValue = password;
+
+    [self.settingsLoginDataStatusTableViewCell setBackgroundColor:[UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0]];
+    [self.settingsLoginDataStatusTableViewCell setTintColor:[UIColor greenColor]];
+    [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
+    self.settingsLoginDataStatusSpinner.transform = CGAffineTransformMakeScale(0.75, 0.75);
+    self.settingsLoginDataStatusLabel.text = @"";
+    [self testLogin];
 
     BOOL signatureEnabled = [self.userDefaults boolForKey:@"signatureEnabled"];
     self.settingsSignatureEnabledSwitch.on = signatureEnabled;
@@ -112,27 +125,39 @@
     NSString *password = self.settingsPasswordTextField.text;
     
     if (username.length > 0 && password.length > 0) {
-        NSString *title, *message;
-        
-        MCLMServiceConnector *mServiceConnector = [[MCLMServiceConnector alloc] init];
-        NSError *error;
-        
-        if ([mServiceConnector testLoginWIthUsername:username password:password error:&error]) {
-            [self.keychainItem setObject:username forKey:(__bridge id)(kSecAttrAccount)];
-            [self.keychainItem setObject:password forKey:(__bridge id)(kSecValueData)];
-            title = @"Login succeed";
-            message = @"You credentials have been securely saved into the keychain of this device";
-        } else {
-            title = @"Login failed";
-            message = @"Please verifiy username and password";
-        }
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                        message:message
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
+        self.settingsLoginDataStatusLabel.textColor = [UIColor darkGrayColor];
+        self.settingsLoginDataStatusLabel.text = @"Verifying username and password...";
+        [self.settingsLoginDataStatusSpinner startAnimating];
+
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSError *error;
+            BOOL login = ([[[MCLMServiceConnector alloc] init] testLoginWIthUsername:username password:password error:&error]);
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.settingsLoginDataStatusSpinner stopAnimating];
+                if (login) {
+                    [self.keychainItem setObject:username forKey:(__bridge id)(kSecAttrAccount)];
+                    [self.keychainItem setObject:password forKey:(__bridge id)(kSecValueData)];
+
+                    [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryCheckmark];
+                    self.settingsLoginDataStatusLabel.text = @"Login data is correct";
+                } else {
+                    [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
+                    self.settingsLoginDataStatusLabel.textColor = [UIColor redColor];
+
+                    if (error) {
+                        self.settingsLoginDataStatusLabel.text = @"ERROR: Could not connect to server";
+                    } else {
+                        self.settingsLoginDataStatusLabel.text = @"Login data was entered incorrectly";
+                    }
+                }
+            });
+        });
+    } else {
+        [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
+        self.settingsLoginDataStatusLabel.textColor = [UIColor darkGrayColor];
+        self.settingsLoginDataStatusLabel.text = @"Please enter username and password";
     }
 }
 
@@ -195,14 +220,18 @@
 
 - (IBAction)settingsUsernameEditingDidEndAction:(UITextField *)sender
 {
-    [self.userDefaults setObject:sender.text forKey:@"username"];
-    [self testLogin];
+    if ( ! [sender.text isEqualToString:self.lastUsernameTextFieldValue]) {
+        [self testLogin];
+    }
+    self.lastUsernameTextFieldValue = sender.text;
 }
 
 - (IBAction)settingsPasswordEditingDidEndAction:(UITextField *)sender
 {
-    [self.userDefaults setObject:sender.text forKey:@"password"];
-    [self testLogin];
+    if ( ! [sender.text isEqualToString:self.lastPasswordTextFieldValue]) {
+        [self testLogin];
+    }
+    self.lastPasswordTextFieldValue = sender.text;
 }
 
 - (IBAction)settingsSignatureEnabledSwitchValueChangedAction:(UISwitch *)sender

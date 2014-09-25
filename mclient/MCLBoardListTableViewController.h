@@ -8,13 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-//@class MCLThreadListTableViewController;
-
 @class MCLBoard;
 
 @interface MCLBoardListTableViewController : UITableViewController <UISplitViewControllerDelegate>
-
-//@property (strong, nonatomic) MCLThreadListTableViewController *threadListTableViewController;
 
 @property (strong) MCLBoard *preselectedBoard;
 

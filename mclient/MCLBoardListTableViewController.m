@@ -8,12 +8,15 @@
 
 #import "constants.h"
 #import "Reachability.h"
+#import "KeychainItemWrapper.h"
+#import "MCLMServiceConnector.h"
 #import "MCLBoardListTableViewController.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLDetailViewController.h"
 #import "MCLBoard.h"
 #import "MCLErrorView.h"
 #import "MCLLoadingView.h"
+#import "MCLVerifiyLoginView.h"
 
 @interface MCLBoardListTableViewController ()
 
@@ -59,6 +62,7 @@
 {
     [super viewDidLoad];
 
+    [self showLoginStatus];
     [self setupReachability];
     [self setupRefreshControl];
 
@@ -88,6 +92,36 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)showLoginStatus
+{
+    MCLVerifiyLoginView *navToolbarView = [[MCLVerifiyLoginView alloc] initWithFrame:self.navigationController.toolbar.bounds];
+    [self.navigationController.toolbar addSubview:navToolbarView];
+    [self.navigationController setToolbarHidden:NO animated:YES];
+
+    // Reading username + password from keychain
+    NSString *keychainIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:keychainIdentifier accessGroup:nil];
+    [keychainItem setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
+    NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
+    NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
+    NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
+
+    // Load data async
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError *error;
+        BOOL loggedIN = ([[[MCLMServiceConnector alloc] init] testLoginWIthUsername:username password:password error:&error]);
+
+        // Remove loading view on main thread
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (loggedIN) {
+                [navToolbarView loginStatusWithUsername:username];
+            } else {
+                [navToolbarView loginStausNoLogin];
+            }
+        });
+    });
+}
+
 - (NSData *)loadData
 {
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: kMServiceBaseURL]];
@@ -101,7 +135,6 @@
         self.tableView.bounces = YES;
 
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-        refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to refresh..."];
         [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
         self.refreshControl = refreshControl;
     }

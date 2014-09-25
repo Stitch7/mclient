@@ -10,4 +10,8 @@
 
 @interface MCLLoadingView : UIView
 
+@property(strong, nonatomic) UILabel *label;
+@property(strong, nonatomic) UIActivityIndicatorView *spinner;
+@property(assign, nonatomic) int spaceBetwennSpinnerAndLabel;
+
 @end
