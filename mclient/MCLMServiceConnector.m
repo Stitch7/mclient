@@ -122,12 +122,84 @@
     return success;
 }
 
+- (NSDictionary *)previewForMessageId:(NSNumber *)inMessageId
+                              boardId:(NSNumber *)inBoardId
+                              subject:(NSString *)inSubject
+                                 text:(NSString *)inText
+                             username:(NSString *)inUsername
+                             password:(NSString *)inPassword
+                                error:(NSError **)errorPtr
+{
+    NSDictionary *vars = @{@"boardId":inBoardId,
+                           @"messageId":inMessageId ?: [NSNull null],
+                           @"subject":[self percentEscapeString:inSubject],
+                           @"text":[self percentEscapeString:inText],
+                           @"username":[self percentEscapeString:inUsername],
+                           @"password":[self percentEscapeString:inPassword],
+                           @"notification":@0};
+
+    BOOL success = NO;
+    NSDictionary *content = nil;
+    NSInteger errorCode = 0;
+    NSDictionary *errorUserInfo = nil;
+
+    NSString *urlString = [NSString stringWithFormat:@"http://localhost:8000/preview"];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+
+    NSString *requestFields = @"";
+    for (id key in vars) {
+        requestFields = [requestFields stringByAppendingFormat:@"%@=%@&", key, [vars objectForKey:key]];
+    }
+    // requestFields = [requestFields stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSData *requestData = [requestFields dataUsingEncoding:NSUTF8StringEncoding];
+    request.HTTPBody = requestData;
+    request.HTTPMethod = @"POST";
+
+    NSHTTPURLResponse *response = nil;
+    NSError *responseError = nil;
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&responseError];
+
+    if ( ! responseError) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&responseError];
+
+        switch (response.statusCode) {
+            case 200:
+                success = [[json objectForKey:@"success"] boolValue];
+                if (success) {
+                    content = [json objectForKey:@"content"];
+                } else {
+                    errorCode = [[json objectForKey:@"errorCode"] integerValue];
+                    errorUserInfo = @{ NSLocalizedDescriptionKey: [json objectForKey:@"errorMessage"],
+                                       NSLocalizedFailureReasonErrorKey: [[self errorMessages] objectAtIndex:errorCode]};
+                }
+                break;
+            case 500:
+                errorUserInfo = @{ NSLocalizedDescriptionKey: [json objectForKey:@"code"],
+                                   NSLocalizedFailureReasonErrorKey: [[self errorMessages] objectAtIndex:0]};
+                NSLog(@"%@: %@", [json objectForKey:@"code"], [json objectForKey:@"message"]);
+                break;
+        }
+    } else {
+        NSLog(@"responseError: %@", responseError);
+    }
+
+    if ( ! success) {
+        *errorPtr = [NSError errorWithDomain:[[NSBundle mainBundle] bundleIdentifier]
+                                        code:errorCode
+                                    userInfo:errorUserInfo];
+    }
+
+    return content;
+}
+
 
 - (BOOL)postThreadToBoardId:(NSNumber *)inBoardId
                     subject:(NSString *)inSubject
                        text:(NSString *)inText
                    username:(NSString *)inUsername
                    password:(NSString *)inPassword
+               notification:(BOOL)inNotification
                       error:(NSError **)errorPtr
 {
     NSDictionary *vars = @{@"boardId":inBoardId,
@@ -136,7 +208,7 @@
                            @"text":[self percentEscapeString:inText],
                            @"username":[self percentEscapeString:inUsername],
                            @"password":[self percentEscapeString:inPassword],
-                           @"notification":@0};
+                           @"notification":[NSNumber numberWithBool:inNotification]};
     
     return [self post:@"post" withVars:vars error:errorPtr];
 }
@@ -147,6 +219,7 @@
                         text:(NSString *)inText
                     username:(NSString *)inUsername
                     password:(NSString *)inPassword
+                notification:(BOOL)inNotification
                        error:(NSError **)errorPtr
 {
     NSDictionary *vars = @{@"boardId":inBoardId,
@@ -155,7 +228,7 @@
                            @"text":[self percentEscapeString:inText],
                            @"username":[self percentEscapeString:inUsername],
                            @"password":[self percentEscapeString:inPassword],
-                           @"notification":@0};
+                           @"notification":[NSNumber numberWithBool:inNotification]};
     
     return [self post:@"post" withVars:vars error:errorPtr];
 }
@@ -215,7 +288,7 @@
 
 - (BOOL)post:(NSString *)action withVars:(NSDictionary *)vars error:(NSError **)errorPtr
 {
-    NSUInteger success = NO;
+    BOOL success = NO;
     NSInteger errorCode = 0;
     NSDictionary *errorUserInfo = nil;
     

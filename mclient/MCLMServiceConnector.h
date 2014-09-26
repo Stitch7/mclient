@@ -32,11 +32,20 @@
                        boardId:(NSNumber *)inBoardId
                          error:(NSError **)errorPtr;
 
+- (NSDictionary *)previewForMessageId:(NSNumber *)inMessageId
+                              boardId:(NSNumber *)inBoardId
+                              subject:(NSString *)inSubject
+                                 text:(NSString *)inText
+                             username:(NSString *)inUsername
+                             password:(NSString *)inPassword
+                                error:(NSError **)errorPtr;
+
 - (BOOL)postThreadToBoardId:(NSNumber *)inBoardId
                     subject:(NSString *)inSubject
                        text:(NSString *)inText
                    username:(NSString *)inUsername
                    password:(NSString *)inPassword
+               notification:(BOOL)inNotification
                       error:(NSError **)errorPtr;
 
 - (BOOL)postReplyToMessageId:(NSNumber *)inMessageId
@@ -45,6 +54,7 @@
                         text:(NSString *)inText
                     username:(NSString *)inUsername
                     password:(NSString *)inPassword
+                notification:(BOOL)inNotification
                        error:(NSError **)errorPtr;
 
 - (BOOL)postEditToMessageId:(NSNumber *)inMessageId

@@ -69,6 +69,7 @@
 		308EC3F019CE72FC00A0869F /* boardSmalltalk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 308EC3EB19CE72FC00A0869F /* boardSmalltalk@2x.png */; };
 		308EC3F119CE72FC00A0869F /* boardTechNCheats@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 308EC3EC19CE72FC00A0869F /* boardTechNCheats@2x.png */; };
 		30A1BFAD19B4A8D4002439FE /* MCLSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */; };
+		30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */; };
 		30E8B89619B33C070067DD1F /* MCLReadList.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89519B33C070067DD1F /* MCLReadList.m */; };
 		30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */; };
 		30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */; };
@@ -139,6 +140,7 @@
 		305DD85F19AB3031006514BD /* MCLThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLThread.m; sourceTree = "<group>"; };
 		305DD86119AB380C006514BD /* MCLMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessage.h; sourceTree = "<group>"; };
 		305DD86219AB380C006514BD /* MCLMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessage.m; sourceTree = "<group>"; };
+		305E53AA19D4F3EE002B8E50 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		306F8C3419BA0F2C00376A58 /* quoteButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quoteButton@2x.png"; sourceTree = "<group>"; };
 		307A80DB19B5EBD8001B538D /* MCLMServiceConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMServiceConnector.h; sourceTree = "<group>"; };
 		307A80DC19B5EBD8001B538D /* MCLMServiceConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMServiceConnector.m; sourceTree = "<group>"; };
@@ -177,6 +179,8 @@
 		308EC3EC19CE72FC00A0869F /* boardTechNCheats@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardTechNCheats@2x.png"; sourceTree = "<group>"; };
 		30A1BFAB19B4A8D4002439FE /* MCLSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLSettingsTableViewController.h; sourceTree = "<group>"; };
 		30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsTableViewController.m; sourceTree = "<group>"; };
+		30A9D5E519D4CFFF00070268 /* MCLComposeMessagePreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessagePreviewViewController.h; sourceTree = "<group>"; };
+		30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLComposeMessagePreviewViewController.m; sourceTree = "<group>"; };
 		30E8B89419B33C070067DD1F /* MCLReadList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadList.h; sourceTree = "<group>"; };
 		30E8B89519B33C070067DD1F /* MCLReadList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadList.m; sourceTree = "<group>"; };
 		30E8B89719B3CBF40067DD1F /* MCLComposeMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessageViewController.h; sourceTree = "<group>"; };
@@ -244,24 +248,18 @@
 		305DD81D19A63517006514BD /* mclient */ = {
 			isa = PBXGroup;
 			children = (
-				308EC3D719CC4DE800A0869F /* SplitViewButtonHandler.h */,
 				301FD00F19AB73160028C5C8 /* constants.h */,
+				305E53AA19D4F3EE002B8E50 /* utils.h */,
+				308EC3D719CC4DE800A0869F /* SplitViewButtonHandler.h */,
 				305DD85819AB2EE0006514BD /* Controller */,
-				307A80DE19B75F29001B538D /* Images */,
-				305DD83519A63517006514BD /* Images.xcassets */,
-				307A80ED19B8800E001B538D /* KeychainItemWrapper.h */,
-				307A80EE19B8800E001B538D /* KeychainItemWrapper.m */,
-				305DD82C19A63517006514BD /* Main_iPad.storyboard */,
-				305DD82919A63517006514BD /* Main_iPhone.storyboard */,
+				305DD85A19AB2F07006514BD /* Model */,
+				305DD85919AB2EFE006514BD /* View */,
 				305DD82619A63517006514BD /* MCLAppDelegate.h */,
 				305DD82719A63517006514BD /* MCLAppDelegate.m */,
 				307A80DB19B5EBD8001B538D /* MCLMServiceConnector.h */,
 				307A80DC19B5EBD8001B538D /* MCLMServiceConnector.m */,
-				305DD85A19AB2F07006514BD /* Model */,
-				301FD9AB19C5C79000E36A5B /* Reachability.h */,
-				301FD9AC19C5C79000E36A5B /* Reachability.m */,
 				305DD81E19A63517006514BD /* Supporting Files */,
-				305DD85919AB2EFE006514BD /* View */,
+				305E53AC19D4F509002B8E50 /* Vendor */,
 			);
 			path = mclient;
 			sourceTree = "<group>";
@@ -300,6 +298,8 @@
 			children = (
 				305DD82F19A63517006514BD /* MCLBoardListTableViewController.h */,
 				305DD83019A63517006514BD /* MCLBoardListTableViewController.m */,
+				30A9D5E519D4CFFF00070268 /* MCLComposeMessagePreviewViewController.h */,
+				30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */,
 				30E8B89719B3CBF40067DD1F /* MCLComposeMessageViewController.h */,
 				30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */,
 				308EC3D519CC4DE800A0869F /* MCLDetailViewController.h */,
@@ -323,6 +323,8 @@
 		305DD85919AB2EFE006514BD /* View */ = {
 			isa = PBXGroup;
 			children = (
+				307A80DE19B75F29001B538D /* Images */,
+				305E53AB19D4F4C5002B8E50 /* Storyboards */,
 				308EC3DB19CC7BA600A0869F /* MCLDetailView.h */,
 				308EC3DC19CC7BA600A0869F /* MCLDetailView.m */,
 				301FD9A419C411D400E36A5B /* MCLErrorView.h */,
@@ -364,9 +366,38 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		305E53AB19D4F4C5002B8E50 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				305DD82C19A63517006514BD /* Main_iPad.storyboard */,
+				305DD82919A63517006514BD /* Main_iPhone.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		305E53AC19D4F509002B8E50 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				305E53AD19D4F517002B8E50 /* Apple */,
+			);
+			name = Vendor;
+			sourceTree = "<group>";
+		};
+		305E53AD19D4F517002B8E50 /* Apple */ = {
+			isa = PBXGroup;
+			children = (
+				307A80ED19B8800E001B538D /* KeychainItemWrapper.h */,
+				307A80EE19B8800E001B538D /* KeychainItemWrapper.m */,
+				301FD9AB19C5C79000E36A5B /* Reachability.h */,
+				301FD9AC19C5C79000E36A5B /* Reachability.m */,
+			);
+			name = Apple;
+			sourceTree = "<group>";
+		};
 		307A80DE19B75F29001B538D /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				305DD83519A63517006514BD /* Images.xcassets */,
 				3086428319D18ED10027F932 /* messageIndention@2x.png */,
 				3086428119D149A50027F932 /* backButton@2x.png */,
 				308EC3E419CE69A400A0869F /* boardDefault@2x.png */,
@@ -527,6 +558,7 @@
 				3086427A19D1264B0027F932 /* MCLPortraitOnlyNavigationController.m in Sources */,
 				301FD01519ACA0D70028C5C8 /* TDBadgedCell.m in Sources */,
 				301FD9A619C411D400E36A5B /* MCLErrorView.m in Sources */,
+				30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */,
 				308EC3DD19CC7BA600A0869F /* MCLDetailView.m in Sources */,
 				30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */,
 				301FD9B019C83A9C00E36A5B /* MCLMessageList2FrameStyleViewController.m in Sources */,

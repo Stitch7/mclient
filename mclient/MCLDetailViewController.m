@@ -7,12 +7,50 @@
 //
 
 #import "MCLDetailViewController.h"
+
+#import "utils.h"
 #import "MCLThread.h"
 #import "MCLBoard.h"
 
 @implementation MCLDetailViewController
 
 @synthesize splitViewButton = _splitViewButton;
+
++ (NSString *)messageHtmlSkeletonForHtml:(NSString *)html
+{
+    return [NSString stringWithFormat:@""
+            "<html>"
+            "<head>"
+            "<script type=\"text/javascript\">"
+            "    function spoiler(obj) {"
+            "        if (obj.nextSibling.style.display === 'none') {"
+            "            obj.nextSibling.style.display = 'inline';"
+            "        } else {"
+            "            obj.nextSibling.style.display = 'none';"
+            "        }"
+            "    }"
+            "</script>"
+            "<style>"
+            "    * {"
+            "        font-family: \"Helvetica Neue\";"
+            "        font-size: 14px;"
+            "    }"
+            "    body {"
+            "        margin: 0 20px 10px 20px;"
+            "        padding: 0px;"
+            "    }"
+            "    img {"
+            "        max-width: 100%%;"
+            "    }"
+            "    button > img {"
+            "        content:url(\"http://www.maniac-forum.de/forum/images/spoiler.png\");"
+            "        width: 17px;"
+            "    }"
+            "</style>"
+            "</head>"
+            "<body>%@</body>"
+            "</html>", html];
+}
 
 
 - (void)viewDidLoad
@@ -26,8 +64,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+# pragma mark - Abstract
+
 - (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard
 {
+    mustOverride();
 }
 
 

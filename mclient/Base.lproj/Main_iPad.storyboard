@@ -909,27 +909,75 @@
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" id="Sv3-DZ-dEK">
+                        <barButtonItem key="backBarButtonItem" title="Edit" id="RLd-vU-Bjq"/>
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="R8v-rJ-Rc3">
                             <connections>
                                 <action selector="cancelAction:" destination="d41-2O-wcL" id="SbH-LF-tZJ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Send" id="Eqz-FO-Phr">
+                        <barButtonItem key="rightBarButtonItem" title="Preview" id="Eqz-FO-Phr">
                             <connections>
-                                <action selector="saveAction:" destination="d41-2O-wcL" id="QX5-oP-7LT"/>
+                                <segue destination="LPs-Fu-JHm" kind="push" identifier="PushToPreview" id="AvC-Bq-Eat"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <modalPageSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="composePreviewButton" destination="Eqz-FO-Phr" id="fXs-uU-pNK"/>
                         <outlet property="composeQuoteButton" destination="Wjq-KB-stX" id="T0E-dN-hmW"/>
-                        <outlet property="composeSendButton" destination="Eqz-FO-Phr" id="vE0-SM-xgk"/>
                         <outlet property="composeSubjectTextField" destination="qBb-jK-6Xb" id="QG5-eM-Ej1"/>
                         <outlet property="composeTextTextField" destination="t81-ow-jqP" id="IRo-pJ-Siu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Gy-wk-fQe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3508" y="-76"/>
+            <point key="canvasLocation" x="3416" y="-76"/>
+        </scene>
+        <!--Compose Message Preview View Controller-->
+        <scene sceneID="lLM-VN-goz">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="LPs-Fu-JHm" customClass="MCLComposeMessagePreviewViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ggS-WP-15y">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" id="h1p-NG-NJO">
+                                <rect key="frame" x="0.0" y="63.000000901436493" width="768" height="646"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                <dataDetectorType key="dataDetectorTypes"/>
+                            </webView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="AtE-Fk-hso">
+                                <rect key="frame" x="699" y="717" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable email notification" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wKa-H3-eae">
+                                <rect key="frame" x="449" y="722" width="242" height="21"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="uAa-o0-zpU">
+                        <barButtonItem key="rightBarButtonItem" title="Send" id="qtP-VL-0oR">
+                            <connections>
+                                <action selector="sendAction:" destination="LPs-Fu-JHm" id="FJ0-xp-qp9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <modalPageSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="notificationSwitch" destination="AtE-Fk-hso" id="GOd-9o-5vW"/>
+                        <outlet property="notificationSwitchLabel" destination="wKa-H3-eae" id="vSV-zS-oXD"/>
+                        <outlet property="webView" destination="h1p-NG-NJO" id="FrV-ZM-rMA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wEq-R3-6ca" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4302" y="-76"/>
         </scene>
         <!--Detail View Controller - Detail-->
         <scene sceneID="aQo-JO-CzA">

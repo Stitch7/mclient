@@ -587,20 +587,20 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="pko-K6-kdO">
+                        <barButtonItem key="backBarButtonItem" title="Edit" id="1e9-4e-zb2"/>
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="szs-kd-thu">
                             <connections>
                                 <action selector="cancelAction:" destination="Lm5-LM-3Mr" id="I4Q-rX-IqQ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Send" id="RXe-Zd-aaP">
+                        <barButtonItem key="rightBarButtonItem" title="Preview" id="RXe-Zd-aaP">
                             <connections>
-                                <action selector="saveAction:" destination="Lm5-LM-3Mr" id="0n6-2H-oHq"/>
+                                <segue destination="k2u-KH-waK" kind="push" identifier="PushToPreview" id="f10-n0-57Y"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="composeQuoteButton" destination="qc6-x2-MYp" id="HKk-aw-d92"/>
-                        <outlet property="composeSendButton" destination="RXe-Zd-aaP" id="iiV-6A-bQc"/>
                         <outlet property="composeSubjectTextField" destination="UbW-b5-AmA" id="YLC-M3-RT3"/>
                         <outlet property="composeTextTextField" destination="Yfo-0k-yIi" id="1eD-2F-3ii"/>
                     </connections>
@@ -901,6 +901,50 @@
             </objects>
             <point key="canvasLocation" x="174" y="-703"/>
         </scene>
+        <!--Compose Message Preview View Controller-->
+        <scene sceneID="1ph-dS-vB0">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="k2u-KH-waK" customClass="MCLComposeMessagePreviewViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HeG-ad-Fmi">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" id="XLg-qv-BeO">
+                                <rect key="frame" x="0.0" y="75.000000188676836" width="320" height="434"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                <dataDetectorType key="dataDetectorTypes"/>
+                            </webView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="s3P-HP-lTE">
+                                <rect key="frame" x="12" y="523" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable email notification" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6xh-Ju-b16">
+                                <rect key="frame" x="69" y="528" width="215" height="21"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="xcI-fZ-kYc">
+                        <barButtonItem key="rightBarButtonItem" title="Send" id="4lL-Fh-1Y6">
+                            <connections>
+                                <action selector="sendAction:" destination="k2u-KH-waK" id="whc-cn-NYI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="notificationSwitch" destination="s3P-HP-lTE" id="lfQ-Ym-ySJ"/>
+                        <outlet property="notificationSwitchLabel" destination="6xh-Ju-b16" id="DYw-qW-clC"/>
+                        <outlet property="webView" destination="XLg-qv-BeO" id="TIH-pk-68r"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r70-7m-Q5C" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1551" y="1540"/>
+        </scene>
     </scenes>
     <resources>
         <image name="copyLinkButton.png" width="25" height="25"/>
@@ -920,7 +964,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="osz-X3-0Wl"/>
+        <segue reference="YJp-bp-qbj"/>
         <segue reference="zga-ee-uGB"/>
         <segue reference="yx8-yu-q67"/>
     </inferredMetricsTieBreakers>

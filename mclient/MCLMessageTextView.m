@@ -137,7 +137,7 @@
     NSString *pasteboardString = pasteboard.string;
 
     NSURL *url = [NSURL URLWithString:pasteboardString];
-    if (url && [[url scheme] isEqualToString:@"http"]) {
+    if (url && ([[url scheme] isEqualToString:@"http"] || [[url scheme] isEqualToString:@"https"])) {
         NSString *format = @"[%@]";
         NSString *lowercasePasteboardString = [pasteboardString lowercaseString];
         if ([lowercasePasteboardString hasSuffix:@".jpg"] ||

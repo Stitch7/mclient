@@ -66,7 +66,6 @@
     [self setupRefreshControl];
 
     self.tableViewBounds = self.view.bounds;
-
     [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.tableViewBounds]];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -291,10 +290,7 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         MCLBoard *board = self.boards[indexPath.row];
         [segue.destinationViewController setBoard:board];
-    }
-
-
-    if ([segue.identifier isEqualToString:@"PushToThreadListNoAnimation"]) {
+    } else if ([segue.identifier isEqualToString:@"PushToThreadListNoAnimation"]) {
         [segue.destinationViewController setBoard:self.preselectedBoard];
     }
 }
