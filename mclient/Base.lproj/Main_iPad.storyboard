@@ -24,10 +24,10 @@
             </objects>
             <point key="canvasLocation" x="473" y="-442"/>
         </scene>
-        <!--Message List2 Frame Style View Controller - Messages-->
+        <!--Message List Frame Style View Controller - Messages-->
         <scene sceneID="ZGb-nP-KYj">
             <objects>
-                <viewController storyboardIdentifier="MessageList2FrameStyleView" automaticallyAdjustsScrollViewInsets="NO" id="85r-qy-rBQ" customClass="MCLMessageList2FrameStyleViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MessageList2FrameStyleView" automaticallyAdjustsScrollViewInsets="NO" id="85r-qy-rBQ" customClass="MCLMessageListFrameStyleViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TDb-gJ-MJR">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -167,10 +167,10 @@
             </objects>
             <point key="canvasLocation" x="1096" y="1452"/>
         </scene>
-        <!--Message List View Controller - Messages-->
+        <!--Message List Widmann Style View Controller - Messages-->
         <scene sceneID="z5e-Tv-Pdo">
             <objects>
-                <viewController storyboardIdentifier="MessageListView" automaticallyAdjustsScrollViewInsets="NO" id="Lzr-7j-OlZ" customClass="MCLMessageListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MessageListView" automaticallyAdjustsScrollViewInsets="NO" id="Lzr-7j-OlZ" customClass="MCLMessageListWidmannStyleViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eZ3-eZ-S03">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -979,10 +979,10 @@
             </objects>
             <point key="canvasLocation" x="4302" y="-76"/>
         </scene>
-        <!--Detail View Controller - Detail-->
+        <!--Message List View Controller - Detail-->
         <scene sceneID="aQo-JO-CzA">
             <objects>
-                <viewController storyboardIdentifier="FooViewController" title="Detail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9GR-Lf-Lz0" customClass="MCLDetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FooViewController" title="Detail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9GR-Lf-Lz0" customClass="MCLMessageListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7yb-sQ-pea">
                         <rect key="frame" x="0.0" y="0.0" width="703" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>

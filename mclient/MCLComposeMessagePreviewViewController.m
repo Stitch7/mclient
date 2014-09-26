@@ -12,7 +12,7 @@
 #import "KeychainItemWrapper.h"
 #import "MCLErrorView.h"
 #import "MCLLoadingView.h"
-#import "MCLDetailViewController.h"
+#import "MCLMessageListViewController.h"
 
 @interface MCLComposeMessagePreviewViewController ()
 
@@ -63,7 +63,7 @@
                 }
             }
             if ( ! mServiceError) {
-                NSString *html = [MCLDetailViewController messageHtmlSkeletonForHtml:[content objectForKey:@"textHtmlWithImages"]];
+                NSString *html = [MCLMessageListViewController messageHtmlSkeletonForHtml:[content objectForKey:@"textHtmlWithImages"]];
                 [self.webView loadHTMLString:html baseURL:nil];
             }
         });

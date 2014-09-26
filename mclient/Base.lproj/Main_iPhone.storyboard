@@ -90,10 +90,10 @@
             </objects>
             <point key="canvasLocation" x="637" y="795"/>
         </scene>
-        <!--Message List View Controller - Messages-->
+        <!--Message List Widmann Style View Controller - Messages-->
         <scene sceneID="q0A-GN-Tyn">
             <objects>
-                <tableViewController id="xgu-SS-2ak" customClass="MCLMessageListViewController" sceneMemberID="viewController">
+                <tableViewController id="xgu-SS-2ak" customClass="MCLMessageListWidmannStyleViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="247" sectionHeaderHeight="22" sectionFooterHeight="22" id="djI-We-nM3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -403,10 +403,10 @@
             </objects>
             <point key="canvasLocation" x="200" y="410"/>
         </scene>
-        <!--Message List2 Frame Style View Controller - Messages-->
+        <!--Message List Frame Style View Controller - Messages-->
         <scene sceneID="SJN-2W-Rsl">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="hau-nR-2Oc" customClass="MCLMessageList2FrameStyleViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="hau-nR-2Oc" customClass="MCLMessageListFrameStyleViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nK6-FJ-3b3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>

@@ -1,18 +1,16 @@
 //
-//  MCLMessageList2FrameStyleViewController.m
+//  MCLMessageListTableViewController.m
 //  mclient
 //
-//  Created by Christopher Reitz on 16.09.14.
+//  Created by Christopher Reitz on 25.08.14.
 //  Copyright (c) 2014 Christopher Reitz. All rights reserved.
 //
-
-#import "MCLMessageList2FrameStyleViewController.h"
 
 #import "constants.h"
 #import "KeychainItemWrapper.h"
 #import "Reachability.h"
 #import "MCLMServiceConnector.h"
-#import "MCLBoardListTableViewController.h"
+#import "MCLMessageListWidmannStyleViewController.h"
 #import "MCLProfileTableViewController.h"
 #import "MCLDetailView.h"
 #import "MCLLoadingView.h"
@@ -22,49 +20,43 @@
 #import "MCLMessage.h"
 #import "MCLReadList.h"
 
-#pragma mark - Private Stuff
-@interface MCLMessageList2FrameStyleViewController ()
+
+@interface MCLMessageListWidmannStyleViewController ()
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
-@property (strong, nonatomic) AVSpeechSynthesizer *speechSynthesizer;
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong) UIRefreshControl *refreshControl;
+@property (strong) UIColor *tableSeparatorColor;
 @property (strong) MCLMServiceConnector *mServiceConnector;
 @property (strong) NSMutableArray *messages;
 @property (strong) NSMutableArray *cells;
 @property (strong) MCLReadList *readList;
 @property (strong) NSString *username;
 @property (strong) NSString *password;
+@property (strong) UIColor *veryLightGreyColor;
 @property (strong) NSDateFormatter *dateFormatter;
-@property (strong) NSIndexPath *selectedIndexPath;
-@property (strong) UIRefreshControl *refreshControl;
-
-@property (weak, nonatomic) IBOutlet UIView *messageView;
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarButtonSpeak;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarButtonNotification;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarButtonEdit;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarButtonReply;
 
 @end
 
-@implementation MCLMessageList2FrameStyleViewController
+@implementation MCLMessageListWidmannStyleViewController
 
-#pragma mark - ViewController
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-
+    
     self.mServiceConnector = [[MCLMServiceConnector alloc] init];
     self.cells = [NSMutableArray array];
     self.readList = [[MCLReadList alloc] init];
-
+    
     NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
     self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
     NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
     self.password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
 
+    self.veryLightGreyColor = [UIColor colorWithRed:240/255.0f green:240/255.0f blue:240/255.0f alpha:1.0f];
+    
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDoesRelativeDateFormatting:YES];
     [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];
@@ -75,40 +67,9 @@
 {
     [super viewDidLoad];
 
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        UIButton *backButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchDown];
-        [backButton setImage:[UIImage imageNamed:@"backButton.png"] forState:UIControlStateNormal];
-        [backButton setImageEdgeInsets:UIEdgeInsetsMake(0, -30, 0, 0)];
-
-        if ([self.thread.subject length] <= 25) {
-            UIColor *globalTintColor = [UIApplication sharedApplication].delegate.window.tintColor;
-            [backButton setTitle:@"Back" forState:UIControlStateNormal];
-            [backButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -30, 0, 0)];
-            [backButton setTitleColor:globalTintColor forState:UIControlStateNormal];
-            [backButton.titleLabel setFont:[UIFont systemFontOfSize:17]];
-        }
-
-        [backButton sizeToFit];
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    }
-
-    self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-
-    // WebView setup
-    self.webView.delegate = self;
-
-    // Init toolbar slide gestures
-    UISwipeGestureRecognizer *toolbarDownSwipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(slideMessageViewDownAction)];
-    toolbarDownSwipeRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
-    toolbarDownSwipeRecognizer.cancelsTouchesInView = YES;
-
-    UISwipeGestureRecognizer *toolbarUpSwipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(slideMessageViewUpAction)];
-    toolbarUpSwipeRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
-    toolbarUpSwipeRecognizer.cancelsTouchesInView = YES;
-
-    [self.toolbar addGestureRecognizer:toolbarDownSwipeRecognizer];
-    [self.toolbar addGestureRecognizer:toolbarUpSwipeRecognizer];
+    // Cache original tables separatorColor and set to clear to avoid flickering loading view
+    self.tableSeparatorColor = [self.tableView separatorColor];
+    [self.tableView setSeparatorColor:[UIColor clearColor]];
 
     // Init refresh control
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -118,6 +79,9 @@
     if (self.board && self.thread) {
         // Set title to threads subject
         self.title = self.thread.subject;
+
+        // Preserve selection between presentations.
+        //    self.clearsSelectionOnViewWillAppear = NO; //TODO
 
         // Add loading view
         [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
@@ -134,6 +98,8 @@
                         [subview removeFromSuperview];
                     }
                 }
+                // Restore tables separatorColor
+                [self.tableView setSeparatorColor:self.tableSeparatorColor];
             });
         });
     } else {
@@ -142,19 +108,11 @@
     }
 }
 
-- (CGFloat)fullViewheight
+- (void)stopRefresh
 {
-    CGFloat statusBarHeight = 0.0f;
-    if ([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft ||
-        [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight
-    ) {
-        statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
-    } else {
-        statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    }
-
-    return self.view.bounds.size.height - self.navigationController.navigationBar.bounds.size.height - statusBarHeight;
+    [self.refreshControl endRefreshing];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -178,10 +136,14 @@
         [self.masterPopoverController dismissPopoverAnimated:YES];
     }
 
-    self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-
     // Add loading view
     [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
+
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    if (selectedIndexPath) {
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES]; //TODO needed?
+        [self tableView:self.tableView didDeselectRowAtIndexPath:selectedIndexPath];
+    }
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [self loadData];
@@ -190,12 +152,14 @@
         // Remove loading view on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
             for (id subview in self.view.subviews) {
-                if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
-                    [subview removeFromSuperview];
-                } else if ([[subview class] isSubclassOfClass: [MCLDetailView class]]) {
+                if ([[subview class] isSubclassOfClass: [MCLLoadingView class]] ||
+                    [[subview class] isSubclassOfClass: [MCLDetailView class]]
+                ) {
                     [subview removeFromSuperview];
                 }
             }
+            // Restore tables separatorColor
+            [self.tableView setSeparatorColor:self.tableSeparatorColor];
 
             // Scrool table to top
             [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
@@ -211,31 +175,22 @@
     return data;
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    // Fixes refreshcontrol's too litle space problem
-    if (scrollView.contentOffset.y < -55 && ! [self.refreshControl isRefreshing]) {
-        [self.refreshControl beginRefreshing];
-        [self reloadData];
-    }
-}
-
 - (void)reloadData
 {
     NSData *data = [self loadData];
     [self fetchedData:data];
-    [self.refreshControl performSelector:@selector(endRefreshing) withObject:nil afterDelay:1.5]; // 2.5
+    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:1.5]; // 2.5
 }
 
 - (void)fetchedData:(NSData *)responseData
 {
     self.messages = [NSMutableArray array];
-
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
     [dateFormatter setLocale:enUSPOSIXLocale];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-
+    
     NSError* error;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     for (id object in json) {
@@ -245,7 +200,7 @@
         NSString *username = [object objectForKey:@"username"];
         NSString *subject = [object objectForKey:@"subject"];
         NSDate *date = [dateFormatter dateFromString:[object objectForKey:@"date"]];
-
+        
         MCLMessage *message = [MCLMessage messageWithId:messageId
                                                   level:level
                                                  userId:nil
@@ -258,13 +213,8 @@
                                      textHtmlWithImages:nil];
         [self.messages addObject:message];
     }
-
-
+    
     [self.tableView reloadData];
-
-    // Select first message
-    [self.tableView selectRowAtIndexPath:self.selectedIndexPath animated:NO scrollPosition:0];
-    [self tableView:self.tableView didSelectRowAtIndexPath:self.selectedIndexPath];
 }
 
 - (void)completeMessage:(MCLMessage *)message
@@ -305,12 +255,21 @@
     static NSString *cellIdentifier = @"MessageCell";
     MCLMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
 
-    [self.cells setObject:cell atIndexedSubscript:i];
+    if ([cell isSelected]) {
+        cell.backgroundColor = self.veryLightGreyColor;
+        [cell.messageTextWebView setBackgroundColor:self.veryLightGreyColor];
+        [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
+    } else {
+        cell.backgroundColor = [UIColor clearColor];
+        [cell.messageToolbar setHidden:YES];
+    }
 
+    [self.cells setObject:cell atIndexedSubscript:i];
+    
     [cell setBoardId:self.board.boardId];
     [cell setMessageId:message.messageId];
 
-    [cell setClipsToBounds:YES]; //TODO effect?
+    [cell setClipsToBounds:YES];
 
     [self indentView:(UIView *)cell.readSymbolView withLevel:message.level startingAtX:5];
     [self indentView:(UIView *)cell.messageIndentionImageView withLevel:message.level startingAtX:20];
@@ -318,10 +277,10 @@
     [self indentView:cell.messageUsernameLabel withLevel:message.level startingAtX:30];
 
     cell.messageIndentionImageView.hidden = (i == 0);
-
+    
     cell.messageSubjectLabel.text = message.subject;
     cell.messageUsernameLabel.text = message.username;
-
+    
     if ([message.username isEqualToString:self.username]) {
         cell.messageUsernameLabel.textColor = [UIColor blueColor];
     } else if (message.isMod) {
@@ -329,22 +288,40 @@
     } else {
         cell.messageUsernameLabel.textColor = [UIColor blackColor];
     }
-
+    
     cell.messageDateLabel.text = [NSString stringWithFormat:@" - %@", [self.dateFormatter stringFromDate:message.date]];
-
+    
     [cell.messageUsernameLabel sizeToFit];
     [cell.messageDateLabel sizeToFit];
-
+    
     // Place dateLabel after authorLabel
     CGRect dateLabelFrame = cell.messageDateLabel.frame;
     dateLabelFrame.origin = CGPointMake(cell.messageUsernameLabel.frame.origin.x + cell.messageUsernameLabel.frame.size.width, dateLabelFrame.origin.y);
     cell.messageDateLabel.frame = dateLabelFrame;
-
+    
+    [cell.messageTextWebView setDelegate:self];
+    
     if (i == 0 || [self.readList messageIdIsRead:message.messageId]) {
         [cell markRead];
     } else {
         [cell markUnread];
     }
+    
+    BOOL hideNotificationButton = ! [message.username isEqualToString:self.username];
+    [self barButton:cell.messageNotificationButton hide:hideNotificationButton];
+    
+    if ( ! hideNotificationButton) {
+        NSError *mServiceError;
+        NSInteger notificationStatus = [self.mServiceConnector notificationStatusForMessageId:message.messageId
+                                                                                      boardId:self.board.boardId
+                                                                                     username:self.username
+                                                                                     password:self.password
+                                                                                        error:&mServiceError];
+        [cell enableNotificationButton:notificationStatus];
+    }
+    
+    BOOL hideEditButton = ! ([message.username isEqualToString:self.username] && nextMessage.level <= message.level);
+    [self barButton:cell.messageEditButton hide:hideEditButton];
 
     return cell;
 }
@@ -352,11 +329,11 @@
 - (void)indentView:(UIView *)view withLevel:(int)level startingAtX:(CGFloat)x
 {//TODO make level = NSNumber
     int indention = 10;
-
+    
     CGRect frame = view.frame;
     frame.origin = CGPointMake(x + (indention * level), frame.origin.y);
     view.frame = frame;
-
+    
 }
 
 -(void)barButton:(UIBarButtonItem *)barButton hide:(BOOL)hide
@@ -370,7 +347,22 @@
     }
 }
 
+
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat height = 60;
+
+	if ([tableView indexPathsForSelectedRows].count && [[tableView indexPathsForSelectedRows] indexOfObject:indexPath] != NSNotFound) {
+        MCLMessageTableViewCell *cell = self.cells[indexPath.row];
+        CGFloat webViewHeight = cell.messageTextWebView.scrollView.contentSize.height;
+        CGFloat toolbarHeight = cell.messageToolbar.frame.size.height;
+        height = height + 10 + webViewHeight + toolbarHeight;
+	}
+
+    return height;
+}
 
 - (NSString *)messageHtml:(MCLMessage *)message
 {
@@ -425,77 +417,140 @@
     return messageHtml;
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    BOOL isSelected = [cell isSelected];
+
+    if (isSelected) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
+    }
+
+    return isSelected ? nil : indexPath;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.selectedIndexPath = indexPath;
-    NSInteger i = indexPath.row;
-
-    MCLMessage *message = self.messages[i];
-    if ( ! message.text) {
+    MCLMessage *message = self.messages[indexPath.row];
+    if (!message.text) {
         [self completeMessage:message];
     }
-
-    MCLMessage *nextMessage = nil;
-    if (indexPath.row < ([self.messages count] - 1)) {
-        nextMessage = self.messages[i + 1];
-    }
-
+    
     MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
 
+    [cell setBackgroundColor:self.veryLightGreyColor];
+    [cell.messageTextWebView setBackgroundColor:self.veryLightGreyColor];
+    [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
     cell.messageText = message.text;
-    [self.webView loadHTMLString:[self messageHtml:message] baseURL:nil];
 
     [cell markRead];
     [self.readList addMessageId:message.messageId];
 
-    BOOL hideNotificationButton = ! [message.username isEqualToString:self.username];
-    [self barButton:self.toolbarButtonNotification hide:hideNotificationButton];
-    if ( ! hideNotificationButton) {
-        NSError *mServiceError;
-        NSInteger notificationStatus = [self.mServiceConnector notificationStatusForMessageId:message.messageId
-                                                                                      boardId:self.board.boardId
-                                                                                     username:self.username
-                                                                                     password:self.password
-                                                                                        error:&mServiceError];
-        if (notificationStatus) {
-            self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonEnabled.png"];
-            self.toolbarButtonNotification.tag = 1;
-        } else {
-            self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonDisabled.png"];
-            self.toolbarButtonNotification.tag = 0;
-        }
-    }
-
-    BOOL hideEditButton = ! ([message.username isEqualToString:self.username] && nextMessage.level <= message.level);
-    [self barButton:self.toolbarButtonEdit hide:hideEditButton];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
 }
 
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    
+    [cell setBackgroundColor:[UIColor clearColor]];
+    [cell.messageTextWebView setBackgroundColor:[UIColor clearColor]];
 
-#pragma mark - UIWebView delegate
+    [cell.messageToolbar setHidden:YES];
+    
+    if (cell.speechSynthesizer.speaking) {
+        [cell.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
+        cell.messageSpeakButton.image = [UIImage imageNamed:@"speakButton.png"];
+    }
+    
+    [self updateTableView];
+}
+
+- (void)updateTableView
+{
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    if (indexPath) {
+        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+        [self.tableView.delegate tableView:self.tableView didDeselectRowAtIndexPath:indexPath];
+        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+    }
+}
+
+#pragma mark - UIWebViewDelegate
 
 -(BOOL)webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
     BOOL shouldStartLoad = YES;
-
+    
     // Open links in Safari
     if (inType == UIWebViewNavigationTypeLinkClicked) {
         [[UIApplication sharedApplication] openURL:[inRequest URL]];
         shouldStartLoad = NO;
     }
-
+    
     return shouldStartLoad;
 }
 
-
-#pragma mark - AVSpeechSynthesizerDelegate
-
-- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didStartSpeechUtterance:(AVSpeechUtterance *)utterance
+- (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    self.toolbarButtonSpeak.image = [UIImage imageNamed:@"stopButton.png"];
+    CGRect frame = webView.frame;
+    frame.size.height = 5.0f;
+    webView.frame = frame;
 }
 
-- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance:(AVSpeechUtterance *)utterance
+- (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    self.toolbarButtonSpeak.image = [UIImage imageNamed:@"speakButton.png"];
+    // UIWebView object has fully loaded.
+    if ([[webView stringByEvaluatingJavaScriptFromString:@"document.readyState"] isEqualToString:@"complete"]) {
+        // Resize text view to content height
+        int height = [[webView stringByEvaluatingJavaScriptFromString:@"Math.max(document.body.scrollHeight, "
+                                                                                "document.body.offsetHeight, "
+                                                                                "document.documentElement.clientHeight, "
+                                                                                "document.documentElement.scrollHeight, "
+                                                                                "document.documentElement.offsetHeight);"] integerValue];
+        CGRect webViewFrame = webView.frame;
+        webViewFrame.size.height = height;
+        webView.frame = webViewFrame;
+        
+        // Disable bouncing in webview
+        for (id subview in webView.subviews) {
+            if ([[subview class] isSubclassOfClass: [UIScrollView class]]) {
+                [subview setBounces:NO];
+            }
+        }
+
+        // Show toolbar after short delay to avoid skidding through text
+        MCLMessageTableViewCell *cell = (MCLMessageTableViewCell *)webView.superview.superview.superview;
+        [cell.messageToolbar performSelector:@selector(setHidden:) withObject:NO afterDelay:0.2];
+        // [cell.messageToolbar setHidden:NO];
+
+        // Resize table cell
+        [self updateTableView];
+    }
+}
+
+
+#pragma mark - UISplitViewControllerDelegate
+
+- (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
+{
+    barButtonItem.title = @"Threads";
+    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
+    self.masterPopoverController = popoverController;
+}
+
+- (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    // Called when the view is shown again in the split view, invalidating the button and popover controller.
+    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
+    self.masterPopoverController = nil;
 }
 
 
@@ -507,158 +562,20 @@
 }
 
 
-#pragma mark - Actions
-
-- (void)backAction
-{
-    [self performSegueWithIdentifier:@"PushBackToThreadList" sender:nil];
-}
-
-- (void)slideMessageViewDownAction
-{
-    self.messageView.layer.needsDisplayOnBoundsChange = YES;
-    self.messageView.contentMode = UIViewContentModeRedraw;
-
-//    NSLog(@"fullViewheight: %f", [self fullViewheight]);
-//    NSLog(@"self.messageView.bounds.size.height: %f", self.messageView.bounds.size.height);
-
-    // Cache initial height
-    [self.messageView setTag:self.messageView.bounds.size.height];
-
-    [UIView animateWithDuration:.4f animations:^{
-        CGRect bounds = self.messageView.bounds;
-        CGPoint center = self.messageView.center;
-        bounds.size.height += [self fullViewheight] - self.messageView.bounds.size.height;
-        center.y += ([self fullViewheight] - self.messageView.bounds.size.height) / 2;
-        self.messageView.bounds = bounds;
-        self.messageView.center = center;
-    }];
-
-    self.messageView.layer.needsDisplayOnBoundsChange = NO;
-}
-
-- (void)slideMessageViewUpAction
-{
-    self.messageView.layer.needsDisplayOnBoundsChange = YES;
-    self.messageView.contentMode = UIViewContentModeRedraw;
-
-    [UIView animateWithDuration:.4f animations:^{
-        CGRect bounds = self.messageView.bounds;
-        CGPoint center = self.messageView.center;
-        bounds.size.height -= [self fullViewheight] - self.messageView.tag;
-        center.y -= ([self fullViewheight] - self.messageView.tag) / 2;
-        self.messageView.bounds = bounds;
-        self.messageView.center = center;
-    }];
-
-    self.messageView.layer.needsDisplayOnBoundsChange = NO;
-}
-
-- (IBAction)copyLinkAction:(UIBarButtonItem *)sender
-{
-    MCLMessage *message = self.messages[self.selectedIndexPath.row];
-
-    NSString *link = [NSString stringWithFormat:@"%@?mode=message&brdid=%@&msgid=%@", kManiacForumURL, self.board.boardId, message.messageId];
-
-    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = link;
-
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
-                                                    message:@"Copied link to this message to clipboard"
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
-}
-
-- (IBAction)speakAction:(UIBarButtonItem *)sender
-{
-    if (self.speechSynthesizer == nil) {
-        self.speechSynthesizer = [[AVSpeechSynthesizer alloc] init];
-        self.speechSynthesizer.delegate = self;
-    }
-
-    if (self.speechSynthesizer.speaking) {
-        [self.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
-        self.toolbarButtonSpeak.image = [UIImage imageNamed:@"speakButton.png"];
-    } else {
-        MCLMessageTableViewCell *selectedCell = (MCLMessageTableViewCell*)[self.tableView cellForRowAtIndexPath:self.selectedIndexPath];
-
-        // Backup of UIWebView content because it's get manipulated by our operation below
-        NSString *webviewTextBackup = [self.webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"html\")[0].innerHTML;"];
-
-        // Remove quoted text (font tags)
-        [self.webView stringByEvaluatingJavaScriptFromString:@"var fontTags = document.getElementsByTagName(\"font\"); for (var i=0; i < fontTags.length; x++) { fontTags[i].remove() };"];
-        NSString *text = [self.webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"body\")[0].textContent;"];
-        text = [[selectedCell.messageSubjectLabel.text  stringByAppendingString:@"..."] stringByAppendingString:text];
-        text = [[NSString stringWithFormat:@"Von %@...", selectedCell.messageUsernameLabel.text] stringByAppendingString:text];
-
-        // Restoring backuped original content
-        [self.webView loadHTMLString:webviewTextBackup baseURL:nil];
-
-        // Speak text
-        AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:text];
-        [utterance setVoice:[AVSpeechSynthesisVoice voiceWithLanguage:@"de-DE"]];
-        [utterance setRate:AVSpeechUtteranceDefaultSpeechRate];
-        [self.speechSynthesizer speakUtterance:utterance];
-    }
-}
-
-- (IBAction)notificationAction:(UIBarButtonItem *)sender
-{
-    MCLMessage *message = self.messages[self.selectedIndexPath.row];
-
-    NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
-    NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
-    NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
-    NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
-
-    MCLMServiceConnector *mServiceConnector = [[MCLMServiceConnector alloc] init];
-    NSError *mServiceError;
-    BOOL success = [mServiceConnector notificationForMessageId:message.messageId boardId:self.board.boardId username:username password:password error:&mServiceError];
-
-    NSString *alertTitle, *alertMessage;
-
-    if ( ! success) {
-        alertTitle = [mServiceError localizedDescription];
-        alertMessage = [mServiceError localizedFailureReason];
-    } else if (sender.tag == 1) {
-        [sender setTag:0];
-        self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonDisabled.png"];
-        alertTitle = @"Message notification disabled";
-        alertMessage = @"You will no longer receive Emails if anyone replies to this post.";
-    } else {
-        [sender setTag:1];
-        self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonEnabled.png"];
-        alertTitle = @"Message notification enabled";
-        alertMessage = @"You will receive an Email if anyone answers to this post.";
-    }
-
-    [[[UIAlertView alloc] initWithTitle:alertTitle
-                                message:alertMessage
-                               delegate:nil
-                      cancelButtonTitle:@"OK"
-                      otherButtonTitles:nil] show];
-}
-
-
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     MCLMessage *message = self.messages[indexPath.row];
-
+    
     if ([segue.identifier isEqualToString:@"ModalToComposeReply"]) {
         MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         NSString *subject = message.subject;
-
         NSString *subjectReplyPrefix = @"Re:";
         if ([subject length] < 3 || ![[subject substringToIndex:3] isEqualToString:subjectReplyPrefix]) {
             subject = [subjectReplyPrefix stringByAppendingString:subject];
         }
-
         [destinationViewController setDelegate:self];
         [destinationViewController setType:kComposeTypeReply];
         [destinationViewController setBoardId:self.board.boardId];
@@ -666,10 +583,6 @@
         [destinationViewController setSubject:subject];
     } else if ([segue.identifier isEqualToString:@"ModalToEditReply"]) {
         MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
-
-//        NSString *text = [self.webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"body\")[0].textContent;"]; //TODO looses Images...
-//        text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-
         [destinationViewController setDelegate:self];
         [destinationViewController setType:kComposeTypeEdit];
         [destinationViewController setBoardId:self.board.boardId];
@@ -677,13 +590,11 @@
         [destinationViewController setSubject:message.subject];
         [destinationViewController setText:message.text];
     } else if ([segue.identifier isEqualToString:@"ModalToShowProfile"]) {
-        MCLProfileTableViewController *destinationViewController = ((MCLProfileTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
+        MCLProfileTableViewController *destinationViewController = ((MCLProfileTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);      
         [destinationViewController setUserId:message.userId];
         [destinationViewController setUsername:message.username];
-    } else if ([segue.identifier isEqualToString:@"PushBackToThreadList"]) {
-        MCLBoardListTableViewController *destinationViewController = ((MCLBoardListTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
-        [destinationViewController setPreselectedBoard:self.board];
     }
 }
+
 
 @end

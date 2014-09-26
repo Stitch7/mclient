@@ -12,7 +12,7 @@
 #import "MCLMServiceConnector.h"
 #import "MCLBoardListTableViewController.h"
 #import "MCLThreadListTableViewController.h"
-#import "MCLDetailViewController.h"
+#import "MCLMessageListViewController.h"
 #import "MCLBoard.h"
 #import "MCLErrorView.h"
 #import "MCLLoadingView.h"
@@ -222,14 +222,14 @@
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
 {
     UINavigationController *navController = [[[self splitViewController ] viewControllers ] lastObject ];
-    MCLDetailViewController *detailViewController = [[navController viewControllers] firstObject];
+    MCLMessageListViewController *detailViewController = [[navController viewControllers] firstObject];
     [detailViewController setSplitViewButton:barButtonItem forPopoverController:popoverController];
 }
 
 - (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
 {
     UINavigationController *navController = [[[self splitViewController ] viewControllers ] lastObject ];
-    MCLDetailViewController *detailViewController = [[navController viewControllers] firstObject];
+    MCLMessageListViewController *detailViewController = [[navController viewControllers] firstObject];
     [detailViewController setSplitViewButton:nil forPopoverController:nil];
 }
 

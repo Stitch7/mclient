@@ -10,9 +10,9 @@
 #import "KeychainItemWrapper.h"
 #import "MCLMServiceConnector.h"
 #import "MCLThreadListTableViewController.h"
-#import "MCLMessageListViewController.h" //TODO
-#import "MCLMessageList2FrameStyleViewController.h" //TODO
-#import "MCLDetailViewController.h"
+#import "MCLMessageListWidmannStyleViewController.h" //TODO
+#import "MCLMessageListFrameStyleViewController.h" //TODO
+#import "MCLMessageListViewController.h"
 #import "MCLComposeMessageViewController.h"
 #import "MCLErrorView.h"
 #import "MCLLoadingView.h"
@@ -27,7 +27,7 @@
 @property (assign, nonatomic) UIColor *tableSeparatorColor;
 @property (assign, nonatomic) CGRect tableViewBounds;
 
-@property (strong, nonatomic) MCLDetailViewController *detailViewController;
+@property (strong, nonatomic) MCLMessageListViewController *detailViewController;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 
 
@@ -88,7 +88,7 @@
         self.detailViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardIdentifier];
 
         UINavigationController *navController = [self.splitViewController.viewControllers lastObject];
-        MCLDetailViewController *oldController = [navController.viewControllers firstObject];
+        MCLMessageListViewController *oldController = [navController.viewControllers firstObject];
         [navController setViewControllers:[NSArray arrayWithObjects:self.detailViewController, nil]];
         UIBarButtonItem *splitViewButton = oldController.navigationItem.leftBarButtonItem;
         self.masterPopoverController = oldController.masterPopoverController;
@@ -366,9 +366,9 @@
 //            cell = (MCLThreadTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
         }
 
-        MCLMessageList2FrameStyleViewController *destinationViewController;
+        MCLMessageListFrameStyleViewController *destinationViewController;
         if ([segue.destinationViewController isKindOfClass:[UINavigationController class]]) {
-            destinationViewController = (MCLMessageList2FrameStyleViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0];
+            destinationViewController = (MCLMessageListFrameStyleViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0];
         } else {
             destinationViewController = segue.destinationViewController;
         }

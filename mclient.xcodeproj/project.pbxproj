@@ -19,7 +19,7 @@
 		301FD9A819C419DE00E36A5B /* errorResponse@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301FD9A719C419DE00E36A5B /* errorResponse@2x.png */; };
 		301FD9AA19C4D8D800E36A5B /* errorConnection@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301FD9A919C4D8D800E36A5B /* errorConnection@2x.png */; };
 		301FD9AD19C5C79000E36A5B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9AC19C5C79000E36A5B /* Reachability.m */; };
-		301FD9B019C83A9C00E36A5B /* MCLMessageList2FrameStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9AF19C83A9C00E36A5B /* MCLMessageList2FrameStyleViewController.m */; };
+		301FD9B019C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9AF19C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.m */; };
 		301FD9B219C8666100E36A5B /* replyButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301FD9B119C8666100E36A5B /* replyButton@2x.png */; };
 		302F462519BF443A00DC77D8 /* copyLinkButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */; };
 		305DD81819A63517006514BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81719A63517006514BD /* Foundation.framework */; };
@@ -37,7 +37,7 @@
 		305DD83F19A63517006514BD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81B19A63517006514BD /* UIKit.framework */; };
 		305DD84719A63517006514BD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 305DD84519A63517006514BD /* InfoPlist.strings */; };
 		305DD84919A63517006514BD /* mclientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD84819A63517006514BD /* mclientTests.m */; };
-		305DD85419AB2970006514BD /* MCLMessageListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85319AB2970006514BD /* MCLMessageListViewController.m */; };
+		305DD85419AB2970006514BD /* MCLMessageListWidmannStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85319AB2970006514BD /* MCLMessageListWidmannStyleViewController.m */; };
 		305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85619AB2A7C006514BD /* MCLThreadListTableViewController.m */; };
 		305DD85D19AB300F006514BD /* MCLBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85C19AB300F006514BD /* MCLBoard.m */; };
 		305DD86019AB3031006514BD /* MCLThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85F19AB3031006514BD /* MCLThread.m */; };
@@ -57,7 +57,7 @@
 		3086428219D149A50027F932 /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3086428119D149A50027F932 /* backButton@2x.png */; };
 		3086428419D18ED10027F932 /* messageIndention@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3086428319D18ED10027F932 /* messageIndention@2x.png */; };
 		3086428919D2D6CE0027F932 /* MCLMessageTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3086428819D2D6CE0027F932 /* MCLMessageTextView.m */; };
-		308EC3D819CC4DE800A0869F /* MCLDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 308EC3D619CC4DE800A0869F /* MCLDetailViewController.m */; };
+		308EC3D819CC4DE800A0869F /* MCLMessageListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 308EC3D619CC4DE800A0869F /* MCLMessageListViewController.m */; };
 		308EC3DA19CC6F9000A0869F /* downButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 308EC3D919CC6F9000A0869F /* downButton@2x.png */; };
 		308EC3DD19CC7BA600A0869F /* MCLDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 308EC3DC19CC7BA600A0869F /* MCLDetailView.m */; };
 		308EC3E119CC809000A0869F /* logoDetailView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 308EC3E019CC809000A0869F /* logoDetailView@2x.png */; };
@@ -106,8 +106,8 @@
 		301FD9A919C4D8D800E36A5B /* errorConnection@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "errorConnection@2x.png"; sourceTree = "<group>"; };
 		301FD9AB19C5C79000E36A5B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		301FD9AC19C5C79000E36A5B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		301FD9AE19C83A9C00E36A5B /* MCLMessageList2FrameStyleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageList2FrameStyleViewController.h; sourceTree = "<group>"; };
-		301FD9AF19C83A9C00E36A5B /* MCLMessageList2FrameStyleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageList2FrameStyleViewController.m; sourceTree = "<group>"; };
+		301FD9AE19C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageListFrameStyleViewController.h; sourceTree = "<group>"; };
+		301FD9AF19C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListFrameStyleViewController.m; sourceTree = "<group>"; };
 		301FD9B119C8666100E36A5B /* replyButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "replyButton@2x.png"; sourceTree = "<group>"; };
 		302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copyLinkButton@2x.png"; sourceTree = "<group>"; };
 		305DD81419A63517006514BD /* mclient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mclient.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,8 +130,8 @@
 		305DD84419A63517006514BD /* mclientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "mclientTests-Info.plist"; sourceTree = "<group>"; };
 		305DD84619A63517006514BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		305DD84819A63517006514BD /* mclientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mclientTests.m; sourceTree = "<group>"; };
-		305DD85219AB2970006514BD /* MCLMessageListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageListViewController.h; sourceTree = "<group>"; };
-		305DD85319AB2970006514BD /* MCLMessageListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListViewController.m; sourceTree = "<group>"; };
+		305DD85219AB2970006514BD /* MCLMessageListWidmannStyleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageListWidmannStyleViewController.h; sourceTree = "<group>"; };
+		305DD85319AB2970006514BD /* MCLMessageListWidmannStyleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListWidmannStyleViewController.m; sourceTree = "<group>"; };
 		305DD85519AB2A7C006514BD /* MCLThreadListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLThreadListTableViewController.h; sourceTree = "<group>"; };
 		305DD85619AB2A7C006514BD /* MCLThreadListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLThreadListTableViewController.m; sourceTree = "<group>"; };
 		305DD85B19AB300F006514BD /* MCLBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLBoard.h; sourceTree = "<group>"; };
@@ -163,8 +163,8 @@
 		3086428319D18ED10027F932 /* messageIndention@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messageIndention@2x.png"; sourceTree = "<group>"; };
 		3086428719D2D6CE0027F932 /* MCLMessageTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageTextView.h; sourceTree = "<group>"; };
 		3086428819D2D6CE0027F932 /* MCLMessageTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageTextView.m; sourceTree = "<group>"; };
-		308EC3D519CC4DE800A0869F /* MCLDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLDetailViewController.h; sourceTree = "<group>"; };
-		308EC3D619CC4DE800A0869F /* MCLDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLDetailViewController.m; sourceTree = "<group>"; };
+		308EC3D519CC4DE800A0869F /* MCLMessageListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageListViewController.h; sourceTree = "<group>"; };
+		308EC3D619CC4DE800A0869F /* MCLMessageListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListViewController.m; sourceTree = "<group>"; };
 		308EC3D719CC4DE800A0869F /* SplitViewButtonHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitViewButtonHandler.h; sourceTree = "<group>"; };
 		308EC3D919CC6F9000A0869F /* downButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downButton@2x.png"; sourceTree = "<group>"; };
 		308EC3DB19CC7BA600A0869F /* MCLDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLDetailView.h; sourceTree = "<group>"; };
@@ -302,12 +302,12 @@
 				30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */,
 				30E8B89719B3CBF40067DD1F /* MCLComposeMessageViewController.h */,
 				30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */,
-				308EC3D519CC4DE800A0869F /* MCLDetailViewController.h */,
-				308EC3D619CC4DE800A0869F /* MCLDetailViewController.m */,
-				301FD9AE19C83A9C00E36A5B /* MCLMessageList2FrameStyleViewController.h */,
-				301FD9AF19C83A9C00E36A5B /* MCLMessageList2FrameStyleViewController.m */,
-				305DD85219AB2970006514BD /* MCLMessageListViewController.h */,
-				305DD85319AB2970006514BD /* MCLMessageListViewController.m */,
+				308EC3D519CC4DE800A0869F /* MCLMessageListViewController.h */,
+				308EC3D619CC4DE800A0869F /* MCLMessageListViewController.m */,
+				301FD9AE19C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.h */,
+				301FD9AF19C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.m */,
+				305DD85219AB2970006514BD /* MCLMessageListWidmannStyleViewController.h */,
+				305DD85319AB2970006514BD /* MCLMessageListWidmannStyleViewController.m */,
 				3086427819D1264B0027F932 /* MCLPortraitOnlyNavigationController.h */,
 				3086427919D1264B0027F932 /* MCLPortraitOnlyNavigationController.m */,
 				301E24B419BB02EB00943EC6 /* MCLProfileTableViewController.h */,
@@ -550,7 +550,7 @@
 				3086427D19D13BAE0027F932 /* MCLFakePushForwardStoryboardSegue.m in Sources */,
 				301FD01819ACE3D10028C5C8 /* MCLMessageTableViewCell.m in Sources */,
 				305DD86019AB3031006514BD /* MCLThread.m in Sources */,
-				308EC3D819CC4DE800A0869F /* MCLDetailViewController.m in Sources */,
+				308EC3D819CC4DE800A0869F /* MCLMessageListViewController.m in Sources */,
 				3086428919D2D6CE0027F932 /* MCLMessageTextView.m in Sources */,
 				301E24B619BB02EB00943EC6 /* MCLProfileTableViewController.m in Sources */,
 				305DD86319AB380C006514BD /* MCLMessage.m in Sources */,
@@ -561,7 +561,7 @@
 				30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */,
 				308EC3DD19CC7BA600A0869F /* MCLDetailView.m in Sources */,
 				30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */,
-				301FD9B019C83A9C00E36A5B /* MCLMessageList2FrameStyleViewController.m in Sources */,
+				301FD9B019C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.m in Sources */,
 				307A80DD19B5EBD8001B538D /* MCLMServiceConnector.m in Sources */,
 				305DD82819A63517006514BD /* MCLAppDelegate.m in Sources */,
 				301FD9AD19C5C79000E36A5B /* Reachability.m in Sources */,
@@ -572,7 +572,7 @@
 				305DD85D19AB300F006514BD /* MCLBoard.m in Sources */,
 				301FD9A319C32FC600E36A5B /* MCLLoadingView.m in Sources */,
 				30A1BFAD19B4A8D4002439FE /* MCLSettingsTableViewController.m in Sources */,
-				305DD85419AB2970006514BD /* MCLMessageListViewController.m in Sources */,
+				305DD85419AB2970006514BD /* MCLMessageListWidmannStyleViewController.m in Sources */,
 				30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */,
 				307A80EF19B8800E001B538D /* KeychainItemWrapper.m in Sources */,
 				307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */,
