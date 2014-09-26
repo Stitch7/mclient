@@ -30,7 +30,7 @@
 @property (strong) UIColor *tableSeparatorColor;
 @property (strong) MCLMServiceConnector *mServiceConnector;
 @property (strong) NSMutableArray *messages;
-@property (strong) NSMutableArray *cells;
+@property (strong) NSMutableDictionary *cells;
 @property (strong) MCLReadList *readList;
 @property (strong) NSString *username;
 @property (strong) NSString *password;
@@ -46,7 +46,7 @@
     [super awakeFromNib];
     
     self.mServiceConnector = [[MCLMServiceConnector alloc] init];
-    self.cells = [NSMutableArray array];
+    self.cells = [NSMutableDictionary dictionary];
     self.readList = [[MCLReadList alloc] init];
     
     NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
@@ -264,7 +264,7 @@
         [cell.messageToolbar setHidden:YES];
     }
 
-    [self.cells setObject:cell atIndexedSubscript:i];
+    [self.cells setObject:cell forKey:@(i)];
     
     [cell setBoardId:self.board.boardId];
     [cell setMessageId:message.messageId];
@@ -355,7 +355,7 @@
     CGFloat height = 60;
 
 	if ([tableView indexPathsForSelectedRows].count && [[tableView indexPathsForSelectedRows] indexOfObject:indexPath] != NSNotFound) {
-        MCLMessageTableViewCell *cell = self.cells[indexPath.row];
+        MCLMessageTableViewCell *cell = [self.cells objectForKey:@(indexPath.row)];
         CGFloat webViewHeight = cell.messageTextWebView.scrollView.contentSize.height;
         CGFloat toolbarHeight = cell.messageToolbar.frame.size.height;
         height = height + 10 + webViewHeight + toolbarHeight;
