@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="H1p-Uh-vWS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="H1p-Uh-vWS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment defaultVersion="1808" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -24,7 +25,7 @@
             </objects>
             <point key="canvasLocation" x="473" y="-442"/>
         </scene>
-        <!--Message List Frame Style View Controller - Messages-->
+        <!--Messages-->
         <scene sceneID="ZGb-nP-KYj">
             <objects>
                 <viewController storyboardIdentifier="MessageList2FrameStyleView" automaticallyAdjustsScrollViewInsets="NO" id="85r-qy-rBQ" customClass="MCLMessageListFrameStyleViewController" sceneMemberID="viewController">
@@ -146,12 +147,10 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" title="Messages" id="FUz-F0-kl1"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    <size key="freeformSize" width="703" height="768"/>
                     <connections>
                         <outlet property="messageView" destination="Ds0-Zs-ACB" id="Yps-ET-FgX"/>
                         <outlet property="tableView" destination="vya-OO-e61" id="7tI-ss-zyt"/>
@@ -167,7 +166,7 @@
             </objects>
             <point key="canvasLocation" x="1096" y="1452"/>
         </scene>
-        <!--Message List Widmann Style View Controller - Messages-->
+        <!--Messages-->
         <scene sceneID="z5e-Tv-Pdo">
             <objects>
                 <viewController storyboardIdentifier="MessageListView" automaticallyAdjustsScrollViewInsets="NO" id="Lzr-7j-OlZ" customClass="MCLMessageListWidmannStyleViewController" sceneMemberID="viewController">
@@ -179,7 +178,6 @@
                                 <rect key="frame" x="0.0" y="66" width="1024" height="702"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" id="wkg-2E-9L1" customClass="MCLMessageTableViewCell">
@@ -289,7 +287,6 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" title="Messages" id="E8b-IG-9Lo"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -317,7 +314,7 @@
             </objects>
             <point key="canvasLocation" x="-662" y="-442"/>
         </scene>
-        <!--Board List Table View Controller - Master-->
+        <!--Master-->
         <scene sceneID="smW-Zh-WAh">
             <objects>
                 <tableViewController title="Master" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" customClass="MCLBoardListTableViewController" sceneMemberID="viewController">
@@ -325,7 +322,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BoardCell" textLabel="wiw-b4-YBf" style="IBUITableViewCellStyleDefault" id="WCw-Qf-5nD">
                                 <rect key="frame" x="0.0" y="119" width="320" height="44"/>
@@ -368,7 +364,7 @@
             </objects>
             <point key="canvasLocation" x="884" y="-443"/>
         </scene>
-        <!--Settings Table View Controller - Settings-->
+        <!--Settings-->
         <scene sceneID="qhI-YH-8Nv">
             <objects>
                 <tableViewController id="7QN-DO-H2B" customClass="MCLSettingsTableViewController" sceneMemberID="viewController">
@@ -376,7 +372,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <sections>
                             <tableViewSection headerTitle="LOGIN DATA" id="Cn1-Gi-W0G">
                                 <cells>
@@ -644,7 +639,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <size key="freeformSize" width="540" height="620"/>
                     <connections>
                         <outlet property="settingsDoneButton" destination="ccs-5C-zuF" id="RJx-ee-zBh"/>
                         <outlet property="settingsLoginDataStatusLabel" destination="pKg-kY-MzG" id="L0E-qN-8sc"/>
@@ -675,7 +669,7 @@
             </objects>
             <point key="canvasLocation" x="1300" y="-1294"/>
         </scene>
-        <!--Thread List Table View Controller - Threads-->
+        <!--Threads-->
         <scene sceneID="ySn-bm-Ogv">
             <objects>
                 <tableViewController id="W6n-Mg-Jff" customClass="MCLThreadListTableViewController" sceneMemberID="viewController">
@@ -683,7 +677,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="63S-ov-7aD">
                             <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -780,7 +773,7 @@
             </objects>
             <point key="canvasLocation" x="-662" y="972"/>
         </scene>
-        <!--Profile Table View Controller - Profile-->
+        <!--Profile-->
         <scene sceneID="fh5-yL-uN8">
             <objects>
                 <tableViewController id="9p0-6c-wYh" customClass="MCLProfileTableViewController" sceneMemberID="viewController">
@@ -788,7 +781,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProfileCell" textLabel="89T-Dc-5jd" detailTextLabel="Qw9-qc-8iC" style="IBUITableViewCellStyleSubtitle" id="dMx-Qk-FSl">
@@ -906,7 +898,6 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" id="Sv3-DZ-dEK">
                         <barButtonItem key="backBarButtonItem" title="Edit" id="RLd-vU-Bjq"/>
@@ -942,7 +933,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" id="h1p-NG-NJO">
-                                <rect key="frame" x="0.0" y="63.000001901890812" width="768" height="646"/>
+                                <rect key="frame" x="0.0" y="63" width="768" height="646"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
@@ -959,7 +950,6 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" id="uAa-o0-zpU">
                         <barButtonItem key="rightBarButtonItem" title="Send" id="qtP-VL-0oR">
@@ -979,7 +969,7 @@
             </objects>
             <point key="canvasLocation" x="4302" y="-76"/>
         </scene>
-        <!--Message List View Controller - Detail-->
+        <!--Detail-->
         <scene sceneID="aQo-JO-CzA">
             <objects>
                 <viewController storyboardIdentifier="FooViewController" title="Detail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9GR-Lf-Lz0" customClass="MCLMessageListViewController" sceneMemberID="viewController">
@@ -994,7 +984,6 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="M!client" id="s5Q-Ey-fIS"/>
