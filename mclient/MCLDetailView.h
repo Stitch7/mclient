@@ -1,5 +1,5 @@
 //
-//  MCLLabelView.h
+//  MCLDetailView.h
 //  mclient
 //
 //  Created by Christopher Reitz on 19.09.14.

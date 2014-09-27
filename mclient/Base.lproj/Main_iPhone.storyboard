@@ -910,7 +910,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" id="XLg-qv-BeO">
-                                <rect key="frame" x="0.0" y="75.000000188676836" width="320" height="434"/>
+                                <rect key="frame" x="0.0" y="74.999999683856203" width="320" height="434"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>

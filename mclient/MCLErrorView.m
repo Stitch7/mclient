@@ -8,18 +8,10 @@
 
 #import "MCLErrorView.h"
 
+#import "utils.h"
+
 #define LABEL_SIZE 15
 #define SUB_LABEL_SIZE 13
-
-#pragma mark - Private Stuff
-@interface MCLErrorView()
-
-@property(strong, nonatomic) UIImageView *image;
-@property(strong, nonatomic) UILabel *label;
-@property(strong, nonatomic) UILabel *subLabel;
-
-
-@end
 
 @implementation MCLErrorView
 
@@ -31,8 +23,7 @@
 - (UIImageView *)image
 {
 	if ( ! _image) {
-//        _image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"errorResponse.png"]];
-        _image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"errorConnection.png"]];
+        _image = [[UIImageView alloc] init];
     }
 
 	return _image;
@@ -61,14 +52,16 @@
 - (id)initWithFrame:(CGRect)frame
 {
 	if (self = [super initWithFrame:frame]) {
-        [self setBackgroundColor:[UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0]];
+        [self setBackgroundColor:[UIColor whiteColor]];
 
-//        self.label.text = @"Unable not load data";
-		self.label.text = @"No Internet Connection";
 		self.label.textColor = [UIColor darkGrayColor];
+        self.subLabel.textColor = [UIColor lightGrayColor];
 
         self.subLabel.text = @"Try pull to refresh…";
-        self.subLabel.textColor = [UIColor lightGrayColor];
+
+        [self configure];
+
+        [self.image sizeToFit];
 
 		[self addSubview:self.image];
         [self addSubview:self.label];
@@ -79,6 +72,12 @@
 	}
 
 	return self;
+}
+
+# pragma mark - Abstract
+- (void)configure
+{
+    mustOverride();
 }
 
 #pragma mark - Layout Management
@@ -114,8 +113,9 @@
     subLabelFrame.origin.x = self.bounds.origin.x + (self.bounds.size.width - subLabelFrame.size.width) / 2;
 
 	// Set y position
-    imageFrame.origin.y = 150;
-	labelFrame.origin.y = imageFrame.origin.y - 35;
+    imageFrame.origin.y = (self.bounds.size.height / 2) - (imageFrame.size.height / 2);
+
+    labelFrame.origin.y = imageFrame.origin.y - 35;
     subLabelFrame.origin.y = imageFrame.origin.y + imageFrame.size.height + 20;
 
 	self.image.frame = imageFrame;

@@ -15,6 +15,8 @@
 #import "MCLMessageListViewController.h"
 #import "MCLBoard.h"
 #import "MCLErrorView.h"
+#import "MCLMServiceErrorView.h"
+#import "MCLInternetConnectionErrorView.h"
 #import "MCLLoadingView.h"
 #import "MCLVerifiyLoginView.h"
 
@@ -34,9 +36,8 @@
 {
     [super awakeFromNib];
 
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    if (self.splitViewController) {
         [self.splitViewController setDelegate:self];
-        self.preferredContentSize = CGSizeMake(320.0, 600.0);
     }
 
     self.images = @{ @1: @"boardSmalltalk.png",
@@ -61,11 +62,36 @@
 {
     [super viewDidLoad];
 
+    BOOL isPortrait =
+        self.interfaceOrientation == UIInterfaceOrientationPortrait ||
+        self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown
+    ;
+
+    BOOL isLandscape =
+        self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+        self.interfaceOrientation == UIInterfaceOrientationLandscapeRight
+    ;
+
+    // Fix width for when in splitView
+    CGFloat viewWidth = self.splitViewController ? 320 : self.view.bounds.size.width;
+
+    CGFloat viewHeight = self.view.bounds.size.height;
+    // If iPad starts in landscape mode, subtract some points...
+    viewHeight = isLandscape && self.splitViewController ? viewHeight - 250 : viewHeight;
+    // Add missing navBar points in landscape mode for iPhone
+    viewHeight = self.splitViewController ? viewHeight : viewHeight + 12;
+
+    CGFloat navBarHeight = self.navigationController.navigationBar.bounds.size.height;
+
+    CGSize statusBarSize = [UIApplication sharedApplication].statusBarFrame.size;
+    CGFloat statusBarHeight = (isPortrait ? statusBarSize.height : statusBarSize.width);
+
+    self.tableViewBounds = CGRectMake(0, 0, viewWidth, viewHeight - navBarHeight - statusBarHeight);
+
     [self showLoginStatus];
-    [self setupReachability];
+    // [self setupReachability];
     [self setupRefreshControl];
 
-    self.tableViewBounds = self.view.bounds;
     [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.tableViewBounds]];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -92,6 +118,12 @@
 
 - (void)showLoginStatus
 {
+    for (id subview in self.navigationController.toolbar.subviews) {
+        if ([[subview class] isSubclassOfClass: [MCLVerifiyLoginView class]]) {
+            [subview removeFromSuperview];
+        }
+    }
+
     MCLVerifiyLoginView *navToolbarView = [[MCLVerifiyLoginView alloc] initWithFrame:self.navigationController.toolbar.bounds];
     [self.navigationController.toolbar addSubview:navToolbarView];
     [self.navigationController setToolbarHidden:NO animated:YES];
@@ -148,6 +180,7 @@
     NSData *data = [self loadData];
     [self fetchedData:data];
 //    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:1.5]; // 1.5
+    [self showLoginStatus];
     [self stopRefresh];
 }
 
@@ -162,7 +195,7 @@
         }
 
         if ( ! errorViewPresent) {
-            [self.view addSubview:[[MCLErrorView alloc] initWithFrame:self.tableViewBounds]];
+            [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:self.tableViewBounds]];
         }
     } else {
         self.boards = [NSMutableArray array];
@@ -221,14 +254,14 @@
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
 {
-    UINavigationController *navController = [[[self splitViewController ] viewControllers ] lastObject ];
+    UINavigationController *navController = [[[self splitViewController] viewControllers] lastObject];
     MCLMessageListViewController *detailViewController = [[navController viewControllers] firstObject];
     [detailViewController setSplitViewButton:barButtonItem forPopoverController:popoverController];
 }
 
 - (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
 {
-    UINavigationController *navController = [[[self splitViewController ] viewControllers ] lastObject ];
+    UINavigationController *navController = [[[self splitViewController] viewControllers] lastObject];
     MCLMessageListViewController *detailViewController = [[navController viewControllers] firstObject];
     [detailViewController setSplitViewButton:nil forPopoverController:nil];
 }
@@ -262,7 +295,7 @@
     switch (netStatus) {
         case NotReachable:
 //            NSLog(@"-- NotReachable");
-            [self.view addSubview:[[MCLErrorView alloc] initWithFrame:self.tableViewBounds]];
+            [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:self.tableViewBounds]];
             self.refreshControl = nil;
             self.tableView.bounces = NO;
             break;

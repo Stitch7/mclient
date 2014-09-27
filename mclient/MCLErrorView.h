@@ -10,4 +10,8 @@
 
 @interface MCLErrorView : UIView
 
+@property(strong, nonatomic) UILabel *label;
+@property(strong, nonatomic) UIImageView *image;
+@property(strong, nonatomic) UILabel *subLabel;
+
 @end
