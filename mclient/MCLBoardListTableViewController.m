@@ -154,7 +154,8 @@
 
 - (NSData *)loadData
 {
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: kMServiceBaseURL]];
+    NSString *urlString = [NSString stringWithFormat:@"%@/", kMServiceBaseURL];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
 
     return data;
 }

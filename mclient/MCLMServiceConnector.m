@@ -8,6 +8,8 @@
 
 #import "MCLMServiceConnector.h"
 
+#import "constants.h"
+
 @implementation MCLMServiceConnector
 
 
@@ -29,8 +31,8 @@
 {
     BOOL success = NO;
     
-    NSString *urlString = @"http://localhost:8000/test-login";
-    
+    NSString *urlString = [NSString stringWithFormat:@"%@/test-login", kMServiceBaseURL];
+
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
@@ -69,7 +71,7 @@
                            @"password":[self percentEscapeString:inPassword]};
     
     
-    NSString *urlString = [NSString stringWithFormat:@"http://localhost:8000/board/%@/notification-status/%@", inBoardId, inMessageId];
+    NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/notification-status/%@", kMServiceBaseURL, inBoardId, inMessageId];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
@@ -143,7 +145,7 @@
     NSInteger errorCode = 0;
     NSDictionary *errorUserInfo = nil;
 
-    NSString *urlString = [NSString stringWithFormat:@"http://localhost:8000/preview"];
+    NSString *urlString = [NSString stringWithFormat:@"%@/preview", kMServiceBaseURL];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
 
@@ -259,7 +261,7 @@
     
     NSDictionary *vars = @{@"phrase":[self percentEscapeString:inPhrase]};
     
-    NSString *urlString = [NSString stringWithFormat:@"http://localhost:8000/board/%@/search", inBoardId];
+    NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/search", kMServiceBaseURL, inBoardId];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
@@ -292,7 +294,7 @@
     NSInteger errorCode = 0;
     NSDictionary *errorUserInfo = nil;
     
-    NSString *urlString = [NSString stringWithFormat:@"http://localhost:8000/%@", action];    
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@", kMServiceBaseURL, action];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     

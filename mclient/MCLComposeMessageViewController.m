@@ -105,7 +105,7 @@
 - (IBAction)quoteButtonTouchUpInside:(UIButton *)sender
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"/board/%@/quote/%@", self.boardId, self.messageId]];
+        NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/quote/%@", kMServiceBaseURL, self.boardId, self.messageId];
         NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
 
         dispatch_async(dispatch_get_main_queue(), ^{

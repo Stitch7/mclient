@@ -205,7 +205,7 @@
 
 - (NSData *)loadData
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@board/%@/messagelist/%@", kMServiceBaseURL, self.board.boardId, self.thread.threadId];
+    NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/messagelist/%@", kMServiceBaseURL, self.board.boardId, self.thread.threadId];
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
 
     return data;
@@ -269,7 +269,7 @@
 
 - (void)completeMessage:(MCLMessage *)message
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@board/%@/message/%@", kMServiceBaseURL, self.board.boardId, message.messageId];
+    NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message/%@", kMServiceBaseURL, self.board.boardId, message.messageId];
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
     NSError* error;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];

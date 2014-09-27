@@ -72,7 +72,7 @@
                            @"lastUpdate": @"Last Updated on"};
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"profile/%@", self.userId]];
+        NSString *urlString = [NSString stringWithFormat:@"%@/profile/%@", kMServiceBaseURL, self.userId];
         NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
         [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
     });

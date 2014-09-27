@@ -126,7 +126,7 @@
 
 - (NSData *)loadData
 {
-    NSString *urlString = [kMServiceBaseURL stringByAppendingString:[NSString stringWithFormat:@"board/%@/threadlist", self.board.boardId]];
+    NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/threadlist", kMServiceBaseURL, self.board.boardId];
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
 
     return data;
