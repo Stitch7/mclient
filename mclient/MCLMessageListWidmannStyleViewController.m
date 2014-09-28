@@ -510,11 +510,11 @@
     // UIWebView object has fully loaded.
     if ([[webView stringByEvaluatingJavaScriptFromString:@"document.readyState"] isEqualToString:@"complete"]) {
         // Resize text view to content height
-        int height = [[webView stringByEvaluatingJavaScriptFromString:@"Math.max(document.body.scrollHeight, "
-                                                                                "document.body.offsetHeight, "
-                                                                                "document.documentElement.clientHeight, "
-                                                                                "document.documentElement.scrollHeight, "
-                                                                                "document.documentElement.offsetHeight);"] integerValue];
+        CGFloat height = [[webView stringByEvaluatingJavaScriptFromString:@"Math.max(document.body.scrollHeight, "
+                                                                           "document.body.offsetHeight, "
+                                                                           "document.documentElement.clientHeight, "
+                                                                           "document.documentElement.scrollHeight, "
+                                                                           "document.documentElement.offsetHeight);"] integerValue];
         CGRect webViewFrame = webView.frame;
         webViewFrame.size.height = height;
         webView.frame = webViewFrame;
@@ -526,9 +526,11 @@
             }
         }
 
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+
         // Show toolbar after short delay to avoid skidding through text
-        MCLMessageTableViewCell *cell = (MCLMessageTableViewCell *)webView.superview.superview.superview;
-        [cell.messageToolbar performSelector:@selector(setHidden:) withObject:NO afterDelay:0.2];
+        [cell.messageToolbar performSelector:@selector(setHidden:) withObject:nil afterDelay:0.2];
         // [cell.messageToolbar setHidden:NO];
 
         // Resize table cell
