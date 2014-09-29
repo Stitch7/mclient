@@ -8,7 +8,8 @@
 
 #ifdef DEBUG
 //    #define kMServiceBaseURL @"http://localhost:8000"
-    #define kMServiceBaseURL @"http://reitz.re:8000"
+//    #define kMServiceBaseURL @"http://reitz.re:8000"
+    #define kMServiceBaseURL @"http://192.168.178.33:8080"
 #else
     #define kMServiceBaseURL @"http://reitz.re:8000"
 #endif

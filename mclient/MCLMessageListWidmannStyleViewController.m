@@ -217,18 +217,6 @@
     [self.tableView reloadData];
 }
 
-- (void)completeMessage:(MCLMessage *)message
-{
-    NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message/%@", kMServiceBaseURL, self.board.boardId, message.messageId];
-    NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    message.userId = [json objectForKey:@"userId"];
-    message.text = [json objectForKey:@"text"];
-    message.textHtml = [json objectForKey:@"textHtml"];
-    message.textHtmlWithImages = [json objectForKey:@"textHtmlWithImages"];
-}
-
 
 #pragma mark - UITableViewDataSource
 
@@ -432,20 +420,56 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MCLMessage *message = self.messages[indexPath.row];
-    if (!message.text) {
-        [self completeMessage:message];
-    }
-    
     MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
-
     [cell setBackgroundColor:self.veryLightGreyColor];
+
+    MCLMessage *message = self.messages[indexPath.row];
+    if (message.text) {
+        [self putMessage:message toCell:cell atIndexPath:indexPath];
+    } else {
+        NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message/%@", kMServiceBaseURL, self.board.boardId, message.messageId];
+        NSURL *url = [NSURL URLWithString:urlString];
+
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
+            if (connectionError) {
+                [tableView deselectRowAtIndexPath:indexPath animated:NO];
+                [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
+
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error"
+                                                                message:[connectionError localizedDescription]
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+
+            } else {
+                NSError *jsonParseError;
+                NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParseError];
+
+                message.userId = [json objectForKey:@"userId"];
+                message.text = [json objectForKey:@"text"];
+                message.textHtml = [json objectForKey:@"textHtml"];
+                message.textHtmlWithImages = [json objectForKey:@"textHtmlWithImages"];
+
+                cell.messageText = message.text;
+                [cell markRead];
+                [self.readList addMessageId:message.messageId];
+
+                [self putMessage:message toCell:cell atIndexPath:indexPath];
+            }
+        }];
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    }
+}
+
+- (void) putMessage:(MCLMessage *)message toCell:(MCLMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
     [cell.messageTextWebView setBackgroundColor:self.veryLightGreyColor];
     [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
-    cell.messageText = message.text;
-
-    [cell markRead];
-    [self.readList addMessageId:message.messageId];
 
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
 }
