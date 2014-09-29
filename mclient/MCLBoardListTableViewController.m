@@ -56,6 +56,12 @@
         self.preselectedBoardSequePerformed = YES;
         [self performSegueWithIdentifier:@"PushToThreadListNoAnimation" sender:nil];
     }
+
+    // Fix odd glitch on swipe back causing cell stay selected
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    if (selectedIndexPath) {
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
+    }
 }
 
 - (void)viewDidLoad
@@ -92,8 +98,10 @@
     // [self setupReachability];
     [self setupRefreshControl];
 
+    // Visualize loading
     [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.tableViewBounds]];
-
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    // Load data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [self loadData];
         [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
@@ -160,10 +168,8 @@
 
 - (NSData *)loadData
 {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     NSString *urlString = [NSString stringWithFormat:@"%@/", kMServiceBaseURL];
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
     return data;
 }
@@ -179,18 +185,17 @@
     }
 }
 
-- (void)stopRefresh
-{
-    [self.refreshControl endRefreshing];
-}
-
 - (void)reloadData
 {
-    NSData *data = [self loadData];
-    [self fetchedData:data];
-//    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:1.5]; // 1.5
-    [self showLoginStatus];
-    [self stopRefresh];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [self loadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self fetchedData:data];
+            [self showLoginStatus];
+            [self.refreshControl endRefreshing];
+        });
+    });
 }
 
 - (void)fetchedData:(NSData *)data
@@ -226,6 +231,7 @@
                 [subview removeFromSuperview];
             }
         }
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [self.tableView reloadData];
     }
 }

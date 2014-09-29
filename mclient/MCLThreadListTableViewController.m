@@ -24,18 +24,15 @@
 
 @interface MCLThreadListTableViewController ()
 
-@property (assign, nonatomic) UIColor *tableSeparatorColor;
+@property (strong, nonatomic) UIColor *tableSeparatorColor;
 @property (assign, nonatomic) CGRect tableViewBounds;
-
 @property (strong, nonatomic) MCLMessageListViewController *detailViewController;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
-
-
-@property (strong) NSMutableArray *threads;
-@property (strong) NSMutableArray *searchResults;
-@property (strong) MCLReadList *readList;
-@property (strong) NSString *username;
-@property (strong) NSDateFormatter *dateFormatter;
+@property (strong, nonatomic) NSMutableArray *threads;
+@property (strong, nonatomic) NSMutableArray *searchResults;
+@property (strong, nonatomic) MCLReadList *readList;
+@property (strong, nonatomic) NSString *username;
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
 @end
 
@@ -48,6 +45,7 @@
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.clearsSelectionOnViewWillAppear = NO;
     }
+    self.clearsSelectionOnViewWillAppear = YES;
 
     self.readList = [[MCLReadList alloc] init];
     
@@ -64,6 +62,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    // Fix odd glitch on swipe back causing cell stay selected
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    if (selectedIndexPath) {
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
+    }
 
     [self.navigationController setToolbarHidden:YES animated:NO];
 }
@@ -109,19 +113,14 @@
 
     self.tableViewBounds = self.view.bounds;
 
-    // Add loading view
+    // Visualize loading
     [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.tableViewBounds]];
-
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     // Load data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [self loadData];
         [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
     });
-}
-
-- (void)stopRefresh
-{
-    [self.refreshControl endRefreshing];
 }
 
 - (NSData *)loadData
@@ -134,11 +133,15 @@
 
 - (void)reloadData
 {
-    NSData *data = [self loadData];
-    [self fetchedData:data];
-    [self stopRefresh];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [self loadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self fetchedData:data];
+            [self.refreshControl endRefreshing];
+        });
+    });
 }
-
 
 - (void)fetchedData:(NSData *)data
 {
@@ -169,6 +172,7 @@
                 [subview removeFromSuperview];
             }
         }
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
         // Restore tables separatorColor
         [self.tableView setSeparatorColor:self.tableSeparatorColor];

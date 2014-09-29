@@ -83,8 +83,9 @@
         // Preserve selection between presentations.
         //    self.clearsSelectionOnViewWillAppear = NO; //TODO
 
-        // Add loading view
+        // Visualize loading
         [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
         // Load data async
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -107,12 +108,6 @@
         [self.view addSubview:[[MCLDetailView alloc] initWithFrame:self.view.bounds]];
     }
 }
-
-- (void)stopRefresh
-{
-    [self.refreshControl endRefreshing];
-}
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -177,9 +172,14 @@
 
 - (void)reloadData
 {
-    NSData *data = [self loadData];
-    [self fetchedData:data];
-    [self performSelector:@selector(stopRefresh) withObject:nil afterDelay:1.5]; // 2.5
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [self loadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self fetchedData:data];
+            [self.refreshControl endRefreshing];
+        });
+    });
 }
 
 - (void)fetchedData:(NSData *)responseData
@@ -213,7 +213,8 @@
                                      textHtmlWithImages:nil];
         [self.messages addObject:message];
     }
-    
+
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.tableView reloadData];
 
     // If new thread select first message

@@ -180,9 +180,11 @@
 
     self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 
-    // Add loading view
+    // Visualize loading
     [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
+    // Load data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [self loadData];
         // Process data on main thread
@@ -222,9 +224,14 @@
 
 - (void)reloadData
 {
-    NSData *data = [self loadData];
-    [self fetchedData:data];
-    [self.refreshControl performSelector:@selector(endRefreshing) withObject:nil afterDelay:1.5]; // 2.5
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [self loadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self fetchedData:data];
+            [self.refreshControl endRefreshing];
+        });
+    });
 }
 
 - (void)fetchedData:(NSData *)responseData
@@ -259,7 +266,7 @@
         [self.messages addObject:message];
     }
 
-
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.tableView reloadData];
 
     // Select first message
