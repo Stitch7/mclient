@@ -11,7 +11,7 @@
 @interface MCLMessage : NSObject
 
 @property (strong) NSNumber *messageId;
-@property (assign) NSNumber *level;
+@property (strong) NSNumber *level;
 @property (strong) NSNumber *userId;
 @property (assign, nonatomic, getter=isMod) BOOL mod;
 @property (strong) NSString *username;
