@@ -601,6 +601,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="composePreviewButton" destination="RXe-Zd-aaP" id="oTP-KA-lLO"/>
                         <outlet property="composeQuoteButton" destination="qc6-x2-MYp" id="HKk-aw-d92"/>
                         <outlet property="composeSubjectTextField" destination="UbW-b5-AmA" id="YLC-M3-RT3"/>
                         <outlet property="composeTextTextField" destination="Yfo-0k-yIi" id="1eD-2F-3ii"/>
@@ -910,8 +911,9 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" id="XLg-qv-BeO">
-                                <rect key="frame" x="0.0" y="74.999999120520044" width="320" height="434"/>
+                                <rect key="frame" x="0.0" y="75" width="320" height="440"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="s3P-HP-lTE">
