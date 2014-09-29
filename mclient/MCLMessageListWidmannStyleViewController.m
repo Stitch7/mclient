@@ -254,6 +254,7 @@
     if ([cell isSelected]) {
         cell.backgroundColor = self.veryLightGreyColor;
         [cell.messageTextWebView setBackgroundColor:self.veryLightGreyColor];
+        [cell.messageToolbar setHidden:NO];
         [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
     } else {
         cell.backgroundColor = [UIColor clearColor];
@@ -307,13 +308,17 @@
     [self barButton:cell.messageNotificationButton hide:hideNotificationButton];
     
     if ( ! hideNotificationButton) {
-        NSError *mServiceError;
-        NSInteger notificationStatus = [self.mServiceConnector notificationStatusForMessageId:message.messageId
-                                                                                      boardId:self.board.boardId
-                                                                                     username:self.username
-                                                                                     password:self.password
-                                                                                        error:&mServiceError];
-        [cell enableNotificationButton:notificationStatus];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSError *mServiceError;
+            NSInteger notificationStatus = [self.mServiceConnector notificationStatusForMessageId:message.messageId
+                                                                                          boardId:self.board.boardId
+                                                                                         username:self.username
+                                                                                         password:self.password
+                                                                                            error:&mServiceError];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [cell enableNotificationButton:notificationStatus];
+            });
+        });
     }
     
     BOOL hideEditButton = ! ([message.username isEqualToString:self.username] && nextMessage.level <= message.level);
