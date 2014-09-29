@@ -91,6 +91,10 @@
 
         [backButton sizeToFit];
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+
+        UIScreenEdgePanGestureRecognizer *swipeBackRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(backAction)];
+        swipeBackRecognizer.edges = UIRectEdgeLeft;
+        [self.view addGestureRecognizer:swipeBackRecognizer];
     }
 
     self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];

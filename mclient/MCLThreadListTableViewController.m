@@ -45,7 +45,6 @@
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.clearsSelectionOnViewWillAppear = NO;
     }
-    self.clearsSelectionOnViewWillAppear = YES;
 
     self.readList = [[MCLReadList alloc] init];
     
