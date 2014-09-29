@@ -118,13 +118,16 @@
 
 - (void)showLoginStatus
 {
+    // Remove if already present
     for (id subview in self.navigationController.toolbar.subviews) {
         if ([[subview class] isSubclassOfClass: [MCLVerifiyLoginView class]]) {
             [subview removeFromSuperview];
         }
     }
 
-    MCLVerifiyLoginView *navToolbarView = [[MCLVerifiyLoginView alloc] initWithFrame:self.navigationController.toolbar.bounds];
+    // Add VerifiyLoginView to navigationControllers toolbar
+    CGRect navToolbarFrane = CGRectMake(0, 0, self.tableViewBounds.size.width, self.navigationController.toolbar.bounds.size.height);
+    MCLVerifiyLoginView *navToolbarView = [[MCLVerifiyLoginView alloc] initWithFrame:navToolbarFrane];
     [self.navigationController.toolbar addSubview:navToolbarView];
     [self.navigationController setToolbarHidden:NO animated:YES];
 
@@ -136,14 +139,17 @@
     NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
     NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
 
-    // Load data async
+    // Check login data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSError *error;
-        BOOL login = ([[[MCLMServiceConnector alloc] init] testLoginWIthUsername:username password:password error:&error]);
+        BOOL loginValid = NO;
+        if ([username length] > 0 && [password length] > 0) {
+            NSError *error;
+            loginValid = ([[[MCLMServiceConnector alloc] init] testLoginWIthUsername:username password:password error:&error]);
+        }
 
-        // Remove loading view on main thread
+        // Set login status on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (login) {
+            if (loginValid) {
                 [navToolbarView loginStatusWithUsername:username];
             } else {
                 [navToolbarView loginStausNoLogin];
@@ -154,8 +160,10 @@
 
 - (NSData *)loadData
 {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     NSString *urlString = [NSString stringWithFormat:@"%@/", kMServiceBaseURL];
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
     return data;
 }

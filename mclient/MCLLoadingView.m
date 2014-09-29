@@ -38,10 +38,15 @@
 	if (self = [super initWithFrame:frame]) {
         [self.spinner startAnimating];
 
-        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+
+        [self configureSubviews];
+
         [self addSubview:self.label];
         [self addSubview:self.spinner];
-        [self configureSubviews];
+
+
+        [self setNeedsLayout];
 	}
 
 	return self;
