@@ -195,7 +195,7 @@
     NSDate *date = [dateFormatter dateFromString:[object objectForKey:@"date"]];
     NSNumber *answerCount = [object objectForKey:@"answerCount"];
     NSDate *answerDate = [dateFormatter dateFromString:[object objectForKey:@"answerDate"]];
-    
+
     return  [MCLThread threadWithId:threadId
                           messageId:messageId
                              sticky:sticky
@@ -277,9 +277,9 @@
     } else {
         [cell markUnread];
     }
-    
+
     cell.badgeString = [thread.answerCount stringValue];
-    
+
     return cell;
 }
 
@@ -300,7 +300,6 @@
         cell = (MCLThreadTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
     }
 
-    [self.readList addMessageId:thread.messageId];
     [cell markRead];
 
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
@@ -353,17 +352,15 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"PushToMessageList"] || [segue.identifier isEqualToString:@"PushToMessageList2FrameStyle"]) {
-        NSIndexPath *indexPath = nil;
-        MCLThread *thread = nil;
-//        MCLThreadTableViewCell *cell = nil;
+        NSIndexPath *indexPath;
+        MCLThread *thread;
+
         if (self.searchDisplayController.active) {
             indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
             thread = self.searchResults[indexPath.row];
-//            cell = (MCLThreadTableViewCell*)[self.searchDisplayController.searchResultsTableView cellForRowAtIndexPath:indexPath];
         } else {
             indexPath = [self.tableView indexPathForSelectedRow];
             thread = self.threads[indexPath.row];
-//            cell = (MCLThreadTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
         }
 
         MCLMessageListFrameStyleViewController *destinationViewController;

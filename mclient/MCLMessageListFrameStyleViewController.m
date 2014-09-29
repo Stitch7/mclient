@@ -125,10 +125,10 @@
         // Load data async
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSData *data = [self loadData];
-            [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
-
-            // Remove loading view on main thread
+            // Process data on main thread
             dispatch_async(dispatch_get_main_queue(), ^{
+                [self fetchedData:data];
+                // Remove loading view
                 for (id subview in self.view.subviews) {
                     if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
                         [subview removeFromSuperview];
@@ -185,10 +185,10 @@
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [self loadData];
-        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
-
-        // Remove loading view on main thread
+        // Process data on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
+            [self fetchedData:data];
+            // Remove loading view
             for (id subview in self.view.subviews) {
                 if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
                     [subview removeFromSuperview];
@@ -206,7 +206,7 @@
 - (NSData *)loadData
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/messagelist/%@", kMServiceBaseURL, self.board.boardId, self.thread.threadId];
-    NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
 
     return data;
 }
