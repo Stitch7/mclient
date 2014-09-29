@@ -11,7 +11,7 @@
 @interface MCLMessage : NSObject
 
 @property (strong) NSNumber *messageId;
-@property (assign) NSUInteger level;
+@property (assign) NSNumber *level;
 @property (strong) NSNumber *userId;
 @property (assign, nonatomic, getter=isMod) BOOL mod;
 @property (strong) NSString *username;
@@ -22,7 +22,7 @@
 @property (strong) NSString *textHtmlWithImages;
 
 + (id)messageWithId:(NSNumber *)inMessageId
-              level:(NSUInteger)inLevel
+              level:(NSNumber *)inLevel
              userId:(NSNumber *)inUserId
                 mod:(BOOL)inMod
            username:(NSString *)inUsername

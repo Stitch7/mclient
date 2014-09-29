@@ -11,7 +11,7 @@
 @implementation MCLMessage
 
 + (id)messageWithId:(NSNumber *)inMessageId
-              level:(NSUInteger)inLevel
+              level:(NSNumber *)inLevel
              userId:(NSNumber *)inUserId
                 mod:(BOOL)inMod
            username:(NSString *)inUsername

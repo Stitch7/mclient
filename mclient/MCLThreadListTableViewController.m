@@ -193,7 +193,7 @@
     NSString *author = [object objectForKey:@"author"];
     NSString *subject = [object objectForKey:@"subject"];
     NSDate *date = [dateFormatter dateFromString:[object objectForKey:@"date"]];
-    int answerCount = [[object objectForKey:@"answerCount"] integerValue];
+    NSNumber *answerCount = [object objectForKey:@"answerCount"];
     NSDate *answerDate = [dateFormatter dateFromString:[object objectForKey:@"answerDate"]];
     
     return  [MCLThread threadWithId:threadId
@@ -278,7 +278,7 @@
         [cell markUnread];
     }
     
-    cell.badgeString = [@(thread.answerCount) stringValue];
+    cell.badgeString = [thread.answerCount stringValue];
     
     return cell;
 }

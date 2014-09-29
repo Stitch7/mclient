@@ -26,8 +26,8 @@
 @property (weak, nonatomic) IBOutlet UITextView *settingsSignatureTextView;
 @property (weak, nonatomic) IBOutlet UISwitch *settingsNightModeSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *settingsSyncReadStatusSwitch;
-@property (assign, nonatomic) int threadView;
-@property (assign, nonatomic) int showImages;
+@property (strong, nonatomic) NSNumber *threadView;
+@property (strong, nonatomic) NSNumber *showImages;
 
 @property (strong, nonatomic) NSString *lastUsernameTextFieldValue;
 @property (strong, nonatomic) NSString *lastPasswordTextFieldValue;
@@ -75,11 +75,11 @@
     self.settingsSyncReadStatusSwitch.on = [self.userDefaults boolForKey:@"syncReadStatus"];
 
     int threadViewSection = THREADVIEW_SECTION;
-    self.threadView = [self.userDefaults integerForKey:@"threadView"];
+    self.threadView = [self.userDefaults objectForKey:@"threadView"];
     self.threadView = self.threadView ? self.threadView : kMCLSettingsThreadViewDefault;
 
     int imagesSection = IMAGES_SECTION;
-    self.showImages = [self.userDefaults integerForKey:@"showImages"];
+    self.showImages = [self.userDefaults objectForKey:@"showImages"];
     self.showImages = self.showImages ? self.showImages : kMCLSettingsShowImagesAlways;
 
     for (int section = 0; section < [self.tableView numberOfSections]; section++) {
@@ -88,13 +88,13 @@
             UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:cellPath];
 
             if (section == threadViewSection) {
-                if (self.threadView == row) {
+                if ([self.threadView integerValue] == row) {
                     [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
                 } else {
                     [cell setAccessoryType:UITableViewCellAccessoryNone];
                 }
             } else if (section == imagesSection) {
-                if (self.showImages == row) {
+                if ([self.showImages integerValue] == row) {
                     [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
                 } else {
                     [cell setAccessoryType:UITableViewCellAccessoryNone];
@@ -170,7 +170,7 @@
             UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:cellPath];
             if (row == indexPath.row) {
                 [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-                self.threadView = row;
+                self.threadView = @(row);
                 [self.userDefaults setInteger:row forKey:@"threadView"];
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
             } else {
@@ -186,7 +186,7 @@
             UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:cellPath];
             if (row == indexPath.row) {
                 [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-                self.showImages = row;
+                self.showImages = @(row);
                 [self.userDefaults setInteger:row forKey:@"showImages"];
                 [tableView deselectRowAtIndexPath:indexPath animated:YES];
             } else {

@@ -240,7 +240,7 @@
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     for (id object in json) {
         NSNumber *messageId = [object objectForKey:@"messageId"];
-        NSUInteger level = [[object objectForKey:@"level"] integerValue];
+        NSNumber *level = [object objectForKey:@"level"];
         BOOL mod = [[object objectForKey:@"mod"] boolValue];
         NSString *username = [object objectForKey:@"username"];
         NSString *subject = [object objectForKey:@"subject"];
@@ -349,12 +349,12 @@
     return cell;
 }
 
-- (void)indentView:(UIView *)view withLevel:(int)level startingAtX:(CGFloat)x
-{//TODO make level = NSNumber
+- (void)indentView:(UIView *)view withLevel:(NSNumber *)level startingAtX:(CGFloat)x
+{
     int indention = 10;
 
     CGRect frame = view.frame;
-    frame.origin = CGPointMake(x + (indention * level), frame.origin.y);
+    frame.origin = CGPointMake(x + (indention * [level integerValue]), frame.origin.y);
     view.frame = frame;
 
 }

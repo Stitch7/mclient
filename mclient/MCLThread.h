@@ -18,7 +18,7 @@
 @property (strong) NSString *username;
 @property (strong) NSString *subject;
 @property (strong) NSDate *date;
-@property (assign) int answerCount;
+@property (assign) NSNumber *answerCount;
 @property (strong) NSDate *answerDate;
 
 + (id)threadWithId:(NSNumber *)inThreadId
@@ -29,7 +29,7 @@
           username:(NSString *)inUsername
            subject:(NSString *)inSubject
               date:(NSDate *)inDate
-       answerCount:(int)inAnswerCount
+       answerCount:(NSNumber *)inAnswerCount
         answerDate:(NSDate *)inAnswerDate;
 
 @end

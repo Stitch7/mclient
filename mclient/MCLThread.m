@@ -18,7 +18,7 @@
           username:(NSString *)inUsername
            subject:(NSString *)inSubject
               date:(NSDate *)inDate
-       answerCount:(int)inAnswerCount
+       answerCount:(NSNumber *)inAnswerCount
         answerDate:(NSDate *)inAnswerDate
 {
     MCLThread *thread = [[MCLThread alloc] init];
