@@ -20,15 +20,6 @@
 
 @implementation MCLProfileTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -70,7 +61,8 @@
                            @"psnId": @"Playstation Network ID",
                            @"nintendoFriendcode": @"Nintendo Friendcode",
                            @"lastUpdate": @"Last Updated on"};
-    
+
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *urlString = [NSString stringWithFormat:@"%@/profile/%@", kMServiceBaseURL, self.userId];
         NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
@@ -91,7 +83,8 @@
 {
     NSError* error;
     self.profileData = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    
+
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.tableView reloadData];
 }
 
@@ -113,7 +106,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *key = self.profileKeys[indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileCell" forIndexPath:indexPath];
+    static NSString *cellIdentifier = @"ProfileCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
     if ([key isEqualToString:@"image"]) {
         cell.textLabel.text = @"";
@@ -121,15 +115,14 @@
         
         if (self.profileImage) {
             UIImageView *imageView = [[UIImageView alloc] initWithImage:self.profileImage];
-            imageView.tag = 777; //TODO
-            
+
             [imageView.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
             [imageView.layer setBorderWidth:0.5];
-            
+
             CGRect imageViewFrame = imageView.frame;
-            imageViewFrame.origin = CGPointMake(cell.textLabel.frame.origin.x, cell.textLabel.frame.origin.y);
+            imageViewFrame.origin = CGPointMake(20.0f, 5.0f);
             imageView.frame = imageViewFrame;
-            
+
             [cell.contentView addSubview:imageView];
         }
     } else {
@@ -137,10 +130,11 @@
         
         NSString *detailText = [self.profileData objectForKey:key];
         cell.detailTextLabel.text = detailText.length ? detailText : @"-";
-        
-        UIView *imageView = [cell.contentView viewWithTag:777];
-        if (imageView) {
-            [imageView removeFromSuperview];
+
+        for (id subview in cell.contentView.subviews) {
+            if ([[subview class] isSubclassOfClass: [UIImageView class]]) {
+                [subview removeFromSuperview];
+            }
         }
     }
 
@@ -157,7 +151,7 @@
             NSString *imageURLString = [self.profileData objectForKey:key];
             if (imageURLString.length) {
                 NSURL *imageURL = [NSURL URLWithString:imageURLString];
-                self.profileImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]]; //TODO Replace with UIWebView to support animated GIFs
+                self.profileImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
             }
         }
 
@@ -183,17 +177,5 @@
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
