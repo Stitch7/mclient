@@ -18,7 +18,7 @@
 @property (strong) NSString *username;
 @property (strong) NSString *subject;
 @property (strong) NSDate *date;
-@property (assign) NSNumber *answerCount;
+@property (strong) NSNumber *answerCount;
 @property (strong) NSDate *answerDate;
 
 + (id)threadWithId:(NSNumber *)inThreadId
