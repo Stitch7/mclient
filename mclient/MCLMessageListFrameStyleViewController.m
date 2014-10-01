@@ -147,7 +147,6 @@
             });
         });
     } else {
-        self.title = @"M!client"; // TODO Read from bundle
         [self.view addSubview:[[MCLDetailView alloc] initWithFrame:self.view.bounds]];
     }
 }

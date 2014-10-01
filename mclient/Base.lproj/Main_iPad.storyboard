@@ -991,7 +991,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="M!client" id="s5Q-Ey-fIS"/>
+                    <navigationItem key="navigationItem" id="s5Q-Ey-fIS"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zp3-gj-mKO" sceneMemberID="firstResponder"/>
             </objects>
