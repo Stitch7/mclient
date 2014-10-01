@@ -100,10 +100,16 @@
     
     self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 
+    // tableView setup
+    self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     // Enable statusbar tap to scroll to top
     self.tableView.scrollsToTop = YES;
+    // Add refresh control
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refreshControl];
 
-    // WebView setup
+    // webView setup
     self.webView.delegate = self;
     self.webView.scrollView.scrollsToTop = NO;
 
@@ -118,11 +124,6 @@
 
     [self.toolbar addGestureRecognizer:toolbarDownSwipeRecognizer];
     [self.toolbar addGestureRecognizer:toolbarUpSwipeRecognizer];
-
-    // Init refresh control
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:self.refreshControl];
 
     if (self.board && self.thread) {
         // Set title to threads subject

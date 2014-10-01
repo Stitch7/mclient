@@ -77,13 +77,14 @@
 {
     [super viewDidLoad];
 
+    // tableView setup
+    self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     // Cache original tables separatorColor and set to clear to avoid flickering loading view
     self.tableSeparatorColor = [self.tableView separatorColor];
     [self.tableView setSeparatorColor:[UIColor clearColor]];
     // Enable statusbar tap to scroll to top for tableView
     self.tableView.scrollsToTop = YES;
-
-    // Init refresh control
+    // Add refresh control
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
@@ -282,7 +283,7 @@
         [cell.messageToolbar setHidden:NO];
         [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
     } else {
-        cell.backgroundColor = [UIColor clearColor];
+        cell.backgroundColor = [UIColor whiteColor];
         [cell.messageToolbar setHidden:YES];
     }
 
