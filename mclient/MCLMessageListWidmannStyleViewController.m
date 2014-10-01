@@ -80,6 +80,8 @@
     // Cache original tables separatorColor and set to clear to avoid flickering loading view
     self.tableSeparatorColor = [self.tableView separatorColor];
     [self.tableView setSeparatorColor:[UIColor clearColor]];
+    // Enable statusbar tap to scroll to top for tableView
+    self.tableView.scrollsToTop = YES;
 
     // Init refresh control
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -272,6 +274,8 @@
     static NSString *cellIdentifier = @"MessageCell";
     MCLMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
 
+    [self.cells setObject:cell forKey:@(i)];
+
     if ([cell isSelected]) {
         cell.backgroundColor = self.veryLightGreyColor;
         [cell.messageTextWebView setBackgroundColor:self.veryLightGreyColor];
@@ -282,8 +286,9 @@
         [cell.messageToolbar setHidden:YES];
     }
 
-    [self.cells setObject:cell forKey:@(i)];
-    
+    // TableView should scoll to top
+    cell.messageTextWebView.scrollView.scrollsToTop = NO;
+
     [cell setBoardId:self.board.boardId];
     [cell setMessageId:message.messageId];
 

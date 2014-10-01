@@ -76,6 +76,7 @@
         }
     });
 
+    // Init + setup dateformatter for message dates
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDoesRelativeDateFormatting:YES];
     [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];
@@ -99,8 +100,12 @@
     
     self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 
+    // Enable statusbar tap to scroll to top
+    self.tableView.scrollsToTop = YES;
+
     // WebView setup
     self.webView.delegate = self;
+    self.webView.scrollView.scrollsToTop = NO;
 
     // Init toolbar slide gestures
     UISwipeGestureRecognizer *toolbarDownSwipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(slideMessageViewDownAction)];
