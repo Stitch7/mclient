@@ -176,6 +176,9 @@
         [self.tableView setSeparatorColor:self.tableSeparatorColor];
 
         [self.tableView reloadData];
+
+        // Hide search bar behind navigation bar
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
 }
 
