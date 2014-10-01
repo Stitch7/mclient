@@ -61,7 +61,7 @@
     self.loginDataChanged = NO;
 
     [self.settingsLoginDataStatusTableViewCell setBackgroundColor:[UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0]];
-    [self.settingsLoginDataStatusTableViewCell setTintColor:[UIColor greenColor]];
+    [self.settingsLoginDataStatusTableViewCell setTintColor:[UIColor colorWithRed:75/255.0 green:216/255.0 blue:99/255.0 alpha:1.0]];
     [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
     self.settingsLoginDataStatusSpinner.transform = CGAffineTransformMakeScale(0.75, 0.75);
     self.settingsLoginDataStatusLabel.text = @"";
@@ -80,36 +80,8 @@
     self.settingsNightModeSwitch.on = [self.userDefaults boolForKey:@"nightMode"];
     self.settingsSyncReadStatusSwitch.on = [self.userDefaults boolForKey:@"syncReadStatus"];
 
-    int threadViewSection = THREADVIEW_SECTION;
-    self.threadView = [self.userDefaults objectForKey:@"threadView"];
-    self.threadView = self.threadView ? self.threadView : kMCLSettingsThreadViewDefault;
-
-    int imagesSection = IMAGES_SECTION;
-    self.showImages = [self.userDefaults objectForKey:@"showImages"];
-    self.showImages = self.showImages ? self.showImages : kMCLSettingsShowImagesAlways;
-
-    for (int section = 0; section < [self.tableView numberOfSections]; section++) {
-        for (int row = 0; row < [self.tableView numberOfRowsInSection:section]; row++) {
-            NSIndexPath* cellPath = [NSIndexPath indexPathForRow:row inSection:section];
-            UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:cellPath];
-
-            if (section == threadViewSection) {
-                if ([self.threadView integerValue] == row) {
-                    [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-                } else {
-                    [cell setAccessoryType:UITableViewCellAccessoryNone];
-                }
-            } else if (section == imagesSection) {
-                if ([self.showImages integerValue] == row) {
-                    [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-                } else {
-                    [cell setAccessoryType:UITableViewCellAccessoryNone];
-                }
-            } else {
-                [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            }
-        }
-    }
+    self.threadView = [self.userDefaults objectForKey:@"threadView"] ?: @(kMCLSettingsThreadViewDefault);
+    self.showImages = [self.userDefaults objectForKey:@"showImages"] ?: @(kMCLSettingsShowImagesAlways);
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -184,6 +156,33 @@
     }
 }
 
+#pragma mark - UITableViewDataSource
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+
+    int threadViewSection = THREADVIEW_SECTION;
+    if (indexPath.section == threadViewSection) {
+        if ([self.threadView integerValue] == indexPath.row) {
+            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        } else {
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+        }
+    }
+
+    int imagesSection = IMAGES_SECTION;
+    if (indexPath.section == imagesSection) {
+        if ([self.showImages integerValue] == indexPath.row) {
+            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        } else {
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+        }
+    }
+
+    return cell;
+}
+
 #pragma mark - UITableViewDelegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -191,8 +190,8 @@
     int threadViewSection = THREADVIEW_SECTION;
     if (indexPath.section == threadViewSection) {
         for (int row = 0; row < [self.tableView numberOfRowsInSection:threadViewSection]; row++) {
-            NSIndexPath* cellPath = [NSIndexPath indexPathForRow:row inSection:threadViewSection];
-            UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:cellPath];
+            NSIndexPath *cellPath = [NSIndexPath indexPathForRow:row inSection:threadViewSection];
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:cellPath];
             if (row == indexPath.row) {
                 [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
                 self.threadView = @(row);
@@ -207,8 +206,8 @@
     int imagesSection = IMAGES_SECTION;
     if (indexPath.section == imagesSection) {
         for (int row = 0; row < [self.tableView numberOfRowsInSection:imagesSection]; row++) {
-            NSIndexPath* cellPath = [NSIndexPath indexPathForRow:row inSection:imagesSection];
-            UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:cellPath];
+            NSIndexPath *cellPath = [NSIndexPath indexPathForRow:row inSection:imagesSection];
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:cellPath];
             if (row == indexPath.row) {
                 [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
                 self.showImages = @(row);
