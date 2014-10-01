@@ -131,19 +131,37 @@
     sharedMenuController.menuVisible = YES;
 }
 
+- (BOOL)isStringUrl:(NSString *)string
+{
+    NSURL *url = [NSURL URLWithString:string];
+    return (url && ([[url scheme] isEqualToString:@"http"] || [[url scheme] isEqualToString:@"https"]));
+}
+
+- (BOOL)isStringImageUrl:(NSString *)string
+{
+    BOOL isStringImageUrl = NO;
+
+    if ([self isStringUrl:string]) {
+        NSString *lowercaseString = [string lowercaseString];
+        if ([lowercaseString hasSuffix:@".jpg"] ||
+            [lowercaseString hasSuffix:@".gif"] ||
+            [lowercaseString hasSuffix:@".png"]
+            ) {
+            isStringImageUrl = YES;
+        }
+    }
+
+    return isStringImageUrl;
+}
+
 - (void)paste:(id)sender
 {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     NSString *pasteboardString = pasteboard.string;
 
-    NSURL *url = [NSURL URLWithString:pasteboardString];
-    if (url && ([[url scheme] isEqualToString:@"http"] || [[url scheme] isEqualToString:@"https"])) {
+    if ([self isStringUrl:pasteboardString]) {
         NSString *format = @"[%@]";
-        NSString *lowercasePasteboardString = [pasteboardString lowercaseString];
-        if ([lowercasePasteboardString hasSuffix:@".jpg"] ||
-            [lowercasePasteboardString hasSuffix:@".gif"] ||
-            [lowercasePasteboardString hasSuffix:@".png"]
-        ) {
+        if ([self isStringImageUrl:pasteboardString]) {
             format = @"[img:%@]";
         }
 
@@ -182,12 +200,32 @@
 
 - (void)formatLink:(id)sender
 {
-    [self formatSelectionWith:@"[%@]"];
+    NSString *selectedText = [self.text substringWithRange:self.selectedRange];
+    if ([self isStringUrl:selectedText]) {
+        [self formatSelectionWith:@"[%@]"];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"Selected text is not a valid URL."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 - (void)formatImage:(id)sender
 {
-    [self formatSelectionWith:@"[img:%@]"];
+    NSString *selectedText = [self.text substringWithRange:self.selectedRange];
+    if ([self isStringImageUrl:selectedText]) {
+        [self formatSelectionWith:@"[img:%@]"];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"Selected text is not a valid image URL."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 - (void)formatSelectionWith:(NSString *)formatString
