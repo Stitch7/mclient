@@ -13,7 +13,7 @@
 @class MCLBoard;
 @class MCLThread;
 
-@interface MCLMessageListWidmannStyleViewController : MCLMessageListViewController <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, MCLComposeMessageViewControllerDelegate>
+@interface MCLMessageListWidmannStyleViewController : MCLMessageListViewController <MCLComposeMessageViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
 
 @property (strong, nonatomic) MCLBoard *board;
 @property (strong, nonatomic) MCLThread *thread;

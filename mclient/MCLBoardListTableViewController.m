@@ -6,11 +6,12 @@
 //  Copyright (c) 2014 Christopher Reitz. All rights reserved.
 //
 
+#import "MCLBoardListTableViewController.h"
+
 #import "constants.h"
 #import "Reachability.h"
 #import "KeychainItemWrapper.h"
 #import "MCLMServiceConnector.h"
-#import "MCLBoardListTableViewController.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLMessageListViewController.h"
 #import "MCLBoard.h"
@@ -258,6 +259,13 @@
     return cell;
 }
 
+#pragma mark - MCLSettingsTableViewControllerDelegate
+
+- (void)settingsTableViewControllerDidFinish:(MCLSettingsTableViewController *)inController
+{
+    [self showLoginStatus];
+}
+
 
 #pragma mark - UISplitViewControllerDelegate
 
@@ -332,6 +340,9 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         MCLBoard *board = self.boards[indexPath.row];
         [segue.destinationViewController setBoard:board];
+    } else if ([segue.identifier isEqualToString:@"ModalToEditSettings"]) {
+        MCLSettingsTableViewController *destinationViewController = ((MCLSettingsTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
+        [destinationViewController setDelegate:self];
     }
 }
 

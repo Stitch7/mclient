@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MCLSettingsTableViewController : UITableViewController <UITextViewDelegate>
+@protocol MCLSettingsTableViewControllerDelegate;
+
+@interface MCLSettingsTableViewController : UITableViewController <UITextFieldDelegate, UITextViewDelegate>
+
+@property (weak) id<MCLSettingsTableViewControllerDelegate> delegate;
+
+@end
+
+@protocol MCLSettingsTableViewControllerDelegate <NSObject>
+
+- (void)settingsTableViewControllerDidFinish:(MCLSettingsTableViewController *)inController;
 
 @end

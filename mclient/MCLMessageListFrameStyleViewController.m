@@ -508,7 +508,7 @@
     [cell markRead];
     [self.readList addMessageId:message.messageId];
 
-    BOOL hideNotificationButton = ! [message.username isEqualToString:self.username];
+    BOOL hideNotificationButton = ! self.validLogin || ! [message.username isEqualToString:self.username];
     [self barButton:self.toolbarButtonNotification hide:hideNotificationButton];
     if ( ! hideNotificationButton) {
         NSError *mServiceError;

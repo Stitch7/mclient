@@ -28,7 +28,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *settingsSyncReadStatusSwitch;
 @property (strong, nonatomic) NSNumber *threadView;
 @property (strong, nonatomic) NSNumber *showImages;
-
+@property (assign, nonatomic) BOOL loginDataChanged;
 @property (strong, nonatomic) NSString *lastUsernameTextFieldValue;
 @property (strong, nonatomic) NSString *lastPasswordTextFieldValue;
 
@@ -56,6 +56,9 @@
     self.settingsPasswordTextField.text = password;
     self.lastUsernameTextFieldValue = username;
     self.lastPasswordTextFieldValue = password;
+    self.settingsUsernameTextField.delegate = self;
+    self.settingsPasswordTextField.delegate = self;
+    self.loginDataChanged = NO;
 
     [self.settingsLoginDataStatusTableViewCell setBackgroundColor:[UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0]];
     [self.settingsLoginDataStatusTableViewCell setTintColor:[UIColor greenColor]];
@@ -109,7 +112,10 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
+
+    if (self.loginDataChanged) {
+        [self.delegate settingsTableViewControllerDidFinish:self];
+    }
     [self.userDefaults synchronize];
 }
 
@@ -130,6 +136,9 @@
         self.settingsLoginDataStatusLabel.text = @"Verifying username and password...";
         [self.settingsLoginDataStatusSpinner startAnimating];
 
+        [self.keychainItem setObject:username forKey:(__bridge id)(kSecAttrAccount)];
+        [self.keychainItem setObject:password forKey:(__bridge id)(kSecValueData)];
+
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *error;
             BOOL login = ([[[MCLMServiceConnector alloc] init] testLoginWIthUsername:username password:password error:&error]);
@@ -137,9 +146,6 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.settingsLoginDataStatusSpinner stopAnimating];
                 if (login) {
-                    [self.keychainItem setObject:username forKey:(__bridge id)(kSecAttrAccount)];
-                    [self.keychainItem setObject:password forKey:(__bridge id)(kSecValueData)];
-
                     [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryCheckmark];
                     self.settingsLoginDataStatusLabel.text = @"Login data is correct";
                 } else {
@@ -160,6 +166,22 @@
         self.settingsLoginDataStatusLabel.text = @"Please enter username and password";
     }
 }
+
+- (void)signatureTextViewEnabled:(BOOL)enable
+{
+    // Color can only be changed if TextView is editable!
+    if (enable) {
+        [self.settingsSignatureTextView setEditable:YES];
+        [self.settingsSignatureTextView setSelectable:YES];
+        [self.settingsSignatureTextView setTextColor:[UIColor blackColor]];
+    } else {
+        [self.settingsSignatureTextView setTextColor:[UIColor lightGrayColor]];
+        [self.settingsSignatureTextView setEditable:NO];
+        [self.settingsSignatureTextView setSelectable:NO];
+    }
+}
+
+#pragma mark - UITableViewDelegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -196,17 +218,30 @@
     }
 }
 
-- (void)signatureTextViewEnabled:(BOOL)enable
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    // Color can only be changed if TextView is editable!
-    if (enable) {
-        [self.settingsSignatureTextView setEditable:YES];
-        [self.settingsSignatureTextView setSelectable:YES];
-        [self.settingsSignatureTextView setTextColor:[UIColor blackColor]];
-    } else {
-        [self.settingsSignatureTextView setTextColor:[UIColor lightGrayColor]];
-        [self.settingsSignatureTextView setEditable:NO];
-        [self.settingsSignatureTextView setSelectable:NO];
+    if (textField == self.settingsUsernameTextField) {
+        [textField resignFirstResponder];
+        [self.settingsPasswordTextField becomeFirstResponder];
+    }
+
+    if (textField == self.settingsPasswordTextField) {
+        [textField resignFirstResponder];
+        [self.settingsUsernameTextField becomeFirstResponder];
+    }
+
+    return NO;
+}
+
+#pragma mark - UITextViewDelegate
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if (textView == self.settingsSignatureTextView) {
+        [self.userDefaults setObject:textView.text forKey:@"signature"];
     }
 }
 
@@ -222,6 +257,7 @@
 {
     if ( ! [sender.text isEqualToString:self.lastUsernameTextFieldValue]) {
         [self testLogin];
+        self.loginDataChanged = YES;
     }
     self.lastUsernameTextFieldValue = sender.text;
 }
@@ -230,6 +266,7 @@
 {
     if ( ! [sender.text isEqualToString:self.lastPasswordTextFieldValue]) {
         [self testLogin];
+        self.loginDataChanged = YES;
     }
     self.lastPasswordTextFieldValue = sender.text;
 }
@@ -251,13 +288,5 @@
     [self.userDefaults setBool:sender.on forKey:@"syncReadStatus"];
 }
 
-#pragma mark - UITextViewDelegate
-
-- (void)textViewDidEndEditing:(UITextView *)textView
-{
-    if (textView == self.settingsSignatureTextView) {
-        [self.userDefaults setObject:textView.text forKey:@"signature"];
-    }
-}
 
 @end

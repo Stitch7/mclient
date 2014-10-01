@@ -13,7 +13,6 @@
 #import "MCLMessageListWidmannStyleViewController.h" //TODO
 #import "MCLMessageListFrameStyleViewController.h" //TODO
 #import "MCLMessageListViewController.h"
-#import "MCLComposeMessageViewController.h"
 #import "MCLErrorView.h"
 #import "MCLLoadingView.h"
 #import "MCLThreadTableViewCell.h"
@@ -336,6 +335,14 @@
 }
 
 
+#pragma mark - MCLComposeMessageViewControllerDelegate
+
+- (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController
+{
+    [self.tableView reloadData];
+}
+
+
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -383,6 +390,7 @@
         [destinationViewController setThread:thread];
     } else if ([segue.identifier isEqualToString:@"ModalToComposeThread"]) {
         MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
+        [destinationViewController setDelegate:self];
         [destinationViewController setType:kComposeTypeThread];
         [destinationViewController setBoardId:self.board.boardId];
     }

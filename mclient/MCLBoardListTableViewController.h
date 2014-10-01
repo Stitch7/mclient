@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MCLSettingsTableViewController.h"
 
-@interface MCLBoardListTableViewController : UITableViewController <UISplitViewControllerDelegate>
+@interface MCLBoardListTableViewController : UITableViewController <MCLSettingsTableViewControllerDelegate, UISplitViewControllerDelegate>
 
 @end
