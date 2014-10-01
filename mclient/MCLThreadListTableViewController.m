@@ -45,8 +45,6 @@
         self.clearsSelectionOnViewWillAppear = NO;
     }
 
-    self.readList = [[MCLReadList alloc] init];
-    
     NSString *keychainIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:keychainIdentifier accessGroup:nil];
     self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
@@ -67,7 +65,11 @@
         [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
     }
 
+    // Hide bottom toolbar
     [self.navigationController setToolbarHidden:YES animated:NO];
+
+    // Load readlist
+    self.readList = [[MCLReadList alloc] init];
 }
 
 - (void)viewDidLoad
