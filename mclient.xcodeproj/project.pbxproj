@@ -21,6 +21,7 @@
 		301FD9AD19C5C79000E36A5B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9AC19C5C79000E36A5B /* Reachability.m */; };
 		301FD9B019C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9AF19C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.m */; };
 		301FD9B219C8666100E36A5B /* replyButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301FD9B119C8666100E36A5B /* replyButton@2x.png */; };
+		3020A26819DA1B66007F46E2 /* isClosed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3020A26719DA1B66007F46E2 /* isClosed@2x.png */; };
 		302F462519BF443A00DC77D8 /* copyLinkButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */; };
 		305DD81819A63517006514BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81719A63517006514BD /* Foundation.framework */; };
 		305DD81A19A63517006514BD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81919A63517006514BD /* CoreGraphics.framework */; };
@@ -111,6 +112,7 @@
 		301FD9AE19C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageListFrameStyleViewController.h; sourceTree = "<group>"; };
 		301FD9AF19C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListFrameStyleViewController.m; sourceTree = "<group>"; };
 		301FD9B119C8666100E36A5B /* replyButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "replyButton@2x.png"; sourceTree = "<group>"; };
+		3020A26719DA1B66007F46E2 /* isClosed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isClosed@2x.png"; sourceTree = "<group>"; };
 		302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copyLinkButton@2x.png"; sourceTree = "<group>"; };
 		305DD81419A63517006514BD /* mclient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mclient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		305DD81719A63517006514BD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -407,6 +409,7 @@
 		307A80DE19B75F29001B538D /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				3020A26719DA1B66007F46E2 /* isClosed@2x.png */,
 				305DD83519A63517006514BD /* Images.xcassets */,
 				3086428319D18ED10027F932 /* messageIndention@2x.png */,
 				3086428119D149A50027F932 /* backButton@2x.png */,
@@ -537,6 +540,7 @@
 				301E24B219BAE86200943EC6 /* notificationButtonDisabled@2x.png in Resources */,
 				307A80E819B7B899001B538D /* speakButton@2x.png in Resources */,
 				307A80EA19B7B962001B538D /* stopButton@2x.png in Resources */,
+				3020A26819DA1B66007F46E2 /* isClosed@2x.png in Resources */,
 				308EC3E119CC809000A0869F /* logoDetailView@2x.png in Resources */,
 				302F462519BF443A00DC77D8 /* copyLinkButton@2x.png in Resources */,
 				301E24AF19BAE3E500943EC6 /* profileButton@2x.png in Resources */,

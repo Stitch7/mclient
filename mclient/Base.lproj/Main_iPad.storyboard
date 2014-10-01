@@ -692,6 +692,10 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="isClosed.png" id="3nC-gQ-X5y">
+                                            <rect key="frame" x="5" y="15" width="10" height="10"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                         <view contentMode="scaleToFill" id="ovz-fY-s9k" customClass="MCLReadSymbolView">
                                             <rect key="frame" x="5" y="15" width="10" height="10"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -722,6 +726,7 @@
                                 <connections>
                                     <outlet property="readSymbolView" destination="ovz-fY-s9k" id="bSI-iv-uW3"/>
                                     <outlet property="threadDateLabel" destination="Ymg-h7-IIp" id="R1D-hc-dxd"/>
+                                    <outlet property="threadIsClosedImageView" destination="3nC-gQ-X5y" id="Yy0-HG-bP1"/>
                                     <outlet property="threadSubjectLabel" destination="aX5-nQ-xQo" id="iRe-q8-Npf"/>
                                     <outlet property="threadUsernameLabel" destination="F1e-vT-ROU" id="zlJ-YB-S4W"/>
                                 </connections>
@@ -997,6 +1002,7 @@
         <image name="copyLinkButton.png" width="25" height="25"/>
         <image name="downButton.png" width="24" height="24"/>
         <image name="editButton.png" width="25" height="25"/>
+        <image name="isClosed.png" width="10" height="10"/>
         <image name="messageIndention.png" width="5" height="40"/>
         <image name="notificationButtonDisabled.png" width="25" height="25"/>
         <image name="profileButton.png" width="25" height="25"/>

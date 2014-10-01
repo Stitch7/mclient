@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="rS3-R9-Ivy">
     <dependencies>
-        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -337,6 +336,10 @@
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="isClosed.png" id="fiW-Jo-K1R">
+                                            <rect key="frame" x="5" y="15" width="10" height="10"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                         <view contentMode="scaleToFill" id="KLT-NR-d1T" customClass="MCLReadSymbolView">
                                             <rect key="frame" x="5" y="15" width="10" height="10"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -367,6 +370,7 @@
                                 <connections>
                                     <outlet property="readSymbolView" destination="KLT-NR-d1T" id="Tos-vx-T5v"/>
                                     <outlet property="threadDateLabel" destination="heT-Kd-h0p" id="yJy-VZ-xK1"/>
+                                    <outlet property="threadIsClosedImageView" destination="fiW-Jo-K1R" id="mTf-wC-1ZC"/>
                                     <outlet property="threadSubjectLabel" destination="Qdd-BZ-Lg5" id="bD4-ja-Pg7"/>
                                     <outlet property="threadUsernameLabel" destination="iUx-A4-fuF" id="FMY-gT-4t9"/>
                                 </connections>
@@ -911,7 +915,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" id="XLg-qv-BeO">
-                                <rect key="frame" x="0.0" y="75" width="320" height="440"/>
+                                <rect key="frame" x="0.0" y="74.999999094109427" width="320" height="440"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
@@ -952,6 +956,7 @@
         <image name="copyLinkButton.png" width="25" height="25"/>
         <image name="downButton.png" width="24" height="24"/>
         <image name="editButton.png" width="25" height="25"/>
+        <image name="isClosed.png" width="10" height="10"/>
         <image name="messageIndention.png" width="5" height="40"/>
         <image name="notificationButtonDisabled.png" width="25" height="25"/>
         <image name="profileButton.png" width="25" height="25"/>
@@ -966,8 +971,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="zga-ee-uGB"/>
         <segue reference="YJp-bp-qbj"/>
-        <segue reference="ejO-Yt-GIM"/>
-        <segue reference="yx8-yu-q67"/>
+        <segue reference="fQb-Tw-eMv"/>
     </inferredMetricsTieBreakers>
 </document>

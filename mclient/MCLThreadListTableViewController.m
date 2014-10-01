@@ -252,7 +252,7 @@
     MCLThreadTableViewCell *cell = (MCLThreadTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     cell.threadSubjectLabel.text = thread.subject;
-    float subjectSize = cell.threadSubjectLabel.font.pointSize;
+    CGFloat subjectSize = cell.threadSubjectLabel.font.pointSize;
     cell.threadSubjectLabel.font = thread.isSticky ? [UIFont boldSystemFontOfSize:subjectSize] : [UIFont systemFontOfSize:subjectSize];
     
     cell.threadUsernameLabel.text = thread.username;
@@ -275,10 +275,16 @@
     dateLabelFrame.origin = CGPointMake(cell.threadUsernameLabel.frame.origin.x + cell.threadUsernameLabel.frame.size.width, dateLabelFrame.origin.y);
     cell.threadDateLabel.frame = dateLabelFrame;
     
-    if ([self.readList messageIdIsRead:thread.messageId]) {
+    if ([self.readList messageIdIsRead:thread.messageId] || thread.isClosed) {
         [cell markRead];
     } else {
         [cell markUnread];
+    }
+
+    if (thread.isClosed) {
+        [cell.threadIsClosedImageView setHidden:NO];
+    } else {
+        [cell.threadIsClosedImageView setHidden:YES];
     }
 
     cell.badgeString = [thread.answerCount stringValue];
