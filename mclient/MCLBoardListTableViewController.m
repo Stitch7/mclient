@@ -22,7 +22,6 @@
 
 @interface MCLBoardListTableViewController ()
 
-@property (assign, nonatomic) BOOL preselectedBoardSequePerformed;
 @property (assign, nonatomic) CGRect tableViewBounds;
 @property (strong, nonatomic) NSMutableArray *boards;
 @property (strong, nonatomic) Reachability *reachability;
@@ -51,11 +50,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-    if (self.preselectedBoard && ! self.preselectedBoardSequePerformed) { // Method is called twice
-        self.preselectedBoardSequePerformed = YES;
-        [self performSegueWithIdentifier:@"PushToThreadListNoAnimation" sender:nil];
-    }
 
     // Fix odd glitch on swipe back causing cell stay selected
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
@@ -338,8 +332,6 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         MCLBoard *board = self.boards[indexPath.row];
         [segue.destinationViewController setBoard:board];
-    } else if ([segue.identifier isEqualToString:@"PushToThreadListNoAnimation"]) {
-        [segue.destinationViewController setBoard:self.preselectedBoard];
     }
 }
 

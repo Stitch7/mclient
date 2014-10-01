@@ -8,10 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class MCLBoard;
-
 @interface MCLBoardListTableViewController : UITableViewController <UISplitViewControllerDelegate>
-
-@property (strong) MCLBoard *preselectedBoard;
 
 @end

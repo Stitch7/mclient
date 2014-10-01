@@ -41,6 +41,8 @@
 
 @implementation MCLMessageListWidmannStyleViewController
 
+#pragma mark - ViewController
+
 - (void)awakeFromNib
 {
     [super awakeFromNib];
@@ -104,8 +106,19 @@
             });
         });
     } else {
-        self.title = @"M!client";
+        self.title = @"M!client"; //TODO Read from bundle
         [self.view addSubview:[[MCLDetailView alloc] initWithFrame:self.view.bounds]];
+    }
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    if (selectedIndexPath) {
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
+        [self.tableView.delegate tableView:self.tableView didDeselectRowAtIndexPath:selectedIndexPath];
+        [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
     }
 }
 
@@ -510,16 +523,6 @@
     [self.tableView endUpdates];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    if (indexPath) {
-        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
-        [self.tableView.delegate tableView:self.tableView didDeselectRowAtIndexPath:indexPath];
-        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-        [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:indexPath];
-    }
-}
 
 #pragma mark - UIWebViewDelegate
 

@@ -323,11 +323,11 @@
         switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"threadView"]) {
             case kMCLSettingsThreadViewDefault:
             default:
-                segueIdentifier = @"PushToMessageList";
+                segueIdentifier = @"PushToMessageListWidmannStyle";
                 break;
 
             case kMCLSettingsThreadViewFrame:
-                segueIdentifier = @"PushToMessageList2FrameStyle";
+                segueIdentifier = @"PushToMessageListFrameStyle";
                 break;
         }
 
@@ -360,7 +360,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"PushToMessageList"] || [segue.identifier isEqualToString:@"PushToMessageList2FrameStyle"]) {
+    if ([segue.identifier isEqualToString:@"PushToMessageListWidmannStyle"] || [segue.identifier isEqualToString:@"PushToMessageListFrameStyle"]) {
         NSIndexPath *indexPath;
         MCLThread *thread;
 

@@ -23,6 +23,7 @@
 #import "MCLReadList.h"
 
 #pragma mark - Private Stuff
+
 @interface MCLMessageListFrameStyleViewController ()
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -50,7 +51,9 @@
 
 @implementation MCLMessageListFrameStyleViewController
 
+
 #pragma mark - ViewController
+
 - (void)awakeFromNib
 {
     [super awakeFromNib];
@@ -71,32 +74,21 @@
     [self.dateFormatter setTimeStyle:NSDateFormatterShortStyle];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        UIButton *backButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchDown];
-        [backButton setImage:[UIImage imageNamed:@"backButton.png"] forState:UIControlStateNormal];
-        [backButton setImageEdgeInsets:UIEdgeInsetsMake(0, -30, 0, 0)];
-
-        if ([self.thread.subject length] <= 25) {
-            UIColor *globalTintColor = [UIApplication sharedApplication].delegate.window.tintColor;
-            [backButton setTitle:@"Back" forState:UIControlStateNormal];
-            [backButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -30, 0, 0)];
-            [backButton setTitleColor:globalTintColor forState:UIControlStateNormal];
-            [backButton.titleLabel setFont:[UIFont systemFontOfSize:17]];
+        if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+            [self transformMessageViewSizeForInterfaceOrientation:self.interfaceOrientation];
         }
-
-        [backButton sizeToFit];
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-
-        UIScreenEdgePanGestureRecognizer *swipeBackRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(backAction)];
-        swipeBackRecognizer.edges = UIRectEdgeLeft;
-        [self.view addGestureRecognizer:swipeBackRecognizer];
     }
-
+    
     self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 
     // WebView setup
@@ -141,17 +133,67 @@
             });
         });
     } else {
-        self.title = @"M!client";
+        self.title = @"M!client"; // TODO Read from bundle
         [self.view addSubview:[[MCLDetailView alloc] initWithFrame:self.view.bounds]];
+    }
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self transformMessageViewSizeForInterfaceOrientation:toInterfaceOrientation];
+
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    if (selectedIndexPath) {
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
+        [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+    }
+}
+
+- (void)transformMessageViewSizeForInterfaceOrientation:(UIInterfaceOrientation)forInterfaceOrientation
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        CGFloat newMessageViewY;
+        CGFloat newMessageViewHeight;
+
+        if (UIInterfaceOrientationIsLandscape(forInterfaceOrientation)) {
+            CGFloat iOS7Offset = 0.0f;
+
+            CGSize viewSize = self.view.bounds.size;
+            if ((NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1)) {
+                iOS7Offset = 28.0f;
+
+                // If we started in landscape mode we must switch height and width in iOS7...
+                if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+                    viewSize = CGSizeMake(viewSize.height, viewSize.width);
+                }
+            }
+
+            // Check current orientation because willRotateToInterfaceOrientation
+            if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+                newMessageViewHeight = viewSize.height;
+            } else {
+                newMessageViewHeight = viewSize.width;
+            }
+
+            newMessageViewY = 32.0f + iOS7Offset;
+            newMessageViewHeight -= 30.0f + iOS7Offset;
+        } else {
+            newMessageViewY = 65.0f;
+            newMessageViewHeight = 300.0f;
+        }
+
+        CGRect messageViewFrame = self.messageView.frame;
+        messageViewFrame.origin.y = newMessageViewY;
+        messageViewFrame.size.height = newMessageViewHeight;
+        self.messageView.frame = messageViewFrame;
     }
 }
 
 - (CGFloat)fullViewheight
 {
     CGFloat statusBarHeight = 0.0f;
-    if ([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft ||
-        [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeRight
-    ) {
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
         statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
     } else {
         statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
@@ -163,7 +205,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
@@ -484,7 +525,8 @@
 
 #pragma mark - UIWebView delegate
 
--(BOOL)webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
+-(BOOL)webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType
+{
     BOOL shouldStartLoad = YES;
 
     // Open links in Safari
@@ -530,9 +572,6 @@
     self.messageView.layer.needsDisplayOnBoundsChange = YES;
     self.messageView.contentMode = UIViewContentModeRedraw;
 
-//    NSLog(@"fullViewheight: %f", [self fullViewheight]);
-//    NSLog(@"self.messageView.bounds.size.height: %f", self.messageView.bounds.size.height);
-
     // Cache initial height
     [self.messageView setTag:self.messageView.bounds.size.height];
 
@@ -550,19 +589,22 @@
 
 - (void)slideMessageViewUpAction
 {
-    self.messageView.layer.needsDisplayOnBoundsChange = YES;
-    self.messageView.contentMode = UIViewContentModeRedraw;
+    if (self.messageView.tag > 0) {
+        self.messageView.layer.needsDisplayOnBoundsChange = YES;
+        self.messageView.contentMode = UIViewContentModeRedraw;
 
-    [UIView animateWithDuration:.4f animations:^{
-        CGRect bounds = self.messageView.bounds;
-        CGPoint center = self.messageView.center;
-        bounds.size.height -= [self fullViewheight] - self.messageView.tag;
-        center.y -= ([self fullViewheight] - self.messageView.tag) / 2;
-        self.messageView.bounds = bounds;
-        self.messageView.center = center;
-    }];
+        [UIView animateWithDuration:.4f animations:^{
+            CGRect bounds = self.messageView.bounds;
+            CGPoint center = self.messageView.center;
+            bounds.size.height -= [self fullViewheight] - self.messageView.tag;
+            center.y -= ([self fullViewheight] - self.messageView.tag) / 2;
+            self.messageView.bounds = bounds;
+            self.messageView.center = center;
+        }];
 
-    self.messageView.layer.needsDisplayOnBoundsChange = NO;
+        self.messageView.layer.needsDisplayOnBoundsChange = NO;
+        self.messageView.tag = 0;
+    }
 }
 
 - (IBAction)copyLinkAction:(UIBarButtonItem *)sender
@@ -691,9 +733,6 @@
         MCLProfileTableViewController *destinationViewController = ((MCLProfileTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         [destinationViewController setUserId:message.userId];
         [destinationViewController setUsername:message.username];
-    } else if ([segue.identifier isEqualToString:@"PushBackToThreadList"]) {
-        MCLBoardListTableViewController *destinationViewController = ((MCLBoardListTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
-        [destinationViewController setPreselectedBoard:self.board];
     }
 }
 

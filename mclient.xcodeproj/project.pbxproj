@@ -54,9 +54,6 @@
 		307A80EF19B8800E001B538D /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 307A80EE19B8800E001B538D /* KeychainItemWrapper.m */; };
 		307A80F119B8804F001B538D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307A80F019B8804F001B538D /* Security.framework */; };
 		307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D797519B0B3B30096A217 /* MCLReadSymbolView.m */; };
-		3086427A19D1264B0027F932 /* MCLPortraitOnlyNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3086427919D1264B0027F932 /* MCLPortraitOnlyNavigationController.m */; };
-		3086427D19D13BAE0027F932 /* MCLFakePushForwardStoryboardSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3086427C19D13BAE0027F932 /* MCLFakePushForwardStoryboardSegue.m */; };
-		3086428019D13C830027F932 /* MCLFakePushBackwardStoryboardSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3086427F19D13C830027F932 /* MCLFakePushBackwardStoryboardSegue.m */; };
 		3086428219D149A50027F932 /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3086428119D149A50027F932 /* backButton@2x.png */; };
 		3086428419D18ED10027F932 /* messageIndention@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3086428319D18ED10027F932 /* messageIndention@2x.png */; };
 		3086428919D2D6CE0027F932 /* MCLMessageTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3086428819D2D6CE0027F932 /* MCLMessageTextView.m */; };
@@ -161,12 +158,6 @@
 		307A80F019B8804F001B538D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		307D797419B0B3B30096A217 /* MCLReadSymbolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadSymbolView.h; sourceTree = "<group>"; };
 		307D797519B0B3B30096A217 /* MCLReadSymbolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadSymbolView.m; sourceTree = "<group>"; };
-		3086427819D1264B0027F932 /* MCLPortraitOnlyNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLPortraitOnlyNavigationController.h; sourceTree = "<group>"; };
-		3086427919D1264B0027F932 /* MCLPortraitOnlyNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLPortraitOnlyNavigationController.m; sourceTree = "<group>"; };
-		3086427B19D13BAE0027F932 /* MCLFakePushForwardStoryboardSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLFakePushForwardStoryboardSegue.h; sourceTree = "<group>"; };
-		3086427C19D13BAE0027F932 /* MCLFakePushForwardStoryboardSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLFakePushForwardStoryboardSegue.m; sourceTree = "<group>"; };
-		3086427E19D13C830027F932 /* MCLFakePushBackwardStoryboardSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLFakePushBackwardStoryboardSegue.h; sourceTree = "<group>"; };
-		3086427F19D13C830027F932 /* MCLFakePushBackwardStoryboardSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLFakePushBackwardStoryboardSegue.m; sourceTree = "<group>"; };
 		3086428119D149A50027F932 /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backButton@2x.png"; sourceTree = "<group>"; };
 		3086428319D18ED10027F932 /* messageIndention@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messageIndention@2x.png"; sourceTree = "<group>"; };
 		3086428719D2D6CE0027F932 /* MCLMessageTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageTextView.h; sourceTree = "<group>"; };
@@ -316,8 +307,6 @@
 				301FD9AF19C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.m */,
 				305DD85219AB2970006514BD /* MCLMessageListWidmannStyleViewController.h */,
 				305DD85319AB2970006514BD /* MCLMessageListWidmannStyleViewController.m */,
-				3086427819D1264B0027F932 /* MCLPortraitOnlyNavigationController.h */,
-				3086427919D1264B0027F932 /* MCLPortraitOnlyNavigationController.m */,
 				301E24B419BB02EB00943EC6 /* MCLProfileTableViewController.h */,
 				301E24B519BB02EB00943EC6 /* MCLProfileTableViewController.m */,
 				30A1BFAB19B4A8D4002439FE /* MCLSettingsTableViewController.h */,
@@ -337,10 +326,6 @@
 				308EC3DC19CC7BA600A0869F /* MCLDetailView.m */,
 				301FD9A419C411D400E36A5B /* MCLErrorView.h */,
 				301FD9A519C411D400E36A5B /* MCLErrorView.m */,
-				3086427E19D13C830027F932 /* MCLFakePushBackwardStoryboardSegue.h */,
-				3086427F19D13C830027F932 /* MCLFakePushBackwardStoryboardSegue.m */,
-				3086427B19D13BAE0027F932 /* MCLFakePushForwardStoryboardSegue.h */,
-				3086427C19D13BAE0027F932 /* MCLFakePushForwardStoryboardSegue.m */,
 				301FD9A119C32FC600E36A5B /* MCLLoadingView.h */,
 				301FD9A219C32FC600E36A5B /* MCLLoadingView.m */,
 				301FD01619ACE3D10028C5C8 /* MCLMessageTableViewCell.h */,
@@ -409,9 +394,7 @@
 		307A80DE19B75F29001B538D /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				3020A26719DA1B66007F46E2 /* isClosed@2x.png */,
 				305DD83519A63517006514BD /* Images.xcassets */,
-				3086428319D18ED10027F932 /* messageIndention@2x.png */,
 				3086428119D149A50027F932 /* backButton@2x.png */,
 				308EC3E419CE69A400A0869F /* boardDefault@2x.png */,
 				308EC3E619CE72F300A0869F /* boardForSale@2x.png */,
@@ -425,7 +408,9 @@
 				307A80EB19B7B993001B538D /* editButton@2x.png */,
 				301FD9A919C4D8D800E36A5B /* errorConnection@2x.png */,
 				301FD9A719C419DE00E36A5B /* errorResponse@2x.png */,
+				3020A26719DA1B66007F46E2 /* isClosed@2x.png */,
 				308EC3E019CC809000A0869F /* logoDetailView@2x.png */,
+				3086428319D18ED10027F932 /* messageIndention@2x.png */,
 				301E24B019BAE86200943EC6 /* notificationButtonDisabled@2x.png */,
 				301E24B119BAE86200943EC6 /* notificationButtonEnabled@2x.png */,
 				301E24AE19BAE3E500943EC6 /* profileButton@2x.png */,
@@ -564,7 +549,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3086427D19D13BAE0027F932 /* MCLFakePushForwardStoryboardSegue.m in Sources */,
 				301FD01819ACE3D10028C5C8 /* MCLMessageTableViewCell.m in Sources */,
 				305DD86019AB3031006514BD /* MCLThread.m in Sources */,
 				308EC3D819CC4DE800A0869F /* MCLMessageListViewController.m in Sources */,
@@ -572,7 +556,6 @@
 				301E24B619BB02EB00943EC6 /* MCLProfileTableViewController.m in Sources */,
 				305DD86319AB380C006514BD /* MCLMessage.m in Sources */,
 				305DD82419A63517006514BD /* main.m in Sources */,
-				3086427A19D1264B0027F932 /* MCLPortraitOnlyNavigationController.m in Sources */,
 				301FD01519ACA0D70028C5C8 /* TDBadgedCell.m in Sources */,
 				301FD9A619C411D400E36A5B /* MCLErrorView.m in Sources */,
 				30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */,
@@ -585,7 +568,6 @@
 				305DD82819A63517006514BD /* MCLAppDelegate.m in Sources */,
 				301FD9AD19C5C79000E36A5B /* Reachability.m in Sources */,
 				301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */,
-				3086428019D13C830027F932 /* MCLFakePushBackwardStoryboardSegue.m in Sources */,
 				305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */,
 				30E8B89619B33C070067DD1F /* MCLReadList.m in Sources */,
 				305DD85D19AB300F006514BD /* MCLBoard.m in Sources */,

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="rS3-R9-Ivy">
     <dependencies>
+        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -67,28 +68,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <segue destination="gdS-bb-itx" kind="push" identifier="PushToThreadListNoAnimation" id="osz-X3-0Wl"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-248" y="410"/>
-        </scene>
-        <!--Portrait Only Navigation Controller-->
-        <scene sceneID="iFD-KC-3Hx">
-            <objects>
-                <navigationController definesPresentationContext="YES" id="a7o-zG-9Rv" customClass="MCLPortraitOnlyNavigationController" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Vmw-yK-cDt">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="hau-nR-2Oc" kind="relationship" relationship="rootViewController" id="Cqy-TK-cSf"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HqN-CB-XtW" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="637" y="795"/>
         </scene>
         <!--Messages-->
         <scene sceneID="q0A-GN-Tyn">
@@ -263,7 +246,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DUN-4l-J7u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1067" y="-695"/>
+            <point key="canvasLocation" x="1621" y="410"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="h1L-33-L73">
@@ -278,7 +261,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T9W-QK-OOl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="637" y="-695"/>
+            <point key="canvasLocation" x="1195" y="410"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="URj-u2-cIZ">
@@ -294,7 +277,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OuU-Z9-Ajz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="630" y="1540"/>
+            <point key="canvasLocation" x="375" y="-724"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Y2W-r9-rnO">
@@ -309,7 +292,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Lf-5u-RRS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-255" y="-703"/>
+            <point key="canvasLocation" x="-535" y="-367"/>
         </scene>
         <!--Threads-->
         <scene sceneID="ox1-g4-ng3">
@@ -391,8 +374,8 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="3TB-hP-UET" id="Zf6-JL-d5U"/>
-                        <segue destination="xgu-SS-2ak" kind="push" identifier="PushToMessageList" id="uX6-fX-7Db"/>
-                        <segue destination="a7o-zG-9Rv" kind="custom" identifier="PushToMessageList2FrameStyle" customClass="MCLFakePushForwardStoryboardSegue" id="UTU-hc-vFD"/>
+                        <segue destination="xgu-SS-2ak" kind="push" identifier="PushToMessageListWidmannStyle" id="uX6-fX-7Db"/>
+                        <segue destination="hau-nR-2Oc" kind="push" identifier="PushToMessageListFrameStyle" id="WH9-Z4-X4c"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D4V-kw-bQP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -479,7 +462,7 @@
                                 <subviews>
                                     <webView contentMode="scaleToFill" id="yVh-lp-8sb">
                                         <rect key="frame" x="0.0" y="10" width="320" height="246"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                     </webView>
@@ -540,12 +523,11 @@
                         <outlet property="toolbarButtonReply" destination="Tdf-tL-f2u" id="hRP-Ek-gQv"/>
                         <outlet property="toolbarButtonSpeak" destination="we6-7c-cah" id="n5Y-bn-Lev"/>
                         <outlet property="webView" destination="yVh-lp-8sb" id="sEw-eB-2qP"/>
-                        <segue destination="rS3-R9-Ivy" kind="custom" identifier="PushBackToThreadList" customClass="MCLFakePushBackwardStoryboardSegue" id="FWN-bg-26m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LDs-WW-uZ7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1088" y="795"/>
+            <point key="canvasLocation" x="637" y="738"/>
         </scene>
         <!--Compose Message View Controller-->
         <scene sceneID="lEV-X2-pT2">
@@ -613,7 +595,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ax2-fh-izI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1088" y="1540"/>
+            <point key="canvasLocation" x="833" y="-724"/>
         </scene>
         <!--Settings-->
         <scene sceneID="IOJ-0j-uvP">
@@ -904,7 +886,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d9Y-Wt-bhZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="174" y="-703"/>
+            <point key="canvasLocation" x="-106" y="-367"/>
         </scene>
         <!--Compose Message Preview View Controller-->
         <scene sceneID="1ph-dS-vB0">
@@ -949,7 +931,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r70-7m-Q5C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1551" y="1540"/>
+            <point key="canvasLocation" x="1296" y="-724"/>
         </scene>
     </scenes>
     <resources>
@@ -971,8 +953,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="zga-ee-uGB"/>
-        <segue reference="YJp-bp-qbj"/>
-        <segue reference="fQb-Tw-eMv"/>
+        <segue reference="yx8-yu-q67"/>
+        <segue reference="ejO-Yt-GIM"/>
     </inferredMetricsTieBreakers>
 </document>
