@@ -261,7 +261,7 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     // Fixes refreshcontrol's too litle space problem
-    if (scrollView.contentOffset.y < -55 && ! [self.refreshControl isRefreshing]) {
+    if (scrollView.contentOffset.y < (self.tableView.bounds.size.height / -5) && ! [self.refreshControl isRefreshing]) {
         [self.refreshControl beginRefreshing];
         [self reloadData];
     }
