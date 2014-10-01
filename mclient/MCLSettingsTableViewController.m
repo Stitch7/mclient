@@ -67,12 +67,15 @@
     self.settingsLoginDataStatusLabel.text = @"";
     [self testLogin];
 
-    BOOL signatureEnabled = [self.userDefaults boolForKey:@"signatureEnabled"];
-    self.settingsSignatureEnabledSwitch.on = signatureEnabled;
-    [self signatureTextViewEnabled:signatureEnabled];
-
+    if ([self.userDefaults objectForKey:@"signatureEnabled"] == nil) {
+        self.settingsSignatureEnabledSwitch.on = YES;
+        [self settingsSignatureEnabledSwitchValueChangedAction:self.settingsSignatureEnabledSwitch];
+    } else {
+        self.settingsSignatureEnabledSwitch.on = [self.userDefaults boolForKey:@"signatureEnabled"];
+    }
+    [self signatureTextViewEnabled:self.settingsSignatureEnabledSwitch.on];
     self.settingsSignatureTextView.delegate = self;
-    self.settingsSignatureTextView.text = [self.userDefaults objectForKey:@"signature"] ?: @"sent from M!client for iOS";
+    self.settingsSignatureTextView.text = [self.userDefaults objectForKey:@"signature"] ?: kSettingsSignatureTextDefault;
 
     self.settingsNightModeSwitch.on = [self.userDefaults boolForKey:@"nightMode"];
     self.settingsSyncReadStatusSwitch.on = [self.userDefaults boolForKey:@"syncReadStatus"];

@@ -8,8 +8,9 @@
 
 #import "MCLComposeMessagePreviewViewController.h"
 
-#import "MCLMServiceConnector.h"
+#import "constants.h"
 #import "KeychainItemWrapper.h"
+#import "MCLMServiceConnector.h"
 #import "MCLErrorView.h"
 #import "MCLLoadingView.h"
 #import "MCLMessageListViewController.h"
@@ -101,18 +102,11 @@
     NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
     NSError *mServiceError;
 
-    NSString *messageText = self.text;
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if ([userDefaults boolForKey:@"signatureEnabled"]) {
-        messageText = [messageText stringByAppendingString:@"\n\n"];
-        messageText = [messageText stringByAppendingString:[userDefaults objectForKey:@"signature"]];
-    }
-
     switch (self.type) {
         case kComposeTypeThread:
             success = [self.mServiceConnector postThreadToBoardId:self.boardId
                                                           subject:self.subject
-                                                             text:messageText
+                                                             text:self.text
                                                          username:username
                                                          password:password
                                                      notification:self.notificationSwitch.on
@@ -122,7 +116,7 @@
             success = [self.mServiceConnector postReplyToMessageId:self.messageId
                                                            boardId:self.boardId
                                                            subject:self.subject
-                                                              text:messageText
+                                                              text:self.text
                                                           username:username
                                                           password:password
                                                       notification:self.notificationSwitch.on

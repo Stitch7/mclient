@@ -134,10 +134,15 @@
  {
      if ([segue.identifier isEqualToString:@"PushToPreview"]) {
          NSString *messageText = self.composeTextTextField.text;
-         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-         if ([userDefaults boolForKey:@"signatureEnabled"]) {
-             messageText = [messageText stringByAppendingString:@"\n\n"];
-             messageText = [messageText stringByAppendingString:[userDefaults objectForKey:@"signature"]];
+
+         if (self.type == kComposeTypeThread || self.type == kComposeTypeReply) {
+             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+             BOOL signatureEnabled = [userDefaults objectForKey:@"signatureEnabled"] == nil ? YES : [userDefaults boolForKey:@"signatureEnabled"];
+             if (signatureEnabled) {
+                 NSString *signature = [userDefaults objectForKey:@"signature"] ?: kSettingsSignatureTextDefault;
+                 messageText = [messageText stringByAppendingString:@"\n\n"];
+                 messageText = [messageText stringByAppendingString:signature];
+             }
          }
 
          MCLComposeMessagePreviewViewController *destinationViewController = segue.destinationViewController;
