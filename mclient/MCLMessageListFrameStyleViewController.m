@@ -34,6 +34,7 @@
 @property (strong) MCLReadList *readList;
 @property (strong) NSString *username;
 @property (strong) NSString *password;
+@property (assign) BOOL validLogin;
 @property (strong) NSDateFormatter *dateFormatter;
 @property (strong) NSIndexPath *selectedIndexPath;
 @property (strong) UIRefreshControl *refreshControl;
@@ -67,6 +68,13 @@
     self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
     NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
     self.password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
+    self.validLogin = NO;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if ([self.username length] > 0 && [self.password length] > 0) {
+            NSError *error;
+            self.validLogin = ([[[MCLMServiceConnector alloc] init] testLoginWIthUsername:self.username password:self.password error:&error]);
+        }
+    });
 
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDoesRelativeDateFormatting:YES];
@@ -518,8 +526,11 @@
         }
     }
 
-    BOOL hideEditButton = ! ([message.username isEqualToString:self.username] && nextMessage.level <= message.level);
+    BOOL hideEditButton = ! self.validLogin || self.thread.isClosed || ! ([message.username isEqualToString:self.username] && nextMessage.level <= message.level);
     [self barButton:self.toolbarButtonEdit hide:hideEditButton];
+
+    BOOL hideReplyButton = ! self.validLogin || self.thread.isClosed;
+    [self barButton:self.toolbarButtonReply hide:hideReplyButton];
 }
 
 
