@@ -38,6 +38,7 @@
 
 #define THREADVIEW_SECTION 2;
 #define IMAGES_SECTION 3;
+#define OPTIONS_SECTION 4;
 
 - (void)viewDidLoad
 {
@@ -60,7 +61,6 @@
     self.settingsPasswordTextField.delegate = self;
     self.loginDataChanged = NO;
 
-    [self.settingsLoginDataStatusTableViewCell setBackgroundColor:[UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0]];
     [self.settingsLoginDataStatusTableViewCell setTintColor:[UIColor colorWithRed:75/255.0 green:216/255.0 blue:99/255.0 alpha:1.0]];
     [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
     self.settingsLoginDataStatusSpinner.transform = CGAffineTransformMakeScale(0.75, 0.75);
@@ -82,6 +82,20 @@
 
     self.threadView = [self.userDefaults objectForKey:@"threadView"] ?: @(kMCLSettingsThreadViewDefault);
     self.showImages = [self.userDefaults objectForKey:@"showImages"] ?: @(kMCLSettingsShowImagesAlways);
+
+
+    UILabel *aboutLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, self.view.bounds.size.width, 70)];
+    aboutLabel.numberOfLines = 3;
+    aboutLabel.font = [UIFont systemFontOfSize:14.0f];
+    aboutLabel.textColor = [UIColor darkGrayColor];
+
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    aboutLabel.text = [NSString stringWithFormat:@"Version %@ (%@)\nCopyright © 2014 Christopher Reitz aka Stitch\nAll rights reserved",
+                       [infoDictionary objectForKey:@"CFBundleShortVersionString"],
+                       [infoDictionary objectForKey:@"CFBundleVersion"]];
+
+    self.tableView.tableFooterView = aboutLabel;
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -163,21 +177,22 @@
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
 
     int threadViewSection = THREADVIEW_SECTION;
+    int imagesSection = IMAGES_SECTION;
+
     if (indexPath.section == threadViewSection) {
         if ([self.threadView integerValue] == indexPath.row) {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         } else {
             [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
-    }
-
-    int imagesSection = IMAGES_SECTION;
-    if (indexPath.section == imagesSection) {
+    } else if (indexPath.section == imagesSection) {
         if ([self.showImages integerValue] == indexPath.row) {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         } else {
             [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
+    } else {
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
 
     return cell;
@@ -218,6 +233,18 @@
             }
         }
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    CGFloat height = UITableViewAutomaticDimension;
+
+    NSInteger optionsSection = OPTIONS_SECTION;
+    if (section == optionsSection) {
+        height = 0.0f;
+    }
+
+    return height;
 }
 
 
