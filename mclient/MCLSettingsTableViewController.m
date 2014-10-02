@@ -90,7 +90,7 @@
     aboutLabel.textColor = [UIColor darkGrayColor];
 
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    aboutLabel.text = [NSString stringWithFormat:@"Version %@ (%@)\nCopyright © 2014 Christopher Reitz aka Stitch\nAll rights reserved",
+    aboutLabel.text = [NSString stringWithFormat:@"Version %@ (Build: %@)\nCopyright © 2014 Christopher Reitz aka Stitch\nAll rights reserved",
                        [infoDictionary objectForKey:@"CFBundleShortVersionString"],
                        [infoDictionary objectForKey:@"CFBundleVersion"]];
 
@@ -241,6 +241,18 @@
 
     NSInteger optionsSection = OPTIONS_SECTION;
     if (section == optionsSection) {
+        height = 0.0f;
+    }
+
+    return height;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat height = UITableViewAutomaticDimension;
+
+    NSInteger optionsSection = OPTIONS_SECTION;
+    if (indexPath.section == optionsSection) {
         height = 0.0f;
     }
 
