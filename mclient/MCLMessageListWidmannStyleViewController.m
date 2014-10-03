@@ -78,7 +78,6 @@
     [super viewDidLoad];
 
     // tableView setup
-    self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     // Cache original tables separatorColor and set to clear to avoid flickering loading view
     self.tableSeparatorColor = [self.tableView separatorColor];
     [self.tableView setSeparatorColor:[UIColor clearColor]];
@@ -282,7 +281,7 @@
         [cell.messageToolbar setHidden:NO];
         [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
     } else {
-        cell.backgroundColor = [UIColor whiteColor];
+        cell.backgroundColor = [UIColor clearColor];
         [cell.messageToolbar setHidden:YES];
     }
 

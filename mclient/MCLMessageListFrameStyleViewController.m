@@ -101,7 +101,6 @@
     self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 
     // tableView setup
-    self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     // Enable statusbar tap to scroll to top
     self.tableView.scrollsToTop = YES;
     // Add refresh control
@@ -735,10 +734,6 @@
         [destinationViewController setSubject:subject];
     } else if ([segue.identifier isEqualToString:@"ModalToEditReply"]) {
         MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
-
-//        NSString *text = [self.webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"body\")[0].textContent;"]; //TODO looses Images...
-//        text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-
         [destinationViewController setDelegate:self];
         [destinationViewController setType:kComposeTypeEdit];
         [destinationViewController setBoardId:self.board.boardId];
