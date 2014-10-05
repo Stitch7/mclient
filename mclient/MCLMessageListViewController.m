@@ -39,6 +39,9 @@
             "        margin: 0 20px 10px 20px;"
             "        padding: 0px;"
             "    }"
+            "    a {"
+            "        word-break: break-all;"
+            "    }"
             "    img {"
             "        max-width: 100%%;"
             "    }"
@@ -56,13 +59,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-    self.title = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.title = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
 }
 
 - (void)didReceiveMemoryWarning

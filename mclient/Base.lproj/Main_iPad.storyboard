@@ -937,7 +937,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" id="h1p-NG-NJO">
-                                <rect key="frame" x="0.0" y="63" width="768" height="646"/>
+                                <rect key="frame" x="0.0" y="63.000000925440631" width="768" height="646"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
@@ -967,6 +967,7 @@
                     <connections>
                         <outlet property="notificationSwitch" destination="AtE-Fk-hso" id="GOd-9o-5vW"/>
                         <outlet property="notificationSwitchLabel" destination="wKa-H3-eae" id="vSV-zS-oXD"/>
+                        <outlet property="sendButton" destination="qtP-VL-0oR" id="iW1-2O-j06"/>
                         <outlet property="webView" destination="h1p-NG-NJO" id="FrV-ZM-rMA"/>
                     </connections>
                 </viewController>

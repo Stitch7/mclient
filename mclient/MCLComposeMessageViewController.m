@@ -9,6 +9,7 @@
 #import "MCLComposeMessageViewController.h"
 
 #import "constants.h"
+#import "MCLMServiceConnector.h"
 #import "MCLComposeMessagePreviewViewController.h"
 #import "MCLMessageTextView.h"
 
@@ -104,19 +105,22 @@
 
 - (IBAction)quoteButtonTouchUpInside:(UIButton *)sender
 {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/quote/%@", kMServiceBaseURL, self.boardId, self.messageId];
-        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
-
+        NSError *mServiceError;
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] quoteMessageWithId:self.messageId fromBoardId:self.boardId error:&mServiceError];
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSError* error;
-            NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-
-            if (error == nil) {
-                NSString *textViewContent = [@"\n\n" stringByAppendingString:self.composeTextTextField.text];
-                self.composeTextTextField.text = [[json objectForKey:@"quote"] stringByAppendingString:textViewContent];
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            if (mServiceError) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error"
+                                                                message:[mServiceError localizedDescription]
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
             } else {
-                NSLog(@"ERROR!");
+                NSString *textViewContent = [@"\n\n" stringByAppendingString:self.composeTextTextField.text];
+                self.composeTextTextField.text = [[data objectForKey:@"quote"] stringByAppendingString:textViewContent];
             }
         });
     });

@@ -8,14 +8,12 @@
 
 #import "MCLBoardListTableViewController.h"
 
-#import "constants.h"
-#import "Reachability.h"
 #import "KeychainItemWrapper.h"
+#import "MCLAppDelegate.h"
 #import "MCLMServiceConnector.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLMessageListViewController.h"
 #import "MCLBoard.h"
-#import "MCLErrorView.h"
 #import "MCLMServiceErrorView.h"
 #import "MCLInternetConnectionErrorView.h"
 #import "MCLLoadingView.h"
@@ -23,9 +21,7 @@
 
 @interface MCLBoardListTableViewController ()
 
-@property (assign, nonatomic) CGRect tableViewBounds;
 @property (strong, nonatomic) NSMutableArray *boards;
-@property (strong, nonatomic) Reachability *reachability;
 @property (strong, nonatomic) NSDictionary *images;
 
 @end
@@ -63,43 +59,20 @@
 {
     [super viewDidLoad];
 
-    BOOL isPortrait =
-        self.interfaceOrientation == UIInterfaceOrientationPortrait ||
-        self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown
-    ;
-
-    BOOL isLandscape =
-        self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-        self.interfaceOrientation == UIInterfaceOrientationLandscapeRight
-    ;
-
-    // Fix width for when in splitView
-    CGFloat viewWidth = self.splitViewController ? 320 : self.view.bounds.size.width;
-
-    CGFloat viewHeight = self.view.bounds.size.height;
-    // If iPad starts in landscape mode, subtract some points...
-    viewHeight = isLandscape && self.splitViewController ? viewHeight - 250 : viewHeight;
-    // Add missing navBar points in landscape mode for iPhone
-    viewHeight = self.splitViewController ? viewHeight : viewHeight + 12;
-
-    CGFloat navBarHeight = self.navigationController.navigationBar.bounds.size.height;
-
-    CGSize statusBarSize = [UIApplication sharedApplication].statusBarFrame.size;
-    CGFloat statusBarHeight = (isPortrait ? statusBarSize.height : statusBarSize.width);
-
-    self.tableViewBounds = CGRectMake(0, 0, viewWidth, viewHeight - navBarHeight - statusBarHeight);
-
     [self showLoginStatus];
-    // [self setupReachability];
     [self setupRefreshControl];
 
     // Visualize loading
-    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.tableViewBounds]];
+    CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
+    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:fullScreenFrame]];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     // Load data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [self loadData];
-        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+        NSError *mServiceError;
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] boards:&mServiceError];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self fetchedData:data error:mServiceError];
+        });
     });
 }
 
@@ -129,8 +102,9 @@
     }
 
     // Add VerifiyLoginView to navigationControllers toolbar
-    CGRect navToolbarFrane = CGRectMake(0, 0, self.tableViewBounds.size.width, self.navigationController.toolbar.bounds.size.height);
-    MCLVerifiyLoginView *navToolbarView = [[MCLVerifiyLoginView alloc] initWithFrame:navToolbarFrane];
+    CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
+    CGRect navToolbarFrame = CGRectMake(0, 0, fullScreenFrame.size.width, self.navigationController.toolbar.bounds.size.height);
+    MCLVerifiyLoginView *navToolbarView = [[MCLVerifiyLoginView alloc] initWithFrame:navToolbarFrame];
     [self.navigationController.toolbar addSubview:navToolbarView];
     [self.navigationController setToolbarHidden:NO animated:YES];
 
@@ -144,29 +118,18 @@
 
     // Check login data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        BOOL loginValid = NO;
-        if ([username length] > 0 && [password length] > 0) {
-            NSError *error;
-            loginValid = ([[[MCLMServiceConnector alloc] init] testLoginWIthUsername:username password:password error:&error]);
-        }
+        NSError *error;
+        BOOL validLogin = ([[MCLMServiceConnector sharedConnector] testLoginWIthUsername:username password:password error:&error]);
 
         // Set login status on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (loginValid) {
+            if (validLogin) {
                 [navToolbarView loginStatusWithUsername:username];
             } else {
                 [navToolbarView loginStausNoLogin];
             }
         });
     });
-}
-
-- (NSData *)loadData
-{
-    NSString *urlString = [NSString stringWithFormat:@"%@/", kMServiceBaseURL];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
-
-    return data;
 }
 
 - (void)setupRefreshControl
@@ -184,34 +147,45 @@
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [self loadData];
+        NSError *mServiceError;
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] boards:&mServiceError];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self fetchedData:data];
+            [self fetchedData:data error:mServiceError];
             [self showLoginStatus];
             [self.refreshControl endRefreshing];
         });
     });
 }
 
-- (void)fetchedData:(NSData *)data
+- (void)fetchedData:(NSDictionary *)data error:(NSError *)error
 {
-    if ( ! data) {
-        BOOL errorViewPresent = NO;
-        for (id subview in self.view.subviews) {
-            if ([[subview class] isSubclassOfClass: [MCLErrorView class]]) {
-                errorViewPresent = YES;
-            }
+    for (id subview in self.view.subviews) {
+        if ([[subview class] isSubclassOfClass: [MCLErrorView class]] ||
+            [[subview class] isSubclassOfClass: [MCLLoadingView class]]
+        ) {
+            [subview removeFromSuperview];
         }
+    }
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
-        if ( ! errorViewPresent) {
-            [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:self.tableViewBounds]];
+    if (error) {
+        CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
+        switch (error.code) {
+            case -2:
+                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame]];
+                break;
+
+            case -1:
+                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[error localizedDescription]]];
+                break;
+
+            default:
+                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame]];
+                break;
         }
     } else {
         self.boards = [NSMutableArray array];
-
-        NSError *error;
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        for (id object in json) {
+        for (id object in data) {
             NSNumber *boardId = [object objectForKey:@"id"];
             NSString *boardName = [object objectForKey:@"text"];
 
@@ -219,14 +193,6 @@
             [self.boards addObject:board];
         }
 
-        for (id subview in self.view.subviews) {
-            if ([[subview class] isSubclassOfClass: [MCLErrorView class]]) {
-                [subview removeFromSuperview];
-            } else if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
-                [subview removeFromSuperview];
-            }
-        }
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [self.tableView reloadData];
     }
 }
@@ -281,54 +247,6 @@
     UINavigationController *navController = [[[self splitViewController] viewControllers] lastObject];
     MCLMessageListViewController *detailViewController = [[navController viewControllers] firstObject];
     [detailViewController setSplitViewButton:nil forPopoverController:nil];
-}
-
-
-#pragma mark - Reachability
-
-- (void)setupReachability
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
-	self.reachability = [Reachability reachabilityWithHostName:@"www.google.com"];
-	[self.reachability startNotifier];
-	[self updateInterfaceWithReachability:self.reachability];
-}
-
-- (void) reachabilityChanged:(NSNotification *)note
-{
-//    NSLog(@"reachabilityChanged");
-
-	Reachability* curReach = [note object];
-	NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
-	[self updateInterfaceWithReachability:curReach];
-}
-
-- (void)updateInterfaceWithReachability:(Reachability *)reachability
-{
-    NetworkStatus netStatus = [reachability currentReachabilityStatus];
-
-//    NSLog(@"#NetworkStatus = %i", netStatus);
-
-    switch (netStatus) {
-        case NotReachable:
-//            NSLog(@"-- NotReachable");
-            [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:self.tableViewBounds]];
-            self.refreshControl = nil;
-            self.tableView.bounces = NO;
-            break;
-
-
-        case ReachableViaWWAN:
-        case ReachableViaWiFi:
-//            NSLog(@"-- ReachableVia");
-            for (id subview in self.view.subviews) {
-                if ([[subview class] isSubclassOfClass: [MCLErrorView class]]) {
-                    [subview removeFromSuperview];
-                    [self setupRefreshControl];
-                }
-            }
-            break;
-    }
 }
 
 

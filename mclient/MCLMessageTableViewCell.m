@@ -111,9 +111,8 @@
     NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
     NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
     
-    MCLMServiceConnector *mServiceConnector = [[MCLMServiceConnector alloc] init];
     NSError *mServiceError;
-    BOOL success = [mServiceConnector notificationForMessageId:self.messageId boardId:self.boardId username:username password:password error:&mServiceError];
+    BOOL success = [[MCLMServiceConnector sharedConnector] notificationForMessageId:self.messageId boardId:self.boardId username:username password:password error:&mServiceError];
 
     NSString *alertTitle, *alertMessage;
 

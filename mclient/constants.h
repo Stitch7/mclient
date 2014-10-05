@@ -7,11 +7,10 @@
 //
 
 #ifdef DEBUG
-//    #define kMServiceBaseURL @"http://localhost:8000"
-//    #define kMServiceBaseURL @"http://reitz.re:8000"
-    #define kMServiceBaseURL @"http://192.168.178.33:8080"
+//    #define kMServiceBaseURL @"http://reitz.re:8000/mservice"
+    #define kMServiceBaseURL @"http://192.168.178.33:8080/mservice"
 #else
-    #define kMServiceBaseURL @"http://reitz.re:8000"
+    #define kMServiceBaseURL @"http://reitz.re:8000/mservice"
 #endif
 
 #define kManiacForumURL @"http://www.maniac-forum.de/forum/pxmboard.php"

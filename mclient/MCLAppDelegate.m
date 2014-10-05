@@ -42,4 +42,30 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+
+# pragma mark Global methods
+
+- (CGRect)fullScreenFrameFromViewController:(UIViewController *)viewController
+{
+    BOOL isPortrait = UIInterfaceOrientationIsPortrait(viewController.interfaceOrientation);
+    BOOL isLandscape = UIInterfaceOrientationIsLandscape(viewController.interfaceOrientation);
+
+    // Fix width for when in splitView
+    CGFloat viewWidth = viewController.splitViewController ? 320 : viewController.view.bounds.size.width;
+
+    CGFloat viewHeight = viewController.view.bounds.size.height;
+    // If iPad starts in landscape mode, subtract some points...
+    viewHeight = isLandscape && viewController.splitViewController ? viewHeight - 250 : viewHeight;
+    // Add missing navBar points in landscape mode for iPhone
+    viewHeight = viewController.splitViewController ? viewHeight : viewHeight + 12;
+
+    CGFloat navBarHeight = viewController.navigationController.navigationBar.bounds.size.height;
+
+    CGSize statusBarSize = [UIApplication sharedApplication].statusBarFrame.size;
+    CGFloat statusBarHeight = (isPortrait ? statusBarSize.height : statusBarSize.width);
+
+    return CGRectMake(0, 0, viewWidth, viewHeight - navBarHeight - statusBarHeight);
+}
+
+
 @end

@@ -12,7 +12,7 @@
 
 - (void)configure
 {
-    self.label.text = @"Unable not load data";
+    self.label.text = self.labelText ?: @"M!service Error";
     self.image.image = [UIImage imageNamed:@"errorResponse.png"];
 }
 

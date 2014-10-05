@@ -6,8 +6,13 @@
 //  Copyright (c) 2014 Christopher Reitz. All rights reserved.
 //
 
-#import "constants.h"
 #import "MCLProfileTableViewController.h"
+
+#import "MCLAppDelegate.h"
+#import "MCLMServiceConnector.h"
+#import "MCLLoadingView.h"
+#import "MCLInternetConnectionErrorView.h"
+#import "MCLMServiceErrorView.h"
 
 @interface MCLProfileTableViewController ()
 
@@ -30,6 +35,7 @@
                          @"firstname",
                          @"lastname",
                          @"domicile",
+                         @"accountNo",
                          @"registrationDate",
                          @"email",
                          @"icq",
@@ -48,6 +54,7 @@
                            @"firstname": @"Firstname",
                            @"lastname": @"Lastname",
                            @"domicile": @"Domicile",
+                           @"accountNo": @"Account-No.",
                            @"registrationDate": @"Date of registration",
                            @"email": @"Email",
                            @"icq": @"ICQ",
@@ -62,11 +69,17 @@
                            @"nintendoFriendcode": @"Nintendo Friendcode",
                            @"lastUpdate": @"Last Updated on"};
 
+    // Visualize loading
+    CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
+    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:fullScreenFrame]];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    // Load data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *urlString = [NSString stringWithFormat:@"%@/profile/%@", kMServiceBaseURL, self.userId];
-        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
-        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+        NSError *mServiceError;
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] userWithId:self.userId error:&mServiceError];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self fetchedData:data error:mServiceError];
+        });
     });
 }
 
@@ -79,13 +92,37 @@
 
 #pragma mark - Data methods
 
-- (void)fetchedData:(NSData *)responseData
+- (void)fetchedData:(NSDictionary *)data error:(NSError *)error
 {
-    NSError* error;
-    self.profileData = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-
+    for (id subview in self.view.subviews) {
+        if ([[subview class] isSubclassOfClass: [MCLErrorView class]] ||
+            [[subview class] isSubclassOfClass: [MCLLoadingView class]]
+        ) {
+            [subview removeFromSuperview];
+        }
+    }
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    [self.tableView reloadData];
+
+    if (error) {
+        CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
+        switch (error.code) {
+            case -2:
+                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame]];
+                break;
+
+            case -1:
+                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[error localizedDescription]]];
+                break;
+
+            default:
+                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame]];
+                break;
+        }
+    } else {
+        self.profileData = data;
+
+        [self.tableView reloadData];
+    }
 }
 
 
@@ -115,7 +152,6 @@
         
         if (self.profileImage) {
             UIImageView *imageView = [[UIImageView alloc] initWithImage:self.profileImage];
-
             [imageView.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
             [imageView.layer setBorderWidth:0.5];
 
@@ -147,7 +183,7 @@
     NSString *key = self.profileKeys[indexPath.row];
     
     if ([key isEqualToString:@"image"]) {
-        if ( ! self.profileImage) {
+        if ( ! self.profileImage && [self.profileData objectForKey:@"image"] != [NSNull null]) {
             NSString *imageURLString = [self.profileData objectForKey:key];
             if (imageURLString.length) {
                 NSURL *imageURL = [NSURL URLWithString:imageURLString];

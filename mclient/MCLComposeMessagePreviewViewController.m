@@ -10,17 +10,20 @@
 
 #import "constants.h"
 #import "KeychainItemWrapper.h"
+#import "Reachability.h"
+#import "MCLAppDelegate.h"
 #import "MCLMServiceConnector.h"
-#import "MCLErrorView.h"
 #import "MCLLoadingView.h"
+#import "MCLMServiceErrorView.h"
+#import "MCLInternetConnectionErrorView.h"
 #import "MCLMessageListViewController.h"
 
 @interface MCLComposeMessagePreviewViewController ()
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sendButton;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UISwitch *notificationSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *notificationSwitchLabel;
-@property (strong, nonatomic) MCLMServiceConnector *mServiceConnector;
 
 @end
 
@@ -30,7 +33,6 @@
 {
     [super viewDidLoad];
 
-    self.mServiceConnector = [[MCLMServiceConnector alloc] init];
     self.title = self.subject;
 
     self.webView.delegate = self;
@@ -40,31 +42,49 @@
         [self.notificationSwitchLabel setHidden:YES];
     }
 
-    NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
-    NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
-    NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
-    NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
+    [self.sendButton setEnabled:NO];
 
-    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
+    CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
+    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:fullScreenFrame]];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
-        NSDictionary *content = [self.mServiceConnector previewForMessageId:self.messageId
-                                                                    boardId:self.boardId
-                                                                    subject:self.subject
-                                                                       text:self.text
-                                                                   username:username
-                                                                   password:password
-                                                                      error:&mServiceError];
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] messagePreviewForBoardId:self.boardId
+                                                                                         text:self.text
+                                                                                        error:&mServiceError];
         dispatch_async(dispatch_get_main_queue(), ^{
-            for (id subview in self.view.subviews) {
-                if ([[subview class] isSubclassOfClass: [MCLErrorView class]]) {
-                    [subview removeFromSuperview];
+            if (mServiceError) {
+                switch (mServiceError.code) {
+                    case -2:
+                        [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame hideSubLabel:YES]];
+                        break;
+
+                    default:
+                        [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[mServiceError localizedDescription] hideSubLabel:YES]];
+                        break;
                 }
-            }
-            if ( ! mServiceError) {
-                NSString *html = [MCLMessageListViewController messageHtmlSkeletonForHtml:[content objectForKey:@"textHtmlWithImages"]];
+            } else {
+                [self.sendButton setEnabled:YES];
+
+                NSString *key = @"";
+                switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"showImages"]) {
+                    case kMCLSettingsShowImagesWifi: {
+                        Reachability *wifiReach = [Reachability reachabilityForLocalWiFi];
+                        NSLog(@"[wifiReach currentReachabilityStatus] == ReachableViaWiFi: %d", [wifiReach currentReachabilityStatus] == ReachableViaWiFi);
+                        key = [wifiReach currentReachabilityStatus] == ReachableViaWiFi ? @"previewTextHtmlWithImages" : @"previewTextHtml";
+                        break;
+                    }
+                    case kMCLSettingsShowImagesNever:
+                        key = @"previewTextHtml";
+                        break;
+
+                    case kMCLSettingsShowImagesAlways:
+                    default:
+                        key = @"previewTextHtmlWithImages";
+                        break;
+                }
+
+                NSString *html = [MCLMessageListViewController messageHtmlSkeletonForHtml:[data objectForKey:key]];
                 [self.webView loadHTMLString:html baseURL:nil];
             }
         });
@@ -93,67 +113,75 @@
 
 - (IBAction)sendAction:(id)sender
 {
-    BOOL success = NO;
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
+        KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
+        NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
+        NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
+        NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
 
-    NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
-    NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
-    NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
-    NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
-    NSError *mServiceError;
+        BOOL success = NO;
+        MCLMServiceConnector *mServiceConnector = [MCLMServiceConnector sharedConnector];
+        NSError *mServiceError;
 
-    switch (self.type) {
-        case kComposeTypeThread:
-            success = [self.mServiceConnector postThreadToBoardId:self.boardId
+        switch (self.type) {
+            case kComposeTypeThread:
+                success = [mServiceConnector postThreadToBoardId:self.boardId
+                                                         subject:self.subject
+                                                            text:self.text
+                                                        username:username
+                                                        password:password
+                                                    notification:self.notificationSwitch.on
+                                                           error:&mServiceError];
+                break;
+            case kComposeTypeReply:
+                success = [mServiceConnector postReplyToMessageId:self.messageId
+                                                          boardId:self.boardId
                                                           subject:self.subject
                                                              text:self.text
                                                          username:username
                                                          password:password
                                                      notification:self.notificationSwitch.on
                                                             error:&mServiceError];
-            break;
-        case kComposeTypeReply:
-            success = [self.mServiceConnector postReplyToMessageId:self.messageId
-                                                           boardId:self.boardId
-                                                           subject:self.subject
-                                                              text:self.text
-                                                          username:username
-                                                          password:password
-                                                      notification:self.notificationSwitch.on
-                                                             error:&mServiceError];
-            break;
-        case kComposeTypeEdit:
-            success = [self.mServiceConnector postEditToMessageId:self.messageId
-                                                          boardId:self.boardId
-                                                          subject:self.subject
-                                                             text:self.text
-                                                         username:username
-                                                         password:password
-                                                            error:&mServiceError];
-            break;
-    }
+                break;
+            case kComposeTypeEdit:
+                success = [mServiceConnector postEditToMessageId:self.messageId
+                                                         boardId:self.boardId
+                                                         subject:self.subject
+                                                            text:self.text
+                                                        username:username
+                                                        password:password
+                                                           error:&mServiceError];
+                break;
+        }
 
-    if (success) {
-        dispatch_block_t completion = ^{
-            [self.delegate composeMessageViewControllerDidFinish:self];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            if (success) {
+                dispatch_block_t completion = ^{
+                    [self.delegate composeMessageViewControllerDidFinish:self];
 
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
-                                                            message:@"Message was posted"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-        };
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
+                                                                    message:@"Message was posted"
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                };
 
-        [self dismissViewControllerAnimated:YES completion:completion];
-    } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[mServiceError localizedDescription]
-                                                        message:[mServiceError localizedFailureReason]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
+                [self dismissViewControllerAnimated:YES completion:completion];
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                message:[mServiceError localizedDescription]
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+        });
+    });
 }
 
 

@@ -11,10 +11,13 @@
 #import "constants.h"
 #import "KeychainItemWrapper.h"
 #import "Reachability.h"
+#import "MCLAppDelegate.h"
 #import "MCLMServiceConnector.h"
 #import "MCLBoardListTableViewController.h"
 #import "MCLProfileTableViewController.h"
 #import "MCLDetailView.h"
+#import "MCLMServiceErrorView.h"
+#import "MCLInternetConnectionErrorView.h"
 #import "MCLLoadingView.h"
 #import "MCLMessageTableViewCell.h"
 #import "MCLBoard.h"
@@ -28,7 +31,6 @@
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) AVSpeechSynthesizer *speechSynthesizer;
-@property (strong) MCLMServiceConnector *mServiceConnector;
 @property (strong) NSMutableArray *messages;
 @property (strong) NSMutableArray *cells;
 @property (strong) MCLReadList *readList;
@@ -59,7 +61,6 @@
 {
     [super awakeFromNib];
 
-    self.mServiceConnector = [[MCLMServiceConnector alloc] init];
     self.cells = [NSMutableArray array];
     self.readList = [[MCLReadList alloc] init];
 
@@ -70,10 +71,8 @@
     self.password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
     self.validLogin = NO;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        if ([self.username length] > 0 && [self.password length] > 0) {
-            NSError *error;
-            self.validLogin = ([[[MCLMServiceConnector alloc] init] testLoginWIthUsername:self.username password:self.password error:&error]);
-        }
+        NSError *error;
+        self.validLogin = ([[MCLMServiceConnector sharedConnector] testLoginWIthUsername:self.username password:self.password error:&error]);
     });
 
     // Init + setup dateformatter for message dates
@@ -130,19 +129,15 @@
 
         // Add loading view
         [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
         // Load data async
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSData *data = [self loadData];
+            NSError *mServiceError;
+            NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId fromBoardId:self.board.boardId error:&mServiceError];
             // Process data on main thread
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self fetchedData:data];
-                // Remove loading view
-                for (id subview in self.view.subviews) {
-                    if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
-                        [subview removeFromSuperview];
-                    }
-                }
+                [self fetchedData:data error:mServiceError];
             });
         });
     } else {
@@ -243,31 +238,16 @@
 
     // Load data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [self loadData];
+        NSError *mServiceError;
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId fromBoardId:self.board.boardId error:&mServiceError];
         // Process data on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self fetchedData:data];
-            // Remove loading view
-            for (id subview in self.view.subviews) {
-                if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
-                    [subview removeFromSuperview];
-                } else if ([[subview class] isSubclassOfClass: [MCLDetailView class]]) {
-                    [subview removeFromSuperview];
-                }
-            }
+            [self fetchedData:data error:mServiceError];
 
             // Scrool table to top
             [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
         });
     });
-}
-
-- (NSData *)loadData
-{
-    NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/messagelist/%@", kMServiceBaseURL, self.board.boardId, self.thread.threadId];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
-
-    return data;
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
@@ -283,64 +263,76 @@
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [self loadData];
+        NSError *mServiceError;
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId fromBoardId:self.board.boardId error:&mServiceError];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self fetchedData:data];
+            [self fetchedData:data error:mServiceError];
             [self.refreshControl endRefreshing];
         });
     });
 }
 
-- (void)fetchedData:(NSData *)responseData
+- (void)fetchedData:(NSDictionary *)data error:(NSError *)error
 {
-    self.messages = [NSMutableArray array];
-
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
-    [dateFormatter setLocale:enUSPOSIXLocale];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    for (id object in json) {
-        NSNumber *messageId = [object objectForKey:@"messageId"];
-        NSNumber *level = [object objectForKey:@"level"];
-        BOOL mod = [[object objectForKey:@"mod"] boolValue];
-        NSString *username = [object objectForKey:@"username"];
-        NSString *subject = [object objectForKey:@"subject"];
-        NSDate *date = [dateFormatter dateFromString:[object objectForKey:@"date"]];
-
-        MCLMessage *message = [MCLMessage messageWithId:messageId
-                                                  level:level
-                                                 userId:nil
-                                                    mod:mod
-                                               username:username
-                                                subject:subject
-                                                   date:date
-                                                   text:nil
-                                               textHtml:nil
-                                     textHtmlWithImages:nil];
-        [self.messages addObject:message];
+    for (id subview in self.view.subviews) {
+        if ([[subview class] isSubclassOfClass: [MCLErrorView class]] ||
+            [[subview class] isSubclassOfClass: [MCLLoadingView class]] ||
+            [[subview class] isSubclassOfClass: [MCLDetailView class]]
+            ) {
+            [subview removeFromSuperview];
+        }
     }
-
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    [self.tableView reloadData];
 
-    // Select first message
-    [self.tableView selectRowAtIndexPath:self.selectedIndexPath animated:NO scrollPosition:0];
-    [self tableView:self.tableView didSelectRowAtIndexPath:self.selectedIndexPath];
-}
+    if (error) {
+        CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
+        switch (error.code) {
+            case -2:
+                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame]];
+                break;
 
-- (void)completeMessage:(MCLMessage *)message
-{
-    NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message/%@", kMServiceBaseURL, self.board.boardId, message.messageId];
-    NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    message.userId = [json objectForKey:@"userId"];
-    message.text = [json objectForKey:@"text"];
-    message.textHtml = [json objectForKey:@"textHtml"];
-    message.textHtmlWithImages = [json objectForKey:@"textHtmlWithImages"];
+            case -1:
+                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[error localizedDescription]]];
+                break;
+
+            default:
+                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame]];
+                break;
+        }
+    } else {
+        self.messages = [NSMutableArray array];
+
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+        [dateFormatter setLocale:enUSPOSIXLocale];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+
+        for (id object in data) {
+            NSNumber *messageId = [object objectForKey:@"messageId"];
+            NSNumber *level = [object objectForKey:@"level"];
+            BOOL mod = [[object objectForKey:@"mod"] boolValue];
+            NSString *username = [object objectForKey:@"username"];
+            NSString *subject = [object objectForKey:@"subject"];
+            NSDate *date = [dateFormatter dateFromString:[object objectForKey:@"date"]];
+
+            MCLMessage *message = [MCLMessage messageWithId:messageId
+                                                      level:level
+                                                     userId:nil
+                                                        mod:mod
+                                                   username:username
+                                                    subject:subject
+                                                       date:date
+                                                       text:nil
+                                                   textHtml:nil
+                                         textHtmlWithImages:nil];
+            [self.messages addObject:message];
+        }
+
+        [self.tableView reloadData];
+
+        // Select first message
+        [self.tableView selectRowAtIndexPath:self.selectedIndexPath animated:NO scrollPosition:0];
+        [self tableView:self.tableView didSelectRowAtIndexPath:self.selectedIndexPath];    }
 }
 
 
@@ -455,88 +447,93 @@
             break;
     }
 
-    messageHtml = [NSString stringWithFormat:@""
-                   "<head>"
-                   "<script type=\"text/javascript\">"
-                   "    function spoiler(obj) {"
-                   "        if (obj.nextSibling.style.display === 'none') {"
-                   "            obj.nextSibling.style.display = 'inline';"
-                   "        } else {"
-                   "            obj.nextSibling.style.display = 'none';"
-                   "        }"
-                   "    }"
-                   "</script>"
-                   "<style>"
-                   "    * {"
-                   "        font-family: \"Helvetica Neue\";"
-                   "        font-size: 14px;"
-                   "    }"
-                   "    body {"
-                   "        margin: 0 20px 10px 20px;"
-                   "        padding: 0px;"
-                   "    }"
-                   "    img {"
-                   "        max-width: 100%%;"
-                   "    }"
-                   "    button > img {"
-                   "        content:url(\"http://www.maniac-forum.de/forum/images/spoiler.png\");"
-                   "        width: 17px;"
-                   "    }"
-                   "</style>"
-                   "</head>"
-                   "<body>%@</body>", messageHtml];
-
-    return messageHtml;
+    return [MCLMessageListViewController messageHtmlSkeletonForHtml:messageHtml];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.selectedIndexPath = indexPath;
     NSInteger i = indexPath.row;
 
+    self.selectedIndexPath = indexPath;
+
+    MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+
     MCLMessage *message = self.messages[i];
-    if ( ! message.text) {
-        [self completeMessage:message];
-    }
 
     MCLMessage *nextMessage = nil;
     if (indexPath.row < ([self.messages count] - 1)) {
         nextMessage = self.messages[i + 1];
     }
 
-    MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
-
-    cell.messageText = message.text;
-    [self.webView loadHTMLString:[self messageHtml:message] baseURL:nil];
-
-    [cell markRead];
-    [self.readList addMessageId:message.messageId];
-
+    self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonDisabled.png"];
     BOOL hideNotificationButton = ! self.validLogin || ! [message.username isEqualToString:self.username];
     [self barButton:self.toolbarButtonNotification hide:hideNotificationButton];
-    if ( ! hideNotificationButton) {
-        NSError *mServiceError;
-        NSInteger notificationStatus = [self.mServiceConnector notificationStatusForMessageId:message.messageId
-                                                                                      boardId:self.board.boardId
-                                                                                     username:self.username
-                                                                                     password:self.password
-                                                                                        error:&mServiceError];
-        if (notificationStatus) {
-            self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonEnabled.png"];
-            self.toolbarButtonNotification.tag = 1;
-        } else {
-            self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonDisabled.png"];
-            self.toolbarButtonNotification.tag = 0;
-        }
-    }
 
     BOOL hideEditButton = ! self.validLogin || self.thread.isClosed || ! ([message.username isEqualToString:self.username] && nextMessage.level <= message.level);
     [self barButton:self.toolbarButtonEdit hide:hideEditButton];
 
     BOOL hideReplyButton = ! self.validLogin || self.thread.isClosed;
     [self barButton:self.toolbarButtonReply hide:hideReplyButton];
+
+
+    if (message.text) {
+        [self loadMessage:message fromCell:cell];
+    } else {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSError *mServiceError;
+            NSDictionary *data = [[MCLMServiceConnector sharedConnector] messageWithId:message.messageId fromBoardId:self.board.boardId error:&mServiceError];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
+                if (mServiceError) {
+                    //                [tableView deselectRowAtIndexPath:indexPath animated:NO];
+                    //                [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
+
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error"
+                                                                    message:[mServiceError localizedDescription]
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                } else {
+                    message.userId = [data objectForKey:@"userId"];
+                    message.text = [data objectForKey:@"text"];
+                    message.textHtml = [data objectForKey:@"textHtml"];
+                    message.textHtmlWithImages = [data objectForKey:@"textHtmlWithImages"];
+
+                    [cell markRead];
+                    [self.readList addMessageId:message.messageId];
+
+                    [self loadMessage:message fromCell:cell];
+                }
+            });
+        });
+    }
 }
 
+- (void) loadMessage:(MCLMessage *)message fromCell:(MCLMessageTableViewCell *)cell
+{
+    cell.messageText = message.text;
+    [self.webView loadHTMLString:[self messageHtml:message] baseURL:nil];
+
+    BOOL showNotificationButton = self.validLogin && [message.username isEqualToString:self.username];
+    if (showNotificationButton) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSError *mServiceError;
+            NSInteger notificationStatus = [[MCLMServiceConnector sharedConnector] notificationStatusForMessageId:message.messageId
+                                                                                                          boardId:self.board.boardId
+                                                                                                         username:self.username
+                                                                                                         password:self.password
+                                                                                                            error:&mServiceError];
+            if (notificationStatus) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonEnabled.png"];
+                });
+            }
+        });
+    }
+}
 
 #pragma mark - UIWebView delegate
 
@@ -682,9 +679,8 @@
     NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
     NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
 
-    MCLMServiceConnector *mServiceConnector = [[MCLMServiceConnector alloc] init];
     NSError *mServiceError;
-    BOOL success = [mServiceConnector notificationForMessageId:message.messageId boardId:self.board.boardId username:username password:password error:&mServiceError];
+    BOOL success = [[MCLMServiceConnector sharedConnector] notificationForMessageId:message.messageId boardId:self.board.boardId username:username password:password error:&mServiceError];
 
     NSString *alertTitle, *alertMessage;
 

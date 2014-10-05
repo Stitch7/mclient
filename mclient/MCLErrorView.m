@@ -35,6 +35,7 @@
 		_label = [[UILabel alloc] initWithFrame:self.bounds];
 		_label.font = [UIFont systemFontOfSize:LABEL_SIZE];
 	}
+
 	return _label;
 }
 
@@ -44,35 +45,78 @@
 		_subLabel = [[UILabel alloc] initWithFrame:self.bounds];
 		_subLabel.font = [UIFont systemFontOfSize:SUB_LABEL_SIZE];
 	}
+
 	return _subLabel;
 }
 
 
 #pragma mark - Initializers
+
 - (id)initWithFrame:(CGRect)frame
 {
+    if (self = [super initWithFrame:frame]) {
+        [self configureBasic];
+    }
+
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame hideSubLabel:(BOOL)hideSubLabel
+{
+    if (self = [super initWithFrame:frame]) {
+        self.hideSubLabel = hideSubLabel;
+        [self configureBasic];
+    }
+
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame andText:(NSString *)text
+{
 	if (self = [super initWithFrame:frame]) {
-        [self setBackgroundColor:[UIColor whiteColor]];
-
-		self.label.textColor = [UIColor darkGrayColor];
-        self.subLabel.textColor = [UIColor lightGrayColor];
-
-        self.subLabel.text = @"Try pull to refresh…";
-
-        [self configure];
-
-        [self.image sizeToFit];
-
-		[self addSubview:self.image];
-        [self addSubview:self.label];
-        [self addSubview:self.subLabel];
-
-		self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		[self setNeedsLayout];
+        self.labelText = text;
+        [self configureBasic];
 	}
 
 	return self;
 }
+
+- (id)initWithFrame:(CGRect)frame andText:(NSString *)text hideSubLabel:(BOOL)hideSubLabel
+{
+    if (self = [super initWithFrame:frame]) {
+        self.labelText = text;
+        self.hideSubLabel = hideSubLabel;
+        [self configureBasic];
+    }
+
+    return self;
+}
+
+- (void)configureBasic
+{
+    [self setBackgroundColor:[UIColor whiteColor]];
+
+    self.label.textColor = [UIColor darkGrayColor];
+    self.subLabel.textColor = [UIColor lightGrayColor];
+
+    if ( ! self.hideSubLabel) {
+        self.subLabel.text = @"Try pull to refresh…";
+    } else {
+        self.subLabel.hidden = YES;
+    }
+
+    [self configure];
+
+    [self.image sizeToFit];
+
+    [self addSubview:self.image];
+    [self addSubview:self.label];
+    [self addSubview:self.subLabel];
+
+    self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self setNeedsLayout];
+}
+
 
 # pragma mark - Abstract
 - (void)configure

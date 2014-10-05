@@ -130,7 +130,7 @@
 
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *error;
-            BOOL login = ([[[MCLMServiceConnector alloc] init] testLoginWIthUsername:username password:password error:&error]);
+            BOOL login = ([[MCLMServiceConnector sharedConnector] testLoginWIthUsername:username password:password error:&error]);
 
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.settingsLoginDataStatusSpinner stopAnimating];

@@ -9,10 +9,13 @@
 #import "constants.h"
 #import "KeychainItemWrapper.h"
 #import "Reachability.h"
+#import "MCLAppDelegate.h"
 #import "MCLMServiceConnector.h"
 #import "MCLMessageListWidmannStyleViewController.h"
 #import "MCLProfileTableViewController.h"
 #import "MCLDetailView.h"
+#import "MCLMServiceErrorView.h"
+#import "MCLInternetConnectionErrorView.h"
 #import "MCLLoadingView.h"
 #import "MCLMessageTableViewCell.h"
 #import "MCLBoard.h"
@@ -23,20 +26,22 @@
 
 @interface MCLMessageListWidmannStyleViewController ()
 
-@property (strong, nonatomic) UIPopoverController *masterPopoverController;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong) UIRefreshControl *refreshControl;
-@property (strong) UIColor *tableSeparatorColor;
-@property (strong) MCLMServiceConnector *mServiceConnector;
-@property (strong) NSMutableArray *messages;
-@property (strong) NSMutableDictionary *cells;
-@property (strong) MCLReadList *readList;
-@property (strong) NSString *username;
-@property (strong) NSString *password;
-@property (assign) BOOL validLogin;
-@property (strong) UIColor *veryLightGreyColor;
-@property (strong) NSDateFormatter *dateFormatter;
+@property (strong, nonatomic) UIPopoverController *masterPopoverController;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
+@property (strong, nonatomic) UIColor *tableSeparatorColor;
+@property (strong, nonatomic) NSMutableArray *messages;
+@property (strong, nonatomic) NSMutableDictionary *cells;
+@property (strong, nonatomic) MCLReadList *readList;
+@property (strong, nonatomic) NSString *username;
+@property (strong, nonatomic) NSString *password;
+@property (assign, nonatomic) BOOL validLogin;
+@property (strong, nonatomic) UIColor *veryLightGreyColor;
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
+
+
+@property (strong, nonatomic) NSIndexPath *selectedCellIndexPath;
+@property (assign, nonatomic) CGFloat selectedCellHeight;
 
 @end
 
@@ -48,7 +53,6 @@
 {
     [super awakeFromNib];
     
-    self.mServiceConnector = [[MCLMServiceConnector alloc] init];
     self.cells = [NSMutableDictionary dictionary];
     self.readList = [[MCLReadList alloc] init];
     
@@ -59,10 +63,8 @@
     self.password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
     self.validLogin = NO;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        if ([self.username length] > 0 && [self.password length] > 0) {
-            NSError *error;
-            self.validLogin = ([[[MCLMServiceConnector alloc] init] testLoginWIthUsername:self.username password:self.password error:&error]);
-        }
+        NSError *error;
+        self.validLogin = ([[MCLMServiceConnector sharedConnector] testLoginWIthUsername:self.username password:self.password error:&error]);
     });
 
     self.veryLightGreyColor = [UIColor colorWithRed:240/255.0f green:240/255.0f blue:240/255.0f alpha:1.0f];
@@ -101,16 +103,11 @@
 
         // Load data async
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSData *data = [self loadData];
+            NSError *mServiceError;
+            NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId fromBoardId:self.board.boardId error:&mServiceError];
             // Process data on main thread
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self fetchedData:data];
-                // Remove loading view
-                for (id subview in self.view.subviews) {
-                    if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
-                        [subview removeFromSuperview];
-                    }
-                }
+                [self fetchedData:data error:mServiceError];
                 // Restore tables separatorColor
                 [self.tableView setSeparatorColor:self.tableSeparatorColor];
             });
@@ -155,6 +152,7 @@
 
     // Add loading view
     [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     if (selectedIndexPath) {
@@ -163,18 +161,12 @@
     }
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [self loadData];
+        NSError *mServiceError;
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId fromBoardId:self.board.boardId error:&mServiceError];
         // Process data on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self fetchedData:data];
-            // Remove loading view on main thread
-            for (id subview in self.view.subviews) {
-                if ([[subview class] isSubclassOfClass: [MCLLoadingView class]] ||
-                    [[subview class] isSubclassOfClass: [MCLDetailView class]]
-                ) {
-                    [subview removeFromSuperview];
-                }
-            }
+            [self fetchedData:data error:mServiceError];
+
             // Restore tables separatorColor
             [self.tableView setSeparatorColor:self.tableSeparatorColor];
 
@@ -184,66 +176,82 @@
     });
 }
 
-- (NSData *)loadData
-{
-    NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/messagelist/%@", kMServiceBaseURL, self.board.boardId, self.thread.threadId];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
-
-    return data;
-}
-
 - (void)reloadData
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [self loadData];
+        NSError *mServiceError;
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId fromBoardId:self.board.boardId error:&mServiceError];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self fetchedData:data];
+            [self fetchedData:data error:mServiceError];
             [self.refreshControl endRefreshing];
         });
     });
 }
 
-- (void)fetchedData:(NSData *)responseData
+- (void)fetchedData:(NSDictionary *)data error:(NSError *)error
 {
-    self.messages = [NSMutableArray array];
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
-    [dateFormatter setLocale:enUSPOSIXLocale];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-    
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    for (id object in json) {
-        NSNumber *messageId = [object objectForKey:@"messageId"];
-        NSNumber *level = [object objectForKey:@"level"];
-        BOOL mod = [[object objectForKey:@"mod"] boolValue];
-        NSString *username = [object objectForKey:@"username"];
-        NSString *subject = [object objectForKey:@"subject"];
-        NSDate *date = [dateFormatter dateFromString:[object objectForKey:@"date"]];
-        
-        MCLMessage *message = [MCLMessage messageWithId:messageId
-                                                  level:level
-                                                 userId:nil
-                                                    mod:mod
-                                               username:username
-                                                subject:subject
-                                                   date:date
-                                                   text:nil
-                                               textHtml:nil
-                                     textHtmlWithImages:nil];
-        [self.messages addObject:message];
+    for (id subview in self.view.subviews) {
+        if ([[subview class] isSubclassOfClass: [MCLErrorView class]] ||
+            [[subview class] isSubclassOfClass: [MCLLoadingView class]] ||
+            [[subview class] isSubclassOfClass: [MCLDetailView class]]
+        ) {
+            [subview removeFromSuperview];
+        }
     }
-
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    [self.tableView reloadData];
 
-    // If new thread select first message
-    if ( ! [self.readList messageIdIsRead:[[self.messages firstObject] messageId]]) {
-        NSIndexPath *firstMessageIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        [self tableView:self.tableView didSelectRowAtIndexPath:firstMessageIndexPath];
-        [self.tableView selectRowAtIndexPath:firstMessageIndexPath animated:YES scrollPosition:0];
+    if (error) {
+        CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
+        switch (error.code) {
+            case -2:
+                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame]];
+                break;
+
+            case -1:
+                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[error localizedDescription]]];
+                break;
+
+            default:
+                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame]];
+                break;
+        }
+    } else {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+        [dateFormatter setLocale:enUSPOSIXLocale];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+
+        self.messages = [NSMutableArray array];
+        for (id object in data) {
+            NSNumber *messageId = [object objectForKey:@"messageId"];
+            NSNumber *level = [object objectForKey:@"level"];
+            BOOL mod = [[object objectForKey:@"mod"] boolValue];
+            NSString *username = [object objectForKey:@"username"];
+            NSString *subject = [object objectForKey:@"subject"];
+            NSDate *date = [dateFormatter dateFromString:[object objectForKey:@"date"]];
+
+            MCLMessage *message = [MCLMessage messageWithId:messageId
+                                                      level:level
+                                                     userId:nil
+                                                        mod:mod
+                                                   username:username
+                                                    subject:subject
+                                                       date:date
+                                                       text:nil
+                                                   textHtml:nil
+                                         textHtmlWithImages:nil];
+            [self.messages addObject:message];
+        }
+
+        [self.tableView reloadData];
+
+        // If new thread select first message
+        if ( ! [self.readList messageIdIsRead:[[self.messages firstObject] messageId]]) {
+            NSIndexPath *firstMessageIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self tableView:self.tableView didSelectRowAtIndexPath:firstMessageIndexPath];
+            [self.tableView selectRowAtIndexPath:firstMessageIndexPath animated:YES scrollPosition:0];
+        }
     }
 }
 
@@ -260,15 +268,13 @@
     return [self.messages count];
 }
 
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger i = indexPath.row;
 
     MCLMessage *message = self.messages[i];
-    MCLMessage *nextMessage = nil;
-    if (indexPath.row < ([self.messages count] - 1)) {
-        nextMessage = self.messages[i + 1];
-    }
 
     static NSString *cellIdentifier = @"MessageCell";
     MCLMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
@@ -280,6 +286,7 @@
         [cell.messageTextWebView setBackgroundColor:self.veryLightGreyColor];
         [cell.messageToolbar setHidden:NO];
         [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
+        [self hideToolbarButtonsForMessage:message inCell:cell atIndexPath:indexPath];
     } else {
         cell.backgroundColor = [UIColor clearColor];
         [cell.messageToolbar setHidden:YES];
@@ -328,29 +335,6 @@
     } else {
         [cell markUnread];
     }
-    
-    BOOL hideNotificationButton = ! self.validLogin ||  ! [message.username isEqualToString:self.username];
-    [self barButton:cell.messageNotificationButton hide:hideNotificationButton];
-    
-    if ( ! hideNotificationButton) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSError *mServiceError;
-            NSInteger notificationStatus = [self.mServiceConnector notificationStatusForMessageId:message.messageId
-                                                                                          boardId:self.board.boardId
-                                                                                         username:self.username
-                                                                                         password:self.password
-                                                                                            error:&mServiceError];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [cell enableNotificationButton:notificationStatus];
-            });
-        });
-    }
-    
-    BOOL hideEditButton = ! self.validLogin || self.thread.isClosed || ! ([message.username isEqualToString:self.username] && nextMessage.level <= message.level);
-    [self barButton:cell.messageEditButton hide:hideEditButton];
-
-    BOOL hideReplyButton = ! self.validLogin || self.thread.isClosed;
-    [self barButton:cell.messageReplyButton hide:hideReplyButton];
 
     return cell;
 }
@@ -376,6 +360,37 @@
     }
 }
 
+- (void)hideToolbarButtonsForMessage:(MCLMessage *)message inCell:(MCLMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    BOOL hideNotificationButton = ! self.validLogin ||  ! [message.username isEqualToString:self.username];
+    [self barButton:cell.messageNotificationButton hide:hideNotificationButton];
+
+    if ( ! hideNotificationButton) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSError *mServiceError;
+            BOOL notificationStatus = [[MCLMServiceConnector sharedConnector] notificationStatusForMessageId:message.messageId
+                                                                                                     boardId:self.board.boardId
+                                                                                                    username:self.username
+                                                                                                    password:self.password
+                                                                                                       error:&mServiceError];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [cell enableNotificationButton:notificationStatus];
+            });
+        });
+    }
+
+    MCLMessage *nextMessage = nil;
+    if (indexPath.row < ([self.messages count] - 1)) {
+        nextMessage = self.messages[indexPath.row + 1];
+    }
+
+    BOOL hideEditButton = ! self.validLogin || self.thread.isClosed || ! ([message.username isEqualToString:self.username] && nextMessage.level <= message.level);
+    [self barButton:cell.messageEditButton hide:hideEditButton];
+
+    BOOL hideReplyButton = ! self.validLogin || self.thread.isClosed;
+    [self barButton:cell.messageReplyButton hide:hideReplyButton];
+}
+
 
 #pragma mark - UITableViewDelegate
 
@@ -383,11 +398,16 @@
 {
     CGFloat height = 60;
 
-	if ([tableView indexPathsForSelectedRows].count && [[tableView indexPathsForSelectedRows] indexOfObject:indexPath] != NSNotFound) {
+    if (indexPath == self.selectedCellIndexPath) {
+        height = self.selectedCellHeight;
+    } else if ([tableView indexPathsForSelectedRows].count && [[tableView indexPathsForSelectedRows] indexOfObject:indexPath] != NSNotFound) {
         MCLMessageTableViewCell *cell = [self.cells objectForKey:@(indexPath.row)];
         CGFloat webViewHeight = cell.messageTextWebView.scrollView.contentSize.height;
         CGFloat toolbarHeight = cell.messageToolbar.frame.size.height;
         height = height + 10 + webViewHeight + toolbarHeight;
+
+        self.selectedCellIndexPath = indexPath;
+        self.selectedCellHeight = height;
 	}
 
     return height;
@@ -412,38 +432,7 @@
             break;
     }
 
-    messageHtml = [NSString stringWithFormat:@""
-                   "<head>"
-                   "<script type=\"text/javascript\">"
-                   "    function spoiler(obj) {"
-                   "        if (obj.nextSibling.style.display === 'none') {"
-                   "            obj.nextSibling.style.display = 'inline';"
-                   "        } else {"
-                   "            obj.nextSibling.style.display = 'none';"
-                   "        }"
-                   "    }"
-                   "</script>"
-                   "<style>"
-                   "    * {"
-                   "        font-family: \"Helvetica Neue\";"
-                   "        font-size: 14px;"
-                   "    }"
-                   "    body {"
-                   "        margin: 0 20px 10px 20px;"
-                   "        padding: 0px;"
-                   "    }"
-                   "    img {"
-                   "        max-width: 100%%;"
-                   "    }"
-                   "    button > img {"
-                   "        content:url(\"http://www.maniac-forum.de/forum/images/spoiler.png\");"
-                   "        width: 17px;"
-                   "    }"
-                   "</style>"
-                   "</head>"
-                   "<body>%@</body>", messageHtml];
-
-    return messageHtml;
+    return [MCLMessageListViewController messageHtmlSkeletonForHtml:messageHtml];
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -461,6 +450,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
     MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
     [cell setBackgroundColor:self.veryLightGreyColor];
 
@@ -468,42 +459,34 @@
     if (message.text) {
         [self putMessage:message toCell:cell atIndexPath:indexPath];
     } else {
-        NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message/%@", kMServiceBaseURL, self.board.boardId, message.messageId];
-        NSURL *url = [NSURL URLWithString:urlString];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSError *mServiceError;
+            NSDictionary *data = [[MCLMServiceConnector sharedConnector] messageWithId:message.messageId fromBoardId:self.board.boardId error:&mServiceError];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (mServiceError) {
+                    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+                    [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
 
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error"
+                                                                    message:[mServiceError localizedDescription]
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                } else {
+                    message.userId = [data objectForKey:@"userId"];
+                    message.text = [data objectForKey:@"text"];
+                    message.textHtml = [data objectForKey:@"textHtml"];
+                    message.textHtmlWithImages = [data objectForKey:@"textHtmlWithImages"];
 
-            if (connectionError) {
-                [tableView deselectRowAtIndexPath:indexPath animated:NO];
-                [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
-
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error"
-                                                                message:[connectionError localizedDescription]
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-                [alert show];
-
-            } else {
-                NSError *jsonParseError;
-                NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonParseError];
-
-                message.userId = [json objectForKey:@"userId"];
-                message.text = [json objectForKey:@"text"];
-                message.textHtml = [json objectForKey:@"textHtml"];
-                message.textHtmlWithImages = [json objectForKey:@"textHtmlWithImages"];
-
-                cell.messageText = message.text;
-                [cell markRead];
-                [self.readList addMessageId:message.messageId];
-
-                [self putMessage:message toCell:cell atIndexPath:indexPath];
-            }
-        }];
-        
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+                    cell.messageText = message.text;
+                    [cell markRead];
+                    [self.readList addMessageId:message.messageId];
+                    
+                    [self putMessage:message toCell:cell atIndexPath:indexPath];
+                }
+            });
+        });
     }
 }
 
@@ -511,6 +494,7 @@
 {
     [cell.messageTextWebView setBackgroundColor:self.veryLightGreyColor];
     [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
+    [self hideToolbarButtonsForMessage:message inCell:cell atIndexPath:indexPath];
 
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
 }
@@ -585,11 +569,14 @@
         MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
 
         // Show toolbar after short delay to avoid skidding through text
-        [cell.messageToolbar performSelector:@selector(setHidden:) withObject:nil afterDelay:0.2];
-        // [cell.messageToolbar setHidden:NO];
+        if ([cell.messageToolbar isHidden]) {
+            [cell.messageToolbar performSelector:@selector(setHidden:) withObject:nil afterDelay:0.2];
+        }
 
         // Resize table cell
         [self updateTableView];
+
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }
 }
 

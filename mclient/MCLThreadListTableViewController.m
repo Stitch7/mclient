@@ -6,14 +6,17 @@
 //  Copyright (c) 2014 Christopher Reitz. All rights reserved.
 //
 
+#import "MCLThreadListTableViewController.h"
+
 #import "constants.h"
 #import "KeychainItemWrapper.h"
+#import "MCLAppDelegate.h"
 #import "MCLMServiceConnector.h"
-#import "MCLThreadListTableViewController.h"
 #import "MCLMessageListWidmannStyleViewController.h" //TODO
 #import "MCLMessageListFrameStyleViewController.h" //TODO
 #import "MCLMessageListViewController.h"
-#import "MCLErrorView.h"
+#import "MCLMServiceErrorView.h"
+#import "MCLInternetConnectionErrorView.h"
 #import "MCLLoadingView.h"
 #import "MCLThreadTableViewCell.h"
 #import "MCLThread.h"
@@ -24,7 +27,6 @@
 @interface MCLThreadListTableViewController ()
 
 @property (strong, nonatomic) UIColor *tableSeparatorColor;
-@property (assign, nonatomic) CGRect tableViewBounds;
 @property (strong, nonatomic) MCLMessageListViewController *detailViewController;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) NSMutableArray *threads;
@@ -111,68 +113,64 @@
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
 
-    self.tableViewBounds = self.view.bounds;
-
     // Visualize loading
-    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.tableViewBounds]];
+    CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
+    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:fullScreenFrame]];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     // Load data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [self loadData];
-        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+        NSError *mServiceError;
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadsFromBoardId:self.board.boardId error:&mServiceError];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self fetchedData:data error:mServiceError];
+        });
     });
-}
-
-- (NSData *)loadData
-{
-    NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/threadlist", kMServiceBaseURL, self.board.boardId];
-    NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString: urlString]];
-
-    return data;
 }
 
 - (void)reloadData
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [self loadData];
+        NSError *mServiceError;
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadsFromBoardId:self.board.boardId error:&mServiceError];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self fetchedData:data];
+            [self fetchedData:data error:mServiceError];
             [self.refreshControl endRefreshing];
         });
     });
 }
 
-- (void)fetchedData:(NSData *)data
+- (void)fetchedData:(NSDictionary *)data error:(NSError *)error
 {
-    if ( ! data) {
-        BOOL errorViewPresent = NO;
-        for (id subview in self.view.subviews) {
-            if ([[subview class] isSubclassOfClass: [MCLErrorView class]]) {
-                errorViewPresent = YES;
-            }
+    for (id subview in self.view.subviews) {
+        if ([[subview class] isSubclassOfClass: [MCLErrorView class]] ||
+            [[subview class] isSubclassOfClass: [MCLLoadingView class]]
+        ) {
+            [subview removeFromSuperview];
         }
+    }
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
-        if ( ! errorViewPresent) {
-            [self.view addSubview:[[MCLErrorView alloc] initWithFrame:self.tableViewBounds]];
+    if (error) {
+        CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
+        switch (error.code) {
+            case -2:
+                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame]];
+                break;
+
+            case -1:
+                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[error localizedDescription]]];
+                break;
+
+            default:
+                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame]];
+                break;
         }
     } else {
-        self.threads = [NSMutableArray array];
-        
-        NSError *error;
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        for (id object in json) {
+        self.threads = [NSMutableArray array];        
+        for (id object in data) {
             [self.threads addObject:[self threadFromJSON:object]];
         }
-
-        for (id subview in self.view.subviews) {
-            if ([[subview class] isSubclassOfClass: [MCLErrorView class]]) {
-                [subview removeFromSuperview];
-            } else if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
-                [subview removeFromSuperview];
-            }
-        }
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
         // Restore tables separatorColor
         [self.tableView setSeparatorColor:self.tableSeparatorColor];
@@ -353,14 +351,11 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     self.searchResults = [NSMutableArray array];
-    
-    MCLMServiceConnector *mServiceConnector = [[MCLMServiceConnector alloc] init];
+
     NSError *mServiceError;
-    NSData *responseData = [mServiceConnector searchOnBoard:self.board.boardId withPhrase:searchBar.text error:&mServiceError];
+    NSDictionary *data = [[MCLMServiceConnector sharedConnector] searchThreadsOnBoard:self.board.boardId withPhrase:searchBar.text error:&mServiceError];
    
-    NSError *jsonError;
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&jsonError];
-    for (id object in json) {
+    for (id object in data) {
         [self.searchResults addObject:[self threadFromJSON:object]];
     }
     
