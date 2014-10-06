@@ -13,7 +13,7 @@
 - (void)configure
 {
     self.label.text = self.labelText ?: @"M!service Error";
-    self.image.image = [UIImage imageNamed:@"errorResponse.png"];
+    self.image.image = [UIImage imageNamed:@"errorMService.png"];
 }
 
 @end

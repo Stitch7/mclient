@@ -13,7 +13,7 @@
 - (void)configure
 {
     self.label.text = @"No Internet Connection";
-    self.image.image = [UIImage imageNamed:@"errorConnection.png"];
+    self.image.image = [UIImage imageNamed:@"errorInternetConnection.png"];
 }
 
 @end
