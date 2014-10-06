@@ -84,13 +84,15 @@
     self.showImages = [self.userDefaults objectForKey:@"showImages"] ?: @(kMCLSettingsShowImagesAlways);
 
 
-    UILabel *aboutLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, self.view.bounds.size.width, 70)];
+    UILabel *aboutLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 70)];
+    aboutLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     aboutLabel.numberOfLines = 3;
     aboutLabel.font = [UIFont systemFontOfSize:14.0f];
+    aboutLabel.textAlignment = NSTextAlignmentCenter;
     aboutLabel.textColor = [UIColor darkGrayColor];
 
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    aboutLabel.text = [NSString stringWithFormat:@"Version %@ (Build: %@)\nCopyright © 2014 Christopher Reitz aka Stitch\nAll rights reserved",
+    aboutLabel.text = [NSString stringWithFormat:@"Version %@ (%@)\nCopyright © 2014 Christopher Reitz aka Stitch\nAll rights reserved.",
                        [infoDictionary objectForKey:@"CFBundleShortVersionString"],
                        [infoDictionary objectForKey:@"CFBundleVersion"]];
 
@@ -136,7 +138,7 @@
                 [self.settingsLoginDataStatusSpinner stopAnimating];
                 if (login) {
                     [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryCheckmark];
-                    self.settingsLoginDataStatusLabel.text = @"Login data is correct";
+                    self.settingsLoginDataStatusLabel.text = @"Login data is valid";
                 } else {
                     [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
                     self.settingsLoginDataStatusLabel.textColor = [UIColor redColor];
@@ -233,30 +235,6 @@
             }
         }
     }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    CGFloat height = UITableViewAutomaticDimension;
-
-    NSInteger optionsSection = OPTIONS_SECTION;
-    if (section == optionsSection) {
-        height = 0.0f;
-    }
-
-    return height;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CGFloat height = UITableViewAutomaticDimension;
-
-    NSInteger optionsSection = OPTIONS_SECTION;
-    if (indexPath.section == optionsSection) {
-        height = 0.0f;
-    }
-
-    return height;
 }
 
 

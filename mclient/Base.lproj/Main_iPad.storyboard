@@ -134,7 +134,7 @@
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="cXe-ps-Poo"/>
-                                            <barButtonItem image="replyButton.png" id="qwk-es-7gv">
+                                            <barButtonItem systemItem="reply" id="qwk-es-7gv">
                                                 <connections>
                                                     <segue destination="Nb5-ih-IpS" kind="modal" identifier="ModalToComposeReply" modalPresentationStyle="pageSheet" id="MHm-mc-WTK"/>
                                                 </connections>
@@ -574,57 +574,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="ayx-Yf-8Mt">
-                                <cells>
-                                    <tableViewCell hidden="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="pa4-Ir-4o6">
-                                        <rect key="frame" x="0.0" y="700" width="540" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pa4-Ir-4o6" id="XdR-ge-Dtl">
-                                            <rect key="frame" x="0.0" y="0.0" width="540" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Night Mode" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Cc9-Mj-Fba">
-                                                    <rect key="frame" x="20" y="11" width="190" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="ABY-q8-nl4">
-                                                    <rect key="frame" x="471" y="6" width="51" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                                    <connections>
-                                                        <action selector="settingsNightModeSwitchValueChangedAction:" destination="7QN-DO-H2B" eventType="valueChanged" id="erK-DV-ile"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell hidden="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="2ps-kS-lBX">
-                                        <rect key="frame" x="0.0" y="744" width="540" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2ps-kS-lBX" id="NDo-fw-BLY">
-                                            <rect key="frame" x="0.0" y="0.0" width="540" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync Read Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3Oz-Et-RZV">
-                                                    <rect key="frame" x="20" y="11" width="273" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="BbG-6l-zSu">
-                                                    <rect key="frame" x="471" y="6" width="51" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                                    <connections>
-                                                        <action selector="settingsSyncReadStatusSwitchValueChangedAction:" destination="7QN-DO-H2B" eventType="valueChanged" id="nQf-xi-CzT"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="7QN-DO-H2B" id="nne-pc-Jgg"/>
@@ -1008,7 +957,6 @@
         <image name="notificationButtonDisabled.png" width="25" height="25"/>
         <image name="profileButton.png" width="25" height="25"/>
         <image name="quoteButton.png" width="25" height="25"/>
-        <image name="replyButton.png" width="25" height="25"/>
         <image name="settingsButton.png" width="25" height="25"/>
         <image name="speakButton.png" width="25" height="25"/>
     </resources>
@@ -1018,7 +966,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="BBe-Jw-dPy"/>
-        <segue reference="OzD-Bs-DyH"/>
+        <segue reference="zlL-gJ-Ao9"/>
+        <segue reference="dz1-oT-aTf"/>
     </inferredMetricsTieBreakers>
 </document>
