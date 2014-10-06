@@ -80,13 +80,13 @@
 #pragma clang diagnostic ignored "-Wundeclared-selector"
     if (action == @selector(_promptForReplace:) ||
         action == @selector(_define:)
-        ) {
+    ) {
         canPerformAction = NO;
     }
 #pragma clang diagnostic pop
 
     if (action == @selector(paste:)) {
-        canPerformAction = self.menuItemsSubmenuFormatTextActive == NO;
+        canPerformAction = [UIPasteboard generalPasteboard].string.length > 0 && self.menuItemsSubmenuFormatTextActive == NO;
     }
 
     if (action == @selector(cut:) ||
@@ -99,7 +99,7 @@
     if (action == @selector(formatSpoiler:) ||
         action == @selector(formatLink:) ||
         action == @selector(formatImage:)
-        ) {
+    ) {
         canPerformAction = self.selectedRange.length > 0;
     }
 
