@@ -102,9 +102,7 @@
     }
 
     // Add VerifiyLoginView to navigationControllers toolbar
-    CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
-    CGRect navToolbarFrame = CGRectMake(0, 0, fullScreenFrame.size.width, self.navigationController.toolbar.bounds.size.height);
-    MCLVerifiyLoginView *navToolbarView = [[MCLVerifiyLoginView alloc] initWithFrame:navToolbarFrame];
+    MCLVerifiyLoginView *navToolbarView = [[MCLVerifiyLoginView alloc] initWithFrame:self.navigationController.toolbar.bounds];
     [self.navigationController.toolbar addSubview:navToolbarView];
     [self.navigationController setToolbarHidden:NO animated:YES];
 

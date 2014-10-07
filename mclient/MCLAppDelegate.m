@@ -8,6 +8,9 @@
 
 #import "MCLAppDelegate.h"
 
+#import "MCLMessageListViewController.h"
+#import "MCLComposeMessagePreviewViewController.h"
+
 @implementation MCLAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -47,25 +50,30 @@
 
 - (CGRect)fullScreenFrameFromViewController:(UIViewController *)viewController
 {
-    BOOL isPortrait = UIInterfaceOrientationIsPortrait(viewController.interfaceOrientation);
-    BOOL isLandscape = UIInterfaceOrientationIsLandscape(viewController.interfaceOrientation);
+    CGFloat x = 0.0f;
+    CGFloat y = 0.0f;
 
-    // Fix width for when in splitView
-    CGFloat viewWidth = viewController.splitViewController ? 320 : viewController.view.bounds.size.width;
-
-    CGFloat viewHeight = viewController.view.bounds.size.height;
-    // If iPad starts in landscape mode, subtract some points...
-    viewHeight = isLandscape && viewController.splitViewController ? viewHeight - 250 : viewHeight;
-    // Add missing navBar points in landscape mode for iPhone
-    viewHeight = viewController.splitViewController ? viewHeight : viewHeight + 12;
+    CGFloat viewWidth = viewController.view.bounds.size.width;
 
     CGFloat navBarHeight = viewController.navigationController.navigationBar.bounds.size.height;
-
     CGSize statusBarSize = [UIApplication sharedApplication].statusBarFrame.size;
-    CGFloat statusBarHeight = (isPortrait ? statusBarSize.height : statusBarSize.width);
+    CGFloat statusBarHeight = statusBarSize.height;
+    if ((NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1) &&
+        UIInterfaceOrientationIsLandscape(viewController.interfaceOrientation)
+    ) {
+        statusBarHeight = statusBarSize.width;
+    }
 
-    return CGRectMake(0, 0, viewWidth, viewHeight - navBarHeight - statusBarHeight);
+    CGFloat viewHeight = viewController.view.bounds.size.height - navBarHeight - statusBarHeight;
+
+    if ([[viewController class] isSubclassOfClass: [MCLMessageListViewController class]]) {
+        y = navBarHeight + statusBarHeight;
+    } else if ([[viewController class] isSubclassOfClass: [MCLComposeMessagePreviewViewController class]]) {
+        y = navBarHeight;
+        viewHeight += statusBarHeight;
+    }
+
+    return CGRectMake(x, y, viewWidth, viewHeight);
 }
-
 
 @end

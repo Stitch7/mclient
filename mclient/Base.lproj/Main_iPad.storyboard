@@ -96,7 +96,7 @@
                                 <subviews>
                                     <webView contentMode="scaleToFill" id="7J9-2Y-eHt">
                                         <rect key="frame" x="0.0" y="10" width="1023" height="315"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                     </webView>
@@ -886,7 +886,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" id="h1p-NG-NJO">
-                                <rect key="frame" x="0.0" y="63.000000925440631" width="768" height="646"/>
+                                <rect key="frame" x="0.0" y="63.000002837687141" width="768" height="646"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
@@ -966,7 +966,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="zlL-gJ-Ao9"/>
-        <segue reference="dz1-oT-aTf"/>
+        <segue reference="tPe-uH-qWP"/>
+        <segue reference="OzD-Bs-DyH"/>
     </inferredMetricsTieBreakers>
 </document>

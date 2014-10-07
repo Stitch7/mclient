@@ -38,14 +38,12 @@
 	if (self = [super initWithFrame:frame]) {
         [self.spinner startAnimating];
 
-//        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-
         [self configureSubviews];
 
         [self addSubview:self.label];
         [self addSubview:self.spinner];
 
-
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self setNeedsLayout];
 	}
 
@@ -55,6 +53,7 @@
 - (void)configureSubviews
 {
     [self setBackgroundColor:[UIColor whiteColor]];
+
     self.label.text = @"Loading…";
     self.label.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     self.label.textColor = self.spinner.color;

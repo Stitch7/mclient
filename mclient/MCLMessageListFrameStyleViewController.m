@@ -128,7 +128,8 @@
         self.title = self.thread.subject;
 
         // Add loading view
-        [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
+        CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
+        [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:fullScreenFrame]];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
         // Load data async
@@ -233,7 +234,8 @@
     self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 
     // Visualize loading
-    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
+    CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
+    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:fullScreenFrame]];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     // Load data async
@@ -278,7 +280,7 @@
         if ([[subview class] isSubclassOfClass: [MCLErrorView class]] ||
             [[subview class] isSubclassOfClass: [MCLLoadingView class]] ||
             [[subview class] isSubclassOfClass: [MCLDetailView class]]
-            ) {
+        ) {
             [subview removeFromSuperview];
         }
     }
@@ -286,13 +288,14 @@
 
     if (error) {
         CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
+        BOOL isIPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
         switch (error.code) {
             case -2:
-                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame]];
+                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame hideSubLabel:isIPad]];
                 break;
 
             default:
-                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[error localizedDescription]]];
+                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[error localizedDescription] hideSubLabel:isIPad]];
                 break;
         }
     } else {
@@ -328,7 +331,8 @@
 
         // Select first message
         [self.tableView selectRowAtIndexPath:self.selectedIndexPath animated:NO scrollPosition:0];
-        [self tableView:self.tableView didSelectRowAtIndexPath:self.selectedIndexPath];    }
+        [self tableView:self.tableView didSelectRowAtIndexPath:self.selectedIndexPath];
+    }
 }
 
 
@@ -471,16 +475,24 @@
     BOOL hideReplyButton = ! self.validLogin || self.thread.isClosed;
     [self barButton:self.toolbarButtonReply hide:hideReplyButton];
 
-
     if (message.text) {
         [self loadMessage:message fromCell:cell];
     } else {
+        [self.webView loadHTMLString:@"" baseURL:nil];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        CGRect mvBounds = self.messageView.bounds;
+        CGRect loadingFrame = CGRectMake(mvBounds .origin.x, mvBounds.origin.y, mvBounds.size.width, mvBounds.size.height - self.toolbar.frame.size.height - 1);
+        [self.messageView addSubview:[[MCLLoadingView alloc] initWithFrame:loadingFrame]];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *mServiceError;
             NSDictionary *data = [[MCLMServiceConnector sharedConnector] messageWithId:message.messageId fromBoardId:self.board.boardId error:&mServiceError];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                for (id subview in self.messageView.subviews) {
+                    if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
+                        [subview removeFromSuperview];
+                    }
+                }
 
                 if (mServiceError) {
                     //                [tableView deselectRowAtIndexPath:indexPath animated:NO];

@@ -94,11 +94,9 @@
         // Set title to threads subject
         self.title = self.thread.subject;
 
-        // Preserve selection between presentations.
-        //    self.clearsSelectionOnViewWillAppear = NO; //TODO
-
         // Visualize loading
-        [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
+        CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
+        [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:fullScreenFrame]];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
         // Load data async
@@ -151,7 +149,8 @@
     }
 
     // Add loading view
-    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.bounds]];
+    CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
+    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:fullScreenFrame]];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
@@ -203,13 +202,14 @@
 
     if (error) {
         CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
+        BOOL isIPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
         switch (error.code) {
             case -2:
-                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame]];
+                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame hideSubLabel:isIPad]];
                 break;
 
             default:
-                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[error localizedDescription]]];
+                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[error localizedDescription] hideSubLabel:isIPad]];
                 break;
         }
     } else {
