@@ -40,7 +40,6 @@
 @property (strong) NSDateFormatter *dateFormatter;
 @property (strong) NSIndexPath *selectedIndexPath;
 @property (strong) UIRefreshControl *refreshControl;
-
 @property (weak, nonatomic) IBOutlet UIView *messageView;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -144,6 +143,11 @@
     } else {
         [self.view addSubview:[[MCLDetailView alloc] initWithFrame:self.view.bounds]];
     }
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [self.refreshControl.superview sendSubviewToBack:self.refreshControl];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration

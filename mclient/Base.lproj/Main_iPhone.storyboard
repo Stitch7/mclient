@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="rS3-R9-Ivy">
     <dependencies>
+        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -477,9 +478,9 @@
         <!--Settings-->
         <scene sceneID="IOJ-0j-uvP">
             <objects>
-                <tableViewController id="DID-uV-EYM" customClass="MCLSettingsTableViewController" sceneMemberID="viewController">
+                <tableViewController extendedLayoutIncludesOpaqueBars="YES" id="DID-uV-EYM" customClass="MCLSettingsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="GR3-bE-uHu">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
@@ -691,7 +692,6 @@
                             <outlet property="delegate" destination="DID-uV-EYM" id="HUp-gG-7f2"/>
                         </connections>
                     </tableView>
-                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="Settings" id="wbc-lg-t5H">
                         <barButtonItem key="leftBarButtonItem" image="downButton.png" id="L16-Vq-eeX">
                             <connections>
@@ -764,13 +764,13 @@
         <!--Messages-->
         <scene sceneID="DRE-Xb-3ag">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="K8N-KE-d4j" customClass="MCLMessageListWidmannStyleViewController" sceneMemberID="viewController">
+                <viewController id="K8N-KE-d4j" customClass="MCLMessageListWidmannStyleViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="g5O-ZY-q9v">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="247" sectionHeaderHeight="22" sectionFooterHeight="22" id="xGh-fJ-4Kx">
-                                <rect key="frame" x="0.0" y="66" width="320" height="501"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -911,7 +911,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ejO-Yt-GIM"/>
-        <segue reference="yx8-yu-q67"/>
+        <segue reference="oG1-Bw-rUB"/>
+        <segue reference="zem-o1-rk9"/>
     </inferredMetricsTieBreakers>
 </document>

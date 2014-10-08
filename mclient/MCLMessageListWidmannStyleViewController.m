@@ -27,8 +27,11 @@
 @interface MCLMessageListWidmannStyleViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSIndexPath *selectedCellIndexPath;
+@property (assign, nonatomic) CGFloat selectedCellHeight;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
+@property (strong, nonatomic) UIView *refreshControlBackgroundView;
 @property (strong, nonatomic) UIColor *tableSeparatorColor;
 @property (strong, nonatomic) NSMutableArray *messages;
 @property (strong, nonatomic) NSMutableDictionary *cells;
@@ -40,8 +43,6 @@
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
 
-@property (strong, nonatomic) NSIndexPath *selectedCellIndexPath;
-@property (assign, nonatomic) CGFloat selectedCellHeight;
 
 @end
 
@@ -86,6 +87,11 @@
     // Enable statusbar tap to scroll to top for tableView
     self.tableView.scrollsToTop = YES;
     // Add refresh control
+    CGRect refreshControlBackgroundViewFrame = self.tableView.bounds;
+    refreshControlBackgroundViewFrame.origin.y = -refreshControlBackgroundViewFrame.size.height;
+    self.refreshControlBackgroundView = [[UIView alloc] initWithFrame:refreshControlBackgroundViewFrame];
+    self.refreshControlBackgroundView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    [self.tableView addSubview:self.refreshControlBackgroundView];
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
@@ -113,6 +119,12 @@
     } else {
         [self.view addSubview:[[MCLDetailView alloc] initWithFrame:self.view.bounds]];
     }
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [self.tableView sendSubviewToBack:self.refreshControl];
+    [self.tableView sendSubviewToBack:self.refreshControlBackgroundView];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -264,8 +276,6 @@
     return [self.messages count];
 }
 
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger i = indexPath.row;
@@ -284,7 +294,7 @@
         [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
         [self hideToolbarButtonsForMessage:message inCell:cell atIndexPath:indexPath];
     } else {
-        cell.backgroundColor = [UIColor clearColor];
+        cell.backgroundColor = [UIColor whiteColor];
         [cell.messageToolbar setHidden:YES];
     }
 
