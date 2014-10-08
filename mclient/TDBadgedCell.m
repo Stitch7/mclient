@@ -46,13 +46,18 @@
     CGFloat scale = [[UIScreen mainScreen] scale];
 	CGFloat fontsize = self.fontSize;
     UIFont *font = self.boldFont ? [UIFont boldSystemFontOfSize:fontsize] : [UIFont systemFontOfSize:fontsize];
-    
+
+    /* BEGIN CHANGES CRE */
+    CGSize numberSize = [self.badgeString sizeWithAttributes:@{ NSFontAttributeName:font }];
+    /*
     CGSize numberSize;
     if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
         numberSize = [self.badgeString sizeWithAttributes:@{ NSFontAttributeName:font }];
     } else {
         numberSize = [self.badgeString sizeWithFont:font];
     }
+    */
+    /* END CHANGES CRE */
     
     CGFloat radius = (__radius)?__radius:8.5;
     
@@ -143,10 +148,17 @@
                 CGContextSetBlendMode(context, kCGBlendModeClear);
             }
         }
-        
-        [__badgeString drawInRect:bounds withFont:font lineBreakMode:TDLineBreakModeClip];
+
+        /* BEGIN CHANGES CRE */
+        NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        paragraphStyle.lineBreakMode = TDLineBreakModeClip;
+        NSDictionary *attributes = @{NSFontAttributeName: font,
+                                     NSParagraphStyleAttributeName: paragraphStyle};
+        [__badgeString drawInRect:bounds withAttributes:attributes];
+        // [__badgeString drawInRect:bounds withFont:font lineBreakMode:TDLineBreakModeClip];
+        /* END CHANGES CRE */
     }
-	
+
     // Create an image from the new badge (Fast and easy to cache)
 	UIImage *outputImage = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
@@ -278,21 +290,20 @@
 		
         // Calculate the size of the bage from the badge string
         UIFont *font = self.badge.boldFont ? [UIFont boldSystemFontOfSize:self.badge.fontSize] : [UIFont systemFontOfSize:self.badge.fontSize];
-        
+
+        /* BEGIN CHANGES CRE */
+        CGSize badgeSize = [self.badgeString sizeWithAttributes:@{ NSFontAttributeName:font }];
+        /*
         CGSize badgeSize;
         if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
             badgeSize = [self.badgeString sizeWithAttributes:@{ NSFontAttributeName:font }];
         } else {
             badgeSize = [self.badgeString sizeWithFont:font];
         }
+        */
+        /* END CHANGES CRE */
 
         /* BEGIN CHANGES CRE */
-        /*
-        CGRect badgeframe = CGRectMake(self.contentView.frame.size.width - (badgeSize.width + 13 + self.badgeRightOffset),
-									   (CGFloat)round((self.contentView.frame.size.height - (badgeSize.height + (50/badgeSize.height))) / 2),
-									   badgeSize.width + 13, badgeSize.height + (50/badgeSize.height));
-         */
-
         CGRect badgeframe = CGRectMake(self.contentView.frame.size.width - (badgeSize.width + 13 + self.badgeRightOffset),
                                        35,
                                        badgeSize.width + 13, badgeSize.height + (50/badgeSize.height));
@@ -302,6 +313,11 @@
                                      35,
                                      badgeSize.width + 13, badgeSize.height + (50/badgeSize.height));
         }
+        /*
+        CGRect badgeframe = CGRectMake(self.contentView.frame.size.width - (badgeSize.width + 13 + self.badgeRightOffset),
+        (CGFloat)round((self.contentView.frame.size.height - (badgeSize.height + (50/badgeSize.height))) / 2),
+        badgeSize.width + 13, badgeSize.height + (50/badgeSize.height));
+        */
         /* END CHANGES CRE */
 
         // Enable shadows if we want them

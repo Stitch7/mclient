@@ -253,6 +253,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		30501B6019E5AC1600333952 /* tmdvs */ = {
+			isa = PBXGroup;
+			children = (
+				301FD01319ACA0D70028C5C8 /* TDBadgedCell.h */,
+				301FD01419ACA0D70028C5C8 /* TDBadgedCell.m */,
+			);
+			name = tmdvs;
+			sourceTree = "<group>";
+		};
 		305DD80B19A63517006514BD = {
 			isa = PBXGroup;
 			children = (
@@ -378,8 +387,6 @@
 				301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */,
 				30EFDC0A19D422DE00E3EE31 /* MCLVerifiyLoginView.h */,
 				30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */,
-				301FD01319ACA0D70028C5C8 /* TDBadgedCell.h */,
-				301FD01419ACA0D70028C5C8 /* TDBadgedCell.m */,
 				306EA6E319D598F800BB4DC8 /* MCLInternetConnectionErrorView.h */,
 				306EA6E419D598F800BB4DC8 /* MCLInternetConnectionErrorView.m */,
 				306EA6E619D5992F00BB4DC8 /* MCLMServiceErrorView.h */,
@@ -416,6 +423,7 @@
 			isa = PBXGroup;
 			children = (
 				305E53AD19D4F517002B8E50 /* Apple */,
+				30501B6019E5AC1600333952 /* tmdvs */,
 			);
 			name = Vendor;
 			sourceTree = "<group>";
