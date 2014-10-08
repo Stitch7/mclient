@@ -17,6 +17,7 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *composePreviewButton;
 @property (weak, nonatomic) IBOutlet UIButton *composeQuoteButton;
+@property (weak, nonatomic) IBOutlet UILabel *composeSubjectLabel;
 @property (weak, nonatomic) IBOutlet UITextField *composeSubjectTextField;
 @property (weak, nonatomic) IBOutlet MCLMessageTextView *composeTextTextField;
 
@@ -29,6 +30,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    // Subject label color like in Apple Mail
+    self.composeSubjectLabel.textColor = [UIColor colorWithRed:142/255.0f green:142/255.0f blue:147/255.0f alpha:1.0f];
 
     switch (self.type) {
         case kComposeTypeThread:
@@ -44,6 +48,13 @@
             self.title = @"Edit";
             [self.composeQuoteButton setHidden:YES];
             break;
+    }
+
+    // Widen subject field if preview button is absent
+    if (self.composeQuoteButton.isHidden) {
+        CGRect composeSubjectTextFieldFrame = self.composeSubjectTextField.frame;
+        composeSubjectTextFieldFrame.size.width += self.composeQuoteButton.frame.size.width;
+        self.composeSubjectTextField.frame = composeSubjectTextFieldFrame;
     }
     
     self.composeSubjectTextField.delegate = self;
@@ -77,6 +88,16 @@
     }
     
     return NO;
+}
+
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    if (textField == self.composeSubjectTextField) {
+        self.composePreviewButton.enabled = NO;
+    }
+
+    return YES;
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

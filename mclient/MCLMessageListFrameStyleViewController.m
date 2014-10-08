@@ -91,10 +91,10 @@
 {
     [super viewDidLoad];
 
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
-            [self transformMessageViewSizeForInterfaceOrientation:self.interfaceOrientation];
-        }
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone &&
+        UIInterfaceOrientationIsLandscape(self.interfaceOrientation)
+    ) {
+        [self transformMessageViewSizeForInterfaceOrientation:self.interfaceOrientation];
     }
     
     self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -195,19 +195,43 @@
         messageViewFrame.origin.y = newMessageViewY;
         messageViewFrame.size.height = newMessageViewHeight;
         self.messageView.frame = messageViewFrame;
+
+        [self adjustWebViewHeightToMessageView];
+    } else { // iPad
+        if (self.messageView.tag > 0) {
+            CGFloat newMessageViewHeight;
+            if (UIInterfaceOrientationIsLandscape(forInterfaceOrientation)) {
+                newMessageViewHeight = 700;
+            } else {
+                newMessageViewHeight = 960;
+            }
+
+            CGRect messageViewFrame = self.messageView.frame;
+            messageViewFrame.size.height = newMessageViewHeight;
+            self.messageView.frame = messageViewFrame;
+
+            [self adjustWebViewHeightToMessageView];
+        }
     }
 }
 
 - (CGFloat)fullViewheight
 {
-    CGFloat statusBarHeight = 0.0f;
-    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    if ((NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1) &&
+        UIInterfaceOrientationIsLandscape(self.interfaceOrientation)
+    ) {
         statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
-    } else {
-        statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
     }
 
     return self.view.bounds.size.height - self.navigationController.navigationBar.bounds.size.height - statusBarHeight;
+}
+
+- (void)adjustWebViewHeightToMessageView
+{
+    CGRect webViewFrame = self.webView.frame;
+    webViewFrame.size.height = self.messageView.bounds.size.height - self.toolbar.bounds.size.height;
+    self.webView.frame = webViewFrame;
 }
 
 - (void)didReceiveMemoryWarning
@@ -412,7 +436,6 @@
     CGRect frame = view.frame;
     frame.origin = CGPointMake(x + (indention * [level integerValue]), frame.origin.y);
     view.frame = frame;
-
 }
 
 -(void)barButton:(UIBarButtonItem *)barButton hide:(BOOL)hide
@@ -447,7 +470,7 @@
             break;
     }
 
-    return [MCLMessageListViewController messageHtmlSkeletonForHtml:messageHtml];
+    return [MCLMessageListViewController messageHtmlSkeletonForHtml:messageHtml withTopMargin:10];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -589,11 +612,11 @@
 
 - (void)slideMessageViewDownAction
 {
-    self.messageView.layer.needsDisplayOnBoundsChange = YES;
-    self.messageView.contentMode = UIViewContentModeRedraw;
-
     // Cache initial height
     [self.messageView setTag:self.messageView.bounds.size.height];
+
+    self.messageView.layer.needsDisplayOnBoundsChange = YES;
+    self.messageView.contentMode = UIViewContentModeRedraw;
 
     [UIView animateWithDuration:.4f animations:^{
         CGRect bounds = self.messageView.bounds;
@@ -605,6 +628,8 @@
     }];
 
     self.messageView.layer.needsDisplayOnBoundsChange = NO;
+
+    [self adjustWebViewHeightToMessageView];
 }
 
 - (void)slideMessageViewUpAction
@@ -623,7 +648,10 @@
         }];
 
         self.messageView.layer.needsDisplayOnBoundsChange = NO;
+
         self.messageView.tag = 0;
+
+        [self adjustWebViewHeightToMessageView];
     }
 }
 

@@ -84,7 +84,7 @@
                         break;
                 }
 
-                NSString *html = [MCLMessageListViewController messageHtmlSkeletonForHtml:[data objectForKey:key]];
+                NSString *html = [MCLMessageListViewController messageHtmlSkeletonForHtml:[data objectForKey:key] withTopMargin:20];
                 [self.webView loadHTMLString:html baseURL:nil];
             }
         });

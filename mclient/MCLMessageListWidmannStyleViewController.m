@@ -428,7 +428,7 @@
             break;
     }
 
-    return [MCLMessageListViewController messageHtmlSkeletonForHtml:messageHtml];
+    return [MCLMessageListViewController messageHtmlSkeletonForHtml:messageHtml withTopMargin:0];
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath

@@ -16,7 +16,7 @@
 
 @synthesize splitViewButton = _splitViewButton;
 
-+ (NSString *)messageHtmlSkeletonForHtml:(NSString *)html
++ (NSString *)messageHtmlSkeletonForHtml:(NSString *)html withTopMargin:(int)topMargin
 {
     return [NSString stringWithFormat:@""
             "<html>"
@@ -36,7 +36,7 @@
             "        font-size: 14px;"
             "    }"
             "    body {"
-            "        margin: 0 20px 10px 20px;"
+            "        margin: %ipx 20px 10px 20px;"
             "        padding: 0px;"
             "    }"
             "    a {"
@@ -52,9 +52,8 @@
             "</style>"
             "</head>"
             "<body>%@</body>"
-            "</html>", html];
+            "</html>", topMargin, html];
 }
-
 
 - (void)viewWillAppear:(BOOL)animated
 {

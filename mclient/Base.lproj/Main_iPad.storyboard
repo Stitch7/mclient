@@ -94,15 +94,15 @@
                                 <rect key="frame" x="0.0" y="66" width="1023" height="369"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <webView contentMode="scaleToFill" id="7J9-2Y-eHt">
-                                        <rect key="frame" x="0.0" y="10" width="1023" height="315"/>
+                                    <webView opaque="NO" contentMode="scaleToFill" id="7J9-2Y-eHt">
+                                        <rect key="frame" x="0.0" y="0.0" width="1023" height="325"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                     </webView>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="ZQy-wQ-P3Q">
                                         <rect key="frame" x="0.0" y="325" width="1023" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         <items>
                                             <barButtonItem image="profileButton.png" id="4Er-vd-8Tt">
                                                 <connections>
@@ -824,7 +824,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" id="qBb-jK-6Xb">
-                                <rect key="frame" x="84" y="53" width="616" height="30"/>
+                                <rect key="frame" x="84" y="53" width="620" height="30"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -836,19 +836,19 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" id="0nB-A9-cno">
+                                <rect key="frame" x="20" y="92" width="748" height="1"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.78431379795074463" green="0.78039222955703735" blue="0.80000007152557373" alpha="1" colorSpace="deviceRGB"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Wjq-KB-stX">
-                                <rect key="frame" x="708" y="48" width="40" height="40"/>
+                                <rect key="frame" x="712" y="48" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="quoteButton.png"/>
                                 <connections>
                                     <action selector="quoteButtonTouchUpInside:" destination="d41-2O-wcL" eventType="touchUpInside" id="tb5-HJ-VV7"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" id="0nB-A9-cno">
-                                <rect key="frame" x="20" y="92" width="748" height="1"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.78431379795074463" green="0.78039222955703735" blue="0.80000007152557373" alpha="1" colorSpace="deviceRGB"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -869,6 +869,7 @@
                     <connections>
                         <outlet property="composePreviewButton" destination="Eqz-FO-Phr" id="fXs-uU-pNK"/>
                         <outlet property="composeQuoteButton" destination="Wjq-KB-stX" id="T0E-dN-hmW"/>
+                        <outlet property="composeSubjectLabel" destination="Dmg-FS-shV" id="GRH-Sr-5kN"/>
                         <outlet property="composeSubjectTextField" destination="qBb-jK-6Xb" id="QG5-eM-Ej1"/>
                         <outlet property="composeTextTextField" destination="t81-ow-jqP" id="IRo-pJ-Siu"/>
                     </connections>
@@ -882,21 +883,21 @@
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="LPs-Fu-JHm" customClass="MCLComposeMessagePreviewViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ggS-WP-15y">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="724"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" id="h1p-NG-NJO">
-                                <rect key="frame" x="0.0" y="63.000002837687141" width="768" height="646"/>
+                            <webView opaque="NO" contentMode="scaleToFill" id="h1p-NG-NJO">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="665"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="AtE-Fk-hso">
-                                <rect key="frame" x="699" y="717" width="51" height="31"/>
+                                <rect key="frame" x="699" y="673" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                             </switch>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable email notification" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wKa-H3-eae">
-                                <rect key="frame" x="449" y="722" width="242" height="21"/>
+                                <rect key="frame" x="449" y="678" width="242" height="21"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -905,6 +906,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="uAa-o0-zpU">
                         <barButtonItem key="rightBarButtonItem" title="Send" id="qtP-VL-0oR">
                             <connections>
@@ -966,7 +968,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="tPe-uH-qWP"/>
-        <segue reference="OzD-Bs-DyH"/>
+        <segue reference="zlL-gJ-Ao9"/>
+        <segue reference="dz1-oT-aTf"/>
     </inferredMetricsTieBreakers>
 </document>

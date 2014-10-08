@@ -16,7 +16,7 @@
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 
-+ (NSString *)messageHtmlSkeletonForHtml:(NSString *)html;
++ (NSString *)messageHtmlSkeletonForHtml:(NSString *)html withTopMargin:(int)topMargin;
 - (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard;
 
 @end
