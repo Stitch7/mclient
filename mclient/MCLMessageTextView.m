@@ -148,7 +148,7 @@
         if ([lowercaseString hasSuffix:@".jpg"] ||
             [lowercaseString hasSuffix:@".gif"] ||
             [lowercaseString hasSuffix:@".png"]
-            ) {
+        ) {
             isStringImageUrl = YES;
         }
     }
@@ -244,16 +244,18 @@
 
 #pragma mark - UITextViewDelegate
 
-- (void)textViewDidChange:(UITextView *)textView {
+- (void)textViewDidChange:(UITextView *)textView
+{
     [self showTextViewCaretPosition:textView];
 }
 
-- (void)textViewDidChangeSelection:(UITextView *)textView {
+- (void)textViewDidChangeSelection:(UITextView *)textView
+{
     [self showTextViewCaretPosition:textView];
 }
 
-
-- (void)showTextViewCaretPosition:(UITextView *)textView {
+- (void)showTextViewCaretPosition:(UITextView *)textView
+{
     CGRect caretRect = [textView caretRectForPosition:self.selectedTextRange.end];
     [textView scrollRectToVisible:caretRect animated:NO];
 }
@@ -261,12 +263,17 @@
 
 #pragma mark - Keyboard notifications
 
-- (void)keyboardWillShow:(NSNotification *)notification {
+- (void)keyboardWillShow:(NSNotification *)notification
+{
     CGRect keyboardFrame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     NSTimeInterval animationDuration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
 
-    BOOL isPortrait = UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
-    CGFloat keyboardHeight = isPortrait ? keyboardFrame.size.height : keyboardFrame.size.width;
+    CGFloat keyboardHeight = keyboardFrame.size.height;
+    if ((NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1) &&
+        UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)
+    ) {
+        keyboardHeight = keyboardFrame.size.width;
+    }
 
     UIEdgeInsets contentInset = self.contentInset;
     contentInset.bottom = keyboardHeight;
@@ -280,7 +287,8 @@
     }];
 }
 
-- (void)keyboardWillHide:(NSNotification *)notification {
+- (void)keyboardWillHide:(NSNotification *)notification
+{
     NSTimeInterval animationDuration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
 
     UIEdgeInsets contentInset = self.contentInset;
