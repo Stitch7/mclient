@@ -181,7 +181,7 @@
         self.boards = [NSMutableArray array];
         for (id object in data) {
             NSNumber *boardId = [object objectForKey:@"id"];
-            NSString *boardName = [object objectForKey:@"text"];
+            NSString *boardName = [object objectForKey:@"name"];
 
             MCLBoard *board = [MCLBoard boardWithId:boardId name:boardName];
             [self.boards addObject:board];
