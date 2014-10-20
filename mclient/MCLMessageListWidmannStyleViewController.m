@@ -301,6 +301,8 @@
     // TableView should scoll to top
     cell.messageTextWebView.scrollView.scrollsToTop = NO;
 
+    [cell.messageToolbar setBackgroundColor:self.veryLightGreyColor];
+
     [cell setBoardId:self.board.boardId];
     [cell setMessageId:message.messageId];
 
@@ -574,10 +576,7 @@
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
         MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
 
-        // Show toolbar after short delay to avoid skidding through text
-        if ([cell.messageToolbar isHidden]) {
-            [cell.messageToolbar performSelector:@selector(setHidden:) withObject:nil afterDelay:0.2];
-        }
+        [cell.messageToolbar setHidden:NO];
 
         // Resize table cell
         [self updateTableView];
