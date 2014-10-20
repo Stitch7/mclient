@@ -7,7 +7,7 @@
 //
 
 #ifdef DEBUG
-//    #define kMServiceBaseURL @"http://reitz.re:8080/mservice"
+//    #define kMServiceBaseURL @"https://reitz.re:8080/mservice"
     #define kMServiceBaseURL @"http://192.168.178.33:8080/mservice"
 #else
     #define kMServiceBaseURL @"http://reitz.re:8080/mservice"
@@ -18,7 +18,7 @@
 #define kSettingsSignatureTextDefault @"sent from M!client for iOS"
 
 typedef NS_ENUM(NSUInteger, kMCLSettingsThreadView) {
-    kMCLSettingsThreadViewDefault,
+    kMCLSettingsThreadViewWidmann,
     kMCLSettingsThreadViewFrame
 };
 

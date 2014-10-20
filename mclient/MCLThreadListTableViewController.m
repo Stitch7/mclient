@@ -90,12 +90,12 @@
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         NSString *storyboardIdentifier = nil;
         switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"threadView"]) {
-            case kMCLSettingsThreadViewDefault:
-            default:
+            case kMCLSettingsThreadViewWidmann:
                 storyboardIdentifier = @"MessageListView";
                 break;
 
             case kMCLSettingsThreadViewFrame:
+            default:
                 storyboardIdentifier = @"MessageList2FrameStyleView";
                 break;
         }
@@ -325,7 +325,7 @@
     } else {
         NSString *segueIdentifier = nil;
         switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"threadView"]) {
-            case kMCLSettingsThreadViewDefault:
+            case kMCLSettingsThreadViewWidmann:
             default:
                 segueIdentifier = @"PushToMessageListWidmannStyle";
                 break;
