@@ -88,6 +88,11 @@
     });
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self.tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -224,7 +229,9 @@
     } else {
         NSString *cellText = [self.profileData objectForKey:key];
 
-        CGSize labelSize = [cellText boundingRectWithSize:CGSizeMake(280.0f, MAXFLOAT)
+
+//        CGSize labelSize = [cellText boundingRectWithSize:CGSizeMake(280.0f, MAXFLOAT)
+        CGSize labelSize = [cellText boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 30, MAXFLOAT)
                                        options:NSStringDrawingUsesLineFragmentOrigin
                                     attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:14.0]}
                                        context:nil].size;
