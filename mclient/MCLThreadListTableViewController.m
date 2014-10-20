@@ -33,7 +33,8 @@
 @property (strong, nonatomic) NSMutableArray *searchResults;
 @property (strong, nonatomic) MCLReadList *readList;
 @property (strong, nonatomic) NSString *username;
-@property (strong, nonatomic) NSDateFormatter *dateFormatter;
+@property (strong, nonatomic) NSDateFormatter *dateFormatterForInput;
+@property (strong, nonatomic) NSDateFormatter *dateFormatterForOutput;
 
 @end
 
@@ -50,11 +51,15 @@
     NSString *keychainIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:keychainIdentifier accessGroup:nil];
     self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
-    
-    self.dateFormatter = [[NSDateFormatter alloc] init];
-    [self.dateFormatter setDoesRelativeDateFormatting:YES];
-    [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];
-    [self.dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+
+    self.dateFormatterForInput = [[NSDateFormatter alloc] init];
+    [self.dateFormatterForInput setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
+    [self.dateFormatterForInput setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+
+    self.dateFormatterForOutput = [[NSDateFormatter alloc] init];
+    [self.dateFormatterForOutput setDoesRelativeDateFormatting:YES];
+    [self.dateFormatterForOutput setDateStyle:NSDateFormatterShortStyle];
+    [self.dateFormatterForOutput setTimeStyle:NSDateFormatterShortStyle];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -180,29 +185,23 @@
 
 - (MCLThread *)threadFromJSON:(id)object
 {
-    //TODO move this outside
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
-    [dateFormatter setLocale:enUSPOSIXLocale];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-    
     NSNumber *threadId = [object objectForKey:@"id"];
     NSNumber *messageId = [object objectForKey:@"messageId"];
     BOOL sticky = [[object objectForKey:@"sticky"] boolValue];
     BOOL closed = [[object objectForKey:@"closed"] boolValue];
     BOOL mod = [[object objectForKey:@"mod"] boolValue];
-    NSString *author = [object objectForKey:@"author"];
+    NSString *username = [object objectForKey:@"username"];
     NSString *subject = [object objectForKey:@"subject"];
-    NSDate *date = [dateFormatter dateFromString:[object objectForKey:@"date"]];
+    NSDate *date = [self.dateFormatterForInput dateFromString:[object objectForKey:@"date"]];
     NSNumber *answerCount = [object objectForKey:@"answerCount"];
-    NSDate *answerDate = [dateFormatter dateFromString:[object objectForKey:@"answerDate"]];
+    NSDate *answerDate = [self.dateFormatterForInput dateFromString:[object objectForKey:@"answerDate"]];
 
     return  [MCLThread threadWithId:threadId
                           messageId:messageId
                              sticky:sticky
                              closed:closed
                                 mod:mod
-                           username:author
+                           username:username
                             subject:subject
                                date:date
                         answerCount:answerCount
@@ -265,7 +264,7 @@
     
     [cell.threadUsernameLabel sizeToFit];
     
-    cell.threadDateLabel.text = [NSString stringWithFormat:@" - %@", [self.dateFormatter stringFromDate:thread.date]];
+    cell.threadDateLabel.text = [NSString stringWithFormat:@" - %@", [self.dateFormatterForOutput stringFromDate:thread.date]];
     [cell.threadDateLabel sizeToFit];
     
     // Place dateLabel after authorLabel
