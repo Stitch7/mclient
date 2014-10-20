@@ -21,14 +21,12 @@
     if ( ! _errorMessages) {
         _errorMessages = @{@(-2):@"No Internet Connection",
                            @(-1):@"Connection to M!service failed",
-                           @(0): @"Action could not be executed",               // :unknown
-                           @(1): @"Man!ac Forum Server down?",                  // :connection
-                           @(2): @"Action could not be executed",               // :permission
-                           @(3): @"Please verify your login data in settings",  // :login
-                           @(4): @"Action could not be executed",               // :boardId
-                           @(5): @"Action could not be executed",               // :messageId
-                           @(6): @"Please fill out the subject field",          // :subject
-                           @(7): @"Editing this message is no longer allowed"}; // :answerExists
+                           @(400):@"Please fill out the subject field",
+                           @(401):@"Please verify your login data in settings",
+                           @(403):@"Editing this message is no longer allowed",
+                           @(404):@"Action could not be executed: %@",
+                           @(500):@"Action could not be executed: an unknown error occured",
+                           @(504):@"Man!ac Forum Server down?"};
     }
 
     return _errorMessages;
@@ -104,8 +102,8 @@
     if (inUsername.length > 0 && inPassword.length > 0) {
         NSString *urlString = [NSString stringWithFormat:@"%@/test-login", kMServiceBaseURL];
 
-        NSDictionary *vars = @{@"username":[self percentEscapeString:inUsername],
-                               @"password":[self percentEscapeString:inPassword]};
+        NSDictionary *vars = @{@"username":inUsername,
+                               @"password":inPassword};
 
         NSDictionary *data = [self postRequestToUrlString:urlString withVars:vars error:errorPtr];
 
@@ -125,8 +123,8 @@
 {
     BOOL notificationEnabled = NO;
     
-    NSDictionary *vars = @{@"username":[self percentEscapeString:inUsername],
-                           @"password":[self percentEscapeString:inPassword]};
+    NSDictionary *vars = @{@"username":inUsername,
+                           @"password":inPassword};
     
     
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/notification-status/%@", kMServiceBaseURL, inBoardId, inMessageId];
@@ -150,8 +148,8 @@
 
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/notification/%@", kMServiceBaseURL, inBoardId, inMessageId];
 
-    NSDictionary *vars = @{@"username":[self percentEscapeString:inUsername],
-                           @"password":[self percentEscapeString:inPassword]};
+    NSDictionary *vars = @{@"username":inUsername,
+                           @"password":inPassword};
 
     NSDictionary *data = [self postRequestToUrlString:urlString withVars:vars error:errorPtr];
 
@@ -168,7 +166,7 @@
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message/preview", kMServiceBaseURL, inBoardId];
 
-    NSDictionary *vars = @{@"text":[self percentEscapeString:inText]};
+    NSDictionary *vars = @{@"text":inText};
 
     return [self postRequestToUrlString:urlString withVars:vars error:errorPtr];
 }
@@ -186,10 +184,10 @@
 
     NSDictionary *vars = @{@"boardId":inBoardId,
                            @"messageId":@"",
-                           @"subject":[self percentEscapeString:inSubject],
-                           @"text":[self percentEscapeString:inText],
-                           @"username":[self percentEscapeString:inUsername],
-                           @"password":[self percentEscapeString:inPassword],
+                           @"subject":inSubject,
+                           @"text":inText,
+                           @"username":inUsername,
+                           @"password":inPassword,
                            @"notification":[NSNumber numberWithBool:inNotification]};
     
     NSDictionary *data = [self postRequestToUrlString:@"post" withVars:vars error:errorPtr];
@@ -212,10 +210,10 @@
 {
     BOOL success = NO;
 
-    NSDictionary *vars = @{@"subject":[self percentEscapeString:inSubject],
-                           @"text":[self percentEscapeString:inText],
-                           @"username":[self percentEscapeString:inUsername],
-                           @"password":[self percentEscapeString:inPassword],
+    NSDictionary *vars = @{@"subject":inSubject,
+                           @"text":inText,
+                           @"username":inUsername,
+                           @"password":inPassword,
                            @"notification":[NSNumber numberWithBool:inNotification]};
 
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message/%@", kMServiceBaseURL, inBoardId, inMessageId];
@@ -239,10 +237,10 @@
 {
     BOOL success = NO;
 
-    NSDictionary *vars = @{@"subject":[self percentEscapeString:inSubject],
-                           @"text":[self percentEscapeString:inText],
-                           @"username":[self percentEscapeString:inUsername],
-                           @"password":[self percentEscapeString:inPassword]};
+    NSDictionary *vars = @{@"subject":inSubject,
+                           @"text":inText,
+                           @"username":inUsername,
+                           @"password":inPassword};
     
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message/%@", kMServiceBaseURL, inBoardId, inMessageId];
     NSDictionary *data = [self putRequestToUrlString:urlString withVars:vars error:errorPtr];
@@ -258,7 +256,7 @@
                withPhrase:(NSString *)inPhrase
                     error:(NSError **)errorPtr
 {
-    NSDictionary *vars = @{@"phrase":[self percentEscapeString:inPhrase]};
+    NSDictionary *vars = @{@"phrase":inPhrase};
     
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/search-threads", kMServiceBaseURL, inBoardId];
 
@@ -267,35 +265,7 @@
 
 - (NSDictionary *)getRequestToUrlString:(NSString *)urlString error:(NSError **)errorPtr
 {
-    NSDictionary *reply = nil;
-    NSNumber *errorCode = nil;
-
-    if ([self noInternetConnectionAvailable]) {
-        errorCode = @(-2);
-    } else {
-        NSData *responseData = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
-        if (responseData) {
-            NSError *jsonError;
-            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&jsonError];
-
-            if ([json objectForKey:@"error"] == [NSNull null]) {
-                reply = [json objectForKey:@"data"];
-            } else {
-                NSDictionary *error = [json objectForKey:@"error"];
-                errorCode = [error objectForKey:@"code"];
-            }
-        } else {
-            errorCode = @(-1);
-        }
-    }
-
-    if (errorCode) {
-        *errorPtr = [NSError errorWithDomain:[[NSBundle mainBundle] bundleIdentifier]
-                                        code:[errorCode integerValue]
-                                    userInfo:@{NSLocalizedDescriptionKey:[self.errorMessages objectForKey:errorCode]}];
-    }
-
-    return reply;
+    return [self requestWithHTTPMethod:@"GET" toUrlString:urlString withVars:nil error:errorPtr];
 }
 
 - (NSDictionary *)postRequestToUrlString:(NSString *)urlString withVars:(NSDictionary *)vars error:(NSError **)errorPtr
@@ -312,22 +282,25 @@
 {
     NSDictionary *reply = nil;
     NSNumber *errorCode = nil;
+    NSString *errorMessage = nil;
 
     if ([self noInternetConnectionAvailable]) {
         errorCode = @(-2);
     } else {
         NSURL *url = [NSURL URLWithString:urlString];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-        
-        NSString *requestFields = @"";
-        for (id key in vars) {
-            requestFields = [requestFields stringByAppendingFormat:@"%@=%@&", key, [vars objectForKey:key]];
-        }
-
-        NSData *requestData = [requestFields dataUsingEncoding:NSUTF8StringEncoding];
-        request.HTTPBody = requestData;
         request.HTTPMethod = httpMethod;
-        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        [request setValue:@"gzip" forHTTPHeaderField:@"accept-encoding"];
+
+        if (vars) {
+            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+
+            NSString *requestFields = @"";
+            for (id key in vars) {
+                requestFields = [requestFields stringByAppendingFormat:@"%@=%@&", key, [self percentEscapeString:[vars objectForKey:key]]];
+            }
+            request.HTTPBody = [requestFields dataUsingEncoding:NSUTF8StringEncoding];
+        }
         
         NSHTTPURLResponse *response = nil;
         NSError *responseError = nil;
@@ -336,22 +309,23 @@
         if (responseError) {
             errorCode = @(-1);
         } else {
+            NSError *jsonError;
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&jsonError];
+
             switch (response.statusCode) {
-                case 500:
-                    errorCode = @(0);
+                case 200:
+                    reply = json;
                     break;
 
-                case 200: {
-                    NSError *jsonError;
-                    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&jsonError];
+                case 404:
+                    errorCode = @(404);
+                    errorMessage = [NSString stringWithFormat:[self.errorMessages objectForKey:errorCode], [json objectForKey:@"error"]];
+                    break;
 
-                    if ([json objectForKey:@"error"] == [NSNull null]) {
-                        reply = [json objectForKey:@"data"];
-                    } else {
-                        NSDictionary *error = [json objectForKey:@"error"];
-                        errorCode = [error objectForKey:@"code"];
-                    }
-                } break;
+                default:
+                    errorCode = @(response.statusCode);
+                    errorMessage = [self.errorMessages objectForKey:errorCode];
+                    break;
             }
         }
     }
@@ -359,7 +333,7 @@
     if (errorCode) {
         *errorPtr = [NSError errorWithDomain:[[NSBundle mainBundle] bundleIdentifier]
                                         code:[errorCode integerValue]
-                                    userInfo:@{NSLocalizedDescriptionKey:[self.errorMessages objectForKey:errorCode]}];
+                                    userInfo:@{NSLocalizedDescriptionKey:errorMessage}];
     }
 
     return reply;
