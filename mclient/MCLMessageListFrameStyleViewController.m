@@ -68,11 +68,8 @@
     self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
     NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
     self.password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
-    self.validLogin = NO;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSError *error;
-        self.validLogin = ([[MCLMServiceConnector sharedConnector] testLoginWIthUsername:self.username password:self.password error:&error]);
-    });
+
+    self.validLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"validLogin"];
 
     // Init + setup dateformatter for message dates
     self.dateFormatter = [[NSDateFormatter alloc] init];

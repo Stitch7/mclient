@@ -33,6 +33,7 @@
 @property (strong, nonatomic) NSMutableArray *searchResults;
 @property (strong, nonatomic) MCLReadList *readList;
 @property (strong, nonatomic) NSString *username;
+@property (assign, nonatomic) BOOL validLogin;
 @property (strong, nonatomic) NSDateFormatter *dateFormatterForInput;
 @property (strong, nonatomic) NSDateFormatter *dateFormatterForOutput;
 
@@ -51,6 +52,8 @@
     NSString *keychainIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:keychainIdentifier accessGroup:nil];
     self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
+
+    self.validLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"validLogin"];
 
     self.dateFormatterForInput = [[NSDateFormatter alloc] init];
     [self.dateFormatterForInput setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
@@ -112,6 +115,10 @@
 
     // Set title to board name
     self.title = self.board.name;
+
+    if ( ! self.validLogin) {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
     
     // Init refresh control
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];

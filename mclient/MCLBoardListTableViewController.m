@@ -121,6 +121,10 @@
 
         // Set login status on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults setBool:validLogin forKey:@"validLogin"];
+            [userDefaults synchronize];
+
             if (validLogin) {
                 [navToolbarView loginStatusWithUsername:username];
             } else {

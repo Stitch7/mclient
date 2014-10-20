@@ -42,8 +42,6 @@
 @property (strong, nonatomic) UIColor *veryLightGreyColor;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
-
-
 @end
 
 @implementation MCLMessageListWidmannStyleViewController
@@ -56,20 +54,18 @@
     
     self.cells = [NSMutableDictionary dictionary];
     self.readList = [[MCLReadList alloc] init];
-    
+
+    self.veryLightGreyColor = [UIColor colorWithRed:240/255.0f green:240/255.0f blue:240/255.0f alpha:1.0f];
+
     NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
     self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
     NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
     self.password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
-    self.validLogin = NO;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSError *error;
-        self.validLogin = ([[MCLMServiceConnector sharedConnector] testLoginWIthUsername:self.username password:self.password error:&error]);
-    });
 
-    self.veryLightGreyColor = [UIColor colorWithRed:240/255.0f green:240/255.0f blue:240/255.0f alpha:1.0f];
-    
+    self.validLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"validLogin"];
+
+    // Init + setup dateformatter for message dates
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDoesRelativeDateFormatting:YES];
     [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];
