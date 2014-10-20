@@ -16,7 +16,8 @@
 
 @interface MCLProfileTableViewController ()
 
-@property (strong) NSDictionary *profileData;
+@property (strong, nonatomic) UIColor *tableSeparatorColor;
+@property (strong) NSMutableDictionary *profileData;
 @property (strong) NSDictionary *profileLabels;
 @property (strong) NSArray *profileKeys;
 @property (strong) UIImage *profileImage;
@@ -31,7 +32,7 @@
     
     self.title = self.username;
     
-    self.profileKeys = @[@"image",
+    self.profileKeys = @[@"picture",
                          @"firstname",
                          @"lastname",
                          @"domicile",
@@ -50,7 +51,7 @@
                          @"nintendoFriendcode",
                          @"lastUpdate"];
     
-    self.profileLabels = @{@"image": @"Avatar",
+    self.profileLabels = @{@"picture": @"Avatar",
                            @"firstname": @"Firstname",
                            @"lastname": @"Lastname",
                            @"domicile": @"Domicile",
@@ -68,6 +69,10 @@
                            @"psnId": @"Playstation Network ID",
                            @"nintendoFriendcode": @"Nintendo Friendcode",
                            @"lastUpdate": @"Last Updated on"};
+
+    // Cache original tables separatorColor and set to clear to avoid flickering loading view
+    self.tableSeparatorColor = [self.tableView separatorColor];
+    [self.tableView setSeparatorColor:[UIColor clearColor]];
 
     // Visualize loading
     CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
@@ -119,12 +124,36 @@
                 break;
         }
     } else {
-        self.profileData = data;
+        self.profileData = [[NSMutableDictionary alloc] init];
+        for (NSString *key in self.profileKeys) {
+            [self.profileData setObject:[data objectForKey:key] forKey:key];
+        }
+
+        NSDateFormatter *dateFormatterForInput = [[NSDateFormatter alloc] init];
+        NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+        [dateFormatterForInput setLocale:enUSPOSIXLocale];
+        [dateFormatterForInput setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+
+        NSDateFormatter *dateFormatterForOutput = [[NSDateFormatter alloc] init];
+        [dateFormatterForOutput setDoesRelativeDateFormatting:YES];
+        [dateFormatterForOutput setDateStyle:NSDateFormatterShortStyle];
+        [dateFormatterForOutput setTimeStyle:NSDateFormatterShortStyle];
+
+        NSString *dateString;
+        for (NSString *key in @[@"registrationDate", @"lastUpdate"]) {
+            dateString = [data objectForKey:key];
+            if ([dateString length] > 0) {
+                dateString = [dateFormatterForOutput stringFromDate:[dateFormatterForInput dateFromString:dateString]];
+                [self.profileData setObject:dateString forKey:key];
+            }
+        }
+
+        // Restore tables separatorColor
+        [self.tableView setSeparatorColor:self.tableSeparatorColor];
 
         [self.tableView reloadData];
     }
 }
-
 
 
 #pragma mark - Table view data source
@@ -136,7 +165,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.profileData count] - 1;
+    return [self.profileData count];
 }
 
 
@@ -146,7 +175,7 @@
     static NSString *cellIdentifier = @"ProfileCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
-    if ([key isEqualToString:@"image"]) {
+    if ([key isEqualToString:@"picture"]) {
         cell.textLabel.text = @"";
         cell.detailTextLabel.text = @"";
         
@@ -182,8 +211,8 @@
     CGFloat height;
     NSString *key = self.profileKeys[indexPath.row];
     
-    if ([key isEqualToString:@"image"]) {
-        if ( ! self.profileImage && [self.profileData objectForKey:@"image"] != [NSNull null]) {
+    if ([key isEqualToString:@"picture"]) {
+        if ( ! self.profileImage && [self.profileData objectForKey:@"picture"] != [NSNull null]) {
             NSString *imageURLString = [self.profileData objectForKey:key];
             if (imageURLString.length) {
                 NSURL *imageURL = [NSURL URLWithString:imageURLString];
