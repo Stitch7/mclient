@@ -1,3 +1,5 @@
+/* Class = "IBUITableViewSection"; footerTitle = "No Account? Register on www.maniac-forum.de"; ObjectID = "Cn1-Gi-W0G"; */
+"Cn1-Gi-W0G.footerTitle" = "Du hast keinen Account?\nRegistrierung unter https://www.maniac-forum.de";
 
 /* Class = "IBUITableViewSection"; headerTitle = "THREAD VIEW"; ObjectID = "7AA-LQ-9LR"; */
 "7AA-LQ-9LR.headerTitle" = "THREAD ANSICHT";
@@ -15,7 +17,7 @@
 "Cn1-Gi-W0G.headerTitle" = "LOGIN DATEN";
 
 /* Class = "IBUILabel"; text = "Subject:"; ObjectID = "Dmg-FS-shV"; */
-"Dmg-FS-shV.text" = "Betreff:";
+"Dmg-FS-shV.text" = "Thema:";
 
 /* Class = "IBUINavigationItem"; title = "Messages"; ObjectID = "E8b-IG-9Lo"; */
 "E8b-IG-9Lo.title" = "Messages";
@@ -51,10 +53,10 @@
 "Qw9-qc-8iC.text" = "Subtitle";
 
 /* Class = "IBUIBarButtonItem"; title = "Edit"; ObjectID = "RLd-vU-Bjq"; */
-"RLd-vU-Bjq.title" = "Edit";
+"RLd-vU-Bjq.title" = "Editieren";
 
 /* Class = "IBUILabel"; text = "Subject"; ObjectID = "Sb4-qC-CTs"; */
-"Sb4-qC-CTs.text" = "Subject";
+"Sb4-qC-CTs.text" = "Thema";
 
 /* Class = "IBUITableViewSection"; headerTitle = "SHOW IMAGES"; ObjectID = "UWU-pT-Ann"; */
 "UWU-pT-Ann.headerTitle" = "BILDER ANZEIGEN";
@@ -81,10 +83,10 @@
 "Zdf-7t-Un8.title" = "Boards";
 
 /* Class = "IBUILabel"; text = "Subject"; ObjectID = "aX5-nQ-xQo"; */
-"aX5-nQ-xQo.text" = "Betreff";
+"aX5-nQ-xQo.text" = "Thema";
 
 /* Class = "IBUILabel"; text = "Subject"; ObjectID = "c8v-Eb-Qk0"; */
-"c8v-Eb-Qk0.text" = "Betreff";
+"c8v-Eb-Qk0.text" = "Thema";
 
 /* Class = "IBUILabel"; text = "Never"; ObjectID = "cJ2-rc-R30"; */
 "cJ2-rc-R30.text" = "Nie";

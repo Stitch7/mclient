@@ -107,6 +107,8 @@
 
     [self configure];
 
+    [self.label sizeToFit];
+    [self.subLabel sizeToFit];
     [self.image sizeToFit];
 
     [self addSubview:self.image];
@@ -119,16 +121,19 @@
 
 
 # pragma mark - Abstract
+
 - (void)configure
 {
     mustOverride();
 }
 
+
 #pragma mark - Layout Management
+
 - (void)layoutSubviews
 {
 	// Calculate label size
-    CGSize labelSize = [self.label.text boundingRectWithSize:CGSizeMake(280.0f, MAXFLOAT)
+    CGSize labelSize = [self.label.text boundingRectWithSize:CGSizeMake(self.bounds.size.width, MAXFLOAT)
                                                      options:NSStringDrawingUsesLineFragmentOrigin
                                                   attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:LABEL_SIZE]}
                                                      context:nil].size;
@@ -138,7 +143,7 @@
 	self.label.frame = labelFrame;
 
     // Calculate subLabel size
-    CGSize subLabelSize = [self.subLabel.text boundingRectWithSize:CGSizeMake(280.0f, MAXFLOAT)
+    CGSize subLabelSize = [self.subLabel.text boundingRectWithSize:CGSizeMake(self.bounds.size.width, MAXFLOAT)
                                                      options:NSStringDrawingUsesLineFragmentOrigin
                                                   attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:SUB_LABEL_SIZE]}
                                                      context:nil].size;

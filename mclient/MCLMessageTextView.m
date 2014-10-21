@@ -207,7 +207,7 @@
         [self formatSelectionWith:@"[%@]"];
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
-                                                        message:NSLocalizedString(@"Selected text is not a valid URL.", nil)
+                                                        message:NSLocalizedString(@"Selected text is not a valid URL", nil)
                                                        delegate:nil
                                               cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                               otherButtonTitles:nil];
@@ -222,7 +222,7 @@
         [self formatSelectionWith:@"[img:%@]"];
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
-                                                        message:NSLocalizedString(@"Selected text is not a valid image URL.", nil)
+                                                        message:NSLocalizedString(@"Selected text is not a valid image URL", nil)
                                                        delegate:nil
                                               cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                               otherButtonTitles:nil];

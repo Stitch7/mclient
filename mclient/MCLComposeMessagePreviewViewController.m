@@ -160,18 +160,23 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
             if (success) {
-                dispatch_block_t completion = ^{
+                [self dismissViewControllerAnimated:YES completion:^{
                     [self.delegate composeMessageViewControllerDidFinish:self withType:self.type];
 
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success", nil)
-                                                                    message:NSLocalizedString(@"Message was posted", nil)
+                    NSString *alertMessage;
+                    if (self.type == kMCLComposeTypeEdit) {
+                        alertMessage = [NSString stringWithFormat:NSLocalizedString(@"Your message \"%@\" was changed", nil), self.subject];
+                    } else {
+                        alertMessage = [NSString stringWithFormat:NSLocalizedString(@"Thank you for your contribution \"%@\"", nil), self.subject];
+                    }
+
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Confirmation", nil)
+                                                                    message:alertMessage
                                                                    delegate:nil
                                                           cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                           otherButtonTitles:nil];
                     [alert show];
-                };
-
-                [self dismissViewControllerAnimated:YES completion:completion];
+                }];
             } else {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
                                                                 message:[mServiceError localizedDescription]

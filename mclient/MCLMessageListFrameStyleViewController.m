@@ -713,8 +713,8 @@
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = link;
 
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success", nil)
-                                                    message:NSLocalizedString(@"Copied link to this message to clipboard", nil)
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Copied link", nil)
+                                                    message:NSLocalizedString(@"URL for this message was copied to clipboard", nil)
                                                    delegate:nil
                                           cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                           otherButtonTitles:nil];
@@ -783,13 +783,13 @@
     } else if (sender.tag == 1) {
         [sender setTag:0];
         self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonDisabled.png"];
-        alertTitle = NSLocalizedString(@"Message notification disabled", nil);
-        alertMessage = NSLocalizedString(@"You will no longer receive Emails if anyone replies to this post.", nil);
+        alertTitle = NSLocalizedString(@"Notification disabled", nil);
+        alertMessage = NSLocalizedString(@"You will no longer receive Emails if anyone replies to this message", nil);
     } else {
         [sender setTag:1];
         self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonEnabled.png"];
-        alertTitle = NSLocalizedString(@"Message notification enabled", nil);
-        alertMessage = NSLocalizedString(@"You will receive an Email if anyone answers to this post.", nil);
+        alertTitle = NSLocalizedString(@"Notification enabled", nil);
+        alertMessage = NSLocalizedString(@"You will receive an Email if anyone replies to this message", nil);
     }
 
     [[[UIAlertView alloc] initWithTitle:alertTitle

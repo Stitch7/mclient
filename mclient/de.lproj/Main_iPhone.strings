@@ -1,6 +1,6 @@
 
 /* Class = "IBUITableViewSection"; footerTitle = "No Account? Register on www.maniac-forum.de"; ObjectID = "0GY-Ud-SXR"; */
-"0GY-Ud-SXR.footerTitle" = "Keinen Account? Registerung unter www.maniac-forum.de";
+"0GY-Ud-SXR.footerTitle" = "Du hast keinen Account?\nRegistrierung unter https://www.maniac-forum.de";
 
 /* Class = "IBUITableViewSection"; headerTitle = "LOGIN DATA"; ObjectID = "0GY-Ud-SXR"; */
 "0GY-Ud-SXR.headerTitle" = "LOGIN DATEN";
@@ -15,7 +15,7 @@
 "2pz-XF-uhl.text" = "Titel";
 
 /* Class = "IBUIBarButtonItem"; title = "Send"; ObjectID = "4lL-Fh-1Y6"; */
-"4lL-Fh-1Y6.title" = "Senden";
+"4lL-Fh-1Y6.title" = "Abschicken";
 
 /* Class = "IBUITableViewSection"; headerTitle = "THREAD VIEW"; ObjectID = "50Q-4i-iux"; */
 "50Q-4i-iux.headerTitle" = "THREAD ANSICHT";
@@ -45,13 +45,13 @@
 "MTV-Li-PbG.placeholder" = "Passwort";
 
 /* Class = "IBUILabel"; text = "Subject:"; ObjectID = "PQv-Cr-prB"; */
-"PQv-Cr-prB.text" = "Betreff:";
+"PQv-Cr-prB.text" = "Thema:";
 
 /* Class = "IBUILabel"; text = "Subject"; ObjectID = "Qdd-BZ-Lg5"; */
-"Qdd-BZ-Lg5.text" = "Betreff";
+"Qdd-BZ-Lg5.text" = "Thema";
 
 /* Class = "IBUILabel"; text = "Subject"; ObjectID = "RKJ-DH-6ef"; */
-"RKJ-DH-6ef.text" = "Betreff";
+"RKJ-DH-6ef.text" = "Thema";
 
 /* Class = "IBUIBarButtonItem"; title = "Preview"; ObjectID = "RXe-Zd-aaP"; */
 "RXe-Zd-aaP.title" = "Vorschau";
@@ -105,7 +105,7 @@
 "tQt-TN-PWz.title" = "Boards";
 
 /* Class = "IBUILabel"; text = "Subject"; ObjectID = "tnQ-av-7bh"; */
-"tnQ-av-7bh.text" = "Betreff";
+"tnQ-av-7bh.text" = "Thema";
 
 /* Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "wbc-lg-t5H"; */
 "wbc-lg-t5H.title" = "Einstellungen";
