@@ -10,12 +10,6 @@
 
 @protocol MCLComposeMessageViewControllerDelegate;
 
-typedef NS_ENUM(NSUInteger, kComposeType) {
-    kComposeTypeThread,
-    kComposeTypeReply,
-    kComposeTypeEdit
-};
-
 @interface MCLComposeMessageViewController : UIViewController <UITextFieldDelegate>
 
 @property (weak) id<MCLComposeMessageViewControllerDelegate> delegate;
@@ -30,6 +24,6 @@ typedef NS_ENUM(NSUInteger, kComposeType) {
 
 @protocol MCLComposeMessageViewControllerDelegate <NSObject>
 
-- (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController;
+- (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController withType:(NSUInteger)type;
 
 @end

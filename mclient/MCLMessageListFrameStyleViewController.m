@@ -38,7 +38,6 @@
 @property (strong) NSString *password;
 @property (assign) BOOL validLogin;
 @property (strong) NSDateFormatter *dateFormatter;
-@property (strong) NSIndexPath *selectedIndexPath;
 @property (strong) UIRefreshControl *refreshControl;
 @property (weak, nonatomic) IBOutlet UIView *messageView;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
@@ -92,8 +91,6 @@
     ) {
         [self transformMessageViewSizeForInterfaceOrientation:self.interfaceOrientation];
     }
-    
-    self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 
     // tableView setup
     // Enable statusbar tap to scroll to top
@@ -101,7 +98,12 @@
     // Add refresh control
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:self.refreshControl];
+//    [self.tableView addSubview:self.refreshControl];
+
+    UITableViewController *tableViewController = [[UITableViewController alloc] init];
+    tableViewController.tableView = self.tableView;
+    tableViewController.refreshControl = self.refreshControl;
+
 
     // webView setup
     self.webView.delegate = self;
@@ -135,6 +137,11 @@
             // Process data on main thread
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self fetchedData:data error:mServiceError];
+
+                // Select first message
+                NSIndexPath *indexPathOfFirstMessage = [NSIndexPath indexPathForRow:0 inSection:0];
+                [self.tableView selectRowAtIndexPath:indexPathOfFirstMessage animated:NO scrollPosition:UITableViewScrollPositionNone];
+                [self tableView:self.tableView didSelectRowAtIndexPath:indexPathOfFirstMessage];
             });
         });
     } else {
@@ -142,9 +149,19 @@
     }
 }
 
-- (void)viewDidLayoutSubviews
+//- (void)viewDidLayoutSubviews
+//{
+//    [self.refreshControl.superview sendSubviewToBack:self.refreshControl];
+//}
+
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [self.refreshControl.superview sendSubviewToBack:self.refreshControl];
+    [super viewWillDisappear:animated];
+
+    if (self.speechSynthesizer.speaking) {
+        [self.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
+        self.toolbarButtonSpeak.image = [UIImage imageNamed:@"speakButton.png"];
+    }
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -256,8 +273,6 @@
         [self.masterPopoverController dismissPopoverAnimated:YES];
     }
 
-    self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-
     // Visualize loading
     CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
     [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:fullScreenFrame]];
@@ -273,30 +288,45 @@
 
             // Scrool table to top
             [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+
+            // Select first message
+            NSIndexPath *indexPathOfFirstMessage = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self.tableView selectRowAtIndexPath:indexPathOfFirstMessage animated:NO scrollPosition:UITableViewScrollPositionNone];
+            [self tableView:self.tableView didSelectRowAtIndexPath:indexPathOfFirstMessage];
         });
     });
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    // Fixes refreshcontrol's too litle space problem
-    if (scrollView.contentOffset.y < (self.tableView.bounds.size.height / -5) && ! [self.refreshControl isRefreshing]) {
-        [self.refreshControl beginRefreshing];
-        [self reloadData];
-    }
-}
+//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+//{
+//    // Fixes refreshcontrol's too litle space problem
+//    if (scrollView.contentOffset.y < (self.tableView.bounds.size.height / -5) && ! [self.refreshControl isRefreshing]) {
+//        [self.refreshControl beginRefreshing];
+//        [self reloadData];
+//    }
+//}
 
 - (void)reloadData
 {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSError *mServiceError;
-        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId fromBoardId:self.board.boardId error:&mServiceError];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self fetchedData:data error:mServiceError];
-            [self.refreshControl endRefreshing];
+//    if ( ! [self.refreshControl isRefreshing]) {
+
+        NSLog(@"reload");
+
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSError *mServiceError;
+            NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId fromBoardId:self.board.boardId error:&mServiceError];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self fetchedData:data error:mServiceError];
+                [self.refreshControl endRefreshing];
+
+                [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+                [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+            });
         });
-    });
+//    }
 }
 
 - (void)fetchedData:(NSDictionary *)data error:(NSError *)error
@@ -353,10 +383,6 @@
         }
 
         [self.tableView reloadData];
-
-        // Select first message
-        [self.tableView selectRowAtIndexPath:self.selectedIndexPath animated:NO scrollPosition:0];
-        [self tableView:self.tableView didSelectRowAtIndexPath:self.selectedIndexPath];
     }
 }
 
@@ -478,8 +504,6 @@
 {
     NSInteger i = indexPath.row;
 
-    self.selectedIndexPath = indexPath;
-
     MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
 
     MCLMessage *message = self.messages[i];
@@ -544,7 +568,15 @@
     }
 }
 
-- (void) loadMessage:(MCLMessage *)message fromCell:(MCLMessageTableViewCell *)cell
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.speechSynthesizer.speaking) {
+        [self.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
+        self.toolbarButtonSpeak.image = [UIImage imageNamed:@"speakButton.png"];
+    }
+}
+
+- (void)loadMessage:(MCLMessage *)message fromCell:(MCLMessageTableViewCell *)cell
 {
     cell.messageText = message.text;
     [self.webView loadHTMLString:[self messageHtml:message] baseURL:nil];
@@ -598,9 +630,24 @@
 
 #pragma mark - MCLComposeMessageViewControllerDelegate
 
-- (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController
+- (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController withType:(NSUInteger)type
 {
-    [self.tableView reloadData];
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError *mServiceError;
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId fromBoardId:self.board.boardId error:&mServiceError];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self fetchedData:data error:mServiceError];
+
+            if (type == kMCLComposeTypeEdit) {
+                // Reload selected message
+                [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+                [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+            }
+        });
+    });
 }
 
 
@@ -658,7 +705,8 @@
 
 - (IBAction)copyLinkAction:(UIBarButtonItem *)sender
 {
-    MCLMessage *message = self.messages[self.selectedIndexPath.row];
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    MCLMessage *message = self.messages[selectedIndexPath.row];
 
     NSString *link = [NSString stringWithFormat:@"%@?mode=message&brdid=%@&msgid=%@", kManiacForumURL, self.board.boardId, message.messageId];
 
@@ -684,7 +732,8 @@
         [self.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
         self.toolbarButtonSpeak.image = [UIImage imageNamed:@"speakButton.png"];
     } else {
-        MCLMessageTableViewCell *selectedCell = (MCLMessageTableViewCell*)[self.tableView cellForRowAtIndexPath:self.selectedIndexPath];
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        MCLMessageTableViewCell *selectedCell = (MCLMessageTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
 
         // Backup of UIWebView content because it's get manipulated by our operation below
         NSString *webviewTextBackup = [self.webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"html\")[0].innerHTML;"];
@@ -701,14 +750,21 @@
         // Speak text
         AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:text];
         [utterance setVoice:[AVSpeechSynthesisVoice voiceWithLanguage:@"de-DE"]];
-        [utterance setRate:AVSpeechUtteranceDefaultSpeechRate];
+
+        float rate = AVSpeechUtteranceDefaultSpeechRate;
+        if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1) {
+            rate = rate / 2;
+        }
+        [utterance setRate:rate];
+
         [self.speechSynthesizer speakUtterance:utterance];
     }
 }
 
 - (IBAction)notificationAction:(UIBarButtonItem *)sender
 {
-    MCLMessage *message = self.messages[self.selectedIndexPath.row];
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    MCLMessage *message = self.messages[selectedIndexPath.row];
 
     NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
@@ -756,19 +812,19 @@
         NSString *subject = message.subject;
 
         NSString *subjectReplyPrefix = @"Re:";
-        if ([subject length] < 3 || ![[subject substringToIndex:3] isEqualToString:subjectReplyPrefix]) {
+        if ([subject length] < 3 || ! [[subject substringToIndex:3] isEqualToString:subjectReplyPrefix]) {
             subject = [subjectReplyPrefix stringByAppendingString:subject];
         }
 
         [destinationViewController setDelegate:self];
-        [destinationViewController setType:kComposeTypeReply];
+        [destinationViewController setType:kMCLComposeTypeReply];
         [destinationViewController setBoardId:self.board.boardId];
         [destinationViewController setMessageId:message.messageId];
         [destinationViewController setSubject:subject];
     } else if ([segue.identifier isEqualToString:@"ModalToEditReply"]) {
         MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         [destinationViewController setDelegate:self];
-        [destinationViewController setType:kComposeTypeEdit];
+        [destinationViewController setType:kMCLComposeTypeEdit];
         [destinationViewController setBoardId:self.board.boardId];
         [destinationViewController setMessageId:message.messageId];
         [destinationViewController setSubject:message.subject];

@@ -342,9 +342,9 @@
 
 #pragma mark - MCLComposeMessageViewControllerDelegate
 
-- (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController
+- (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController withType:(NSUInteger)type
 {
-    [self.tableView reloadData];
+    [self reloadData];
 }
 
 
@@ -393,7 +393,7 @@
     } else if ([segue.identifier isEqualToString:@"ModalToComposeThread"]) {
         MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         [destinationViewController setDelegate:self];
-        [destinationViewController setType:kComposeTypeThread];
+        [destinationViewController setType:kMCLComposeTypeThread];
         [destinationViewController setBoardId:self.board.boardId];
     }
 }

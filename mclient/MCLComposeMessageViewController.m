@@ -35,16 +35,16 @@
     self.composeSubjectLabel.textColor = [UIColor colorWithRed:142/255.0f green:142/255.0f blue:147/255.0f alpha:1.0f];
 
     switch (self.type) {
-        case kComposeTypeThread:
+        case kMCLComposeTypeThread:
             self.title = @"Create Thread";
             [self.composeQuoteButton setHidden:YES];
             break;
         
-        case kComposeTypeReply:
+        case kMCLComposeTypeReply:
             self.title = @"Reply";
             break;
             
-        case kComposeTypeEdit:
+        case kMCLComposeTypeEdit:
             self.title = @"Edit";
             [self.composeQuoteButton setHidden:YES];
             break;
@@ -158,9 +158,9 @@
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
  {
      if ([segue.identifier isEqualToString:@"PushToPreview"]) {
-         NSString *messageText = self.composeTextTextField.text;
+         NSString *messageText = [self.composeTextTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
-         if (self.type == kComposeTypeThread || self.type == kComposeTypeReply) {
+         if (self.type == kMCLComposeTypeThread || self.type == kMCLComposeTypeReply) {
              NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
              BOOL signatureEnabled = [userDefaults objectForKey:@"signatureEnabled"] == nil ? YES : [userDefaults boolForKey:@"signatureEnabled"];
              if (signatureEnabled) {

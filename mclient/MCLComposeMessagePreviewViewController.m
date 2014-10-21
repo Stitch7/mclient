@@ -37,7 +37,7 @@
 
     self.webView.delegate = self;
 
-    if (self.type == kComposeTypeEdit) {
+    if (self.type == kMCLComposeTypeEdit) {
         [self.notificationSwitch setHidden:YES];
         [self.notificationSwitchLabel setHidden:YES];
     }
@@ -127,7 +127,7 @@
         NSError *mServiceError;
 
         switch (self.type) {
-            case kComposeTypeThread:
+            case kMCLComposeTypeThread:
                 success = [mServiceConnector postThreadToBoardId:self.boardId
                                                          subject:self.subject
                                                             text:self.text
@@ -136,7 +136,7 @@
                                                     notification:self.notificationSwitch.on
                                                            error:&mServiceError];
                 break;
-            case kComposeTypeReply:
+            case kMCLComposeTypeReply:
                 success = [mServiceConnector postReplyToMessageId:self.messageId
                                                           boardId:self.boardId
                                                           subject:self.subject
@@ -146,7 +146,7 @@
                                                      notification:self.notificationSwitch.on
                                                             error:&mServiceError];
                 break;
-            case kComposeTypeEdit:
+            case kMCLComposeTypeEdit:
                 success = [mServiceConnector postEditToMessageId:self.messageId
                                                          boardId:self.boardId
                                                          subject:self.subject
@@ -161,7 +161,7 @@
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
             if (success) {
                 dispatch_block_t completion = ^{
-                    [self.delegate composeMessageViewControllerDidFinish:self];
+                    [self.delegate composeMessageViewControllerDidFinish:self withType:self.type];
 
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
                                                                     message:@"Message was posted"

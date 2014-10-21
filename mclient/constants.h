@@ -27,3 +27,9 @@ typedef NS_ENUM(NSUInteger, kMCLSettingsShowImages) {
     kMCLSettingsShowImagesWifi,
     kMCLSettingsShowImagesNever
 };
+
+typedef NS_ENUM(NSUInteger, kMCLComposeType) {
+    kMCLComposeTypeThread,
+    kMCLComposeTypeReply,
+    kMCLComposeTypeEdit
+};

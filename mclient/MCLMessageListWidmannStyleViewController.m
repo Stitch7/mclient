@@ -87,10 +87,17 @@
     refreshControlBackgroundViewFrame.origin.y = -refreshControlBackgroundViewFrame.size.height;
     self.refreshControlBackgroundView = [[UIView alloc] initWithFrame:refreshControlBackgroundViewFrame];
     self.refreshControlBackgroundView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [self.tableView addSubview:self.refreshControlBackgroundView];
+//    [self.tableView addSubview:self.refreshControlBackgroundView];
+
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:self.refreshControl];
+//    [self.tableView addSubview:self.refreshControl];
+
+    UITableViewController *tableViewController = [[UITableViewController alloc] init];
+    tableViewController.tableView = self.tableView;
+    tableViewController.refreshControl = self.refreshControl;
+    [tableViewController.tableView addSubview:self.refreshControlBackgroundView];
+    self.refreshControl.layer.zPosition = self.refreshControlBackgroundView.layer.zPosition + 1;
 
     if (self.board && self.thread) {
         // Set title to threads subject
@@ -117,11 +124,25 @@
     }
 }
 
-- (void)viewDidLayoutSubviews
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [self.tableView sendSubviewToBack:self.refreshControl];
-    [self.tableView sendSubviewToBack:self.refreshControlBackgroundView];
+    [super viewWillDisappear:animated];
+
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    if (selectedIndexPath) {
+        MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+        if (cell.speechSynthesizer.speaking) {
+            [cell.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
+            cell.messageSpeakButton.image = [UIImage imageNamed:@"speakButton.png"];
+        }
+    }
 }
+
+//- (void)viewDidLayoutSubviews
+//{
+//    [self.tableView sendSubviewToBack:self.refreshControl];
+//    [self.tableView sendSubviewToBack:self.refreshControlBackgroundView];
+//}
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
@@ -185,6 +206,15 @@
 
 - (void)reloadData
 {
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    if (selectedIndexPath) {
+        MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+        if (cell.speechSynthesizer.speaking) {
+            [cell.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
+            cell.messageSpeakButton.image = [UIImage imageNamed:@"speakButton.png"];
+        }
+    }
+
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
@@ -494,7 +524,7 @@
     }
 }
 
-- (void) putMessage:(MCLMessage *)message toCell:(MCLMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)putMessage:(MCLMessage *)message toCell:(MCLMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     [cell.messageTextWebView setBackgroundColor:self.veryLightGreyColor];
     [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
@@ -601,9 +631,9 @@
 
 #pragma mark - MCLComposeMessageViewControllerDelegate
 
-- (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController
+- (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController withType:(NSUInteger)type
 {
-    [self.tableView reloadData];
+    [self reloadData];
 }
 
 
@@ -618,18 +648,18 @@
         MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         NSString *subject = message.subject;
         NSString *subjectReplyPrefix = @"Re:";
-        if ([subject length] < 3 || ![[subject substringToIndex:3] isEqualToString:subjectReplyPrefix]) {
+        if ([subject length] < 3 || ! [[subject substringToIndex:3] isEqualToString:subjectReplyPrefix]) {
             subject = [subjectReplyPrefix stringByAppendingString:subject];
         }
         [destinationViewController setDelegate:self];
-        [destinationViewController setType:kComposeTypeReply];
+        [destinationViewController setType:kMCLComposeTypeReply];
         [destinationViewController setBoardId:self.board.boardId];
         [destinationViewController setMessageId:message.messageId];
         [destinationViewController setSubject:subject];
     } else if ([segue.identifier isEqualToString:@"ModalToEditReply"]) {
         MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         [destinationViewController setDelegate:self];
-        [destinationViewController setType:kComposeTypeEdit];
+        [destinationViewController setType:kMCLComposeTypeEdit];
         [destinationViewController setBoardId:self.board.boardId];
         [destinationViewController setMessageId:message.messageId];
         [destinationViewController setSubject:message.subject];
