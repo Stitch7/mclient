@@ -13,7 +13,7 @@
 - (void)configureSubviews
 {
     [self setBackgroundColor:[UIColor clearColor]];
-    self.label.text = @"Verifying login data…";
+    self.label.text = NSLocalizedString(@"Verifying login data…", nil);
     self.label.font = [UIFont systemFontOfSize:13.0f];
 
     self.spaceBetwennSpinnerAndLabel = 10;
@@ -22,14 +22,14 @@
 - (void)loginStatusWithUsername:(NSString *)username
 {
     [self.spinner stopAnimating];
-    self.label.text = [NSString stringWithFormat:@"Welcome %@", username];
+    self.label.text = [NSString stringWithFormat:NSLocalizedString(@"Welcome %@", nil), username];
     [self layoutSubviews];
 }
 
 - (void)loginStausNoLogin
 {
     [self.spinner stopAnimating];
-    self.label.text = @"You are not logged in";
+    self.label.text = NSLocalizedString(@"You are not logged in", nil);
     [self layoutSubviews];
 }
 

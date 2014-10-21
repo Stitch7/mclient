@@ -100,7 +100,7 @@
     self.subLabel.textColor = [UIColor lightGrayColor];
 
     if ( ! self.hideSubLabel) {
-        self.subLabel.text = @"Try pull to refresh…";
+        self.subLabel.text = NSLocalizedString(@"Try pull to refresh…", nil);
     } else {
         self.subLabel.hidden = YES;
     }

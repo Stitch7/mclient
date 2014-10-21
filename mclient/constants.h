@@ -15,7 +15,7 @@
 
 #define kManiacForumURL @"http://www.maniac-forum.de/forum/pxmboard.php"
 
-#define kSettingsSignatureTextDefault @"sent from M!client for iOS"
+#define kSettingsSignatureTextDefault NSLocalizedString(@"sent from M!client for iOS", nil)
 
 typedef NS_ENUM(NSUInteger, kMCLSettingsThreadView) {
     kMCLSettingsThreadViewWidmann,

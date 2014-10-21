@@ -47,14 +47,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
-    self.menuItems = @[[[UIMenuItem alloc] initWithTitle:@"Spoiler" action:@selector(formatSpoiler:)],
-                       [[UIMenuItem alloc] initWithTitle:@"Link" action:@selector(formatLink:)],
-                       [[UIMenuItem alloc] initWithTitle:@"Image" action:@selector(formatImage:)]];
+    self.menuItems = @[[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Spoiler", nil) action:@selector(formatSpoiler:)],
+                       [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Link", nil) action:@selector(formatLink:)],
+                       [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Image", nil) action:@selector(formatImage:)]];
 
-    self.menuItemsSubmenuFormatText = @[[[UIMenuItem alloc] initWithTitle:@"B" action:@selector(formatBold:)],
-                                        [[UIMenuItem alloc] initWithTitle:@"I" action:@selector(formatItalic:)],
-                                        [[UIMenuItem alloc] initWithTitle:@"U" action:@selector(formatUnderline:)],
-                                        [[UIMenuItem alloc] initWithTitle:@"S" action:@selector(formatStroke:)]];
+    self.menuItemsSubmenuFormatText = @[[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"B", nil) action:@selector(formatBold:)],
+                                        [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"I", nil) action:@selector(formatItalic:)],
+                                        [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"U", nil) action:@selector(formatUnderline:)],
+                                        [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"S", nil) action:@selector(formatStroke:)]];
 
     self.menuItemsSubmenuFormatTextActive = NO;
 
@@ -206,10 +206,10 @@
     if ([self isStringUrl:selectedText]) {
         [self formatSelectionWith:@"[%@]"];
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"Selected text is not a valid URL."
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                        message:NSLocalizedString(@"Selected text is not a valid URL.", nil)
                                                        delegate:nil
-                                              cancelButtonTitle:@"OK"
+                                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                               otherButtonTitles:nil];
         [alert show];
     }
@@ -221,10 +221,10 @@
     if ([self isStringImageUrl:selectedText]) {
         [self formatSelectionWith:@"[img:%@]"];
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"Selected text is not a valid image URL."
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                        message:NSLocalizedString(@"Selected text is not a valid image URL.", nil)
                                                        delegate:nil
-                                              cancelButtonTitle:@"OK"
+                                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                               otherButtonTitles:nil];
         [alert show];
     }

@@ -12,7 +12,7 @@
 
 - (void)configure
 {
-    self.label.text = self.labelText ?: @"M!service Error";
+    self.label.text = self.labelText ?: NSLocalizedString(@"M!service Error", nil);
     self.image.image = [UIImage imageNamed:@"errorMService.png"];
 }
 

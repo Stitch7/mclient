@@ -87,9 +87,9 @@
 {
     NSString *activeDetailViewControllerClassName = NSStringFromClass([[[[self.splitViewController.viewControllers lastObject] viewControllers] firstObject] class]);
 
-    NSString *barButtonTitle = @"Threads";
+    NSString *barButtonTitle = NSLocalizedString(@"Threads", nil);
     if ([activeDetailViewControllerClassName isEqualToString:@"MCLMessageListViewController"]) {
-        barButtonTitle = @"Boards";
+        barButtonTitle = NSLocalizedString(@"Boards", nil);
     }
     barButtonItem.title = barButtonTitle;
     _splitViewButton = barButtonItem;

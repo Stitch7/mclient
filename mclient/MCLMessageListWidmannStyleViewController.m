@@ -501,10 +501,10 @@
                     [tableView deselectRowAtIndexPath:indexPath animated:NO];
                     [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
 
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error"
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Network Error", nil)
                                                                     message:[mServiceError localizedDescription]
                                                                    delegate:nil
-                                                          cancelButtonTitle:@"OK"
+                                                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                           otherButtonTitles:nil];
                     [alert show];
                 } else {
@@ -613,6 +613,14 @@
 
 
 #pragma mark - UISplitViewControllerDelegate
+
+
+/**
+ *
+ * IS THIS NEEDED ?????
+ *
+ */
+
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
 {

@@ -19,14 +19,14 @@
 - (NSDictionary *)errorMessages
 {
     if ( ! _errorMessages) {
-        _errorMessages = @{@(-2):@"No Internet Connection",
-                           @(-1):@"Connection to M!service failed",
-                           @(400):@"Please fill out the subject field",
-                           @(401):@"Please verify your login data in settings",
-                           @(403):@"Editing this message is no longer allowed",
-                           @(404):@"Action could not be executed: %@",
-                           @(500):@"Action could not be executed: an unknown error occured",
-                           @(504):@"Man!ac Forum Server down?"};
+        _errorMessages = @{@(-2):NSLocalizedString(@"No Internet Connection", nil),
+                           @(-1):NSLocalizedString(@"Connection to M!service failed", nil),
+                           @(400):NSLocalizedString(@"Please fill out the subject field", nil),
+                           @(401):NSLocalizedString(@"Please verify your login data in settings", nil),
+                           @(403):NSLocalizedString(@"Editing this message is no longer allowed", nil),
+                           @(404):NSLocalizedString(@"Action could not be executed: %@", nil),
+                           @(500):NSLocalizedString(@"Action could not be executed: an unknown error occured", nil),
+                           @(504):NSLocalizedString(@"Man!ac Forum Server down?", nil)};
     }
 
     return _errorMessages;
@@ -324,7 +324,6 @@
 
                 default:
                     errorCode = @(response.statusCode);
-                    errorMessage = [self.errorMessages objectForKey:errorCode];
                     break;
             }
         }
@@ -333,7 +332,7 @@
     if (errorCode) {
         *errorPtr = [NSError errorWithDomain:[[NSBundle mainBundle] bundleIdentifier]
                                         code:[errorCode integerValue]
-                                    userInfo:@{NSLocalizedDescriptionKey:errorMessage}];
+                                    userInfo:@{NSLocalizedDescriptionKey:errorMessage ?: [self.errorMessages objectForKey:errorCode]}];
     }
 
     return reply;

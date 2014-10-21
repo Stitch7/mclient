@@ -50,7 +50,7 @@
 - (id)initWithFrame:(CGRect)frame
 {
 	if (self = [super initWithFrame:frame]) {
-        [self configureWithSubLabelText:@"Select a thread…"];
+        [self configureWithSubLabelText:NSLocalizedString(@"Select a thread…", nil)];
 	}
 
 	return self;
@@ -59,7 +59,7 @@
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super initWithCoder:aDecoder]) {
-        [self configureWithSubLabelText:@"Select a board…"];
+        [self configureWithSubLabelText:NSLocalizedString(@"Select a board…", nil)];
 	}
     
 	return self;

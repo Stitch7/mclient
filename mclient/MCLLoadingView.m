@@ -54,7 +54,7 @@
 {
     [self setBackgroundColor:[UIColor whiteColor]];
 
-    self.label.text = @"Loading…";
+    self.label.text = NSLocalizedString(@"Loading…", nil);
     self.label.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     self.label.textColor = self.spinner.color;
 

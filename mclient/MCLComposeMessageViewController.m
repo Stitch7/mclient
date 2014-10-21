@@ -36,16 +36,16 @@
 
     switch (self.type) {
         case kMCLComposeTypeThread:
-            self.title = @"Create Thread";
+            self.title = NSLocalizedString(@"Create Thread", nil);
             [self.composeQuoteButton setHidden:YES];
             break;
         
         case kMCLComposeTypeReply:
-            self.title = @"Reply";
+            self.title = NSLocalizedString(@"Reply", nil);
             break;
             
         case kMCLComposeTypeEdit:
-            self.title = @"Edit";
+            self.title = NSLocalizedString(@"Edit", nil);
             [self.composeQuoteButton setHidden:YES];
             break;
     }
@@ -133,10 +133,10 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
             if (mServiceError) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error"
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Network Error", nil)
                                                                 message:[mServiceError localizedDescription]
                                                                delegate:nil
-                                                      cancelButtonTitle:@"OK"
+                                                      cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                       otherButtonTitles:nil];
                 [alert show];
             } else {

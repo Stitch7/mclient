@@ -163,20 +163,20 @@
                 dispatch_block_t completion = ^{
                     [self.delegate composeMessageViewControllerDidFinish:self withType:self.type];
 
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success"
-                                                                    message:@"Message was posted"
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success", nil)
+                                                                    message:NSLocalizedString(@"Message was posted", nil)
                                                                    delegate:nil
-                                                          cancelButtonTitle:@"OK"
+                                                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                           otherButtonTitles:nil];
                     [alert show];
                 };
 
                 [self dismissViewControllerAnimated:YES completion:completion];
             } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
                                                                 message:[mServiceError localizedDescription]
                                                                delegate:nil
-                                                      cancelButtonTitle:@"OK"
+                                                      cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                       otherButtonTitles:nil];
                 [alert show];
             }

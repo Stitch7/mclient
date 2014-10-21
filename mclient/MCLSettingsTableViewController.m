@@ -93,7 +93,7 @@
     aboutLabel.textColor = [UIColor darkGrayColor];
 
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    aboutLabel.text = [NSString stringWithFormat:@"Version %@ (%@)\nCopyright © 2014 Christopher Reitz aka Stitch\nAll rights reserved.",
+    aboutLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Version %@ (%@)\nCopyright © 2014 Christopher Reitz aka Stitch\nAll rights reserved.", nil),
                        [infoDictionary objectForKey:@"CFBundleShortVersionString"],
                        [infoDictionary objectForKey:@"CFBundleVersion"]];
 
@@ -125,7 +125,7 @@
     if (username.length > 0 && password.length > 0) {
         [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
         self.settingsLoginDataStatusLabel.textColor = [UIColor darkGrayColor];
-        self.settingsLoginDataStatusLabel.text = @"Verifying username and password...";
+        self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Verifying username and password…", nil);
         [self.settingsLoginDataStatusSpinner startAnimating];
 
         [self.keychainItem setObject:username forKey:(__bridge id)(kSecAttrAccount)];
@@ -139,15 +139,15 @@
                 [self.settingsLoginDataStatusSpinner stopAnimating];
                 if (login) {
                     [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryCheckmark];
-                    self.settingsLoginDataStatusLabel.text = @"Login data is valid";
+                    self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Login data is valid", nil);
                 } else {
                     [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
                     self.settingsLoginDataStatusLabel.textColor = [UIColor redColor];
 
                     if (error) {
-                        self.settingsLoginDataStatusLabel.text = @"ERROR: Could not connect to server";
+                        self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Error: Could not connect to server", nil);
                     } else {
-                        self.settingsLoginDataStatusLabel.text = @"Login data was entered incorrectly";
+                        self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Login data was entered incorrectly", nil);
                     }
                 }
             });
@@ -155,7 +155,7 @@
     } else {
         [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
         self.settingsLoginDataStatusLabel.textColor = [UIColor darkGrayColor];
-        self.settingsLoginDataStatusLabel.text = @"Please enter username and password";
+        self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Please enter username and password", nil);
     }
 }
 

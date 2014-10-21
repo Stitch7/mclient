@@ -31,7 +31,8 @@
     [super viewDidLoad];
     
     self.title = self.username;
-    
+
+    // TODO
     self.profileKeys = @[@"picture",
                          @"firstname",
                          @"lastname",
@@ -51,24 +52,24 @@
                          @"nintendoFriendcode",
                          @"lastUpdate"];
     
-    self.profileLabels = @{@"picture": @"Avatar",
-                           @"firstname": @"Firstname",
-                           @"lastname": @"Lastname",
-                           @"domicile": @"Domicile",
-                           @"accountNo": @"Account-No.",
-                           @"registrationDate": @"Date of registration",
-                           @"email": @"Email",
-                           @"icq": @"ICQ",
-                           @"homepage": @"Homepage",
-                           @"firstGame": @"First Game",
-                           @"allTimeClassics": @"All Time Classics",
-                           @"favoriteGenres": @"Favorite Genres",
-                           @"currentSystems": @"Current Systems",
-                           @"hobbies": @"Hobbies",
-                           @"xboxLiveGamertag": @"XBox Live Gamertag",
-                           @"psnId": @"Playstation Network ID",
-                           @"nintendoFriendcode": @"Nintendo Friendcode",
-                           @"lastUpdate": @"Last Updated on"};
+    self.profileLabels = @{@"picture": NSLocalizedString(@"Avatar", nil),
+                           @"firstname": NSLocalizedString(@"Firstname", nil),
+                           @"lastname": NSLocalizedString(@"Lastname", nil),
+                           @"domicile": NSLocalizedString(@"Domicile", nil),
+                           @"accountNo": NSLocalizedString(@"Account-No.", nil),
+                           @"registrationDate": NSLocalizedString(@"Date of registration", nil),
+                           @"email": NSLocalizedString(@"Email", nil),
+                           @"icq": NSLocalizedString(@"ICQ", nil),
+                           @"homepage": NSLocalizedString(@"Homepage", nil),
+                           @"firstGame": NSLocalizedString(@"First Game", nil),
+                           @"allTimeClassics": NSLocalizedString(@"All Time Classics", nil),
+                           @"favoriteGenres": NSLocalizedString(@"Favorite Genres", nil),
+                           @"currentSystems": NSLocalizedString(@"Current Systems", nil),
+                           @"hobbies": NSLocalizedString(@"Hobbies", nil),
+                           @"xboxLiveGamertag": NSLocalizedString(@"XBox Live Gamertag", nil),
+                           @"psnId": NSLocalizedString(@"Playstation Network ID", nil),
+                           @"nintendoFriendcode": NSLocalizedString(@"Nintendo Friendcode", nil),
+                           @"lastUpdate": NSLocalizedString(@"Last Updated on", nil)};
 
     // Cache original tables separatorColor and set to clear to avoid flickering loading view
     self.tableSeparatorColor = [self.tableView separatorColor];

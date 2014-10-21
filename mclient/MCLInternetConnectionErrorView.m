@@ -12,7 +12,7 @@
 
 - (void)configure
 {
-    self.label.text = @"No Internet Connection";
+    self.label.text = NSLocalizedString(@"No Internet Connection", nil);
     self.image.image = [UIImage imageNamed:@"errorInternetConnection.png"];
 }
 
