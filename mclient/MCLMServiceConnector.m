@@ -13,26 +13,6 @@
 
 @implementation MCLMServiceConnector
 
-#pragma mark - Accessors
-@synthesize errorMessages = _errorMessages;
-
-- (NSDictionary *)errorMessages
-{
-    if ( ! _errorMessages) {
-        _errorMessages = @{@(-2):NSLocalizedString(@"No Internet Connection", nil),
-                           @(-1):NSLocalizedString(@"Connection to M!service failed", nil),
-                           @(400):NSLocalizedString(@"Please fill out the subject field", nil),
-                           @(401):NSLocalizedString(@"Please verify your login data in settings", nil),
-                           @(403):NSLocalizedString(@"Editing this message is no longer allowed", nil),
-                           @(404):NSLocalizedString(@"Action could not be executed: %@", nil),
-                           @(500):NSLocalizedString(@"Action could not be executed: an unknown error occured", nil),
-                           @(504):NSLocalizedString(@"Man!ac Forum Server down?", nil)};
-    }
-
-    return _errorMessages;
-}
-
-
 #pragma mark Singleton Methods
 
 + (id)sharedConnector
@@ -263,6 +243,9 @@
     return [self postRequestToUrlString:urlString withVars:vars error:errorPtr];
 }
 
+
+#pragma mark Private Methods
+
 - (NSDictionary *)getRequestToUrlString:(NSString *)urlString error:(NSError **)errorPtr
 {
     return [self requestWithHTTPMethod:@"GET" toUrlString:urlString withVars:nil error:errorPtr];
@@ -319,7 +302,7 @@
 
                 case 404:
                     errorCode = @(404);
-                    errorMessage = [NSString stringWithFormat:[self.errorMessages objectForKey:errorCode], [json objectForKey:@"error"]];
+                    errorMessage = [NSString stringWithFormat:NSLocalizedString([errorCode stringValue], nil), [json objectForKey:@"error"]];
                     break;
 
                 default:
@@ -332,7 +315,7 @@
     if (errorCode) {
         *errorPtr = [NSError errorWithDomain:[[NSBundle mainBundle] bundleIdentifier]
                                         code:[errorCode integerValue]
-                                    userInfo:@{NSLocalizedDescriptionKey:errorMessage ?: [self.errorMessages objectForKey:errorCode]}];
+                                    userInfo:@{NSLocalizedDescriptionKey:errorMessage ?: NSLocalizedString([errorCode stringValue], nil)}];
     }
 
     return reply;

@@ -10,8 +10,6 @@
 
 @interface MCLMServiceConnector : NSObject
 
-@property(strong, nonatomic) NSDictionary *errorMessages;
-
 + (id)sharedConnector;
 
 - (NSDictionary *)boards:(NSError **)errorPtr;
