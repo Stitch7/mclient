@@ -188,7 +188,7 @@
                            @"text":inText,
                            @"username":inUsername,
                            @"password":inPassword,
-                           @"notification":[NSNumber numberWithBool:inNotification]};
+                           @"notification":[NSString stringWithFormat:@"%d", inNotification]};
     
     NSDictionary *data = [self postRequestToUrlString:@"post" withVars:vars error:errorPtr];
 
@@ -214,7 +214,7 @@
                            @"text":inText,
                            @"username":inUsername,
                            @"password":inPassword,
-                           @"notification":[NSNumber numberWithBool:inNotification]};
+                           @"notification":[NSString stringWithFormat:@"%d", inNotification]};
 
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message/%@", kMServiceBaseURL, inBoardId, inMessageId];
 
