@@ -16,24 +16,24 @@
 
 @interface MCLProfileTableViewController ()
 
+@property (strong, nonatomic) NSArray *profileKeys;
+@property (strong, nonatomic) NSMutableDictionary *profileData;
+@property (strong, nonatomic) UIImage *profileImage;
 @property (strong, nonatomic) UIColor *tableSeparatorColor;
-@property (strong) NSMutableDictionary *profileData;
-@property (strong) NSDictionary *profileLabels;
-@property (strong) NSArray *profileKeys;
-@property (strong) UIImage *profileImage;
 
 @end
 
 @implementation MCLProfileTableViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.title = self.username;
 
-    // TODO
-    self.profileKeys = @[@"picture",
+#pragma mark - Accessors
+
+@synthesize profileKeys = _profileKeys;
+
+- (NSArray *)profileKeys
+{
+    if ( ! _profileKeys) {
+        _profileKeys = @[@"picture",
                          @"firstname",
                          @"lastname",
                          @"domicile",
@@ -51,25 +51,19 @@
                          @"psnId",
                          @"nintendoFriendcode",
                          @"lastUpdate"];
+    }
+
+    return _profileKeys;
+}
+
+
+#pragma mark - ViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
     
-    self.profileLabels = @{@"picture": NSLocalizedString(@"Avatar", nil),
-                           @"firstname": NSLocalizedString(@"Firstname", nil),
-                           @"lastname": NSLocalizedString(@"Lastname", nil),
-                           @"domicile": NSLocalizedString(@"Domicile", nil),
-                           @"accountNo": NSLocalizedString(@"Account-No.", nil),
-                           @"registrationDate": NSLocalizedString(@"Date of registration", nil),
-                           @"email": NSLocalizedString(@"Email", nil),
-                           @"icq": NSLocalizedString(@"ICQ", nil),
-                           @"homepage": NSLocalizedString(@"Homepage", nil),
-                           @"firstGame": NSLocalizedString(@"First Game", nil),
-                           @"allTimeClassics": NSLocalizedString(@"All Time Classics", nil),
-                           @"favoriteGenres": NSLocalizedString(@"Favorite Genres", nil),
-                           @"currentSystems": NSLocalizedString(@"Current Systems", nil),
-                           @"hobbies": NSLocalizedString(@"Hobbies", nil),
-                           @"xboxLiveGamertag": NSLocalizedString(@"XBox Live Gamertag", nil),
-                           @"psnId": NSLocalizedString(@"Playstation Network ID", nil),
-                           @"nintendoFriendcode": NSLocalizedString(@"Nintendo Friendcode", nil),
-                           @"lastUpdate": NSLocalizedString(@"Last Updated on", nil)};
+    self.title = self.username;
 
     // Cache original tables separatorColor and set to clear to avoid flickering loading view
     self.tableSeparatorColor = [self.tableView separatorColor];
@@ -130,7 +124,7 @@
                 break;
         }
     } else {
-        self.profileData = [[NSMutableDictionary alloc] init];
+        self.profileData = [NSMutableDictionary dictionary];
         for (NSString *key in self.profileKeys) {
             [self.profileData setObject:[data objectForKey:key] forKey:key];
         }
@@ -174,7 +168,6 @@
     return [self.profileData count];
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *key = self.profileKeys[indexPath.row];
@@ -197,7 +190,7 @@
             [cell.contentView addSubview:imageView];
         }
     } else {
-        cell.textLabel.text = [[self.profileLabels objectForKey:key] stringByAppendingString:@":"];
+        cell.textLabel.text = [NSLocalizedString(key, nil) stringByAppendingString:@":"];
         
         NSString *detailText = [self.profileData objectForKey:key];
         cell.detailTextLabel.text = detailText.length ? detailText : @"-";
@@ -232,7 +225,7 @@
 
         CGSize labelSize = [cellText boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 30, MAXFLOAT)
                                        options:NSStringDrawingUsesLineFragmentOrigin
-                                    attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:14.0]}
+                                    attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14.0]}
                                        context:nil].size;
         
         height = labelSize.height + 30;
