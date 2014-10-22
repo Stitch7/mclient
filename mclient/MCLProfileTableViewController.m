@@ -184,7 +184,7 @@
             [imageView.layer setBorderWidth:0.5];
 
             CGRect imageViewFrame = imageView.frame;
-            imageViewFrame.origin = CGPointMake(20.0f, 5.0f);
+            imageViewFrame.origin = CGPointMake(16.0f, 5.0f);
             imageView.frame = imageViewFrame;
 
             [cell.contentView addSubview:imageView];
