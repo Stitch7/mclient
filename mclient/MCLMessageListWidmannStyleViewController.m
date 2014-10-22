@@ -501,7 +501,7 @@
                     [tableView deselectRowAtIndexPath:indexPath animated:NO];
                     [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
 
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Network Error", nil)
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
                                                                     message:[mServiceError localizedDescription]
                                                                    delegate:nil
                                                           cancelButtonTitle:NSLocalizedString(@"OK", nil)
