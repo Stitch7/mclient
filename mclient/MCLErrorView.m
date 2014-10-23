@@ -144,7 +144,6 @@
 
 	CGRect labelFrame;
 	labelFrame.size = labelSize;
-//	self.label.frame = labelFrame;
 
     // Calculate subLabel size
     CGSize subLabelSize = [self.subLabel.text boundingRectWithSize:CGSizeMake(self.bounds.size.width, MAXFLOAT)
@@ -154,8 +153,6 @@
 
 	CGRect subLabelFrame;
 	subLabelFrame.size = subLabelSize;
-//	self.subLabel.frame = subLabelFrame;
-
 
 	// Allign label and spinner horizontaly
 	labelFrame = self.label.frame;
@@ -167,9 +164,6 @@
 
 	// Set y position
     imageFrame.origin.y = (self.bounds.size.height / 2) - (imageFrame.size.height / 2);
-
-    NSLog(@"label height: %f", labelSize.height);
-
     labelFrame.origin.y = imageFrame.origin.y - 20 - labelSize.height;
     subLabelFrame.origin.y = imageFrame.origin.y + imageFrame.size.height + 20;
 
