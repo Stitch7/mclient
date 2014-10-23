@@ -168,6 +168,7 @@
 {
     [self transformMessageViewSizeForInterfaceOrientation:toInterfaceOrientation];
 
+    // Fix zooming webView content on rotate
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     if (selectedIndexPath) {
         [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];

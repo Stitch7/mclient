@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UISwitch *notificationSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *notificationSwitchLabel;
+@property (strong, nonatomic) NSString *previewText;
 
 @end
 
@@ -84,11 +85,17 @@
                         break;
                 }
 
-                NSString *html = [MCLMessageListViewController messageHtmlSkeletonForHtml:[data objectForKey:key] withTopMargin:20];
-                [self.webView loadHTMLString:html baseURL:nil];
+                self.previewText = [MCLMessageListViewController messageHtmlSkeletonForHtml:[data objectForKey:key] withTopMargin:20];
+                [self.webView loadHTMLString:self.previewText baseURL:nil];
             }
         });
     });
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    // Fix zooming webView content on rotate
+    [self.webView loadHTMLString:self.previewText baseURL:nil];
 }
 
 - (void)didReceiveMemoryWarning
