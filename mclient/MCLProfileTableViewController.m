@@ -115,12 +115,8 @@
                 [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame]];
                 break;
 
-            case -1:
-                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[error localizedDescription]]];
-                break;
-
             default:
-                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame]];
+                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[error localizedDescription]]];
                 break;
         }
     } else {
@@ -173,11 +169,11 @@
     NSString *key = self.profileKeys[indexPath.row];
     static NSString *cellIdentifier = @"ProfileCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    
+
     if ([key isEqualToString:@"picture"]) {
-        cell.textLabel.text = @"";
-        cell.detailTextLabel.text = @"";
-        
+        [cell.textLabel setHidden:YES];
+        [cell.detailTextLabel setHidden:YES];
+
         if (self.profileImage) {
             UIImageView *imageView = [[UIImageView alloc] initWithImage:self.profileImage];
             [imageView.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
@@ -190,6 +186,9 @@
             [cell.contentView addSubview:imageView];
         }
     } else {
+        [cell.textLabel setHidden:NO];
+        [cell.detailTextLabel setHidden:NO];
+
         cell.textLabel.text = [NSLocalizedString(key, nil) stringByAppendingString:@":"];
         
         NSString *detailText = [self.profileData objectForKey:key];
@@ -209,11 +208,12 @@
 {
     CGFloat height;
     NSString *key = self.profileKeys[indexPath.row];
-    
+
     if ([key isEqualToString:@"picture"]) {
-        if ( ! self.profileImage && [self.profileData objectForKey:@"picture"] != [NSNull null]) {
+        if ( ! self.profileImage && [[self.profileData objectForKey:@"picture"] length]) {
             NSString *imageURLString = [self.profileData objectForKey:key];
             if (imageURLString.length) {
+                [self.profileData setObject:@"" forKey:key];
                 NSURL *imageURL = [NSURL URLWithString:imageURLString];
                 self.profileImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
             }
@@ -223,12 +223,12 @@
     } else {
         NSString *cellText = [self.profileData objectForKey:key];
 
-        CGSize labelSize = [cellText boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 30, MAXFLOAT)
-                                       options:NSStringDrawingUsesLineFragmentOrigin
-                                    attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14.0]}
-                                       context:nil].size;
-        
-        height = labelSize.height + 30;
+        CGFloat labelHeight = [cellText boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 30, MAXFLOAT)
+                                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                                  attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14.0]}
+                                                     context:nil].size.height;
+
+        height = labelHeight + 30;
     }
 
     return height;
