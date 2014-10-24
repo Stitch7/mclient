@@ -422,8 +422,6 @@
     [cell setBoardId:self.board.boardId];
     [cell setMessageId:message.messageId];
 
-    [cell setClipsToBounds:YES]; //TODO effect?
-
     [self indentView:(UIView *)cell.readSymbolView withLevel:message.level startingAtX:5];
     [self indentView:(UIView *)cell.messageIndentionImageView withLevel:message.level startingAtX:20];
     [self indentView:cell.messageSubjectLabel withLevel:message.level startingAtX:30];
@@ -548,8 +546,8 @@
                 }
 
                 if (mServiceError) {
-                    //                [tableView deselectRowAtIndexPath:indexPath animated:NO];
-                    //                [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
+                    // [tableView deselectRowAtIndexPath:indexPath animated:NO];
+                    // [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
 
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
                                                                     message:[mServiceError localizedDescription]
