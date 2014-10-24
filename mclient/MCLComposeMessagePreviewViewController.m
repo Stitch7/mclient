@@ -123,44 +123,50 @@
         NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
         NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
 
-        BOOL success = NO;
         MCLMServiceConnector *mServiceConnector = [MCLMServiceConnector sharedConnector];
         NSError *mServiceError;
 
         switch (self.type) {
             case kMCLComposeTypeThread:
-                success = [mServiceConnector postThreadToBoardId:self.boardId
-                                                         subject:self.subject
-                                                            text:self.text
-                                                        username:username
-                                                        password:password
-                                                    notification:self.notificationSwitch.on
-                                                           error:&mServiceError];
+                [mServiceConnector postThreadToBoardId:self.boardId
+                                               subject:self.subject
+                                                  text:self.text
+                                              username:username
+                                              password:password
+                                          notification:self.notificationSwitch.on
+                                                 error:&mServiceError];
                 break;
             case kMCLComposeTypeReply:
-                success = [mServiceConnector postReplyToMessageId:self.messageId
-                                                          boardId:self.boardId
-                                                          subject:self.subject
-                                                             text:self.text
-                                                         username:username
-                                                         password:password
-                                                     notification:self.notificationSwitch.on
-                                                            error:&mServiceError];
+                [mServiceConnector postReplyToMessageId:self.messageId
+                                                boardId:self.boardId
+                                                subject:self.subject
+                                                   text:self.text
+                                               username:username
+                                               password:password
+                                           notification:self.notificationSwitch.on
+                                                  error:&mServiceError];
                 break;
             case kMCLComposeTypeEdit:
-                success = [mServiceConnector postEditToMessageId:self.messageId
-                                                         boardId:self.boardId
-                                                         subject:self.subject
-                                                            text:self.text
-                                                        username:username
-                                                        password:password
-                                                           error:&mServiceError];
+                [mServiceConnector postEditToMessageId:self.messageId
+                                               boardId:self.boardId
+                                               subject:self.subject
+                                                  text:self.text
+                                              username:username
+                                              password:password
+                                                 error:&mServiceError];
                 break;
         }
 
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            if (success) {
+            if (mServiceError) {
+                [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                            message:[mServiceError localizedDescription]
+                                           delegate:nil
+                                  cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                  otherButtonTitles:nil] show];
+
+            } else {
                 [self dismissViewControllerAnimated:YES completion:^{
                     [self.delegate composeMessageViewControllerDidFinish:self withType:self.type];
 
@@ -171,20 +177,12 @@
                         alertMessage = [NSString stringWithFormat:NSLocalizedString(@"Thank you for your contribution \"%@\"", nil), self.subject];
                     }
 
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Confirmation", nil)
-                                                                    message:alertMessage
-                                                                   delegate:nil
-                                                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                                                          otherButtonTitles:nil];
-                    [alert show];
+                    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Confirmation", nil)
+                                                message:alertMessage
+                                               delegate:nil
+                                      cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                      otherButtonTitles:nil] show];
                 }];
-            } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
-                                                                message:[mServiceError localizedDescription]
-                                                               delegate:nil
-                                                      cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                                                      otherButtonTitles:nil];
-                [alert show];
             }
         });
     });

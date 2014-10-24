@@ -116,19 +116,23 @@
 
     // Check login data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSError *error;
-        BOOL validLogin = ([[MCLMServiceConnector sharedConnector] testLoginWIthUsername:username password:password error:&error]);
+        NSError *mServiceError;
+        BOOL validLogin = ([[MCLMServiceConnector sharedConnector] testLoginWIthUsername:username password:password error:&mServiceError]);
 
         // Set login status on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            [userDefaults setBool:validLogin forKey:@"validLogin"];
-            [userDefaults synchronize];
-
-            if (validLogin) {
-                [navToolbarView loginStatusWithUsername:username];
+            if (mServiceError) {
+                [self.navigationController setToolbarHidden:YES animated:YES];
             } else {
-                [navToolbarView loginStausNoLogin];
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setBool:validLogin forKey:@"validLogin"];
+                [userDefaults synchronize];
+
+                if (validLogin) {
+                    [navToolbarView loginStatusWithUsername:username];
+                } else {
+                    [navToolbarView loginStausNoLogin];
+                }
             }
         });
     });
@@ -153,7 +157,9 @@
         NSDictionary *data = [[MCLMServiceConnector sharedConnector] boards:&mServiceError];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedData:data error:mServiceError];
-            [self showLoginStatus];
+            if ( ! mServiceError) {
+                [self showLoginStatus];
+            }
             [self.refreshControl endRefreshing];
         });
     });

@@ -139,10 +139,12 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self fetchedData:data error:mServiceError];
 
-                // Select first message
-                NSIndexPath *indexPathOfFirstMessage = [NSIndexPath indexPathForRow:0 inSection:0];
-                [self.tableView selectRowAtIndexPath:indexPathOfFirstMessage animated:NO scrollPosition:UITableViewScrollPositionNone];
-                [self tableView:self.tableView didSelectRowAtIndexPath:indexPathOfFirstMessage];
+                if ( ! mServiceError) {
+                    // Select first message
+                    NSIndexPath *indexPathOfFirstMessage = [NSIndexPath indexPathForRow:0 inSection:0];
+                    [self.tableView selectRowAtIndexPath:indexPathOfFirstMessage animated:NO scrollPosition:UITableViewScrollPositionNone];
+                    [self tableView:self.tableView didSelectRowAtIndexPath:indexPathOfFirstMessage];
+                }
             });
         });
     } else {
@@ -345,14 +347,13 @@
 
     if (error) {
         CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
-        BOOL isIPad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
         switch (error.code) {
             case -2:
-                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame hideSubLabel:isIPad]];
+                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame hideSubLabel:YES]];
                 break;
 
             default:
-                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[error localizedDescription] hideSubLabel:isIPad]];
+                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[error localizedDescription] hideSubLabel:YES]];
                 break;
         }
     } else {
@@ -585,6 +586,7 @@
 
     BOOL showNotificationButton = self.validLogin && [message.username isEqualToString:self.username];
     if (showNotificationButton) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *mServiceError;
             NSInteger notificationStatus = [[MCLMServiceConnector sharedConnector] notificationStatusForMessageId:message.messageId
@@ -592,11 +594,18 @@
                                                                                                          username:self.username
                                                                                                          password:self.password
                                                                                                             error:&mServiceError];
-            if (notificationStatus) {
-                dispatch_async(dispatch_get_main_queue(), ^{
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
+                if (notificationStatus) {
+                    [self.toolbarButtonNotification setTag:1];
                     self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonEnabled.png"];
-                });
-            }
+                } else {
+                    [self.toolbarButtonNotification setTag:0];
+                }
+            });
+
         });
     }
 }
@@ -784,31 +793,37 @@
     NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
     NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
 
-    NSError *mServiceError;
-    BOOL success = [[MCLMServiceConnector sharedConnector] notificationForMessageId:message.messageId boardId:self.board.boardId username:username password:password error:&mServiceError];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError *mServiceError;
+        [[MCLMServiceConnector sharedConnector] notificationForMessageId:message.messageId boardId:self.board.boardId username:username password:password error:&mServiceError];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
-    NSString *alertTitle, *alertMessage;
+            NSString *alertTitle, *alertMessage;
+            if (mServiceError) {
+                alertTitle = NSLocalizedString(@"Error", nil);
+                alertMessage = [mServiceError localizedDescription];
+            } else if (sender.tag == 1) {
+                [sender setTag:0];
+                self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonDisabled.png"];
+                alertTitle = NSLocalizedString(@"Notification disabled", nil);
+                alertMessage = NSLocalizedString(@"You will no longer receive Emails if anyone replies to this message", nil);
+            } else {
+                [sender setTag:1];
+                self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonEnabled.png"];
+                alertTitle = NSLocalizedString(@"Notification enabled", nil);
+                alertMessage = NSLocalizedString(@"You will receive an Email if anyone replies to this message", nil);
+            }
 
-    if ( ! success) {
-        alertTitle = [mServiceError localizedDescription];
-        alertMessage = [mServiceError localizedFailureReason];
-    } else if (sender.tag == 1) {
-        [sender setTag:0];
-        self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonDisabled.png"];
-        alertTitle = NSLocalizedString(@"Notification disabled", nil);
-        alertMessage = NSLocalizedString(@"You will no longer receive Emails if anyone replies to this message", nil);
-    } else {
-        [sender setTag:1];
-        self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonEnabled.png"];
-        alertTitle = NSLocalizedString(@"Notification enabled", nil);
-        alertMessage = NSLocalizedString(@"You will receive an Email if anyone replies to this message", nil);
-    }
+            [[[UIAlertView alloc] initWithTitle:alertTitle
+                                        message:alertMessage
+                                       delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil] show];
+        });
+    });
 
-    [[[UIAlertView alloc] initWithTitle:alertTitle
-                                message:alertMessage
-                               delegate:nil
-                      cancelButtonTitle:@"OK"
-                      otherButtonTitles:nil] show];
 }
 
 

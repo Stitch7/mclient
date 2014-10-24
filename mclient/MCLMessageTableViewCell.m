@@ -116,30 +116,35 @@
     NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
     NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
     NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
-    
-    NSError *mServiceError;
-    BOOL success = [[MCLMServiceConnector sharedConnector] notificationForMessageId:self.messageId boardId:self.boardId username:username password:password error:&mServiceError];
 
-    NSString *alertTitle, *alertMessage;
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError *mServiceError;
+        [[MCLMServiceConnector sharedConnector] notificationForMessageId:self.messageId boardId:self.boardId username:username password:password error:&mServiceError];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
-    if ( ! success) {
-        alertTitle = [mServiceError localizedDescription];
-        alertMessage = [mServiceError localizedFailureReason];
-    } else if (self.messageNotification) {
-        [self enableNotificationButton:NO];
-        alertTitle = NSLocalizedString(@"Notification disabled", nil);
-        alertMessage = NSLocalizedString(@"You will no longer receive Emails if anyone replies to this message", nil);
-    } else {
-        [self enableNotificationButton:YES];
-        alertTitle = NSLocalizedString(@"Notification enabled", nil);
-        alertMessage = NSLocalizedString(@"You will receive an Email if anyone answers to this message", nil);
-    }
+            NSString *alertTitle, *alertMessage;
+            if (mServiceError) {
+                alertTitle = NSLocalizedString(@"Error", nil);
+                alertMessage = [mServiceError localizedDescription];
+            } else if (self.messageNotification) {
+                [self enableNotificationButton:NO];
+                alertTitle = NSLocalizedString(@"Notification disabled", nil);
+                alertMessage = NSLocalizedString(@"You will no longer receive Emails if anyone replies to this message", nil);
+            } else {
+                [self enableNotificationButton:YES];
+                alertTitle = NSLocalizedString(@"Notification enabled", nil);
+                alertMessage = NSLocalizedString(@"You will receive an Email if anyone replies to this message", nil);
+            }
 
-    [[[UIAlertView alloc] initWithTitle:alertTitle
-                                message:alertMessage
-                               delegate:nil
-                      cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                      otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:alertTitle
+                                        message:alertMessage
+                                       delegate:nil
+                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                              otherButtonTitles:nil] show];
+        });
+    });
 }
 
 @end
