@@ -47,6 +47,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarButtonNotification;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarButtonEdit;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarButtonReply;
+@property (assign, nonatomic) UIInterfaceOrientation orientationBeforeWentToBackground;
 
 @end
 
@@ -633,6 +634,8 @@
 
 - (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController withType:(NSUInteger)type
 {
+    [self handleRotationChangeInBackground];
+
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -649,6 +652,14 @@
             }
         });
     });
+
+}
+
+- (void)handleRotationChangeInBackground
+{
+    if (self.orientationBeforeWentToBackground != self.interfaceOrientation) {
+        [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0];
+    }
 }
 
 
@@ -805,6 +816,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    self.orientationBeforeWentToBackground = self.interfaceOrientation;
+
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     MCLMessage *message = self.messages[indexPath.row];
 
@@ -832,6 +845,7 @@
         [destinationViewController setText:message.text];
     } else if ([segue.identifier isEqualToString:@"ModalToShowProfile"]) {
         MCLProfileTableViewController *destinationViewController = ((MCLProfileTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
+        [destinationViewController setDelegate:self];
         [destinationViewController setUserId:message.userId];
         [destinationViewController setUsername:message.username];
     }

@@ -41,6 +41,7 @@
 @property (assign, nonatomic) BOOL validLogin;
 @property (strong, nonatomic) UIColor *veryLightGreyColor;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
+@property (assign, nonatomic) UIInterfaceOrientation orientationBeforeWentToBackground;
 
 @end
 
@@ -642,7 +643,17 @@
 
 - (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController withType:(NSUInteger)type
 {
+    [self handleRotationChangeInBackground];
     [self reloadData];
+}
+
+- (void)handleRotationChangeInBackground
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone &&
+        self.orientationBeforeWentToBackground != self.interfaceOrientation
+    ) {
+        [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0];
+    }
 }
 
 
@@ -650,6 +661,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    self.orientationBeforeWentToBackground = self.interfaceOrientation;
+
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     MCLMessage *message = self.messages[indexPath.row];
     
@@ -674,7 +687,8 @@
         [destinationViewController setSubject:message.subject];
         [destinationViewController setText:message.text];
     } else if ([segue.identifier isEqualToString:@"ModalToShowProfile"]) {
-        MCLProfileTableViewController *destinationViewController = ((MCLProfileTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);      
+        MCLProfileTableViewController *destinationViewController = ((MCLProfileTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
+        [destinationViewController setDelegate:self];
         [destinationViewController setUserId:message.userId];
         [destinationViewController setUsername:message.username];
     }

@@ -8,9 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol MCLProfileTableViewControllerDelegate;
+
 @interface MCLProfileTableViewController : UITableViewController
 
+@property (weak) id<MCLProfileTableViewControllerDelegate> delegate;
 @property (strong, nonatomic) NSNumber *userId;
 @property (strong, nonatomic) NSString *username;
+
+@end
+
+@protocol MCLProfileTableViewControllerDelegate <NSObject>
+
+@optional
+- (void)handleRotationChangeInBackground;
 
 @end

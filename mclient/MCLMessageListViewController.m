@@ -34,6 +34,7 @@
             "    * {"
             "        font-family: \"Helvetica Neue\";"
             "        font-size: 14px;"
+            "        -webkit-text-size-adjust: none;"
             "    }"
             "    body {"
             "        margin: %ipx 20px 10px 20px;"

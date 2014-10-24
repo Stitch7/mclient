@@ -24,6 +24,10 @@
 
 @protocol MCLComposeMessageViewControllerDelegate <NSObject>
 
+@required
 - (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController withType:(NSUInteger)type;
+
+@optional
+- (void)handleRotationChangeInBackground;
 
 @end

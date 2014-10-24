@@ -9,12 +9,13 @@
 #import <AVFoundation/AVFoundation.h>
 #import <UIKit/UIKit.h>
 #import "MCLMessageListViewController.h"
+#import "MCLProfileTableViewController.h"
 #import "MCLComposeMessageViewController.h"
 
 @class MCLBoard;
 @class MCLThread;
 
-@interface MCLMessageListFrameStyleViewController : MCLMessageListViewController <MCLComposeMessageViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, AVSpeechSynthesizerDelegate>
+@interface MCLMessageListFrameStyleViewController : MCLMessageListViewController <MCLProfileTableViewControllerDelegate, MCLComposeMessageViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, AVSpeechSynthesizerDelegate>
 
 @property (strong, nonatomic) MCLBoard *board;
 @property (strong, nonatomic) MCLThread *thread;

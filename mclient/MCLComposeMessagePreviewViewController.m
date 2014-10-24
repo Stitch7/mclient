@@ -92,12 +92,6 @@
     });
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    // Fix zooming webView content on rotate
-    [self.webView loadHTMLString:self.previewText baseURL:nil];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
