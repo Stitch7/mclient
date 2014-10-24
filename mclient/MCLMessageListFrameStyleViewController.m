@@ -293,10 +293,12 @@
             // Scrool table to top
             [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
 
-            // Select first message
-            NSIndexPath *indexPathOfFirstMessage = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.tableView selectRowAtIndexPath:indexPathOfFirstMessage animated:NO scrollPosition:UITableViewScrollPositionNone];
-            [self tableView:self.tableView didSelectRowAtIndexPath:indexPathOfFirstMessage];
+            if ( ! mServiceError) {
+                // Select first message
+                NSIndexPath *indexPathOfFirstMessage = [NSIndexPath indexPathForRow:0 inSection:0];
+                [self.tableView selectRowAtIndexPath:indexPathOfFirstMessage animated:NO scrollPosition:UITableViewScrollPositionNone];
+                [self tableView:self.tableView didSelectRowAtIndexPath:indexPathOfFirstMessage];
+            }
         });
     });
 }
