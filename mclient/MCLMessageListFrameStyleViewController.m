@@ -821,7 +821,7 @@
             [[[UIAlertView alloc] initWithTitle:alertTitle
                                         message:alertMessage
                                        delegate:nil
-                              cancelButtonTitle:@"OK"
+                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
                               otherButtonTitles:nil] show];
         });
     });

@@ -30,6 +30,7 @@
 @property (strong, nonatomic) MCLMessageListViewController *detailViewController;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) NSMutableArray *threads;
+@property (strong, nonatomic) NSTimer *searchTimer;
 @property (strong, nonatomic) NSMutableArray *searchResults;
 @property (strong, nonatomic) MCLReadList *readList;
 @property (strong, nonatomic) NSString *username;
@@ -350,18 +351,50 @@
 
 #pragma mark - UISearchBarDelegate
 
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    if (self.searchTimer) {
+        [self.searchTimer invalidate];
+        self.searchTimer = nil;
+    }
+
+    if (searchString.length > 1) {
+        self.searchTimer = [NSTimer scheduledTimerWithTimeInterval:0.9 target:self selector:@selector(searchTimerPopped:) userInfo:searchString repeats:FALSE];
+    }
+
+    return YES;
+}
+
+-(void)searchTimerPopped:(NSTimer *)searchTimer
+{
+    [self doSearch:searchTimer.userInfo];
+}
+
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    self.searchResults = [NSMutableArray array];
+    [self doSearch:searchBar.text];
+}
 
+-(void)doSearch:(NSString *)searchString
+{
     NSError *mServiceError;
-    NSDictionary *data = [[MCLMServiceConnector sharedConnector] searchThreadsOnBoard:self.board.boardId withPhrase:searchBar.text error:&mServiceError];
-   
-    for (id object in data) {
-        [self.searchResults addObject:[self threadFromJSON:object]];
+    NSDictionary *data = [[MCLMServiceConnector sharedConnector] searchThreadsOnBoard:self.board.boardId withPhrase:searchString error:&mServiceError];
+
+    if (mServiceError) {
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                    message:[mServiceError localizedDescription]
+                                   delegate:nil
+                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                          otherButtonTitles:nil] show];
+
+    } else {
+        self.searchResults = [NSMutableArray array];
+        for (id object in data) {
+            [self.searchResults addObject:[self threadFromJSON:object]];
+        }
+
+        [self.searchDisplayController.searchResultsTableView reloadData];
     }
-    
-    [self.searchDisplayController.searchResultsTableView reloadData];
 }
 
 
