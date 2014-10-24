@@ -186,7 +186,7 @@
 
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     if (selectedIndexPath) {
-        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES]; //TODO needed?
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
         [self tableView:self.tableView didDeselectRowAtIndexPath:selectedIndexPath];
     }
 
@@ -211,6 +211,14 @@
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     if (selectedIndexPath) {
         MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+
+        // On iOS7 deselect the selected cell manually before table is reloaded,
+        // this is done automatically on iOS8 after the reload which looks smoother
+        if ((NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1)) {
+            [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
+            [self tableView:self.tableView didDeselectRowAtIndexPath:selectedIndexPath];
+        }
+
         if (cell.speechSynthesizer.speaking) {
             [cell.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
             cell.messageSpeakButton.image = [UIImage imageNamed:@"speakButton.png"];
