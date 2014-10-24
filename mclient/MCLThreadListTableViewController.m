@@ -12,8 +12,6 @@
 #import "KeychainItemWrapper.h"
 #import "MCLAppDelegate.h"
 #import "MCLMServiceConnector.h"
-#import "MCLMessageListWidmannStyleViewController.h" //TODO
-#import "MCLMessageListFrameStyleViewController.h" //TODO
 #import "MCLMessageListViewController.h"
 #import "MCLMServiceErrorView.h"
 #import "MCLInternetConnectionErrorView.h"
@@ -414,13 +412,7 @@
             thread = self.threads[indexPath.row];
         }
 
-        MCLMessageListFrameStyleViewController *destinationViewController;
-        if ([segue.destinationViewController isKindOfClass:[UINavigationController class]]) {
-            destinationViewController = (MCLMessageListFrameStyleViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0];
-        } else {
-            destinationViewController = segue.destinationViewController;
-        }
-
+        MCLMessageListViewController *destinationViewController = segue.destinationViewController;
         [destinationViewController setBoard:self.board];
         [destinationViewController setThread:thread];
     } else if ([segue.identifier isEqualToString:@"ModalToComposeThread"]) {

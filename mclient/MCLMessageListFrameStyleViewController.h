@@ -12,12 +12,6 @@
 #import "MCLProfileTableViewController.h"
 #import "MCLComposeMessageViewController.h"
 
-@class MCLBoard;
-@class MCLThread;
-
 @interface MCLMessageListFrameStyleViewController : MCLMessageListViewController <MCLProfileTableViewControllerDelegate, MCLComposeMessageViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, AVSpeechSynthesizerDelegate>
-
-@property (strong, nonatomic) MCLBoard *board;
-@property (strong, nonatomic) MCLThread *thread;
 
 @end

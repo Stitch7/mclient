@@ -11,14 +11,6 @@
 #import "MCLProfileTableViewController.h"
 #import "MCLComposeMessageViewController.h"
 
-@class MCLBoard;
-@class MCLThread;
-
 @interface MCLMessageListWidmannStyleViewController : MCLMessageListViewController <MCLProfileTableViewControllerDelegate, MCLComposeMessageViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
-
-@property (strong, nonatomic) MCLBoard *board;
-@property (strong, nonatomic) MCLThread *thread;
-
-- (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard;
 
 @end
