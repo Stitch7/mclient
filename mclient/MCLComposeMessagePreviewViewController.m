@@ -168,7 +168,10 @@
 
             } else {
                 [self dismissViewControllerAnimated:YES completion:^{
-                    [self.delegate composeMessageViewControllerDidFinish:self withType:self.type];
+                    if ([self.delegate respondsToSelector:@selector(handleRotationChangeInBackground)]) {
+                        [self.delegate handleRotationChangeInBackground];
+                    }
+                    [self.delegate messageSentWithType:self.type];
 
                     NSString *alertMessage;
                     if (self.type == kMCLComposeTypeEdit) {

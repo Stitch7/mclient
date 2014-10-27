@@ -341,7 +341,7 @@
 
 #pragma mark - MCLComposeMessageViewControllerDelegate
 
-- (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController withType:(NSUInteger)type
+- (void)messageSentWithType:(NSUInteger)type
 {
     [self reloadData];
 }

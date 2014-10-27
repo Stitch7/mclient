@@ -641,10 +641,8 @@
 
 #pragma mark - MCLComposeMessageViewControllerDelegate
 
-- (void)composeMessageViewControllerDidFinish:(MCLComposeMessageViewController *)inController withType:(NSUInteger)type
+- (void)messageSentWithType:(NSUInteger)type
 {
-    [self handleRotationChangeInBackground];
-
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;

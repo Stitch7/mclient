@@ -75,7 +75,9 @@
 {
     [super viewWillDisappear:animated];
 
-    [self.delegate handleRotationChangeInBackground];
+    if ([self.delegate respondsToSelector:@selector(handleRotationChangeInBackground)]) {
+        [self.delegate handleRotationChangeInBackground];
+    }
 }
 
 - (void)didReceiveMemoryWarning
