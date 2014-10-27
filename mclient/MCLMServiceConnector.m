@@ -163,7 +163,6 @@
     BOOL success = NO;
 
     NSDictionary *vars = @{@"boardId":inBoardId,
-                           @"messageId":@"",
                            @"subject":inSubject,
                            @"text":inText,
                            @"username":inUsername,
