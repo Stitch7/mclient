@@ -114,28 +114,37 @@
     NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
     NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
 
-    // Check login data async
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSError *mServiceError;
-        BOOL validLogin = ([[MCLMServiceConnector sharedConnector] testLoginWIthUsername:username password:password error:&mServiceError]);
+    if (username.length == 0 || password.length == 0) {
+        [self saveValidLoginFlagToUserDefaultWithValue:NO];
+    } else {
+        // Check login data async
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSError *mServiceError;
+            [[MCLMServiceConnector sharedConnector] testLoginWithUsername:username password:password error:&mServiceError];
 
-        // Set login status on main thread
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (mServiceError) {
-                [self.navigationController setToolbarHidden:YES animated:YES];
-            } else {
-                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                [userDefaults setBool:validLogin forKey:@"validLogin"];
-                [userDefaults synchronize];
-
-                if (validLogin) {
-                    [navToolbarView loginStatusWithUsername:username];
+            // Set login status on main thread
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (mServiceError) {
+                    if ([mServiceError code] == 401) {
+                        [navToolbarView loginStatusNoLogin];
+                        [self saveValidLoginFlagToUserDefaultWithValue:NO];
+                    } else {
+                        [self.navigationController setToolbarHidden:YES animated:YES];
+                    }
                 } else {
-                    [navToolbarView loginStausNoLogin];
+                    [navToolbarView loginStatusWithUsername:username];
+                    [self saveValidLoginFlagToUserDefaultWithValue:YES];
                 }
-            }
+            });
         });
-    });
+    }
+}
+
+- (void)saveValidLoginFlagToUserDefaultWithValue:(BOOL)validLogin
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:validLogin forKey:@"validLogin"];
+    [userDefaults synchronize];
 }
 
 - (void)setupRefreshControl

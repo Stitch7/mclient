@@ -26,7 +26,7 @@
     [self layoutSubviews];
 }
 
-- (void)loginStausNoLogin
+- (void)loginStatusNoLogin
 {
     [self.spinner stopAnimating];
     self.label.text = NSLocalizedString(@"You are not logged in", nil);

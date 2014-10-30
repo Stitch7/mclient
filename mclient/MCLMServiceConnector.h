@@ -12,6 +12,10 @@
 
 + (id)sharedConnector;
 
+- (void)testLoginWithUsername:(NSString *)inUsername
+                     password:(NSString *)inPassword
+                        error:(NSError **)errorPtr;
+
 - (NSDictionary *)boards:(NSError **)errorPtr;
 
 - (NSDictionary *)threadsFromBoardId:(NSNumber *)inBoardId
@@ -32,28 +36,23 @@
 - (NSDictionary *)userWithId:(NSNumber *)inUserId
                        error:(NSError **)errorPtr;
 
-
-- (BOOL)testLoginWIthUsername:(NSString *)inUsername
-                     password:(NSString *)inPassword
-                        error:(NSError **)errorPtr;
-
 - (BOOL)notificationStatusForMessageId:(NSNumber *)inMessageId
-                                    boardId:(NSNumber *)inBoardId
-                                   username:(NSString *)inUsername
-                                   password:(NSString *)inPassword
-                                      error:(NSError **)errorPtr;
+                               boardId:(NSNumber *)inBoardId
+                              username:(NSString *)inUsername
+                              password:(NSString *)inPassword
+                                 error:(NSError **)errorPtr;
 
-- (BOOL)notificationForMessageId:(NSNumber *)inMessageId
-                              boardId:(NSNumber *)inBoardId
-                             username:(NSString *)inUsername
-                             password:(NSString *)inPassword
-                                error:(NSError **)errorPtr;
+- (void)notificationForMessageId:(NSNumber *)inMessageId
+                         boardId:(NSNumber *)inBoardId
+                        username:(NSString *)inUsername
+                        password:(NSString *)inPassword
+                           error:(NSError **)errorPtr;
 
 - (NSDictionary *)messagePreviewForBoardId:(NSNumber *)inBoardId
                                       text:(NSString *)inText
                                      error:(NSError **)errorPtr;
 
-- (BOOL)postThreadToBoardId:(NSNumber *)inBoardId
+- (void)postThreadToBoardId:(NSNumber *)inBoardId
                     subject:(NSString *)inSubject
                        text:(NSString *)inText
                    username:(NSString *)inUsername
@@ -61,7 +60,7 @@
                notification:(BOOL)inNotification
                       error:(NSError **)errorPtr;
 
-- (BOOL)postReplyToMessageId:(NSNumber *)inMessageId
+- (void)postReplyToMessageId:(NSNumber *)inMessageId
                      boardId:(NSNumber *)inBoardId
                      subject:(NSString *)inSubject
                         text:(NSString *)inText
@@ -70,7 +69,7 @@
                 notification:(BOOL)inNotification
                        error:(NSError **)errorPtr;
 
-- (BOOL)postEditToMessageId:(NSNumber *)inMessageId
+- (void)postEditToMessageId:(NSNumber *)inMessageId
                     boardId:(NSNumber *)inBoardId
                     subject:(NSString *)inSubject
                        text:(NSString *)inText

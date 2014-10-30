@@ -132,23 +132,24 @@
         [self.keychainItem setObject:password forKey:(__bridge id)(kSecValueData)];
 
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSError *error;
-            BOOL login = ([[MCLMServiceConnector sharedConnector] testLoginWIthUsername:username password:password error:&error]);
+            NSError *mServiceError;
+            [[MCLMServiceConnector sharedConnector] testLoginWithUsername:username password:password error:&mServiceError];
 
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.settingsLoginDataStatusSpinner stopAnimating];
-                if (login) {
-                    [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryCheckmark];
-                    self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Login data is valid", nil);
-                } else {
+                
+                if (mServiceError) {
                     [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
                     self.settingsLoginDataStatusLabel.textColor = [UIColor redColor];
 
-                    if (error) {
-                        self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Error: Could not connect to server", nil);
-                    } else {
+                    if ([mServiceError code] == 401) {
                         self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Login data was entered incorrectly", nil);
+                    } else {
+                        self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Error: Could not connect to server", nil);
                     }
+                } else {
+                    [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryCheckmark];
+                    self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Login data is valid", nil);
                 }
             });
         });

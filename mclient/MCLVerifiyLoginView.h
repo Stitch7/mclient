@@ -12,6 +12,6 @@
 @interface MCLVerifiyLoginView : MCLLoadingView
 
 - (void)loginStatusWithUsername:(NSString *)username;
-- (void)loginStausNoLogin;
+- (void)loginStatusNoLogin;
 
 @end
