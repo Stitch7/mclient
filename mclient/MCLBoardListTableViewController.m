@@ -38,7 +38,7 @@
 
     self.images = @{ @1: @"boardSmalltalk.png",
                      @2: @"boardForSale.png",
-                     @4: @"boardTechNCheats.png",
+                     @4: @"boardRetroNTech.png",
                      @6: @"boardOT.png",
                     @26: @"boardKulturbeutel.png",
                      @8: @"boardOnlineGaming.png"};

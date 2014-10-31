@@ -75,9 +75,7 @@
 		308EC3EE19CE72FC00A0869F /* boardOnlineGaming@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 308EC3E919CE72FC00A0869F /* boardOnlineGaming@2x.png */; };
 		308EC3EF19CE72FC00A0869F /* boardOT@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 308EC3EA19CE72FC00A0869F /* boardOT@2x.png */; };
 		308EC3F019CE72FC00A0869F /* boardSmalltalk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 308EC3EB19CE72FC00A0869F /* boardSmalltalk@2x.png */; };
-		308EC3F119CE72FC00A0869F /* boardTechNCheats@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 308EC3EC19CE72FC00A0869F /* boardTechNCheats@2x.png */; };
 		3093B78419E2EF5700F8FD5F /* boardSmalltalk.png in Resources */ = {isa = PBXBuildFile; fileRef = 3093B78319E2EF5700F8FD5F /* boardSmalltalk.png */; };
-		3093B78619E2F05F00F8FD5F /* boardTechNCheats.png in Resources */ = {isa = PBXBuildFile; fileRef = 3093B78519E2F05F00F8FD5F /* boardTechNCheats.png */; };
 		3093B78819E2F0AC00F8FD5F /* boardOT.png in Resources */ = {isa = PBXBuildFile; fileRef = 3093B78719E2F0AC00F8FD5F /* boardOT.png */; };
 		3093B78A19E2F10A00F8FD5F /* boardForSale.png in Resources */ = {isa = PBXBuildFile; fileRef = 3093B78919E2F10A00F8FD5F /* boardForSale.png */; };
 		3093B78C19E2F13C00F8FD5F /* boardOnlineGaming.png in Resources */ = {isa = PBXBuildFile; fileRef = 3093B78B19E2F13C00F8FD5F /* boardOnlineGaming.png */; };
@@ -91,6 +89,8 @@
 		3093B79C19E2FA6C00F8FD5F /* profileButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 3093B79B19E2FA6C00F8FD5F /* profileButton.png */; };
 		30A1BFAD19B4A8D4002439FE /* MCLSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */; };
 		30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */; };
+		30DBC45C1A032A1100340B3A /* boardRetroNTech.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC45A1A032A1100340B3A /* boardRetroNTech.png */; };
+		30DBC45D1A032A1100340B3A /* boardRetroNTech@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC45B1A032A1100340B3A /* boardRetroNTech@2x.png */; };
 		30E8B89619B33C070067DD1F /* MCLReadList.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89519B33C070067DD1F /* MCLReadList.m */; };
 		30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */; };
 		30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */; };
@@ -209,9 +209,7 @@
 		308EC3E919CE72FC00A0869F /* boardOnlineGaming@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardOnlineGaming@2x.png"; sourceTree = "<group>"; };
 		308EC3EA19CE72FC00A0869F /* boardOT@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardOT@2x.png"; sourceTree = "<group>"; };
 		308EC3EB19CE72FC00A0869F /* boardSmalltalk@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardSmalltalk@2x.png"; sourceTree = "<group>"; };
-		308EC3EC19CE72FC00A0869F /* boardTechNCheats@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardTechNCheats@2x.png"; sourceTree = "<group>"; };
 		3093B78319E2EF5700F8FD5F /* boardSmalltalk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boardSmalltalk.png; sourceTree = "<group>"; };
-		3093B78519E2F05F00F8FD5F /* boardTechNCheats.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boardTechNCheats.png; sourceTree = "<group>"; };
 		3093B78719E2F0AC00F8FD5F /* boardOT.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boardOT.png; sourceTree = "<group>"; };
 		3093B78919E2F10A00F8FD5F /* boardForSale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boardForSale.png; sourceTree = "<group>"; };
 		3093B78B19E2F13C00F8FD5F /* boardOnlineGaming.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boardOnlineGaming.png; sourceTree = "<group>"; };
@@ -227,6 +225,8 @@
 		30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsTableViewController.m; sourceTree = "<group>"; };
 		30A9D5E519D4CFFF00070268 /* MCLComposeMessagePreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessagePreviewViewController.h; sourceTree = "<group>"; };
 		30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLComposeMessagePreviewViewController.m; sourceTree = "<group>"; };
+		30DBC45A1A032A1100340B3A /* boardRetroNTech.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boardRetroNTech.png; sourceTree = "<group>"; };
+		30DBC45B1A032A1100340B3A /* boardRetroNTech@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardRetroNTech@2x.png"; sourceTree = "<group>"; };
 		30E8B89419B33C070067DD1F /* MCLReadList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadList.h; sourceTree = "<group>"; };
 		30E8B89519B33C070067DD1F /* MCLReadList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadList.m; sourceTree = "<group>"; };
 		30E8B89719B3CBF40067DD1F /* MCLComposeMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessageViewController.h; sourceTree = "<group>"; };
@@ -461,10 +461,10 @@
 				308EC3E919CE72FC00A0869F /* boardOnlineGaming@2x.png */,
 				3093B78719E2F0AC00F8FD5F /* boardOT.png */,
 				308EC3EA19CE72FC00A0869F /* boardOT@2x.png */,
+				30DBC45A1A032A1100340B3A /* boardRetroNTech.png */,
+				30DBC45B1A032A1100340B3A /* boardRetroNTech@2x.png */,
 				3093B78319E2EF5700F8FD5F /* boardSmalltalk.png */,
 				308EC3EB19CE72FC00A0869F /* boardSmalltalk@2x.png */,
-				3093B78519E2F05F00F8FD5F /* boardTechNCheats.png */,
-				308EC3EC19CE72FC00A0869F /* boardTechNCheats@2x.png */,
 				3093B79719E2F6C600F8FD5F /* copyLinkButton.png */,
 				302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */,
 				30501B5819E3100900333952 /* downButton.png */,
@@ -593,7 +593,6 @@
 				308EC3E719CE72F300A0869F /* boardForSale@2x.png in Resources */,
 				3038D58319F65E21005E7D3D /* Localizable.strings in Resources */,
 				305DD82B19A63517006514BD /* Main_iPhone.storyboard in Resources */,
-				3093B78619E2F05F00F8FD5F /* boardTechNCheats.png in Resources */,
 				3093B79619E2F5BE00F8FD5F /* stopButton.png in Resources */,
 				3093B78819E2F0AC00F8FD5F /* boardOT.png in Resources */,
 				30501B5119E307DE00333952 /* messageIndention.png in Resources */,
@@ -601,10 +600,10 @@
 				3093B79819E2F6C600F8FD5F /* copyLinkButton.png in Resources */,
 				3093B79A19E2F71100F8FD5F /* editButton.png in Resources */,
 				306F8C3519BA0F2C00376A58 /* quoteButton@2x.png in Resources */,
+				30DBC45D1A032A1100340B3A /* boardRetroNTech@2x.png in Resources */,
 				3093B79C19E2FA6C00F8FD5F /* profileButton.png in Resources */,
 				30501B5B19E3125600333952 /* errorMService.png in Resources */,
 				3093B78419E2EF5700F8FD5F /* boardSmalltalk.png in Resources */,
-				308EC3F119CE72FC00A0869F /* boardTechNCheats@2x.png in Resources */,
 				305DD82219A63517006514BD /* InfoPlist.strings in Resources */,
 				3093B79219E2F47F00F8FD5F /* settingsButton.png in Resources */,
 				3093B79419E2F58400F8FD5F /* speakButton.png in Resources */,
@@ -625,6 +624,7 @@
 				30501B5519E3082C00333952 /* notificationButtonDisabled.png in Resources */,
 				3093B78C19E2F13C00F8FD5F /* boardOnlineGaming.png in Resources */,
 				308EC3E119CC809000A0869F /* logoDetailView@2x.png in Resources */,
+				30DBC45C1A032A1100340B3A /* boardRetroNTech.png in Resources */,
 				302F462519BF443A00DC77D8 /* copyLinkButton@2x.png in Resources */,
 				301E24AF19BAE3E500943EC6 /* profileButton@2x.png in Resources */,
 				30501B5319E3081300333952 /* notificationButtonEnabled.png in Resources */,
