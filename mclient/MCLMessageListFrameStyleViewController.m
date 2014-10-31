@@ -376,14 +376,10 @@
 
             MCLMessage *message = [MCLMessage messageWithId:messageId
                                                       level:level
-                                                     userId:nil
                                                         mod:mod
                                                    username:username
                                                     subject:subject
-                                                       date:date
-                                                       text:nil
-                                                   textHtml:nil
-                                         textHtmlWithImages:nil];
+                                                       date:date];
             [self.messages addObject:message];
         }
 
@@ -529,6 +525,12 @@
     if (message.text) {
         [self loadMessage:message fromCell:cell];
     } else {
+        NSDictionary *loginData = nil;
+        if ([message.username isEqualToString:self.username]) {
+            loginData = @{@"username":self.username,
+                          @"password":self.password};
+        }
+
         [self.webView loadHTMLString:@"" baseURL:nil];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         CGRect mvBounds = self.messageView.bounds;
@@ -536,7 +538,7 @@
         [self.messageView addSubview:[[MCLLoadingView alloc] initWithFrame:loadingFrame]];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *mServiceError;
-            NSDictionary *data = [[MCLMServiceConnector sharedConnector] messageWithId:message.messageId fromBoardId:self.board.boardId error:&mServiceError];
+            NSDictionary *data = [[MCLMServiceConnector sharedConnector] messageWithId:message.messageId fromBoardId:self.board.boardId login:loginData error:&mServiceError];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                 for (id subview in self.messageView.subviews) {
@@ -560,6 +562,9 @@
                     message.text = [data objectForKey:@"text"];
                     message.textHtml = [data objectForKey:@"textHtml"];
                     message.textHtmlWithImages = [data objectForKey:@"textHtmlWithImages"];
+                    if ([data objectForKey:@"notification"] != [NSNull null]) {
+                        message.notification = [[data objectForKey:@"notification"] boolValue];
+                    }
 
                     [cell markRead];
                     [self.readList addMessageId:message.messageId];
@@ -586,27 +591,12 @@
 
     BOOL showNotificationButton = self.validLogin && [message.username isEqualToString:self.username];
     if (showNotificationButton) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSError *mServiceError;
-            NSInteger notificationStatus = [[MCLMServiceConnector sharedConnector] notificationStatusForMessageId:message.messageId
-                                                                                                          boardId:self.board.boardId
-                                                                                                         username:self.username
-                                                                                                         password:self.password
-                                                                                                            error:&mServiceError];
-
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-
-                if (notificationStatus) {
-                    [self.toolbarButtonNotification setTag:1];
-                    self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonEnabled.png"];
-                } else {
-                    [self.toolbarButtonNotification setTag:0];
-                }
-            });
-
-        });
+        if (message.notification) {
+            [self.toolbarButtonNotification setTag:1];
+            self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonEnabled.png"];
+        } else {
+            [self.toolbarButtonNotification setTag:0];
+        }
     }
 }
 

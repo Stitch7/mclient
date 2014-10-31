@@ -13,6 +13,6 @@
 @property (strong, nonatomic) NSNumber *boardId;
 @property (strong, nonatomic) NSString *name;
 
-+ (id)boardWithId:(NSNumber *)inBoardId name:(NSString *)inName;
++ (MCLBoard *)boardWithId:(NSNumber *)inBoardId name:(NSString *)inName;
 
 @end

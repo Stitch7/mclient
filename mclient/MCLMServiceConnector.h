@@ -27,6 +27,7 @@
 
 - (NSDictionary *)messageWithId:(NSNumber *)inMessageId
                     fromBoardId:(NSNumber *)inBoardId
+                          login:(NSDictionary *)loginData
                           error:(NSError **)errorPtr;
 
 - (NSDictionary *)quoteMessageWithId:(NSNumber *)inMessageId

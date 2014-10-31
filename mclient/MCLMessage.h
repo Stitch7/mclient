@@ -20,16 +20,13 @@
 @property (strong) NSString *text;
 @property (strong) NSString *textHtml;
 @property (strong) NSString *textHtmlWithImages;
+@property (assign, nonatomic) BOOL notification;
 
-+ (id)messageWithId:(NSNumber *)inMessageId
-              level:(NSNumber *)inLevel
-             userId:(NSNumber *)inUserId
-                mod:(BOOL)inMod
-           username:(NSString *)inUsername
-            subject:(NSString *)inSubject
-               date:(NSDate *)inDate
-               text:(NSString *)inText
-           textHtml:(NSString *)inTextHtml
-textHtmlWithImages:(NSString *)inTextHtmlWithImages;
++ (MCLMessage *)messageWithId:(NSNumber *)inMessageId
+                        level:(NSNumber *)inLevel
+                          mod:(BOOL)inMod
+                     username:(NSString *)inUsername
+                      subject:(NSString *)inSubject
+                         date:(NSDate *)inDate;
 
 @end

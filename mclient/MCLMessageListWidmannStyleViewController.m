@@ -276,14 +276,10 @@
 
             MCLMessage *message = [MCLMessage messageWithId:messageId
                                                       level:level
-                                                     userId:nil
                                                         mod:mod
                                                    username:username
                                                     subject:subject
-                                                       date:date
-                                                       text:nil
-                                                   textHtml:nil
-                                         textHtmlWithImages:nil];
+                                                       date:date];
             [self.messages addObject:message];
         }
 
@@ -405,21 +401,10 @@
 
 - (void)hideToolbarButtonsForMessage:(MCLMessage *)message inCell:(MCLMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    BOOL hideNotificationButton = ! self.validLogin ||  ! [message.username isEqualToString:self.username];
+    BOOL hideNotificationButton = ! self.validLogin || ! [message.username isEqualToString:self.username];
     [self barButton:cell.messageNotificationButton hide:hideNotificationButton];
-
     if ( ! hideNotificationButton) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSError *mServiceError;
-            BOOL notificationStatus = [[MCLMServiceConnector sharedConnector] notificationStatusForMessageId:message.messageId
-                                                                                                     boardId:self.board.boardId
-                                                                                                    username:self.username
-                                                                                                    password:self.password
-                                                                                                       error:&mServiceError];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [cell enableNotificationButton:notificationStatus];
-            });
-        });
+        [cell enableNotificationButton:message.notification];
     }
 
     MCLMessage *nextMessage = nil;
@@ -502,9 +487,15 @@
     if (message.text) {
         [self putMessage:message toCell:cell atIndexPath:indexPath];
     } else {
+        NSDictionary *loginData = nil;
+        if ([message.username isEqualToString:self.username]) {
+            loginData = @{@"username":self.username,
+                          @"password":self.password};
+        }
+
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *mServiceError;
-            NSDictionary *data = [[MCLMServiceConnector sharedConnector] messageWithId:message.messageId fromBoardId:self.board.boardId error:&mServiceError];
+            NSDictionary *data = [[MCLMServiceConnector sharedConnector] messageWithId:message.messageId fromBoardId:self.board.boardId login:loginData error:&mServiceError];
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (mServiceError) {
                     [tableView deselectRowAtIndexPath:indexPath animated:NO];
@@ -521,6 +512,9 @@
                     message.text = [data objectForKey:@"text"];
                     message.textHtml = [data objectForKey:@"textHtml"];
                     message.textHtmlWithImages = [data objectForKey:@"textHtmlWithImages"];
+                    if ([data objectForKey:@"notification"] != [NSNull null]) {
+                        message.notification = [[data objectForKey:@"notification"] boolValue];
+                    }
 
                     cell.messageText = message.text;
                     [cell markRead];

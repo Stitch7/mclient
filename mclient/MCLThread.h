@@ -21,15 +21,15 @@
 @property (strong) NSNumber *answerCount;
 @property (strong) NSDate *answerDate;
 
-+ (id)threadWithId:(NSNumber *)inThreadId
-         messageId:(NSNumber *)inMessageId
-            sticky:(BOOL)inSticky
-            closed:(BOOL)inClosed
-               mod:(BOOL)inMod
-          username:(NSString *)inUsername
-           subject:(NSString *)inSubject
-              date:(NSDate *)inDate
-       answerCount:(NSNumber *)inAnswerCount
-        answerDate:(NSDate *)inAnswerDate;
++ (MCLThread *)threadWithId:(NSNumber *)inThreadId
+                  messageId:(NSNumber *)inMessageId
+                     sticky:(BOOL)inSticky
+                     closed:(BOOL)inClosed
+                        mod:(BOOL)inMod
+                   username:(NSString *)inUsername
+                    subject:(NSString *)inSubject
+                       date:(NSDate *)inDate
+                answerCount:(NSNumber *)inAnswerCount
+                 answerDate:(NSDate *)inAnswerDate;
 
 @end

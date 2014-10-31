@@ -63,10 +63,11 @@
 
 - (NSDictionary *)messageWithId:(NSNumber *)inMessageId
                     fromBoardId:(NSNumber *)inBoardId
+                          login:(NSDictionary *)loginData
                           error:(NSError **)errorPtr
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message/%@", kMServiceBaseURL, inBoardId, inMessageId];
-    return [self getRequestToUrlString:urlString login:nil error:errorPtr];
+    return [self getRequestToUrlString:urlString login:loginData error:errorPtr];
 }
 
 - (NSDictionary *)quoteMessageWithId:(NSNumber *)inMessageId
@@ -85,10 +86,10 @@
 }
 
 - (BOOL)notificationStatusForMessageId:(NSNumber *)inMessageId
-                                    boardId:(NSNumber *)inBoardId
-                                   username:(NSString *)inUsername
-                                   password:(NSString *)inPassword
-                                      error:(NSError **)errorPtr
+                               boardId:(NSNumber *)inBoardId
+                              username:(NSString *)inUsername
+                              password:(NSString *)inPassword
+                                 error:(NSError **)errorPtr
 {
     BOOL notificationEnabled = NO;
     
@@ -101,7 +102,7 @@
     NSDictionary *data = [self getRequestToUrlString:urlString login:loginData error:errorPtr];
 
     if ( ! *errorPtr) {
-        notificationEnabled = [[data objectForKey:@"notificationEnabled"] boolValue];
+        notificationEnabled = [[data objectForKey:@"notification"] boolValue];
     }
     
     return notificationEnabled;
