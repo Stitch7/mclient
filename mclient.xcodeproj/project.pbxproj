@@ -91,6 +91,27 @@
 		30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */; };
 		30DBC45C1A032A1100340B3A /* boardRetroNTech.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC45A1A032A1100340B3A /* boardRetroNTech.png */; };
 		30DBC45D1A032A1100340B3A /* boardRetroNTech@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC45B1A032A1100340B3A /* boardRetroNTech@2x.png */; };
+		30DBC4671A07DB6700340B3A /* copyLinkButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC45E1A07DB6700340B3A /* copyLinkButton@3x.png */; };
+		30DBC4681A07DB6700340B3A /* editButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC45F1A07DB6700340B3A /* editButton@3x.png */; };
+		30DBC4691A07DB6700340B3A /* messageIndention@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4601A07DB6700340B3A /* messageIndention@3x.png */; };
+		30DBC46A1A07DB6700340B3A /* notificationButtonDisabled@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4611A07DB6700340B3A /* notificationButtonDisabled@3x.png */; };
+		30DBC46B1A07DB6700340B3A /* notificationButtonEnabled@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4621A07DB6700340B3A /* notificationButtonEnabled@3x.png */; };
+		30DBC46C1A07DB6700340B3A /* profileButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4631A07DB6700340B3A /* profileButton@3x.png */; };
+		30DBC46D1A07DB6700340B3A /* settingsButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4641A07DB6700340B3A /* settingsButton@3x.png */; };
+		30DBC46E1A07DB6700340B3A /* speakButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4651A07DB6700340B3A /* speakButton@3x.png */; };
+		30DBC46F1A07DB6700340B3A /* stopButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4661A07DB6700340B3A /* stopButton@3x.png */; };
+		30DBC4711A07DC8600340B3A /* boardRetroNTech@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4701A07DC8600340B3A /* boardRetroNTech@3x.png */; };
+		30DBC4781A07E05300340B3A /* boardDefault@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4721A07E05300340B3A /* boardDefault@3x.png */; };
+		30DBC4791A07E05300340B3A /* boardForSale@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4731A07E05300340B3A /* boardForSale@3x.png */; };
+		30DBC47A1A07E05300340B3A /* boardKulturbeutel@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4741A07E05300340B3A /* boardKulturbeutel@3x.png */; };
+		30DBC47B1A07E05300340B3A /* boardOnlineGaming@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4751A07E05300340B3A /* boardOnlineGaming@3x.png */; };
+		30DBC47C1A07E05300340B3A /* boardOT@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4761A07E05300340B3A /* boardOT@3x.png */; };
+		30DBC47D1A07E05300340B3A /* boardSmalltalk@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4771A07E05300340B3A /* boardSmalltalk@3x.png */; };
+		30DBC4811A07E30100340B3A /* downButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4801A07E30100340B3A /* downButton@3x.png */; };
+		30DBC4831A07E56700340B3A /* isClosed@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4821A07E56700340B3A /* isClosed@3x.png */; };
+		30DBC4851A07E83600340B3A /* quoteButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4841A07E83600340B3A /* quoteButton@3x.png */; };
+		30DBC4871A07E8B900340B3A /* errorInternetConnection@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4861A07E8B900340B3A /* errorInternetConnection@3x.png */; };
+		30DBC4891A07E8D100340B3A /* errorMService@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4881A07E8D100340B3A /* errorMService@3x.png */; };
 		30E8B89619B33C070067DD1F /* MCLReadList.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89519B33C070067DD1F /* MCLReadList.m */; };
 		30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */; };
 		30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */; };
@@ -227,6 +248,27 @@
 		30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLComposeMessagePreviewViewController.m; sourceTree = "<group>"; };
 		30DBC45A1A032A1100340B3A /* boardRetroNTech.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boardRetroNTech.png; sourceTree = "<group>"; };
 		30DBC45B1A032A1100340B3A /* boardRetroNTech@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardRetroNTech@2x.png"; sourceTree = "<group>"; };
+		30DBC45E1A07DB6700340B3A /* copyLinkButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copyLinkButton@3x.png"; sourceTree = "<group>"; };
+		30DBC45F1A07DB6700340B3A /* editButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editButton@3x.png"; sourceTree = "<group>"; };
+		30DBC4601A07DB6700340B3A /* messageIndention@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messageIndention@3x.png"; sourceTree = "<group>"; };
+		30DBC4611A07DB6700340B3A /* notificationButtonDisabled@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notificationButtonDisabled@3x.png"; sourceTree = "<group>"; };
+		30DBC4621A07DB6700340B3A /* notificationButtonEnabled@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notificationButtonEnabled@3x.png"; sourceTree = "<group>"; };
+		30DBC4631A07DB6700340B3A /* profileButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profileButton@3x.png"; sourceTree = "<group>"; };
+		30DBC4641A07DB6700340B3A /* settingsButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsButton@3x.png"; sourceTree = "<group>"; };
+		30DBC4651A07DB6700340B3A /* speakButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "speakButton@3x.png"; sourceTree = "<group>"; };
+		30DBC4661A07DB6700340B3A /* stopButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stopButton@3x.png"; sourceTree = "<group>"; };
+		30DBC4701A07DC8600340B3A /* boardRetroNTech@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardRetroNTech@3x.png"; sourceTree = "<group>"; };
+		30DBC4721A07E05300340B3A /* boardDefault@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardDefault@3x.png"; sourceTree = "<group>"; };
+		30DBC4731A07E05300340B3A /* boardForSale@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardForSale@3x.png"; sourceTree = "<group>"; };
+		30DBC4741A07E05300340B3A /* boardKulturbeutel@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardKulturbeutel@3x.png"; sourceTree = "<group>"; };
+		30DBC4751A07E05300340B3A /* boardOnlineGaming@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardOnlineGaming@3x.png"; sourceTree = "<group>"; };
+		30DBC4761A07E05300340B3A /* boardOT@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardOT@3x.png"; sourceTree = "<group>"; };
+		30DBC4771A07E05300340B3A /* boardSmalltalk@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardSmalltalk@3x.png"; sourceTree = "<group>"; };
+		30DBC4801A07E30100340B3A /* downButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downButton@3x.png"; sourceTree = "<group>"; };
+		30DBC4821A07E56700340B3A /* isClosed@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isClosed@3x.png"; sourceTree = "<group>"; };
+		30DBC4841A07E83600340B3A /* quoteButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quoteButton@3x.png"; sourceTree = "<group>"; };
+		30DBC4861A07E8B900340B3A /* errorInternetConnection@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "errorInternetConnection@3x.png"; sourceTree = "<group>"; };
+		30DBC4881A07E8D100340B3A /* errorMService@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "errorMService@3x.png"; sourceTree = "<group>"; };
 		30E8B89419B33C070067DD1F /* MCLReadList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadList.h; sourceTree = "<group>"; };
 		30E8B89519B33C070067DD1F /* MCLReadList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadList.m; sourceTree = "<group>"; };
 		30E8B89719B3CBF40067DD1F /* MCLComposeMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessageViewController.h; sourceTree = "<group>"; };
@@ -453,48 +495,69 @@
 				305DD83519A63517006514BD /* Images.xcassets */,
 				3093B78F19E2F1E700F8FD5F /* boardDefault.png */,
 				308EC3E419CE69A400A0869F /* boardDefault@2x.png */,
+				30DBC4721A07E05300340B3A /* boardDefault@3x.png */,
 				3093B78919E2F10A00F8FD5F /* boardForSale.png */,
 				308EC3E619CE72F300A0869F /* boardForSale@2x.png */,
+				30DBC4731A07E05300340B3A /* boardForSale@3x.png */,
 				3093B78D19E2F17D00F8FD5F /* boardKulturbeutel.png */,
 				308EC3E819CE72FC00A0869F /* boardKulturbeutel@2x.png */,
+				30DBC4741A07E05300340B3A /* boardKulturbeutel@3x.png */,
 				3093B78B19E2F13C00F8FD5F /* boardOnlineGaming.png */,
 				308EC3E919CE72FC00A0869F /* boardOnlineGaming@2x.png */,
+				30DBC4751A07E05300340B3A /* boardOnlineGaming@3x.png */,
 				3093B78719E2F0AC00F8FD5F /* boardOT.png */,
 				308EC3EA19CE72FC00A0869F /* boardOT@2x.png */,
+				30DBC4761A07E05300340B3A /* boardOT@3x.png */,
 				30DBC45A1A032A1100340B3A /* boardRetroNTech.png */,
 				30DBC45B1A032A1100340B3A /* boardRetroNTech@2x.png */,
+				30DBC4701A07DC8600340B3A /* boardRetroNTech@3x.png */,
 				3093B78319E2EF5700F8FD5F /* boardSmalltalk.png */,
 				308EC3EB19CE72FC00A0869F /* boardSmalltalk@2x.png */,
+				30DBC4771A07E05300340B3A /* boardSmalltalk@3x.png */,
 				3093B79719E2F6C600F8FD5F /* copyLinkButton.png */,
 				302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */,
+				30DBC45E1A07DB6700340B3A /* copyLinkButton@3x.png */,
 				30501B5819E3100900333952 /* downButton.png */,
 				308EC3D919CC6F9000A0869F /* downButton@2x.png */,
+				30DBC4801A07E30100340B3A /* downButton@3x.png */,
 				3093B79919E2F71100F8FD5F /* editButton.png */,
 				307A80EB19B7B993001B538D /* editButton@2x.png */,
+				30DBC45F1A07DB6700340B3A /* editButton@3x.png */,
 				30501B5C19E31C1500333952 /* errorInternetConnection.png */,
 				301FD9A919C4D8D800E36A5B /* errorInternetConnection@2x.png */,
+				30DBC4861A07E8B900340B3A /* errorInternetConnection@3x.png */,
 				30501B5A19E3125600333952 /* errorMService.png */,
 				301FD9A719C419DE00E36A5B /* errorMService@2x.png */,
+				30DBC4881A07E8D100340B3A /* errorMService@3x.png */,
 				30501B4E19E3063400333952 /* isClosed.png */,
 				3020A26719DA1B66007F46E2 /* isClosed@2x.png */,
+				30DBC4821A07E56700340B3A /* isClosed@3x.png */,
 				30501B5E19E31D0A00333952 /* logoDetailView.png */,
 				308EC3E019CC809000A0869F /* logoDetailView@2x.png */,
 				30501B5019E307DE00333952 /* messageIndention.png */,
 				3086428319D18ED10027F932 /* messageIndention@2x.png */,
+				30DBC4601A07DB6700340B3A /* messageIndention@3x.png */,
 				30501B5419E3082C00333952 /* notificationButtonDisabled.png */,
 				301E24B019BAE86200943EC6 /* notificationButtonDisabled@2x.png */,
+				30DBC4611A07DB6700340B3A /* notificationButtonDisabled@3x.png */,
 				30501B5219E3081300333952 /* notificationButtonEnabled.png */,
 				301E24B119BAE86200943EC6 /* notificationButtonEnabled@2x.png */,
+				30DBC4621A07DB6700340B3A /* notificationButtonEnabled@3x.png */,
 				3093B79B19E2FA6C00F8FD5F /* profileButton.png */,
 				301E24AE19BAE3E500943EC6 /* profileButton@2x.png */,
+				30DBC4631A07DB6700340B3A /* profileButton@3x.png */,
 				30501B5619E30CF800333952 /* quoteButton.png */,
 				306F8C3419BA0F2C00376A58 /* quoteButton@2x.png */,
+				30DBC4841A07E83600340B3A /* quoteButton@3x.png */,
 				3093B79119E2F47F00F8FD5F /* settingsButton.png */,
 				307A80E519B7736A001B538D /* settingsButton@2x.png */,
+				30DBC4641A07DB6700340B3A /* settingsButton@3x.png */,
 				3093B79319E2F58400F8FD5F /* speakButton.png */,
 				307A80E719B7B899001B538D /* speakButton@2x.png */,
+				30DBC4651A07DB6700340B3A /* speakButton@3x.png */,
 				3093B79519E2F5BE00F8FD5F /* stopButton.png */,
 				307A80E919B7B962001B538D /* stopButton@2x.png */,
+				30DBC4661A07DB6700340B3A /* stopButton@3x.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -594,42 +657,63 @@
 				3038D58319F65E21005E7D3D /* Localizable.strings in Resources */,
 				305DD82B19A63517006514BD /* Main_iPhone.storyboard in Resources */,
 				3093B79619E2F5BE00F8FD5F /* stopButton.png in Resources */,
+				30DBC47B1A07E05300340B3A /* boardOnlineGaming@3x.png in Resources */,
+				30DBC47D1A07E05300340B3A /* boardSmalltalk@3x.png in Resources */,
 				3093B78819E2F0AC00F8FD5F /* boardOT.png in Resources */,
+				30DBC4711A07DC8600340B3A /* boardRetroNTech@3x.png in Resources */,
+				30DBC4681A07DB6700340B3A /* editButton@3x.png in Resources */,
 				30501B5119E307DE00333952 /* messageIndention.png in Resources */,
 				30501B5919E3100900333952 /* downButton.png in Resources */,
 				3093B79819E2F6C600F8FD5F /* copyLinkButton.png in Resources */,
+				30DBC46C1A07DB6700340B3A /* profileButton@3x.png in Resources */,
 				3093B79A19E2F71100F8FD5F /* editButton.png in Resources */,
 				306F8C3519BA0F2C00376A58 /* quoteButton@2x.png in Resources */,
+				30DBC47C1A07E05300340B3A /* boardOT@3x.png in Resources */,
+				30DBC4791A07E05300340B3A /* boardForSale@3x.png in Resources */,
 				30DBC45D1A032A1100340B3A /* boardRetroNTech@2x.png in Resources */,
 				3093B79C19E2FA6C00F8FD5F /* profileButton.png in Resources */,
 				30501B5B19E3125600333952 /* errorMService.png in Resources */,
+				30DBC4671A07DB6700340B3A /* copyLinkButton@3x.png in Resources */,
+				30DBC46B1A07DB6700340B3A /* notificationButtonEnabled@3x.png in Resources */,
 				3093B78419E2EF5700F8FD5F /* boardSmalltalk.png in Resources */,
+				30DBC4831A07E56700340B3A /* isClosed@3x.png in Resources */,
 				305DD82219A63517006514BD /* InfoPlist.strings in Resources */,
 				3093B79219E2F47F00F8FD5F /* settingsButton.png in Resources */,
 				3093B79419E2F58400F8FD5F /* speakButton.png in Resources */,
 				307A80EC19B7B993001B538D /* editButton@2x.png in Resources */,
 				30501B5D19E31C1500333952 /* errorInternetConnection.png in Resources */,
 				30501B4F19E3063400333952 /* isClosed.png in Resources */,
+				30DBC46F1A07DB6700340B3A /* stopButton@3x.png in Resources */,
 				3093B78E19E2F17D00F8FD5F /* boardKulturbeutel.png in Resources */,
 				308EC3E519CE69A400A0869F /* boardDefault@2x.png in Resources */,
+				30DBC47A1A07E05300340B3A /* boardKulturbeutel@3x.png in Resources */,
 				301E24B319BAE86200943EC6 /* notificationButtonEnabled@2x.png in Resources */,
 				30501B5719E30CF800333952 /* quoteButton.png in Resources */,
 				301E24B219BAE86200943EC6 /* notificationButtonDisabled@2x.png in Resources */,
+				30DBC4851A07E83600340B3A /* quoteButton@3x.png in Resources */,
 				3093B78A19E2F10A00F8FD5F /* boardForSale.png in Resources */,
 				3093B79019E2F1E700F8FD5F /* boardDefault.png in Resources */,
+				30DBC4781A07E05300340B3A /* boardDefault@3x.png in Resources */,
+				30DBC46D1A07DB6700340B3A /* settingsButton@3x.png in Resources */,
 				30501B5F19E31D0A00333952 /* logoDetailView.png in Resources */,
+				30DBC46A1A07DB6700340B3A /* notificationButtonDisabled@3x.png in Resources */,
 				307A80E819B7B899001B538D /* speakButton@2x.png in Resources */,
+				30DBC4891A07E8D100340B3A /* errorMService@3x.png in Resources */,
 				307A80EA19B7B962001B538D /* stopButton@2x.png in Resources */,
 				3020A26819DA1B66007F46E2 /* isClosed@2x.png in Resources */,
+				30DBC4871A07E8B900340B3A /* errorInternetConnection@3x.png in Resources */,
 				30501B5519E3082C00333952 /* notificationButtonDisabled.png in Resources */,
 				3093B78C19E2F13C00F8FD5F /* boardOnlineGaming.png in Resources */,
 				308EC3E119CC809000A0869F /* logoDetailView@2x.png in Resources */,
 				30DBC45C1A032A1100340B3A /* boardRetroNTech.png in Resources */,
+				30DBC4691A07DB6700340B3A /* messageIndention@3x.png in Resources */,
 				302F462519BF443A00DC77D8 /* copyLinkButton@2x.png in Resources */,
+				30DBC46E1A07DB6700340B3A /* speakButton@3x.png in Resources */,
 				301E24AF19BAE3E500943EC6 /* profileButton@2x.png in Resources */,
 				30501B5319E3081300333952 /* notificationButtonEnabled.png in Resources */,
 				308EC3DA19CC6F9000A0869F /* downButton@2x.png in Resources */,
 				307A80E619B7736A001B538D /* settingsButton@2x.png in Resources */,
+				30DBC4811A07E30100340B3A /* downButton@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -838,7 +922,7 @@
 		305DD84D19A63517006514BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -855,7 +939,7 @@
 		305DD84E19A63517006514BD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
