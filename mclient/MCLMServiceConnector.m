@@ -144,8 +144,7 @@
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message", kMServiceBaseURL, inBoardId];
 
-    NSDictionary *vars = @{@"boardId":inBoardId,
-                           @"subject":inSubject,
+    NSDictionary *vars = @{@"subject":inSubject,
                            @"text":inText,
                            @"notification":[NSString stringWithFormat:@"%d", inNotification]};
 
