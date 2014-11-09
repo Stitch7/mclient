@@ -183,6 +183,7 @@
 - (void)transformMessageViewSizeForInterfaceOrientation:(UIInterfaceOrientation)forInterfaceOrientation
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        CGRect messageViewFrame = self.messageView.frame;
         CGFloat newMessageViewY;
         CGFloat newMessageViewHeight;
 
@@ -206,14 +207,18 @@
                 newMessageViewHeight = viewSize.width;
             }
 
-            newMessageViewY = 32.0f + iOS7Offset;
-            newMessageViewHeight -= 30.0f + iOS7Offset;
+            if ([UIScreen mainScreen].bounds.size.height == 736) { // 6 Plus :-(
+                newMessageViewY = 44.0f + iOS7Offset;
+            } else {
+                newMessageViewY = 32.0f + iOS7Offset;
+            }
+
+            newMessageViewHeight -= newMessageViewY - 2;
         } else {
             newMessageViewY = 65.0f;
             newMessageViewHeight = 300.0f;
         }
 
-        CGRect messageViewFrame = self.messageView.frame;
         messageViewFrame.origin.y = newMessageViewY;
         messageViewFrame.size.height = newMessageViewHeight;
         self.messageView.frame = messageViewFrame;
