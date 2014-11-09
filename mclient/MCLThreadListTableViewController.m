@@ -90,11 +90,11 @@
         NSString *storyboardIdentifier = nil;
         switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"threadView"]) {
             case kMCLSettingsThreadViewWidmann:
+            default:
                 storyboardIdentifier = @"MessageListView";
                 break;
 
             case kMCLSettingsThreadViewFrame:
-            default:
                 storyboardIdentifier = @"MessageList2FrameStyleView";
                 break;
         }

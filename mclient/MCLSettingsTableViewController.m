@@ -80,9 +80,7 @@
     self.settingsNightModeSwitch.on = [self.userDefaults boolForKey:@"nightMode"];
     self.settingsSyncReadStatusSwitch.on = [self.userDefaults boolForKey:@"syncReadStatus"];
 
-    NSNumber *defaultThreadView = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone ? @(kMCLSettingsThreadViewWidmann) : @(kMCLSettingsThreadViewFrame);
-    self.threadView = [self.userDefaults objectForKey:@"threadView"] ?: defaultThreadView;
-
+    self.threadView = [self.userDefaults objectForKey:@"threadView"] ?: @(kMCLSettingsThreadViewWidmann);
     self.showImages = [self.userDefaults objectForKey:@"showImages"] ?: @(kMCLSettingsShowImagesAlways);
 
     UILabel *aboutLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 70)];
