@@ -135,6 +135,7 @@
 
 - (IBAction)quoteButtonTouchUpInside:(UIButton *)sender
 {
+    [sender setEnabled:NO];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
@@ -152,6 +153,7 @@
                 NSString *textViewContent = [@"\n\n" stringByAppendingString:self.composeTextTextField.text];
                 self.composeTextTextField.text = [[data objectForKey:@"quote"] stringByAppendingString:textViewContent];
             }
+            [sender setEnabled:YES];
         });
     });
 }
