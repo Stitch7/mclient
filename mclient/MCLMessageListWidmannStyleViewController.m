@@ -498,6 +498,8 @@
             NSDictionary *data = [[MCLMServiceConnector sharedConnector] messageWithId:message.messageId fromBoardId:self.board.boardId login:loginData error:&mServiceError];
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (mServiceError) {
+                    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
                     [tableView deselectRowAtIndexPath:indexPath animated:NO];
                     [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
 
