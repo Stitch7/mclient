@@ -77,15 +77,15 @@
 {
     BOOL canPerformAction = [super canPerformAction:action withSender:sender];
 
-// Surpress undeclared selector warnings
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wundeclared-selector"
-    if (action == @selector(_promptForReplace:) ||
-        action == @selector(_define:)
-    ) {
-        canPerformAction = NO;
-    }
-#pragma clang diagnostic pop
+//// Surpress undeclared selector warnings
+//#pragma clang diagnostic push
+//#pragma clang diagnostic ignored "-Wundeclared-selector"
+//    if (action == @selector(_promptForReplace:) ||
+//        action == @selector(_define:)
+//    ) {
+//        canPerformAction = NO;
+//    }
+//#pragma clang diagnostic pop
 
     if (action == @selector(paste:)) {
         canPerformAction = [UIPasteboard generalPasteboard].string.length > 0 && self.menuItemsSubmenuFormatTextActive == NO;
