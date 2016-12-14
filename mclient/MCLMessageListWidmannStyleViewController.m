@@ -552,6 +552,8 @@
         cell.messageSpeakButton.image = [UIImage imageNamed:@"speakButton.png"];
     }
     
+
+    self.selectedCellIndexPath = nil;
     [self updateTableView];
 }
 
