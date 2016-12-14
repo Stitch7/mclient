@@ -30,7 +30,8 @@
 {
     [self.spinner stopAnimating];
     self.label.text = NSLocalizedString(@"You are not logged in", nil);
-    [self layoutSubviews];
+// FIXCRASH
+//    [self layoutSubviews];
 }
 
 @end
