@@ -348,13 +348,15 @@
 				301FD00F19AB73160028C5C8 /* constants.h */,
 				305E53AA19D4F3EE002B8E50 /* utils.h */,
 				308EC3D719CC4DE800A0869F /* SplitViewButtonHandler.h */,
-				305DD85819AB2EE0006514BD /* Controller */,
-				305DD85A19AB2F07006514BD /* Model */,
-				305DD85919AB2EFE006514BD /* View */,
+				305DD85819AB2EE0006514BD /* Controllers */,
+				305DD85A19AB2F07006514BD /* Models */,
+				305DD85919AB2EFE006514BD /* Views */,
 				305DD82619A63517006514BD /* MCLAppDelegate.h */,
 				305DD82719A63517006514BD /* MCLAppDelegate.m */,
 				307A80DB19B5EBD8001B538D /* MCLMServiceConnector.h */,
 				307A80DC19B5EBD8001B538D /* MCLMServiceConnector.m */,
+				305E53AB19D4F4C5002B8E50 /* Storyboards */,
+				307A80DE19B75F29001B538D /* Images */,
 				305DD81E19A63517006514BD /* Supporting Files */,
 				305E53AC19D4F509002B8E50 /* Vendor */,
 			);
@@ -364,6 +366,7 @@
 		305DD81E19A63517006514BD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3038D58519F65E21005E7D3D /* Localizable.strings */,
 				305DD81F19A63517006514BD /* mclient-Info.plist */,
 				305DD82019A63517006514BD /* InfoPlist.strings */,
 				305DD82319A63517006514BD /* main.m */,
@@ -390,7 +393,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		305DD85819AB2EE0006514BD /* Controller */ = {
+		305DD85819AB2EE0006514BD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				305DD82F19A63517006514BD /* MCLBoardListTableViewController.h */,
@@ -412,15 +415,12 @@
 				305DD85519AB2A7C006514BD /* MCLThreadListTableViewController.h */,
 				305DD85619AB2A7C006514BD /* MCLThreadListTableViewController.m */,
 			);
-			name = Controller;
+			name = Controllers;
 			sourceTree = "<group>";
 		};
-		305DD85919AB2EFE006514BD /* View */ = {
+		305DD85919AB2EFE006514BD /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3038D58519F65E21005E7D3D /* Localizable.strings */,
-				307A80DE19B75F29001B538D /* Images */,
-				305E53AB19D4F4C5002B8E50 /* Storyboards */,
 				308EC3DB19CC7BA600A0869F /* MCLDetailView.h */,
 				308EC3DC19CC7BA600A0869F /* MCLDetailView.m */,
 				301FD9A419C411D400E36A5B /* MCLErrorView.h */,
@@ -442,10 +442,10 @@
 				306EA6E619D5992F00BB4DC8 /* MCLMServiceErrorView.h */,
 				306EA6E719D5992F00BB4DC8 /* MCLMServiceErrorView.m */,
 			);
-			name = View;
+			name = Views;
 			sourceTree = "<group>";
 		};
-		305DD85A19AB2F07006514BD /* Model */ = {
+		305DD85A19AB2F07006514BD /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				305DD85B19AB300F006514BD /* MCLBoard.h */,
@@ -457,7 +457,7 @@
 				30E8B89419B33C070067DD1F /* MCLReadList.h */,
 				30E8B89519B33C070067DD1F /* MCLReadList.m */,
 			);
-			name = Model;
+			name = Models;
 			sourceTree = "<group>";
 		};
 		305E53AB19D4F4C5002B8E50 /* Storyboards */ = {
@@ -616,6 +616,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					305DD83A19A63517006514BD = {
+						ProvisioningStyle = Automatic;
 						TestTargetID = 305DD81319A63517006514BD;
 					};
 				};
@@ -981,6 +982,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/mclient.app/mclient";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -995,6 +999,7 @@
 				INFOPLIST_FILE = "mclientTests/mclientTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1004,6 +1009,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/mclient.app/mclient";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1014,6 +1022,7 @@
 				INFOPLIST_FILE = "mclientTests/mclientTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};

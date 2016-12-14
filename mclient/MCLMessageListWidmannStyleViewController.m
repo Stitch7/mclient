@@ -157,13 +157,6 @@
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 #pragma mark - Data methods
 
 - (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard
@@ -332,7 +325,8 @@
     // TableView should scoll to top
     cell.messageTextWebView.scrollView.scrollsToTop = NO;
 
-    [cell.messageToolbar setBackgroundColor:self.veryLightGreyColor];
+    cell.messageToolbar.translucent = NO;
+    cell.messageToolbar.barTintColor = self.veryLightGreyColor;
 
     [cell setBoardId:self.board.boardId];
     [cell setMessageId:message.messageId];
@@ -551,7 +545,6 @@
         [cell.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
         cell.messageSpeakButton.image = [UIImage imageNamed:@"speakButton.png"];
     }
-    
 
     self.selectedCellIndexPath = nil;
     [self updateTableView];
@@ -562,7 +555,6 @@
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
 }
-
 
 #pragma mark - UIWebViewDelegate
 
