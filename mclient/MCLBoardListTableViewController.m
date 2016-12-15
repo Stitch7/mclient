@@ -186,6 +186,9 @@
         for (id object in data) {
             NSNumber *boardId = [object objectForKey:@"id"];
             NSString *boardName = [object objectForKey:@"name"];
+            if (boardName.length == 0) {
+                continue;
+            }
 
             MCLBoard *board = [MCLBoard boardWithId:boardId name:boardName];
             [self.boards addObject:board];
