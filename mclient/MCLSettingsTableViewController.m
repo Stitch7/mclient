@@ -83,15 +83,15 @@
     self.threadView = [self.userDefaults objectForKey:@"threadView"] ?: @(kMCLSettingsThreadViewWidmann);
     self.showImages = [self.userDefaults objectForKey:@"showImages"] ?: @(kMCLSettingsShowImagesAlways);
 
-    UILabel *aboutLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 70)];
+    UILabel *aboutLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
     aboutLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    aboutLabel.numberOfLines = 3;
-    aboutLabel.font = [UIFont systemFontOfSize:14.0f];
+    aboutLabel.numberOfLines = 2;
+    aboutLabel.font = [UIFont systemFontOfSize:13.0f];
     aboutLabel.textAlignment = NSTextAlignmentCenter;
     aboutLabel.textColor = [UIColor darkGrayColor];
 
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    aboutLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Version %@ (%@)\nCopyright © 2014 Christopher Reitz aka Stitch\nAll rights reserved.", nil),
+    aboutLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Version %@ (%@)\nCopyright © 2014-2016 Christopher Reitz aka Stitch", nil),
                        [infoDictionary objectForKey:@"CFBundleShortVersionString"],
                        [infoDictionary objectForKey:@"CFBundleVersion"]];
 
