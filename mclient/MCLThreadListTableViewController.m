@@ -21,13 +21,13 @@
 #import "MCLBoard.h"
 #import "MCLReadList.h"
 
-
 @interface MCLThreadListTableViewController ()
 
 @property (strong, nonatomic) UIColor *tableSeparatorColor;
 @property (strong, nonatomic) MCLMessageListViewController *detailViewController;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) NSMutableArray *threads;
+@property (strong, nonatomic) UISearchController *searchController;
 @property (strong, nonatomic) NSTimer *searchTimer;
 @property (strong, nonatomic) NSMutableArray *searchResults;
 @property (strong, nonatomic) MCLReadList *readList;
@@ -88,6 +88,8 @@
     UINib *threadCellNib = [UINib nibWithNibName: @"MCLThreadTableViewCell" bundle: nil];
     [self.tableView registerNib: threadCellNib  forCellReuseIdentifier: @"ThreadCell"];
 
+    [self configureSearchResultsController];
+
     // On iPad replace splitviews detailViewController with MessageListViewController type depending on users settings
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         NSString *storyboardIdentifier = nil;
@@ -139,6 +141,21 @@
             [self fetchedData:data error:mServiceError];
         });
     });
+}
+
+- (void)configureSearchResultsController
+{
+    self.definesPresentationContext = YES;
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController: nil];
+    self.tableView.tableHeaderView = _searchController.searchBar;
+    [_searchController loadViewIfNeeded];
+    _searchController.delegate = self;
+    _searchController.searchResultsUpdater = self;
+    _searchController.hidesNavigationBarDuringPresentation = YES;
+    _searchController.dimsBackgroundDuringPresentation = YES;
+    _searchController.searchBar.placeholder = @"Search";
+    _searchController.searchBar.searchBarStyle = UISearchBarStyleProminent;
+    [_searchController.searchBar sizeToFit];
 }
 
 - (void)reloadData
@@ -234,29 +251,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger count;
-    
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        count = [self.searchResults count];
-    } else {
-        count = [self.threads count];
-    }
-    
-    return count;
+    return [self isSearching] ? [self.searchResults count] : [self.threads count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MCLThread *thread = nil;
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        thread = self.searchResults[indexPath.row];
-    } else {
-        thread = self.threads[indexPath.row];
-    }
-
     static NSString *cellIdentifier = @"ThreadCell";
     MCLThreadTableViewCell *cell = (MCLThreadTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
+    MCLThread *thread = [self isSearching] ? self.searchResults[indexPath.row] : self.threads[indexPath.row];
+
     cell.threadSubjectLabel.text = thread.subject;
     CGFloat subjectSize = cell.threadSubjectLabel.font.pointSize;
     cell.threadSubjectLabel.font = thread.isSticky ? [UIFont boldSystemFontOfSize:subjectSize] : [UIFont systemFontOfSize:subjectSize];
@@ -312,9 +315,11 @@
 {
     MCLThread *thread = nil;
     MCLThreadTableViewCell *cell = nil;
-    if (self.searchDisplayController.active) {
+    if ([self isSearching]) {
         thread = self.searchResults[indexPath.row];
-        cell = (MCLThreadTableViewCell*)[self.searchDisplayController.searchResultsTableView cellForRowAtIndexPath:indexPath];
+//        cell = (MCLThreadTableViewCell*)[self.searchDisplayController.searchResultsTableView cellForRowAtIndexPath:indexPath];
+        // TODO: is this correct?
+        cell = (MCLThreadTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
     } else {
         thread = self.threads[indexPath.row];
         cell = (MCLThreadTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
@@ -355,20 +360,37 @@
 }
 
 
-#pragma mark - UISearchBarDelegate
+#pragma mark - UISearchResultsUpdating
 
--(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+- (BOOL)isSearching
 {
+    return _searchController.isActive;
+}
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+    // Cancel button pressed
+    if (![self isSearching]) {
+        [self.tableView reloadData];
+    }
+
+    NSString *searchString = _searchController.searchBar.text;
+    if (searchString == nil || searchString.length == 0) {
+        self.searchResults = [NSMutableArray array];
+        [self.tableView reloadData];
+        return;
+    }
+
     if (self.searchTimer) {
         [self.searchTimer invalidate];
         self.searchTimer = nil;
     }
 
-    if (searchString.length > 1) {
-        self.searchTimer = [NSTimer scheduledTimerWithTimeInterval:0.9 target:self selector:@selector(searchTimerPopped:) userInfo:searchString repeats:FALSE];
-    }
-
-    return YES;
+    self.searchTimer = [NSTimer scheduledTimerWithTimeInterval:0.9
+                                                        target:self
+                                                      selector:@selector(searchTimerPopped:)
+                                                      userInfo:searchString
+                                                       repeats:NO];
 }
 
 -(void)searchTimerPopped:(NSTimer *)searchTimer
@@ -381,10 +403,12 @@
     [self doSearch:searchBar.text];
 }
 
--(void)doSearch:(NSString *)searchString
+- (void)doSearch:(NSString *)searchString
 {
     NSError *mServiceError;
-    NSDictionary *data = [[MCLMServiceConnector sharedConnector] searchThreadsOnBoard:self.board.boardId withPhrase:searchString error:&mServiceError];
+    NSDictionary *data = [[MCLMServiceConnector sharedConnector] searchThreadsOnBoard:self.board.boardId
+                                                                           withPhrase:searchString
+                                                                                error:&mServiceError];
 
     if (mServiceError) {
         [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
@@ -399,7 +423,7 @@
             [self.searchResults addObject:[self threadFromJSON:object]];
         }
 
-        [self.searchDisplayController.searchResultsTableView reloadData];
+        [self.tableView reloadData];
     }
 }
 
@@ -408,18 +432,11 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"PushToMessageListWidmannStyle"] || [segue.identifier isEqualToString:@"PushToMessageListFrameStyle"]) {
-        NSIndexPath *indexPath;
-        MCLThread *thread;
-
-        if (self.searchDisplayController.active) {
-            indexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
-            thread = self.searchResults[indexPath.row];
-        } else {
-            indexPath = [self.tableView indexPathForSelectedRow];
-            thread = self.threads[indexPath.row];
-        }
-
+    if ([segue.identifier isEqualToString:@"PushToMessageListWidmannStyle"] ||
+        [segue.identifier isEqualToString:@"PushToMessageListFrameStyle"]
+    ) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        MCLThread *thread = [self isSearching] ? self.searchResults[indexPath.row] : self.threads[indexPath.row];
         MCLMessageListViewController *destinationViewController = segue.destinationViewController;
         [destinationViewController setBoard:self.board];
         [destinationViewController setThread:thread];

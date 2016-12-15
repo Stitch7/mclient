@@ -11,7 +11,7 @@
 
 @class MCLBoard;
 
-@interface MCLThreadListTableViewController : UITableViewController <MCLComposeMessageViewControllerDelegate, UISearchBarDelegate>
+@interface MCLThreadListTableViewController : UITableViewController <MCLComposeMessageViewControllerDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
 @property (strong, nonatomic) MCLBoard *board;
 
