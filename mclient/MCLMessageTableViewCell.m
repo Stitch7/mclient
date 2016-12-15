@@ -6,9 +6,10 @@
 //  Copyright (c) 2014 Christopher Reitz. All rights reserved.
 //
 
+#import "MCLMessageTableViewCell.h"
+
 #import <AVFoundation/AVFoundation.h>
 #import "constants.h"
-#import "MCLMessageTableViewCell.h"
 #import "KeychainItemWrapper.h"
 #import "MCLMServiceConnector.h"
 #import "MCLReadSymbolView.h"

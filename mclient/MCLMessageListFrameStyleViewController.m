@@ -19,7 +19,7 @@
 #import "MCLMServiceErrorView.h"
 #import "MCLInternetConnectionErrorView.h"
 #import "MCLLoadingView.h"
-#import "MCLMessageTableViewCell.h"
+#import "MCLMessageListFrameStyleTableViewCell.h"
 #import "MCLBoard.h"
 #import "MCLThread.h"
 #import "MCLMessage.h"
@@ -85,6 +85,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    UINib *threadCellNib = [UINib nibWithNibName: @"MCLMessageListFrameStyleTableViewCell" bundle: nil];
+    [self.tableView registerNib: threadCellNib forCellReuseIdentifier: @"MessageCell"];
 
     UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone &&
@@ -416,17 +419,14 @@
     }
 
     static NSString *cellIdentifier = @"MessageCell";
-    MCLMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    MCLMessageListFrameStyleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
 
     [self.cells setObject:cell atIndexedSubscript:i];
 
     [cell setBoardId:self.board.boardId];
     [cell setMessageId:message.messageId];
 
-    [self indentView:(UIView *)cell.readSymbolView withLevel:message.level startingAtX:5];
-    [self indentView:(UIView *)cell.messageIndentionImageView withLevel:message.level startingAtX:20];
-    [self indentView:cell.messageSubjectLabel withLevel:message.level startingAtX:30];
-    [self indentView:cell.messageUsernameLabel withLevel:message.level startingAtX:30];
+    [self indentView:cell.indentionConstraint withLevel:message.level];
 
     cell.messageIndentionImageView.hidden = (i == 0);
 
@@ -469,6 +469,13 @@
     view.frame = frame;
 }
 
+- (void)indentView:(NSLayoutConstraint *)indentionConstraint withLevel:(NSNumber *)level
+{
+    int indention = 10;
+    indentionConstraint.constant = 0 + (indention * [level integerValue]);
+}
+
+
 -(void)barButton:(UIBarButtonItem *)barButton hide:(BOOL)hide
 {
     if (hide) {
@@ -504,11 +511,21 @@
     return [MCLMessageListViewController messageHtmlSkeletonForHtml:messageHtml withTopMargin:10];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewAutomaticDimension;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewAutomaticDimension;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger i = indexPath.row;
 
-    MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+    MCLMessageListFrameStyleTableViewCell *cell = (MCLMessageListFrameStyleTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
 
     MCLMessage *message = self.messages[i];
 
@@ -589,7 +606,7 @@
     }
 }
 
-- (void)loadMessage:(MCLMessage *)message fromCell:(MCLMessageTableViewCell *)cell
+- (void)loadMessage:(MCLMessage *)message fromCell:(MCLMessageListFrameStyleTableViewCell *)cell
 {
     cell.messageText = message.text;
     [self.webView loadHTMLString:[self messageHtml:message] baseURL:nil];
@@ -748,7 +765,7 @@
         self.toolbarButtonSpeak.image = [UIImage imageNamed:@"speakButton.png"];
     } else {
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-        MCLMessageTableViewCell *selectedCell = (MCLMessageTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+        MCLMessageListFrameStyleTableViewCell *selectedCell = (MCLMessageListFrameStyleTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
 
         // Backup of UIWebView content because it's get manipulated by our operation below
         NSString *webviewTextBackup = [self.webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"html\")[0].innerHTML;"];
