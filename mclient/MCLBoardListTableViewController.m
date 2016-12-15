@@ -41,7 +41,7 @@
                      @4: @"boardRetroNTech.png",
                      @6: @"boardOT.png",
                     @26: @"boardKulturbeutel.png",
-                     @8: @"boardOnlineGaming.png"};
+                     @8: @"boardOnlineGaming.png" };
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -76,22 +76,6 @@
     });
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//    for (id key in @[@"signatureEnabled", @"signatureText", @"frameStyle", @"nightMode", @"syncReadStatus"]) {
-//        NSLog(@"%@: %@", key, [userDefaults objectForKey:key]);
-//    }
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)showLoginStatus
 {
     // Remove if already present
@@ -109,8 +93,7 @@
     // Reading username + password from keychain
     NSString *keychainIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:keychainIdentifier accessGroup:nil];
-// FIXCRASH
-//    [keychainItem setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
+    [keychainItem setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
     NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
     NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
     NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
