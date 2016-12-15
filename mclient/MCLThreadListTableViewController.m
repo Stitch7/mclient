@@ -85,6 +85,9 @@
 {
     [super viewDidLoad];
 
+    UINib *threadCellNib = [UINib nibWithNibName: @"MCLThreadTableViewCell" bundle: nil];
+    [self.tableView registerNib: threadCellNib  forCellReuseIdentifier: @"ThreadCell"];
+
     // On iPad replace splitviews detailViewController with MessageListViewController type depending on users settings
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         NSString *storyboardIdentifier = nil;
@@ -295,9 +298,14 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+   return UITableViewAutomaticDimension;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.tableView rowHeight];
+    return UITableViewAutomaticDimension;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

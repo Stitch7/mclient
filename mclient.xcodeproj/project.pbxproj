@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3004E5AC1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */; };
 		301E24AF19BAE3E500943EC6 /* profileButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301E24AE19BAE3E500943EC6 /* profileButton@2x.png */; };
 		301E24B219BAE86200943EC6 /* notificationButtonDisabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301E24B019BAE86200943EC6 /* notificationButtonDisabled@2x.png */; };
 		301E24B319BAE86200943EC6 /* notificationButtonEnabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301E24B119BAE86200943EC6 /* notificationButtonEnabled@2x.png */; };
@@ -128,6 +129,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MCLThreadTableViewCell.xib; sourceTree = "<group>"; };
 		301E24AE19BAE3E500943EC6 /* profileButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profileButton@2x.png"; sourceTree = "<group>"; };
 		301E24B019BAE86200943EC6 /* notificationButtonDisabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notificationButtonDisabled@2x.png"; sourceTree = "<group>"; };
 		301E24B119BAE86200943EC6 /* notificationButtonEnabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notificationButtonEnabled@2x.png"; sourceTree = "<group>"; };
@@ -435,6 +437,7 @@
 				307D797519B0B3B30096A217 /* MCLReadSymbolView.m */,
 				301FD01019AC794E0028C5C8 /* MCLThreadTableViewCell.h */,
 				301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */,
+				3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */,
 				30EFDC0A19D422DE00E3EE31 /* MCLVerifiyLoginView.h */,
 				30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */,
 				306EA6E319D598F800BB4DC8 /* MCLInternetConnectionErrorView.h */,
@@ -694,6 +697,7 @@
 				301E24B219BAE86200943EC6 /* notificationButtonDisabled@2x.png in Resources */,
 				30DBC4851A07E83600340B3A /* quoteButton@3x.png in Resources */,
 				3093B78A19E2F10A00F8FD5F /* boardForSale.png in Resources */,
+				3004E5AC1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib in Resources */,
 				3093B79019E2F1E700F8FD5F /* boardDefault.png in Resources */,
 				30DBC4781A07E05300340B3A /* boardDefault@3x.png in Resources */,
 				30DBC46D1A07DB6700340B3A /* settingsButton@3x.png in Resources */,

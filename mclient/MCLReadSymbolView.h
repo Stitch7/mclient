@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+IB_DESIGNABLE
 @interface MCLReadSymbolView : UIView
 
 @property (strong, nonatomic) UIColor *color;
