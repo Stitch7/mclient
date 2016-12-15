@@ -296,7 +296,7 @@
         [cell.threadIsClosedImageView setHidden:YES];
     }
 
-    cell.badgeString = [thread.answerCount stringValue];
+    cell.badgeLabel.text = [thread.answerCount stringValue];
 
     return cell;
 }

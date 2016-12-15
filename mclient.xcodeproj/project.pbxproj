@@ -10,12 +10,12 @@
 		3004E5AC1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */; };
 		3012032D1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3012032B1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.m */; };
 		3012032E1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3012032C1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib */; };
+		301203311E031D7500B06FF6 /* MCLBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 301203301E031D7500B06FF6 /* MCLBadgeView.m */; };
 		301E24AF19BAE3E500943EC6 /* profileButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301E24AE19BAE3E500943EC6 /* profileButton@2x.png */; };
 		301E24B219BAE86200943EC6 /* notificationButtonDisabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301E24B019BAE86200943EC6 /* notificationButtonDisabled@2x.png */; };
 		301E24B319BAE86200943EC6 /* notificationButtonEnabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301E24B119BAE86200943EC6 /* notificationButtonEnabled@2x.png */; };
 		301E24B619BB02EB00943EC6 /* MCLProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 301E24B519BB02EB00943EC6 /* MCLProfileTableViewController.m */; };
 		301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */; };
-		301FD01519ACA0D70028C5C8 /* TDBadgedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01419ACA0D70028C5C8 /* TDBadgedCell.m */; };
 		301FD01819ACE3D10028C5C8 /* MCLMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01719ACE3D10028C5C8 /* MCLMessageTableViewCell.m */; };
 		301FD9A319C32FC600E36A5B /* MCLLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9A219C32FC600E36A5B /* MCLLoadingView.m */; };
 		301FD9A619C411D400E36A5B /* MCLErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9A519C411D400E36A5B /* MCLErrorView.m */; };
@@ -135,6 +135,8 @@
 		3012032A1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageListFrameStyleTableViewCell.h; sourceTree = "<group>"; };
 		3012032B1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListFrameStyleTableViewCell.m; sourceTree = "<group>"; };
 		3012032C1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MCLMessageListFrameStyleTableViewCell.xib; sourceTree = "<group>"; };
+		3012032F1E031D7500B06FF6 /* MCLBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLBadgeView.h; sourceTree = "<group>"; };
+		301203301E031D7500B06FF6 /* MCLBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLBadgeView.m; sourceTree = "<group>"; };
 		301E24AE19BAE3E500943EC6 /* profileButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profileButton@2x.png"; sourceTree = "<group>"; };
 		301E24B019BAE86200943EC6 /* notificationButtonDisabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notificationButtonDisabled@2x.png"; sourceTree = "<group>"; };
 		301E24B119BAE86200943EC6 /* notificationButtonEnabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notificationButtonEnabled@2x.png"; sourceTree = "<group>"; };
@@ -143,8 +145,6 @@
 		301FD00F19AB73160028C5C8 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
 		301FD01019AC794E0028C5C8 /* MCLThreadTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLThreadTableViewCell.h; sourceTree = "<group>"; };
 		301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLThreadTableViewCell.m; sourceTree = "<group>"; };
-		301FD01319ACA0D70028C5C8 /* TDBadgedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDBadgedCell.h; sourceTree = "<group>"; };
-		301FD01419ACA0D70028C5C8 /* TDBadgedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDBadgedCell.m; sourceTree = "<group>"; };
 		301FD01619ACE3D10028C5C8 /* MCLMessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageTableViewCell.h; sourceTree = "<group>"; };
 		301FD01719ACE3D10028C5C8 /* MCLMessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageTableViewCell.m; sourceTree = "<group>"; };
 		301FD9A119C32FC600E36A5B /* MCLLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLLoadingView.h; sourceTree = "<group>"; };
@@ -309,15 +309,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		30501B6019E5AC1600333952 /* tmdvs */ = {
-			isa = PBXGroup;
-			children = (
-				301FD01319ACA0D70028C5C8 /* TDBadgedCell.h */,
-				301FD01419ACA0D70028C5C8 /* TDBadgedCell.m */,
-			);
-			name = tmdvs;
-			sourceTree = "<group>";
-		};
 		305DD80B19A63517006514BD = {
 			isa = PBXGroup;
 			children = (
@@ -428,19 +419,25 @@
 		305DD85919AB2EFE006514BD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3012032F1E031D7500B06FF6 /* MCLBadgeView.h */,
+				301203301E031D7500B06FF6 /* MCLBadgeView.m */,
 				308EC3DB19CC7BA600A0869F /* MCLDetailView.h */,
 				308EC3DC19CC7BA600A0869F /* MCLDetailView.m */,
 				301FD9A419C411D400E36A5B /* MCLErrorView.h */,
 				301FD9A519C411D400E36A5B /* MCLErrorView.m */,
+				306EA6E319D598F800BB4DC8 /* MCLInternetConnectionErrorView.h */,
+				306EA6E419D598F800BB4DC8 /* MCLInternetConnectionErrorView.m */,
 				301FD9A119C32FC600E36A5B /* MCLLoadingView.h */,
 				301FD9A219C32FC600E36A5B /* MCLLoadingView.m */,
-				301FD01619ACE3D10028C5C8 /* MCLMessageTableViewCell.h */,
-				301FD01719ACE3D10028C5C8 /* MCLMessageTableViewCell.m */,
 				3012032A1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.h */,
 				3012032B1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.m */,
 				3012032C1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib */,
+				301FD01619ACE3D10028C5C8 /* MCLMessageTableViewCell.h */,
+				301FD01719ACE3D10028C5C8 /* MCLMessageTableViewCell.m */,
 				3086428719D2D6CE0027F932 /* MCLMessageTextView.h */,
 				3086428819D2D6CE0027F932 /* MCLMessageTextView.m */,
+				306EA6E619D5992F00BB4DC8 /* MCLMServiceErrorView.h */,
+				306EA6E719D5992F00BB4DC8 /* MCLMServiceErrorView.m */,
 				307D797419B0B3B30096A217 /* MCLReadSymbolView.h */,
 				307D797519B0B3B30096A217 /* MCLReadSymbolView.m */,
 				301FD01019AC794E0028C5C8 /* MCLThreadTableViewCell.h */,
@@ -448,10 +445,6 @@
 				3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */,
 				30EFDC0A19D422DE00E3EE31 /* MCLVerifiyLoginView.h */,
 				30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */,
-				306EA6E319D598F800BB4DC8 /* MCLInternetConnectionErrorView.h */,
-				306EA6E419D598F800BB4DC8 /* MCLInternetConnectionErrorView.m */,
-				306EA6E619D5992F00BB4DC8 /* MCLMServiceErrorView.h */,
-				306EA6E719D5992F00BB4DC8 /* MCLMServiceErrorView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -484,7 +477,6 @@
 			isa = PBXGroup;
 			children = (
 				305E53AD19D4F517002B8E50 /* Apple */,
-				30501B6019E5AC1600333952 /* tmdvs */,
 			);
 			name = Vendor;
 			sourceTree = "<group>";
@@ -764,13 +756,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				301FD01819ACE3D10028C5C8 /* MCLMessageTableViewCell.m in Sources */,
+				301203311E031D7500B06FF6 /* MCLBadgeView.m in Sources */,
 				305DD86019AB3031006514BD /* MCLThread.m in Sources */,
 				308EC3D819CC4DE800A0869F /* MCLMessageListViewController.m in Sources */,
 				3086428919D2D6CE0027F932 /* MCLMessageTextView.m in Sources */,
 				301E24B619BB02EB00943EC6 /* MCLProfileTableViewController.m in Sources */,
 				305DD86319AB380C006514BD /* MCLMessage.m in Sources */,
 				305DD82419A63517006514BD /* main.m in Sources */,
-				301FD01519ACA0D70028C5C8 /* TDBadgedCell.m in Sources */,
 				301FD9A619C411D400E36A5B /* MCLErrorView.m in Sources */,
 				30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */,
 				308EC3DD19CC7BA600A0869F /* MCLDetailView.m in Sources */,

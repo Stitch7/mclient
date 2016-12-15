@@ -50,17 +50,37 @@
                         <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AEi-FQ-ztU" customClass="MCLBadgeView">
+                        <rect key="frame" x="479" y="29.5" width="18" height="20"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Twy-0y-4AA">
+                                <rect key="frame" x="5" y="2" width="8" height="16"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Twy-0y-4AA" secondAttribute="bottom" constant="2" id="VlY-jw-bXX"/>
+                            <constraint firstItem="Twy-0y-4AA" firstAttribute="top" secondItem="AEi-FQ-ztU" secondAttribute="top" constant="2" id="cTh-2f-Zrq"/>
+                            <constraint firstItem="Twy-0y-4AA" firstAttribute="leading" secondItem="AEi-FQ-ztU" secondAttribute="leading" constant="5" id="e5p-Ah-GhH"/>
+                            <constraint firstAttribute="trailing" secondItem="Twy-0y-4AA" secondAttribute="trailing" constant="5" id="sfS-j5-iNI"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="54B-cN-ZIH" firstAttribute="top" secondItem="JMx-FO-mrg" secondAttribute="bottom" constant="5" id="1t4-X7-tAd"/>
                     <constraint firstItem="UQX-Jv-GUa" firstAttribute="leading" secondItem="VA8-cC-iBl" secondAttribute="leading" constant="20" id="6qW-5G-6WR"/>
                     <constraint firstAttribute="bottom" secondItem="UQX-Jv-GUa" secondAttribute="bottom" constant="10.5" id="7Ao-4S-Avz"/>
                     <constraint firstItem="54B-cN-ZIH" firstAttribute="leading" secondItem="UQX-Jv-GUa" secondAttribute="trailing" id="Ecu-n2-aTd"/>
+                    <constraint firstAttribute="bottom" secondItem="AEi-FQ-ztU" secondAttribute="bottom" constant="10" id="KVf-f2-QEF"/>
                     <constraint firstItem="M2N-RC-aVv" firstAttribute="leading" secondItem="VA8-cC-iBl" secondAttribute="leading" constant="5" id="Ngy-Nn-NRY"/>
                     <constraint firstItem="ayY-li-Xhv" firstAttribute="leading" secondItem="VA8-cC-iBl" secondAttribute="leading" constant="5" id="O87-7h-blI"/>
                     <constraint firstItem="JMx-FO-mrg" firstAttribute="leading" secondItem="M2N-RC-aVv" secondAttribute="trailing" constant="5" id="P3o-4z-UYw"/>
                     <constraint firstItem="M2N-RC-aVv" firstAttribute="top" secondItem="VA8-cC-iBl" secondAttribute="top" constant="15" id="Xlw-up-Qcb"/>
                     <constraint firstItem="JMx-FO-mrg" firstAttribute="top" secondItem="VA8-cC-iBl" secondAttribute="top" constant="10" id="cnd-kB-XD0"/>
+                    <constraint firstAttribute="trailing" secondItem="AEi-FQ-ztU" secondAttribute="trailing" constant="10" id="cy8-NN-Joc"/>
                     <constraint firstAttribute="bottom" secondItem="54B-cN-ZIH" secondAttribute="bottom" constant="10.5" id="eeL-ad-KiO"/>
                     <constraint firstItem="UQX-Jv-GUa" firstAttribute="top" secondItem="JMx-FO-mrg" secondAttribute="bottom" constant="5" id="f9I-Z2-Ndw"/>
                     <constraint firstAttribute="trailing" secondItem="JMx-FO-mrg" secondAttribute="trailing" constant="10" id="qIw-lS-kyw"/>
@@ -68,6 +88,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="badgeLabel" destination="Twy-0y-4AA" id="aYn-G0-2ca"/>
                 <outlet property="readSymbolView" destination="M2N-RC-aVv" id="fdV-wX-sEW"/>
                 <outlet property="threadDateLabel" destination="54B-cN-ZIH" id="M8I-4i-Obo"/>
                 <outlet property="threadIsClosedImageView" destination="ayY-li-Xhv" id="v1Z-Vc-cPe"/>
