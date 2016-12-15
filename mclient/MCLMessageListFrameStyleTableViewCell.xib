@@ -45,14 +45,14 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n9R-YT-gMz">
-                        <rect key="frame" x="30" y="10" width="289" height="18"/>
+                        <rect key="frame" x="30" y="10" width="287" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="n9R-YT-gMz" secondAttribute="trailing" constant="1" id="5pF-Ds-CmO"/>
+                    <constraint firstAttribute="trailing" secondItem="n9R-YT-gMz" secondAttribute="trailing" constant="3" id="5pF-Ds-CmO"/>
                     <constraint firstItem="tdd-bb-Z4G" firstAttribute="leading" secondItem="9lE-dV-Yc4" secondAttribute="trailing" id="HKN-pe-Zke"/>
                     <constraint firstAttribute="bottom" secondItem="tdd-bb-Z4G" secondAttribute="bottom" constant="8.5" id="MLf-b2-p6S"/>
                     <constraint firstItem="BuP-oH-STt" firstAttribute="leading" secondItem="rBf-Of-tJN" secondAttribute="trailing" constant="5" id="PYk-6Z-77g"/>

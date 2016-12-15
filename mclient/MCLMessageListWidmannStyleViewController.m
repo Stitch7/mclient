@@ -100,8 +100,7 @@
     self.refreshControl.layer.zPosition = self.refreshControlBackgroundView.layer.zPosition + 1;
 
     if (self.board && self.thread) {
-        // Set title to threads subject
-        self.title = self.thread.subject;
+        [self updateTitle:self.thread.subject];
 
         // Visualize loading
         CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];

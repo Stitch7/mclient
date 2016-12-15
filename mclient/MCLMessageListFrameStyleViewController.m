@@ -126,8 +126,7 @@
     [self.toolbar addGestureRecognizer:toolbarUpSwipeRecognizer];
 
     if (self.board && self.thread) {
-        // Set title to threads subject
-        self.title = self.thread.subject;
+        [self updateTitle:self.thread.subject];        
 
         // Add loading view
         CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];

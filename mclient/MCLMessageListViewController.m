@@ -65,13 +65,25 @@
 {
     [super viewDidLoad];
 
-    self.title = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 480, 44)];
+    label.backgroundColor = [UIColor clearColor];
+    label.numberOfLines = 2;
+    label.font = [UIFont boldSystemFontOfSize: 15.0f];
+    label.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+
+    self.titleLabel = label;
+    self.navigationItem.titleView = label;
 }
 
-- (void)didReceiveMemoryWarning
+- (void)updateTitle:(NSString *)title
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:title];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = 0.5;
+    paragraphStyle.hyphenationFactor = 1.0;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, title.length)];
+    self.titleLabel.attributedText = attributedString;
 }
 
 # pragma mark - Abstract
@@ -80,7 +92,6 @@
 {
     mustOverride();
 }
-
 
 #pragma mark - SplitViewButtonHandler
 

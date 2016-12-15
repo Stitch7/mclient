@@ -15,10 +15,12 @@
 @interface MCLMessageListViewController : UIViewController <SplitViewButtonHandler>
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
+@property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) MCLBoard *board;
 @property (strong, nonatomic) MCLThread *thread;
 
 + (NSString *)messageHtmlSkeletonForHtml:(NSString *)html withTopMargin:(int)topMargin;
 - (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard;
+- (void)updateTitle:(NSString *)title;
 
 @end
