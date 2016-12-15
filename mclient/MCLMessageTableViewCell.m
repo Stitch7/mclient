@@ -100,12 +100,6 @@
         AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:text];
         [utterance setVoice:[AVSpeechSynthesisVoice voiceWithLanguage:@"de-DE"]];
 
-        float rate = AVSpeechUtteranceDefaultSpeechRate;
-        if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1) {
-            rate = rate / 2;
-        }
-        [utterance setRate:rate];
-
         [self.speechSynthesizer speakUtterance:utterance];
     }
 }
