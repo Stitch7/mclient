@@ -29,7 +29,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSIndexPath *selectedCellIndexPath;
 @property (assign, nonatomic) CGFloat selectedCellHeight;
-@property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) UIView *refreshControlBackgroundView;
 @property (strong, nonatomic) UIColor *tableSeparatorColor;
@@ -584,7 +583,6 @@
         CGRect webViewFrame = webView.frame;
         webViewFrame.size.height = height;
         webView.frame = webViewFrame;
-        
         // Disable bouncing in webview
         for (id subview in webView.subviews) {
             if ([[subview class] isSubclassOfClass: [UIScrollView class]]) {

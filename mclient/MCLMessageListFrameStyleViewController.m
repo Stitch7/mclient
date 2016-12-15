@@ -29,7 +29,6 @@
 
 @interface MCLMessageListFrameStyleViewController ()
 
-@property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) AVSpeechSynthesizer *speechSynthesizer;
 @property (strong) NSMutableArray *messages;
 @property (strong) NSMutableArray *cells;
