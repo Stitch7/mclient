@@ -87,10 +87,11 @@
 {
     [super viewDidLoad];
 
+    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone &&
-        UIInterfaceOrientationIsLandscape(self.interfaceOrientation)
+        UIInterfaceOrientationIsLandscape(interfaceOrientation)
     ) {
-        [self transformMessageViewSizeForInterfaceOrientation:self.interfaceOrientation];
+        [self transformMessageViewSizeForInterfaceOrientation:interfaceOrientation];
     }
 
     // tableView setup
@@ -201,7 +202,7 @@
             }
 
             // Check current orientation because willRotateToInterfaceOrientation
-            if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+            if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
                 newMessageViewHeight = viewSize.height;
             } else {
                 newMessageViewHeight = viewSize.width;
@@ -246,7 +247,7 @@
 {
     CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
     if ((NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1) &&
-        UIInterfaceOrientationIsLandscape(self.interfaceOrientation)
+        UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])
     ) {
         statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
     }
@@ -659,8 +660,9 @@
 
 - (void)handleRotationChangeInBackground
 {
-    if (self.orientationBeforeWentToBackground != self.interfaceOrientation) {
-        [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0];
+    if (self.orientationBeforeWentToBackground != [[UIApplication sharedApplication] statusBarOrientation]) {
+//        [self willRotateToInterfaceOrientation:interfaceOrientation duration:0];
+        [self willTransitionToTraitCollection:self.traitCollection withTransitionCoordinator:self.transitionCoordinator];
     }
 }
 
@@ -824,7 +826,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    self.orientationBeforeWentToBackground = self.interfaceOrientation;
+    self.orientationBeforeWentToBackground = [[UIApplication sharedApplication] statusBarOrientation];
 
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     MCLMessage *message = self.messages[indexPath.row];

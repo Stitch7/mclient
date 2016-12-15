@@ -139,23 +139,17 @@
     }
 }
 
-//- (void)viewDidLayoutSubviews
+//-(void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 //{
-//    [self.tableView sendSubviewToBack:self.refreshControl];
-//    [self.tableView sendSubviewToBack:self.refreshControlBackgroundView];
+//    // Fix zooming webView content on rotate
+//    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+//    if (selectedIndexPath) {
+//        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
+//        [self.tableView.delegate tableView:self.tableView didDeselectRowAtIndexPath:selectedIndexPath];
+//        [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+//        [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+//    }
 //}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    // Fix zooming webView content on rotate
-    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-    if (selectedIndexPath) {
-        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
-        [self.tableView.delegate tableView:self.tableView didDeselectRowAtIndexPath:selectedIndexPath];
-        [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-        [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
-    }
-}
 
 #pragma mark - Data methods
 
@@ -620,10 +614,11 @@
 
 - (void)handleRotationChangeInBackground
 {
+    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone &&
-        self.orientationBeforeWentToBackground != self.interfaceOrientation
+        self.orientationBeforeWentToBackground != interfaceOrientation
     ) {
-        [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0];
+        [self willTransitionToTraitCollection:self.traitCollection withTransitionCoordinator:self.transitionCoordinator];
     }
 }
 
@@ -632,7 +627,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    self.orientationBeforeWentToBackground = self.interfaceOrientation;
+    self.orientationBeforeWentToBackground = [[UIApplication sharedApplication] statusBarOrientation];
 
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     MCLMessage *message = self.messages[indexPath.row];
@@ -664,6 +659,5 @@
         [destinationViewController setUsername:message.username];
     }
 }
-
 
 @end

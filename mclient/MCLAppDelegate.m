@@ -58,8 +58,9 @@
     CGFloat navBarHeight = viewController.navigationController.navigationBar.bounds.size.height;
     CGSize statusBarSize = [UIApplication sharedApplication].statusBarFrame.size;
     CGFloat statusBarHeight = statusBarSize.height;
+    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     if ((NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1) &&
-        UIInterfaceOrientationIsLandscape(viewController.interfaceOrientation)
+        UIInterfaceOrientationIsLandscape(interfaceOrientation)
     ) {
         statusBarHeight = statusBarSize.width;
     }
