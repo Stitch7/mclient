@@ -23,15 +23,12 @@
 {
     [self.spinner stopAnimating];
     self.label.text = [NSString stringWithFormat:NSLocalizedString(@"Welcome %@", nil), username];
-    [self layoutSubviews];
 }
 
 - (void)loginStatusNoLogin
 {
     [self.spinner stopAnimating];
     self.label.text = NSLocalizedString(@"You are not logged in", nil);
-// FIXCRASH
-//    [self layoutSubviews];
 }
 
 @end
