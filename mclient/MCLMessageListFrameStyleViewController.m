@@ -25,8 +25,6 @@
 #import "MCLMessage.h"
 #import "MCLReadList.h"
 
-#pragma mark - Private Stuff
-
 @interface MCLMessageListFrameStyleViewController ()
 
 @property (strong, nonatomic) AVSpeechSynthesizer *speechSynthesizer;
@@ -38,20 +36,25 @@
 @property (assign) BOOL validLogin;
 @property (strong) NSDateFormatter *dateFormatter;
 @property (strong) UIRefreshControl *refreshControl;
-@property (weak, nonatomic) IBOutlet UIView *messageView;
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (nonatomic, retain) IBOutlet UIView *containerView;
+@property (weak, nonatomic) IBOutlet UIView *topFrame;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topFrameHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UIView *bottomFrame;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarButtonSpeak;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarButtonNotification;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarButtonEdit;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarButtonReply;
+
+@property (nonatomic) CGFloat topFrameHeight;
 @property (assign, nonatomic) UIInterfaceOrientation orientationBeforeWentToBackground;
+@property (strong, nonatomic) WKWebView *webView;
 
 @end
 
 @implementation MCLMessageListFrameStyleViewController
-
 
 #pragma mark - ViewController
 
@@ -77,56 +80,36 @@
     [self.dateFormatter setTimeStyle:NSDateFormatterShortStyle];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
+    [self loadContainerView];
+
+    self.topFrameHeightConstraint.constant = 500;
+    self.topFrameHeight = 500;
+
+    UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleToolbarDrag:)];
+    [self.toolbar addGestureRecognizer:pgr];
+
     UINib *threadCellNib = [UINib nibWithNibName: @"MCLMessageListFrameStyleTableViewCell" bundle: nil];
     [self.tableView registerNib: threadCellNib forCellReuseIdentifier: @"MessageCell"];
 
-    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone &&
-        UIInterfaceOrientationIsLandscape(interfaceOrientation)
-    ) {
-        [self transformMessageViewSizeForInterfaceOrientation:interfaceOrientation];
-    }
-
     // tableView setup
     // Enable statusbar tap to scroll to top
+    //TODO: DOES NOT WORK
     self.tableView.scrollsToTop = YES;
+    self.tableView.backgroundColor = [UIColor clearColor];
     // Add refresh control
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
-//    [self.tableView addSubview:self.refreshControl];
 
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.tableView;
     tableViewController.refreshControl = self.refreshControl;
 
-
-    // webView setup
-    self.webView.delegate = self;
-    self.webView.scrollView.scrollsToTop = NO;
-
-    // Init toolbar slide gestures
-    UISwipeGestureRecognizer *toolbarDownSwipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(slideMessageViewDownAction)];
-    toolbarDownSwipeRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
-    toolbarDownSwipeRecognizer.cancelsTouchesInView = YES;
-
-    UISwipeGestureRecognizer *toolbarUpSwipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(slideMessageViewUpAction)];
-    toolbarUpSwipeRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
-    toolbarUpSwipeRecognizer.cancelsTouchesInView = YES;
-
-    [self.toolbar addGestureRecognizer:toolbarDownSwipeRecognizer];
-    [self.toolbar addGestureRecognizer:toolbarUpSwipeRecognizer];
-
     if (self.board && self.thread) {
-        [self updateTitle:self.thread.subject];        
+        [self updateTitle:self.thread.subject];
 
         // Add loading view
         CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
@@ -154,10 +137,51 @@
     }
 }
 
-//- (void)viewDidLayoutSubviews
-//{
-//    [self.refreshControl.superview sendSubviewToBack:self.refreshControl];
-//}
+- (void)loadContainerView
+{
+    [[NSBundle mainBundle] loadNibNamed:@"MCLMessageListFrameStyleView" owner:self options:nil];
+    self.containerView.frame = self.view.frame;
+    self.containerView.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.containerView];
+
+    // webView setup
+    self.webView = [[WKWebView alloc] init];
+    self.webView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.webView.navigationDelegate = self;
+    self.webView.scrollView.scrollsToTop = NO;
+    self.webView.opaque = NO;
+    self.webView.backgroundColor = [UIColor whiteColor];
+
+    [self.webView.scrollView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
+    [self.webView.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(64, 0, 0, 0)];
+    [self.webView.scrollView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+
+    [self.topFrame addSubview:self.webView];
+
+    UIToolbar *toolbar = self.toolbar;
+    WKWebView *webView = self.webView;
+    NSDictionary *views = NSDictionaryOfVariableBindings(toolbar, webView);
+    [self.topFrame addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[webView][toolbar]|" options:0 metrics:nil views:views]];
+    [self.topFrame addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[webView]|" options:0 metrics:nil views:views]];
+}
+
+- (void)handleToolbarDrag:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        self.topFrameHeight = self.topFrameHeightConstraint.constant;
+    }
+
+    CGPoint translation = [gestureRecognizer translationInView:self.view];
+    CGFloat screenHeight = UIScreen.mainScreen.bounds.size.height;
+    CGFloat newHeight = self.topFrameHeight + translation.y;
+    if (newHeight > 150) {
+        if (newHeight > screenHeight) {
+            newHeight = screenHeight;
+        }
+        self.topFrameHeightConstraint.constant = newHeight;
+    }
+}
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -168,106 +192,6 @@
         self.toolbarButtonSpeak.image = [UIImage imageNamed:@"speakButton.png"];
     }
 }
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [self transformMessageViewSizeForInterfaceOrientation:toInterfaceOrientation];
-
-    // Fix zooming webView content on rotate
-    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-    if (selectedIndexPath) {
-        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
-        [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-        [self.tableView.delegate tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
-    }
-}
-
-- (void)transformMessageViewSizeForInterfaceOrientation:(UIInterfaceOrientation)forInterfaceOrientation
-{
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        CGRect messageViewFrame = self.messageView.frame;
-        CGFloat newMessageViewY;
-        CGFloat newMessageViewHeight;
-
-        if (UIInterfaceOrientationIsLandscape(forInterfaceOrientation)) {
-            CGFloat iOS7Offset = 0.0f;
-
-            CGSize viewSize = self.view.bounds.size;
-            if ((NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1)) {
-                iOS7Offset = 28.0f;
-
-                // If we started in landscape mode we must switch height and width in iOS7...
-                if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
-                    viewSize = CGSizeMake(viewSize.height, viewSize.width);
-                }
-            }
-
-            // Check current orientation because willRotateToInterfaceOrientation
-            if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
-                newMessageViewHeight = viewSize.height;
-            } else {
-                newMessageViewHeight = viewSize.width;
-            }
-
-            if ([UIScreen mainScreen].bounds.size.height == 736) { // 6 Plus :-(
-                newMessageViewY = 44.0f + iOS7Offset;
-            } else {
-                newMessageViewY = 32.0f + iOS7Offset;
-            }
-
-            newMessageViewHeight -= newMessageViewY - 2;
-        } else {
-            newMessageViewY = 65.0f;
-            newMessageViewHeight = 300.0f;
-        }
-
-        messageViewFrame.origin.y = newMessageViewY;
-        messageViewFrame.size.height = newMessageViewHeight;
-        self.messageView.frame = messageViewFrame;
-
-        [self adjustWebViewHeightToMessageView];
-    } else { // iPad
-        if (self.messageView.tag > 0) {
-            CGFloat newMessageViewHeight;
-            if (UIInterfaceOrientationIsLandscape(forInterfaceOrientation)) {
-                newMessageViewHeight = 700;
-            } else {
-                newMessageViewHeight = 960;
-            }
-
-            CGRect messageViewFrame = self.messageView.frame;
-            messageViewFrame.size.height = newMessageViewHeight;
-            self.messageView.frame = messageViewFrame;
-
-            [self adjustWebViewHeightToMessageView];
-        }
-    }
-}
-
-- (CGFloat)fullViewheight
-{
-    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    if ((NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1) &&
-        UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])
-    ) {
-        statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
-    }
-
-    return self.view.bounds.size.height - self.navigationController.navigationBar.bounds.size.height - statusBarHeight;
-}
-
-- (void)adjustWebViewHeightToMessageView
-{
-    CGRect webViewFrame = self.webView.frame;
-    webViewFrame.size.height = self.messageView.bounds.size.height - self.toolbar.bounds.size.height;
-    self.webView.frame = webViewFrame;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 
 #pragma mark - Data methods
 
@@ -310,36 +234,22 @@
     });
 }
 
-//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-//{
-//    // Fixes refreshcontrol's too litle space problem
-//    if (scrollView.contentOffset.y < (self.tableView.bounds.size.height / -5) && ! [self.refreshControl isRefreshing]) {
-//        [self.refreshControl beginRefreshing];
-//        [self reloadData];
-//    }
-//}
-
 - (void)reloadData
 {
-//    if ( ! [self.refreshControl isRefreshing]) {
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
 
-//        NSLog(@"reload");
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError *mServiceError;
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId fromBoardId:self.board.boardId error:&mServiceError];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self fetchedData:data error:mServiceError];
+            [self.refreshControl endRefreshing];
 
-        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSError *mServiceError;
-            NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId fromBoardId:self.board.boardId error:&mServiceError];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self fetchedData:data error:mServiceError];
-                [self.refreshControl endRefreshing];
-
-                [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-                [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
-            });
+            [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+            [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
         });
-//    }
+    });
 }
 
 - (void)fetchedData:(NSDictionary *)data error:(NSError *)error
@@ -445,11 +355,6 @@
     [cell.messageUsernameLabel sizeToFit];
     [cell.messageDateLabel sizeToFit];
 
-    // Place dateLabel after authorLabel
-    CGRect dateLabelFrame = cell.messageDateLabel.frame;
-    dateLabelFrame.origin = CGPointMake(cell.messageUsernameLabel.frame.origin.x + cell.messageUsernameLabel.frame.size.width, dateLabelFrame.origin.y);
-    cell.messageDateLabel.frame = dateLabelFrame;
-
     if (i == 0 || [self.readList messageIdIsRead:message.messageId]) {
         [cell markRead];
     } else {
@@ -457,15 +362,6 @@
     }
 
     return cell;
-}
-
-- (void)indentView:(UIView *)view withLevel:(NSNumber *)level startingAtX:(CGFloat)x
-{
-    int indention = 10;
-
-    CGRect frame = view.frame;
-    frame.origin = CGPointMake(x + (indention * [level integerValue]), frame.origin.y);
-    view.frame = frame;
 }
 
 - (void)indentView:(NSLayoutConstraint *)indentionConstraint withLevel:(NSNumber *)level
@@ -554,15 +450,15 @@
 
         [self.webView loadHTMLString:@"" baseURL:nil];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        CGRect mvBounds = self.messageView.bounds;
+        CGRect mvBounds = self.topFrame.bounds;
         CGRect loadingFrame = CGRectMake(mvBounds .origin.x, mvBounds.origin.y, mvBounds.size.width, mvBounds.size.height - self.toolbar.frame.size.height - 1);
-        [self.messageView addSubview:[[MCLLoadingView alloc] initWithFrame:loadingFrame]];
+        [self.topFrame addSubview:[[MCLLoadingView alloc] initWithFrame:loadingFrame]];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *mServiceError;
             NSDictionary *data = [[MCLMServiceConnector sharedConnector] messageWithId:message.messageId fromBoardId:self.board.boardId login:loginData error:&mServiceError];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-                for (id subview in self.messageView.subviews) {
+                for (id subview in self.topFrame.subviews) {
                     if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
                         [subview removeFromSuperview];
                     }
@@ -609,6 +505,7 @@
 {
     cell.messageText = message.text;
     [self.webView loadHTMLString:[self messageHtml:message] baseURL:nil];
+//    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.google.com"]]]; // TODO: - Remove
 
     BOOL showNotificationButton = self.validLogin && [message.username isEqualToString:self.username];
     if (showNotificationButton) {
@@ -621,8 +518,8 @@
     }
 }
 
-#pragma mark - UIWebView delegate
-
+#pragma mark - UKWebView delegate
+// TODO: This does not work with WKWebView?!?
 -(BOOL)webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType
 {
     BOOL shouldStartLoad = YES;
@@ -636,6 +533,15 @@
     return shouldStartLoad;
 }
 
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+{
+    if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
+        [UIApplication.sharedApplication openURL:navigationAction.request.URL];
+        decisionHandler(WKNavigationActionPolicyCancel);
+    } else {
+        decisionHandler(WKNavigationActionPolicyAllow);
+    }
+}
 
 #pragma mark - AVSpeechSynthesizerDelegate
 
@@ -670,15 +576,6 @@
             }
         });
     });
-
-}
-
-- (void)handleRotationChangeInBackground
-{
-    if (self.orientationBeforeWentToBackground != [[UIApplication sharedApplication] statusBarOrientation]) {
-//        [self willRotateToInterfaceOrientation:interfaceOrientation duration:0];
-        [self willTransitionToTraitCollection:self.traitCollection withTransitionCoordinator:self.transitionCoordinator];
-    }
 }
 
 
@@ -689,49 +586,8 @@
     [self performSegueWithIdentifier:@"PushBackToThreadList" sender:nil];
 }
 
-- (void)slideMessageViewDownAction
-{
-    // Cache initial height
-    [self.messageView setTag:self.messageView.bounds.size.height];
-
-    self.messageView.layer.needsDisplayOnBoundsChange = YES;
-    self.messageView.contentMode = UIViewContentModeRedraw;
-
-    [UIView animateWithDuration:.4f animations:^{
-        CGRect bounds = self.messageView.bounds;
-        CGPoint center = self.messageView.center;
-        bounds.size.height += [self fullViewheight] - self.messageView.bounds.size.height;
-        center.y += ([self fullViewheight] - self.messageView.bounds.size.height) / 2;
-        self.messageView.bounds = bounds;
-        self.messageView.center = center;
-    }];
-
-    self.messageView.layer.needsDisplayOnBoundsChange = NO;
-
-    [self adjustWebViewHeightToMessageView];
-}
-
-- (void)slideMessageViewUpAction
-{
-    if (self.messageView.tag > 0) {
-        self.messageView.layer.needsDisplayOnBoundsChange = YES;
-        self.messageView.contentMode = UIViewContentModeRedraw;
-
-        [UIView animateWithDuration:.4f animations:^{
-            CGRect bounds = self.messageView.bounds;
-            CGPoint center = self.messageView.center;
-            bounds.size.height -= [self fullViewheight] - self.messageView.tag;
-            center.y -= ([self fullViewheight] - self.messageView.tag) / 2;
-            self.messageView.bounds = bounds;
-            self.messageView.center = center;
-        }];
-
-        self.messageView.layer.needsDisplayOnBoundsChange = NO;
-
-        self.messageView.tag = 0;
-
-        [self adjustWebViewHeightToMessageView];
-    }
+- (IBAction)openProfileAction:(UIBarButtonItem *)sender {
+    [self performSegueWithIdentifier:@"ModalToShowProfile" sender:self];
 }
 
 - (IBAction)copyLinkAction:(UIBarButtonItem *)sender
@@ -767,22 +623,36 @@
         MCLMessageListFrameStyleTableViewCell *selectedCell = (MCLMessageListFrameStyleTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
 
         // Backup of UIWebView content because it's get manipulated by our operation below
-        NSString *webviewTextBackup = [self.webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"html\")[0].innerHTML;"];
+        NSString *foo = @"document.getElementsByTagName(\"html\")[0].innerHTML;";
+        [self.webView evaluateJavaScript:foo completionHandler:^(NSString *result, NSError *error) {
+            if (error != nil) { return; }
 
-        // Remove quoted text (font tags)
-        [self.webView stringByEvaluatingJavaScriptFromString:@"var fontTags = document.getElementsByTagName(\"font\"); for (var i=0; i < fontTags.length; x++) { fontTags[i].remove() };"];
-        NSString *text = [self.webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(\"body\")[0].textContent;"];
-        text = [[selectedCell.messageSubjectLabel.text  stringByAppendingString:@"..."] stringByAppendingString:text];
-        text = [[NSString stringWithFormat:@"Von %@...", selectedCell.messageUsernameLabel.text] stringByAppendingString:text];
+            NSString *webviewTextBackup = result;
 
-        // Restoring backuped original content
-        [self.webView loadHTMLString:webviewTextBackup baseURL:nil];
+            // Remove quoted text (font tags)
+            NSString *foo2 = @"var fontTags = document.getElementsByTagName(\"font\"); for (var i=0; i < fontTags.length; x++) { fontTags[i].remove() };";
+            [self.webView evaluateJavaScript:foo2 completionHandler:nil];
 
-        // Speak text
-        AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:text];
-        [utterance setVoice:[AVSpeechSynthesisVoice voiceWithLanguage:@"de-DE"]];
+            NSString *foo3 = @"document.getElementsByTagName(\"body\")[0].textContent;";
+            [self.webView evaluateJavaScript:foo3 completionHandler:^(NSString *result, NSError *error) {
+                if (error != nil) { return; }
 
-        [self.speechSynthesizer speakUtterance:utterance];
+                NSString *text = result;
+                text = [[selectedCell.messageSubjectLabel.text  stringByAppendingString:@"..."] stringByAppendingString:text];
+                text = [[NSString stringWithFormat:@"Von %@...", selectedCell.messageUsernameLabel.text] stringByAppendingString:text];
+
+                // Restoring backuped original content
+                [self.webView loadHTMLString:webviewTextBackup baseURL:nil];
+
+                // Speak text
+                AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:text];
+                [utterance setVoice:[AVSpeechSynthesisVoice voiceWithLanguage:@"de-DE"]];
+                
+                [self.speechSynthesizer speakUtterance:utterance];
+
+            }];
+
+        }];
     }
 }
 
@@ -827,9 +697,15 @@
                               otherButtonTitles:nil] show];
         });
     });
-
 }
 
+- (IBAction)editAction:(UIBarButtonItem *)sender {
+    [self performSegueWithIdentifier:@"ModalToEditReply" sender:self];
+}
+
+- (IBAction)replyAction:(UIBarButtonItem *)sender {
+    [self performSegueWithIdentifier:@"ModalToComposeReply" sender:self];
+}
 
 #pragma mark - Navigation
 

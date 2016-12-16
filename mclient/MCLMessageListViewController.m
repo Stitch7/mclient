@@ -21,6 +21,7 @@
     return [NSString stringWithFormat:@""
             "<html>"
             "<head>"
+            "<meta name=\"viewport\" content=\"initial-scale=1.0\"/>"
             "<script type=\"text/javascript\">"
             "    function spoiler(obj) {"
             "        if (obj.nextSibling.style.display === 'none') {"

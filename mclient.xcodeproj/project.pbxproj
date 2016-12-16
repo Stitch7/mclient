@@ -11,6 +11,8 @@
 		3012032D1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3012032B1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.m */; };
 		3012032E1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3012032C1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib */; };
 		301203311E031D7500B06FF6 /* MCLBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 301203301E031D7500B06FF6 /* MCLBadgeView.m */; };
+		301203541E03704500B06FF6 /* MCLMessageListFrameStyleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 301203531E03704500B06FF6 /* MCLMessageListFrameStyleView.xib */; };
+		3012035A1E037DEC00B06FF6 /* MCLMessageListFrameStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 301203591E037DEC00B06FF6 /* MCLMessageListFrameStyleViewController.m */; };
 		301E24AF19BAE3E500943EC6 /* profileButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301E24AE19BAE3E500943EC6 /* profileButton@2x.png */; };
 		301E24B219BAE86200943EC6 /* notificationButtonDisabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301E24B019BAE86200943EC6 /* notificationButtonDisabled@2x.png */; };
 		301E24B319BAE86200943EC6 /* notificationButtonEnabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301E24B119BAE86200943EC6 /* notificationButtonEnabled@2x.png */; };
@@ -22,7 +24,6 @@
 		301FD9A819C419DE00E36A5B /* errorMService@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301FD9A719C419DE00E36A5B /* errorMService@2x.png */; };
 		301FD9AA19C4D8D800E36A5B /* errorInternetConnection@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301FD9A919C4D8D800E36A5B /* errorInternetConnection@2x.png */; };
 		301FD9AD19C5C79000E36A5B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9AC19C5C79000E36A5B /* Reachability.m */; };
-		301FD9B019C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9AF19C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.m */; };
 		3020A26819DA1B66007F46E2 /* isClosed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3020A26719DA1B66007F46E2 /* isClosed@2x.png */; };
 		302F462519BF443A00DC77D8 /* copyLinkButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */; };
 		3038D58319F65E21005E7D3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3038D58519F65E21005E7D3D /* Localizable.strings */; };
@@ -137,6 +138,9 @@
 		3012032C1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MCLMessageListFrameStyleTableViewCell.xib; sourceTree = "<group>"; };
 		3012032F1E031D7500B06FF6 /* MCLBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLBadgeView.h; sourceTree = "<group>"; };
 		301203301E031D7500B06FF6 /* MCLBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLBadgeView.m; sourceTree = "<group>"; };
+		301203531E03704500B06FF6 /* MCLMessageListFrameStyleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MCLMessageListFrameStyleView.xib; sourceTree = "<group>"; };
+		301203581E037DEC00B06FF6 /* MCLMessageListFrameStyleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageListFrameStyleViewController.h; sourceTree = "<group>"; };
+		301203591E037DEC00B06FF6 /* MCLMessageListFrameStyleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListFrameStyleViewController.m; sourceTree = "<group>"; };
 		301E24AE19BAE3E500943EC6 /* profileButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profileButton@2x.png"; sourceTree = "<group>"; };
 		301E24B019BAE86200943EC6 /* notificationButtonDisabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notificationButtonDisabled@2x.png"; sourceTree = "<group>"; };
 		301E24B119BAE86200943EC6 /* notificationButtonEnabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notificationButtonEnabled@2x.png"; sourceTree = "<group>"; };
@@ -155,8 +159,6 @@
 		301FD9A919C4D8D800E36A5B /* errorInternetConnection@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "errorInternetConnection@2x.png"; sourceTree = "<group>"; };
 		301FD9AB19C5C79000E36A5B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		301FD9AC19C5C79000E36A5B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		301FD9AE19C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageListFrameStyleViewController.h; sourceTree = "<group>"; };
-		301FD9AF19C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListFrameStyleViewController.m; sourceTree = "<group>"; };
 		3020A26719DA1B66007F46E2 /* isClosed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isClosed@2x.png"; sourceTree = "<group>"; };
 		302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copyLinkButton@2x.png"; sourceTree = "<group>"; };
 		3038D57F19F65E0C005E7D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPad.strings; sourceTree = "<group>"; };
@@ -402,8 +404,8 @@
 				30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */,
 				308EC3D519CC4DE800A0869F /* MCLMessageListViewController.h */,
 				308EC3D619CC4DE800A0869F /* MCLMessageListViewController.m */,
-				301FD9AE19C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.h */,
-				301FD9AF19C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.m */,
+				301203581E037DEC00B06FF6 /* MCLMessageListFrameStyleViewController.h */,
+				301203591E037DEC00B06FF6 /* MCLMessageListFrameStyleViewController.m */,
 				305DD85219AB2970006514BD /* MCLMessageListWidmannStyleViewController.h */,
 				305DD85319AB2970006514BD /* MCLMessageListWidmannStyleViewController.m */,
 				301E24B419BB02EB00943EC6 /* MCLProfileTableViewController.h */,
@@ -432,6 +434,7 @@
 				3012032A1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.h */,
 				3012032B1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.m */,
 				3012032C1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib */,
+				301203531E03704500B06FF6 /* MCLMessageListFrameStyleView.xib */,
 				301FD01619ACE3D10028C5C8 /* MCLMessageTableViewCell.h */,
 				301FD01719ACE3D10028C5C8 /* MCLMessageTableViewCell.m */,
 				3086428719D2D6CE0027F932 /* MCLMessageTextView.h */,
@@ -671,6 +674,7 @@
 				30501B5919E3100900333952 /* downButton.png in Resources */,
 				3093B79819E2F6C600F8FD5F /* copyLinkButton.png in Resources */,
 				30DBC46C1A07DB6700340B3A /* profileButton@3x.png in Resources */,
+				301203541E03704500B06FF6 /* MCLMessageListFrameStyleView.xib in Resources */,
 				3012032E1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
 				3093B79A19E2F71100F8FD5F /* editButton.png in Resources */,
 				306F8C3519BA0F2C00376A58 /* quoteButton@2x.png in Resources */,
@@ -767,8 +771,8 @@
 				30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */,
 				308EC3DD19CC7BA600A0869F /* MCLDetailView.m in Sources */,
 				30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */,
-				301FD9B019C83A9C00E36A5B /* MCLMessageListFrameStyleViewController.m in Sources */,
 				306EA6E519D598F800BB4DC8 /* MCLInternetConnectionErrorView.m in Sources */,
+				3012035A1E037DEC00B06FF6 /* MCLMessageListFrameStyleViewController.m in Sources */,
 				3012032D1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.m in Sources */,
 				306EA6E819D5992F00BB4DC8 /* MCLMServiceErrorView.m in Sources */,
 				307A80DD19B5EBD8001B538D /* MCLMServiceConnector.m in Sources */,
