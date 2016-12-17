@@ -157,7 +157,7 @@
     self.board = inBoard;
 
     // Set title
-    self.title = inThread.subject;
+    [self updateTitle:inThread.subject];
 
     // Close thread list in portrait mode
     if (self.masterPopoverController) {

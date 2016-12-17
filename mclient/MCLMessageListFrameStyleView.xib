@@ -29,10 +29,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zr4-KV-EcB">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="465"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
                     <subviews>
                         <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eR6-AN-hCj">
-                            <rect key="frame" x="0.0" y="421" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="355" width="375" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="kM4-A5-UKz"/>
                             </constraints>
@@ -78,15 +78,15 @@
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="eR6-AN-hCj" secondAttribute="bottom" id="Fph-xf-UM5"/>
                         <constraint firstItem="eR6-AN-hCj" firstAttribute="leading" secondItem="Zr4-KV-EcB" secondAttribute="leading" id="GKs-m1-v9k"/>
-                        <constraint firstAttribute="height" constant="465" id="K1Q-0D-Ptx"/>
+                        <constraint firstAttribute="height" constant="400" id="K1Q-0D-Ptx"/>
                         <constraint firstAttribute="trailing" secondItem="eR6-AN-hCj" secondAttribute="trailing" id="yKm-jT-8OC"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XZF-bV-lQx">
-                    <rect key="frame" x="0.0" y="465" width="375" height="202"/>
+                    <rect key="frame" x="0.0" y="400" width="375" height="267"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QZS-hZ-tLG">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="202"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="267"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="xqD-HR-hnh"/>

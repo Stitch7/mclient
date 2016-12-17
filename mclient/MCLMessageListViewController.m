@@ -69,6 +69,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 480, 44)];
     label.backgroundColor = [UIColor clearColor];
     label.numberOfLines = 2;
+    label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont boldSystemFontOfSize: 15.0f];
     label.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
 

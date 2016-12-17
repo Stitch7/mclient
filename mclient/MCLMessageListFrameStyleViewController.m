@@ -84,10 +84,8 @@
 {
     [super viewDidLoad];
 
-    [self loadContainerView];
-
-    self.topFrameHeightConstraint.constant = 500;
-    self.topFrameHeight = 500;
+    [self configureContainerView];
+    [self configureWebView];
 
     UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleToolbarDrag:)];
     [self.toolbar addGestureRecognizer:pgr];
@@ -137,15 +135,17 @@
     }
 }
 
-- (void)loadContainerView
+- (void)configureContainerView
 {
     [[NSBundle mainBundle] loadNibNamed:@"MCLMessageListFrameStyleView" owner:self options:nil];
     self.containerView.frame = self.view.frame;
     self.containerView.backgroundColor = [UIColor clearColor];
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.containerView];
+}
 
-    // webView setup
+- (void)configureWebView
+{
     self.webView = [[WKWebView alloc] init];
     self.webView.translatesAutoresizingMaskIntoConstraints = NO;
     self.webView.navigationDelegate = self;
@@ -201,7 +201,7 @@
     self.board = inBoard;
 
     // Set title
-    self.title = inThread.subject;
+    [self updateTitle:inThread.subject];
 
     // Close thread list in portrait mode
     if (self.masterPopoverController) {
@@ -505,7 +505,6 @@
 {
     cell.messageText = message.text;
     [self.webView loadHTMLString:[self messageHtml:message] baseURL:nil];
-//    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.google.com"]]]; // TODO: - Remove
 
     BOOL showNotificationButton = self.validLogin && [message.username isEqualToString:self.username];
     if (showNotificationButton) {
@@ -519,19 +518,6 @@
 }
 
 #pragma mark - UKWebView delegate
-// TODO: This does not work with WKWebView?!?
--(BOOL)webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType
-{
-    BOOL shouldStartLoad = YES;
-
-    // Open links in Safari
-    if (inType == UIWebViewNavigationTypeLinkClicked) {
-        [[UIApplication sharedApplication] openURL:[inRequest URL]];
-        shouldStartLoad = NO;
-    }
-
-    return shouldStartLoad;
-}
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
