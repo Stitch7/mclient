@@ -86,7 +86,7 @@
     [super viewDidLoad];
 
     UINib *threadCellNib = [UINib nibWithNibName: @"MCLThreadTableViewCell" bundle: nil];
-    [self.tableView registerNib: threadCellNib  forCellReuseIdentifier: @"ThreadCell"];
+    [self.tableView registerNib: threadCellNib forCellReuseIdentifier: @"ThreadCell"];
 
     [self configureSearchResultsController];
 
@@ -151,9 +151,9 @@
     [_searchController loadViewIfNeeded];
     _searchController.delegate = self;
     _searchController.searchResultsUpdater = self;
-    _searchController.hidesNavigationBarDuringPresentation = YES;
-    _searchController.dimsBackgroundDuringPresentation = YES;
-    _searchController.searchBar.placeholder = @"Search";
+    _searchController.hidesNavigationBarDuringPresentation = NO;
+    _searchController.dimsBackgroundDuringPresentation = NO;
+    _searchController.searchBar.placeholder = NSLocalizedString(@"Search", nil);
     _searchController.searchBar.searchBarStyle = UISearchBarStyleProminent;
     [_searchController.searchBar sizeToFit];
 }
