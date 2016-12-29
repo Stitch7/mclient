@@ -123,6 +123,13 @@
     }
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    for (MCLMessageTableViewCell *cell in self.tableView.visibleCells) {
+        [cell.messageTextWebView addObserver:self forKeyPath:@"scrollView.contentSize" options:NSKeyValueObservingOptionNew context:nil];
+    }
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -133,6 +140,13 @@
         if (cell.speechSynthesizer.speaking) {
             [cell.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
             cell.messageSpeakButton.image = [UIImage imageNamed:@"speakButton.png"];
+        }
+    }
+
+    for (MCLMessageTableViewCell *cell in self.tableView.visibleCells) {
+        @try{
+            [cell.messageTextWebView removeObserver:self forKeyPath:@"scrollView.contentSize"];
+        }@catch(id exception){
         }
     }
 }
@@ -196,13 +210,6 @@
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     if (selectedIndexPath) {
         MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
-
-        // On iOS7 deselect the selected cell manually before table is reloaded,
-        // this is done automatically on iOS8 after the reload which looks smoother
-        if ((NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1)) {
-            [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
-            [self tableView:self.tableView didDeselectRowAtIndexPath:selectedIndexPath];
-        }
 
         if (cell.speechSynthesizer.speaking) {
             [cell.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
@@ -303,6 +310,8 @@
 
     [self.cells setObject:cell forKey:@(i)];
 
+    cell.messageTextWebView.suppressesIncrementalRendering = YES;
+
     if ([cell isSelected]) {
         cell.backgroundColor = self.veryLightGreyColor;
         [cell.messageTextWebView setBackgroundColor:self.veryLightGreyColor];
@@ -354,6 +363,16 @@
     cell.messageDateLabel.frame = dateLabelFrame;
     
     [cell.messageTextWebView setDelegate:self];
+
+//    CGSize size = cell.messageTextWebView.scrollView.contentSize;
+//    size.height = 0;
+//    cell.messageTextWebView.scrollView.contentSize = size;
+
+//    CGRect frame = cell.messageTextWebView.frame;
+//    frame.size.height = 5.0f;
+//    cell.messageTextWebView.frame = frame;
+
+    [cell.messageTextWebView addObserver:self forKeyPath:@"scrollView.contentSize" options:NSKeyValueObservingOptionNew context:nil];
     
     if (i == 0 || [self.readList messageIdIsRead:message.messageId]) {
         [cell markRead];
@@ -408,12 +427,26 @@
 
 #pragma mark - UITableViewDelegate
 
+-(void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    @try{
+        MCLMessageTableViewCell *messageCell = (MCLMessageTableViewCell *)cell;
+        [messageCell.messageTextWebView removeObserver:self forKeyPath:@"scrollView.contentSize"];
+    }@catch(id exception){
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height = 60;
 
     if (indexPath == self.selectedCellIndexPath) {
-        height = self.selectedCellHeight;
+        MCLMessageTableViewCell *selectedCell = [self.cells objectForKey:@(self.selectedCellIndexPath.row)];
+        CGFloat webViewHeight = selectedCell.messageTextWebView.scrollView.contentSize.height;
+        CGFloat toolbarHeight = selectedCell.messageToolbar.frame.size.height;
+        height = height + 10 + webViewHeight + toolbarHeight;
+
+        self.selectedCellHeight = height;
     } else if ([tableView indexPathsForSelectedRows].count && [[tableView indexPathsForSelectedRows] indexOfObject:indexPath] != NSNotFound) {
         MCLMessageTableViewCell *cell = [self.cells objectForKey:@(indexPath.row)];
         CGFloat webViewHeight = cell.messageTextWebView.scrollView.contentSize.height;
@@ -571,36 +604,60 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    // UIWebView object has fully loaded.
+    NSLog(@"webViewDidFinishLoad:");
+
+    // UIWebView has fully loaded
     if ([[webView stringByEvaluatingJavaScriptFromString:@"document.readyState"] isEqualToString:@"complete"]) {
-        // Resize text view to content height
-        CGFloat height = [[webView stringByEvaluatingJavaScriptFromString:@"Math.max(document.body.scrollHeight, "
-                                                                           "document.body.offsetHeight, "
-                                                                           "document.documentElement.clientHeight, "
-                                                                           "document.documentElement.scrollHeight, "
-                                                                           "document.documentElement.offsetHeight);"] integerValue];
-        CGRect webViewFrame = webView.frame;
-        webViewFrame.size.height = height;
-        webView.frame = webViewFrame;
-        // Disable bouncing in webview
-        for (id subview in webView.subviews) {
-            if ([[subview class] isSubclassOfClass: [UIScrollView class]]) {
-                [subview setBounces:NO];
-            }
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
+        if ([[webView stringByEvaluatingJavaScriptFromString:@"document.readyState"] isEqualToString:@"complete"]) {
+            // Resize text view to content height
+            CGFloat height = [[webView stringByEvaluatingJavaScriptFromString:@"Math.max(document.body.scrollHeight, "
+                                                                               "document.body.offsetHeight, "
+                                                                               "document.documentElement.clientHeight, "
+                                                                               "document.documentElement.scrollHeight, "
+                                                                               "document.documentElement.offsetHeight);"] integerValue];
+            CGSize webViewContentSize = webView.scrollView.contentSize;
+            webViewContentSize.height = height;
+            webView.scrollView.contentSize = webViewContentSize;
+
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         }
 
-        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-        MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
-
-        [cell.messageToolbar setHidden:NO];
-
-        // Resize table cell
-        [self updateTableView];
-
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }
 }
 
+-(void) observeValueForKeyPath: (NSString *)keyPath ofObject: (id) object
+                        change: (NSDictionary *) change context: (void *) context
+{
+    if ([object isKindOfClass:[UIWebView class]] == false) {
+        return;
+    }
+
+    UIWebView *webView = (UIWebView *)object;
+
+    // Disable bouncing in webview
+    for (id subview in webView.subviews) {
+        if ([[subview class] isSubclassOfClass: [UIScrollView class]]) {
+            [subview setBounces:NO];
+        }
+    }
+
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    MCLMessageTableViewCell *cell = (MCLMessageTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+    [cell.messageToolbar setHidden:NO];
+
+    CGFloat contentHeight = webView.scrollView.contentSize.height;
+    CGRect webViewFrame = webView.frame;
+    webViewFrame.size.height = contentHeight;
+    webView.frame = webViewFrame;
+
+
+    NSLog(@"|NEW webView heightB´8=o. %f", contentHeight);
+
+    // Resize table cell
+    [self updateTableView];
+}
 
 #pragma mark - MCLComposeMessageViewControllerDelegate
 
