@@ -18,8 +18,9 @@
                    username:(NSString *)inUsername
                     subject:(NSString *)inSubject
                        date:(NSDate *)inDate
-                answerCount:(NSNumber *)inAnswerCount
-                 answerDate:(NSDate *)inAnswerDate
+                messageCount:(NSNumber *)inMessageCount
+                lastMessageId:(NSNumber *)inLastMessageId
+                 lastMessageDate:(NSDate *)inLastMessageDate
 {
     MCLThread *thread = [[MCLThread alloc] init];
     
@@ -31,8 +32,9 @@
     thread.username = inUsername;
     thread.subject = inSubject;
     thread.date = inDate;
-    thread.answerCount = inAnswerCount;
-    thread.answerDate = inAnswerDate;
+    thread.messageCount = inMessageCount;
+    thread.lastMessageId = inLastMessageId;
+    thread.lastMessageDate = inLastMessageDate;
     
     return thread;
 }

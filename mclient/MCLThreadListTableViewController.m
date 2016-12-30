@@ -219,8 +219,9 @@
     NSString *username = [object objectForKey:@"username"];
     NSString *subject = [object objectForKey:@"subject"];
     NSDate *date = [self.dateFormatterForInput dateFromString:[object objectForKey:@"date"]];
-    NSNumber *answerCount = [object objectForKey:@"answerCount"];
-    NSDate *answerDate = [self.dateFormatterForInput dateFromString:[object objectForKey:@"answerDate"]];
+    NSNumber *messageCount = [object objectForKey:@"messageCount"];
+    NSNumber *lastMessageId = [object objectForKey:@"lastMessageId"];
+    NSDate *lastMessageDate = [self.dateFormatterForInput dateFromString:[object objectForKey:@"lastMessageDate"]];
 
     return  [MCLThread threadWithId:threadId
                           messageId:messageId
@@ -230,8 +231,9 @@
                            username:username
                             subject:subject
                                date:date
-                        answerCount:answerCount
-                         answerDate:answerDate];
+                        messageCount:messageCount
+                        lastMessageId:lastMessageId
+                         lastMessageDate:lastMessageDate];
 }
 
 - (void)didReceiveMemoryWarning
@@ -296,7 +298,7 @@
         [cell.threadIsClosedImageView setHidden:YES];
     }
 
-    cell.badgeLabel.text = [thread.answerCount stringValue];
+    cell.badgeLabel.text = [thread.messageCount stringValue];
 
     return cell;
 }

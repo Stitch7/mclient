@@ -18,8 +18,9 @@
 @property (strong) NSString *username;
 @property (strong) NSString *subject;
 @property (strong) NSDate *date;
-@property (strong) NSNumber *answerCount;
-@property (strong) NSDate *answerDate;
+@property (strong) NSNumber *messageCount;
+@property (strong) NSNumber *lastMessageId;
+@property (strong) NSDate *lastMessageDate;
 
 + (MCLThread *)threadWithId:(NSNumber *)inThreadId
                   messageId:(NSNumber *)inMessageId
@@ -29,7 +30,8 @@
                    username:(NSString *)inUsername
                     subject:(NSString *)inSubject
                        date:(NSDate *)inDate
-                answerCount:(NSNumber *)inAnswerCount
-                 answerDate:(NSDate *)inAnswerDate;
+                messageCount:(NSNumber *)inMessageCount
+                lastMessageId:(NSNumber *)inLastMessageId
+                 lastMessageDate:(NSDate *)inLastMessageDate;
 
 @end
