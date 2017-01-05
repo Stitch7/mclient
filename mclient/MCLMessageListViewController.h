@@ -11,16 +11,27 @@
 
 @class MCLBoard;
 @class MCLThread;
+@class MCLReadList;
+
+@protocol MCLMessageListDelegate;
 
 @interface MCLMessageListViewController : UIViewController <SplitViewButtonHandler>
 
-@property (strong, nonatomic) UIPopoverController *masterPopoverController;
-@property (strong, nonatomic) UILabel *titleLabel;
+@property (weak) id<MCLMessageListDelegate> delegate;
+@property (strong, nonatomic) MCLReadList *readList;
 @property (strong, nonatomic) MCLBoard *board;
 @property (strong, nonatomic) MCLThread *thread;
+@property (strong, nonatomic) UIPopoverController *masterPopoverController;
+@property (strong, nonatomic) UILabel *titleLabel;
 
 + (NSString *)messageHtmlSkeletonForHtml:(NSString *)html withTopMargin:(int)topMargin;
 - (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard;
 - (void)updateTitle:(NSString *)title;
+
+@end
+
+@protocol MCLMessageListDelegate <NSObject>
+
+- (void)messageListViewController:(MCLMessageListViewController *)inController didReadMessageOnThread:(MCLThread *)inThread onReadList:(MCLReadList *)inReadList;
 
 @end

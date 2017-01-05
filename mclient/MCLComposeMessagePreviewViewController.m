@@ -44,9 +44,7 @@
     }
 
     [self.sendButton setEnabled:NO];
-
-    CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
-    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:fullScreenFrame]];
+    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.frame]];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
@@ -57,11 +55,14 @@
             if (mServiceError) {
                 switch (mServiceError.code) {
                     case -2:
-                        [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame hideSubLabel:YES]];
+                        [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:self.view.frame
+                                                                                       hideSubLabel:YES]];
                         break;
 
                     default:
-                        [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[mServiceError localizedDescription] hideSubLabel:YES]];
+                        [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:self.view.frame
+                                                                                  andText:[mServiceError localizedDescription]
+                                                                             hideSubLabel:YES]];
                         break;
                 }
             } else {
@@ -71,8 +72,9 @@
                 switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"showImages"]) {
                     case kMCLSettingsShowImagesWifi: {
                         Reachability *wifiReach = [Reachability reachabilityForLocalWiFi];
-                        NSLog(@"[wifiReach currentReachabilityStatus] == ReachableViaWiFi: %d", [wifiReach currentReachabilityStatus] == ReachableViaWiFi);
-                        key = [wifiReach currentReachabilityStatus] == ReachableViaWiFi ? @"previewTextHtmlWithImages" : @"previewTextHtml";
+                        key = [wifiReach currentReachabilityStatus] == ReachableViaWiFi
+                            ? @"previewTextHtmlWithImages"
+                            : @"previewTextHtml";
                         break;
                     }
                     case kMCLSettingsShowImagesNever:
@@ -85,17 +87,12 @@
                         break;
                 }
 
-                self.previewText = [MCLMessageListViewController messageHtmlSkeletonForHtml:[data objectForKey:key] withTopMargin:20];
+                self.previewText = [MCLMessageListViewController messageHtmlSkeletonForHtml:[data objectForKey:key]
+                                                                              withTopMargin:20];
                 [self.webView loadHTMLString:self.previewText baseURL:nil];
             }
         });
     });
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - UIWebViewDelegate
@@ -139,6 +136,7 @@
             case kMCLComposeTypeReply:
                 [mServiceConnector postReplyToMessageId:self.messageId
                                                 boardId:self.boardId
+                                                threadId:self.threadId
                                                 subject:self.subject
                                                    text:self.text
                                                username:username
@@ -149,6 +147,7 @@
             case kMCLComposeTypeEdit:
                 [mServiceConnector postEditToMessageId:self.messageId
                                                boardId:self.boardId
+                                              threadId:self.threadId
                                                subject:self.subject
                                                   text:self.text
                                               username:username
@@ -190,6 +189,5 @@
         });
     });
 }
-
 
 @end

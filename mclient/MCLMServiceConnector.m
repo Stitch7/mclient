@@ -156,6 +156,7 @@
 
 - (void)postReplyToMessageId:(NSNumber *)inMessageId
                      boardId:(NSNumber *)inBoardId
+                     threadId:(NSNumber *)inThreadId
                      subject:(NSString *)inSubject
                         text:(NSString *)inText
                     username:(NSString *)inUsername
@@ -165,7 +166,8 @@
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message/%@", kMServiceBaseURL, inBoardId, inMessageId];
 
-    NSDictionary *vars = @{@"subject":inSubject,
+    NSDictionary *vars = @{@"threadId":[inThreadId stringValue],
+                           @"subject":inSubject,
                            @"text":inText,
                            @"notification":[NSString stringWithFormat:@"%d", inNotification]};
 
@@ -177,6 +179,7 @@
 
 - (void)postEditToMessageId:(NSNumber *)inMessageId
                     boardId:(NSNumber *)inBoardId
+                   threadId:(NSNumber *)inThreadId
                     subject:(NSString *)inSubject
                        text:(NSString *)inText
                    username:(NSString *)inUsername
@@ -185,7 +188,8 @@
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message/%@", kMServiceBaseURL, inBoardId, inMessageId];
 
-    NSDictionary *vars = @{@"subject":inSubject,
+    NSDictionary *vars = @{@"threadId":[inThreadId stringValue],
+                           @"subject":inSubject,
                            @"text":inText};
 
     NSDictionary *loginData = @{@"username":inUsername,
@@ -281,6 +285,11 @@
 
                 case 404:
                     errorCode = @(404);
+                    errorMessage = [NSString stringWithFormat:NSLocalizedString([errorCode stringValue], nil), [json objectForKey:@"error"]];
+                    break;
+
+                case 502:
+                    errorCode = @(-1);
                     errorMessage = [NSString stringWithFormat:NSLocalizedString([errorCode stringValue], nil), [json objectForKey:@"error"]];
                     break;
 

@@ -8,9 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@class MCLThread;
+
 @interface MCLReadList : NSObject
 
-- (void)addMessageId:(NSNumber *)messageId;
-- (BOOL)messageIdIsRead:(NSNumber *)messageId;
+- (void)addMessageId:(NSNumber *)messageId fromThread:(MCLThread *)thread;
+- (void)addMessages:(NSArray *)messages fromThread:(MCLThread *)thread;
+- (BOOL)messageIdIsRead:(NSNumber *)messageId fromThread:(MCLThread *)thread;
+- (NSArray *)messagesFromThread:(MCLThread *)thread;
+- (NSNumber *)readMessagesCountFromThread:(MCLThread *)threadId;
 
 @end

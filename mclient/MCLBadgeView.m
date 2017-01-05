@@ -30,9 +30,6 @@
 
 - (void)commonInit
 {
-    self.backgroundColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0];
-    self.backgroundColor = [UIColor lightGrayColor];
-    self.backgroundColor = [UIColor colorWithRed:0.92 green:0.94 blue:0.95 alpha:1.0];
     self.layer.cornerRadius = 3;
     self.layer.masksToBounds = YES;
 }

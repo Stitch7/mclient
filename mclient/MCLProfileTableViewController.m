@@ -32,7 +32,7 @@
 
 - (NSArray *)profileKeys
 {
-    if ( ! _profileKeys) {
+    if (!_profileKeys) {
         _profileKeys = @[@"picture",
                          @"firstname",
                          @"lastname",
@@ -55,7 +55,6 @@
 
     return _profileKeys;
 }
-
 
 #pragma mark - ViewController
 
@@ -118,14 +117,14 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
     if (error) {
-        CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
         switch (error.code) {
             case -2:
-                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame]];
+                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:self.view.frame]];
                 break;
 
             default:
-                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[error localizedDescription]]];
+                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:self.view.frame
+                                                                          andText:[error localizedDescription]]];
                 break;
         }
     } else {

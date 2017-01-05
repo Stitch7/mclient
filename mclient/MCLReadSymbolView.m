@@ -42,13 +42,11 @@
 
 - (void)drawRect:(CGRect)rect
 {
-//    if (self.drawn == NO) {
-        self.drawn = YES;
-        CGContextRef ctx = UIGraphicsGetCurrentContext();
-        CGContextAddEllipseInRect(ctx, rect);
-        CGContextSetFillColor(ctx, CGColorGetComponents([self.color CGColor]));
-        CGContextFillPath(ctx);
-//    }
+    self.drawn = YES;
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextAddEllipseInRect(ctx, rect);
+    CGContextSetFillColor(ctx, CGColorGetComponents([self.color CGColor]));
+    CGContextFillPath(ctx);
 }
 
 @end

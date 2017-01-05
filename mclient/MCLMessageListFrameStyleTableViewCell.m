@@ -19,11 +19,13 @@
 - (void)markRead
 {
     self.readSymbolView.hidden = YES;
+    self.messageSubjectLabel.font = [UIFont systemFontOfSize:15.0f];
 }
 
 - (void)markUnread
 {
     self.readSymbolView.hidden = NO;
+    self.messageSubjectLabel.font = [UIFont systemFontOfSize:15.0f weight:UIFontWeightSemibold];
 }
 
 @end

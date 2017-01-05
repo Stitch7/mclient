@@ -7,44 +7,16 @@
 //
 
 #import "MCLLoadingView.h"
+#import "UIView+addConstraints.h"
 
 @implementation MCLLoadingView
 
-#pragma mark - Accessors
-@synthesize label = _label;
-@synthesize spinner = _spinner;
-
-- (UILabel *)label
-{
-	if ( ! _label) {
-		_label = [[UILabel alloc] initWithFrame:self.bounds];
-	}
-
-    return _label;
-}
-
-- (UIActivityIndicatorView *)spinner
-{
-	if ( ! _spinner) {
-        _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    }
-
-	return _spinner;
-}
-
 #pragma mark - Initializers
+
 - (id)initWithFrame:(CGRect)frame
 {
 	if (self = [super initWithFrame:frame]) {
-        [self.spinner startAnimating];
-
         [self configureSubviews];
-
-        [self addSubview:self.label];
-        [self addSubview:self.spinner];
-
-        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self setNeedsLayout];
 	}
 
 	return self;
@@ -54,44 +26,47 @@
 {
     [self setBackgroundColor:[UIColor whiteColor]];
 
-    self.label.text = NSLocalizedString(@"Loading…", nil);
-    self.label.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-    self.label.textColor = [UIColor darkGrayColor];
+    UIView *container = [[UIView alloc] init];
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    UILabel *label = [[UILabel alloc] init];
 
-    self.spaceBetwennSpinnerAndLabel = 5;
-}
+    container.translatesAutoresizingMaskIntoConstraints = NO;
 
-#pragma mark - Layout Management
-- (void)layoutSubviews
-{
-	// Calculate label size
-    CGSize labelSize = [self.label.text boundingRectWithSize:CGSizeMake(280.0f, MAXFLOAT)
-                                                     options:NSStringDrawingUsesLineFragmentOrigin
-                                                  attributes:@{NSFontAttributeName:self.label.font}
-                                                     context:nil].size;
+    spinner.translatesAutoresizingMaskIntoConstraints = NO;
+    [spinner startAnimating];
 
-	CGRect labelFrame;
-	labelFrame.size = labelSize;
-	self.label.frame = labelFrame;
+    label.translatesAutoresizingMaskIntoConstraints = NO;
+    label.text = NSLocalizedString(@"Loading…", nil);
+    label.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+    label.textColor = [UIColor darkGrayColor];
 
-	// Allign label and spinner horizontaly
-	labelFrame = self.label.frame;
-	CGRect spinnerFrame = self.spinner.frame;
+    [self addSubview:container];
+    [container addSubview:label];
+    [container addSubview:spinner];
 
-    int spinnerWidth = [self.spinner isAnimating] ? spinnerFrame.size.width : 0;
-    int spaceBetwennSpinnerAndLabel = [self.spinner isAnimating] ? self.spaceBetwennSpinnerAndLabel : 0;
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self
+                                                     attribute:NSLayoutAttributeCenterX
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:container
+                                                     attribute:NSLayoutAttributeCenterX
+                                                    multiplier:1.0
+                                                      constant:0]];
 
-    CGFloat totalWidth = spinnerWidth + spaceBetwennSpinnerAndLabel + labelSize.width;
-	spinnerFrame.origin.x = self.bounds.origin.x + (self.bounds.size.width - totalWidth) / 2;
-	labelFrame.origin.x = spinnerFrame.origin.x + spinnerWidth + spaceBetwennSpinnerAndLabel;
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self
+                                                     attribute:NSLayoutAttributeCenterY
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:container
+                                                     attribute:NSLayoutAttributeCenterY
+                                                    multiplier:1.0
+                                                      constant:0]];
 
-	// Set y position
-    spinnerFrame.origin.y = (self.bounds.size.height - labelFrame.size.height) / 2;
-	labelFrame.origin.y = spinnerFrame.origin.y;
+    NSDictionary *views = NSDictionaryOfVariableBindings(spinner, label);
+    [container addConstraints:@"V:|[spinner]|" views:views];
+    [container addConstraints:@"V:|[label]|" views:views];
+    [container addConstraints:@"H:|[spinner]-5-[label]|" views:views];
 
-    // Pass back modiefied frames
-	self.label.frame = labelFrame;
-	self.spinner.frame = spinnerFrame;
+    self.spinner = spinner;
+    self.label = label;
 }
 
 @end

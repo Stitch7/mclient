@@ -181,15 +181,15 @@
              }
          }
 
-         MCLComposeMessagePreviewViewController *destinationViewController = segue.destinationViewController;
-         [destinationViewController setDelegate:self.delegate];
-         [destinationViewController setType:self.type];
-         [destinationViewController setBoardId:self.boardId];
-         [destinationViewController setMessageId:self.messageId];
-         [destinationViewController setSubject:self.composeSubjectTextField.text];
-         [destinationViewController setText:messageText];
+         MCLComposeMessagePreviewViewController *composeMessagePreviewVC = segue.destinationViewController;
+         [composeMessagePreviewVC setDelegate:self.delegate];
+         [composeMessagePreviewVC setType:self.type];
+         [composeMessagePreviewVC setBoardId:self.boardId];
+         [composeMessagePreviewVC setThreadId:self.threadId];
+         [composeMessagePreviewVC setMessageId:self.messageId];
+         [composeMessagePreviewVC setSubject:self.composeSubjectTextField.text];
+         [composeMessagePreviewVC setText:messageText];
      }
  }
-
 
 @end

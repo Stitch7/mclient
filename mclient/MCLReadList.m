@@ -7,10 +7,14 @@
 //
 
 #import "MCLReadList.h"
+#import "MCLThread.h"
+
+#define kUserDefaultsKey @"MCLReadList"
+#define kOldUserDefaultsKey @"readList"  // TODO: Remove this is in next release
 
 @interface MCLReadList()
 
-@property (strong, nonatomic) NSMutableArray *messages;
+@property (strong, nonatomic) NSMutableDictionary *pool;
 @property (strong, nonatomic) NSUserDefaults *userDefaults;
 
 @end
@@ -21,31 +25,61 @@
 {
     if (self = [super init]) {
         self.userDefaults = [NSUserDefaults standardUserDefaults];
-        self.messages = [[self.userDefaults objectForKey:@"readList"] mutableCopy];
-        if (self.messages == nil) {
-            self.messages = [[NSMutableArray alloc] init];
+
+        [self.userDefaults removeObjectForKey:kOldUserDefaultsKey];
+        self.pool = [[self.userDefaults objectForKey:kUserDefaultsKey] mutableCopy];
+        if (self.pool == nil) {
+            self.pool = [[NSMutableDictionary alloc] init];
         }
     }
-    
+
     return self;
 }
 
-- (void)addMessageId:(NSNumber *)messageId
+- (void)addMessageId:(NSNumber *)messageId fromThread:(MCLThread *)thread
 {
-    if ( ! [self messageIdIsRead:messageId]) {
-        [self.messages addObject:messageId];
-        [self.userDefaults setObject:self.messages forKey:@"readList"];
-
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self.userDefaults synchronize];
-//            NSLog(@"%@ count: %lu", self.messages, (unsigned long)[self.messages count]);
-        });
+    if ([self messageIdIsRead:messageId fromThread:thread]) {
+        return;
     }
+
+    NSMutableArray *messages = [NSMutableArray arrayWithArray: [self.pool objectForKey:[thread.threadId stringValue]]];
+    if (!messages) {
+        messages = [[NSMutableArray alloc] init];
+    }
+    [messages addObject:messageId];
+
+    [self.pool setObject:messages forKey:[thread.threadId stringValue]];
+    [self.userDefaults setObject:self.pool forKey:kUserDefaultsKey];
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.userDefaults synchronize];
+    });
 }
 
-- (BOOL)messageIdIsRead:(NSNumber *)messageId
+- (void)addMessages:(NSArray *)messages fromThread:(MCLThread *)thread
 {
-    return [self.messages containsObject:messageId];
+    [self.pool setObject:messages forKey:[thread.threadId stringValue]];
+    [self.userDefaults setObject:self.pool forKey:kUserDefaultsKey];
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.userDefaults synchronize];
+    });
+}
+
+- (BOOL)messageIdIsRead:(NSNumber *)messageId fromThread:(MCLThread *)thread
+{
+    NSArray *messages = [self.pool objectForKey:[thread.threadId stringValue]];
+    return messages ? [messages containsObject:messageId] : false;
+}
+
+- (NSArray *)messagesFromThread:(MCLThread *)thread
+{
+    return [self.pool objectForKey:[thread.threadId stringValue]];
+}
+
+- (NSNumber *)readMessagesCountFromThread:(MCLThread *)thread
+{
+    return @([[self messagesFromThread:thread] count]);
 }
 
 @end

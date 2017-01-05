@@ -65,6 +65,9 @@
 /* Class = "IBUILabel"; text = "Only in WiFI Network"; ObjectID = "Tk0-c0-wUN"; */
 "Tk0-c0-wUN.text" = "Nur wenn mit WLAN verbunden";
 
+/* Class = "IBUILabel"; text = "Jump to latest Post"; ObjectID = "VdQ-t4-WGF"; */
+"VdQ-t4-WGF.text" = "Zum letzten Post springen";
+
 /* Class = "IBUILabel"; text = "Author"; ObjectID = "VV2-Uo-e5P"; */
 "VV2-Uo-e5P.text" = "Author";
 

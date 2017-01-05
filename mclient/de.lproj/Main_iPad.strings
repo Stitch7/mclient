@@ -46,6 +46,9 @@
 /* Class = "IBUILabel"; text = "Only in WiFI Network"; ObjectID = "Mbc-Sr-wEJ"; */
 "Mbc-Sr-wEJ.text" = "Nur wenn mit WLAN verbunden";
 
+/* Class = "IBUILabel"; text = "Jump to latest Post"; ObjectID = "NAn-bU-GE1"; */
+"NAn-bU-GE1.text" = "Zum letzten Post springen";
+
 /* Class = "IBUILabel"; text = "Author"; ObjectID = "Q6J-58-GXh"; */
 "Q6J-58-GXh.text" = "Author";
 

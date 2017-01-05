@@ -12,11 +12,13 @@
 
 - (void)configureSubviews
 {
+    [super configureSubviews];
+    
     [self setBackgroundColor:[UIColor clearColor]];
+
+    self.label.textColor = [UIColor blackColor];
     self.label.text = NSLocalizedString(@"Verifying login data…", nil);
     self.label.font = [UIFont systemFontOfSize:13.0f];
-
-    self.spaceBetwennSpinnerAndLabel = 10;
 }
 
 - (void)loginStatusWithUsername:(NSString *)username

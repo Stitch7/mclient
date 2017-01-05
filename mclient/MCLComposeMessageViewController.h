@@ -16,6 +16,7 @@
 
 @property (assign) NSUInteger type;
 @property (strong, nonatomic) NSNumber *boardId;
+@property (strong, nonatomic) NSNumber *threadId;
 @property (strong, nonatomic) NSNumber *messageId;
 @property (strong, nonatomic) NSString *subject;
 @property (strong, nonatomic) NSString *text;

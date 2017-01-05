@@ -24,13 +24,12 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *settingsLoginDataStatusTableViewCell;
 @property (weak, nonatomic) IBOutlet UISwitch *settingsSignatureEnabledSwitch;
 @property (weak, nonatomic) IBOutlet UITextView *settingsSignatureTextView;
-@property (weak, nonatomic) IBOutlet UISwitch *settingsNightModeSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *settingsSyncReadStatusSwitch;
 @property (strong, nonatomic) NSNumber *threadView;
 @property (strong, nonatomic) NSNumber *showImages;
 @property (assign, nonatomic) BOOL loginDataChanged;
 @property (strong, nonatomic) NSString *lastUsernameTextFieldValue;
 @property (strong, nonatomic) NSString *lastPasswordTextFieldValue;
+@property (weak, nonatomic) IBOutlet UISwitch *jumpToLatestMessageSwitch;
 
 @end
 
@@ -77,11 +76,10 @@
     self.settingsSignatureTextView.delegate = self;
     self.settingsSignatureTextView.text = [self.userDefaults objectForKey:@"signature"] ?: kSettingsSignatureTextDefault;
 
-    self.settingsNightModeSwitch.on = [self.userDefaults boolForKey:@"nightMode"];
-    self.settingsSyncReadStatusSwitch.on = [self.userDefaults boolForKey:@"syncReadStatus"];
-
     self.threadView = [self.userDefaults objectForKey:@"threadView"] ?: @(kMCLSettingsThreadViewWidmann);
     self.showImages = [self.userDefaults objectForKey:@"showImages"] ?: @(kMCLSettingsShowImagesAlways);
+
+    self.jumpToLatestMessageSwitch.on = [self.userDefaults boolForKey:@"jumpToLatestPost"];
 
     UILabel *aboutLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
     aboutLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -91,7 +89,7 @@
     aboutLabel.textColor = [UIColor darkGrayColor];
 
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    aboutLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Version %@ (%@)\nCopyright © 2014-2016 Christopher Reitz aka Stitch", nil),
+    aboutLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Version %@ (%@)\nCopyright © 2014-2017 Christopher Reitz aka Stitch", nil),
                        [infoDictionary objectForKey:@"CFBundleShortVersionString"],
                        [infoDictionary objectForKey:@"CFBundleVersion"]];
 
@@ -297,15 +295,8 @@
 
 }
 
-- (IBAction)settingsNightModeSwitchValueChangedAction:(UISwitch *)sender
-{
-    [self.userDefaults setBool:sender.on forKey:@"nightMode"];
+- (IBAction)jumpToLatestPostEnabledSwitchValueChangedAction:(UISwitch *)sender {
+    [self.userDefaults setBool:sender.on forKey:@"jumpToLatestPost"];
 }
-
-- (IBAction)settingsSyncReadStatusSwitchValueChangedAction:(UISwitch *)sender
-{
-    [self.userDefaults setBool:sender.on forKey:@"syncReadStatus"];
-}
-
 
 @end

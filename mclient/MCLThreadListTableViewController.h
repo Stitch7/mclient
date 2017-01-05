@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "MCLComposeMessageViewController.h"
+#import "MCLMessageListViewController.h"
 
 @class MCLBoard;
 
-@interface MCLThreadListTableViewController : UITableViewController <MCLComposeMessageViewControllerDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
+@interface MCLThreadListTableViewController : UITableViewController <MCLComposeMessageViewControllerDelegate, MCLMessageListDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
 @property (strong, nonatomic) MCLBoard *board;
 

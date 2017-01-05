@@ -36,12 +36,12 @@
         [self.splitViewController setDelegate:self];
     }
 
-    self.images = @{ @1: @"boardSmalltalk.png",
-                     @2: @"boardForSale.png",
-                     @4: @"boardRetroNTech.png",
-                     @6: @"boardOT.png",
+    self.images = @{@1: @"boardSmalltalk.png",
+                    @2: @"boardForSale.png",
+                    @4: @"boardRetroNTech.png",
+                    @6: @"boardOT.png",
                     @26: @"boardKulturbeutel.png",
-                     @8: @"boardOnlineGaming.png" };
+                    @8: @"boardOnlineGaming.png"};
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -63,8 +63,7 @@
     [self setupRefreshControl];
 
     // Visualize loading
-    CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
-    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:fullScreenFrame]];
+    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.frame]];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     // Load data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -86,46 +85,50 @@
     }
 
     // Add VerifiyLoginView to navigationControllers toolbar
-    MCLVerifiyLoginView *navToolbarView = [[MCLVerifiyLoginView alloc] initWithFrame:self.navigationController.toolbar.bounds];
+    CGRect navToolbarFrame = self.navigationController.toolbar.bounds;
+    MCLVerifiyLoginView *navToolbarView = [[MCLVerifiyLoginView alloc] initWithFrame:navToolbarFrame];
     [self.navigationController.toolbar addSubview:navToolbarView];
     [self.navigationController setToolbarHidden:NO animated:YES];
 
     // Reading username + password from keychain
     NSString *keychainIdentifier = [[NSBundle mainBundle] bundleIdentifier];
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:keychainIdentifier accessGroup:nil];
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:keychainIdentifier
+                                                                            accessGroup:nil];
     [keychainItem setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
     NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
     NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
     NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
 
     if (username.length == 0 || password.length == 0) {
-        [self saveValidLoginFlagToUserDefaultWithValue:NO];
+        [self saveValidLoginFlagWithValue:NO];
         [navToolbarView loginStatusNoLogin];
     } else {
         // Check login data async
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *mServiceError;
-            [[MCLMServiceConnector sharedConnector] testLoginWithUsername:username password:password error:&mServiceError];
+            [[MCLMServiceConnector sharedConnector] testLoginWithUsername:username
+                                                                 password:password
+                                                                    error:&mServiceError];
 
             // Set login status on main thread
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (mServiceError) {
                     if ([mServiceError code] == 401) {
                         [navToolbarView loginStatusNoLogin];
-                        [self saveValidLoginFlagToUserDefaultWithValue:NO];
+                        [self saveValidLoginFlagWithValue:NO];
                     } else {
                         [self.navigationController setToolbarHidden:YES animated:YES];
                     }
                 } else {
                     [navToolbarView loginStatusWithUsername:username];
-                    [self saveValidLoginFlagToUserDefaultWithValue:YES];
+                    [self saveValidLoginFlagWithValue:YES];
                 }
             });
         });
     }
 }
 
-- (void)saveValidLoginFlagToUserDefaultWithValue:(BOOL)validLogin
+- (void)saveValidLoginFlagWithValue:(BOOL)validLogin
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:validLogin forKey:@"validLogin"];
@@ -151,7 +154,7 @@
         NSDictionary *data = [[MCLMServiceConnector sharedConnector] boards:&mServiceError];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedData:data error:mServiceError];
-            if ( ! mServiceError) {
+            if (!mServiceError) {
                 [self showLoginStatus];
             }
             [self.refreshControl endRefreshing];
@@ -171,15 +174,13 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
     if (error) {
-        CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
-        switch (error.code) {
-            case -2:
-                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame]];
-                break;
-
-            default:
-                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[error localizedDescription]]];
-                break;
+        if (error.code == -2) {
+            [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:self.view.frame]];
+        }
+        else {
+            MCLMServiceErrorView *mServiceErrorView = [[MCLMServiceErrorView alloc] initWithFrame:self.view.frame
+                                                                                          andText:[error localizedDescription]];
+            [self.tableView addSubview:mServiceErrorView];
         }
     } else {
         self.boards = [NSMutableArray array];
@@ -198,13 +199,7 @@
     }
 }
 
-
-#pragma mark - Table View
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -213,10 +208,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MCLBoard *board = self.boards[indexPath.row];
-
     static NSString *cellIdentifier = @"BoardCell";
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+
+    UIView *backgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    backgroundView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    cell.selectedBackgroundView = backgroundView;
+
+    MCLBoard *board = self.boards[indexPath.row];
 
     NSString *imageName = [self.images objectForKey:board.boardId];
     cell.imageView.image = imageName ? [UIImage imageNamed:imageName] : [UIImage imageNamed:@"boardDefault.png"];
@@ -260,7 +259,8 @@
         MCLBoard *board = self.boards[indexPath.row];
         [segue.destinationViewController setBoard:board];
     } else if ([segue.identifier isEqualToString:@"ModalToEditSettings"]) {
-        MCLSettingsTableViewController *destinationViewController = ((MCLSettingsTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
+        MCLSettingsTableViewController *destinationViewController =
+            ((MCLSettingsTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
         [destinationViewController setDelegate:self];
     }
 }

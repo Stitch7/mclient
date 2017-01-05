@@ -1,5 +1,5 @@
 //
-//  MCLMessageList2FrameStyleViewController.m
+//  MCLMessageListFrameStyleViewController.m
 //  mclient
 //
 //  Created by Christopher Reitz on 16.09.14.
@@ -9,6 +9,7 @@
 #import "MCLMessageListFrameStyleViewController.h"
 
 #import "constants.h"
+#import "UIView+addConstraints.h"
 #import "KeychainItemWrapper.h"
 #import "Reachability.h"
 #import "MCLAppDelegate.h"
@@ -29,8 +30,6 @@
 
 @property (strong, nonatomic) AVSpeechSynthesizer *speechSynthesizer;
 @property (strong) NSMutableArray *messages;
-@property (strong) NSMutableArray *cells;
-@property (strong) MCLReadList *readList;
 @property (strong) NSString *username;
 @property (strong) NSString *password;
 @property (assign) BOOL validLogin;
@@ -62,9 +61,6 @@
 {
     [super awakeFromNib];
 
-    self.cells = [NSMutableArray array];
-    self.readList = [[MCLReadList alloc] init];
-
     NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:identifier accessGroup:nil];
     self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
@@ -87,7 +83,8 @@
     [self configureContainerView];
     [self configureWebView];
 
-    UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleToolbarDrag:)];
+    UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(handleToolbarDrag:)];
     [self.toolbar addGestureRecognizer:pgr];
 
     UINib *threadCellNib = [UINib nibWithNibName: @"MCLMessageListFrameStyleTableViewCell" bundle: nil];
@@ -110,23 +107,45 @@
         [self updateTitle:self.thread.subject];
 
         // Add loading view
-        CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
-        [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:fullScreenFrame]];
+        [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.frame]];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
         // Load data async
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *mServiceError;
-            NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId fromBoardId:self.board.boardId error:&mServiceError];
+            NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
+                                                                          fromBoardId:self.board.boardId
+                                                                                error:&mServiceError];
             // Process data on main thread
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self fetchedData:data error:mServiceError];
-
-                if ( ! mServiceError) {
-                    // Select first message
-                    NSIndexPath *indexPathOfFirstMessage = [NSIndexPath indexPathForRow:0 inSection:0];
-                    [self.tableView selectRowAtIndexPath:indexPathOfFirstMessage animated:NO scrollPosition:UITableViewScrollPositionNone];
-                    [self tableView:self.tableView didSelectRowAtIndexPath:indexPathOfFirstMessage];
+                if (!mServiceError) {
+                    // if enabled, jump to latest posting
+                    NSNumber *lastMessageId = self.thread.lastMessageId;
+                    BOOL firstMessageIsRead = [self.readList messageIdIsRead:self.thread.messageId fromThread:self.thread];
+                    BOOL jumpToLatestPost = [[NSUserDefaults standardUserDefaults] boolForKey:@"jumpToLatestPost"];
+                    if (firstMessageIsRead && jumpToLatestPost && lastMessageId > 0) {
+                        BOOL lastMessageIsNotRead = ![self.readList messageIdIsRead:lastMessageId fromThread:self.thread];
+                        if (lastMessageIsNotRead) {
+                            [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
+                                if (self.thread.lastMessageId == message.messageId) {
+                                    NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
+                                    [self.tableView selectRowAtIndexPath:latestMessageIndexPath
+                                                                animated:YES
+                                                          scrollPosition:UITableViewScrollPositionMiddle];
+                                    [self tableView:self.tableView didSelectRowAtIndexPath:latestMessageIndexPath];
+                                }
+                            }];
+                        }
+                    }
+                    // else, select first message
+                    else {
+                        NSIndexPath *indexPathOfFirstMessage = [NSIndexPath indexPathForRow:0 inSection:0];
+                        [self.tableView selectRowAtIndexPath:indexPathOfFirstMessage
+                                                    animated:NO
+                                              scrollPosition:UITableViewScrollPositionNone];
+                        [self tableView:self.tableView didSelectRowAtIndexPath:indexPathOfFirstMessage];
+                    }
                 }
             });
         });
@@ -152,18 +171,20 @@
     self.webView.scrollView.scrollsToTop = NO;
     self.webView.opaque = NO;
     self.webView.backgroundColor = [UIColor whiteColor];
+    self.webView.scrollView.backgroundColor = [UIColor whiteColor];
 
-    [self.webView.scrollView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
-    [self.webView.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(64, 0, 0, 0)];
-    [self.webView.scrollView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+    self.webView.scrollView.contentInset = UIEdgeInsetsMake(statusBarHeight + navigationBarHeight, 0.0f, 0.0f, 0.0f);
 
     [self.topFrame addSubview:self.webView];
 
     UIToolbar *toolbar = self.toolbar;
     WKWebView *webView = self.webView;
     NSDictionary *views = NSDictionaryOfVariableBindings(toolbar, webView);
-    [self.topFrame addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[webView][toolbar]|" options:0 metrics:nil views:views]];
-    [self.topFrame addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[webView]|" options:0 metrics:nil views:views]];
+
+    [self.topFrame addConstraints:@"V:|[webView][toolbar]|" views:views];
+    [self.topFrame addConstraints:@"H:|[webView]|" views:views];
 }
 
 - (void)handleToolbarDrag:(UIPanGestureRecognizer *)gestureRecognizer
@@ -209,14 +230,17 @@
     }
 
     // Visualize loading
-    CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
-    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:fullScreenFrame]];
+    MCLLoadingView *loadingView = [[MCLLoadingView alloc] initWithFrame:self.view.frame];
+    
+    [self.view addSubview:loadingView];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     // Load data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
-        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId fromBoardId:self.board.boardId error:&mServiceError];
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
+                                                                      fromBoardId:self.board.boardId
+                                                                            error:&mServiceError];
         // Process data on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedData:data error:mServiceError];
@@ -224,11 +248,32 @@
             // Scrool table to top
             [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
 
-            if ( ! mServiceError) {
+            if (!mServiceError) {
+                NSNumber *lastMessageId = self.thread.lastMessageId;
+                BOOL firstMessageIsRead = [self.readList messageIdIsRead:self.thread.messageId fromThread:self.thread];
+                BOOL jumpToLatestPost = [[NSUserDefaults standardUserDefaults] boolForKey:@"jumpToLatestPost"];
+                if (firstMessageIsRead && jumpToLatestPost && lastMessageId > 0) {
+                    BOOL lastMessageIsNotRead = ![self.readList messageIdIsRead:lastMessageId fromThread:self.thread];
+                    if (lastMessageIsNotRead) {
+                        [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
+                            if (self.thread.lastMessageId == message.messageId) {
+                                NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
+                                [self.tableView selectRowAtIndexPath:latestMessageIndexPath
+                                                            animated:YES
+                                                      scrollPosition:UITableViewScrollPositionMiddle];
+                                [self tableView:self.tableView didSelectRowAtIndexPath:latestMessageIndexPath];
+                            }
+                        }];
+                    }
+                }
                 // Select first message
-                NSIndexPath *indexPathOfFirstMessage = [NSIndexPath indexPathForRow:0 inSection:0];
-                [self.tableView selectRowAtIndexPath:indexPathOfFirstMessage animated:NO scrollPosition:UITableViewScrollPositionNone];
-                [self tableView:self.tableView didSelectRowAtIndexPath:indexPathOfFirstMessage];
+                else {
+                    NSIndexPath *indexPathOfFirstMessage = [NSIndexPath indexPathForRow:0 inSection:0];
+                    [self.tableView selectRowAtIndexPath:indexPathOfFirstMessage
+                                                animated:NO
+                                          scrollPosition:UITableViewScrollPositionNone];
+                    [self tableView:self.tableView didSelectRowAtIndexPath:indexPathOfFirstMessage];
+                }
             }
         });
     });
@@ -241,12 +286,16 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
-        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId fromBoardId:self.board.boardId error:&mServiceError];
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
+                                                                      fromBoardId:self.board.boardId
+                                                                            error:&mServiceError];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedData:data error:mServiceError];
             [self.refreshControl endRefreshing];
 
-            [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+            [self.tableView selectRowAtIndexPath:selectedIndexPath
+                                        animated:NO
+                                  scrollPosition:UITableViewScrollPositionNone];
             [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
         });
     });
@@ -265,14 +314,16 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
     if (error) {
-        CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
         switch (error.code) {
             case -2:
-                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:fullScreenFrame hideSubLabel:YES]];
+                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:self.view.frame
+                                                                               hideSubLabel:YES]];
                 break;
 
             default:
-                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:fullScreenFrame andText:[error localizedDescription] hideSubLabel:YES]];
+                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:self.view.frame
+                                                                          andText:[error localizedDescription]
+                                                                     hideSubLabel:YES]];
                 break;
         }
     } else {
@@ -307,11 +358,6 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.messages count];
@@ -330,10 +376,12 @@
     static NSString *cellIdentifier = @"MessageCell";
     MCLMessageListFrameStyleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
 
-    [self.cells setObject:cell atIndexedSubscript:i];
-
     [cell setBoardId:self.board.boardId];
     [cell setMessageId:message.messageId];
+
+    UIView *backgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    backgroundView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    cell.selectedBackgroundView = backgroundView;
 
     [self indentView:cell.indentionConstraint withLevel:message.level];
 
@@ -355,7 +403,7 @@
     [cell.messageUsernameLabel sizeToFit];
     [cell.messageDateLabel sizeToFit];
 
-    if (i == 0 || [self.readList messageIdIsRead:message.messageId]) {
+    if (i == 0 || [self.readList messageIdIsRead:message.messageId fromThread:self.thread]) {
         [cell markRead];
     } else {
         [cell markUnread];
@@ -395,7 +443,9 @@
 
         case kMCLSettingsShowImagesWifi: {
             Reachability *wifiReach = [Reachability reachabilityForLocalWiFi];
-            messageHtml = [wifiReach currentReachabilityStatus] == ReachableViaWiFi ? message.textHtmlWithImages : message.textHtml;
+            messageHtml = [wifiReach currentReachabilityStatus] == ReachableViaWiFi
+                ? message.textHtmlWithImages
+                : message.textHtml;
             break;
         }
         case kMCLSettingsShowImagesNever:
@@ -420,20 +470,19 @@
 {
     NSInteger i = indexPath.row;
 
-    MCLMessageListFrameStyleTableViewCell *cell = (MCLMessageListFrameStyleTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+    MCLMessageListFrameStyleTableViewCell *cell = (MCLMessageListFrameStyleTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
 
     MCLMessage *message = self.messages[i];
-
     MCLMessage *nextMessage = nil;
     if (indexPath.row < ([self.messages count] - 1)) {
         nextMessage = self.messages[i + 1];
     }
 
     self.toolbarButtonNotification.image = [UIImage imageNamed:@"notificationButtonDisabled.png"];
-    BOOL hideNotificationButton = ! self.validLogin || ! [message.username isEqualToString:self.username];
+    BOOL hideNotificationButton = !self.validLogin || ![message.username isEqualToString:self.username];
     [self barButton:self.toolbarButtonNotification hide:hideNotificationButton];
 
-    BOOL hideEditButton = ! self.validLogin || self.thread.isClosed || ! ([message.username isEqualToString:self.username] && nextMessage.level <= message.level);
+    BOOL hideEditButton = !self.validLogin || self.thread.isClosed || !([message.username isEqualToString:self.username] && nextMessage.level <= message.level);
     [self barButton:self.toolbarButtonEdit hide:hideEditButton];
 
     BOOL hideReplyButton = ! self.validLogin || self.thread.isClosed;
@@ -451,11 +500,15 @@
         [self.webView loadHTMLString:@"" baseURL:nil];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         CGRect mvBounds = self.topFrame.bounds;
-        CGRect loadingFrame = CGRectMake(mvBounds .origin.x, mvBounds.origin.y, mvBounds.size.width, mvBounds.size.height - self.toolbar.frame.size.height - 1);
+        CGFloat loadingFrameHeight = mvBounds.size.height - self.toolbar.frame.size.height - 1;
+        CGRect loadingFrame = CGRectMake(mvBounds.origin.x, mvBounds.origin.y, mvBounds.size.width, loadingFrameHeight);
         [self.topFrame addSubview:[[MCLLoadingView alloc] initWithFrame:loadingFrame]];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *mServiceError;
-            NSDictionary *data = [[MCLMServiceConnector sharedConnector] messageWithId:message.messageId fromBoardId:self.board.boardId login:loginData error:&mServiceError];
+            NSDictionary *data = [[MCLMServiceConnector sharedConnector] messageWithId:message.messageId
+                                                                           fromBoardId:self.board.boardId
+                                                                                 login:loginData
+                                                                                 error:&mServiceError];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                 for (id subview in self.topFrame.subviews) {
@@ -465,9 +518,6 @@
                 }
 
                 if (mServiceError) {
-                    // [tableView deselectRowAtIndexPath:indexPath animated:NO];
-                    // [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
-
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
                                                                     message:[mServiceError localizedDescription]
                                                                    delegate:nil
@@ -484,8 +534,8 @@
                     }
 
                     [cell markRead];
-                    [self.readList addMessageId:message.messageId];
-
+                    [self.readList addMessageId:message.messageId fromThread:self.thread];
+                    [self.delegate messageListViewController:self didReadMessageOnThread:self.thread onReadList:self.readList];
                     [self loadMessage:message fromCell:cell];
                 }
             });
@@ -517,7 +567,7 @@
     }
 }
 
-#pragma mark - UKWebView delegate
+#pragma mark - WKNavigationDelegate
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
@@ -551,13 +601,17 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
-        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId fromBoardId:self.board.boardId error:&mServiceError];
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
+                                                                      fromBoardId:self.board.boardId
+                                                                            error:&mServiceError];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedData:data error:mServiceError];
 
             if (type == kMCLComposeTypeEdit) {
                 // Reload selected message
-                [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+                [self.tableView selectRowAtIndexPath:selectedIndexPath
+                                            animated:NO
+                                      scrollPosition:UITableViewScrollPositionNone];
                 [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
             }
         });
@@ -606,21 +660,23 @@
         self.toolbarButtonSpeak.image = [UIImage imageNamed:@"speakButton.png"];
     } else {
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-        MCLMessageListFrameStyleTableViewCell *selectedCell = (MCLMessageListFrameStyleTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+        MCLMessageListFrameStyleTableViewCell *selectedCell =
+            (MCLMessageListFrameStyleTableViewCell *)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
 
         // Backup of UIWebView content because it's get manipulated by our operation below
-        NSString *foo = @"document.getElementsByTagName(\"html\")[0].innerHTML;";
-        [self.webView evaluateJavaScript:foo completionHandler:^(NSString *result, NSError *error) {
+        NSString *js1 = @"document.getElementsByTagName(\"html\")[0].innerHTML;";
+        [self.webView evaluateJavaScript:js1 completionHandler:^(NSString *result, NSError *error) {
             if (error != nil) { return; }
 
             NSString *webviewTextBackup = result;
 
             // Remove quoted text (font tags)
-            NSString *foo2 = @"var fontTags = document.getElementsByTagName(\"font\"); for (var i=0; i < fontTags.length; x++) { fontTags[i].remove() };";
-            [self.webView evaluateJavaScript:foo2 completionHandler:nil];
+            NSString *js2 = @"var fontTags = document.getElementsByTagName(\"font\");"
+                            " for (var i=0; i < fontTags.length; x++) { fontTags[i].remove() };";
+            [self.webView evaluateJavaScript:js2 completionHandler:nil];
 
-            NSString *foo3 = @"document.getElementsByTagName(\"body\")[0].textContent;";
-            [self.webView evaluateJavaScript:foo3 completionHandler:^(NSString *result, NSError *error) {
+            NSString *js3 = @"document.getElementsByTagName(\"body\")[0].textContent;";
+            [self.webView evaluateJavaScript:js3 completionHandler:^(NSString *result, NSError *error) {
                 if (error != nil) { return; }
 
                 NSString *text = result;
@@ -656,7 +712,11 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
-        [[MCLMServiceConnector sharedConnector] notificationForMessageId:message.messageId boardId:self.board.boardId username:username password:password error:&mServiceError];
+        [[MCLMServiceConnector sharedConnector] notificationForMessageId:message.messageId
+                                                                 boardId:self.board.boardId
+                                                                username:username
+                                                                password:password
+                                                                   error:&mServiceError];
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
@@ -699,36 +759,39 @@
 {
     self.orientationBeforeWentToBackground = [[UIApplication sharedApplication] statusBarOrientation];
 
+    UIViewController *destinationVC = [[segue.destinationViewController viewControllers] objectAtIndex:0];
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     MCLMessage *message = self.messages[indexPath.row];
 
     if ([segue.identifier isEqualToString:@"ModalToComposeReply"]) {
-        MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
+        MCLComposeMessageViewController *composeMessageVC = (MCLComposeMessageViewController *)destinationVC;
         NSString *subject = message.subject;
-
         NSString *subjectReplyPrefix = @"Re:";
-        if ([subject length] < 3 || ! [[subject substringToIndex:3] isEqualToString:subjectReplyPrefix]) {
+        if ([subject length] < 3 || ![[subject substringToIndex:3] isEqualToString:subjectReplyPrefix]) {
             subject = [subjectReplyPrefix stringByAppendingString:subject];
         }
-
-        [destinationViewController setDelegate:self];
-        [destinationViewController setType:kMCLComposeTypeReply];
-        [destinationViewController setBoardId:self.board.boardId];
-        [destinationViewController setMessageId:message.messageId];
-        [destinationViewController setSubject:subject];
-    } else if ([segue.identifier isEqualToString:@"ModalToEditReply"]) {
-        MCLComposeMessageViewController *destinationViewController = ((MCLComposeMessageViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
-        [destinationViewController setDelegate:self];
-        [destinationViewController setType:kMCLComposeTypeEdit];
-        [destinationViewController setBoardId:self.board.boardId];
-        [destinationViewController setMessageId:message.messageId];
-        [destinationViewController setSubject:message.subject];
-        [destinationViewController setText:message.text];
-    } else if ([segue.identifier isEqualToString:@"ModalToShowProfile"]) {
-        MCLProfileTableViewController *destinationViewController = ((MCLProfileTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
-        [destinationViewController setDelegate:self];
-        [destinationViewController setUserId:message.userId];
-        [destinationViewController setUsername:message.username];
+        [composeMessageVC setDelegate:self];
+        [composeMessageVC setType:kMCLComposeTypeReply];
+        [composeMessageVC setBoardId:self.board.boardId];
+        [composeMessageVC setThreadId:self.thread.threadId];
+        [composeMessageVC setMessageId:message.messageId];
+        [composeMessageVC setSubject:subject];
+    }
+    else if ([segue.identifier isEqualToString:@"ModalToEditReply"]) {
+        MCLComposeMessageViewController *editMessageVC = (MCLComposeMessageViewController *)destinationVC;
+        [editMessageVC setDelegate:self];
+        [editMessageVC setType:kMCLComposeTypeEdit];
+        [editMessageVC setBoardId:self.board.boardId];
+        [editMessageVC setThreadId:self.thread.threadId];
+        [editMessageVC setMessageId:message.messageId];
+        [editMessageVC setSubject:message.subject];
+        [editMessageVC setText:message.text];
+    }
+    else if ([segue.identifier isEqualToString:@"ModalToShowProfile"]) {
+        MCLProfileTableViewController *profileVC = (MCLProfileTableViewController *)destinationVC;
+        [profileVC setDelegate:self];
+        [profileVC setUserId:message.userId];
+        [profileVC setUsername:message.username];
     }
 }
 

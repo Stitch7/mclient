@@ -63,6 +63,7 @@
 
 - (void)postReplyToMessageId:(NSNumber *)inMessageId
                      boardId:(NSNumber *)inBoardId
+                     threadId:(NSNumber *)inThreadId
                      subject:(NSString *)inSubject
                         text:(NSString *)inText
                     username:(NSString *)inUsername
@@ -72,6 +73,7 @@
 
 - (void)postEditToMessageId:(NSNumber *)inMessageId
                     boardId:(NSNumber *)inBoardId
+                   threadId:(NSNumber *)inThreadId
                     subject:(NSString *)inSubject
                        text:(NSString *)inText
                    username:(NSString *)inUsername
