@@ -69,8 +69,7 @@
     [self.tableView setSeparatorColor:[UIColor clearColor]];
 
     // Visualize loading
-    CGRect fullScreenFrame = [(MCLAppDelegate *)[[UIApplication sharedApplication] delegate] fullScreenFrameFromViewController:self];
-    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:fullScreenFrame]];
+    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.frame]];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     // Load data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

@@ -163,8 +163,8 @@
 		301FD9AC19C5C79000E36A5B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		3020A26719DA1B66007F46E2 /* isClosed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isClosed@2x.png"; sourceTree = "<group>"; };
 		302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copyLinkButton@2x.png"; sourceTree = "<group>"; };
-		3038D57F19F65E0C005E7D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPad.strings; sourceTree = "<group>"; };
-		3038D58019F65E0C005E7D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
+		3038D57F19F65E0C005E7D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		3038D58019F65E0C005E7D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		3038D58119F65E0C005E7D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3038D58219F65E0D005E7D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3038D58419F65E21005E7D3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -326,16 +326,25 @@
 				3039748E1E16B083003C8BC9 /* UIView+addConstraints.h */,
 				3039748F1E16B083003C8BC9 /* UIView+addConstraints.m */,
 			);
-			name = Extensions;
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		304E5A471E1EB6790022FE8B /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				307A80DB19B5EBD8001B538D /* MCLMServiceConnector.h */,
+				307A80DC19B5EBD8001B538D /* MCLMServiceConnector.m */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		305DD80B19A63517006514BD = {
 			isa = PBXGroup;
 			children = (
 				305DD81619A63517006514BD /* Frameworks */,
+				305DD81519A63517006514BD /* Products */,
 				305DD81D19A63517006514BD /* mclient */,
 				305DD84219A63517006514BD /* mclientTests */,
-				305DD81519A63517006514BD /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -363,20 +372,18 @@
 		305DD81D19A63517006514BD /* mclient */ = {
 			isa = PBXGroup;
 			children = (
-				301FD00F19AB73160028C5C8 /* constants.h */,
-				305E53AA19D4F3EE002B8E50 /* utils.h */,
-				308EC3D719CC4DE800A0869F /* SplitViewButtonHandler.h */,
 				305DD85819AB2EE0006514BD /* Controllers */,
 				305DD85A19AB2F07006514BD /* Models */,
 				305DD85919AB2EFE006514BD /* Views */,
-				305DD82619A63517006514BD /* MCLAppDelegate.h */,
-				305DD82719A63517006514BD /* MCLAppDelegate.m */,
-				307A80DB19B5EBD8001B538D /* MCLMServiceConnector.h */,
-				307A80DC19B5EBD8001B538D /* MCLMServiceConnector.m */,
+				304E5A471E1EB6790022FE8B /* Network */,
 				303974911E16B08D003C8BC9 /* Extensions */,
 				305E53AB19D4F4C5002B8E50 /* Storyboards */,
-				307A80DE19B75F29001B538D /* Images */,
 				305DD81E19A63517006514BD /* Supporting Files */,
+				305DD82619A63517006514BD /* MCLAppDelegate.h */,
+				305DD82719A63517006514BD /* MCLAppDelegate.m */,
+				308EC3D719CC4DE800A0869F /* SplitViewButtonHandler.h */,
+				301FD00F19AB73160028C5C8 /* constants.h */,
+				305E53AA19D4F3EE002B8E50 /* utils.h */,
 				305E53AC19D4F509002B8E50 /* Vendor */,
 			);
 			path = mclient;
@@ -385,20 +392,21 @@
 		305DD81E19A63517006514BD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				3038D58519F65E21005E7D3D /* Localizable.strings */,
-				305DD81F19A63517006514BD /* mclient-Info.plist */,
+				307A80DE19B75F29001B538D /* Images */,
 				305DD82019A63517006514BD /* InfoPlist.strings */,
+				3038D58519F65E21005E7D3D /* Localizable.strings */,
 				305DD82319A63517006514BD /* main.m */,
+				305DD81F19A63517006514BD /* mclient-Info.plist */,
 				305DD82519A63517006514BD /* mclient-Prefix.pch */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		305DD84219A63517006514BD /* mclientTests */ = {
 			isa = PBXGroup;
 			children = (
-				305DD84819A63517006514BD /* mclientTests.m */,
 				305DD84319A63517006514BD /* Supporting Files */,
+				305DD84819A63517006514BD /* mclientTests.m */,
 			);
 			path = mclientTests;
 			sourceTree = "<group>";
@@ -406,10 +414,10 @@
 		305DD84319A63517006514BD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				305DD84419A63517006514BD /* mclientTests-Info.plist */,
 				305DD84519A63517006514BD /* InfoPlist.strings */,
+				305DD84419A63517006514BD /* mclientTests-Info.plist */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		305DD85819AB2EE0006514BD /* Controllers */ = {
@@ -421,10 +429,10 @@
 				30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */,
 				30E8B89719B3CBF40067DD1F /* MCLComposeMessageViewController.h */,
 				30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */,
-				308EC3D519CC4DE800A0869F /* MCLMessageListViewController.h */,
-				308EC3D619CC4DE800A0869F /* MCLMessageListViewController.m */,
 				301203581E037DEC00B06FF6 /* MCLMessageListFrameStyleViewController.h */,
 				301203591E037DEC00B06FF6 /* MCLMessageListFrameStyleViewController.m */,
+				308EC3D519CC4DE800A0869F /* MCLMessageListViewController.h */,
+				308EC3D619CC4DE800A0869F /* MCLMessageListViewController.m */,
 				303974881E1694C8003C8BC9 /* MCLMessageListWidmannStyleViewController.h */,
 				303974891E1694C8003C8BC9 /* MCLMessageListWidmannStyleViewController.m */,
 				301E24B419BB02EB00943EC6 /* MCLProfileTableViewController.h */,
@@ -434,7 +442,7 @@
 				305DD85519AB2A7C006514BD /* MCLThreadListTableViewController.h */,
 				305DD85619AB2A7C006514BD /* MCLThreadListTableViewController.m */,
 			);
-			name = Controllers;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		305DD85919AB2EFE006514BD /* Views */ = {
@@ -450,6 +458,8 @@
 				306EA6E419D598F800BB4DC8 /* MCLInternetConnectionErrorView.m */,
 				301FD9A119C32FC600E36A5B /* MCLLoadingView.h */,
 				301FD9A219C32FC600E36A5B /* MCLLoadingView.m */,
+				306EA6E619D5992F00BB4DC8 /* MCLMServiceErrorView.h */,
+				306EA6E719D5992F00BB4DC8 /* MCLMServiceErrorView.m */,
 				3012032A1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.h */,
 				3012032B1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.m */,
 				3012032C1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib */,
@@ -458,8 +468,6 @@
 				3039748C1E16A1F4003C8BC9 /* MCLMessageListWidmannStyleTableViewCell.m */,
 				3086428719D2D6CE0027F932 /* MCLMessageTextView.h */,
 				3086428819D2D6CE0027F932 /* MCLMessageTextView.m */,
-				306EA6E619D5992F00BB4DC8 /* MCLMServiceErrorView.h */,
-				306EA6E719D5992F00BB4DC8 /* MCLMServiceErrorView.m */,
 				307D797419B0B3B30096A217 /* MCLReadSymbolView.h */,
 				307D797519B0B3B30096A217 /* MCLReadSymbolView.m */,
 				301FD01019AC794E0028C5C8 /* MCLThreadTableViewCell.h */,
@@ -468,7 +476,7 @@
 				30EFDC0A19D422DE00E3EE31 /* MCLVerifiyLoginView.h */,
 				30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */,
 			);
-			name = Views;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		305DD85A19AB2F07006514BD /* Models */ = {
@@ -476,14 +484,14 @@
 			children = (
 				305DD85B19AB300F006514BD /* MCLBoard.h */,
 				305DD85C19AB300F006514BD /* MCLBoard.m */,
-				305DD85E19AB3031006514BD /* MCLThread.h */,
-				305DD85F19AB3031006514BD /* MCLThread.m */,
 				305DD86119AB380C006514BD /* MCLMessage.h */,
 				305DD86219AB380C006514BD /* MCLMessage.m */,
 				30E8B89419B33C070067DD1F /* MCLReadList.h */,
 				30E8B89519B33C070067DD1F /* MCLReadList.m */,
+				305DD85E19AB3031006514BD /* MCLThread.h */,
+				305DD85F19AB3031006514BD /* MCLThread.m */,
 			);
-			name = Models;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		305E53AB19D4F4C5002B8E50 /* Storyboards */ = {
@@ -492,7 +500,7 @@
 				305DD82C19A63517006514BD /* Main_iPad.storyboard */,
 				305DD82919A63517006514BD /* Main_iPhone.storyboard */,
 			);
-			name = Storyboards;
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 		305E53AC19D4F509002B8E50 /* Vendor */ = {
@@ -500,7 +508,7 @@
 			children = (
 				305E53AD19D4F517002B8E50 /* Apple */,
 			);
-			name = Vendor;
+			path = Vendor;
 			sourceTree = "<group>";
 		};
 		305E53AD19D4F517002B8E50 /* Apple */ = {
@@ -511,7 +519,7 @@
 				301FD9AB19C5C79000E36A5B /* Reachability.h */,
 				301FD9AC19C5C79000E36A5B /* Reachability.m */,
 			);
-			name = Apple;
+			path = Apple;
 			sourceTree = "<group>";
 		};
 		307A80DE19B75F29001B538D /* Images */ = {
@@ -527,12 +535,12 @@
 				3093B78D19E2F17D00F8FD5F /* boardKulturbeutel.png */,
 				308EC3E819CE72FC00A0869F /* boardKulturbeutel@2x.png */,
 				30DBC4741A07E05300340B3A /* boardKulturbeutel@3x.png */,
-				3093B78B19E2F13C00F8FD5F /* boardOnlineGaming.png */,
-				308EC3E919CE72FC00A0869F /* boardOnlineGaming@2x.png */,
-				30DBC4751A07E05300340B3A /* boardOnlineGaming@3x.png */,
 				3093B78719E2F0AC00F8FD5F /* boardOT.png */,
 				308EC3EA19CE72FC00A0869F /* boardOT@2x.png */,
 				30DBC4761A07E05300340B3A /* boardOT@3x.png */,
+				3093B78B19E2F13C00F8FD5F /* boardOnlineGaming.png */,
+				308EC3E919CE72FC00A0869F /* boardOnlineGaming@2x.png */,
+				30DBC4751A07E05300340B3A /* boardOnlineGaming@3x.png */,
 				30DBC45A1A032A1100340B3A /* boardRetroNTech.png */,
 				30DBC45B1A032A1100340B3A /* boardRetroNTech@2x.png */,
 				30DBC4701A07DC8600340B3A /* boardRetroNTech@3x.png */,
@@ -557,6 +565,9 @@
 				30501B4E19E3063400333952 /* isClosed.png */,
 				3020A26719DA1B66007F46E2 /* isClosed@2x.png */,
 				30DBC4821A07E56700340B3A /* isClosed@3x.png */,
+				303974941E197204003C8BC9 /* isSticky.png */,
+				303974931E197204003C8BC9 /* isSticky@2x.png */,
+				303974921E197204003C8BC9 /* isSticky@3x.png */,
 				30501B5E19E31D0A00333952 /* logoDetailView.png */,
 				308EC3E019CC809000A0869F /* logoDetailView@2x.png */,
 				30501B5019E307DE00333952 /* messageIndention.png */,
@@ -580,14 +591,11 @@
 				3093B79319E2F58400F8FD5F /* speakButton.png */,
 				307A80E719B7B899001B538D /* speakButton@2x.png */,
 				30DBC4651A07DB6700340B3A /* speakButton@3x.png */,
-				303974921E197204003C8BC9 /* isSticky@3x.png */,
-				303974931E197204003C8BC9 /* isSticky@2x.png */,
-				303974941E197204003C8BC9 /* isSticky.png */,
 				3093B79519E2F5BE00F8FD5F /* stopButton.png */,
 				307A80E919B7B962001B538D /* stopButton@2x.png */,
 				30DBC4661A07DB6700340B3A /* stopButton@3x.png */,
 			);
-			name = Images;
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -840,19 +848,21 @@
 		3038D58519F65E21005E7D3D /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3038D58419F65E21005E7D3D /* en */,
 				3038D58619F65E25005E7D3D /* de */,
+				3038D58419F65E21005E7D3D /* en */,
 			);
 			name = Localizable.strings;
+			path = .;
 			sourceTree = "<group>";
 		};
 		305DD82019A63517006514BD /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				305DD82119A63517006514BD /* en */,
 				3038D58119F65E0C005E7D3D /* de */,
+				305DD82119A63517006514BD /* en */,
 			);
 			name = InfoPlist.strings;
+			path = .;
 			sourceTree = "<group>";
 		};
 		305DD82919A63517006514BD /* Main_iPhone.storyboard */ = {
@@ -862,6 +872,7 @@
 				3038D58019F65E0C005E7D3D /* de */,
 			);
 			name = Main_iPhone.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		305DD82C19A63517006514BD /* Main_iPad.storyboard */ = {
@@ -871,15 +882,17 @@
 				3038D57F19F65E0C005E7D3D /* de */,
 			);
 			name = Main_iPad.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		305DD84519A63517006514BD /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				305DD84619A63517006514BD /* en */,
 				3038D58219F65E0D005E7D3D /* de */,
+				305DD84619A63517006514BD /* en */,
 			);
 			name = InfoPlist.strings;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -983,8 +996,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = J8XDHCNJQA;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "mclient/mclient-Prefix.pch";
-				INFOPLIST_FILE = "mclient/mclient-Info.plist";
+				GCC_PREFIX_HEADER = "mclient/Supporting Files/mclient-Prefix.pch";
+				INFOPLIST_FILE = "mclient/Supporting Files/mclient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-beta";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1003,8 +1016,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = J8XDHCNJQA;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "mclient/mclient-Prefix.pch";
-				INFOPLIST_FILE = "mclient/mclient-Info.plist";
+				GCC_PREFIX_HEADER = "mclient/Supporting Files/mclient-Prefix.pch";
+				INFOPLIST_FILE = "mclient/Supporting Files/mclient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-beta";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1027,12 +1040,12 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "mclient/mclient-Prefix.pch";
+				GCC_PREFIX_HEADER = "mclient/Supporting Files/mclient-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "mclientTests/mclientTests-Info.plist";
+				INFOPLIST_FILE = "mclientTests/Supporting Files/mclientTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1054,8 +1067,8 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "mclient/mclient-Prefix.pch";
-				INFOPLIST_FILE = "mclientTests/mclientTests-Info.plist";
+				GCC_PREFIX_HEADER = "mclient/Supporting Files/mclient-Prefix.pch";
+				INFOPLIST_FILE = "mclientTests/Supporting Files/mclientTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
