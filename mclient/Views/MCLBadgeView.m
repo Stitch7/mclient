@@ -13,7 +13,7 @@
 - (id)initWithCoder:(NSCoder*)coder
 {
     if (self = [super initWithCoder:coder]) {
-        [self commonInit];
+        [self configure];
     }
 
     return self;
@@ -22,13 +22,13 @@
 - (id)initWithFrame:(CGRect)rect
 {
     if (self = [super initWithFrame:rect]) {
-        [self commonInit];
+        [self configure];
     }
 
     return self;
 }
 
-- (void)commonInit
+- (void)configure
 {
     self.layer.cornerRadius = 3;
     self.layer.masksToBounds = YES;

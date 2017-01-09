@@ -160,7 +160,7 @@
     [self.contentView addConstraints:@"H:|[toolbar]|" views:views];
 
     [self.contentView addConstraints:@"V:|-15-[indentionImageView(40)]" views:views];
-    [self.contentView addConstraints:@"V:|-10-[subjectLabel]-5-[usernameLabel]-10-[webView]" views:views];
+    [self.contentView addConstraints:@"V:|-10-[subjectLabel]-5-[usernameLabel]-10@999-[webView]" views:views];
     [self.contentView addConstraints:@"V:[subjectLabel]-5-[dateLabel]" views:views];
     [self.contentView addConstraints:@"V:[subjectLabel]-9-[readSymbol(8)]" views:views];
     [self.contentView addConstraints:@"V:[webView]|" views:views];

@@ -300,7 +300,7 @@
                         NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
                         [self.tableView selectRowAtIndexPath:latestMessageIndexPath
                                                     animated:YES
-                                              scrollPosition:UITableViewScrollPositionMiddle];
+                                              scrollPosition:UITableViewScrollPositionTop];
                         [self tableView:self.tableView didSelectRowAtIndexPath:latestMessageIndexPath];
                     }
                 }];
