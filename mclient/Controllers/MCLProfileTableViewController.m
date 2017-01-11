@@ -10,16 +10,18 @@
 
 #import "MCLAppDelegate.h"
 #import "MCLMServiceConnector.h"
+#import "MCLTheme.h"
+#import "MCLThemeManager.h"
 #import "MCLLoadingView.h"
 #import "MCLInternetConnectionErrorView.h"
 #import "MCLMServiceErrorView.h"
 
 @interface MCLProfileTableViewController ()
 
+@property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) NSArray *profileKeys;
 @property (strong, nonatomic) NSMutableDictionary *profileData;
 @property (strong, nonatomic) UIImage *profileImage;
-@property (strong, nonatomic) UIColor *tableSeparatorColor;
 
 @end
 
@@ -61,11 +63,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
     self.title = self.username;
 
-    // Cache original tables separatorColor and set to clear to avoid flickering loading view
-    self.tableSeparatorColor = [self.tableView separatorColor];
+    // Hide the tableView separators to avoid flickering loading view
     [self.tableView setSeparatorColor:[UIColor clearColor]];
 
     // Visualize loading
@@ -94,13 +96,6 @@
         [self.delegate handleRotationChangeInBackground];
     }
 }
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 #pragma mark - Data methods
 
@@ -152,7 +147,7 @@
         }
 
         // Restore tables separatorColor
-        [self.tableView setSeparatorColor:self.tableSeparatorColor];
+        [self.tableView setSeparatorColor:[self.currentTheme tableViewSeparatorColor]];
 
         [self.tableView reloadData];
     }
@@ -160,11 +155,6 @@
 
 
 #pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -183,8 +173,8 @@
 
         if (self.profileImage) {
             UIImageView *imageView = [[UIImageView alloc] initWithImage:self.profileImage];
-            [imageView.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
-            [imageView.layer setBorderWidth:0.5];
+            [imageView.layer setBorderColor:[[self.currentTheme tableViewSeparatorColor] CGColor]];
+            [imageView.layer setBorderWidth:0.5f];
 
             CGRect imageViewFrame = imageView.frame;
             imageViewFrame.origin = CGPointMake(16.0f, 5.0f);
@@ -197,7 +187,9 @@
         [cell.detailTextLabel setHidden:NO];
 
         cell.textLabel.text = [NSLocalizedString(key, nil) stringByAppendingString:@":"];
-        
+
+        cell.detailTextLabel.textColor = [self.currentTheme detailTextColor];
+
         NSString *detailText = [self.profileData objectForKey:key];
         cell.detailTextLabel.text = detailText.length ? detailText : @"-";
 
@@ -215,9 +207,8 @@
 {
     CGFloat height;
     NSString *key = self.profileKeys[indexPath.row];
-
     if ([key isEqualToString:@"picture"]) {
-        if ( ! self.profileImage && [[self.profileData objectForKey:@"picture"] length]) {
+        if (!self.profileImage && [[self.profileData objectForKey:@"picture"] length]) {
             NSString *imageURLString = [self.profileData objectForKey:key];
             if (imageURLString.length) {
                 [self.profileData setObject:@"" forKey:key];
@@ -229,12 +220,10 @@
         height = self.profileImage ? self.profileImage.size.height + 10 : 0;
     } else {
         NSString *cellText = [self.profileData objectForKey:key];
-
         CGFloat labelHeight = [cellText boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 30, MAXFLOAT)
                                                      options:NSStringDrawingUsesLineFragmentOrigin
                                                   attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14.0]}
                                                      context:nil].size.height;
-
         height = labelHeight + 30;
     }
 

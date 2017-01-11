@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MCLTextView.h"
 
-@interface MCLMessageTextView : UITextView <UITextViewDelegate>
+@interface MCLMessageTextView : MCLTextView <UITextViewDelegate>
 
 @end

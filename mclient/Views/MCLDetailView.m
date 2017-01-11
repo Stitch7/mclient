@@ -8,6 +8,10 @@
 
 #import "MCLDetailView.h"
 
+
+#import "MCLTheme.h"
+#import "MCLThemeManager.h"
+
 #define SUB_LABEL_SIZE 13
 
 #pragma mark - Private Stuff
@@ -28,7 +32,7 @@
 
 - (UIImageView *)image
 {
-	if ( ! _image) {
+	if (!_image) {
         _image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoDetailView.png"]];
     }
 
@@ -37,7 +41,7 @@
 
 - (UILabel *)subLabel
 {
-	if ( ! _subLabel) {
+	if (!_subLabel) {
 		_subLabel = [[UILabel alloc] initWithFrame:self.bounds];
 		_subLabel.font = [UIFont systemFontOfSize:SUB_LABEL_SIZE];
 	}
@@ -50,6 +54,8 @@
 - (id)initWithFrame:(CGRect)frame
 {
 	if (self = [super initWithFrame:frame]) {
+        // TODO: Why does UIAppearance not work here?
+        self.subLabel.textColor = [[[MCLThemeManager sharedManager] currentTheme] overlayTextColor];
         [self configureWithSubLabelText:NSLocalizedString(@"Select a thread…", nil)];
 	}
 
@@ -67,10 +73,7 @@
 
 - (void)configureWithSubLabelText:(NSString *)subLabelText
 {
-    [self setBackgroundColor:[UIColor whiteColor]];
-
     self.subLabel.text = subLabelText;
-
 
     [self addSubview:self.image];
     [self addSubview:self.subLabel];

@@ -7,6 +7,8 @@
 //
 
 #import "MCLVerifiyLoginView.h"
+#import "MCLTheme.h"
+#import "MCLThemeManager.h"
 
 @implementation MCLVerifiyLoginView
 
@@ -16,9 +18,10 @@
     
     [self setBackgroundColor:[UIColor clearColor]];
 
-    self.label.textColor = [UIColor blackColor];
-    self.label.text = NSLocalizedString(@"Verifying login data…", nil);
+    id <MCLTheme> currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+    self.label.textColor = [currentTheme textColor];
     self.label.font = [UIFont systemFontOfSize:13.0f];
+    self.label.text = NSLocalizedString(@"Verifying login data…", nil);
 }
 
 - (void)loginStatusWithUsername:(NSString *)username

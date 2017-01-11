@@ -10,15 +10,19 @@
 
 #import "constants.h"
 #import "MCLMServiceConnector.h"
+#import "MCLTheme.h"
+#import "MCLThemeManager.h"
 #import "MCLComposeMessagePreviewViewController.h"
 #import "MCLMessageTextView.h"
 
 @interface MCLComposeMessageViewController ()
 
+@property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *composePreviewButton;
 @property (weak, nonatomic) IBOutlet UIButton *composeQuoteButton;
 @property (weak, nonatomic) IBOutlet UILabel *composeSubjectLabel;
 @property (weak, nonatomic) IBOutlet UITextField *composeSubjectTextField;
+@property (weak, nonatomic) IBOutlet UIView *composeSeparatorView;
 @property (weak, nonatomic) IBOutlet MCLMessageTextView *composeTextTextField;
 
 @end
@@ -30,6 +34,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+
+    self.view.backgroundColor = [self.currentTheme backgroundColor];
 
     // Subject label color like in Apple Mail
     self.composeSubjectLabel.textColor = [UIColor colorWithRed:142/255.0f green:142/255.0f blue:147/255.0f alpha:1.0f];
@@ -65,6 +73,8 @@
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
         [self.composeSubjectTextField becomeFirstResponder];
     }
+
+    self.composeSeparatorView.backgroundColor = [self.currentTheme tableViewSeparatorColor];
     
     if (self.text) {
         self.composeTextTextField.text = self.text;

@@ -37,9 +37,10 @@
     return self;
 }
 
-
 - (void)configure
 {
+    [super configure];
+
     self.delegate = self;
 
     self.textContainer.lineFragmentPadding = 0;

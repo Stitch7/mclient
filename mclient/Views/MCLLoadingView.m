@@ -24,8 +24,6 @@
 
 - (void)configureSubviews
 {
-    [self setBackgroundColor:[UIColor whiteColor]];
-
     UIView *container = [[UIView alloc] init];
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     UILabel *label = [[UILabel alloc] init];

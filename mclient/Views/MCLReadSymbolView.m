@@ -37,7 +37,6 @@
 - (void)commonInit
 {
     self.backgroundColor = [UIColor clearColor];
-    self.color = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0];
 }
 
 - (void)drawRect:(CGRect)rect

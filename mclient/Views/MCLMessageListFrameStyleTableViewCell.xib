@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="messageIndention.png" translatesAutoresizingMaskIntoConstraints="NO" id="BuP-oH-STt">
@@ -81,6 +81,7 @@
                 <outlet property="indentionConstraint" destination="Wg6-8T-DdW" id="ckS-jL-oZM"/>
                 <outlet property="messageDateLabel" destination="tdd-bb-Z4G" id="EC4-pF-imN"/>
                 <outlet property="messageIndentionImageView" destination="BuP-oH-STt" id="lIG-so-Mzs"/>
+                <outlet property="messageIndentionView" destination="PTk-Wm-Zo2" id="hkX-IJ-2eA"/>
                 <outlet property="messageSubjectLabel" destination="n9R-YT-gMz" id="8xc-vT-VEK"/>
                 <outlet property="messageUsernameLabel" destination="9lE-dV-Yc4" id="1sj-6J-A81"/>
                 <outlet property="readSymbolView" destination="rBf-Of-tJN" id="goL-Fs-zEb"/>

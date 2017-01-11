@@ -5,17 +5,27 @@
 //  Created by Christopher Reitz on 01.09.14.
 //  Copyright (c) 2014 Christopher Reitz. All rights reserved.
 //
+#import "MCLSettingsTableViewController.h"
 
 #import "constants.h"
 #import "KeychainItemWrapper.h"
-#import "MCLSettingsTableViewController.h"
 #import "MCLMServiceConnector.h"
+#import "MCLThemeManager.h"
+#import "MCLDefaultTheme.h"
+#import "MCLNightTheme.h"
+#import "MCLTextView.h"
 
 @interface MCLSettingsTableViewController ()
 
 @property (strong, nonatomic) KeychainItemWrapper *keychainItem;
+@property (strong, nonatomic) MCLThemeManager *themeManager;
+@property (strong, nonatomic) NSUserDefaults *userDefaults;
+@property (strong, nonatomic) NSNumber *threadView;
+@property (strong, nonatomic) NSNumber *showImages;
+@property (assign, nonatomic) BOOL loginDataChanged;
+@property (strong, nonatomic) NSString *lastUsernameTextFieldValue;
+@property (strong, nonatomic) NSString *lastPasswordTextFieldValue;
 
-@property (weak, nonatomic) NSUserDefaults *userDefaults;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsDoneButton;
 @property (weak, nonatomic) IBOutlet UITextField *settingsUsernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *settingsPasswordTextField;
@@ -23,13 +33,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *settingsLoginDataStatusLabel;
 @property (weak, nonatomic) IBOutlet UITableViewCell *settingsLoginDataStatusTableViewCell;
 @property (weak, nonatomic) IBOutlet UISwitch *settingsSignatureEnabledSwitch;
-@property (weak, nonatomic) IBOutlet UITextView *settingsSignatureTextView;
-@property (strong, nonatomic) NSNumber *threadView;
-@property (strong, nonatomic) NSNumber *showImages;
-@property (assign, nonatomic) BOOL loginDataChanged;
-@property (strong, nonatomic) NSString *lastUsernameTextFieldValue;
-@property (strong, nonatomic) NSString *lastPasswordTextFieldValue;
+@property (weak, nonatomic) IBOutlet MCLTextView *settingsSignatureTextView;
 @property (weak, nonatomic) IBOutlet UISwitch *jumpToLatestMessageSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *nightModeEnabledMessageSwitch;
 
 @end
 
@@ -44,6 +50,8 @@
     [super viewDidLoad];
     
     self.userDefaults = [NSUserDefaults standardUserDefaults];
+
+    self.themeManager = [MCLThemeManager sharedManager];
     
     // Reading username + password from keychain
     NSString *keychainIdentifier = [[NSBundle mainBundle] bundleIdentifier];
@@ -81,6 +89,8 @@
 
     self.jumpToLatestMessageSwitch.on = [self.userDefaults boolForKey:@"jumpToLatestPost"];
 
+    self.nightModeEnabledMessageSwitch.on = [self.userDefaults boolForKey:@"nightModeEnabled"];
+
     UILabel *aboutLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
     aboutLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     aboutLabel.numberOfLines = 2;
@@ -94,32 +104,23 @@
                        [infoDictionary objectForKey:@"CFBundleVersion"]];
 
     self.tableView.tableFooterView = aboutLabel;
-
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
 
-    if (self.loginDataChanged) {
-        [self.delegate settingsTableViewControllerDidFinish:self];
-    }
+    [self.delegate settingsTableViewControllerDidFinish:self loginDataChanged:self.loginDataChanged];
     [self.userDefaults synchronize];
 }
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)testLogin
 {
+    id <MCLTheme> theme = self.themeManager.currentTheme;
     NSString *username = self.settingsUsernameTextField.text;
     NSString *password = self.settingsPasswordTextField.text;
     
     if (username.length > 0 && password.length > 0) {
-        [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
+        self.settingsLoginDataStatusTableViewCell.accessoryType = UITableViewCellAccessoryNone;
         self.settingsLoginDataStatusLabel.textColor = [UIColor darkGrayColor];
         self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Verifying username and password…", nil);
         [self.settingsLoginDataStatusSpinner startAnimating];
@@ -136,7 +137,7 @@
                 
                 if (mServiceError) {
                     [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
-                    self.settingsLoginDataStatusLabel.textColor = [UIColor redColor];
+                    self.settingsLoginDataStatusLabel.textColor = [theme warnTextColor];
 
                     if ([mServiceError code] == 401) {
                         self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Login data was entered incorrectly", nil);
@@ -158,13 +159,14 @@
 
 - (void)signatureTextViewEnabled:(BOOL)enable
 {
-    // Color can only be changed if TextView is editable!
+    id <MCLTheme> theme = self.themeManager.currentTheme;
+    // Color can only be changed if TextView is editable
     if (enable) {
         [self.settingsSignatureTextView setEditable:YES];
         [self.settingsSignatureTextView setSelectable:YES];
-        [self.settingsSignatureTextView setTextColor:[UIColor blackColor]];
+        [self.settingsSignatureTextView setTextColor:[theme textViewTextColor]];
     } else {
-        [self.settingsSignatureTextView setTextColor:[UIColor lightGrayColor]];
+        [self.settingsSignatureTextView setTextColor:[theme textViewDisabledTextColor]];
         [self.settingsSignatureTextView setEditable:NO];
         [self.settingsSignatureTextView setSelectable:NO];
     }
@@ -175,6 +177,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+
+    UIView *backgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    backgroundView.backgroundColor = [self.themeManager.currentTheme tableViewCellSelectedBackgroundColor];
+    cell.selectedBackgroundView = backgroundView;
 
     int threadViewSection = THREADVIEW_SECTION;
     int imagesSection = IMAGES_SECTION;
@@ -199,6 +205,18 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    [header.textLabel setTextColor:[self.themeManager.currentTheme tableViewHeaderTextColor]];
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section
+{
+    UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
+    [footer.textLabel setTextColor:[self.themeManager.currentTheme tableViewFooterTextColor]];
+}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -262,7 +280,6 @@
     }
 }
 
-
 #pragma mark - Actions
 
 - (IBAction)settingsDoneAction:(UIBarButtonItem *)sender
@@ -272,7 +289,7 @@
 
 - (IBAction)settingsUsernameEditingDidEndAction:(UITextField *)sender
 {
-    if ( ! [sender.text isEqualToString:self.lastUsernameTextFieldValue]) {
+    if (![sender.text isEqualToString:self.lastUsernameTextFieldValue]) {
         [self testLogin];
         self.loginDataChanged = YES;
     }
@@ -281,7 +298,7 @@
 
 - (IBAction)settingsPasswordEditingDidEndAction:(UITextField *)sender
 {
-    if ( ! [sender.text isEqualToString:self.lastPasswordTextFieldValue]) {
+    if (![sender.text isEqualToString:self.lastPasswordTextFieldValue]) {
         [self testLogin];
         self.loginDataChanged = YES;
     }
@@ -291,12 +308,29 @@
 - (IBAction)settingsSignatureEnabledSwitchValueChangedAction:(UISwitch *)sender
 {
     [self.userDefaults setBool:sender.on forKey:@"signatureEnabled"];
+    [self.userDefaults synchronize];
     [self signatureTextViewEnabled:sender.on];
-
 }
 
 - (IBAction)jumpToLatestPostEnabledSwitchValueChangedAction:(UISwitch *)sender {
     [self.userDefaults setBool:sender.on forKey:@"jumpToLatestPost"];
+    [self.userDefaults synchronize];
+}
+
+- (IBAction)nightModeSwitchValueChangedAction:(UISwitch *)sender
+{
+    [self.userDefaults setBool:sender.on forKey:@"nightModeEnabled"];
+
+    MCLThemeManager *themeManager = [MCLThemeManager sharedManager];
+    id <MCLTheme> theme = sender.on ? [[MCLNightTheme alloc] init] : [[MCLDefaultTheme alloc] init];
+    [themeManager applyTheme:theme];
+
+    NSUInteger themeName = sender.on ? kMCLThemeNight : kMCLThemeDefault;
+    [[NSUserDefaults standardUserDefaults] setInteger:themeName forKey:@"theme"];
+    [self.userDefaults synchronize];
+
+    [self signatureTextViewEnabled:self.settingsSignatureEnabledSwitch.on];
+    [self.tableView reloadData];
 }
 
 @end

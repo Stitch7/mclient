@@ -1,5 +1,5 @@
 //
-//  MCLDetailViewController.m
+//  MCLMessageListViewController.m
 //  mclient
 //
 //  Created by Christopher Reitz on 19.09.14.
@@ -11,13 +11,15 @@
 #import "utils.h"
 #import "MCLThread.h"
 #import "MCLBoard.h"
+#import "MCLThemeManager.h"
 
 @implementation MCLMessageListViewController
 
 @synthesize splitViewButton = _splitViewButton;
 
-+ (NSString *)messageHtmlSkeletonForHtml:(NSString *)html withTopMargin:(int)topMargin
++ (NSString *)messageHtmlSkeletonForHtml:(NSString *)html withTopMargin:(int)topMargin andTheme:(id <MCLTheme>)currentTheme
 {
+    NSString *textColor = [currentTheme isDark] ? @"fff" : @"000";
     return [NSString stringWithFormat:@""
             "<html>"
             "<head>"
@@ -40,9 +42,11 @@
             "    body {"
             "        margin: %ipx 20px 10px 20px;"
             "        padding: 0px;"
+            "        color: #%@;"
             "    }"
             "    a {"
             "        word-break: break-all;"
+            "        color: #007aff;"
             "    }"
             "    img {"
             "        max-width: 100%%;"
@@ -54,13 +58,14 @@
             "</style>"
             "</head>"
             "<body>%@</body>"
-            "</html>", topMargin, html];
+            "</html>", topMargin, textColor, html];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
     [self configureTitle];
 }
 
@@ -69,8 +74,9 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 480, 44)];
     label.backgroundColor = [UIColor clearColor];
     label.numberOfLines = 2;
-    label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont boldSystemFontOfSize: 15.0f];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [self.currentTheme navigationBarTextColor];
     label.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
 
     self.titleLabel = label;
@@ -117,7 +123,6 @@
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     _splitViewButton = nil;
     self.masterPopoverController = nil;
-    
 }
 
 -(void) setSplitViewButton:(UIBarButtonItem *)splitViewButton forPopoverController:(UIPopoverController *)popoverController {

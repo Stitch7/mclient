@@ -1,5 +1,5 @@
 //
-//  MCLDetailViewController.h
+//  MCLMessageListViewController.h
 //  mclient
 //
 //  Created by Christopher Reitz on 19.09.14.
@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SplitViewButtonHandler.h"
+#import "MCLTheme.h"
 
 @class MCLBoard;
 @class MCLThread;
@@ -17,14 +18,15 @@
 
 @interface MCLMessageListViewController : UIViewController <SplitViewButtonHandler>
 
-@property (weak) id<MCLMessageListDelegate> delegate;
+@property (weak) id <MCLMessageListDelegate> delegate;
+@property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) MCLReadList *readList;
 @property (strong, nonatomic) MCLBoard *board;
 @property (strong, nonatomic) MCLThread *thread;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) UILabel *titleLabel;
 
-+ (NSString *)messageHtmlSkeletonForHtml:(NSString *)html withTopMargin:(int)topMargin;
++ (NSString *)messageHtmlSkeletonForHtml:(NSString *)html withTopMargin:(int)topMargin andTheme:(id <MCLTheme>)currentTheme;
 - (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard;
 - (void)updateTitle:(NSString *)title;
 

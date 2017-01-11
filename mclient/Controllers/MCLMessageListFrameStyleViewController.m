@@ -82,26 +82,14 @@
 
     [self configureContainerView];
     [self configureWebView];
+    [self configureToolbar];
+    [self configureTableView];
 
-    UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self
-                                                                          action:@selector(handleToolbarDrag:)];
-    [self.toolbar addGestureRecognizer:pgr];
+}
 
-    UINib *threadCellNib = [UINib nibWithNibName: @"MCLMessageListFrameStyleTableViewCell" bundle: nil];
-    [self.tableView registerNib: threadCellNib forCellReuseIdentifier: @"MessageCell"];
-
-    // tableView setup
-    // Enable statusbar tap to scroll to top
-    //TODO: DOES NOT WORK
-    self.tableView.scrollsToTop = YES;
-    self.tableView.backgroundColor = [UIColor clearColor];
-    // Add refresh control
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
-
-    UITableViewController *tableViewController = [[UITableViewController alloc] init];
-    tableViewController.tableView = self.tableView;
-    tableViewController.refreshControl = self.refreshControl;
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
 
     if (self.board && self.thread) {
         [self updateTitle:self.thread.subject];
@@ -160,7 +148,28 @@
     self.containerView.frame = self.view.frame;
     self.containerView.backgroundColor = [UIColor clearColor];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [self.currentTheme backgroundColor];
     [self.view addSubview:self.containerView];
+}
+
+- (void)configureToolbar
+{
+    [self.toolbar addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                            action:@selector(handleToolbarDrag:)]];
+}
+
+- (void)configureTableView
+{
+    UINib *threadCellNib = [UINib nibWithNibName: @"MCLMessageListFrameStyleTableViewCell" bundle: nil];
+    [self.tableView registerNib: threadCellNib forCellReuseIdentifier: @"MessageCell"];
+
+    // Add refresh control
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+
+    UITableViewController *tableViewController = [[UITableViewController alloc] init];
+    tableViewController.tableView = self.tableView;
+    tableViewController.refreshControl = self.refreshControl;
 }
 
 - (void)configureWebView
@@ -170,8 +179,6 @@
     self.webView.navigationDelegate = self;
     self.webView.scrollView.scrollsToTop = NO;
     self.webView.opaque = NO;
-    self.webView.backgroundColor = [UIColor whiteColor];
-    self.webView.scrollView.backgroundColor = [UIColor whiteColor];
 
     CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
     CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
@@ -380,28 +387,31 @@
     [cell setMessageId:message.messageId];
 
     UIView *backgroundView = [[UIView alloc] initWithFrame:cell.frame];
-    backgroundView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    backgroundView.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
     cell.selectedBackgroundView = backgroundView;
 
+    cell.messageIndentionImageView.image = [cell.messageIndentionImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    cell.messageIndentionImageView.tintColor = [self.currentTheme tableViewSeparatorColor];
+
+    cell.messageIndentionView.backgroundColor = cell.backgroundColor;
     [self indentView:cell.indentionConstraint withLevel:message.level];
 
     cell.messageIndentionImageView.hidden = (i == 0);
 
     cell.messageSubjectLabel.text = message.subject;
-    cell.messageUsernameLabel.text = message.username;
+    cell.messageSubjectLabel.textColor = [self.currentTheme textColor];
 
+    cell.messageUsernameLabel.text = message.username;
     if ([message.username isEqualToString:self.username]) {
-        cell.messageUsernameLabel.textColor = [UIColor blueColor];
+        cell.messageUsernameLabel.textColor = [self.currentTheme usernameTextColor];
     } else if (message.isMod) {
-        cell.messageUsernameLabel.textColor = [UIColor redColor];
+        cell.messageUsernameLabel.textColor = [self.currentTheme modTextColor];
     } else {
-        cell.messageUsernameLabel.textColor = [UIColor blackColor];
+        cell.messageUsernameLabel.textColor = [self.currentTheme detailTextColor];
     }
 
     cell.messageDateLabel.text = [NSString stringWithFormat:@" - %@", [self.dateFormatter stringFromDate:message.date]];
-
-    [cell.messageUsernameLabel sizeToFit];
-    [cell.messageDateLabel sizeToFit];
+    cell.messageDateLabel.textColor = [self.currentTheme detailTextColor];
 
     if (i == 0 || [self.readList messageIdIsRead:message.messageId fromThread:self.thread]) {
         [cell markRead];
@@ -453,7 +463,9 @@
             break;
     }
 
-    return [MCLMessageListViewController messageHtmlSkeletonForHtml:messageHtml withTopMargin:10];
+    return [MCLMessageListViewController messageHtmlSkeletonForHtml:messageHtml
+                                                      withTopMargin:10
+                                                           andTheme:self.currentTheme];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath

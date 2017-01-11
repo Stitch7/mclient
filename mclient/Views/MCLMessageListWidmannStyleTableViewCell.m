@@ -34,7 +34,6 @@
 - (void)configure
 {
     self.translatesAutoresizingMaskIntoConstraints = NO;
-    self.backgroundColor = [UIColor whiteColor];
 
     UIImageView *indentionImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"messageIndention.png"]];
     indentionImageView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -279,9 +278,7 @@
                 [utterance setVoice:[AVSpeechSynthesisVoice voiceWithLanguage:@"de-DE"]];
 
                 [self.speechSynthesizer speakUtterance:utterance];
-                
             }];
-            
         }];
     }
 }

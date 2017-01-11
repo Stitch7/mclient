@@ -12,6 +12,7 @@
 @class MCLBadgeView;
 @class MCLReadList;
 @class MCLThread;
+@protocol MCLTheme;
 
 @interface MCLThreadTableViewCell : UITableViewCell
 
@@ -28,6 +29,6 @@
 
 - (void)markRead;
 - (void)markUnread;
-- (void)updateBadge:(MCLReadList *)readList forThread:(MCLThread *)thread;
+- (void)updateBadge:(MCLReadList *)readList forThread:(MCLThread *)thread withTheme:(id <MCLTheme>)theme;
 
 @end

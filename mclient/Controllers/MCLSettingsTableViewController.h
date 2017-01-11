@@ -18,6 +18,6 @@
 
 @protocol MCLSettingsTableViewControllerDelegate <NSObject>
 
-- (void)settingsTableViewControllerDidFinish:(MCLSettingsTableViewController *)inController;
+- (void)settingsTableViewControllerDidFinish:(MCLSettingsTableViewController *)inController loginDataChanged:(BOOL)loginDataChanged;
 
 @end

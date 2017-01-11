@@ -33,7 +33,6 @@
 @property (assign, nonatomic) CGFloat selectedCellHeight;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) UIView *refreshControlBackgroundView;
-@property (strong, nonatomic) UIColor *tableSeparatorColor;
 @property (strong, nonatomic) NSMutableArray *messages;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *password;
@@ -76,6 +75,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+
     if (self.board && self.thread) {
         [self updateTitle:self.thread.subject];
 
@@ -92,8 +93,6 @@
             // Process data on main thread
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self fetchedData:data error:mServiceError];
-                // Restore tables separatorColor
-                [self.tableView setSeparatorColor:self.tableSeparatorColor];
             });
         });
     } else {
@@ -124,13 +123,7 @@
     [tableView registerClass:[MCLMessageListWidmannStyleTableViewCell class] forCellReuseIdentifier:@"MessageCell"];
     tableView.delegate = self;
     tableView.dataSource = self;
-    tableView.backgroundColor = [UIColor whiteColor];
     tableView.scrollsToTop = YES;
-
-    // Cache original tables separatorColor and set to clear to avoid flickering loading view
-    self.tableSeparatorColor = [tableView separatorColor];
-    [tableView setSeparatorColor:[UIColor clearColor]];
-
     [self.view addSubview:tableView];
 
     NSDictionary *views = NSDictionaryOfVariableBindings(tableView);
@@ -152,7 +145,6 @@
     CGRect refreshControlBackgroundViewFrame = self.tableView.bounds;
     refreshControlBackgroundViewFrame.origin.y = -refreshControlBackgroundViewFrame.size.height;
     self.refreshControlBackgroundView = [[UIView alloc] initWithFrame:refreshControlBackgroundViewFrame];
-    self.refreshControlBackgroundView.backgroundColor = [UIColor groupTableViewBackgroundColor];
 
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
@@ -196,9 +188,6 @@
         // Process data on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedData:data error:mServiceError];
-
-            // Restore tables separatorColor
-            [self.tableView setSeparatorColor:self.tableSeparatorColor];
         });
     });
 }
@@ -327,8 +316,9 @@
     if (cell == nil) {
         cell = [[MCLMessageListWidmannStyleTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle
                                                              reuseIdentifier:cellIdentifier];
-        cell.translatesAutoresizingMaskIntoConstraints = NO;
     }
+
+    cell.translatesAutoresizingMaskIntoConstraints = NO;
 
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -336,23 +326,23 @@
 
     [self indentView:cell.messageIndentionConstraint withLevel:message.level];
 
-    if (i > 0 && i == [tableView indexPathForSelectedRow].row) {
-        cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    cell.messageIndentionImageView.image = [cell.messageIndentionImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    cell.messageIndentionImageView.tintColor = [self.currentTheme tableViewSeparatorColor];
 
-        [cell.messageTextWebView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-        [cell.messageTextWebView.scrollView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    if (i > 0 && i == [tableView indexPathForSelectedRow].row) { // is selected
+        cell.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
+        cell.messageTextWebView.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
+        cell.messageTextWebView.scrollView.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
 
         [cell.messageToolbar setHidden:NO];
         [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
         [self hideToolbarButtonsForMessage:message inCell:cell atIndexPath:indexPath];
-    } else {
-        cell.backgroundColor = [UIColor whiteColor];
+    }
+    else {
+        cell.backgroundColor = [self.currentTheme tableViewCellBackgroundColor];
         [cell.messageToolbar setHidden:YES];
         cell.messageTextWebViewHeightConstraint.constant = 0;
     }
-
-    cell.messageToolbar.translucent = NO;
-    cell.messageToolbar.barTintColor = [UIColor groupTableViewBackgroundColor];
 
     [cell setBoardId:self.board.boardId];
     [cell setMessageId:message.messageId];
@@ -362,20 +352,19 @@
     cell.messageIndentionImageView.hidden = (i == 0);
     
     cell.messageSubjectLabel.text = message.subject;
+    cell.messageSubjectLabel.textColor = [self.currentTheme textColor];
+
     cell.messageUsernameLabel.text = message.username;
-    
     if ([message.username isEqualToString:self.username]) {
-        cell.messageUsernameLabel.textColor = [UIColor blueColor];
+        cell.messageUsernameLabel.textColor = [self.currentTheme usernameTextColor];
     } else if (message.isMod) {
-        cell.messageUsernameLabel.textColor = [UIColor redColor];
+        cell.messageUsernameLabel.textColor = [self.currentTheme modTextColor];
     } else {
-        cell.messageUsernameLabel.textColor = [UIColor blackColor];
+        cell.messageUsernameLabel.textColor = [self.currentTheme detailTextColor];
     }
     
     cell.messageDateLabel.text = [NSString stringWithFormat:@" - %@", [self.dateFormatter stringFromDate:message.date]];
-    
-    [cell.messageUsernameLabel sizeToFit];
-    [cell.messageDateLabel sizeToFit];
+    cell.messageDateLabel.textColor = [self.currentTheme detailTextColor];
 
     [cell.messageTextWebView setNavigationDelegate:self];
 
@@ -468,7 +457,9 @@
             break;
     }
 
-    return [MCLMessageListViewController messageHtmlSkeletonForHtml:messageHtml withTopMargin:0];
+    return [MCLMessageListViewController messageHtmlSkeletonForHtml:messageHtml
+                                                      withTopMargin:0
+                                                           andTheme:self.currentTheme];
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -491,7 +482,9 @@
 
     MCLMessageListWidmannStyleTableViewCell *cell =
         (MCLMessageListWidmannStyleTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    [cell setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    cell.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
+    cell.messageTextWebView.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
+    cell.messageTextWebView.scrollView.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
 
     MCLMessage *message = self.messages[indexPath.row];
     if (message.text) {
@@ -547,8 +540,6 @@
 
 - (void)putMessage:(MCLMessage *)message toCell:(MCLMessageListWidmannStyleTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    [cell.messageTextWebView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-    [cell.messageTextWebView.scrollView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
     [self hideToolbarButtonsForMessage:message inCell:cell atIndexPath:indexPath];
 
@@ -560,9 +551,8 @@
     MCLMessageListWidmannStyleTableViewCell *cell =
         (MCLMessageListWidmannStyleTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     
-    [cell setBackgroundColor:[UIColor clearColor]];
-    [cell.messageTextWebView setBackgroundColor:[UIColor clearColor]];
-    [cell.messageTextWebView.scrollView setBackgroundColor:[UIColor clearColor]];
+    cell.backgroundColor = [self.currentTheme tableViewCellBackgroundColor];
+
     cell.messageTextWebViewHeightConstraint.constant = 0.0;
 
     [cell.messageToolbar setHidden:YES];
@@ -693,35 +683,4 @@
     }
 }
 
-/*
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator
-{
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
- 
-    // Code here will execute before the rotation begins.
-    // Equivalent to placing it in the deprecated method -[willRotateToInterfaceOrientation:duration:]
-    NSLog(@"111111111111111111111111111111111111111111111111111111111111");
-
-    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-    if (!selectedIndexPath) { return; }
-
-    MCLMessageListWidmannStyleTableViewCell *cell =
-    (MCLMessageListWidmannStyleTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
-    MCLMessage *message = self.messages[selectedIndexPath.row];
-
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        // Place code here to perform animations during the rotation.
-        // You can pass nil or leave this block empty if not necessary.
-        NSLog(@"222222222222222222222222222222222222222222222222222222222222");
-
-        [cell.messageTextWebView setNeedsLayout];
-        [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        // Code here will execute after the rotation has finished.
-        // Equivalent to placing it in the deprecated method -[didRotateFromInterfaceOrientation:]
-        NSLog(@"333333333333333333333333333333333333333333333333333333333333");
-
-    }];
-}
-*/
 @end

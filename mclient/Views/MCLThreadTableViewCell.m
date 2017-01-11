@@ -7,6 +7,8 @@
 //
 
 #import "MCLThreadTableViewCell.h"
+
+#import "MCLTheme.h"
 #import "MCLReadSymbolView.h"
 #import "MCLBadgeView.h"
 #import "MCLThread.h"
@@ -48,7 +50,7 @@
     }
 }
 
-- (void)updateBadge:(MCLReadList *)readList forThread:(MCLThread *)thread
+- (void)updateBadge:(MCLReadList *)readList forThread:(MCLThread *)thread withTheme:(id <MCLTheme>)theme
 {
     self.badgeLabel.text = [thread.messageCount stringValue];
 
@@ -58,11 +60,11 @@
 
     if (messageCount > 999 && !thread.isSticky) {
         // red
-        self.badgeLabel.textColor = [UIColor redColor];
+        self.badgeLabel.textColor = [theme warnTextColor];
     }
     else if (!isRead || readMessagesCount < messageCount) {
         // blue
-        self.badgeLabel.textColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0];
+        self.badgeLabel.textColor = [theme tintColor];
     }
     else {
         // gray

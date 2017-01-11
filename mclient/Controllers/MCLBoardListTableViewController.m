@@ -11,6 +11,8 @@
 #import "KeychainItemWrapper.h"
 #import "MCLAppDelegate.h"
 #import "MCLMServiceConnector.h"
+#import "MCLTheme.h"
+#import "MCLThemeManager.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLMessageListViewController.h"
 #import "MCLBoard.h"
@@ -21,6 +23,7 @@
 
 @interface MCLBoardListTableViewController ()
 
+@property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) NSMutableArray *boards;
 @property (strong, nonatomic) NSDictionary *images;
 
@@ -47,6 +50,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
 
     // Fix odd glitch on swipe back causing cell stay selected
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
@@ -137,7 +142,7 @@
 
 - (void)setupRefreshControl
 {
-    if ( ! self.refreshControl) {
+    if (!self.refreshControl) {
         self.tableView.bounces = YES;
 
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -212,7 +217,7 @@
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
     UIView *backgroundView = [[UIView alloc] initWithFrame:cell.frame];
-    backgroundView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    backgroundView.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
     cell.selectedBackgroundView = backgroundView;
 
     MCLBoard *board = self.boards[indexPath.row];
@@ -227,11 +232,14 @@
 
 #pragma mark - MCLSettingsTableViewControllerDelegate
 
-- (void)settingsTableViewControllerDidFinish:(MCLSettingsTableViewController *)inController
+- (void)settingsTableViewControllerDidFinish:(MCLSettingsTableViewController *)inController loginDataChanged:(BOOL)loginDataChanged
 {
-    [self showLoginStatus];
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+    [self.tableView reloadData];
+    if (loginDataChanged) {
+        [self showLoginStatus];
+    }
 }
-
 
 #pragma mark - UISplitViewControllerDelegate
 
@@ -248,7 +256,6 @@
     MCLMessageListViewController *detailViewController = [[navController viewControllers] firstObject];
     [detailViewController setSplitViewButton:nil forPopoverController:nil];
 }
-
 
 #pragma mark - Navigation
 

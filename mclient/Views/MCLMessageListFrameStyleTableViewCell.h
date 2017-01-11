@@ -18,6 +18,7 @@
 @property (assign, nonatomic) BOOL messageNotification;
 
 @property (weak, nonatomic) IBOutlet MCLReadSymbolView *readSymbolView;
+@property (weak, nonatomic) IBOutlet UIView *messageIndentionView;
 @property (weak, nonatomic) IBOutlet UIImageView *messageIndentionImageView;
 @property (weak, nonatomic) IBOutlet UILabel *messageSubjectLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageUsernameLabel;
