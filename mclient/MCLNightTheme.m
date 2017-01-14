@@ -75,6 +75,11 @@
     return [UIColor redColor];
 }
 
+-(UIColor *)successTextColor
+{
+    return [UIColor colorWithRed:0.30 green:0.85 blue:0.39 alpha:1.0];
+}
+
 - (UIColor *)warnTextColor;
 {
     return [UIColor redColor];

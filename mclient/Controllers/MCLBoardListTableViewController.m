@@ -47,25 +47,13 @@
                     @8: @"boardOnlineGaming.png"};
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
-
-    // Fix odd glitch on swipe back causing cell stay selected
-    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-    if (selectedIndexPath) {
-        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
-    }
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     [self showLoginStatus];
-    [self setupRefreshControl];
+    [self configureNavigationBar];
+    [self configureRefreshControl];
 
     // Visualize loading
     [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.frame]];
@@ -78,6 +66,19 @@
             [self fetchedData:data error:mServiceError];
         });
     });
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+
+    // Fix odd glitch on swipe back causing cell stay selected
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    if (selectedIndexPath) {
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
+    }
 }
 
 - (void)showLoginStatus
@@ -140,15 +141,24 @@
     [userDefaults synchronize];
 }
 
-- (void)setupRefreshControl
+- (void)configureNavigationBar
 {
-    if (!self.refreshControl) {
-        self.tableView.bounces = YES;
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"settingsButton.png"]
+                                                                       style:UIBarButtonItemStylePlain
+                                                                      target:self
+                                                                      action:@selector(settingsButtonPressed:)];
+    self.navigationItem.rightBarButtonItem = settingsButton;
+}
 
-        UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-        [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
-        self.refreshControl = refreshControl;
-    }
+- (void)configureRefreshControl
+{
+    if (self.refreshControl) { return; }
+
+    self.tableView.bounces = YES;
+
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
 }
 
 - (void)reloadData
@@ -255,6 +265,16 @@
     UINavigationController *navController = [[[self splitViewController] viewControllers] lastObject];
     MCLMessageListViewController *detailViewController = [[navController viewControllers] firstObject];
     [detailViewController setSplitViewButton:nil forPopoverController:nil];
+}
+
+#pragma mark - Actions
+
+-(void)settingsButtonPressed:(UIBarButtonItem *)sender
+{
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
+    UINavigationController *nc = [sb instantiateViewControllerWithIdentifier:@"SettingsNavigationController"];
+    nc.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self.navigationController presentViewController:nc animated:YES completion:nil];
 }
 
 #pragma mark - Navigation

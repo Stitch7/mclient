@@ -57,9 +57,6 @@
 
     [[UISearchBar appearance] setBackgroundImage:[[UIImage alloc] init]];
     [[UISearchBar appearance] setBackgroundColor:[theme searchBarBackgroundColor]];
-    // TODO: Why doesn't this work?
-//    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTextColor:[UIColor greenColor]];
-//    [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[UIColor greenColor]];
 
     [[UITableViewCell appearance] setBackgroundColor:[theme tableViewCellBackgroundColor]];
     [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UITableViewCell class]]] setTextColor:[theme textColor]];
@@ -86,6 +83,7 @@
 
     UIKeyboardAppearance keyboardAppearance = [theme isDark] ? UIKeyboardAppearanceDark : UIKeyboardAppearanceLight;
     [[UITextField appearance] setKeyboardAppearance:keyboardAppearance];
+    [[UITextField appearance] setTextColor:[theme textViewTextColor]];
 
     [[UIWebView appearance] setBackgroundColor:[theme webViewBackgroundColor]];
     [[WKWebView appearance] setBackgroundColor:[theme webViewBackgroundColor]];

@@ -113,6 +113,8 @@
     }
 }
 
+#pragma mark - Actions
+
 - (IBAction)sendAction:(id)sender
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;

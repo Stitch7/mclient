@@ -35,15 +35,16 @@
 @property (weak, nonatomic) IBOutlet UISwitch *settingsSignatureEnabledSwitch;
 @property (weak, nonatomic) IBOutlet MCLTextView *settingsSignatureTextView;
 @property (weak, nonatomic) IBOutlet UISwitch *jumpToLatestMessageSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *nightModeEnabledMessageSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *nightModeEnabledSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *nightModeAutomaticallySwitch;
 
 @end
 
 @implementation MCLSettingsTableViewController
 
-#define THREADVIEW_SECTION 2;
-#define IMAGES_SECTION 3;
-#define OPTIONS_SECTION 4;
+#define THREADVIEW_SECTION 1;
+#define FONTSIZE_SECTION 3;
+#define IMAGES_SECTION 4;
 
 - (void)viewDidLoad
 {
@@ -52,7 +53,11 @@
     self.userDefaults = [NSUserDefaults standardUserDefaults];
 
     self.themeManager = [MCLThemeManager sharedManager];
-    
+
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    tap.cancelsTouchesInView = NO;
+    [self.tableView addGestureRecognizer:tap];
+
     // Reading username + password from keychain
     NSString *keychainIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     self.keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:keychainIdentifier accessGroup:nil];
@@ -88,8 +93,8 @@
     self.showImages = [self.userDefaults objectForKey:@"showImages"] ?: @(kMCLSettingsShowImagesAlways);
 
     self.jumpToLatestMessageSwitch.on = [self.userDefaults boolForKey:@"jumpToLatestPost"];
-
-    self.nightModeEnabledMessageSwitch.on = [self.userDefaults boolForKey:@"nightModeEnabled"];
+    self.nightModeEnabledSwitch.on = [self.userDefaults boolForKey:@"nightModeEnabled"];
+    self.nightModeAutomaticallySwitch.on = [self.userDefaults boolForKey:@"nightModeAutomatically"];
 
     UILabel *aboutLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
     aboutLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -120,7 +125,6 @@
     NSString *password = self.settingsPasswordTextField.text;
     
     if (username.length > 0 && password.length > 0) {
-        self.settingsLoginDataStatusTableViewCell.accessoryType = UITableViewCellAccessoryNone;
         self.settingsLoginDataStatusLabel.textColor = [UIColor darkGrayColor];
         self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Verifying username and password…", nil);
         [self.settingsLoginDataStatusSpinner startAnimating];
@@ -136,7 +140,6 @@
                 [self.settingsLoginDataStatusSpinner stopAnimating];
                 
                 if (mServiceError) {
-                    [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
                     self.settingsLoginDataStatusLabel.textColor = [theme warnTextColor];
 
                     if ([mServiceError code] == 401) {
@@ -145,7 +148,7 @@
                         self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Error: Could not connect to server", nil);
                     }
                 } else {
-                    [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryCheckmark];
+                    self.settingsLoginDataStatusLabel.textColor = [theme successTextColor];
                     self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Login data is valid", nil);
                 }
             });
@@ -182,23 +185,59 @@
     backgroundView.backgroundColor = [self.themeManager.currentTheme tableViewCellSelectedBackgroundColor];
     cell.selectedBackgroundView = backgroundView;
 
-    int threadViewSection = THREADVIEW_SECTION;
-    int imagesSection = IMAGES_SECTION;
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 
+    int threadViewSection = THREADVIEW_SECTION;
     if (indexPath.section == threadViewSection) {
         if ([self.threadView integerValue] == indexPath.row) {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         } else {
             [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
-    } else if (indexPath.section == imagesSection) {
+        [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
+    }
+
+    int fontSizeSection = FONTSIZE_SECTION;
+    if (indexPath.section == fontSizeSection) {
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
+        cell.textLabel.text = @"Font Size"; // TODO: i18n
+
+//        cell.detailTextLabel.textColor = [[self.themeManager currentTheme] detailTextColor];
+        cell.detailTextLabel.textColor = [UIColor grayColor];
+        NSString *detailText;
+        NSInteger fontSize = [[NSUserDefaults standardUserDefaults] integerForKey:@"fontSize"];
+        switch (fontSize) {
+            case 1:
+                detailText = @"Tiny"; // TODO: i18n
+                break;
+            case 2:
+                detailText = @"Small"; // TODO: i18n
+                break;
+            case 3:
+                detailText = @"Normal"; // TODO: i18n
+                break;
+            case 4:
+                detailText = @"Big"; // TODO: i18n
+                break;
+            case 5:
+                detailText = @"Bigger"; // TODO: i18n
+                break;
+            case 6:
+                detailText = @"Huge"; // TODO: i18n
+                break;
+        }
+        cell.detailTextLabel.text = detailText;
+    }
+
+    int imagesSection = IMAGES_SECTION;
+    if (indexPath.section == imagesSection) {
         if ([self.showImages integerValue] == indexPath.row) {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         } else {
             [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
-    } else {
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
     }
 
     return cell;
@@ -280,7 +319,20 @@
     }
 }
 
+#pragma mark - UITextViewDelegate
+
+- (void)settingsFontSizeViewController:(MCLSettingsFontSizeViewController *)inController fontSizeChanged:(int)fontSize
+{
+    [self.tableView reloadData];
+}
+
 #pragma mark - Actions
+
+
+- (void)dismissKeyboard
+{
+    [self.view endEditing:YES];
+}
 
 - (IBAction)settingsDoneAction:(UIBarButtonItem *)sender
 {
@@ -317,7 +369,7 @@
     [self.userDefaults synchronize];
 }
 
-- (IBAction)nightModeSwitchValueChangedAction:(UISwitch *)sender
+- (IBAction)nightModeEnabledSwitchValueChangedAction:(UISwitch *)sender
 {
     [self.userDefaults setBool:sender.on forKey:@"nightModeEnabled"];
 
@@ -326,11 +378,27 @@
     [themeManager applyTheme:theme];
 
     NSUInteger themeName = sender.on ? kMCLThemeNight : kMCLThemeDefault;
-    [[NSUserDefaults standardUserDefaults] setInteger:themeName forKey:@"theme"];
+    [self.userDefaults setInteger:themeName forKey:@"theme"];
     [self.userDefaults synchronize];
 
     [self signatureTextViewEnabled:self.settingsSignatureEnabledSwitch.on];
     [self.tableView reloadData];
+}
+
+- (IBAction)nightModeAutomaticallySwitchValueChangedAction:(UISwitch *)sender
+{
+    [self.userDefaults setBool:sender.on forKey:@"nightModeAutomatically"];
+    [self.userDefaults synchronize];
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"PushToSettingsFontSize"]) {
+        MCLSettingsFontSizeViewController *settingsFontSizeVC = (MCLSettingsFontSizeViewController *)segue.destinationViewController;
+        [settingsFontSizeVC setDelegate:self];
+    }
 }
 
 @end

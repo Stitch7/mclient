@@ -19,7 +19,11 @@
 
 + (NSString *)messageHtmlSkeletonForHtml:(NSString *)html withTopMargin:(int)topMargin andTheme:(id <MCLTheme>)currentTheme
 {
-    NSString *textColor = [currentTheme isDark] ? @"fff" : @"000";
+    NSInteger fontSizeValue = [[NSUserDefaults standardUserDefaults] integerForKey:@"fontSize"];
+    NSString *fontSize = [NSString stringWithFormat:@"%lipx", fontSizeValue + 11];
+    NSString *backgroundColor = [currentTheme isDark] ? @"#000" : @"#fff";
+    NSString *textColor = [currentTheme isDark] ? @"#fff" : @"#000";
+
     return [NSString stringWithFormat:@""
             "<html>"
             "<head>"
@@ -36,13 +40,14 @@
             "<style>"
             "    * {"
             "        font-family: \"Helvetica Neue\";"
-            "        font-size: 14px;"
+            "        font-size: %@;"
             "        -webkit-text-size-adjust: none;"
             "    }"
             "    body {"
             "        margin: %ipx 20px 10px 20px;"
             "        padding: 0px;"
-            "        color: #%@;"
+            "        background-color: %@;"
+            "        color: %@;"
             "    }"
             "    a {"
             "        word-break: break-all;"
@@ -58,7 +63,7 @@
             "</style>"
             "</head>"
             "<body>%@</body>"
-            "</html>", topMargin, textColor, html];
+            "</html>", fontSize, topMargin, backgroundColor, textColor, html];
 }
 
 - (void)viewDidLoad

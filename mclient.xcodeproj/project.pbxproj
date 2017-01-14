@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30043B191E2A27B20047FBEB /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30043B181E2A27B20047FBEB /* Settings.storyboard */; };
 		3004E5AC1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */; };
 		3012032D1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3012032B1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.m */; };
 		3012032E1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3012032C1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib */; };
@@ -100,6 +101,9 @@
 		3093B79C19E2FA6C00F8FD5F /* profileButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 3093B79B19E2FA6C00F8FD5F /* profileButton.png */; };
 		30A1BFAD19B4A8D4002439FE /* MCLSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */; };
 		30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */; };
+		30D82AEF1E2A40B400898963 /* fontIncrease@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30D82AED1E2A40B400898963 /* fontIncrease@2x.png */; };
+		30D82AF01E2A40B400898963 /* fontDecrease@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30D82AEE1E2A40B400898963 /* fontDecrease@2x.png */; };
+		30D82AF31E2A42F700898963 /* MCLSettingsFontSizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D82AF21E2A42F700898963 /* MCLSettingsFontSizeViewController.m */; };
 		30DBC45C1A032A1100340B3A /* boardRetroNTech.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC45A1A032A1100340B3A /* boardRetroNTech.png */; };
 		30DBC45D1A032A1100340B3A /* boardRetroNTech@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC45B1A032A1100340B3A /* boardRetroNTech@2x.png */; };
 		30DBC4671A07DB6700340B3A /* copyLinkButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC45E1A07DB6700340B3A /* copyLinkButton@3x.png */; };
@@ -140,6 +144,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		30043B181E2A27B20047FBEB /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MCLThreadTableViewCell.xib; sourceTree = "<group>"; };
 		3012032A1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageListFrameStyleTableViewCell.h; sourceTree = "<group>"; };
 		3012032B1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListFrameStyleTableViewCell.m; sourceTree = "<group>"; };
@@ -275,6 +280,10 @@
 		30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsTableViewController.m; sourceTree = "<group>"; };
 		30A9D5E519D4CFFF00070268 /* MCLComposeMessagePreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessagePreviewViewController.h; sourceTree = "<group>"; };
 		30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLComposeMessagePreviewViewController.m; sourceTree = "<group>"; };
+		30D82AED1E2A40B400898963 /* fontIncrease@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fontIncrease@2x.png"; sourceTree = "<group>"; };
+		30D82AEE1E2A40B400898963 /* fontDecrease@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fontDecrease@2x.png"; sourceTree = "<group>"; };
+		30D82AF11E2A42F700898963 /* MCLSettingsFontSizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLSettingsFontSizeViewController.h; sourceTree = "<group>"; };
+		30D82AF21E2A42F700898963 /* MCLSettingsFontSizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsFontSizeViewController.m; sourceTree = "<group>"; };
 		30DBC45A1A032A1100340B3A /* boardRetroNTech.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boardRetroNTech.png; sourceTree = "<group>"; };
 		30DBC45B1A032A1100340B3A /* boardRetroNTech@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardRetroNTech@2x.png"; sourceTree = "<group>"; };
 		30DBC45E1A07DB6700340B3A /* copyLinkButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copyLinkButton@3x.png"; sourceTree = "<group>"; };
@@ -467,6 +476,8 @@
 				301E24B519BB02EB00943EC6 /* MCLProfileTableViewController.m */,
 				30A1BFAB19B4A8D4002439FE /* MCLSettingsTableViewController.h */,
 				30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */,
+				30D82AF11E2A42F700898963 /* MCLSettingsFontSizeViewController.h */,
+				30D82AF21E2A42F700898963 /* MCLSettingsFontSizeViewController.m */,
 				305DD85519AB2A7C006514BD /* MCLThreadListTableViewController.h */,
 				305DD85619AB2A7C006514BD /* MCLThreadListTableViewController.m */,
 			);
@@ -529,6 +540,7 @@
 			children = (
 				305DD82C19A63517006514BD /* Main_iPad.storyboard */,
 				305DD82919A63517006514BD /* Main_iPhone.storyboard */,
+				30043B181E2A27B20047FBEB /* Settings.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -592,6 +604,8 @@
 				30501B5A19E3125600333952 /* errorMService.png */,
 				301FD9A719C419DE00E36A5B /* errorMService@2x.png */,
 				30DBC4881A07E8D100340B3A /* errorMService@3x.png */,
+				30D82AED1E2A40B400898963 /* fontIncrease@2x.png */,
+				30D82AEE1E2A40B400898963 /* fontDecrease@2x.png */,
 				30501B4E19E3063400333952 /* isClosed.png */,
 				3020A26719DA1B66007F46E2 /* isClosed@2x.png */,
 				30DBC4821A07E56700340B3A /* isClosed@3x.png */,
@@ -725,6 +739,8 @@
 				3038D58319F65E21005E7D3D /* Localizable.strings in Resources */,
 				305DD82B19A63517006514BD /* Main_iPhone.storyboard in Resources */,
 				303974971E197205003C8BC9 /* isSticky.png in Resources */,
+				30043B191E2A27B20047FBEB /* Settings.storyboard in Resources */,
+				30D82AF01E2A40B400898963 /* fontDecrease@2x.png in Resources */,
 				3093B79619E2F5BE00F8FD5F /* stopButton.png in Resources */,
 				30DBC47B1A07E05300340B3A /* boardOnlineGaming@3x.png in Resources */,
 				30DBC47D1A07E05300340B3A /* boardSmalltalk@3x.png in Resources */,
@@ -732,6 +748,7 @@
 				30DBC4711A07DC8600340B3A /* boardRetroNTech@3x.png in Resources */,
 				30DBC4681A07DB6700340B3A /* editButton@3x.png in Resources */,
 				303974951E197205003C8BC9 /* isSticky@3x.png in Resources */,
+				30D82AEF1E2A40B400898963 /* fontIncrease@2x.png in Resources */,
 				30501B5119E307DE00333952 /* messageIndention.png in Resources */,
 				30501B5919E3100900333952 /* downButton.png in Resources */,
 				3093B79819E2F6C600F8FD5F /* copyLinkButton.png in Resources */,
@@ -830,6 +847,7 @@
 				301E24B619BB02EB00943EC6 /* MCLProfileTableViewController.m in Sources */,
 				30DBC8A61E285FAC00EF150B /* MCLTextView.m in Sources */,
 				305DD86319AB380C006514BD /* MCLMessage.m in Sources */,
+				30D82AF31E2A42F700898963 /* MCLSettingsFontSizeViewController.m in Sources */,
 				305DD82419A63517006514BD /* main.m in Sources */,
 				3036F59B1E266B3800ABC2CE /* MCLNightTheme.m in Sources */,
 				301FD9A619C411D400E36A5B /* MCLErrorView.m in Sources */,
