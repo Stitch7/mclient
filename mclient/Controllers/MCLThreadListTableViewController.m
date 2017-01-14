@@ -150,6 +150,8 @@
         [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
     }
 
+    [self.tableView reloadData];
+
     [self.navigationController setToolbarHidden:YES animated:NO];
 }
 
@@ -169,6 +171,7 @@
     // TODO: Why does UIAppearance not work here?
     UITextField *searchField = [self searchViewForTextFieldBg:self.searchController.searchBar];
     [searchField setBackgroundColor:[self.currentTheme searchFieldBackgroundColor]];
+    [searchField setTextColor:[self.currentTheme searchFieldTextColor]];
 }
 
 - (UITextField*)searchViewForTextFieldBg:(UIView*)view

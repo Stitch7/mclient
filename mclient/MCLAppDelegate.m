@@ -18,6 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self initiliazeSunriseSet];
     [self initiliazeTheme];
 
     return YES;
@@ -28,6 +29,25 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+-(void)applicationWillEnterForeground:(UIApplication *)application
+{
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"nightModeAutomatically"]) {
+        return;
+    }
+
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    MCLThemeManager *themeManager = [MCLThemeManager sharedManager];
+
+    if ([userDefaults integerForKey:@"theme"] == kMCLThemeNight) {
+        [themeManager applyTheme:[[MCLDefaultTheme alloc] init]];
+        [userDefaults setInteger:kMCLThemeDefault forKey:@"theme"];
+    }
+    else {
+        [themeManager applyTheme:[[MCLNightTheme alloc] init]];
+        [userDefaults setInteger:kMCLThemeNight forKey:@"theme"];
+    }
+    [userDefaults synchronize];
+}
 
 -(void)initiliazeTheme
 {
@@ -39,6 +59,11 @@
     } else {
         [themeManager applyTheme:[[MCLDefaultTheme alloc] init]];
     }
+}
+
+-(void)initiliazeSunriseSet
+{
+
 }
 
 @end

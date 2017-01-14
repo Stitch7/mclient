@@ -72,6 +72,8 @@
 {
     [super viewWillAppear:animated];
 
+    [self.tableView reloadData];
+
     self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
 
     // Fix odd glitch on swipe back causing cell stay selected
