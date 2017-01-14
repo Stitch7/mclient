@@ -42,22 +42,63 @@
 
 @implementation MCLSettingsTableViewController
 
-#define THREADVIEW_SECTION 1;
-#define FONTSIZE_SECTION 3;
-#define IMAGES_SECTION 4;
+#define THREADVIEW_SECTION 2;
+#define FONTSIZE_SECTION 4;
+#define IMAGES_SECTION 5;
+
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+
+    self.userDefaults = [NSUserDefaults standardUserDefaults];
+    self.themeManager = [MCLThemeManager sharedManager];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.userDefaults = [NSUserDefaults standardUserDefaults];
 
-    self.themeManager = [MCLThemeManager sharedManager];
+    [self configureDismissKeyboardEvent];
+    [self configureLoginSection];
+    [self configureSignatureSection];
+    [self configureThreadSection];
+    [self configureNightModeSection];
+    [self configureAboutLabel];
+}
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+
+    [self.delegate settingsTableViewControllerDidFinish:self loginDataChanged:self.loginDataChanged];
+}
+
+-(void)configureDismissKeyboardEvent
+{
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     tap.cancelsTouchesInView = NO;
     [self.tableView addGestureRecognizer:tap];
+}
 
+-(void)configureNightModeSection
+{
+    self.nightModeEnabledSwitch.on = [self.userDefaults boolForKey:@"nightModeEnabled"];
+    self.nightModeAutomaticallySwitch.on = [self.userDefaults boolForKey:@"nightModeAutomatically"];
+}
+
+-(void)configureImagesSection
+{
+    self.showImages = [self.userDefaults objectForKey:@"showImages"] ?: @(kMCLSettingsShowImagesAlways);
+}
+
+-(void)configureThreadSection
+{
+    self.threadView = [self.userDefaults objectForKey:@"threadView"] ?: @(kMCLSettingsThreadViewWidmann);
+    self.jumpToLatestMessageSwitch.on = [self.userDefaults boolForKey:@"jumpToLatestPost"];
+}
+
+-(void)configureLoginSection
+{
     // Reading username + password from keychain
     NSString *keychainIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     self.keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:keychainIdentifier accessGroup:nil];
@@ -78,52 +119,14 @@
     self.settingsLoginDataStatusSpinner.transform = CGAffineTransformMakeScale(0.75, 0.75);
     self.settingsLoginDataStatusLabel.text = @"";
     [self testLogin];
-
-    if ([self.userDefaults objectForKey:@"signatureEnabled"] == nil) {
-        self.settingsSignatureEnabledSwitch.on = YES;
-        [self settingsSignatureEnabledSwitchValueChangedAction:self.settingsSignatureEnabledSwitch];
-    } else {
-        self.settingsSignatureEnabledSwitch.on = [self.userDefaults boolForKey:@"signatureEnabled"];
-    }
-    [self signatureTextViewEnabled:self.settingsSignatureEnabledSwitch.on];
-    self.settingsSignatureTextView.delegate = self;
-    self.settingsSignatureTextView.text = [self.userDefaults objectForKey:@"signature"] ?: kSettingsSignatureTextDefault;
-
-    self.threadView = [self.userDefaults objectForKey:@"threadView"] ?: @(kMCLSettingsThreadViewWidmann);
-    self.showImages = [self.userDefaults objectForKey:@"showImages"] ?: @(kMCLSettingsShowImagesAlways);
-
-    self.jumpToLatestMessageSwitch.on = [self.userDefaults boolForKey:@"jumpToLatestPost"];
-    self.nightModeEnabledSwitch.on = [self.userDefaults boolForKey:@"nightModeEnabled"];
-    self.nightModeAutomaticallySwitch.on = [self.userDefaults boolForKey:@"nightModeAutomatically"];
-
-    UILabel *aboutLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
-    aboutLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    aboutLabel.numberOfLines = 2;
-    aboutLabel.font = [UIFont systemFontOfSize:13.0f];
-    aboutLabel.textAlignment = NSTextAlignmentCenter;
-    aboutLabel.textColor = [UIColor darkGrayColor];
-
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    aboutLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Version %@ (%@)\nCopyright © 2014-2017 Christopher Reitz aka Stitch", nil),
-                       [infoDictionary objectForKey:@"CFBundleShortVersionString"],
-                       [infoDictionary objectForKey:@"CFBundleVersion"]];
-
-    self.tableView.tableFooterView = aboutLabel;
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-
-    [self.delegate settingsTableViewControllerDidFinish:self loginDataChanged:self.loginDataChanged];
-    [self.userDefaults synchronize];
-}
 - (void)testLogin
 {
     id <MCLTheme> theme = self.themeManager.currentTheme;
     NSString *username = self.settingsUsernameTextField.text;
     NSString *password = self.settingsPasswordTextField.text;
-    
+
     if (username.length > 0 && password.length > 0) {
         self.settingsLoginDataStatusLabel.textColor = [UIColor darkGrayColor];
         self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Verifying username and password…", nil);
@@ -138,7 +141,7 @@
 
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.settingsLoginDataStatusSpinner stopAnimating];
-                
+
                 if (mServiceError) {
                     self.settingsLoginDataStatusLabel.textColor = [theme warnTextColor];
 
@@ -158,6 +161,45 @@
         self.settingsLoginDataStatusLabel.textColor = [UIColor darkGrayColor];
         self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Please enter username and password", nil);
     }
+}
+
+-(void)configureSignatureSection
+{
+    if ([self.userDefaults objectForKey:@"signatureEnabled"] == nil) {
+        self.settingsSignatureEnabledSwitch.on = YES;
+        [self settingsSignatureEnabledSwitchValueChangedAction:self.settingsSignatureEnabledSwitch];
+    } else {
+        self.settingsSignatureEnabledSwitch.on = [self.userDefaults boolForKey:@"signatureEnabled"];
+    }
+    [self signatureTextViewEnabled:self.settingsSignatureEnabledSwitch.on];
+    self.settingsSignatureTextView.delegate = self;
+    self.settingsSignatureTextView.text = [self.userDefaults objectForKey:@"signature"] ?: kSettingsSignatureTextDefault;
+}
+
+-(void)configureAboutLabel
+{
+    UILabel *aboutLabel = [[UILabel alloc] init];
+    aboutLabel.numberOfLines = 2;
+    aboutLabel.font = [UIFont systemFontOfSize:13.0f];
+    aboutLabel.textAlignment = NSTextAlignmentCenter;
+    aboutLabel.textColor = [UIColor darkGrayColor];
+
+    NSString *aboutText = NSLocalizedString(@"Version %@ (%@)\nCopyright © 2014-2017 Christopher Reitz aka Stitch", nil);
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    aboutLabel.text = [NSString stringWithFormat:aboutText,
+                       [infoDictionary objectForKey:@"CFBundleShortVersionString"],
+                       [infoDictionary objectForKey:@"CFBundleVersion"]];
+
+    self.tableView.tableFooterView = aboutLabel;
+    [aboutLabel setNeedsLayout];
+    [aboutLabel layoutIfNeeded];
+    CGFloat height = [aboutLabel systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 40.0;
+
+    // Update the header's frame and set it again
+    CGRect headerFrame = aboutLabel.frame;
+    headerFrame.size.height = height;
+    aboutLabel.frame = headerFrame;
+    self.tableView.tableFooterView = aboutLabel;
 }
 
 - (void)signatureTextViewEnabled:(BOOL)enable

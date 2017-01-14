@@ -84,7 +84,6 @@
     [self configureWebView];
     [self configureToolbar];
     [self configureTableView];
-
 }
 
 -(void)viewWillAppear:(BOOL)animated

@@ -31,7 +31,7 @@
             <objects>
                 <tableViewController extendedLayoutIncludesOpaqueBars="YES" id="ecl-kD-BtA" customClass="MCLSettingsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="g3z-6x-fKe">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1100"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
@@ -112,13 +112,77 @@ Register at https://www.maniac-forum.de</string>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Night Mode" id="MNY-pr-L5C">
+                                <string key="footerTitle">Night mode can be enabled automatically at sunset, and disabled automatically at sunrise. To calculate the times you get asked for permission to gather location data. Location data is only ever gathered when you open the app - never in the background.</string>
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="JKJ-M4-cgD">
+                                        <rect key="frame" x="0.0" y="268" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JKJ-M4-cgD" id="PtB-ae-VVM">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DME-wj-tpS">
+                                                    <rect key="frame" x="18" y="11" width="290" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JRO-gI-ndV">
+                                                    <rect key="frame" x="313" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="nightModeEnabledSwitchValueChangedAction:" destination="ecl-kD-BtA" eventType="valueChanged" id="O2q-6D-0Eb"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="JRO-gI-ndV" firstAttribute="leading" secondItem="DME-wj-tpS" secondAttribute="trailing" constant="5" id="GoZ-4s-Ybc"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="JRO-gI-ndV" secondAttribute="trailing" constant="5" id="KWP-Nv-LX6"/>
+                                                <constraint firstItem="JRO-gI-ndV" firstAttribute="centerY" secondItem="PtB-ae-VVM" secondAttribute="centerY" id="OrN-Yx-CtH"/>
+                                                <constraint firstItem="DME-wj-tpS" firstAttribute="centerY" secondItem="PtB-ae-VVM" secondAttribute="centerY" id="RN7-Ur-4Pq"/>
+                                                <constraint firstItem="DME-wj-tpS" firstAttribute="leading" secondItem="PtB-ae-VVM" secondAttribute="leadingMargin" constant="10" id="VEC-Wd-vS3"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="yBh-ez-9eS">
+                                        <rect key="frame" x="0.0" y="312" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yBh-ez-9eS" id="m6p-iw-SvJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Switch Automatically" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQm-Bk-cad">
+                                                    <rect key="frame" x="18" y="11" width="290" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9HA-ik-cBI">
+                                                    <rect key="frame" x="313" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="nightModeAutomaticallySwitchValueChangedAction:" destination="ecl-kD-BtA" eventType="valueChanged" id="vQC-xs-uXW"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="9HA-ik-cBI" firstAttribute="leading" secondItem="xQm-Bk-cad" secondAttribute="trailing" constant="5" id="C9W-ri-dqT"/>
+                                                <constraint firstItem="9HA-ik-cBI" firstAttribute="centerY" secondItem="m6p-iw-SvJ" secondAttribute="centerY" id="eIV-SS-cX6"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="9HA-ik-cBI" secondAttribute="trailing" constant="5" id="iwr-H6-Fyd"/>
+                                                <constraint firstItem="xQm-Bk-cad" firstAttribute="leading" secondItem="m6p-iw-SvJ" secondAttribute="leadingMargin" constant="10" id="klF-Ua-9lY"/>
+                                                <constraint firstItem="xQm-Bk-cad" firstAttribute="centerY" secondItem="m6p-iw-SvJ" secondAttribute="centerY" id="s5v-s1-bRf"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="THREAD VIEW" id="7Km-hk-O45">
+                                <string key="footerTitle">You can choose between two different view Styles for the the thread view. Widmann style is inspired by the mobile web app and Frames is a more classical design.</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="f9O-BL-1yq">
-                                        <rect key="frame" x="0.0" y="261" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="496" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="f9O-BL-1yq" id="keN-GL-k2M">
-                                            <rect key="frame" x="0.0" y="0.0" width="336" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="336" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Widmann Style" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1uH-yH-PBJ">
@@ -136,10 +200,10 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="dah-XY-ZlQ">
-                                        <rect key="frame" x="0.0" y="305" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="540" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dah-XY-ZlQ" id="PEg-5j-Hs2">
-                                            <rect key="frame" x="0.0" y="0.0" width="336" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="336" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Frames" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="axW-gz-TjX">
@@ -161,7 +225,7 @@ Register at https://www.maniac-forum.de</string>
                             <tableViewSection id="dEF-CN-x0h">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="9FY-ow-Hyd">
-                                        <rect key="frame" x="0.0" y="369" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="656" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9FY-ow-Hyd" id="Uj9-fB-Jcg">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
@@ -194,7 +258,7 @@ Register at https://www.maniac-forum.de</string>
                             <tableViewSection id="OFC-Vq-dnO">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="XPl-DW-327" detailTextLabel="EAh-0C-O91" style="IBUITableViewCellStyleValue1" id="sd3-lJ-h8l">
-                                        <rect key="frame" x="0.0" y="433" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="720" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sd3-lJ-h8l" id="pks-My-a3W">
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
@@ -225,10 +289,10 @@ Register at https://www.maniac-forum.de</string>
                             <tableViewSection headerTitle="SHOW IMAGES" id="dxZ-Ml-7OB">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="A9x-a9-9zf">
-                                        <rect key="frame" x="0.0" y="526" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="813" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="A9x-a9-9zf" id="MO8-os-mCM">
-                                            <rect key="frame" x="0.0" y="0.0" width="336" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="336" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Always" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IbE-Ea-778">
@@ -246,10 +310,10 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="RRF-by-2V6">
-                                        <rect key="frame" x="0.0" y="570" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="857" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RRF-by-2V6" id="1yg-t3-vqi">
-                                            <rect key="frame" x="0.0" y="0.0" width="336" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="336" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Only in WiFI Network" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SxL-9L-Hxa">
@@ -267,10 +331,10 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="M0z-CT-3OR">
-                                        <rect key="frame" x="0.0" y="614" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="901" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M0z-CT-3OR" id="tMp-UC-PtB">
-                                            <rect key="frame" x="0.0" y="0.0" width="336" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="336" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Never" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vru-Zb-WEl">
@@ -289,76 +353,13 @@ Register at https://www.maniac-forum.de</string>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Night Mode" id="MNY-pr-L5C">
-                                <string key="footerTitle">Night mode can be enabled automatically at sunset, and disabled automatically at sunrise. To calculate the times you get asked for permission to gather location data. Location data is only ever gathered when you open the app - never in the background.</string>
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="JKJ-M4-cgD">
-                                        <rect key="frame" x="0.0" y="714" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JKJ-M4-cgD" id="PtB-ae-VVM">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DME-wj-tpS">
-                                                    <rect key="frame" x="18" y="11" width="290" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JRO-gI-ndV">
-                                                    <rect key="frame" x="313" y="6" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="nightModeEnabledSwitchValueChangedAction:" destination="ecl-kD-BtA" eventType="valueChanged" id="O2q-6D-0Eb"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="JRO-gI-ndV" firstAttribute="leading" secondItem="DME-wj-tpS" secondAttribute="trailing" constant="5" id="GoZ-4s-Ybc"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="JRO-gI-ndV" secondAttribute="trailing" constant="5" id="KWP-Nv-LX6"/>
-                                                <constraint firstItem="JRO-gI-ndV" firstAttribute="centerY" secondItem="PtB-ae-VVM" secondAttribute="centerY" id="OrN-Yx-CtH"/>
-                                                <constraint firstItem="DME-wj-tpS" firstAttribute="centerY" secondItem="PtB-ae-VVM" secondAttribute="centerY" id="RN7-Ur-4Pq"/>
-                                                <constraint firstItem="DME-wj-tpS" firstAttribute="leading" secondItem="PtB-ae-VVM" secondAttribute="leadingMargin" constant="10" id="VEC-Wd-vS3"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="yBh-ez-9eS">
-                                        <rect key="frame" x="0.0" y="758" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yBh-ez-9eS" id="m6p-iw-SvJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Switch Automatically" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQm-Bk-cad">
-                                                    <rect key="frame" x="18" y="11" width="290" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9HA-ik-cBI">
-                                                    <rect key="frame" x="313" y="6" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="nightModeAutomaticallySwitchValueChangedAction:" destination="ecl-kD-BtA" eventType="valueChanged" id="vQC-xs-uXW"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="9HA-ik-cBI" firstAttribute="leading" secondItem="xQm-Bk-cad" secondAttribute="trailing" constant="5" id="C9W-ri-dqT"/>
-                                                <constraint firstItem="9HA-ik-cBI" firstAttribute="centerY" secondItem="m6p-iw-SvJ" secondAttribute="centerY" id="eIV-SS-cX6"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="9HA-ik-cBI" secondAttribute="trailing" constant="5" id="iwr-H6-Fyd"/>
-                                                <constraint firstItem="xQm-Bk-cad" firstAttribute="leading" secondItem="m6p-iw-SvJ" secondAttribute="leadingMargin" constant="10" id="klF-Ua-9lY"/>
-                                                <constraint firstItem="xQm-Bk-cad" firstAttribute="centerY" secondItem="m6p-iw-SvJ" secondAttribute="centerY" id="s5v-s1-bRf"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection headerTitle="SIGNATURE" id="tY9-Fn-E9G">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5YV-zo-Yvu">
-                                        <rect key="frame" x="0.0" y="935" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="994" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5YV-zo-Yvu" id="Xeh-yv-fMc">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Signature enabled" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="itk-zT-27W">
@@ -384,10 +385,10 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="72" id="fFY-7R-rKU">
-                                        <rect key="frame" x="0.0" y="979" width="375" height="72"/>
+                                        <rect key="frame" x="0.0" y="1038" width="375" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fFY-7R-rKU" id="3ID-op-sJ9">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="71"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="amr-a4-IvD" customClass="MCLTextView">
@@ -423,7 +424,7 @@ Register at https://www.maniac-forum.de</string>
                         </barButtonItem>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="375" height="1100"/>
+                    <size key="freeformSize" width="375" height="1300"/>
                     <connections>
                         <outlet property="jumpToLatestMessageSwitch" destination="6Sj-nd-z3g" id="zFj-nJ-DtK"/>
                         <outlet property="nightModeAutomaticallySwitch" destination="9HA-ik-cBI" id="kz4-MV-VZG"/>
