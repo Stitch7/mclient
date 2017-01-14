@@ -63,6 +63,7 @@
     [container addConstraints:@"V:|[label]|" views:views];
     [container addConstraints:@"H:|[spinner]-5-[label]|" views:views];
 
+    self.container = container;
     self.spinner = spinner;
     self.label = label;
 }

@@ -7,6 +7,8 @@
 //
 
 #import "MCLVerifiyLoginView.h"
+
+#import "UIView+addConstraints.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
 
@@ -26,14 +28,24 @@
 
 - (void)loginStatusWithUsername:(NSString *)username
 {
-    [self.spinner stopAnimating];
+    [self hideSpinner];
     self.label.text = [NSString stringWithFormat:NSLocalizedString(@"Welcome %@", nil), username];
 }
 
 - (void)loginStatusNoLogin
 {
-    [self.spinner stopAnimating];
+    [self hideSpinner];
     self.label.text = NSLocalizedString(@"You are not logged in", nil);
+}
+
+-(void)hideSpinner
+{
+    [self.spinner stopAnimating];
+    [self.spinner removeFromSuperview];
+
+    UILabel *label = self.label;
+    NSDictionary *views = NSDictionaryOfVariableBindings(label);
+    [self.container addConstraints:@"H:|[label]|" views:views];
 }
 
 @end
