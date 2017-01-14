@@ -131,6 +131,7 @@
 		30E8B89619B33C070067DD1F /* MCLReadList.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89519B33C070067DD1F /* MCLReadList.m */; };
 		30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */; };
 		30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */; };
+		6501766D8063F5F642D79D11 /* libPods-mclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 064E0AFA20768528C9F3DBC4 /* libPods-mclient.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +145,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		064E0AFA20768528C9F3DBC4 /* libPods-mclient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mclient.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		30043B181E2A27B20047FBEB /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MCLThreadTableViewCell.xib; sourceTree = "<group>"; };
 		3012032A1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageListFrameStyleTableViewCell.h; sourceTree = "<group>"; };
@@ -315,6 +317,8 @@
 		30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLComposeMessageViewController.m; sourceTree = "<group>"; };
 		30EFDC0A19D422DE00E3EE31 /* MCLVerifiyLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLVerifiyLoginView.h; sourceTree = "<group>"; };
 		30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLVerifiyLoginView.m; sourceTree = "<group>"; };
+		454F27F65C44793D03FAD818 /* Pods-mclient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mclient.release.xcconfig"; path = "Pods/Target Support Files/Pods-mclient/Pods-mclient.release.xcconfig"; sourceTree = "<group>"; };
+		7A3554192111A6737A92E22B /* Pods-mclient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mclient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mclient/Pods-mclient.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,6 +330,7 @@
 				305DD81A19A63517006514BD /* CoreGraphics.framework in Frameworks */,
 				305DD81C19A63517006514BD /* UIKit.framework in Frameworks */,
 				305DD81819A63517006514BD /* Foundation.framework in Frameworks */,
+				6501766D8063F5F642D79D11 /* libPods-mclient.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,6 +386,7 @@
 				305DD81519A63517006514BD /* Products */,
 				305DD81D19A63517006514BD /* mclient */,
 				305DD84219A63517006514BD /* mclientTests */,
+				BCB4279C3A1D0A6F74251FD4 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -401,6 +407,7 @@
 				305DD81919A63517006514BD /* CoreGraphics.framework */,
 				305DD81B19A63517006514BD /* UIKit.framework */,
 				305DD83C19A63517006514BD /* XCTest.framework */,
+				064E0AFA20768528C9F3DBC4 /* libPods-mclient.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -642,6 +649,15 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		BCB4279C3A1D0A6F74251FD4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7A3554192111A6737A92E22B /* Pods-mclient.debug.xcconfig */,
+				454F27F65C44793D03FAD818 /* Pods-mclient.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -649,10 +665,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 305DD84C19A63517006514BD /* Build configuration list for PBXNativeTarget "mclient" */;
 			buildPhases = (
+				02D30F959A85419F39298EEF /* [CP] Check Pods Manifest.lock */,
 				305DD81019A63517006514BD /* Sources */,
 				305DD81119A63517006514BD /* Frameworks */,
 				305DD81219A63517006514BD /* Resources */,
 				3020A26919DCD01C007F46E2 /* ShellScript */,
+				75AA96FBFE5AD43607C0F231 /* [CP] Embed Pods Frameworks */,
+				309C004BDACC9202878B311D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -819,6 +838,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		02D30F959A85419F39298EEF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		3020A26919DCD01C007F46E2 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
@@ -831,6 +865,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# xcode-build-bump.sh\n# @desc Auto-increment the build number every time the project is run.\n# @usage\n# 1. Select: your Target in Xcode\n# 2. Select: Build Phases Tab\n# 3. Select: Add Build Phase -> Add Run Script\n# 4. Paste code below in to new \"Run Script\" section\n# 5. Drag the \"Run Script\" below \"Link Binaries With Libraries\"\n# 6. Insure that your starting build number is set to a whole integer and not a float (e.g. 1, not 1.0)\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
+		309C004BDACC9202878B311D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient/Pods-mclient-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		75AA96FBFE5AD43607C0F231 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient/Pods-mclient-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1041,6 +1105,7 @@
 		};
 		305DD84D19A63517006514BD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A3554192111A6737A92E22B /* Pods-mclient.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1061,6 +1126,7 @@
 		};
 		305DD84E19A63517006514BD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 454F27F65C44793D03FAD818 /* Pods-mclient.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

@@ -8,6 +8,7 @@
 
 #import "MCLAppDelegate.h"
 
+#import "EDSunriseSet.h"
 #import "MCLThemeManager.h"
 #import "MCLDefaultTheme.h"
 #import "MCLNightTheme.h"

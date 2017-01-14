@@ -1,0 +1,21 @@
+PODS:
+  - EDSunriseSet (2.0)
+
+DEPENDENCIES:
+  - EDSunriseSet (from `https://github.com/jelmerderonde/EDSunriseSet`)
+
+EXTERNAL SOURCES:
+  EDSunriseSet:
+    :git: https://github.com/jelmerderonde/EDSunriseSet
+
+CHECKOUT OPTIONS:
+  EDSunriseSet:
+    :commit: 659ae1418433104cc9c152c2760fd1884101ceba
+    :git: https://github.com/jelmerderonde/EDSunriseSet
+
+SPEC CHECKSUMS:
+  EDSunriseSet: 6cbe2d2405d3258f31e0c52c2f3e8b84dba65c53
+
+PODFILE CHECKSUM: 83f210e0171032ae849edcde7875df151b18adda
+
+COCOAPODS: 1.2.0.rc.1
