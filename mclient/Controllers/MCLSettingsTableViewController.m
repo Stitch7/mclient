@@ -244,7 +244,7 @@
     if (indexPath.section == fontSizeSection) {
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
-        cell.textLabel.text = @"Font Size"; // TODO: i18n
+//        cell.textLabel.text = NSLocalizedString(@"Font Size", nil);
 
 //        cell.detailTextLabel.textColor = [[self.themeManager currentTheme] detailTextColor];
         cell.detailTextLabel.textColor = [UIColor grayColor];
@@ -252,22 +252,22 @@
         NSInteger fontSize = [[NSUserDefaults standardUserDefaults] integerForKey:@"fontSize"];
         switch (fontSize) {
             case 1:
-                detailText = @"Tiny"; // TODO: i18n
+                detailText = NSLocalizedString(@"Tiny", nil);
                 break;
             case 2:
-                detailText = @"Small"; // TODO: i18n
+                detailText = NSLocalizedString(@"Small", nil);
                 break;
             case 3:
-                detailText = @"Normal"; // TODO: i18n
+                detailText = NSLocalizedString(@"Normal", nil);
                 break;
             case 4:
-                detailText = @"Big"; // TODO: i18n
+                detailText = NSLocalizedString(@"Big", nil);
                 break;
             case 5:
-                detailText = @"Bigger"; // TODO: i18n
+                detailText = NSLocalizedString(@"Bigger", nil);
                 break;
             case 6:
-                detailText = @"Huge"; // TODO: i18n
+                detailText = NSLocalizedString(@"Huge", nil);
                 break;
         }
         cell.detailTextLabel.text = detailText;

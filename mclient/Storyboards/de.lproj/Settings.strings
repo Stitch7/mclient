@@ -1,0 +1,69 @@
+
+/* Class = "UILabel"; text = "Widmann Style"; ObjectID = "1uH-yH-PBJ"; */
+"1uH-yH-PBJ.text" = "Widmann Style";
+
+/* Class = "UITableViewSection"; footerTitle = "You can choose between two different view Styles for the the thread view. Widmann style is inspired by the mobile web app and Frames is a more classical design."; ObjectID = "7Km-hk-O45"; */
+"7Km-hk-O45.footerTitle" = "Du kannst aus zwei verschiedenen Styles für die Thread Ansicht wählen. Widmann Style ist inspiriert von der mobilen Web App, Frames ist eine klassischere Variante.";
+
+/* Class = "UITableViewSection"; headerTitle = "THREAD VIEW"; ObjectID = "7Km-hk-O45"; */
+"7Km-hk-O45.headerTitle" = "THREAD ANSICHT";
+
+/* Class = "UILabel"; text = "Enable"; ObjectID = "DME-wj-tpS"; */
+"DME-wj-tpS.text" = "Aktivieren";
+
+/* Class = "UILabel"; text = "Jump to latest Post"; ObjectID = "F5e-Z8-s9N"; */
+"F5e-Z8-s9N.text" = "Zum letzten Post springen";
+
+/* Class = "UILabel"; text = "Always"; ObjectID = "IbE-Ea-778"; */
+"IbE-Ea-778.text" = "Immer";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "JAh-L7-Zeh"; */
+"JAh-L7-Zeh.title" = "Einstellungen";
+
+/* Class = "UILabel"; text = "loginDataStatusLabel"; ObjectID = "Kto-1S-ge8"; */
+"Kto-1S-ge8.text" = "loginDataStatusLabel";
+
+/* Class = "UILabel"; text = "Preview"; ObjectID = "L7R-UJ-uhd"; */
+"L7R-UJ-uhd.text" = "Vorschau";
+
+/* Class = "UITableViewSection"; footerTitle = "Night mode can be enabled automatically at sunset, and disabled automatically at sunrise. To calculate the times you get asked for permission to gather location data. Location data is only ever gathered when you open the app, never in the background."; ObjectID = "MNY-pr-L5C"; */
+"MNY-pr-L5C.footerTitle" = "Nacht-Modus kann bei Sonnenaufgang und Sonnenuntergang automatisch umgeschaltet werden. Um die Zeiten dafür zu berechnen, fragt Instacast deinen aktuellen Standort ab. Standortdaten werden nur gesammelt während du die App startest, niemals im Hintergrund.";
+
+/* Class = "UITableViewSection"; headerTitle = "Night Mode"; ObjectID = "MNY-pr-L5C"; */
+"MNY-pr-L5C.headerTitle" = "NACHT-MODUS";
+
+/* Class = "UILabel"; text = "Only in WiFI Network"; ObjectID = "SxL-9L-Hxa"; */
+"SxL-9L-Hxa.text" = "Nur wenn mit WLAN verbunden";
+
+/* Class = "UITextField"; placeholder = "Username"; ObjectID = "TXU-Eo-vnw"; */
+"TXU-Eo-vnw.placeholder" = "Benutzername";
+
+/* Class = "UILabel"; text = "Font Size"; ObjectID = "XPl-DW-327"; */
+"XPl-DW-327.text" = "Schriftgröße";
+
+/* Class = "UILabel"; text = "Frames"; ObjectID = "axW-gz-TjX"; */
+"axW-gz-TjX.text" = "Frames";
+
+/* Class = "UITableViewSection"; headerTitle = "SHOW IMAGES"; ObjectID = "dxZ-Ml-7OB"; */
+"dxZ-Ml-7OB.headerTitle" = "BILDER ANZEIGEN";
+
+/* Class = "UITableViewSection"; footerTitle = "Need an account? \nRegister at https://www.maniac-forum.de"; ObjectID = "h0H-z1-ncm"; */
+"h0H-z1-ncm.footerTitle" = "Du hast keinen Account?\nRegistrierung unter https://www.maniac-forum.de";
+
+/* Class = "UITableViewSection"; headerTitle = "LOGIN DATA"; ObjectID = "h0H-z1-ncm"; */
+"h0H-z1-ncm.headerTitle" = "LOGIN DATEN";
+
+/* Class = "UILabel"; text = "Signature enabled"; ObjectID = "itk-zT-27W"; */
+"itk-zT-27W.text" = "Signatur aktiviert";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "kcH-Od-HC7"; */
+"kcH-Od-HC7.placeholder" = "Passwort";
+
+/* Class = "UITableViewSection"; headerTitle = "SIGNATURE"; ObjectID = "tY9-Fn-E9G"; */
+"tY9-Fn-E9G.headerTitle" = "SIGNATUR";
+
+/* Class = "UILabel"; text = "Never"; ObjectID = "vru-Zb-WEl"; */
+"vru-Zb-WEl.text" = "Nie";
+
+/* Class = "UILabel"; text = "Switch Automatically"; ObjectID = "xQm-Bk-cad"; */
+"xQm-Bk-cad.text" = "Automatisch umschalten";

@@ -113,7 +113,7 @@ Register at https://www.maniac-forum.de</string>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Night Mode" id="MNY-pr-L5C">
-                                <string key="footerTitle">Night mode can be enabled automatically at sunset, and disabled automatically at sunrise. To calculate the times you get asked for permission to gather location data. Location data is only ever gathered when you open the app - never in the background.</string>
+                                <string key="footerTitle">Night mode can be enabled automatically at sunset, and disabled automatically at sunrise. To calculate the times you get asked for permission to gather location data. Location data is only ever gathered when you open the app, never in the background.</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="JKJ-M4-cgD">
                                         <rect key="frame" x="0.0" y="268" width="375" height="44"/>
@@ -176,7 +176,7 @@ Register at https://www.maniac-forum.de</string>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="THREAD VIEW" id="7Km-hk-O45">
-                                <string key="footerTitle">You can choose between two different view Styles for the the thread view. Widmann style is inspired by the mobile web app and Frames is a more classical design.</string>
+                                <string key="footerTitle">You can choose between two different view styles for the the thread view. Widmann style is inspired by the mobile web app and Frames is a more classical design.</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="f9O-BL-1yq">
                                         <rect key="frame" x="0.0" y="496" width="375" height="44"/>
@@ -264,8 +264,8 @@ Register at https://www.maniac-forum.de</string>
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XPl-DW-327">
-                                                    <rect key="frame" x="15" y="11" width="34" height="21"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Font Size" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XPl-DW-327">
+                                                    <rect key="frame" x="15" y="11" width="71" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>

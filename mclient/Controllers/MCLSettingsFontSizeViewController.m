@@ -41,7 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.title = @"Setup Font Size"; // TODO: i18n
+    self.title = NSLocalizedString(@"Setup Font Size", nil);
     self.view.backgroundColor = [self.currentTheme backgroundColor];
 
     [self configureNavigationBar];
@@ -54,7 +54,7 @@
 
 - (void)configureNavigationBar
 {
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Reset"
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Reset", nil)
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(resetButtonPressed:)];
