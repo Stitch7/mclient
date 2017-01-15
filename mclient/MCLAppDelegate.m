@@ -47,17 +47,32 @@
 
 -(void)initiliazeSunrise
 {
-    [self.locationManager startUpdatingLocation];
-    [self.locationManager requestWhenInUseAuthorization];
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
+        self.sunrise = [[NSDateComponents alloc] init];
+        self.sunrise.hour = 8;
+        self.sunrise.minute = 0;
+        self.sunrise.second = 0;
 
-    EDSunriseSet *sunriseSet = [EDSunriseSet sunrisesetWithDate:[NSDate date]
-                                                       timezone:[NSTimeZone localTimeZone]
-                                                       latitude:self.locationManager.location.coordinate.latitude
-                                                      longitude:self.locationManager.location.coordinate.longitude];
-    self.sunrise = sunriseSet.localSunrise;
-    self.sunset = sunriseSet.localSunset;
+        self.sunset = [[NSDateComponents alloc] init];
+        self.sunset.hour = 20;
+        self.sunset.minute = 0;
+        self.sunset.second = 0;
+    }
+    else {
+        [self.locationManager startUpdatingLocation];
+        [self.locationManager requestWhenInUseAuthorization];
 
-    [self.locationManager stopUpdatingLocation];
+        double latitude = self.locationManager.location.coordinate.latitude;
+        double longitude = self.locationManager.location.coordinate.longitude;
+        EDSunriseSet *sunriseSet = [EDSunriseSet sunrisesetWithDate:[NSDate date]
+                                                           timezone:[NSTimeZone localTimeZone]
+                                                           latitude:latitude
+                                                          longitude:longitude];
+        self.sunrise = sunriseSet.localSunrise;
+        self.sunset = sunriseSet.localSunset;
+
+        [self.locationManager stopUpdatingLocation];
+    }
 }
 
 -(void)initiliazeTheme
@@ -93,19 +108,19 @@
     NSLog(@"sunset: %@", self.sunset);
     // --------------------
 
-    if (now.hour >= self.sunrise.hour && now.minute >= self.sunrise.minute && now.second >= self.sunrise.second) {
-        if ([userDefaults integerForKey:@"theme"] != kMCLThemeDefault) {
-            [themeManager applyTheme:[[MCLDefaultTheme alloc] init]];
-            [userDefaults setInteger:kMCLThemeDefault forKey:@"theme"];
+    if (now.hour >= self.sunset.hour && now.minute >= self.sunset.minute && now.second >= self.sunset.second) {
+        if ([userDefaults integerForKey:@"theme"] != kMCLThemeNight) {
+            [themeManager applyTheme:[[MCLNightTheme alloc] init]];
+            [userDefaults setInteger:kMCLThemeNight forKey:@"theme"];
 
             return YES;
         }
     }
 
-    if (now.hour >= self.sunset.hour && now.minute >= self.sunset.minute && now.second >= self.sunset.second) {
-        if ([userDefaults integerForKey:@"theme"] != kMCLThemeNight) {
-            [themeManager applyTheme:[[MCLNightTheme alloc] init]];
-            [userDefaults setInteger:kMCLThemeNight forKey:@"theme"];
+    if (now.hour >= self.sunrise.hour && now.minute >= self.sunrise.minute && now.second >= self.sunrise.second) {
+        if ([userDefaults integerForKey:@"theme"] != kMCLThemeDefault) {
+            [themeManager applyTheme:[[MCLDefaultTheme alloc] init]];
+            [userDefaults setInteger:kMCLThemeDefault forKey:@"theme"];
 
             return YES;
         }
