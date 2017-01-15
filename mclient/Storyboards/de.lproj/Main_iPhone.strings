@@ -1,0 +1,24 @@
+
+/* Class = "UINavigationItem"; title = "Boards"; ObjectID = "tQt-TN-PWz"; */
+"tQt-TN-PWz.title" = "Boards";
+
+/* Class = "UINavigationItem"; title = "Threads"; ObjectID = "zEH-Pw-wuE"; */
+"zEH-Pw-wuE.title" = "Threads";
+
+/* Class = "UILabel"; text = "Subject:"; ObjectID = "PQv-Cr-prB"; */
+"PQv-Cr-prB.text" = "Betreff:";
+
+/* Class = "UIBarButtonItem"; title = "Preview"; ObjectID = "RXe-Zd-aaP"; */
+"RXe-Zd-aaP.title" = "Vorschau";
+
+/* Class = "UIBarButtonItem"; title = "Send"; ObjectID = "4lL-Fh-1Y6"; */
+"4lL-Fh-1Y6.title" = "Senden";
+
+/* Class = "UILabel"; text = "Enable email notification"; ObjectID = "6xh-Ju-b16"; */
+"6xh-Ju-b16.text" = "Mailbenachrichtigung?";
+
+/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "1e9-4e-zb2"; */
+"1e9-4e-zb2.title" = "Editieren";
+
+/* Class = "UINavigationItem"; title = "Profile"; ObjectID = "240-7X-jUo"; */
+"240-7X-jUo.title" = "Profil";

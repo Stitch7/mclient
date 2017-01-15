@@ -182,7 +182,6 @@
 		3036F59A1E266B3800ABC2CE /* MCLNightTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLNightTheme.m; sourceTree = "<group>"; };
 		3036F59C1E26798E00ABC2CE /* MCLDefaultTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLDefaultTheme.h; sourceTree = "<group>"; };
 		3036F59D1E26798E00ABC2CE /* MCLDefaultTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLDefaultTheme.m; sourceTree = "<group>"; };
-		3038D57F19F65E0C005E7D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		3038D58119F65E0C005E7D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3038D58219F65E0D005E7D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3038D58419F65E21005E7D3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -255,6 +254,8 @@
 		30849D1E1E2B8CB500626331 /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
 		30849D211E2BABBD00626331 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		30849D241E2BABFC00626331 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Settings.strings; sourceTree = "<group>"; };
+		30849D261E2BBD4300626331 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
+		30849D2A1E2BBED200626331 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		3086428319D18ED10027F932 /* messageIndention@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messageIndention@2x.png"; sourceTree = "<group>"; };
 		3086428719D2D6CE0027F932 /* MCLMessageTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageTextView.h; sourceTree = "<group>"; };
 		3086428819D2D6CE0027F932 /* MCLMessageTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageTextView.m; sourceTree = "<group>"; };
@@ -995,6 +996,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				305DD82A19A63517006514BD /* Base */,
+				30849D261E2BBD4300626331 /* de */,
 			);
 			name = Main_iPhone.storyboard;
 			path = .;
@@ -1004,7 +1006,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				305DD82D19A63517006514BD /* Base */,
-				3038D57F19F65E0C005E7D3D /* de */,
+				30849D2A1E2BBED200626331 /* de */,
 			);
 			name = Main_iPad.storyboard;
 			path = .;
