@@ -49,7 +49,7 @@
 
 - (UIColor *)detailTextColor
 {
-    return [UIColor blackColor];
+    return [UIColor darkGrayColor];
 }
 
 - (UIColor *)overlayTextColor
@@ -58,6 +58,11 @@
 }
 
 - (UIColor *)usernameTextColor
+{
+    return [UIColor blackColor];
+}
+
+- (UIColor *)ownUsernameTextColor
 {
     return self.royalBlueColor;
 }

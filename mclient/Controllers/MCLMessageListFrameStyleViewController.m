@@ -125,8 +125,7 @@
                             }];
                         }
                     }
-                    // else, select first message
-                    else {
+                    else { // else, select first message
                         NSIndexPath *indexPathOfFirstMessage = [NSIndexPath indexPathForRow:0 inSection:0];
                         [self.tableView selectRowAtIndexPath:indexPathOfFirstMessage
                                                     animated:NO
@@ -402,14 +401,14 @@
 
     cell.messageUsernameLabel.text = message.username;
     if ([message.username isEqualToString:self.username]) {
-        cell.messageUsernameLabel.textColor = [self.currentTheme usernameTextColor];
+        cell.messageUsernameLabel.textColor = [self.currentTheme ownUsernameTextColor];
     } else if (message.isMod) {
         cell.messageUsernameLabel.textColor = [self.currentTheme modTextColor];
     } else {
-        cell.messageUsernameLabel.textColor = [self.currentTheme detailTextColor];
+        cell.messageUsernameLabel.textColor = [self.currentTheme usernameTextColor];
     }
 
-    cell.messageDateLabel.text = [NSString stringWithFormat:@" - %@", [self.dateFormatter stringFromDate:message.date]];
+    cell.messageDateLabel.text = [self.dateFormatter stringFromDate:message.date];
     cell.messageDateLabel.textColor = [self.currentTheme detailTextColor];
 
     if (i == 0 || [self.readList messageIdIsRead:message.messageId fromThread:self.thread]) {

@@ -11,6 +11,7 @@
 @interface MCLNightTheme()
 
 @property (strong, nonatomic) UIColor *royalBlueColor;
+@property (strong, nonatomic) UIColor *silverColor;
 @property (strong, nonatomic) UIColor *grayColor;
 @property (strong, nonatomic) UIColor *darkGrayColor;
 @property (strong, nonatomic) UIColor *totalDarkGrayColor;
@@ -24,6 +25,7 @@
 {
     if (self = [super init]) {
         self.royalBlueColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0];
+        self.silverColor = [UIColor colorWithRed:0.93 green:0.94 blue:0.95 alpha:1.0];
         self.grayColor = [UIColor colorWithRed:0.20 green:0.20 blue:0.20 alpha:1.0];
         self.darkGrayColor = [UIColor colorWithRed:0.56 green:0.56 blue:0.58 alpha:1.0];
         self.totalDarkGrayColor = [UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0];
@@ -66,6 +68,11 @@
 }
 
 - (UIColor *)usernameTextColor
+{
+    return self.silverColor;
+}
+
+- (UIColor *)ownUsernameTextColor
 {
     return self.royalBlueColor;
 }

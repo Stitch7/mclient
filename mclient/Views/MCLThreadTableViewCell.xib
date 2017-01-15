@@ -30,8 +30,8 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="54B-cN-ZIH">
-                        <rect key="frame" x="76" y="33" width="29" height="16"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <rect key="frame" x="81" y="33" width="26.5" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -54,21 +54,21 @@
                         </constraints>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="isSticky.png" translatesAutoresizingMaskIntoConstraints="NO" id="xEb-Vm-qQ0">
-                        <rect key="frame" x="112" y="36" width="10" height="10"/>
+                        <rect key="frame" x="114.5" y="36" width="10" height="10"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="4N3-3K-b9T"/>
                             <constraint firstAttribute="width" constant="10" id="OC0-mB-uJZ"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="isClosed.png" translatesAutoresizingMaskIntoConstraints="NO" id="ayY-li-Xhv">
-                        <rect key="frame" x="112" y="36" width="10" height="10"/>
+                        <rect key="frame" x="114.5" y="36" width="10" height="10"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="Fr3-QV-3in"/>
                             <constraint firstAttribute="width" constant="10" id="PkE-Qa-jLk"/>
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jkg-Ej-QWJ" customClass="MCLReadSymbolView">
-                        <rect key="frame" x="128" y="37.5" width="8" height="8"/>
+                        <rect key="frame" x="130.5" y="37.5" width="8" height="8"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="8" id="8Kf-kY-LuK"/>
@@ -82,7 +82,7 @@
                     <constraint firstItem="UQX-Jv-GUa" firstAttribute="leading" secondItem="VA8-cC-iBl" secondAttribute="leading" constant="10" id="6qW-5G-6WR"/>
                     <constraint firstAttribute="bottom" secondItem="UQX-Jv-GUa" secondAttribute="bottom" constant="10.5" id="7Ao-4S-Avz"/>
                     <constraint firstAttribute="bottom" secondItem="ayY-li-Xhv" secondAttribute="bottom" constant="13" id="Cx0-XN-hue"/>
-                    <constraint firstItem="54B-cN-ZIH" firstAttribute="leading" secondItem="UQX-Jv-GUa" secondAttribute="trailing" id="Ecu-n2-aTd"/>
+                    <constraint firstItem="54B-cN-ZIH" firstAttribute="leading" secondItem="UQX-Jv-GUa" secondAttribute="trailing" constant="5" id="Ecu-n2-aTd"/>
                     <constraint firstItem="Jkg-Ej-QWJ" firstAttribute="leading" secondItem="54B-cN-ZIH" secondAttribute="trailing" constant="23" id="JFu-m0-dsE"/>
                     <constraint firstAttribute="bottom" secondItem="xEb-Vm-qQ0" secondAttribute="bottom" constant="13" id="JTK-UJ-P1O"/>
                     <constraint firstAttribute="bottom" secondItem="AEi-FQ-ztU" secondAttribute="bottom" constant="7" id="KVf-f2-QEF"/>

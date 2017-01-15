@@ -356,14 +356,14 @@
 
     cell.messageUsernameLabel.text = message.username;
     if ([message.username isEqualToString:self.username]) {
-        cell.messageUsernameLabel.textColor = [self.currentTheme usernameTextColor];
+        cell.messageUsernameLabel.textColor = [self.currentTheme ownUsernameTextColor];
     } else if (message.isMod) {
         cell.messageUsernameLabel.textColor = [self.currentTheme modTextColor];
     } else {
-        cell.messageUsernameLabel.textColor = [self.currentTheme detailTextColor];
+        cell.messageUsernameLabel.textColor = [self.currentTheme usernameTextColor];
     }
     
-    cell.messageDateLabel.text = [NSString stringWithFormat:@" - %@", [self.dateFormatter stringFromDate:message.date]];
+    cell.messageDateLabel.text = [self.dateFormatter stringFromDate:message.date];
     cell.messageDateLabel.textColor = [self.currentTheme detailTextColor];
 
     [cell.messageTextWebView setNavigationDelegate:self];

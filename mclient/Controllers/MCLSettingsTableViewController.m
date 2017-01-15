@@ -244,10 +244,8 @@
     if (indexPath.section == fontSizeSection) {
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
-//        cell.textLabel.text = NSLocalizedString(@"Font Size", nil);
 
-//        cell.detailTextLabel.textColor = [[self.themeManager currentTheme] detailTextColor];
-        cell.detailTextLabel.textColor = [UIColor grayColor];
+        cell.detailTextLabel.textColor = [[self.themeManager currentTheme] detailTextColor];
         NSString *detailText;
         NSInteger fontSize = [[NSUserDefaults standardUserDefaults] integerForKey:@"fontSize"];
         switch (fontSize) {

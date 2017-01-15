@@ -295,14 +295,14 @@
 
     cell.threadUsernameLabel.text = thread.username;
     if ([thread.username isEqualToString:self.username]) {
-        cell.threadUsernameLabel.textColor = [self.currentTheme usernameTextColor];
+        cell.threadUsernameLabel.textColor = [self.currentTheme ownUsernameTextColor];
     } else if (thread.isMod) {
         cell.threadUsernameLabel.textColor = [self.currentTheme modTextColor];
     } else {
-        cell.threadUsernameLabel.textColor = [self.currentTheme detailTextColor];
+        cell.threadUsernameLabel.textColor = [self.currentTheme usernameTextColor];
     }
     
-    cell.threadDateLabel.text = [NSString stringWithFormat:@" - %@", [self.dateFormatterForOutput stringFromDate:thread.date]];
+    cell.threadDateLabel.text = [self.dateFormatterForOutput stringFromDate:thread.date];
     cell.threadDateLabel.textColor = [self.currentTheme detailTextColor];
     
     if ([self.readList messageIdIsRead:thread.messageId fromThread:thread] || thread.isClosed) {

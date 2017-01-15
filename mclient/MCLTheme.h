@@ -17,6 +17,7 @@
 - (UIColor *)detailTextColor;
 - (UIColor *)overlayTextColor;
 - (UIColor *)usernameTextColor;
+- (UIColor *)ownUsernameTextColor;
 - (UIColor *)modTextColor;
 - (UIColor *)successTextColor;
 - (UIColor *)warnTextColor;
