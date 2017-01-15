@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface MCLAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) NSDate *sunrise;
-@property (strong, nonatomic) NSDate *sunset;
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) NSDateComponents *sunrise;
+@property (strong, nonatomic) NSDateComponents *sunset;
 
 @end

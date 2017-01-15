@@ -431,6 +431,14 @@
 {
     [self.userDefaults setBool:sender.on forKey:@"nightModeAutomatically"];
     [self.userDefaults synchronize];
+
+    if (sender.on) {
+        // Trigger dialog asking for location permission
+        MCLAppDelegate *app = (MCLAppDelegate *)[[UIApplication sharedApplication] delegate];
+        [app.locationManager startUpdatingLocation];
+        [app.locationManager requestWhenInUseAuthorization];
+        [app.locationManager stopUpdatingLocation];
+    }
 }
 
 #pragma mark - Navigation

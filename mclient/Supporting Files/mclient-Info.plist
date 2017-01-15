@@ -25,7 +25,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2608</string>
+	<string>2642</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -35,6 +35,8 @@
 		<key>NSAllowsArbitraryLoadsInWebContent</key>
 		<true/>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Benötige deinen Standort um die Zeit des Sonnenaufgangs und Sonnenuntergangs zu berechnen.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>Main_iPhone</string>
 	<key>UIMainStoryboardFile</key>
