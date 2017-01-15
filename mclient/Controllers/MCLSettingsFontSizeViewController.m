@@ -91,6 +91,7 @@
 {
     [self.webView addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.frame]];
     self.webView.delegate = self;
+    self.webView.opaque = NO;
     self.webView.backgroundColor = [self.currentTheme webViewBackgroundColor];
 }
 

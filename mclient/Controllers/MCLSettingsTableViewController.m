@@ -8,6 +8,7 @@
 #import "MCLSettingsTableViewController.h"
 
 #import "constants.h"
+#import "MCLAppDelegate.h"
 #import "KeychainItemWrapper.h"
 #import "MCLMServiceConnector.h"
 #import "MCLThemeManager.h"

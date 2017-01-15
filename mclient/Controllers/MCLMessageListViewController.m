@@ -9,6 +9,7 @@
 #import "MCLMessageListViewController.h"
 
 #import "utils.h"
+#import "UIColor+Hex.h"
 #import "MCLThread.h"
 #import "MCLBoard.h"
 #import "MCLThemeManager.h"
@@ -21,8 +22,8 @@
 {
     NSInteger fontSizeValue = [[NSUserDefaults standardUserDefaults] integerForKey:@"fontSize"];
     NSString *fontSize = [NSString stringWithFormat:@"%lipx", fontSizeValue + 11];
-    NSString *backgroundColor = [currentTheme isDark] ? @"#000" : @"#fff";
     NSString *textColor = [currentTheme isDark] ? @"#fff" : @"#000";
+    NSString *linkColor = [[currentTheme tintColor] cssString];
 
     return [NSString stringWithFormat:@""
             "<html>"
@@ -46,12 +47,12 @@
             "    body {"
             "        margin: %ipx 20px 10px 20px;"
             "        padding: 0px;"
-            "        background-color: %@;"
+            "        background-color: transparent;"
             "        color: %@;"
             "    }"
             "    a {"
             "        word-break: break-all;"
-            "        color: #007aff;"
+            "        color: %@;"
             "    }"
             "    img {"
             "        max-width: 100%%;"
@@ -63,7 +64,7 @@
             "</style>"
             "</head>"
             "<body>%@</body>"
-            "</html>", fontSize, topMargin, backgroundColor, textColor, html];
+            "</html>", fontSize, topMargin, textColor, linkColor, html];
 }
 
 - (void)viewDidLoad

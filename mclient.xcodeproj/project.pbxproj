@@ -76,6 +76,7 @@
 		307A80F119B8804F001B538D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307A80F019B8804F001B538D /* Security.framework */; };
 		307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D797519B0B3B30096A217 /* MCLReadSymbolView.m */; };
 		30849D1C1E2AA40900626331 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30849D1B1E2AA40900626331 /* CoreLocation.framework */; };
+		30849D1F1E2B8CB500626331 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 30849D1E1E2B8CB500626331 /* UIColor+Hex.m */; };
 		3086428419D18ED10027F932 /* messageIndention@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3086428319D18ED10027F932 /* messageIndention@2x.png */; };
 		3086428919D2D6CE0027F932 /* MCLMessageTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3086428819D2D6CE0027F932 /* MCLMessageTextView.m */; };
 		308EC3D819CC4DE800A0869F /* MCLMessageListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 308EC3D619CC4DE800A0869F /* MCLMessageListViewController.m */; };
@@ -252,6 +253,8 @@
 		307D797419B0B3B30096A217 /* MCLReadSymbolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadSymbolView.h; sourceTree = "<group>"; };
 		307D797519B0B3B30096A217 /* MCLReadSymbolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadSymbolView.m; sourceTree = "<group>"; };
 		30849D1B1E2AA40900626331 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		30849D1D1E2B8C6C00626331 /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
+		30849D1E1E2B8CB500626331 /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
 		3086428319D18ED10027F932 /* messageIndention@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messageIndention@2x.png"; sourceTree = "<group>"; };
 		3086428719D2D6CE0027F932 /* MCLMessageTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageTextView.h; sourceTree = "<group>"; };
 		3086428819D2D6CE0027F932 /* MCLMessageTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageTextView.m; sourceTree = "<group>"; };
@@ -369,6 +372,8 @@
 			children = (
 				3039748E1E16B083003C8BC9 /* UIView+addConstraints.h */,
 				3039748F1E16B083003C8BC9 /* UIView+addConstraints.m */,
+				30849D1D1E2B8C6C00626331 /* UIColor+Hex.h */,
+				30849D1E1E2B8CB500626331 /* UIColor+Hex.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -909,6 +914,7 @@
 			files = (
 				301203311E031D7500B06FF6 /* MCLBadgeView.m in Sources */,
 				305DD86019AB3031006514BD /* MCLThread.m in Sources */,
+				30849D1F1E2B8CB500626331 /* UIColor+Hex.m in Sources */,
 				3039748D1E16A1F4003C8BC9 /* MCLMessageListWidmannStyleTableViewCell.m in Sources */,
 				308EC3D819CC4DE800A0869F /* MCLMessageListViewController.m in Sources */,
 				3086428919D2D6CE0027F932 /* MCLMessageTextView.m in Sources */,
