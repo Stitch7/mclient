@@ -67,12 +67,31 @@
             "</html>", fontSize, topMargin, textColor, linkColor, html];
 }
 
+#pragma mark - Initializers
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - UIViewController
+
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
     [self configureTitle];
+    [self themeChanged:nil];
 }
 
 - (void)configureTitle
@@ -82,7 +101,6 @@
     label.numberOfLines = 2;
     label.font = [UIFont boldSystemFontOfSize: 15.0f];
     label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [self.currentTheme navigationBarTextColor];
     label.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
 
     self.titleLabel = label;
@@ -100,16 +118,9 @@
     self.titleLabel.attributedText = attributedString;
 }
 
-# pragma mark - Abstract
-
-- (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard
-{
-    mustOverride();
-}
-
 #pragma mark - SplitViewButtonHandler
 
--(void) turnSplitViewButtonOn: (UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *) popoverController
+- (void) turnSplitViewButtonOn: (UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *) popoverController
 {
     NSString *activeDetailViewControllerClassName = NSStringFromClass([[[[self.splitViewController.viewControllers lastObject] viewControllers] firstObject] class]);
 
@@ -124,14 +135,14 @@
     self.masterPopoverController = popoverController;
 }
 
--(void)turnSplitViewButtonOff {
+- (void)turnSplitViewButtonOff {
     // Called when the view is shown again in the split view, invalidating the button and popover controller.
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     _splitViewButton = nil;
     self.masterPopoverController = nil;
 }
 
--(void) setSplitViewButton:(UIBarButtonItem *)splitViewButton forPopoverController:(UIPopoverController *)popoverController {
+- (void) setSplitViewButton:(UIBarButtonItem *)splitViewButton forPopoverController:(UIPopoverController *)popoverController {
     if (splitViewButton != _splitViewButton) {
         if (splitViewButton) {
             [self turnSplitViewButtonOn:splitViewButton forPopoverController:popoverController];
@@ -139,6 +150,22 @@
             [self turnSplitViewButtonOff];
         }
     }
+}
+
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+
+    self.titleLabel.textColor = [self.currentTheme navigationBarTextColor];
+}
+
+# pragma mark - Abstract
+
+- (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard
+{
+    mustOverride();
 }
 
 @end

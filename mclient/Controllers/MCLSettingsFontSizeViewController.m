@@ -19,6 +19,8 @@
 @property (strong, nonatomic) NSUserDefaults *userDefaults;
 @property (nonatomic) float lastSliderValue;
 
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *topContainerView;
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *bottomContainerView;
 @property (weak, nonatomic) IBOutlet UISlider *slider;
 @property (weak, nonatomic) IBOutlet UIImageView *fontDecreaseImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *fontIncreaseImageView;
@@ -30,9 +32,23 @@
 
 #define DEFAULT_FONT_SIZE 3.0f;
 
+#pragma mark - Initializers
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - UIViewController
+
 -(void)awakeFromNib
 {
     [super awakeFromNib];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
 
     self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
     self.userDefaults = [NSUserDefaults standardUserDefaults];
@@ -42,13 +58,12 @@
     [super viewDidLoad];
 
     self.title = NSLocalizedString(@"Setup Font Size", nil);
-    self.view.backgroundColor = [self.currentTheme backgroundColor];
 
     [self configureNavigationBar];
     [self configureSlider];
     [self configureWebView];
 
-    [self loadPreviewMessage];
+    [self themeChanged:nil];
 }
 
 
@@ -82,9 +97,6 @@
 
     self.fontDecreaseImageView.image = [self.fontDecreaseImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     self.fontIncreaseImageView.image = [self.fontIncreaseImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-
-    self.fontDecreaseImageView.tintColor = [self.currentTheme textColor];
-    self.fontIncreaseImageView.tintColor = [self.currentTheme textColor];
 }
 
 - (void)configureWebView
@@ -92,7 +104,6 @@
     [self.webView addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.frame]];
     self.webView.delegate = self;
     self.webView.opaque = NO;
-    self.webView.backgroundColor = [self.currentTheme webViewBackgroundColor];
 }
 
 #pragma mark - UIWebViewDelegate
@@ -121,7 +132,6 @@
     if (newValue != self.lastSliderValue) {
         self.lastSliderValue = newValue;
         [self.userDefaults setInteger:(int)newValue forKey:@"fontSize"];
-        [self.userDefaults synchronize];
 
         [self loadPreviewMessage];
         [self.delegate settingsFontSizeViewController:self fontSizeChanged:newValue];
@@ -133,9 +143,24 @@
 -(void)loadPreviewMessage
 {
     NSString *previewText = [MCLMessageListViewController messageHtmlSkeletonForHtml:[self seamanDiaryPostingText]
-                                                                       withTopMargin:0
+                                                                       withTopMargin:55
                                                                             andTheme:self.currentTheme];
     [self.webView loadHTMLString:previewText baseURL:nil];
+}
+
+
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+
+    self.view.backgroundColor = [self.currentTheme backgroundColor];
+
+    self.fontDecreaseImageView.tintColor = [self.currentTheme textColor];
+    self.fontIncreaseImageView.tintColor = [self.currentTheme textColor];
+
+    [self loadPreviewMessage];
 }
 
 #pragma mark - Static data

@@ -45,17 +45,15 @@
 		_subLabel = [[UILabel alloc] initWithFrame:self.bounds];
 		_subLabel.font = [UIFont systemFontOfSize:SUB_LABEL_SIZE];
 	}
+    
 	return _subLabel;
 }
-
 
 #pragma mark - Initializers
 
 - (id)initWithFrame:(CGRect)frame
 {
 	if (self = [super initWithFrame:frame]) {
-        // TODO: Why does UIAppearance not work here?
-        self.subLabel.textColor = [[[MCLThemeManager sharedManager] currentTheme] overlayTextColor];
         [self configureWithSubLabelText:NSLocalizedString(@"Select a thread…", nil)];
 	}
 
@@ -71,8 +69,18 @@
 	return self;
 }
 
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)configureWithSubLabelText:(NSString *)subLabelText
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
+    
     self.subLabel.text = subLabelText;
 
     [self addSubview:self.image];
@@ -80,6 +88,8 @@
 
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self setNeedsLayout];
+
+    [self themeChanged:nil];
 }
 
 #pragma mark - Layout Management
@@ -96,7 +106,6 @@
 	subLabelFrame.size = subLabelSize;
 	self.subLabel.frame = subLabelFrame;
 
-
 	// Align label and spinner horizontaly
 	CGRect imageFrame = self.image.frame;
 
@@ -110,6 +119,14 @@
     // Pass back modiefied frames
 	self.image.frame = imageFrame;
     self.subLabel.frame = subLabelFrame;
+}
+
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    // TODO: Why does UIAppearance not work here?
+    self.subLabel.textColor = [[[MCLThemeManager sharedManager] currentTheme] overlayTextColor];
 }
 
 @end

@@ -17,7 +17,6 @@
 
 @interface MCLComposeMessageViewController ()
 
-@property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *composePreviewButton;
 @property (weak, nonatomic) IBOutlet UIButton *composeQuoteButton;
 @property (weak, nonatomic) IBOutlet UILabel *composeSubjectLabel;
@@ -31,13 +30,28 @@
 
 #define SUBJECT_MAXLENGTH 56
 
+#pragma mark - Initializers
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - UIViewController
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
-
-    self.view.backgroundColor = [self.currentTheme backgroundColor];
 
     // Subject label color like in Apple Mail
     self.composeSubjectLabel.textColor = [UIColor colorWithRed:142/255.0f green:142/255.0f blue:147/255.0f alpha:1.0f];
@@ -73,12 +87,12 @@
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
         [self.composeSubjectTextField becomeFirstResponder];
     }
-
-    self.composeSeparatorView.backgroundColor = [self.currentTheme tableViewSeparatorColor];
     
     if (self.text) {
         self.composeTextTextField.text = self.text;
     }
+
+    [self themeChanged:nil];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -140,7 +154,6 @@
     return shouldChangeCharacters;
 }
 
-
 #pragma mark - Actions
 
 - (IBAction)quoteButtonTouchUpInside:(UIButton *)sender
@@ -173,6 +186,15 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    id <MCLTheme> currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+
+    self.view.backgroundColor = [currentTheme backgroundColor];
+    self.composeSeparatorView.backgroundColor = [currentTheme tableViewSeparatorColor];
+}
 
  #pragma mark - Navigation
 

@@ -42,9 +42,23 @@
 
 @implementation MCLThreadListTableViewController
 
+#pragma mark - Initializers
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - UIViewController
+
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
 
     self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
     self.readList = [[MCLReadList alloc] init];
@@ -159,7 +173,7 @@
 {
     self.definesPresentationContext = YES;
     self.searchController = [[UISearchController alloc] initWithSearchResultsController: nil];
-    self.tableView.tableHeaderView = _searchController.searchBar;
+    self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.searchController loadViewIfNeeded];
     self.searchController.delegate = self;
     self.searchController.searchResultsUpdater = self;
@@ -319,11 +333,11 @@
     }
 
     cell.threadIsStickyImageView.image = [cell.threadIsStickyImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    cell.threadIsStickyImageView.tintColor = [self.currentTheme textColor];
+    cell.threadIsStickyImageView.tintColor = [self.currentTheme detailImageColor];
     [cell.threadIsStickyImageView setHidden:!thread.isSticky];
 
     cell.threadIsClosedImageView.image = [cell.threadIsClosedImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    cell.threadIsClosedImageView.tintColor = [self.currentTheme textColor];
+    cell.threadIsClosedImageView.tintColor = [self.currentTheme detailImageColor];
     [cell.threadIsClosedImageView setHidden:!thread.isClosed];
 
     cell.badgeView.userInteractionEnabled = NO;
@@ -505,6 +519,16 @@
 
         [self.tableView reloadData];
     }
+}
+
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+    [self configureSearchResultsController];
+    [self.tableView setSeparatorColor:[self.currentTheme tableViewSeparatorColor]];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Navigation

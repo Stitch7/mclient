@@ -31,11 +31,28 @@
     return self;
 }
 
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)configure
 {
-    id <MCLTheme> theme = [[MCLThemeManager sharedManager] currentTheme];
-    self.keyboardAppearance = [theme isDark] ? UIKeyboardAppearanceDark : UIKeyboardAppearanceLight;
-    self.textColor = [theme textViewTextColor];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
+
+    [self themeChanged:nil];
+}
+
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    id <MCLTheme> currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+    self.keyboardAppearance = [currentTheme isDark] ? UIKeyboardAppearanceDark : UIKeyboardAppearanceLight;
+    self.textColor = [currentTheme textViewTextColor];
 }
 
 @end

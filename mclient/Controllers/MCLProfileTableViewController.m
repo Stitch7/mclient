@@ -58,7 +58,24 @@
     return _profileKeys;
 }
 
+#pragma mark - Initializers
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - ViewController
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
+}
 
 - (void)viewDidLoad
 {
@@ -236,6 +253,15 @@
 - (IBAction)doneAction:(UIBarButtonItem *)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+    [self.tableView setSeparatorColor:[self.currentTheme tableViewSeparatorColor]];
+    [self.tableView reloadData];
 }
 
 @end

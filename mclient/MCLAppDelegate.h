@@ -13,8 +13,8 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) NSDateComponents *sunrise;
-@property (strong, nonatomic) NSDateComponents *sunset;
+//@property (strong, nonatomic) CLLocationManager *locationManager;
+//@property (strong, nonatomic) NSDateComponents *sunrise;
+//@property (strong, nonatomic) NSDateComponents *sunset;
 
 @end

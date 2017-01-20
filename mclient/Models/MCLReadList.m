@@ -50,20 +50,12 @@
 
     [self.pool setObject:messages forKey:[thread.threadId stringValue]];
     [self.userDefaults setObject:self.pool forKey:kUserDefaultsKey];
-
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.userDefaults synchronize];
-    });
 }
 
 - (void)addMessages:(NSArray *)messages fromThread:(MCLThread *)thread
 {
     [self.pool setObject:messages forKey:[thread.threadId stringValue]];
     [self.userDefaults setObject:self.pool forKey:kUserDefaultsKey];
-
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.userDefaults synchronize];
-    });
 }
 
 - (BOOL)messageIdIsRead:(NSNumber *)messageId fromThread:(MCLThread *)thread

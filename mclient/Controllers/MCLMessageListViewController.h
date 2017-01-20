@@ -28,6 +28,7 @@
 
 + (NSString *)messageHtmlSkeletonForHtml:(NSString *)html withTopMargin:(int)topMargin andTheme:(id <MCLTheme>)currentTheme;
 - (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard;
+- (void)themeChanged:(NSNotification *)notification;
 - (void)updateTitle:(NSString *)title;
 
 @end

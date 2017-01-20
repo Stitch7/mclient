@@ -8,17 +8,44 @@
 
 #import "MCLThemeManager.h"
 
+#import <CoreLocation/CoreLocation.h>
 #import <WebKit/WebKit.h>
+
+#import "EDSunriseSet.h"
+
 #import "MCLTheme.h"
+#import "MCLDefaultTheme.h"
+#import "MCLNightTheme.h"
 #import "MCLDetailView.h"
 #import "MCLLoadingView.h"
 #import "MCLErrorView.h"
 #import "MCLReadSymbolView.h"
 #import "MCLBadgeView.h"
 
+NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
+
+@interface MCLThemeManager()
+
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) NSDateComponents *sunrise;
+@property (strong, nonatomic) NSDateComponents *sunset;
+
+@end
+
+
 @implementation MCLThemeManager
 
-#pragma mark Singleton Methods
+#pragma mark Initializers
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self initiliazeLocationManager];
+        [self updateSun];
+    }
+    return self;
+}
 
 + (id)sharedManager
 {
@@ -31,16 +58,132 @@
     return sharedThemeManager;
 }
 
+#pragma mark Sunset
+
+- (void)initiliazeLocationManager
+{
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+}
+
+- (BOOL)isAfterSunset:(NSDateComponents*)dateComponents
+{
+    if (dateComponents.hour > self.sunset.hour) {
+        return YES;
+    }
+
+    if (dateComponents.hour == self.sunset.hour &&
+        dateComponents.minute > self.sunset.minute
+        ) {
+        return YES;
+    }
+
+    if (dateComponents.hour == self.sunset.hour &&
+        dateComponents.minute == self.sunset.minute &&
+        dateComponents.second >= self.sunset.second
+    ) {
+        return YES;
+    }
+
+    return NO;
+}
+
+- (BOOL)isBeforeSunrise:(NSDateComponents*)dateComponents
+{
+    if (dateComponents.hour < self.sunrise.hour) {
+        return YES;
+    }
+
+    if (dateComponents.hour == self.sunrise.hour &&
+        dateComponents.minute < self.sunrise.minute
+    ) {
+        return YES;
+    }
+
+    if (dateComponents.hour == self.sunrise.hour &&
+        dateComponents.minute == self.sunrise.minute &&
+        dateComponents.second <= self.sunrise.second
+        ) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 #pragma mark Public
+
+- (void)updateSun
+{
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
+        self.sunrise = [[NSDateComponents alloc] init];
+        self.sunrise.hour = 8;
+        self.sunrise.minute = 0;
+        self.sunrise.second = 0;
+
+        self.sunset = [[NSDateComponents alloc] init];
+        self.sunset.hour = 20;
+        self.sunset.minute = 0;
+        self.sunset.second = 0;
+    }
+    else {
+        [self.locationManager startUpdatingLocation];
+        [self.locationManager requestWhenInUseAuthorization];
+
+        double latitude = self.locationManager.location.coordinate.latitude;
+        double longitude = self.locationManager.location.coordinate.longitude;
+        EDSunriseSet *sunriseSet = [EDSunriseSet sunrisesetWithDate:[NSDate date]
+                                                           timezone:[NSTimeZone localTimeZone]
+                                                           latitude:latitude
+                                                          longitude:longitude];
+        self.sunrise = sunriseSet.localSunrise;
+        self.sunset = sunriseSet.localSunset;
+
+        [self.locationManager stopUpdatingLocation];
+    }
+}
+
+- (void)switchThemeBasedOnTime
+{
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"nightModeAutomatically"]) {
+        return;
+    }
+
+    MCLThemeManager *themeManager = [MCLThemeManager sharedManager];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *now = [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond
+                                        fromDate:[NSDate date]];
+
+    // --------------------
+    NSLog(@"sunrise: %@", self.sunrise);
+    NSLog(@"now: %@", now);
+    NSLog(@"sunset: %@", self.sunset);
+    // --------------------
+
+    id <MCLTheme> theme;
+    if ([self isAfterSunset:now] || [self isBeforeSunrise:now]) {
+        theme = [[MCLNightTheme alloc] init];
+    }
+    else {
+        theme = [[MCLDefaultTheme alloc] init];
+    }
+    [themeManager applyTheme:theme];
+}
 
 - (void)applyTheme: (id <MCLTheme>)theme
 {
+    if ([self.currentTheme description] == [theme description]) {
+        return;
+    }
+
     self.currentTheme = theme;
 
     UIBarStyle barStyle = [theme isDark] ? UIBarStyleBlack : UIBarStyleDefault;
     [[UINavigationBar appearance] setBarStyle:barStyle];
 
     [[UILabel appearance] setTextColor:[theme textColor]];
+
+//    [[UIVisualEffectView appearance] set];
 
     [[UINavigationBar appearance] setBarTintColor:[theme navigationBarBackgroundColor]];
     [[UINavigationBar appearance] setTranslucent:YES];
@@ -89,6 +232,8 @@
     [[WKWebView appearance] setBackgroundColor:[theme webViewBackgroundColor]];
     [[UIScrollView appearanceWhenContainedInInstancesOfClasses:@[[WKWebView class]]] setBackgroundColor:[theme webViewBackgroundColor]];
 
+    [[NSUserDefaults standardUserDefaults] setInteger:[theme identifier] forKey:@"theme"];
+
     NSArray *windows = [UIApplication sharedApplication].windows;
     for (UIWindow *window in windows) {
         for (UIView *view in window.subviews) {
@@ -96,6 +241,8 @@
             [window addSubview:view];
         }
     }
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:MCLThemeChangedNotification object:self];
 }
 
 @end

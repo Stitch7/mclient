@@ -31,9 +31,23 @@
 
 @implementation MCLBoardListTableViewController
 
+#pragma mark - Initializers
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - UIViewController
+
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
 
     if (self.splitViewController) {
         [self.splitViewController setDelegate:self];
@@ -140,7 +154,6 @@
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:validLogin forKey:@"validLogin"];
-    [userDefaults synchronize];
 }
 
 - (void)configureNavigationBar
@@ -246,8 +259,6 @@
 
 - (void)settingsTableViewControllerDidFinish:(MCLSettingsTableViewController *)inController loginDataChanged:(BOOL)loginDataChanged
 {
-    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
-    [self.tableView reloadData];
     if (loginDataChanged) {
         [self showLoginStatus];
     }
@@ -271,12 +282,20 @@
 
 #pragma mark - Actions
 
--(void)settingsButtonPressed:(UIBarButtonItem *)sender
+- (void)settingsButtonPressed:(UIBarButtonItem *)sender
 {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
     UINavigationController *nc = [sb instantiateViewControllerWithIdentifier:@"SettingsNavigationController"];
     nc.modalPresentationStyle = UIModalPresentationFormSheet;
     [self.navigationController presentViewController:nc animated:YES completion:nil];
+}
+
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Navigation

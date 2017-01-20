@@ -7,9 +7,11 @@
 //
 
 #import "MCLNightTheme.h"
+#import "MCLThemeManager.h"
 
 @interface MCLNightTheme()
 
+@property (strong, nonatomic) UIColor *flatRedColor;
 @property (strong, nonatomic) UIColor *royalBlueColor;
 @property (strong, nonatomic) UIColor *silverColor;
 @property (strong, nonatomic) UIColor *grayColor;
@@ -24,6 +26,7 @@
 - (id)init
 {
     if (self = [super init]) {
+        self.flatRedColor = [UIColor colorWithRed:0.95 green:0.26 blue:0.28 alpha:1.0];
         self.royalBlueColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0];
         self.silverColor = [UIColor colorWithRed:0.93 green:0.94 blue:0.95 alpha:1.0];
         self.grayColor = [UIColor colorWithRed:0.20 green:0.20 blue:0.20 alpha:1.0];
@@ -36,6 +39,11 @@
 }
 
 #pragma mark MCLTheme
+
+- (NSUInteger)identifier
+{
+    return kMCLThemeNight;
+}
 
 - (BOOL)isDark
 {
@@ -62,6 +70,11 @@
     return self.darkGrayColor;
 }
 
+- (UIColor *)detailImageColor
+{
+    return self.darkGrayColor;
+}
+
 - (UIColor *)overlayTextColor
 {
     return self.darkGrayColor;
@@ -79,7 +92,7 @@
 
 - (UIColor *)modTextColor
 {
-    return [UIColor redColor];
+    return self.flatRedColor;
 }
 
 -(UIColor *)successTextColor
@@ -89,7 +102,7 @@
 
 - (UIColor *)warnTextColor;
 {
-    return [UIColor redColor];
+    return self.flatRedColor;
 }
 
 - (UIColor *)textViewBackgroundColor

@@ -401,13 +401,11 @@
 - (IBAction)settingsSignatureEnabledSwitchValueChangedAction:(UISwitch *)sender
 {
     [self.userDefaults setBool:sender.on forKey:@"signatureEnabled"];
-    [self.userDefaults synchronize];
     [self signatureTextViewEnabled:sender.on];
 }
 
 - (IBAction)jumpToLatestPostEnabledSwitchValueChangedAction:(UISwitch *)sender {
     [self.userDefaults setBool:sender.on forKey:@"jumpToLatestPost"];
-    [self.userDefaults synchronize];
 }
 
 - (IBAction)nightModeEnabledSwitchValueChangedAction:(UISwitch *)sender
@@ -420,7 +418,6 @@
 
     NSUInteger themeName = sender.on ? kMCLThemeNight : kMCLThemeDefault;
     [self.userDefaults setInteger:themeName forKey:@"theme"];
-    [self.userDefaults synchronize];
 
     [self signatureTextViewEnabled:self.settingsSignatureEnabledSwitch.on];
     [self.tableView reloadData];
@@ -429,14 +426,10 @@
 - (IBAction)nightModeAutomaticallySwitchValueChangedAction:(UISwitch *)sender
 {
     [self.userDefaults setBool:sender.on forKey:@"nightModeAutomatically"];
-    [self.userDefaults synchronize];
 
     if (sender.on) {
         // Trigger dialog asking for location permission
-        MCLAppDelegate *app = (MCLAppDelegate *)[[UIApplication sharedApplication] delegate];
-        [app.locationManager startUpdatingLocation];
-        [app.locationManager requestWhenInUseAuthorization];
-        [app.locationManager stopUpdatingLocation];
+        [self.themeManager updateSun];
     }
 }
 

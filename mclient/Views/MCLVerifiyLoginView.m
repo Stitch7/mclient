@@ -14,17 +14,31 @@
 
 @implementation MCLVerifiyLoginView
 
+#pragma mark - Initializers
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)configureSubviews
 {
     [super configureSubviews];
-    
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
+
     [self setBackgroundColor:[UIColor clearColor]];
 
-    id <MCLTheme> currentTheme = [[MCLThemeManager sharedManager] currentTheme];
-    self.label.textColor = [currentTheme textColor];
     self.label.font = [UIFont systemFontOfSize:13.0f];
     self.label.text = NSLocalizedString(@"Verifying login data…", nil);
+
+    [self themeChanged:nil];
 }
+
+#pragma mark - Public
 
 - (void)loginStatusWithUsername:(NSString *)username
 {
@@ -46,6 +60,14 @@
     UILabel *label = self.label;
     NSDictionary *views = NSDictionaryOfVariableBindings(label);
     [self.container addConstraints:@"H:|[label]|" views:views];
+}
+
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    id <MCLTheme> currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+    self.label.textColor = [currentTheme textColor];
 }
 
 @end

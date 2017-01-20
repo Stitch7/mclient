@@ -641,6 +641,17 @@
     }
 }
 
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    [super themeChanged:notification];
+
+    if (notification) {
+        [self.tableView reloadData];
+    }
+}
+
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

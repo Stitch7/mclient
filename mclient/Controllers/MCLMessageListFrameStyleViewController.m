@@ -144,9 +144,6 @@
 {
     [[NSBundle mainBundle] loadNibNamed:@"MCLMessageListFrameStyleView" owner:self options:nil];
     self.containerView.frame = self.view.frame;
-    self.containerView.backgroundColor = [UIColor clearColor];
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.view.backgroundColor = [self.currentTheme backgroundColor];
     [self.view addSubview:self.containerView];
 }
 
@@ -534,7 +531,8 @@
                                                           cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                           otherButtonTitles:nil];
                     [alert show];
-                } else {
+                }
+                else {
                     message.userId = [data objectForKey:@"userId"];
                     message.text = [data objectForKey:@"text"];
                     message.textHtml = [data objectForKey:@"textHtml"];
@@ -761,6 +759,25 @@
 
 - (IBAction)replyAction:(UIBarButtonItem *)sender {
     [self performSegueWithIdentifier:@"ModalToComposeReply" sender:self];
+}
+
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    [super themeChanged:notification];
+
+    self.view.backgroundColor = [self.currentTheme backgroundColor];
+
+    if (notification) {
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        [self.tableView selectRowAtIndexPath:selectedIndexPath
+                                    animated:NO
+                              scrollPosition:UITableViewScrollPositionNone];
+        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - Navigation

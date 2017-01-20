@@ -7,6 +7,7 @@
 //
 
 #import "MCLDefaultTheme.h"
+#import "MCLThemeManager.h"
 
 @interface MCLDefaultTheme()
 
@@ -26,6 +27,11 @@
 }
 
 #pragma mark MCLTheme
+
+- (NSUInteger)identifier
+{
+    return kMCLThemeDefault;
+}
 
 - (BOOL)isDark
 {
@@ -50,6 +56,11 @@
 - (UIColor *)detailTextColor
 {
     return [UIColor darkGrayColor];
+}
+
+- (UIColor *)detailImageColor
+{
+    return [UIColor blackColor];
 }
 
 - (UIColor *)overlayTextColor

@@ -10,11 +10,13 @@
 
 @protocol MCLTheme <NSObject>
 
+- (NSUInteger)identifier;
 - (BOOL)isDark;
 - (UIColor *)tintColor;
 - (UIColor *)backgroundColor;
 - (UIColor *)textColor;
 - (UIColor *)detailTextColor;
+- (UIColor *)detailImageColor;
 - (UIColor *)overlayTextColor;
 - (UIColor *)usernameTextColor;
 - (UIColor *)ownUsernameTextColor;
