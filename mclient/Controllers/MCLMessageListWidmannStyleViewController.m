@@ -84,8 +84,10 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
         // Load data async
-        NSDictionary *loginData = @{@"username":self.username,
-                                    @"password":self.password};
+        NSDictionary *loginData;
+        if (self.validLogin) {
+            loginData = @{@"username":self.username, @"password":self.password};
+        }
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *mServiceError;
             NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
@@ -184,8 +186,10 @@
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
-        NSDictionary *loginData = @{@"username":self.username,
-                                    @"password":self.password};
+        NSDictionary *loginData;
+        if (self.validLogin) {
+            loginData = @{@"username":self.username, @"password":self.password};
+        }
         NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
                                                                       fromBoardId:self.board.boardId
                                                                             login:loginData
@@ -213,8 +217,10 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
-        NSDictionary *loginData = @{@"username":self.username,
-                                    @"password":self.password};
+        NSDictionary *loginData;
+        if (self.validLogin) {
+            loginData = @{@"username":self.username, @"password":self.password};
+        }
         NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
                                                                       fromBoardId:self.board.boardId
                                                                             login:loginData
@@ -260,7 +266,8 @@
         self.messages = [NSMutableArray array];
         for (id object in data) {
             NSNumber *messageId = [object objectForKey:@"messageId"];
-            BOOL isRead = [[object objectForKey:@"isRead"] boolValue];
+            id isReadOpt = [object objectForKey:@"isRead"];
+            BOOL isRead = (isReadOpt != (id)[NSNull null] && isReadOpt != nil) ? [isReadOpt boolValue] : YES;
             NSNumber *level = [object objectForKey:@"level"];
             BOOL mod = [[object objectForKey:@"mod"] boolValue];
             NSString *username = [object objectForKey:@"username"];
@@ -279,7 +286,6 @@
 
         [self.tableView reloadData];
 
-        // TODO, thread.isRead is probably always set from thread list???? EDIT: now fixed?
         // If new thread select first message
         BOOL jumpToLatestPost = [[NSUserDefaults standardUserDefaults] boolForKey:@"jumpToLatestPost"];
         if (!self.thread.isRead) {
@@ -498,8 +504,10 @@
     } else {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *mServiceError;
-            NSDictionary *loginData = @{@"username":self.username,
-                                        @"password":self.password};
+            NSDictionary *loginData;
+            if (self.validLogin) {
+                loginData = @{@"username":self.username, @"password":self.password};
+            }
             NSDictionary *data = [[MCLMServiceConnector sharedConnector] messageWithId:message.messageId
                                                                            fromBoardId:self.board.boardId
                                                                           andThreadId:self.thread.threadId

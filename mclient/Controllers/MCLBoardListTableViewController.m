@@ -112,7 +112,10 @@
     CGRect navToolbarFrame = self.navigationController.toolbar.bounds;
     MCLVerifiyLoginView *navToolbarView = [[MCLVerifiyLoginView alloc] initWithFrame:navToolbarFrame];
     [self.navigationController.toolbar addSubview:navToolbarView];
+
+    // TODO: Both calls are required? Why?
     [self.navigationController setToolbarHidden:NO animated:YES];
+    self.navigationController.toolbar.hidden = NO;
 
     // Reading username + password from keychain
     NSString *keychainIdentifier = [[NSBundle mainBundle] bundleIdentifier];
@@ -293,6 +296,8 @@
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
     UINavigationController *nc = [sb instantiateViewControllerWithIdentifier:@"SettingsNavigationController"];
     nc.modalPresentationStyle = UIModalPresentationFormSheet;
+    MCLSettingsTableViewController *settingsVC = nc.viewControllers[0];
+    settingsVC.delegate = self;
     [self.navigationController presentViewController:nc animated:YES completion:nil];
 }
 
@@ -312,10 +317,6 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         MCLBoard *board = self.boards[indexPath.row];
         [segue.destinationViewController setBoard:board];
-    } else if ([segue.identifier isEqualToString:@"ModalToEditSettings"]) {
-        MCLSettingsTableViewController *destinationViewController =
-            ((MCLSettingsTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
-        [destinationViewController setDelegate:self];
     }
 }
 

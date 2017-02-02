@@ -13,7 +13,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[MCLThemeManager sharedManager] switchThemeBasedOnTime];
+    [[MCLThemeManager sharedManager] loadTheme];
 
     return YES;
 }
@@ -30,7 +30,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [[MCLThemeManager sharedManager] switchThemeBasedOnTime];
+    [[MCLThemeManager sharedManager] loadTheme];
 }
 
 @end

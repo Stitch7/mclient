@@ -111,6 +111,17 @@
     self.settingsPasswordTextField.text = password;
     self.lastUsernameTextFieldValue = username;
     self.lastPasswordTextFieldValue = password;
+
+    NSDictionary<NSString *,id> *placeholderAttrs = @{NSForegroundColorAttributeName: [UIColor lightGrayColor]};
+    NSAttributedString *usernamePlaceholder = [[NSAttributedString alloc] initWithString:@"Username"
+                                                                              attributes:placeholderAttrs];
+    self.settingsUsernameTextField.attributedPlaceholder = usernamePlaceholder;
+
+    NSAttributedString *passwordPlaceholder = [[NSAttributedString alloc] initWithString:@"Password"
+                                                                              attributes:placeholderAttrs];
+    self.settingsPasswordTextField.attributedPlaceholder = passwordPlaceholder;
+
+
     self.settingsUsernameTextField.delegate = self;
     self.settingsPasswordTextField.delegate = self;
     self.loginDataChanged = NO;
@@ -255,6 +266,7 @@
             case 2:
                 detailText = NSLocalizedString(@"Small", nil);
                 break;
+            default:
             case 3:
                 detailText = NSLocalizedString(@"Normal", nil);
                 break;

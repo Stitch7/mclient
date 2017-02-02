@@ -393,10 +393,6 @@
     MCLThreadTableViewCell *cell = (MCLThreadTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     [cell markRead];
     thread.tempRead = YES;
-    // Workaround for swipe back
-//    if ([thread.messagesCount intValue] == 0) {
-//        cell.badgeLabel.textColor = [UIColor darkGrayColor];
-//    }
 
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         // Hide popoverController in portrait mode

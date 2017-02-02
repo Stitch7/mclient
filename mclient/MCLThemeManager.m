@@ -147,18 +147,39 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
     }
 }
 
-- (void)switchThemeBasedOnTime
+- (void)loadTheme
 {
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"nightModeAutomatically"]) {
-        return;
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"nightModeAutomatically"]) {
+        [self loadThemeBasedOnTime];
+    }
+    else {
+        [self loadThemeBasedOnUserDefaults];
+    }
+}
+
+- (void)loadThemeBasedOnUserDefaults
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    id <MCLTheme> theme;
+    MCLThemeManager *themeManager = [MCLThemeManager sharedManager];
+
+    if ([userDefaults boolForKey:@"nightModeEnabled"]) {
+        theme = [[MCLNightTheme alloc] init];
+    } else {
+        theme = [[MCLDefaultTheme alloc] init];
     }
 
-    MCLThemeManager *themeManager = [MCLThemeManager sharedManager];
+    [themeManager applyTheme:theme];
+}
+
+- (void)loadThemeBasedOnTime
+{
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *now = [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond
                                         fromDate:[NSDate date]];
-
     id <MCLTheme> theme;
+    MCLThemeManager *themeManager = [MCLThemeManager sharedManager];
+
     if ([self isAfterSunset:now] || [self isBeforeSunrise:now]) {
         theme = [[MCLNightTheme alloc] init];
     } else {

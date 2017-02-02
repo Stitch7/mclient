@@ -21,6 +21,9 @@
 + (NSString *)messageHtmlSkeletonForHtml:(NSString *)html withTopMargin:(int)topMargin andTheme:(id <MCLTheme>)currentTheme
 {
     NSInteger fontSizeValue = [[NSUserDefaults standardUserDefaults] integerForKey:@"fontSize"];
+    if (!fontSizeValue) {
+        fontSizeValue = 3;
+    }
     NSString *fontSize = [NSString stringWithFormat:@"%lipx", fontSizeValue + 11];
     NSString *textColor = [currentTheme isDark] ? @"#fff" : @"#000";
     NSString *linkColor = [[currentTheme tintColor] cssString];

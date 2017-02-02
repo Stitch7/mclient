@@ -23,7 +23,7 @@ typedef NS_ENUM(NSUInteger, kMCLTheme) {
 
 + (id)sharedManager;
 - (void)updateSun;
-- (void)switchThemeBasedOnTime;
+- (void)loadTheme;
 - (void)applyTheme: (id <MCLTheme>)theme;
 
 @end
