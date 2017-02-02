@@ -115,6 +115,10 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
 
 - (void)updateSun
 {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"nightModeAutomatically"]) {
+        return;
+    }
+
     if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
         self.sunrise = [[NSDateComponents alloc] init];
         self.sunrise.hour = 8;
@@ -154,17 +158,10 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
     NSDateComponents *now = [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond
                                         fromDate:[NSDate date]];
 
-    // --------------------
-    NSLog(@"sunrise: %@", self.sunrise);
-    NSLog(@"now: %@", now);
-    NSLog(@"sunset: %@", self.sunset);
-    // --------------------
-
     id <MCLTheme> theme;
     if ([self isAfterSunset:now] || [self isBeforeSunrise:now]) {
         theme = [[MCLNightTheme alloc] init];
-    }
-    else {
+    } else {
         theme = [[MCLDefaultTheme alloc] init];
     }
     [themeManager applyTheme:theme];
@@ -182,8 +179,6 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
     [[UINavigationBar appearance] setBarStyle:barStyle];
 
     [[UILabel appearance] setTextColor:[theme textColor]];
-
-//    [[UIVisualEffectView appearance] set];
 
     [[UINavigationBar appearance] setBarTintColor:[theme navigationBarBackgroundColor]];
     [[UINavigationBar appearance] setTranslucent:YES];

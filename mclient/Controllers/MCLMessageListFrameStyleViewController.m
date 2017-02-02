@@ -24,7 +24,6 @@
 #import "MCLBoard.h"
 #import "MCLThread.h"
 #import "MCLMessage.h"
-#import "MCLReadList.h"
 
 @interface MCLMessageListFrameStyleViewController ()
 
@@ -100,18 +99,21 @@
         // Load data async
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *mServiceError;
+            NSDictionary *loginData = @{@"username":self.username,
+                                        @"password":self.password};
             NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
                                                                           fromBoardId:self.board.boardId
+                                                                                login:loginData
                                                                                 error:&mServiceError];
             // Process data on main thread
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self fetchedData:data error:mServiceError];
                 if (!mServiceError) {
                     NSNumber *lastMessageId = self.thread.lastMessageId;
-                    BOOL firstMessageIsRead = [self.readList messageIdIsRead:self.thread.messageId fromThread:self.thread];
+                    BOOL firstMessageIsRead = self.thread.isRead;
                     BOOL jumpToLatestPost = [[NSUserDefaults standardUserDefaults] boolForKey:@"jumpToLatestPost"];
                     BOOL lastMessageExists = lastMessageId > 0;
-                    BOOL lastMessageIsNotRead = ![self.readList messageIdIsRead:lastMessageId fromThread:self.thread];
+                    BOOL lastMessageIsNotRead = !self.thread.lastMessageIsRead;
 
                     if (firstMessageIsRead && jumpToLatestPost && lastMessageExists && lastMessageIsNotRead) {
                         [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
@@ -240,8 +242,11 @@
     // Load data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
+        NSDictionary *loginData = @{@"username":self.username,
+                                    @"password":self.password};
         NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
                                                                       fromBoardId:self.board.boardId
+                                                                            login:loginData
                                                                             error:&mServiceError];
         // Process data on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -252,10 +257,10 @@
 
             if (!mServiceError) {
                 NSNumber *lastMessageId = self.thread.lastMessageId;
-                BOOL firstMessageIsRead = [self.readList messageIdIsRead:self.thread.messageId fromThread:self.thread];
+                BOOL firstMessageIsRead = self.thread.isRead;
                 BOOL jumpToLatestPost = [[NSUserDefaults standardUserDefaults] boolForKey:@"jumpToLatestPost"];
                 BOOL lastMessageExists = lastMessageId > 0;
-                BOOL lastMessageIsNotRead = ![self.readList messageIdIsRead:lastMessageId fromThread:self.thread];
+                BOOL lastMessageIsNotRead = !self.thread.lastMessageIsRead;
 
                 if (firstMessageIsRead && jumpToLatestPost && lastMessageExists && lastMessageIsNotRead) {
                     [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
@@ -288,8 +293,11 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
+        NSDictionary *loginData = @{@"username":self.username,
+                                    @"password":self.password};
         NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
                                                                       fromBoardId:self.board.boardId
+                                                                            login:loginData
                                                                             error:&mServiceError];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedData:data error:mServiceError];
@@ -338,6 +346,7 @@
 
         for (id object in data) {
             NSNumber *messageId = [object objectForKey:@"messageId"];
+            BOOL isRead = [[object objectForKey:@"isRead"] boolValue];
             NSNumber *level = [object objectForKey:@"level"];
             BOOL mod = [[object objectForKey:@"mod"] boolValue];
             NSString *username = [object objectForKey:@"username"];
@@ -345,6 +354,7 @@
             NSDate *date = [dateFormatter dateFromString:[object objectForKey:@"date"]];
 
             MCLMessage *message = [MCLMessage messageWithId:messageId
+                                                       read:isRead
                                                       level:level
                                                         mod:mod
                                                    username:username
@@ -408,7 +418,7 @@
     cell.messageDateLabel.text = [self.dateFormatter stringFromDate:message.date];
     cell.messageDateLabel.textColor = [self.currentTheme detailTextColor];
 
-    if (i == 0 || [self.readList messageIdIsRead:message.messageId fromThread:self.thread]) {
+    if (i == 0 || message.isRead) {
         [cell markRead];
     } else {
         [cell markUnread];
@@ -498,12 +508,6 @@
     if (message.text) {
         [self loadMessage:message fromCell:cell];
     } else {
-        NSDictionary *loginData = nil;
-        if ([message.username isEqualToString:self.username]) {
-            loginData = @{@"username":self.username,
-                          @"password":self.password};
-        }
-
         [self.webView loadHTMLString:@"" baseURL:nil];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         CGRect mvBounds = self.topFrame.bounds;
@@ -512,8 +516,10 @@
         [self.topFrame addSubview:[[MCLLoadingView alloc] initWithFrame:loadingFrame]];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *mServiceError;
+            NSDictionary *loginData = @{@"username":self.username, @"password":self.password};
             NSDictionary *data = [[MCLMServiceConnector sharedConnector] messageWithId:message.messageId
                                                                            fromBoardId:self.board.boardId
+                                                                           andThreadId:self.thread.threadId
                                                                                  login:loginData
                                                                                  error:&mServiceError];
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -541,9 +547,15 @@
                         message.notification = [[data objectForKey:@"notification"] boolValue];
                     }
 
-                    [cell markRead];
-                    [self.readList addMessageId:message.messageId fromThread:self.thread];
-                    [self.delegate messageListViewController:self didReadMessageOnThread:self.thread onReadList:self.readList];
+                    if (!message.isRead) {
+                        [cell markRead];
+                        self.thread.messagesRead = [NSNumber numberWithInteger:[self.thread.messagesRead intValue] + 1];
+                        message.read = YES;
+                        if ([message.messageId isEqualToNumber:self.thread.lastMessageId]) {
+                            self.thread.lastMessageRead = YES;
+                        }
+                    }
+                    [self.delegate messageListViewController:self didReadMessageOnThread:self.thread];
                     [self loadMessage:message fromCell:cell];
                 }
             });
@@ -609,8 +621,11 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
+        NSDictionary *loginData = @{@"username":self.username,
+                                    @"password":self.password};
         NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
                                                                       fromBoardId:self.board.boardId
+                                                                            login:loginData
                                                                             error:&mServiceError];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedData:data error:mServiceError];

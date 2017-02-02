@@ -12,7 +12,6 @@
 
 @class MCLBoard;
 @class MCLThread;
-@class MCLReadList;
 
 @protocol MCLMessageListDelegate;
 
@@ -20,7 +19,6 @@
 
 @property (weak) id <MCLMessageListDelegate> delegate;
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
-@property (strong, nonatomic) MCLReadList *readList;
 @property (strong, nonatomic) MCLBoard *board;
 @property (strong, nonatomic) MCLThread *thread;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -35,6 +33,6 @@
 
 @protocol MCLMessageListDelegate <NSObject>
 
-- (void)messageListViewController:(MCLMessageListViewController *)inController didReadMessageOnThread:(MCLThread *)inThread onReadList:(MCLReadList *)inReadList;
+- (void)messageListViewController:(MCLMessageListViewController *)inController didReadMessageOnThread:(MCLThread *)inThread;
 
 @end

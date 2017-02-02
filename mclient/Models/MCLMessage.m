@@ -11,6 +11,7 @@
 @implementation MCLMessage
 
 + (MCLMessage *)messageWithId:(NSNumber *)inMessageId
+                         read:(BOOL)inRead
                         level:(NSNumber *)inLevel
                           mod:(BOOL)inMod
                      username:(NSString *)inUsername
@@ -20,6 +21,7 @@
     MCLMessage *message = [[MCLMessage alloc] init];
     
     message.messageId = inMessageId;
+    message.read = inRead;
     message.level = inLevel;
     message.username = inUsername;
     message.mod = inMod;

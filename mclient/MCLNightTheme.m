@@ -172,7 +172,7 @@
 
 - (UIColor *)searchFieldTextColor
 {
-    return self.darkGrayColor;
+    return [UIColor whiteColor];
 }
 
 - (UIColor *)tableViewCellBackgroundColor

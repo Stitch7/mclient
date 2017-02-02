@@ -12,7 +12,6 @@
 #import "MCLReadSymbolView.h"
 #import "MCLBadgeView.h"
 #import "MCLThread.h"
-#import "MCLReadList.h"
 
 @implementation MCLThreadTableViewCell
 
@@ -50,19 +49,15 @@
     }
 }
 
-- (void)updateBadge:(MCLReadList *)readList forThread:(MCLThread *)thread withTheme:(id <MCLTheme>)theme
+- (void)updateBadgeWithThread:(MCLThread *)thread andTheme:(id <MCLTheme>)theme
 {
-    self.badgeLabel.text = [thread.messageCount stringValue];
+    self.badgeLabel.text = [thread.messagesCount stringValue];
 
-    int messageCount = [thread.messageCount intValue];
-    int readMessagesCount = [[readList readMessagesCountFromThread:thread] intValue];
-    BOOL isRead = [readList messageIdIsRead:thread.messageId fromThread:thread];
-
-    if (messageCount > 999 && !thread.isSticky) {
+    if ([thread.messagesCount intValue] > 999 && !thread.isSticky) {
         // red
         self.badgeLabel.textColor = [theme warnTextColor];
     }
-    else if (!isRead || readMessagesCount < messageCount) {
+    else if (!thread.isRead || [thread.messagesRead intValue] < [thread.messagesCount intValue]) {
         // blue
         self.badgeLabel.textColor = [theme tintColor];
     }

@@ -130,7 +130,7 @@
 		30DBC4871A07E8B900340B3A /* errorInternetConnection@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4861A07E8B900340B3A /* errorInternetConnection@3x.png */; };
 		30DBC4891A07E8D100340B3A /* errorMService@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4881A07E8D100340B3A /* errorMService@3x.png */; };
 		30DBC8A61E285FAC00EF150B /* MCLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBC8A51E285FAC00EF150B /* MCLTextView.m */; };
-		30E8B89619B33C070067DD1F /* MCLReadList.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89519B33C070067DD1F /* MCLReadList.m */; };
+		30E70BF81E40B8B900534EDE /* MCLReadListMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E70BF71E40B8B900534EDE /* MCLReadListMigrator.m */; };
 		30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */; };
 		30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */; };
 		6501766D8063F5F642D79D11 /* libPods-mclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 064E0AFA20768528C9F3DBC4 /* libPods-mclient.a */; };
@@ -317,8 +317,8 @@
 		30DBC4881A07E8D100340B3A /* errorMService@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "errorMService@3x.png"; sourceTree = "<group>"; };
 		30DBC8A41E285FAB00EF150B /* MCLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLTextView.h; sourceTree = "<group>"; };
 		30DBC8A51E285FAC00EF150B /* MCLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLTextView.m; sourceTree = "<group>"; };
-		30E8B89419B33C070067DD1F /* MCLReadList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadList.h; sourceTree = "<group>"; };
-		30E8B89519B33C070067DD1F /* MCLReadList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadList.m; sourceTree = "<group>"; };
+		30E70BF61E40B8B800534EDE /* MCLReadListMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadListMigrator.h; sourceTree = "<group>"; };
+		30E70BF71E40B8B900534EDE /* MCLReadListMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadListMigrator.m; sourceTree = "<group>"; };
 		30E8B89719B3CBF40067DD1F /* MCLComposeMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessageViewController.h; sourceTree = "<group>"; };
 		30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLComposeMessageViewController.m; sourceTree = "<group>"; };
 		30EFDC0A19D422DE00E3EE31 /* MCLVerifiyLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLVerifiyLoginView.h; sourceTree = "<group>"; };
@@ -435,6 +435,8 @@
 				305DD81E19A63517006514BD /* Supporting Files */,
 				305DD82619A63517006514BD /* MCLAppDelegate.h */,
 				305DD82719A63517006514BD /* MCLAppDelegate.m */,
+				30E70BF61E40B8B800534EDE /* MCLReadListMigrator.h */,
+				30E70BF71E40B8B900534EDE /* MCLReadListMigrator.m */,
 				308EC3D719CC4DE800A0869F /* SplitViewButtonHandler.h */,
 				301FD00F19AB73160028C5C8 /* constants.h */,
 				305E53AA19D4F3EE002B8E50 /* utils.h */,
@@ -544,8 +546,6 @@
 				305DD85C19AB300F006514BD /* MCLBoard.m */,
 				305DD86119AB380C006514BD /* MCLMessage.h */,
 				305DD86219AB380C006514BD /* MCLMessage.m */,
-				30E8B89419B33C070067DD1F /* MCLReadList.h */,
-				30E8B89519B33C070067DD1F /* MCLReadList.m */,
 				305DD85E19AB3031006514BD /* MCLThread.h */,
 				305DD85F19AB3031006514BD /* MCLThread.m */,
 			);
@@ -926,6 +926,7 @@
 				305DD82419A63517006514BD /* main.m in Sources */,
 				3036F59B1E266B3800ABC2CE /* MCLNightTheme.m in Sources */,
 				301FD9A619C411D400E36A5B /* MCLErrorView.m in Sources */,
+				30E70BF81E40B8B900534EDE /* MCLReadListMigrator.m in Sources */,
 				30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */,
 				308EC3DD19CC7BA600A0869F /* MCLDetailView.m in Sources */,
 				30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */,
@@ -940,7 +941,6 @@
 				301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */,
 				305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */,
 				3036F5981E26666600ABC2CE /* MCLThemeManager.m in Sources */,
-				30E8B89619B33C070067DD1F /* MCLReadList.m in Sources */,
 				305DD85D19AB300F006514BD /* MCLBoard.m in Sources */,
 				301FD9A319C32FC600E36A5B /* MCLLoadingView.m in Sources */,
 				30A1BFAD19B4A8D4002439FE /* MCLSettingsTableViewController.m in Sources */,
@@ -1136,7 +1136,7 @@
 				GCC_PREFIX_HEADER = "mclient/Supporting Files/mclient-Prefix.pch";
 				INFOPLIST_FILE = "mclient/Supporting Files/mclient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-beta";
+				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-rc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1157,7 +1157,7 @@
 				GCC_PREFIX_HEADER = "mclient/Supporting Files/mclient-Prefix.pch";
 				INFOPLIST_FILE = "mclient/Supporting Files/mclient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-beta";
+				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-rc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

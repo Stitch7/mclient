@@ -19,14 +19,26 @@
 - (NSDictionary *)boards:(NSError **)errorPtr;
 
 - (NSDictionary *)threadsFromBoardId:(NSNumber *)inBoardId
+                               login:(NSDictionary *)loginData
                                error:(NSError **)errorPtr;
 
 - (NSDictionary *)threadWithId:(NSNumber *)inThreadId
                    fromBoardId:(NSNumber *)inBoardId
+                         login:(NSDictionary *)loginData
                          error:(NSError **)errorPtr;
+
+- (NSDictionary *)markAsReadThreadWithId:(NSNumber *)inThreadId
+                   fromBoardId:(NSNumber *)inBoardId
+                         login:(NSDictionary *)loginData
+                         error:(NSError **)errorPtr;
+
+- (void)importReadList:(NSDictionary *)inReadList
+                 login:(NSDictionary *)loginData
+                 error:(NSError **)errorPtr;
 
 - (NSDictionary *)messageWithId:(NSNumber *)inMessageId
                     fromBoardId:(NSNumber *)inBoardId
+                    andThreadId:(NSNumber *)inThreadId
                           login:(NSDictionary *)loginData
                           error:(NSError **)errorPtr;
 
@@ -82,6 +94,7 @@
 
 - (NSDictionary *)searchThreadsOnBoard:(NSNumber *)inBoardId
                             withPhrase:(NSString *)inPhrase
+                                 login:(NSDictionary *)loginData
                                  error:(NSError **)errorPtr;
 
 @end

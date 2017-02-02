@@ -7,9 +7,7 @@
 //
 
 #import "MCLAppDelegate.h"
-
 #import "MCLThemeManager.h"
-
 
 @implementation MCLAppDelegate
 
