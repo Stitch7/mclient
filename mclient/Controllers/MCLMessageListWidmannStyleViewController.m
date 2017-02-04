@@ -300,10 +300,10 @@
                 [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
                     if (self.thread.lastMessageId == message.messageId) {
                         NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
-                        [self.tableView selectRowAtIndexPath:latestMessageIndexPath
-                                                    animated:YES
-                                              scrollPosition:UITableViewScrollPositionTop];
-                        [self tableView:self.tableView didSelectRowAtIndexPath:latestMessageIndexPath];
+                        [self.tableView scrollToRowAtIndexPath:latestMessageIndexPath
+                                              atScrollPosition:UITableViewScrollPositionTop
+                                                      animated:YES];
+                        self.thread.lastMessageRead = YES;
                     }
                 }];
             }
@@ -430,6 +430,24 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)selectLastMessage
+{
+    [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
+        if (self.thread.lastMessageId == message.messageId) {
+            NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
+            [self.tableView selectRowAtIndexPath:latestMessageIndexPath
+                                        animated:YES
+                                  scrollPosition:UITableViewScrollPositionTop];
+            [self tableView:self.tableView didSelectRowAtIndexPath:latestMessageIndexPath];
+        }
+    }];
+}
+
+-(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    [self selectLastMessage];
+}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
