@@ -83,8 +83,21 @@
 
 -(void)configureNightModeSection
 {
-    self.nightModeEnabledSwitch.on = [self.userDefaults boolForKey:@"nightModeEnabled"];
-    self.nightModeAutomaticallySwitch.on = [self.userDefaults boolForKey:@"nightModeAutomatically"];
+    BOOL nightModeEnabled = [self.userDefaults boolForKey:@"nightModeEnabled"];
+    BOOL nightModeAutomatically = [self.userDefaults boolForKey:@"nightModeAutomatically"];
+
+    self.nightModeEnabledSwitch.on = nightModeEnabled;
+    self.nightModeAutomaticallySwitch.on = nightModeAutomatically;
+
+    if (nightModeEnabled) {
+        self.nightModeAutomaticallySwitch.enabled = NO;
+        self.nightModeAutomaticallySwitch.alpha = 0.6f;
+    }
+
+    if (nightModeAutomatically) {
+        self.nightModeEnabledSwitch.enabled = NO;
+        self.nightModeEnabledSwitch.alpha = 0.6f;
+    }
 }
 
 -(void)configureImagesSection
@@ -113,14 +126,12 @@
     self.lastPasswordTextFieldValue = password;
 
     NSDictionary<NSString *,id> *placeholderAttrs = @{NSForegroundColorAttributeName: [UIColor lightGrayColor]};
-    NSAttributedString *usernamePlaceholder = [[NSAttributedString alloc] initWithString:@"Username"
+    NSAttributedString *usernamePlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Username", nil)
+                                                                              attributes:placeholderAttrs];
+    NSAttributedString *passwordPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Password", nil)
                                                                               attributes:placeholderAttrs];
     self.settingsUsernameTextField.attributedPlaceholder = usernamePlaceholder;
-
-    NSAttributedString *passwordPlaceholder = [[NSAttributedString alloc] initWithString:@"Password"
-                                                                              attributes:placeholderAttrs];
     self.settingsPasswordTextField.attributedPlaceholder = passwordPlaceholder;
-
 
     self.settingsUsernameTextField.delegate = self;
     self.settingsPasswordTextField.delegate = self;
@@ -237,7 +248,6 @@
 
     UIView *backgroundView = [[UIView alloc] initWithFrame:cell.frame];
     backgroundView.backgroundColor = [self.themeManager.currentTheme tableViewCellSelectedBackgroundColor];
-    cell.selectedBackgroundView = backgroundView;
 
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 
@@ -248,6 +258,7 @@
         } else {
             [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
+        cell.selectedBackgroundView = backgroundView;
         [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
     }
 
@@ -290,6 +301,7 @@
         } else {
             [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
+        cell.selectedBackgroundView = backgroundView;
         [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
     }
 
@@ -424,14 +436,20 @@
 {
     [self.userDefaults setBool:sender.on forKey:@"nightModeEnabled"];
 
-    MCLThemeManager *themeManager = [MCLThemeManager sharedManager];
-    id <MCLTheme> theme = sender.on ? [[MCLNightTheme alloc] init] : [[MCLDefaultTheme alloc] init];
-    [themeManager applyTheme:theme];
+    if (sender.on) {
+        self.nightModeAutomaticallySwitch.enabled = NO;
+        self.nightModeAutomaticallySwitch.alpha = 0.6f;
+        [self.userDefaults setBool:NO forKey:@"nightModeAutomatically"];
+    }
+    else {
+        self.nightModeAutomaticallySwitch.enabled = YES;
+        self.nightModeAutomaticallySwitch.alpha = 1.0f;
+    }
 
     NSUInteger themeName = sender.on ? kMCLThemeNight : kMCLThemeDefault;
     [self.userDefaults setInteger:themeName forKey:@"theme"];
 
-    [self signatureTextViewEnabled:self.settingsSignatureEnabledSwitch.on];
+    [self.themeManager loadTheme];
     [self.tableView reloadData];
 }
 
@@ -442,7 +460,18 @@
     if (sender.on) {
         // Trigger dialog asking for location permission
         [self.themeManager updateSun];
+
+        self.nightModeEnabledSwitch.enabled = NO;
+        self.nightModeEnabledSwitch.alpha = 0.6f;
+        [self.userDefaults setBool:NO forKey:@"nightModeEnabled"];
     }
+    else {
+        self.nightModeEnabledSwitch.enabled = YES;
+        self.nightModeEnabledSwitch.alpha = 1.0f;
+    }
+
+    [self.themeManager loadTheme];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Navigation

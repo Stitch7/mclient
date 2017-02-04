@@ -35,9 +35,6 @@
 /* Class = "UILabel"; text = "Only in WiFI Network"; ObjectID = "SxL-9L-Hxa"; */
 "SxL-9L-Hxa.text" = "Nur wenn mit WLAN verbunden";
 
-/* Class = "UITextField"; placeholder = "Username"; ObjectID = "TXU-Eo-vnw"; */
-"TXU-Eo-vnw.placeholder" = "Benutzername";
-
 /* Class = "UILabel"; text = "Font Size"; ObjectID = "XPl-DW-327"; */
 "XPl-DW-327.text" = "Schriftgröße";
 
@@ -55,9 +52,6 @@
 
 /* Class = "UILabel"; text = "Signature enabled"; ObjectID = "itk-zT-27W"; */
 "itk-zT-27W.text" = "Signatur aktiviert";
-
-/* Class = "UITextField"; placeholder = "Password"; ObjectID = "kcH-Od-HC7"; */
-"kcH-Od-HC7.placeholder" = "Passwort";
 
 /* Class = "UITableViewSection"; headerTitle = "SIGNATURE"; ObjectID = "tY9-Fn-E9G"; */
 "tY9-Fn-E9G.headerTitle" = "SIGNATUR";
