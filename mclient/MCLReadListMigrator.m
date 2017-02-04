@@ -35,7 +35,7 @@
             return;
         }
 
-//        [userDefaults removeObjectForKey:kUserDefaultsKey];
+        [userDefaults removeObjectForKey:kUserDefaultsKey];
         [userDefaults setBool:YES forKey:kUserDefaultsMigratedKey];
     });
 }
