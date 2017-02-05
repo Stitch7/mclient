@@ -51,6 +51,8 @@
 
 - (void)updateBadgeWithThread:(MCLThread *)thread andTheme:(id <MCLTheme>)theme
 {
+    self.badgeView.backgroundColor = [theme badgeViewBackgroundColor];
+
     self.badgeLabel.text = [thread.messagesCount stringValue];
 
     if ([thread.messagesCount intValue] > 999 && !thread.isSticky) {
