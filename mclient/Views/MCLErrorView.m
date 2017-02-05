@@ -57,8 +57,6 @@
 
 - (void)configureBasic
 {
-    [self setBackgroundColor:[UIColor whiteColor]];
-
     UILabel *label = [[UILabel alloc] init];
     label.translatesAutoresizingMaskIntoConstraints = NO;
     label.font = [UIFont systemFontOfSize:15.0f];

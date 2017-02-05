@@ -1,5 +1,5 @@
 //
-//  MCLDetailViewController.m
+//  MCLMessageListViewController.m
 //  mclient
 //
 //  Created by Christopher Reitz on 19.09.14.
@@ -9,15 +9,25 @@
 #import "MCLMessageListViewController.h"
 
 #import "utils.h"
+#import "UIColor+Hex.h"
 #import "MCLThread.h"
 #import "MCLBoard.h"
+#import "MCLThemeManager.h"
 
 @implementation MCLMessageListViewController
 
 @synthesize splitViewButton = _splitViewButton;
 
-+ (NSString *)messageHtmlSkeletonForHtml:(NSString *)html withTopMargin:(int)topMargin
++ (NSString *)messageHtmlSkeletonForHtml:(NSString *)html withTopMargin:(int)topMargin andTheme:(id <MCLTheme>)currentTheme
 {
+    NSInteger fontSizeValue = [[NSUserDefaults standardUserDefaults] integerForKey:@"fontSize"];
+    if (!fontSizeValue) {
+        fontSizeValue = 3;
+    }
+    NSString *fontSize = [NSString stringWithFormat:@"%lipx", fontSizeValue + 11];
+    NSString *textColor = [currentTheme isDark] ? @"#fff" : @"#000";
+    NSString *linkColor = [[currentTheme tintColor] cssString];
+
     return [NSString stringWithFormat:@""
             "<html>"
             "<head>"
@@ -34,15 +44,18 @@
             "<style>"
             "    * {"
             "        font-family: \"Helvetica Neue\";"
-            "        font-size: 14px;"
+            "        font-size: %@;"
             "        -webkit-text-size-adjust: none;"
             "    }"
             "    body {"
             "        margin: %ipx 20px 10px 20px;"
             "        padding: 0px;"
+            "        background-color: transparent;"
+            "        color: %@;"
             "    }"
             "    a {"
             "        word-break: break-all;"
+            "        color: %@;"
             "    }"
             "    img {"
             "        max-width: 100%%;"
@@ -54,7 +67,26 @@
             "</style>"
             "</head>"
             "<body>%@</body>"
-            "</html>", topMargin, html];
+            "</html>", fontSize, topMargin, textColor, linkColor, html];
+}
+
+#pragma mark - Initializers
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - UIViewController
+
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
 }
 
 - (void)viewDidLoad
@@ -62,6 +94,7 @@
     [super viewDidLoad];
 
     [self configureTitle];
+    [self themeChanged:nil];
 }
 
 - (void)configureTitle
@@ -69,8 +102,8 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 480, 44)];
     label.backgroundColor = [UIColor clearColor];
     label.numberOfLines = 2;
-    label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont boldSystemFontOfSize: 15.0f];
+    label.textAlignment = NSTextAlignmentCenter;
     label.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
 
     self.titleLabel = label;
@@ -88,16 +121,9 @@
     self.titleLabel.attributedText = attributedString;
 }
 
-# pragma mark - Abstract
-
-- (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard
-{
-    mustOverride();
-}
-
 #pragma mark - SplitViewButtonHandler
 
--(void) turnSplitViewButtonOn: (UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *) popoverController
+- (void) turnSplitViewButtonOn: (UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *) popoverController
 {
     NSString *activeDetailViewControllerClassName = NSStringFromClass([[[[self.splitViewController.viewControllers lastObject] viewControllers] firstObject] class]);
 
@@ -112,15 +138,14 @@
     self.masterPopoverController = popoverController;
 }
 
--(void)turnSplitViewButtonOff {
+- (void)turnSplitViewButtonOff {
     // Called when the view is shown again in the split view, invalidating the button and popover controller.
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     _splitViewButton = nil;
     self.masterPopoverController = nil;
-    
 }
 
--(void) setSplitViewButton:(UIBarButtonItem *)splitViewButton forPopoverController:(UIPopoverController *)popoverController {
+- (void) setSplitViewButton:(UIBarButtonItem *)splitViewButton forPopoverController:(UIPopoverController *)popoverController {
     if (splitViewButton != _splitViewButton) {
         if (splitViewButton) {
             [self turnSplitViewButtonOn:splitViewButton forPopoverController:popoverController];
@@ -128,6 +153,22 @@
             [self turnSplitViewButtonOff];
         }
     }
+}
+
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+
+    self.titleLabel.textColor = [self.currentTheme navigationBarTextColor];
+}
+
+# pragma mark - Abstract
+
+- (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard
+{
+    mustOverride();
 }
 
 @end

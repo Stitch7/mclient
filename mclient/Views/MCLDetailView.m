@@ -8,6 +8,10 @@
 
 #import "MCLDetailView.h"
 
+
+#import "MCLTheme.h"
+#import "MCLThemeManager.h"
+
 #define SUB_LABEL_SIZE 13
 
 #pragma mark - Private Stuff
@@ -28,7 +32,7 @@
 
 - (UIImageView *)image
 {
-	if ( ! _image) {
+	if (!_image) {
         _image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoDetailView.png"]];
     }
 
@@ -37,13 +41,13 @@
 
 - (UILabel *)subLabel
 {
-	if ( ! _subLabel) {
+	if (!_subLabel) {
 		_subLabel = [[UILabel alloc] initWithFrame:self.bounds];
 		_subLabel.font = [UIFont systemFontOfSize:SUB_LABEL_SIZE];
 	}
+    
 	return _subLabel;
 }
-
 
 #pragma mark - Initializers
 
@@ -65,18 +69,27 @@
 	return self;
 }
 
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)configureWithSubLabelText:(NSString *)subLabelText
 {
-    [self setBackgroundColor:[UIColor whiteColor]];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
+    
     self.subLabel.text = subLabelText;
-
 
     [self addSubview:self.image];
     [self addSubview:self.subLabel];
 
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self setNeedsLayout];
+
+    [self themeChanged:nil];
 }
 
 #pragma mark - Layout Management
@@ -93,7 +106,6 @@
 	subLabelFrame.size = subLabelSize;
 	self.subLabel.frame = subLabelFrame;
 
-
 	// Align label and spinner horizontaly
 	CGRect imageFrame = self.image.frame;
 
@@ -107,6 +119,14 @@
     // Pass back modiefied frames
 	self.image.frame = imageFrame;
     self.subLabel.frame = subLabelFrame;
+}
+
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    // TODO: Why does UIAppearance not work here?
+    self.subLabel.textColor = [[[MCLThemeManager sharedManager] currentTheme] overlayTextColor];
 }
 
 @end

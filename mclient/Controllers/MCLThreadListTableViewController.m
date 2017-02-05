@@ -12,6 +12,7 @@
 #import "KeychainItemWrapper.h"
 #import "MCLAppDelegate.h"
 #import "MCLMServiceConnector.h"
+#import "MCLThemeManager.h"
 #import "MCLMessageListViewController.h"
 #import "MCLMServiceErrorView.h"
 #import "MCLInternetConnectionErrorView.h"
@@ -19,20 +20,19 @@
 #import "MCLThreadTableViewCell.h"
 #import "MCLThread.h"
 #import "MCLBoard.h"
-#import "MCLReadList.h"
 #import "MCLBadgeView.h"
 
 @interface MCLThreadListTableViewController ()
 
-@property (strong, nonatomic) UIColor *tableSeparatorColor;
 @property (strong, nonatomic) MCLMessageListViewController *detailViewController;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
+@property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) NSMutableArray *threads;
 @property (strong, nonatomic) UISearchController *searchController;
 @property (strong, nonatomic) NSTimer *searchTimer;
 @property (strong, nonatomic) NSMutableArray *searchResults;
-@property (strong, nonatomic) MCLReadList *readList;
 @property (strong, nonatomic) NSString *username;
+@property (strong, nonatomic) NSString *password;
 @property (assign, nonatomic) BOOL validLogin;
 @property (strong, nonatomic) NSDateFormatter *dateFormatterForInput;
 @property (strong, nonatomic) NSDateFormatter *dateFormatterForOutput;
@@ -41,11 +41,25 @@
 
 @implementation MCLThreadListTableViewController
 
+#pragma mark - Initializers
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - UIViewController
+
 - (void)awakeFromNib
 {
     [super awakeFromNib];
 
-    self.readList = [[MCLReadList alloc] init];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
+
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
 
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.clearsSelectionOnViewWillAppear = NO;
@@ -55,6 +69,8 @@
     KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:keychainIdentifier
                                                                             accessGroup:nil];
     self.username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
+    NSData *passwordData = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
+    self.password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
 
     self.validLogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"validLogin"];
 
@@ -100,14 +116,10 @@
         [self.detailViewController setSplitViewButton:splitViewButton forPopoverController:self.masterPopoverController];
 
         self.detailViewController.delegate = self;
-        self.detailViewController.readList = self.readList;
     }
 
     // Cache original tables separatorColor and set to clear to avoid flickering loading view
-    self.tableSeparatorColor = [self.tableView separatorColor];
     [self.tableView setSeparatorColor:[UIColor clearColor]];
-
-    self.tableView.allowsMultipleSelectionDuringEditing = NO;
 
     // Set title to board name
     self.title = self.board.name;
@@ -122,12 +134,19 @@
     self.refreshControl = refreshControl;
 
     // Visualize loading
-    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.frame]];
+    MCLLoadingView *loadingView = [[MCLLoadingView alloc] initWithFrame:self.view.frame];
+    [self.tableView addSubview:loadingView];
+
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     // Load data async
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
+        NSDictionary *loginData;
+        if (self.validLogin) {
+            loginData = @{@"username":self.username, @"password":self.password};
+        }
         NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadsFromBoardId:self.board.boardId
+                                                                                  login:loginData
                                                                                   error:&mServiceError];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedData:data error:mServiceError];
@@ -139,11 +158,15 @@
 {
     [super viewWillAppear:animated];
 
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+
     // Fix odd glitch on swipe back causing cell stay selected
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     if (selectedIndexPath) {
         [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
     }
+
+    [self.tableView reloadData];
 
     [self.navigationController setToolbarHidden:YES animated:NO];
 }
@@ -152,7 +175,7 @@
 {
     self.definesPresentationContext = YES;
     self.searchController = [[UISearchController alloc] initWithSearchResultsController: nil];
-    self.tableView.tableHeaderView = _searchController.searchBar;
+    self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.searchController loadViewIfNeeded];
     self.searchController.delegate = self;
     self.searchController.searchResultsUpdater = self;
@@ -160,7 +183,27 @@
     self.searchController.dimsBackgroundDuringPresentation = NO;
     self.searchController.searchBar.placeholder = NSLocalizedString(@"Search", nil);
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleProminent;
-    [self.searchController.searchBar sizeToFit];
+
+    // TODO: Why does UIAppearance not work here?
+    UITextField *searchField = [self searchViewForTextFieldBg:self.searchController.searchBar];
+    [searchField setBackgroundColor:[self.currentTheme searchFieldBackgroundColor]];
+    [searchField setTextColor:[self.currentTheme searchFieldTextColor]];
+}
+
+- (UITextField*)searchViewForTextFieldBg:(UIView*)view
+{
+    if ([view isKindOfClass:[UITextField class]]) {
+        return (UITextField *)view;
+    }
+
+    UITextField *searchTextField;
+    for (UIView *subview in view.subviews) {
+        searchTextField = [self searchViewForTextFieldBg:subview];
+        if (searchTextField) {
+            break;
+        }
+    }
+    return searchTextField;
 }
 
 - (void)reloadData
@@ -168,7 +211,12 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
+        NSDictionary *loginData;
+        if (self.validLogin) {
+            loginData = @{@"username":self.username, @"password":self.password};
+        }
         NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadsFromBoardId:self.board.boardId
+                                                                                  login:loginData
                                                                                   error:&mServiceError];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedData:data error:mServiceError];
@@ -186,6 +234,7 @@
             [subview removeFromSuperview];
         }
     }
+
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
     if (error) {
@@ -204,7 +253,7 @@
         }
 
         // Restore tables separatorColor
-        [self.tableView setSeparatorColor:self.tableSeparatorColor];
+        [self.tableView setSeparatorColor:[self.currentTheme tableViewSeparatorColor]];
 
         [self.tableView reloadData];
 
@@ -218,27 +267,36 @@
 {
     NSNumber *threadId = [object objectForKey:@"id"];
     NSNumber *messageId = [object objectForKey:@"messageId"];
+    id isRead = [object objectForKey:@"isRead"];
+    BOOL read = isRead != (id)[NSNull null] ? [isRead boolValue] : YES;
     BOOL sticky = [[object objectForKey:@"sticky"] boolValue];
     BOOL closed = [[object objectForKey:@"closed"] boolValue];
     BOOL mod = [[object objectForKey:@"mod"] boolValue];
     NSString *username = [object objectForKey:@"username"];
     NSString *subject = [object objectForKey:@"subject"];
     NSDate *date = [self.dateFormatterForInput dateFromString:[object objectForKey:@"date"]];
-    NSNumber *messageCount = [object objectForKey:@"messageCount"];
+    NSNumber *messagesCount = [object objectForKey:@"messagesCount"];
+    id messagesReadOpt = [object objectForKey:@"messagesRead"];
+    NSNumber *messagesRead = messagesReadOpt != (id)[NSNull null] ? messagesReadOpt : messagesCount;
     NSNumber *lastMessageId = [object objectForKey:@"lastMessageId"];
+    id lastMessageReadOpt = [object objectForKey:@"lastMessageIsRead"];
+    BOOL lastMessageRead = lastMessageReadOpt != (id)[NSNull null] ? [lastMessageReadOpt boolValue] : YES;
     NSDate *lastMessageDate = [self.dateFormatterForInput dateFromString:[object objectForKey:@"lastMessageDate"]];
 
-    return  [MCLThread threadWithId:threadId
-                          messageId:messageId
-                             sticky:sticky
-                             closed:closed
-                                mod:mod
-                           username:username
-                            subject:subject
-                               date:date
-                        messageCount:messageCount
-                        lastMessageId:lastMessageId
-                         lastMessageDate:lastMessageDate];
+    return [MCLThread threadWithId:threadId
+                         messageId:messageId
+                              read:read
+                            sticky:sticky
+                            closed:closed
+                               mod:mod
+                          username:username
+                           subject:subject
+                              date:date
+                      messagesCount:messagesCount
+                      messagesRead:messagesRead
+                     lastMessageId:lastMessageId
+                     lastMessageRead:lastMessageRead
+                   lastMessageDate:lastMessageDate];
 }
 
 #pragma mark - UITableViewDataSource
@@ -251,12 +309,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"ThreadCell";
+
     MCLThreadTableViewCell *cell =
         (MCLThreadTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.separatorInset = UIEdgeInsetsZero;
 
     UIView *backgroundView = [[UIView alloc] initWithFrame:cell.frame];
-    backgroundView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    backgroundView.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
     cell.selectedBackgroundView = backgroundView;
 
     MCLThread *thread = [self isSearching] ? self.searchResults[indexPath.row] : self.threads[indexPath.row];
@@ -266,16 +325,17 @@
 
     cell.threadUsernameLabel.text = thread.username;
     if ([thread.username isEqualToString:self.username]) {
-        cell.threadUsernameLabel.textColor = [UIColor blueColor];
+        cell.threadUsernameLabel.textColor = [self.currentTheme ownUsernameTextColor];
     } else if (thread.isMod) {
-        cell.threadUsernameLabel.textColor = [UIColor redColor];
+        cell.threadUsernameLabel.textColor = [self.currentTheme modTextColor];
     } else {
-        cell.threadUsernameLabel.textColor = [UIColor blackColor];
+        cell.threadUsernameLabel.textColor = [self.currentTheme usernameTextColor];
     }
     
-    cell.threadDateLabel.text = [NSString stringWithFormat:@" - %@", [self.dateFormatterForOutput stringFromDate:thread.date]];
-    
-    if ([self.readList messageIdIsRead:thread.messageId fromThread:thread] || thread.isClosed) {
+    cell.threadDateLabel.text = [self.dateFormatterForOutput stringFromDate:thread.date];
+    cell.threadDateLabel.textColor = [self.currentTheme detailTextColor];
+
+    if (thread.isRead || thread.isTemporaryRead || thread.isClosed) {
         [cell markRead];
     } else {
         [cell markUnread];
@@ -288,21 +348,25 @@
         cell.readSymbolViewLeadingConstraint.constant = 7.0f;
     }
 
+    cell.threadIsStickyImageView.image = [cell.threadIsStickyImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    cell.threadIsStickyImageView.tintColor = [self.currentTheme detailImageColor];
     [cell.threadIsStickyImageView setHidden:!thread.isSticky];
+
+    cell.threadIsClosedImageView.image = [cell.threadIsClosedImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    cell.threadIsClosedImageView.tintColor = [self.currentTheme detailImageColor];
     [cell.threadIsClosedImageView setHidden:!thread.isClosed];
 
     cell.badgeView.userInteractionEnabled = NO;
     cell.badgeLabel.userInteractionEnabled = NO;
 
-    [cell updateBadge:self.readList forThread:thread];
+    [cell updateBadgeWithThread:thread andTheme:self.currentTheme];
 
     return cell;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     MCLThread *thread = [self isSearching] ? self.searchResults[indexPath.row] : self.threads[indexPath.row];
-    NSNumber *readMessagesCount = [self.readList readMessagesCountFromThread:thread];
-    BOOL hasUnreadMessages = readMessagesCount < thread.messageCount;
+    BOOL hasUnreadMessages = thread.messagesRead < thread.messagesCount;
 
     return hasUnreadMessages;
 }
@@ -328,6 +392,7 @@
     MCLThread *thread = [self isSearching] ? self.searchResults[indexPath.row] : self.threads[indexPath.row];
     MCLThreadTableViewCell *cell = (MCLThreadTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     [cell markRead];
+    thread.tempRead = YES;
 
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         // Hide popoverController in portrait mode
@@ -360,22 +425,28 @@
         MCLThread *selectedThread = [self isSearching] ? self.searchResults[indexPath.row] : self.threads[indexPath.row];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *mServiceError;
-            NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:selectedThread.threadId
-                                                                          fromBoardId:self.board.boardId
-                                                                                error:&mServiceError];
+            NSDictionary *loginData;
+            if (self.validLogin) {
+                loginData = @{@"username":self.username, @"password":self.password};
+            }
+            NSDictionary *data = [[MCLMServiceConnector sharedConnector] markAsReadThreadWithId:selectedThread.threadId
+                                                                                    fromBoardId:self.board.boardId
+                                                                                          login:loginData
+                                                                                          error:&mServiceError];
+
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (!mServiceError) {
-                    NSMutableArray *messages = [NSMutableArray array];
-                    for (id object in data) {
-                        NSNumber *messageId = [object objectForKey:@"messageId"];
-                        [messages addObject:messageId];
-                    }
-                    [self.readList addMessages:messages fromThread:selectedThread];
+                if (mServiceError) { // TODO: Display error to user
+                    NSLog(@"%@ - %@", mServiceError, data);
+                } else {
+                    MCLThreadTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+                    [cell markRead];
+                    selectedThread.read = YES;
+                    selectedThread.lastMessageRead = YES;
+                    selectedThread.messagesRead = selectedThread.messagesCount;
+                    [cell updateBadgeWithThread:selectedThread andTheme:self.currentTheme];
                 }
+
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-                MCLThreadTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-                [cell markRead];
-                [cell updateBadge:self.readList forThread:selectedThread];
                 self.tableView.editing = NO;
             });
         });
@@ -384,7 +455,7 @@
     UITableViewRowAction *button = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
                                                                       title:NSLocalizedString(@"Mark as read", nil)
                                                                     handler:markThreadAsRead];
-    button.backgroundColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0];
+    button.backgroundColor = [self.currentTheme tintColor];
 
     return @[button];
 }
@@ -398,11 +469,11 @@
 
 #pragma mark - MCLMessageListDelegate
 
-- (void)messageListViewController:(MCLMessageListViewController *)inController didReadMessageOnThread:(MCLThread *)inThread onReadList:(MCLReadList *)inReadList
+- (void)messageListViewController:(MCLMessageListViewController *)inController didReadMessageOnThread:(MCLThread *)inThread
 {
     NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;
     MCLThreadTableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
-    [selectedCell updateBadge:inReadList forThread:inThread];
+    [selectedCell updateBadgeWithThread:inThread andTheme:self.currentTheme];
 }
 
 #pragma mark - UISearchResultsUpdating
@@ -451,8 +522,13 @@
 - (void)doSearch:(NSString *)searchString
 {
     NSError *mServiceError;
+    NSDictionary *loginData;
+    if (self.validLogin) {
+        loginData = @{@"username":self.username, @"password":self.password};
+    }
     NSDictionary *data = [[MCLMServiceConnector sharedConnector] searchThreadsOnBoard:self.board.boardId
                                                                            withPhrase:searchString
+                                                                                login:loginData
                                                                                 error:&mServiceError];
 
     if (mServiceError) {
@@ -472,6 +548,16 @@
     }
 }
 
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+    [self configureSearchResultsController];
+    [self.tableView setSeparatorColor:[self.currentTheme tableViewSeparatorColor]];
+    [self.tableView reloadData];
+}
+
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -483,7 +569,6 @@
         MCLThread *thread = [self isSearching] ? self.searchResults[indexPath.row] : self.threads[indexPath.row];
         MCLMessageListViewController *messageListVC = segue.destinationViewController;
         [messageListVC setDelegate:self];
-        [messageListVC setReadList:self.readList];
         [messageListVC setBoard:self.board];
         [messageListVC setThread:thread];
     } else if ([segue.identifier isEqualToString:@"ModalToComposeThread"]) {

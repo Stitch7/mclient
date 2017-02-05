@@ -10,6 +10,8 @@
 
 #import "constants.h"
 #import "MCLMServiceConnector.h"
+#import "MCLTheme.h"
+#import "MCLThemeManager.h"
 #import "MCLComposeMessagePreviewViewController.h"
 #import "MCLMessageTextView.h"
 
@@ -19,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *composeQuoteButton;
 @property (weak, nonatomic) IBOutlet UILabel *composeSubjectLabel;
 @property (weak, nonatomic) IBOutlet UITextField *composeSubjectTextField;
+@property (weak, nonatomic) IBOutlet UIView *composeSeparatorView;
 @property (weak, nonatomic) IBOutlet MCLMessageTextView *composeTextTextField;
 
 @end
@@ -26,6 +29,25 @@
 @implementation MCLComposeMessageViewController
 
 #define SUBJECT_MAXLENGTH 56
+
+#pragma mark - Initializers
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - UIViewController
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
+}
 
 - (void)viewDidLoad
 {
@@ -69,6 +91,8 @@
     if (self.text) {
         self.composeTextTextField.text = self.text;
     }
+
+    [self themeChanged:nil];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -130,7 +154,6 @@
     return shouldChangeCharacters;
 }
 
-
 #pragma mark - Actions
 
 - (IBAction)quoteButtonTouchUpInside:(UIButton *)sender
@@ -163,6 +186,15 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    id <MCLTheme> currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+
+    self.view.backgroundColor = [currentTheme backgroundColor];
+    self.composeSeparatorView.backgroundColor = [currentTheme tableViewSeparatorColor];
+}
 
  #pragma mark - Navigation
 

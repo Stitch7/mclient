@@ -34,7 +34,6 @@
 - (void)configure
 {
     self.translatesAutoresizingMaskIntoConstraints = NO;
-    self.backgroundColor = [UIColor whiteColor];
 
     UIImageView *indentionImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"messageIndention.png"]];
     indentionImageView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -52,7 +51,7 @@
     UILabel *dateLabel = [[UILabel alloc] init];
     dateLabel.translatesAutoresizingMaskIntoConstraints = NO;
     dateLabel.numberOfLines = 1;
-    dateLabel.font = [UIFont systemFontOfSize:13.0f];
+    dateLabel.font = [UIFont systemFontOfSize:12.0f];
 
     MCLReadSymbolView *readSymbol = [[MCLReadSymbolView alloc] init];
     readSymbol.translatesAutoresizingMaskIntoConstraints = NO;
@@ -161,7 +160,7 @@
 
     [self.contentView addConstraints:@"V:|-15-[indentionImageView(40)]" views:views];
     [self.contentView addConstraints:@"V:|-10-[subjectLabel]-5-[usernameLabel]-10@999-[webView]" views:views];
-    [self.contentView addConstraints:@"V:[subjectLabel]-5-[dateLabel]" views:views];
+    [self.contentView addConstraints:@"V:[subjectLabel]-6-[dateLabel]" views:views];
     [self.contentView addConstraints:@"V:[subjectLabel]-9-[readSymbol(8)]" views:views];
     [self.contentView addConstraints:@"V:[webView]|" views:views];
     [self.contentView addConstraints:@"V:[toolbar]|" views:views];
@@ -279,9 +278,7 @@
                 [utterance setVoice:[AVSpeechSynthesisVoice voiceWithLanguage:@"de-DE"]];
 
                 [self.speechSynthesizer speakUtterance:utterance];
-                
             }];
-            
         }];
     }
 }

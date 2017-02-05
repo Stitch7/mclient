@@ -23,7 +23,6 @@
 #import "MCLBoard.h"
 #import "MCLThread.h"
 #import "MCLMessage.h"
-#import "MCLReadList.h"
 
 
 @interface MCLMessageListWidmannStyleViewController ()
@@ -33,7 +32,6 @@
 @property (assign, nonatomic) CGFloat selectedCellHeight;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) UIView *refreshControlBackgroundView;
-@property (strong, nonatomic) UIColor *tableSeparatorColor;
 @property (strong, nonatomic) NSMutableArray *messages;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *password;
@@ -76,6 +74,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+
     if (self.board && self.thread) {
         [self updateTitle:self.thread.subject];
 
@@ -84,16 +84,19 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
         // Load data async
+        NSDictionary *loginData;
+        if (self.validLogin) {
+            loginData = @{@"username":self.username, @"password":self.password};
+        }
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *mServiceError;
             NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
                                                                           fromBoardId:self.board.boardId
+                                                                                login:loginData
                                                                                 error:&mServiceError];
             // Process data on main thread
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self fetchedData:data error:mServiceError];
-                // Restore tables separatorColor
-                [self.tableView setSeparatorColor:self.tableSeparatorColor];
             });
         });
     } else {
@@ -124,13 +127,7 @@
     [tableView registerClass:[MCLMessageListWidmannStyleTableViewCell class] forCellReuseIdentifier:@"MessageCell"];
     tableView.delegate = self;
     tableView.dataSource = self;
-    tableView.backgroundColor = [UIColor whiteColor];
     tableView.scrollsToTop = YES;
-
-    // Cache original tables separatorColor and set to clear to avoid flickering loading view
-    self.tableSeparatorColor = [tableView separatorColor];
-    [tableView setSeparatorColor:[UIColor clearColor]];
-
     [self.view addSubview:tableView];
 
     NSDictionary *views = NSDictionaryOfVariableBindings(tableView);
@@ -152,7 +149,6 @@
     CGRect refreshControlBackgroundViewFrame = self.tableView.bounds;
     refreshControlBackgroundViewFrame.origin.y = -refreshControlBackgroundViewFrame.size.height;
     self.refreshControlBackgroundView = [[UIView alloc] initWithFrame:refreshControlBackgroundViewFrame];
-    self.refreshControlBackgroundView.backgroundColor = [UIColor groupTableViewBackgroundColor];
 
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
@@ -190,15 +186,17 @@
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
+        NSDictionary *loginData;
+        if (self.validLogin) {
+            loginData = @{@"username":self.username, @"password":self.password};
+        }
         NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
                                                                       fromBoardId:self.board.boardId
+                                                                            login:loginData
                                                                             error:&mServiceError];
         // Process data on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedData:data error:mServiceError];
-
-            // Restore tables separatorColor
-            [self.tableView setSeparatorColor:self.tableSeparatorColor];
         });
     });
 }
@@ -219,8 +217,13 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
+        NSDictionary *loginData;
+        if (self.validLogin) {
+            loginData = @{@"username":self.username, @"password":self.password};
+        }
         NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
                                                                       fromBoardId:self.board.boardId
+                                                                            login:loginData
                                                                             error:&mServiceError];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedData:data error:mServiceError];
@@ -263,6 +266,8 @@
         self.messages = [NSMutableArray array];
         for (id object in data) {
             NSNumber *messageId = [object objectForKey:@"messageId"];
+            id isReadOpt = [object objectForKey:@"isRead"];
+            BOOL isRead = (isReadOpt != (id)[NSNull null] && isReadOpt != nil) ? [isReadOpt boolValue] : YES;
             NSNumber *level = [object objectForKey:@"level"];
             BOOL mod = [[object objectForKey:@"mod"] boolValue];
             NSString *username = [object objectForKey:@"username"];
@@ -270,6 +275,7 @@
             NSDate *date = [dateFormatter dateFromString:[object objectForKey:@"date"]];
 
             MCLMessage *message = [MCLMessage messageWithId:messageId
+                                                       read:isRead
                                                       level:level
                                                         mod:mod
                                                    username:username
@@ -280,28 +286,24 @@
 
         [self.tableView reloadData];
 
-        NSNumber *lastMessageId = self.thread.lastMessageId;
-
         // If new thread select first message
-        BOOL threadIsNew = ![self.readList messageIdIsRead:self.thread.messageId fromThread:self.thread];
         BOOL jumpToLatestPost = [[NSUserDefaults standardUserDefaults] boolForKey:@"jumpToLatestPost"];
-        if (threadIsNew) {
+        if (!self.thread.isRead) {
             NSIndexPath *firstMessageIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
             [self.tableView selectRowAtIndexPath:firstMessageIndexPath
                                         animated:YES
                                   scrollPosition:UITableViewScrollPositionTop];
             [self tableView:self.tableView didSelectRowAtIndexPath:firstMessageIndexPath];
         }
-        else if (jumpToLatestPost && lastMessageId > 0) {
-            BOOL lastMessageIsNotRead = ![self.readList messageIdIsRead:lastMessageId fromThread:self.thread];
-            if (lastMessageIsNotRead) {
+        else if (jumpToLatestPost && self.thread.lastMessageId > 0) {
+            if (!self.thread.lastMessageIsRead) {
                 [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
                     if (self.thread.lastMessageId == message.messageId) {
                         NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
-                        [self.tableView selectRowAtIndexPath:latestMessageIndexPath
-                                                    animated:YES
-                                              scrollPosition:UITableViewScrollPositionTop];
-                        [self tableView:self.tableView didSelectRowAtIndexPath:latestMessageIndexPath];
+                        [self.tableView scrollToRowAtIndexPath:latestMessageIndexPath
+                                              atScrollPosition:UITableViewScrollPositionTop
+                                                      animated:YES];
+                        self.thread.lastMessageRead = YES;
                     }
                 }];
             }
@@ -327,8 +329,9 @@
     if (cell == nil) {
         cell = [[MCLMessageListWidmannStyleTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle
                                                              reuseIdentifier:cellIdentifier];
-        cell.translatesAutoresizingMaskIntoConstraints = NO;
     }
+
+    cell.translatesAutoresizingMaskIntoConstraints = NO;
 
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -336,23 +339,23 @@
 
     [self indentView:cell.messageIndentionConstraint withLevel:message.level];
 
-    if (i > 0 && i == [tableView indexPathForSelectedRow].row) {
-        cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    cell.messageIndentionImageView.image = [cell.messageIndentionImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    cell.messageIndentionImageView.tintColor = [self.currentTheme tableViewSeparatorColor];
 
-        [cell.messageTextWebView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-        [cell.messageTextWebView.scrollView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    if (i > 0 && i == [tableView indexPathForSelectedRow].row) { // is selected
+        cell.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
+        cell.messageTextWebView.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
+        cell.messageTextWebView.scrollView.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
 
         [cell.messageToolbar setHidden:NO];
         [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
         [self hideToolbarButtonsForMessage:message inCell:cell atIndexPath:indexPath];
-    } else {
-        cell.backgroundColor = [UIColor whiteColor];
+    }
+    else {
+        cell.backgroundColor = [self.currentTheme tableViewCellBackgroundColor];
         [cell.messageToolbar setHidden:YES];
         cell.messageTextWebViewHeightConstraint.constant = 0;
     }
-
-    cell.messageToolbar.translucent = NO;
-    cell.messageToolbar.barTintColor = [UIColor groupTableViewBackgroundColor];
 
     [cell setBoardId:self.board.boardId];
     [cell setMessageId:message.messageId];
@@ -362,24 +365,23 @@
     cell.messageIndentionImageView.hidden = (i == 0);
     
     cell.messageSubjectLabel.text = message.subject;
+    cell.messageSubjectLabel.textColor = [self.currentTheme textColor];
+
     cell.messageUsernameLabel.text = message.username;
-    
     if ([message.username isEqualToString:self.username]) {
-        cell.messageUsernameLabel.textColor = [UIColor blueColor];
+        cell.messageUsernameLabel.textColor = [self.currentTheme ownUsernameTextColor];
     } else if (message.isMod) {
-        cell.messageUsernameLabel.textColor = [UIColor redColor];
+        cell.messageUsernameLabel.textColor = [self.currentTheme modTextColor];
     } else {
-        cell.messageUsernameLabel.textColor = [UIColor blackColor];
+        cell.messageUsernameLabel.textColor = [self.currentTheme usernameTextColor];
     }
     
-    cell.messageDateLabel.text = [NSString stringWithFormat:@" - %@", [self.dateFormatter stringFromDate:message.date]];
-    
-    [cell.messageUsernameLabel sizeToFit];
-    [cell.messageDateLabel sizeToFit];
+    cell.messageDateLabel.text = [self.dateFormatter stringFromDate:message.date];
+    cell.messageDateLabel.textColor = [self.currentTheme detailTextColor];
 
     [cell.messageTextWebView setNavigationDelegate:self];
 
-    if (i == 0 || [self.readList messageIdIsRead:message.messageId fromThread:self.thread]) {
+    if (i == 0 || message.isRead) {
         [cell markRead];
     } else {
         [cell markUnread];
@@ -427,8 +429,25 @@
     [self barButton:cell.messageReplyButton hide:hideReplyButton];
 }
 
-
 #pragma mark - UITableViewDelegate
+
+- (void)selectLastMessage
+{
+    [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
+        if (self.thread.lastMessageId == message.messageId) {
+            NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
+            [self.tableView selectRowAtIndexPath:latestMessageIndexPath
+                                        animated:YES
+                                  scrollPosition:UITableViewScrollPositionTop];
+            [self tableView:self.tableView didSelectRowAtIndexPath:latestMessageIndexPath];
+        }
+    }];
+}
+
+-(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    [self selectLastMessage];
+}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -468,7 +487,9 @@
             break;
     }
 
-    return [MCLMessageListViewController messageHtmlSkeletonForHtml:messageHtml withTopMargin:0];
+    return [MCLMessageListViewController messageHtmlSkeletonForHtml:messageHtml
+                                                      withTopMargin:0
+                                                           andTheme:self.currentTheme];
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -491,22 +512,23 @@
 
     MCLMessageListWidmannStyleTableViewCell *cell =
         (MCLMessageListWidmannStyleTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    [cell setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    cell.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
+    cell.messageTextWebView.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
+    cell.messageTextWebView.scrollView.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
 
     MCLMessage *message = self.messages[indexPath.row];
     if (message.text) {
         [self putMessage:message toCell:cell atIndexPath:indexPath];
     } else {
-        NSDictionary *loginData = nil;
-        if ([message.username isEqualToString:self.username]) {
-            loginData = @{@"username":self.username,
-                          @"password":self.password};
-        }
-
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSError *mServiceError;
+            NSDictionary *loginData;
+            if (self.validLogin) {
+                loginData = @{@"username":self.username, @"password":self.password};
+            }
             NSDictionary *data = [[MCLMServiceConnector sharedConnector] messageWithId:message.messageId
                                                                            fromBoardId:self.board.boardId
+                                                                          andThreadId:self.thread.threadId
                                                                                  login:loginData
                                                                                  error:&mServiceError];
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -533,11 +555,15 @@
                     }
 
                     cell.messageText = message.text;
-                    [cell markRead];
-                    [self.readList addMessageId:message.messageId fromThread:self.thread];
-                    [self.delegate messageListViewController:self
-                                      didReadMessageOnThread:self.thread
-                                                  onReadList:self.readList];
+                    if (!message.isRead) {
+                        [cell markRead];
+                        self.thread.messagesRead = [NSNumber numberWithInteger:[self.thread.messagesRead intValue] + 1];
+                        message.read = YES;
+                        if ([message.messageId isEqualToNumber:self.thread.lastMessageId]) {
+                            self.thread.lastMessageRead = YES;
+                        }
+                    }
+                    [self.delegate messageListViewController:self didReadMessageOnThread:self.thread];
                     [self putMessage:message toCell:cell atIndexPath:indexPath];
                 }
             });
@@ -547,8 +573,6 @@
 
 - (void)putMessage:(MCLMessage *)message toCell:(MCLMessageListWidmannStyleTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    [cell.messageTextWebView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-    [cell.messageTextWebView.scrollView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
     [self hideToolbarButtonsForMessage:message inCell:cell atIndexPath:indexPath];
 
@@ -560,9 +584,8 @@
     MCLMessageListWidmannStyleTableViewCell *cell =
         (MCLMessageListWidmannStyleTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     
-    [cell setBackgroundColor:[UIColor clearColor]];
-    [cell.messageTextWebView setBackgroundColor:[UIColor clearColor]];
-    [cell.messageTextWebView.scrollView setBackgroundColor:[UIColor clearColor]];
+    cell.backgroundColor = [self.currentTheme tableViewCellBackgroundColor];
+
     cell.messageTextWebViewHeightConstraint.constant = 0.0;
 
     [cell.messageToolbar setHidden:YES];
@@ -651,6 +674,17 @@
     }
 }
 
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    [super themeChanged:notification];
+
+    if (notification) {
+        [self.tableView reloadData];
+    }
+}
+
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -693,35 +727,4 @@
     }
 }
 
-/*
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator
-{
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
- 
-    // Code here will execute before the rotation begins.
-    // Equivalent to placing it in the deprecated method -[willRotateToInterfaceOrientation:duration:]
-    NSLog(@"111111111111111111111111111111111111111111111111111111111111");
-
-    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-    if (!selectedIndexPath) { return; }
-
-    MCLMessageListWidmannStyleTableViewCell *cell =
-    (MCLMessageListWidmannStyleTableViewCell*)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
-    MCLMessage *message = self.messages[selectedIndexPath.row];
-
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        // Place code here to perform animations during the rotation.
-        // You can pass nil or leave this block empty if not necessary.
-        NSLog(@"222222222222222222222222222222222222222222222222222222222222");
-
-        [cell.messageTextWebView setNeedsLayout];
-        [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        // Code here will execute after the rotation has finished.
-        // Equivalent to placing it in the deprecated method -[didRotateFromInterfaceOrientation:]
-        NSLog(@"333333333333333333333333333333333333333333333333333333333333");
-
-    }];
-}
-*/
 @end

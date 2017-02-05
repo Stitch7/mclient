@@ -47,26 +47,48 @@
 }
 
 - (NSDictionary *)threadsFromBoardId:(NSNumber *)inBoardId
+                               login:(NSDictionary *)loginData
                                error:(NSError **)errorPtr
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/threads", kMServiceBaseURL, inBoardId];
-    return [self getRequestToUrlString:urlString login:nil error:errorPtr];
+    return [self getRequestToUrlString:urlString login:loginData error:errorPtr];
 }
 
 - (NSDictionary *)threadWithId:(NSNumber *)inThreadId
                    fromBoardId:(NSNumber *)inBoardId
+                         login:(NSDictionary *)loginData
                          error:(NSError **)errorPtr
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/thread/%@", kMServiceBaseURL, inBoardId, inThreadId];
-    return [self getRequestToUrlString:urlString login:nil error:errorPtr];
+    return [self getRequestToUrlString:urlString login:loginData error:errorPtr];
+}
+
+- (NSDictionary *)markAsReadThreadWithId:(NSNumber *)inThreadId
+                             fromBoardId:(NSNumber *)inBoardId
+                                   login:(NSDictionary *)loginData
+                                   error:(NSError **)errorPtr
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/thread/%@/mark-as-read", kMServiceBaseURL, inBoardId, inThreadId];
+    return [self getRequestToUrlString:urlString login:loginData error:errorPtr];
+}
+
+- (void)importReadList:(NSDictionary *)inReadList
+                 login:(NSDictionary *)loginData
+                 error:(NSError **)errorPtr
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/read-list", kMServiceBaseURL];
+    NSError *jsonError;
+    NSData *body = [NSJSONSerialization dataWithJSONObject:inReadList options:0 error:&jsonError];
+    [self requestWithHTTPMethod:@"POST" toUrlString:urlString withVars:nil body:body login:loginData error:errorPtr];
 }
 
 - (NSDictionary *)messageWithId:(NSNumber *)inMessageId
                     fromBoardId:(NSNumber *)inBoardId
+                   andThreadId:(NSNumber *)inThreadId
                           login:(NSDictionary *)loginData
                           error:(NSError **)errorPtr
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message/%@", kMServiceBaseURL, inBoardId, inMessageId];
+    NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/thread/%@/message/%@", kMServiceBaseURL, inBoardId, inThreadId, inMessageId];
     return [self getRequestToUrlString:urlString login:loginData error:errorPtr];
 }
 
@@ -200,13 +222,14 @@
 
 - (NSDictionary *)searchThreadsOnBoard:(NSNumber *)inBoardId
                withPhrase:(NSString *)inPhrase
+                    login:(NSDictionary *)loginData
                     error:(NSError **)errorPtr
 {
     NSDictionary *vars = @{@"phrase":inPhrase};
     
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/search-threads", kMServiceBaseURL, inBoardId];
 
-    return [self postRequestToUrlString:urlString withVars:vars login:nil error:errorPtr];
+    return [self postRequestToUrlString:urlString withVars:vars login:loginData error:errorPtr];
 }
 
 
@@ -214,20 +237,20 @@
 
 - (NSDictionary *)getRequestToUrlString:(NSString *)urlString login:(NSDictionary *)loginData error:(NSError **)errorPtr
 {
-    return [self requestWithHTTPMethod:@"GET" toUrlString:urlString withVars:nil login:loginData error:errorPtr];
+    return [self requestWithHTTPMethod:@"GET" toUrlString:urlString withVars:nil body:nil login:loginData error:errorPtr];
 }
 
 - (NSDictionary *)postRequestToUrlString:(NSString *)urlString withVars:(NSDictionary *)vars login:(NSDictionary *)loginData error:(NSError **)errorPtr
 {
-    return [self requestWithHTTPMethod:@"POST" toUrlString:urlString withVars:vars login:loginData error:errorPtr];
+    return [self requestWithHTTPMethod:@"POST" toUrlString:urlString withVars:vars body:nil login:loginData error:errorPtr];
 }
 
 - (NSDictionary *)putRequestToUrlString:(NSString *)urlString withVars:(NSDictionary *)vars login:(NSDictionary *)loginData error:(NSError **)errorPtr
 {
-    return [self requestWithHTTPMethod:@"PUT" toUrlString:urlString withVars:vars login:loginData error:errorPtr];
+    return [self requestWithHTTPMethod:@"PUT" toUrlString:urlString withVars:vars body:nil login:loginData error:errorPtr];
 }
 
-- (NSDictionary *)requestWithHTTPMethod:(NSString *)httpMethod toUrlString:(NSString *)urlString withVars:(NSDictionary *)vars login:(NSDictionary *)loginData error:(NSError **)errorPtr
+- (NSDictionary *)requestWithHTTPMethod:(NSString *)httpMethod toUrlString:(NSString *)urlString withVars:(NSDictionary *)vars body:(NSData *)body login:(NSDictionary *)loginData error:(NSError **)errorPtr
 {
     NSDictionary *reply = nil;
     NSNumber *errorCode = nil;
@@ -250,7 +273,10 @@
             [request setValue:authValue forHTTPHeaderField:@"Authorization"];
         }
 
-        if (vars) {
+        if (body) {
+            request.HTTPBody = body;
+        }
+        else if (vars) {
             [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
 
             NSString *requestFields = @"";

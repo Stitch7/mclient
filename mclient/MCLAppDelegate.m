@@ -7,20 +7,30 @@
 //
 
 #import "MCLAppDelegate.h"
-
-#import "MCLMessageListViewController.h"
-#import "MCLComposeMessagePreviewViewController.h"
+#import "MCLThemeManager.h"
 
 @implementation MCLAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[MCLThemeManager sharedManager] loadTheme];
+
     return YES;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+-(void)applicationDidEnterBackground:(UIApplication *)application
+{
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    [[MCLThemeManager sharedManager] loadTheme];
 }
 
 @end

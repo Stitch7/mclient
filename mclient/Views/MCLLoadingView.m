@@ -24,8 +24,6 @@
 
 - (void)configureSubviews
 {
-    [self setBackgroundColor:[UIColor whiteColor]];
-
     UIView *container = [[UIView alloc] init];
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     UILabel *label = [[UILabel alloc] init];
@@ -65,6 +63,7 @@
     [container addConstraints:@"V:|[label]|" views:views];
     [container addConstraints:@"H:|[spinner]-5-[label]|" views:views];
 
+    self.container = container;
     self.spinner = spinner;
     self.label = label;
 }

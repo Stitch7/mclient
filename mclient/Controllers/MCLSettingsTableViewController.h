@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MCLSettingsFontSizeViewController.h"
+
 @protocol MCLSettingsTableViewControllerDelegate;
 
-@interface MCLSettingsTableViewController : UITableViewController <UITextFieldDelegate, UITextViewDelegate>
+@interface MCLSettingsTableViewController : UITableViewController <UITextFieldDelegate, UITextViewDelegate, MCLSettingsFontSizeViewControllerDelegate>
 
 @property (weak) id<MCLSettingsTableViewControllerDelegate> delegate;
 
@@ -18,6 +20,6 @@
 
 @protocol MCLSettingsTableViewControllerDelegate <NSObject>
 
-- (void)settingsTableViewControllerDidFinish:(MCLSettingsTableViewController *)inController;
+- (void)settingsTableViewControllerDidFinish:(MCLSettingsTableViewController *)inController loginDataChanged:(BOOL)loginDataChanged;
 
 @end

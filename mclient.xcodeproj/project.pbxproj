@@ -25,6 +25,9 @@
 		301FD9AD19C5C79000E36A5B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9AC19C5C79000E36A5B /* Reachability.m */; };
 		3020A26819DA1B66007F46E2 /* isClosed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3020A26719DA1B66007F46E2 /* isClosed@2x.png */; };
 		302F462519BF443A00DC77D8 /* copyLinkButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */; };
+		3036F5981E26666600ABC2CE /* MCLThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3036F5971E26666600ABC2CE /* MCLThemeManager.m */; };
+		3036F59B1E266B3800ABC2CE /* MCLNightTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 3036F59A1E266B3800ABC2CE /* MCLNightTheme.m */; };
+		3036F59E1E26798E00ABC2CE /* MCLDefaultTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 3036F59D1E26798E00ABC2CE /* MCLDefaultTheme.m */; };
 		3038D58319F65E21005E7D3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3038D58519F65E21005E7D3D /* Localizable.strings */; };
 		3039748A1E1694C8003C8BC9 /* MCLMessageListWidmannStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 303974891E1694C8003C8BC9 /* MCLMessageListWidmannStyleViewController.m */; };
 		3039748D1E16A1F4003C8BC9 /* MCLMessageListWidmannStyleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3039748C1E16A1F4003C8BC9 /* MCLMessageListWidmannStyleTableViewCell.m */; };
@@ -71,6 +74,9 @@
 		307A80EF19B8800E001B538D /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 307A80EE19B8800E001B538D /* KeychainItemWrapper.m */; };
 		307A80F119B8804F001B538D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307A80F019B8804F001B538D /* Security.framework */; };
 		307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D797519B0B3B30096A217 /* MCLReadSymbolView.m */; };
+		30849D1C1E2AA40900626331 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30849D1B1E2AA40900626331 /* CoreLocation.framework */; };
+		30849D1F1E2B8CB500626331 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 30849D1E1E2B8CB500626331 /* UIColor+Hex.m */; };
+		30849D201E2BABBD00626331 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30849D221E2BABBD00626331 /* Settings.storyboard */; };
 		3086428419D18ED10027F932 /* messageIndention@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3086428319D18ED10027F932 /* messageIndention@2x.png */; };
 		3086428919D2D6CE0027F932 /* MCLMessageTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3086428819D2D6CE0027F932 /* MCLMessageTextView.m */; };
 		308EC3D819CC4DE800A0869F /* MCLMessageListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 308EC3D619CC4DE800A0869F /* MCLMessageListViewController.m */; };
@@ -97,6 +103,9 @@
 		3093B79C19E2FA6C00F8FD5F /* profileButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 3093B79B19E2FA6C00F8FD5F /* profileButton.png */; };
 		30A1BFAD19B4A8D4002439FE /* MCLSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */; };
 		30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */; };
+		30D82AEF1E2A40B400898963 /* fontIncrease@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30D82AED1E2A40B400898963 /* fontIncrease@2x.png */; };
+		30D82AF01E2A40B400898963 /* fontDecrease@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30D82AEE1E2A40B400898963 /* fontDecrease@2x.png */; };
+		30D82AF31E2A42F700898963 /* MCLSettingsFontSizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D82AF21E2A42F700898963 /* MCLSettingsFontSizeViewController.m */; };
 		30DBC45C1A032A1100340B3A /* boardRetroNTech.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC45A1A032A1100340B3A /* boardRetroNTech.png */; };
 		30DBC45D1A032A1100340B3A /* boardRetroNTech@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC45B1A032A1100340B3A /* boardRetroNTech@2x.png */; };
 		30DBC4671A07DB6700340B3A /* copyLinkButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC45E1A07DB6700340B3A /* copyLinkButton@3x.png */; };
@@ -120,9 +129,11 @@
 		30DBC4851A07E83600340B3A /* quoteButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4841A07E83600340B3A /* quoteButton@3x.png */; };
 		30DBC4871A07E8B900340B3A /* errorInternetConnection@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4861A07E8B900340B3A /* errorInternetConnection@3x.png */; };
 		30DBC4891A07E8D100340B3A /* errorMService@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30DBC4881A07E8D100340B3A /* errorMService@3x.png */; };
-		30E8B89619B33C070067DD1F /* MCLReadList.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89519B33C070067DD1F /* MCLReadList.m */; };
+		30DBC8A61E285FAC00EF150B /* MCLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBC8A51E285FAC00EF150B /* MCLTextView.m */; };
+		30E70BF81E40B8B900534EDE /* MCLReadListMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E70BF71E40B8B900534EDE /* MCLReadListMigrator.m */; };
 		30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */; };
 		30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */; };
+		6501766D8063F5F642D79D11 /* libPods-mclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 064E0AFA20768528C9F3DBC4 /* libPods-mclient.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +147,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		064E0AFA20768528C9F3DBC4 /* libPods-mclient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mclient.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MCLThreadTableViewCell.xib; sourceTree = "<group>"; };
 		3012032A1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageListFrameStyleTableViewCell.h; sourceTree = "<group>"; };
 		3012032B1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListFrameStyleTableViewCell.m; sourceTree = "<group>"; };
@@ -163,8 +175,13 @@
 		301FD9AC19C5C79000E36A5B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		3020A26719DA1B66007F46E2 /* isClosed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isClosed@2x.png"; sourceTree = "<group>"; };
 		302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copyLinkButton@2x.png"; sourceTree = "<group>"; };
-		3038D57F19F65E0C005E7D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		3038D58019F65E0C005E7D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		3036F5941E263E9800ABC2CE /* MCLTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLTheme.h; sourceTree = "<group>"; };
+		3036F5961E26666600ABC2CE /* MCLThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLThemeManager.h; sourceTree = "<group>"; };
+		3036F5971E26666600ABC2CE /* MCLThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLThemeManager.m; sourceTree = "<group>"; };
+		3036F5991E266B3800ABC2CE /* MCLNightTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLNightTheme.h; sourceTree = "<group>"; };
+		3036F59A1E266B3800ABC2CE /* MCLNightTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLNightTheme.m; sourceTree = "<group>"; };
+		3036F59C1E26798E00ABC2CE /* MCLDefaultTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLDefaultTheme.h; sourceTree = "<group>"; };
+		3036F59D1E26798E00ABC2CE /* MCLDefaultTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLDefaultTheme.m; sourceTree = "<group>"; };
 		3038D58119F65E0C005E7D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3038D58219F65E0D005E7D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3038D58419F65E21005E7D3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -232,6 +249,13 @@
 		307A80F019B8804F001B538D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		307D797419B0B3B30096A217 /* MCLReadSymbolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadSymbolView.h; sourceTree = "<group>"; };
 		307D797519B0B3B30096A217 /* MCLReadSymbolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadSymbolView.m; sourceTree = "<group>"; };
+		30849D1B1E2AA40900626331 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		30849D1D1E2B8C6C00626331 /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
+		30849D1E1E2B8CB500626331 /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
+		30849D211E2BABBD00626331 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
+		30849D241E2BABFC00626331 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Settings.strings; sourceTree = "<group>"; };
+		30849D261E2BBD4300626331 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
+		30849D2A1E2BBED200626331 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		3086428319D18ED10027F932 /* messageIndention@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messageIndention@2x.png"; sourceTree = "<group>"; };
 		3086428719D2D6CE0027F932 /* MCLMessageTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageTextView.h; sourceTree = "<group>"; };
 		3086428819D2D6CE0027F932 /* MCLMessageTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageTextView.m; sourceTree = "<group>"; };
@@ -264,6 +288,10 @@
 		30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsTableViewController.m; sourceTree = "<group>"; };
 		30A9D5E519D4CFFF00070268 /* MCLComposeMessagePreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessagePreviewViewController.h; sourceTree = "<group>"; };
 		30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLComposeMessagePreviewViewController.m; sourceTree = "<group>"; };
+		30D82AED1E2A40B400898963 /* fontIncrease@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fontIncrease@2x.png"; sourceTree = "<group>"; };
+		30D82AEE1E2A40B400898963 /* fontDecrease@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fontDecrease@2x.png"; sourceTree = "<group>"; };
+		30D82AF11E2A42F700898963 /* MCLSettingsFontSizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLSettingsFontSizeViewController.h; sourceTree = "<group>"; };
+		30D82AF21E2A42F700898963 /* MCLSettingsFontSizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsFontSizeViewController.m; sourceTree = "<group>"; };
 		30DBC45A1A032A1100340B3A /* boardRetroNTech.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boardRetroNTech.png; sourceTree = "<group>"; };
 		30DBC45B1A032A1100340B3A /* boardRetroNTech@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardRetroNTech@2x.png"; sourceTree = "<group>"; };
 		30DBC45E1A07DB6700340B3A /* copyLinkButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copyLinkButton@3x.png"; sourceTree = "<group>"; };
@@ -287,12 +315,16 @@
 		30DBC4841A07E83600340B3A /* quoteButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quoteButton@3x.png"; sourceTree = "<group>"; };
 		30DBC4861A07E8B900340B3A /* errorInternetConnection@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "errorInternetConnection@3x.png"; sourceTree = "<group>"; };
 		30DBC4881A07E8D100340B3A /* errorMService@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "errorMService@3x.png"; sourceTree = "<group>"; };
-		30E8B89419B33C070067DD1F /* MCLReadList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadList.h; sourceTree = "<group>"; };
-		30E8B89519B33C070067DD1F /* MCLReadList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadList.m; sourceTree = "<group>"; };
+		30DBC8A41E285FAB00EF150B /* MCLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLTextView.h; sourceTree = "<group>"; };
+		30DBC8A51E285FAC00EF150B /* MCLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLTextView.m; sourceTree = "<group>"; };
+		30E70BF61E40B8B800534EDE /* MCLReadListMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadListMigrator.h; sourceTree = "<group>"; };
+		30E70BF71E40B8B900534EDE /* MCLReadListMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadListMigrator.m; sourceTree = "<group>"; };
 		30E8B89719B3CBF40067DD1F /* MCLComposeMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessageViewController.h; sourceTree = "<group>"; };
 		30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLComposeMessageViewController.m; sourceTree = "<group>"; };
 		30EFDC0A19D422DE00E3EE31 /* MCLVerifiyLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLVerifiyLoginView.h; sourceTree = "<group>"; };
 		30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLVerifiyLoginView.m; sourceTree = "<group>"; };
+		454F27F65C44793D03FAD818 /* Pods-mclient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mclient.release.xcconfig"; path = "Pods/Target Support Files/Pods-mclient/Pods-mclient.release.xcconfig"; sourceTree = "<group>"; };
+		7A3554192111A6737A92E22B /* Pods-mclient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mclient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mclient/Pods-mclient.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,10 +332,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30849D1C1E2AA40900626331 /* CoreLocation.framework in Frameworks */,
 				307A80F119B8804F001B538D /* Security.framework in Frameworks */,
 				305DD81A19A63517006514BD /* CoreGraphics.framework in Frameworks */,
 				305DD81C19A63517006514BD /* UIKit.framework in Frameworks */,
 				305DD81819A63517006514BD /* Foundation.framework in Frameworks */,
+				6501766D8063F5F642D79D11 /* libPods-mclient.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,11 +354,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3036F5951E263EE100ABC2CE /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				3036F5941E263E9800ABC2CE /* MCLTheme.h */,
+				3036F59C1E26798E00ABC2CE /* MCLDefaultTheme.h */,
+				3036F59D1E26798E00ABC2CE /* MCLDefaultTheme.m */,
+				3036F5991E266B3800ABC2CE /* MCLNightTheme.h */,
+				3036F59A1E266B3800ABC2CE /* MCLNightTheme.m */,
+				3036F5961E26666600ABC2CE /* MCLThemeManager.h */,
+				3036F5971E26666600ABC2CE /* MCLThemeManager.m */,
+			);
+			name = Themes;
+			sourceTree = "<group>";
+		};
 		303974911E16B08D003C8BC9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				3039748E1E16B083003C8BC9 /* UIView+addConstraints.h */,
 				3039748F1E16B083003C8BC9 /* UIView+addConstraints.m */,
+				30849D1D1E2B8C6C00626331 /* UIColor+Hex.h */,
+				30849D1E1E2B8CB500626331 /* UIColor+Hex.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -345,6 +395,7 @@
 				305DD81519A63517006514BD /* Products */,
 				305DD81D19A63517006514BD /* mclient */,
 				305DD84219A63517006514BD /* mclientTests */,
+				BCB4279C3A1D0A6F74251FD4 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -360,11 +411,13 @@
 		305DD81619A63517006514BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				30849D1B1E2AA40900626331 /* CoreLocation.framework */,
 				307A80F019B8804F001B538D /* Security.framework */,
 				305DD81719A63517006514BD /* Foundation.framework */,
 				305DD81919A63517006514BD /* CoreGraphics.framework */,
 				305DD81B19A63517006514BD /* UIKit.framework */,
 				305DD83C19A63517006514BD /* XCTest.framework */,
+				064E0AFA20768528C9F3DBC4 /* libPods-mclient.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -375,12 +428,15 @@
 				305DD85819AB2EE0006514BD /* Controllers */,
 				305DD85A19AB2F07006514BD /* Models */,
 				305DD85919AB2EFE006514BD /* Views */,
+				3036F5951E263EE100ABC2CE /* Themes */,
 				304E5A471E1EB6790022FE8B /* Network */,
 				303974911E16B08D003C8BC9 /* Extensions */,
 				305E53AB19D4F4C5002B8E50 /* Storyboards */,
 				305DD81E19A63517006514BD /* Supporting Files */,
 				305DD82619A63517006514BD /* MCLAppDelegate.h */,
 				305DD82719A63517006514BD /* MCLAppDelegate.m */,
+				30E70BF61E40B8B800534EDE /* MCLReadListMigrator.h */,
+				30E70BF71E40B8B900534EDE /* MCLReadListMigrator.m */,
 				308EC3D719CC4DE800A0869F /* SplitViewButtonHandler.h */,
 				301FD00F19AB73160028C5C8 /* constants.h */,
 				305E53AA19D4F3EE002B8E50 /* utils.h */,
@@ -439,6 +495,8 @@
 				301E24B519BB02EB00943EC6 /* MCLProfileTableViewController.m */,
 				30A1BFAB19B4A8D4002439FE /* MCLSettingsTableViewController.h */,
 				30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */,
+				30D82AF11E2A42F700898963 /* MCLSettingsFontSizeViewController.h */,
+				30D82AF21E2A42F700898963 /* MCLSettingsFontSizeViewController.m */,
 				305DD85519AB2A7C006514BD /* MCLThreadListTableViewController.h */,
 				305DD85619AB2A7C006514BD /* MCLThreadListTableViewController.m */,
 			);
@@ -470,6 +528,8 @@
 				3086428819D2D6CE0027F932 /* MCLMessageTextView.m */,
 				307D797419B0B3B30096A217 /* MCLReadSymbolView.h */,
 				307D797519B0B3B30096A217 /* MCLReadSymbolView.m */,
+				30DBC8A41E285FAB00EF150B /* MCLTextView.h */,
+				30DBC8A51E285FAC00EF150B /* MCLTextView.m */,
 				301FD01019AC794E0028C5C8 /* MCLThreadTableViewCell.h */,
 				301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */,
 				3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */,
@@ -486,8 +546,6 @@
 				305DD85C19AB300F006514BD /* MCLBoard.m */,
 				305DD86119AB380C006514BD /* MCLMessage.h */,
 				305DD86219AB380C006514BD /* MCLMessage.m */,
-				30E8B89419B33C070067DD1F /* MCLReadList.h */,
-				30E8B89519B33C070067DD1F /* MCLReadList.m */,
 				305DD85E19AB3031006514BD /* MCLThread.h */,
 				305DD85F19AB3031006514BD /* MCLThread.m */,
 			);
@@ -499,6 +557,7 @@
 			children = (
 				305DD82C19A63517006514BD /* Main_iPad.storyboard */,
 				305DD82919A63517006514BD /* Main_iPhone.storyboard */,
+				30849D221E2BABBD00626331 /* Settings.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -562,6 +621,8 @@
 				30501B5A19E3125600333952 /* errorMService.png */,
 				301FD9A719C419DE00E36A5B /* errorMService@2x.png */,
 				30DBC4881A07E8D100340B3A /* errorMService@3x.png */,
+				30D82AED1E2A40B400898963 /* fontIncrease@2x.png */,
+				30D82AEE1E2A40B400898963 /* fontDecrease@2x.png */,
 				30501B4E19E3063400333952 /* isClosed.png */,
 				3020A26719DA1B66007F46E2 /* isClosed@2x.png */,
 				30DBC4821A07E56700340B3A /* isClosed@3x.png */,
@@ -598,6 +659,15 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		BCB4279C3A1D0A6F74251FD4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7A3554192111A6737A92E22B /* Pods-mclient.debug.xcconfig */,
+				454F27F65C44793D03FAD818 /* Pods-mclient.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -605,10 +675,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 305DD84C19A63517006514BD /* Build configuration list for PBXNativeTarget "mclient" */;
 			buildPhases = (
+				02D30F959A85419F39298EEF /* [CP] Check Pods Manifest.lock */,
 				305DD81019A63517006514BD /* Sources */,
 				305DD81119A63517006514BD /* Frameworks */,
 				305DD81219A63517006514BD /* Resources */,
 				3020A26919DCD01C007F46E2 /* ShellScript */,
+				75AA96FBFE5AD43607C0F231 /* [CP] Embed Pods Frameworks */,
+				309C004BDACC9202878B311D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -695,6 +768,8 @@
 				3038D58319F65E21005E7D3D /* Localizable.strings in Resources */,
 				305DD82B19A63517006514BD /* Main_iPhone.storyboard in Resources */,
 				303974971E197205003C8BC9 /* isSticky.png in Resources */,
+				30849D201E2BABBD00626331 /* Settings.storyboard in Resources */,
+				30D82AF01E2A40B400898963 /* fontDecrease@2x.png in Resources */,
 				3093B79619E2F5BE00F8FD5F /* stopButton.png in Resources */,
 				30DBC47B1A07E05300340B3A /* boardOnlineGaming@3x.png in Resources */,
 				30DBC47D1A07E05300340B3A /* boardSmalltalk@3x.png in Resources */,
@@ -702,6 +777,7 @@
 				30DBC4711A07DC8600340B3A /* boardRetroNTech@3x.png in Resources */,
 				30DBC4681A07DB6700340B3A /* editButton@3x.png in Resources */,
 				303974951E197205003C8BC9 /* isSticky@3x.png in Resources */,
+				30D82AEF1E2A40B400898963 /* fontIncrease@2x.png in Resources */,
 				30501B5119E307DE00333952 /* messageIndention.png in Resources */,
 				30501B5919E3100900333952 /* downButton.png in Resources */,
 				3093B79819E2F6C600F8FD5F /* copyLinkButton.png in Resources */,
@@ -772,6 +848,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		02D30F959A85419F39298EEF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		3020A26919DCD01C007F46E2 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
@@ -785,6 +876,36 @@
 			shellPath = /bin/sh;
 			shellScript = "# xcode-build-bump.sh\n# @desc Auto-increment the build number every time the project is run.\n# @usage\n# 1. Select: your Target in Xcode\n# 2. Select: Build Phases Tab\n# 3. Select: Add Build Phase -> Add Run Script\n# 4. Paste code below in to new \"Run Script\" section\n# 5. Drag the \"Run Script\" below \"Link Binaries With Libraries\"\n# 6. Insure that your starting build number is set to a whole integer and not a float (e.g. 1, not 1.0)\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
 		};
+		309C004BDACC9202878B311D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient/Pods-mclient-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		75AA96FBFE5AD43607C0F231 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient/Pods-mclient-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -794,13 +915,18 @@
 			files = (
 				301203311E031D7500B06FF6 /* MCLBadgeView.m in Sources */,
 				305DD86019AB3031006514BD /* MCLThread.m in Sources */,
+				30849D1F1E2B8CB500626331 /* UIColor+Hex.m in Sources */,
 				3039748D1E16A1F4003C8BC9 /* MCLMessageListWidmannStyleTableViewCell.m in Sources */,
 				308EC3D819CC4DE800A0869F /* MCLMessageListViewController.m in Sources */,
 				3086428919D2D6CE0027F932 /* MCLMessageTextView.m in Sources */,
 				301E24B619BB02EB00943EC6 /* MCLProfileTableViewController.m in Sources */,
+				30DBC8A61E285FAC00EF150B /* MCLTextView.m in Sources */,
 				305DD86319AB380C006514BD /* MCLMessage.m in Sources */,
+				30D82AF31E2A42F700898963 /* MCLSettingsFontSizeViewController.m in Sources */,
 				305DD82419A63517006514BD /* main.m in Sources */,
+				3036F59B1E266B3800ABC2CE /* MCLNightTheme.m in Sources */,
 				301FD9A619C411D400E36A5B /* MCLErrorView.m in Sources */,
+				30E70BF81E40B8B900534EDE /* MCLReadListMigrator.m in Sources */,
 				30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */,
 				308EC3DD19CC7BA600A0869F /* MCLDetailView.m in Sources */,
 				30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */,
@@ -814,10 +940,11 @@
 				301FD9AD19C5C79000E36A5B /* Reachability.m in Sources */,
 				301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */,
 				305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */,
-				30E8B89619B33C070067DD1F /* MCLReadList.m in Sources */,
+				3036F5981E26666600ABC2CE /* MCLThemeManager.m in Sources */,
 				305DD85D19AB300F006514BD /* MCLBoard.m in Sources */,
 				301FD9A319C32FC600E36A5B /* MCLLoadingView.m in Sources */,
 				30A1BFAD19B4A8D4002439FE /* MCLSettingsTableViewController.m in Sources */,
+				3036F59E1E26798E00ABC2CE /* MCLDefaultTheme.m in Sources */,
 				303974901E16B083003C8BC9 /* UIView+addConstraints.m in Sources */,
 				30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */,
 				307A80EF19B8800E001B538D /* KeychainItemWrapper.m in Sources */,
@@ -869,7 +996,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				305DD82A19A63517006514BD /* Base */,
-				3038D58019F65E0C005E7D3D /* de */,
+				30849D261E2BBD4300626331 /* de */,
 			);
 			name = Main_iPhone.storyboard;
 			path = .;
@@ -879,7 +1006,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				305DD82D19A63517006514BD /* Base */,
-				3038D57F19F65E0C005E7D3D /* de */,
+				30849D2A1E2BBED200626331 /* de */,
 			);
 			name = Main_iPad.storyboard;
 			path = .;
@@ -893,6 +1020,15 @@
 			);
 			name = InfoPlist.strings;
 			path = .;
+			sourceTree = "<group>";
+		};
+		30849D221E2BABBD00626331 /* Settings.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				30849D211E2BABBD00626331 /* Base */,
+				30849D241E2BABFC00626331 /* de */,
+			);
+			name = Settings.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -989,6 +1125,7 @@
 		};
 		305DD84D19A63517006514BD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A3554192111A6737A92E22B /* Pods-mclient.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -999,7 +1136,7 @@
 				GCC_PREFIX_HEADER = "mclient/Supporting Files/mclient-Prefix.pch";
 				INFOPLIST_FILE = "mclient/Supporting Files/mclient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-beta";
+				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1009,6 +1146,7 @@
 		};
 		305DD84E19A63517006514BD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 454F27F65C44793D03FAD818 /* Pods-mclient.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1019,7 +1157,7 @@
 				GCC_PREFIX_HEADER = "mclient/Supporting Files/mclient-Prefix.pch";
 				INFOPLIST_FILE = "mclient/Supporting Files/mclient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-beta";
+				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

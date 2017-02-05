@@ -13,6 +13,8 @@
 #import "Reachability.h"
 #import "MCLAppDelegate.h"
 #import "MCLMServiceConnector.h"
+#import "MCLTheme.h"
+#import "MCLThemeManager.h"
 #import "MCLLoadingView.h"
 #import "MCLMServiceErrorView.h"
 #import "MCLInternetConnectionErrorView.h"
@@ -86,9 +88,11 @@
                         key = @"previewTextHtmlWithImages";
                         break;
                 }
-
+                
+                id <MCLTheme> currentTheme = [[MCLThemeManager sharedManager] currentTheme];
                 self.previewText = [MCLMessageListViewController messageHtmlSkeletonForHtml:[data objectForKey:key]
-                                                                              withTopMargin:20];
+                                                                              withTopMargin:20
+                                                                                   andTheme:currentTheme];
                 [self.webView loadHTMLString:self.previewText baseURL:nil];
             }
         });
@@ -108,6 +112,8 @@
         }
     }
 }
+
+#pragma mark - Actions
 
 - (IBAction)sendAction:(id)sender
 {

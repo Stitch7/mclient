@@ -11,6 +11,8 @@
 #import "KeychainItemWrapper.h"
 #import "MCLAppDelegate.h"
 #import "MCLMServiceConnector.h"
+#import "MCLTheme.h"
+#import "MCLThemeManager.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLMessageListViewController.h"
 #import "MCLBoard.h"
@@ -19,8 +21,11 @@
 #import "MCLLoadingView.h"
 #import "MCLVerifiyLoginView.h"
 
+#import "MCLReadListMigrator.h" // TODO: Remove in next release
+
 @interface MCLBoardListTableViewController ()
 
+@property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) NSMutableArray *boards;
 @property (strong, nonatomic) NSDictionary *images;
 
@@ -28,9 +33,23 @@
 
 @implementation MCLBoardListTableViewController
 
+#pragma mark - Initializers
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - UIViewController
+
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
 
     if (self.splitViewController) {
         [self.splitViewController setDelegate:self];
@@ -44,23 +63,13 @@
                     @8: @"boardOnlineGaming.png"};
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    // Fix odd glitch on swipe back causing cell stay selected
-    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-    if (selectedIndexPath) {
-        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
-    }
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     [self showLoginStatus];
-    [self setupRefreshControl];
+    [self configureNavigationBar];
+    [self configureRefreshControl];
 
     // Visualize loading
     [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.frame]];
@@ -73,6 +82,21 @@
             [self fetchedData:data error:mServiceError];
         });
     });
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    [self.tableView reloadData];
+
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+
+    // Fix odd glitch on swipe back causing cell stay selected
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    if (selectedIndexPath) {
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
+    }
 }
 
 - (void)showLoginStatus
@@ -88,7 +112,10 @@
     CGRect navToolbarFrame = self.navigationController.toolbar.bounds;
     MCLVerifiyLoginView *navToolbarView = [[MCLVerifiyLoginView alloc] initWithFrame:navToolbarFrame];
     [self.navigationController.toolbar addSubview:navToolbarView];
+
+    // TODO: Both calls are required? Why?
     [self.navigationController setToolbarHidden:NO animated:YES];
+    self.navigationController.toolbar.hidden = NO;
 
     // Reading username + password from keychain
     NSString *keychainIdentifier = [[NSBundle mainBundle] bundleIdentifier];
@@ -122,6 +149,10 @@
                 } else {
                     [navToolbarView loginStatusWithUsername:username];
                     [self saveValidLoginFlagWithValue:YES];
+
+                    // TODO: Remove in next release
+                    NSDictionary *loginData = @{@"username":username, @"password":password};
+                    [[[MCLReadListMigrator alloc] init] migrateWithLoginData:loginData];
                 }
             });
         });
@@ -132,18 +163,26 @@
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:validLogin forKey:@"validLogin"];
-    [userDefaults synchronize];
 }
 
-- (void)setupRefreshControl
+- (void)configureNavigationBar
 {
-    if ( ! self.refreshControl) {
-        self.tableView.bounces = YES;
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"settingsButton.png"]
+                                                                       style:UIBarButtonItemStylePlain
+                                                                      target:self
+                                                                      action:@selector(settingsButtonPressed:)];
+    self.navigationItem.rightBarButtonItem = settingsButton;
+}
 
-        UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-        [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
-        self.refreshControl = refreshControl;
-    }
+- (void)configureRefreshControl
+{
+    if (self.refreshControl) { return; }
+
+    self.tableView.bounces = YES;
+
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
 }
 
 - (void)reloadData
@@ -212,7 +251,7 @@
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
     UIView *backgroundView = [[UIView alloc] initWithFrame:cell.frame];
-    backgroundView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    backgroundView.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
     cell.selectedBackgroundView = backgroundView;
 
     MCLBoard *board = self.boards[indexPath.row];
@@ -227,11 +266,12 @@
 
 #pragma mark - MCLSettingsTableViewControllerDelegate
 
-- (void)settingsTableViewControllerDidFinish:(MCLSettingsTableViewController *)inController
+- (void)settingsTableViewControllerDidFinish:(MCLSettingsTableViewController *)inController loginDataChanged:(BOOL)loginDataChanged
 {
-    [self showLoginStatus];
+    if (loginDataChanged) {
+        [self showLoginStatus];
+    }
 }
-
 
 #pragma mark - UISplitViewControllerDelegate
 
@@ -249,6 +289,25 @@
     [detailViewController setSplitViewButton:nil forPopoverController:nil];
 }
 
+#pragma mark - Actions
+
+- (void)settingsButtonPressed:(UIBarButtonItem *)sender
+{
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
+    UINavigationController *nc = [sb instantiateViewControllerWithIdentifier:@"SettingsNavigationController"];
+    nc.modalPresentationStyle = UIModalPresentationFormSheet;
+    MCLSettingsTableViewController *settingsVC = nc.viewControllers[0];
+    settingsVC.delegate = self;
+    [self.navigationController presentViewController:nc animated:YES completion:nil];
+}
+
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
+    [self.tableView reloadData];
+}
 
 #pragma mark - Navigation
 
@@ -258,10 +317,6 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         MCLBoard *board = self.boards[indexPath.row];
         [segue.destinationViewController setBoard:board];
-    } else if ([segue.identifier isEqualToString:@"ModalToEditSettings"]) {
-        MCLSettingsTableViewController *destinationViewController =
-            ((MCLSettingsTableViewController *)[[segue.destinationViewController viewControllers] objectAtIndex:0]);
-        [destinationViewController setDelegate:self];
     }
 }
 

@@ -10,9 +10,10 @@
 
 @interface MCLLoadingView : UIView
 
+@property(strong, nonatomic) UIView *container;
 @property(strong, nonatomic) UILabel *label;
 @property(strong, nonatomic) UIActivityIndicatorView *spinner;
 
-- (void)configureSubviews;
+-(void)configureSubviews;
 
 @end
