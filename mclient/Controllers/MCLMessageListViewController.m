@@ -24,7 +24,7 @@
     if (!fontSizeValue) {
         fontSizeValue = 3;
     }
-    NSString *fontSize = [NSString stringWithFormat:@"%lipx", fontSizeValue + 11];
+    NSString *fontSize = [NSString stringWithFormat:@"%ldpx", (long)(fontSizeValue + 11)];
     NSString *textColor = [currentTheme isDark] ? @"#fff" : @"#000";
     NSString *linkColor = [[currentTheme tintColor] cssString];
 
