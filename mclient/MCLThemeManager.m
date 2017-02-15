@@ -190,7 +190,7 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
 
 - (void)applyTheme: (id <MCLTheme>)theme
 {
-    if ([self.currentTheme description] == [theme description]) {
+    if ([self.currentTheme identifier] == [theme identifier]) {
         return;
     }
 
