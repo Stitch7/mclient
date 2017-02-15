@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *threadIsClosedImageView;
 @property (weak, nonatomic) IBOutlet UILabel *threadSubjectLabel;
 @property (weak, nonatomic) IBOutlet UILabel *threadUsernameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *threadDateImageView;
 @property (weak, nonatomic) IBOutlet UILabel *threadDateLabel;
 @property (weak, nonatomic) IBOutlet MCLBadgeView *badgeView;
 @property (weak, nonatomic) IBOutlet UILabel *badgeLabel;

@@ -331,8 +331,12 @@
     } else {
         cell.threadUsernameLabel.textColor = [self.currentTheme usernameTextColor];
     }
-    
-    cell.threadDateLabel.text = [self.dateFormatterForOutput stringFromDate:thread.date];
+
+    cell.threadDateImageView.image = [cell.threadDateImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    cell.threadDateImageView.tintColor = [self.currentTheme detailImageColor];
+
+    NSDate *threadDate = thread.lastMessageDate ? thread.lastMessageDate : thread.date;
+    cell.threadDateLabel.text = [self.dateFormatterForOutput stringFromDate:threadDate];
     cell.threadDateLabel.textColor = [self.currentTheme detailTextColor];
 
     if (thread.isRead || thread.isTemporaryRead || thread.isClosed) {
