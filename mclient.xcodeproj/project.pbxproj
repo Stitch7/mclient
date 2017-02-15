@@ -259,9 +259,9 @@
 		30849D1D1E2B8C6C00626331 /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
 		30849D1E1E2B8CB500626331 /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
 		30849D211E2BABBD00626331 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
-		30849D241E2BABFC00626331 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Settings.strings; sourceTree = "<group>"; };
-		30849D261E2BBD4300626331 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
-		30849D2A1E2BBED200626331 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPad.strings; sourceTree = "<group>"; };
+		30849D241E2BABFC00626331 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Settings.storyboard; sourceTree = "<group>"; };
+		30849D261E2BBD4300626331 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		30849D2A1E2BBED200626331 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		3086428319D18ED10027F932 /* messageIndention@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messageIndention@2x.png"; sourceTree = "<group>"; };
 		3086428719D2D6CE0027F932 /* MCLMessageTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageTextView.h; sourceTree = "<group>"; };
 		3086428819D2D6CE0027F932 /* MCLMessageTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageTextView.m; sourceTree = "<group>"; };
@@ -363,24 +363,24 @@
 		3036F5951E263EE100ABC2CE /* Themes */ = {
 			isa = PBXGroup;
 			children = (
-				3036F5941E263E9800ABC2CE /* MCLTheme.h */,
 				3036F59C1E26798E00ABC2CE /* MCLDefaultTheme.h */,
 				3036F59D1E26798E00ABC2CE /* MCLDefaultTheme.m */,
 				3036F5991E266B3800ABC2CE /* MCLNightTheme.h */,
 				3036F59A1E266B3800ABC2CE /* MCLNightTheme.m */,
+				3036F5941E263E9800ABC2CE /* MCLTheme.h */,
 				3036F5961E26666600ABC2CE /* MCLThemeManager.h */,
 				3036F5971E26666600ABC2CE /* MCLThemeManager.m */,
 			);
-			name = Themes;
+			path = Themes;
 			sourceTree = "<group>";
 		};
 		303974911E16B08D003C8BC9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				3039748E1E16B083003C8BC9 /* UIView+addConstraints.h */,
-				3039748F1E16B083003C8BC9 /* UIView+addConstraints.m */,
 				30849D1D1E2B8C6C00626331 /* UIColor+Hex.h */,
 				30849D1E1E2B8CB500626331 /* UIColor+Hex.m */,
+				3039748E1E16B083003C8BC9 /* UIView+addConstraints.h */,
+				3039748F1E16B083003C8BC9 /* UIView+addConstraints.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -398,10 +398,10 @@
 			isa = PBXGroup;
 			children = (
 				305DD81619A63517006514BD /* Frameworks */,
+				BCB4279C3A1D0A6F74251FD4 /* Pods */,
 				305DD81519A63517006514BD /* Products */,
 				305DD81D19A63517006514BD /* mclient */,
 				305DD84219A63517006514BD /* mclientTests */,
-				BCB4279C3A1D0A6F74251FD4 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -432,13 +432,14 @@
 			isa = PBXGroup;
 			children = (
 				305DD85819AB2EE0006514BD /* Controllers */,
-				305DD85A19AB2F07006514BD /* Models */,
-				305DD85919AB2EFE006514BD /* Views */,
-				3036F5951E263EE100ABC2CE /* Themes */,
-				304E5A471E1EB6790022FE8B /* Network */,
 				303974911E16B08D003C8BC9 /* Extensions */,
+				305DD85A19AB2F07006514BD /* Models */,
+				304E5A471E1EB6790022FE8B /* Network */,
 				305E53AB19D4F4C5002B8E50 /* Storyboards */,
 				305DD81E19A63517006514BD /* Supporting Files */,
+				3036F5951E263EE100ABC2CE /* Themes */,
+				305E53AC19D4F509002B8E50 /* Vendor */,
+				305DD85919AB2EFE006514BD /* Views */,
 				305DD82619A63517006514BD /* MCLAppDelegate.h */,
 				305DD82719A63517006514BD /* MCLAppDelegate.m */,
 				30E70BF61E40B8B800534EDE /* MCLReadListMigrator.h */,
@@ -446,7 +447,6 @@
 				308EC3D719CC4DE800A0869F /* SplitViewButtonHandler.h */,
 				301FD00F19AB73160028C5C8 /* constants.h */,
 				305E53AA19D4F3EE002B8E50 /* utils.h */,
-				305E53AC19D4F509002B8E50 /* Vendor */,
 			);
 			path = mclient;
 			sourceTree = "<group>";
@@ -499,10 +499,10 @@
 				303974891E1694C8003C8BC9 /* MCLMessageListWidmannStyleViewController.m */,
 				301E24B419BB02EB00943EC6 /* MCLProfileTableViewController.h */,
 				301E24B519BB02EB00943EC6 /* MCLProfileTableViewController.m */,
-				30A1BFAB19B4A8D4002439FE /* MCLSettingsTableViewController.h */,
-				30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */,
 				30D82AF11E2A42F700898963 /* MCLSettingsFontSizeViewController.h */,
 				30D82AF21E2A42F700898963 /* MCLSettingsFontSizeViewController.m */,
+				30A1BFAB19B4A8D4002439FE /* MCLSettingsTableViewController.h */,
+				30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */,
 				305DD85519AB2A7C006514BD /* MCLThreadListTableViewController.h */,
 				305DD85619AB2A7C006514BD /* MCLThreadListTableViewController.m */,
 			);
@@ -590,9 +590,6 @@
 		307A80DE19B75F29001B538D /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				3073A7F61E5505BA00978FB0 /* lastMessageDate@3x.png */,
-				3073A7F71E5505BA00978FB0 /* lastMessageDate@2x.png */,
-				3073A7F81E5505BA00978FB0 /* lastMessageDate.png */,
 				305DD83519A63517006514BD /* Images.xcassets */,
 				3093B78F19E2F1E700F8FD5F /* boardDefault.png */,
 				308EC3E419CE69A400A0869F /* boardDefault@2x.png */,
@@ -630,14 +627,17 @@
 				30501B5A19E3125600333952 /* errorMService.png */,
 				301FD9A719C419DE00E36A5B /* errorMService@2x.png */,
 				30DBC4881A07E8D100340B3A /* errorMService@3x.png */,
-				30D82AED1E2A40B400898963 /* fontIncrease@2x.png */,
 				30D82AEE1E2A40B400898963 /* fontDecrease@2x.png */,
+				30D82AED1E2A40B400898963 /* fontIncrease@2x.png */,
 				30501B4E19E3063400333952 /* isClosed.png */,
 				3020A26719DA1B66007F46E2 /* isClosed@2x.png */,
 				30DBC4821A07E56700340B3A /* isClosed@3x.png */,
 				303974941E197204003C8BC9 /* isSticky.png */,
 				303974931E197204003C8BC9 /* isSticky@2x.png */,
 				303974921E197204003C8BC9 /* isSticky@3x.png */,
+				3073A7F81E5505BA00978FB0 /* lastMessageDate.png */,
+				3073A7F71E5505BA00978FB0 /* lastMessageDate@2x.png */,
+				3073A7F61E5505BA00978FB0 /* lastMessageDate@3x.png */,
 				30501B5E19E31D0A00333952 /* logoDetailView.png */,
 				308EC3E019CC809000A0869F /* logoDetailView@2x.png */,
 				30501B5019E307DE00333952 /* messageIndention.png */,
@@ -1041,6 +1041,7 @@
 				30849D241E2BABFC00626331 /* de */,
 			);
 			name = Settings.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
