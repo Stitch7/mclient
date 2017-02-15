@@ -66,6 +66,9 @@
 		306EA6E519D598F800BB4DC8 /* MCLInternetConnectionErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 306EA6E419D598F800BB4DC8 /* MCLInternetConnectionErrorView.m */; };
 		306EA6E819D5992F00BB4DC8 /* MCLMServiceErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 306EA6E719D5992F00BB4DC8 /* MCLMServiceErrorView.m */; };
 		306F8C3519BA0F2C00376A58 /* quoteButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 306F8C3419BA0F2C00376A58 /* quoteButton@2x.png */; };
+		3073A7F91E5505BA00978FB0 /* lastMessageDate@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3073A7F61E5505BA00978FB0 /* lastMessageDate@3x.png */; };
+		3073A7FA1E5505BA00978FB0 /* lastMessageDate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3073A7F71E5505BA00978FB0 /* lastMessageDate@2x.png */; };
+		3073A7FB1E5505BA00978FB0 /* lastMessageDate.png in Resources */ = {isa = PBXBuildFile; fileRef = 3073A7F81E5505BA00978FB0 /* lastMessageDate.png */; };
 		307A80DD19B5EBD8001B538D /* MCLMServiceConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 307A80DC19B5EBD8001B538D /* MCLMServiceConnector.m */; };
 		307A80E619B7736A001B538D /* settingsButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 307A80E519B7736A001B538D /* settingsButton@2x.png */; };
 		307A80E819B7B899001B538D /* speakButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 307A80E719B7B899001B538D /* speakButton@2x.png */; };
@@ -238,6 +241,9 @@
 		306EA6E619D5992F00BB4DC8 /* MCLMServiceErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMServiceErrorView.h; sourceTree = "<group>"; };
 		306EA6E719D5992F00BB4DC8 /* MCLMServiceErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMServiceErrorView.m; sourceTree = "<group>"; };
 		306F8C3419BA0F2C00376A58 /* quoteButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quoteButton@2x.png"; sourceTree = "<group>"; };
+		3073A7F61E5505BA00978FB0 /* lastMessageDate@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lastMessageDate@3x.png"; sourceTree = "<group>"; };
+		3073A7F71E5505BA00978FB0 /* lastMessageDate@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lastMessageDate@2x.png"; sourceTree = "<group>"; };
+		3073A7F81E5505BA00978FB0 /* lastMessageDate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lastMessageDate.png; sourceTree = "<group>"; };
 		307A80DB19B5EBD8001B538D /* MCLMServiceConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMServiceConnector.h; sourceTree = "<group>"; };
 		307A80DC19B5EBD8001B538D /* MCLMServiceConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMServiceConnector.m; sourceTree = "<group>"; };
 		307A80E519B7736A001B538D /* settingsButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsButton@2x.png"; sourceTree = "<group>"; };
@@ -584,6 +590,9 @@
 		307A80DE19B75F29001B538D /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				3073A7F61E5505BA00978FB0 /* lastMessageDate@3x.png */,
+				3073A7F71E5505BA00978FB0 /* lastMessageDate@2x.png */,
+				3073A7F81E5505BA00978FB0 /* lastMessageDate.png */,
 				305DD83519A63517006514BD /* Images.xcassets */,
 				3093B78F19E2F1E700F8FD5F /* boardDefault.png */,
 				308EC3E419CE69A400A0869F /* boardDefault@2x.png */,
@@ -795,9 +804,11 @@
 				30DBC46B1A07DB6700340B3A /* notificationButtonEnabled@3x.png in Resources */,
 				3093B78419E2EF5700F8FD5F /* boardSmalltalk.png in Resources */,
 				30DBC4831A07E56700340B3A /* isClosed@3x.png in Resources */,
+				3073A7FA1E5505BA00978FB0 /* lastMessageDate@2x.png in Resources */,
 				305DD82219A63517006514BD /* InfoPlist.strings in Resources */,
 				3093B79219E2F47F00F8FD5F /* settingsButton.png in Resources */,
 				3093B79419E2F58400F8FD5F /* speakButton.png in Resources */,
+				3073A7F91E5505BA00978FB0 /* lastMessageDate@3x.png in Resources */,
 				307A80EC19B7B993001B538D /* editButton@2x.png in Resources */,
 				30501B5D19E31C1500333952 /* errorInternetConnection.png in Resources */,
 				30501B4F19E3063400333952 /* isClosed.png in Resources */,
@@ -808,6 +819,7 @@
 				301E24B319BAE86200943EC6 /* notificationButtonEnabled@2x.png in Resources */,
 				30501B5719E30CF800333952 /* quoteButton.png in Resources */,
 				301E24B219BAE86200943EC6 /* notificationButtonDisabled@2x.png in Resources */,
+				3073A7FB1E5505BA00978FB0 /* lastMessageDate.png in Resources */,
 				30DBC4851A07E83600340B3A /* quoteButton@3x.png in Resources */,
 				3093B78A19E2F10A00F8FD5F /* boardForSale.png in Resources */,
 				3004E5AC1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib in Resources */,

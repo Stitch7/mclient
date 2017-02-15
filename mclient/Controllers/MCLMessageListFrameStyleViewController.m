@@ -83,65 +83,66 @@
     [self configureWebView];
     [self configureToolbar];
     [self configureTableView];
+    [self loadData];
 }
 
--(void)viewWillAppear:(BOOL)animated
+-(void)loadData
 {
-    [super viewWillAppear:animated];
-
-    if (self.board && self.thread) {
-        [self updateTitle:self.thread.subject];
-
-        // Add loading view
-        [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.frame]];
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-
-        // Load data async
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSError *mServiceError;
-            NSDictionary *loginData;
-            if (self.validLogin) {
-                loginData = @{@"username":self.username, @"password":self.password};
-            }
-            NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
-                                                                          fromBoardId:self.board.boardId
-                                                                                login:loginData
-                                                                                error:&mServiceError];
-            // Process data on main thread
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self fetchedData:data error:mServiceError];
-                if (!mServiceError) {
-                    NSNumber *lastMessageId = self.thread.lastMessageId;
-                    BOOL firstMessageIsRead = self.thread.isRead;
-                    BOOL jumpToLatestPost = [[NSUserDefaults standardUserDefaults] boolForKey:@"jumpToLatestPost"];
-                    BOOL lastMessageExists = lastMessageId > 0;
-                    BOOL lastMessageIsNotRead = !self.thread.lastMessageIsRead;
-
-                    if (firstMessageIsRead && jumpToLatestPost && lastMessageExists && lastMessageIsNotRead) {
-                        [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
-                            if (self.thread.lastMessageId == message.messageId) {
-                                NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
-                                [self.tableView scrollToRowAtIndexPath:latestMessageIndexPath
-                                                      atScrollPosition:UITableViewScrollPositionTop
-                                                              animated:YES];
-                                self.thread.lastMessageRead = YES;
-                            }
-                        }];
-                    }
-                    // Select first message
-                    else {
-                        NSIndexPath *indexPathOfFirstMessage = [NSIndexPath indexPathForRow:0 inSection:0];
-                        [self.tableView selectRowAtIndexPath:indexPathOfFirstMessage
-                                                    animated:NO
-                                              scrollPosition:UITableViewScrollPositionNone];
-                        [self tableView:self.tableView didSelectRowAtIndexPath:indexPathOfFirstMessage];
-                    }
-                }
-            });
-        });
-    } else {
+    if (!self.board || !self.thread) {
         [self.view addSubview:[[MCLDetailView alloc] initWithFrame:self.view.bounds]];
+        return;
     }
+
+    [self updateTitle:self.thread.subject];
+
+    // Add loading view
+    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.frame]];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
+    // Load data async
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError *mServiceError;
+        NSDictionary *loginData;
+        if (self.validLogin) {
+            loginData = @{@"username":self.username, @"password":self.password};
+        }
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
+                                                                      fromBoardId:self.board.boardId
+                                                                            login:loginData
+                                                                            error:&mServiceError];
+        // Process data on main thread
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self fetchedData:data error:mServiceError];
+            if (!mServiceError) {
+                NSNumber *lastMessageId = self.thread.lastMessageId;
+                BOOL firstMessageIsRead = self.thread.isRead;
+                BOOL jumpToLatestPost = [[NSUserDefaults standardUserDefaults] boolForKey:@"jumpToLatestPost"];
+                BOOL lastMessageExists = lastMessageId > 0;
+                BOOL lastMessageIsNotRead = !self.thread.lastMessageIsRead;
+
+                if (firstMessageIsRead && jumpToLatestPost && lastMessageExists && lastMessageIsNotRead) {
+                    [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
+                        if (self.thread.lastMessageId == message.messageId) {
+                            NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
+                            [self.tableView scrollToRowAtIndexPath:latestMessageIndexPath
+                                                  atScrollPosition:UITableViewScrollPositionTop
+                                                          animated:YES];
+                            self.thread.lastMessageRead = YES;
+                        }
+                    }];
+                }
+                // Select first message
+                else {
+                    NSIndexPath *indexPathOfFirstMessage = [NSIndexPath indexPathForRow:0 inSection:0];
+                    [self.tableView selectRowAtIndexPath:indexPathOfFirstMessage
+                                                animated:NO
+                                          scrollPosition:UITableViewScrollPositionNone];
+                    [self tableView:self.tableView didSelectRowAtIndexPath:indexPathOfFirstMessage];
+                }
+            }
+        });
+    });
+
 }
 
 - (void)configureContainerView

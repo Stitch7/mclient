@@ -70,38 +70,7 @@
 
     [self configureTableView];
     [self configureRefreshControl];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    if (self.board && self.thread) {
-        [self updateTitle:self.thread.subject];
-
-        // Visualize loading
-        [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.frame]];
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-
-        // Load data async
-        NSDictionary *loginData;
-        if (self.validLogin) {
-            loginData = @{@"username":self.username, @"password":self.password};
-        }
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSError *mServiceError;
-            NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
-                                                                          fromBoardId:self.board.boardId
-                                                                                login:loginData
-                                                                                error:&mServiceError];
-            // Process data on main thread
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self fetchedData:data error:mServiceError];
-            });
-        });
-    } else {
-        [self.view addSubview:[[MCLDetailView alloc] initWithFrame:self.view.bounds]];
-    }
+    [self loadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -117,6 +86,37 @@
             cell.messageSpeakButton.image = [UIImage imageNamed:@"speakButton.png"];
         }
     }
+}
+
+-(void)loadData
+{
+    if (!self.board || !self.thread) {
+        [self.view addSubview:[[MCLDetailView alloc] initWithFrame:self.view.bounds]];
+        return;
+    }
+
+    [self updateTitle:self.thread.subject];
+
+    // Visualize loading
+    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.frame]];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
+    // Load data async
+    NSDictionary *loginData;
+    if (self.validLogin) {
+        loginData = @{@"username":self.username, @"password":self.password};
+    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError *mServiceError;
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] threadWithId:self.thread.threadId
+                                                                      fromBoardId:self.board.boardId
+                                                                            login:loginData
+                                                                            error:&mServiceError];
+        // Process data on main thread
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self fetchedData:data error:mServiceError];
+        });
+    });
 }
 
 - (void)configureTableView
