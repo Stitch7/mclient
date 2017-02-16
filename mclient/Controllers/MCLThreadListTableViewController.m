@@ -333,7 +333,7 @@
     }
 
     cell.threadDateImageView.image = [cell.threadDateImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    cell.threadDateImageView.tintColor = [self.currentTheme detailImageColor];
+    cell.threadDateImageView.tintColor = [self.currentTheme detailTextColor];
 
     NSDate *threadDate = thread.lastMessageDate ? thread.lastMessageDate : thread.date;
     cell.threadDateLabel.text = [self.dateFormatterForOutput stringFromDate:threadDate];
