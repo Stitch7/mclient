@@ -27,6 +27,9 @@
 @property (strong) NSDate *lastMessageDate;
 
 + (MCLThread *)threadWithId:(NSNumber *)inThreadId
+                    subject:(NSString *)inSubject;
+
++ (MCLThread *)threadWithId:(NSNumber *)inThreadId
                   messageId:(NSNumber *)inMessageId
                        read:(BOOL)inRead
                      sticky:(BOOL)inSticky

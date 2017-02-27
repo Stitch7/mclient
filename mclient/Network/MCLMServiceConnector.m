@@ -82,6 +82,14 @@
     [self requestWithHTTPMethod:@"POST" toUrlString:urlString withVars:nil body:body login:loginData error:errorPtr];
 }
 
+- (NSDictionary *)responsesForUsername:(NSString *)inUsername
+                                 error:(NSError **)errorPtr
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/user/%@/responses", kMServiceBaseURL, inUsername];
+    return [self getRequestToUrlString:urlString login:nil error:errorPtr];
+}
+
+
 - (NSDictionary *)messageWithId:(NSNumber *)inMessageId
                     fromBoardId:(NSNumber *)inBoardId
                    andThreadId:(NSNumber *)inThreadId

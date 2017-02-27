@@ -63,6 +63,8 @@
 		305DD85D19AB300F006514BD /* MCLBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85C19AB300F006514BD /* MCLBoard.m */; };
 		305DD86019AB3031006514BD /* MCLThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85F19AB3031006514BD /* MCLThread.m */; };
 		305DD86319AB380C006514BD /* MCLMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD86219AB380C006514BD /* MCLMessage.m */; };
+		306386741E6098D9004822ED /* MCLResponsesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 306386731E6098D9004822ED /* MCLResponsesTableViewController.m */; };
+		306386771E643F1D004822ED /* MCLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 306386761E643F1D004822ED /* MCLResponse.m */; };
 		306EA6E519D598F800BB4DC8 /* MCLInternetConnectionErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 306EA6E419D598F800BB4DC8 /* MCLInternetConnectionErrorView.m */; };
 		306EA6E819D5992F00BB4DC8 /* MCLMServiceErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 306EA6E719D5992F00BB4DC8 /* MCLMServiceErrorView.m */; };
 		306F8C3519BA0F2C00376A58 /* quoteButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 306F8C3419BA0F2C00376A58 /* quoteButton@2x.png */; };
@@ -236,6 +238,10 @@
 		305DD86119AB380C006514BD /* MCLMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessage.h; sourceTree = "<group>"; };
 		305DD86219AB380C006514BD /* MCLMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessage.m; sourceTree = "<group>"; };
 		305E53AA19D4F3EE002B8E50 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
+		306386721E6098D9004822ED /* MCLResponsesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLResponsesTableViewController.h; sourceTree = "<group>"; };
+		306386731E6098D9004822ED /* MCLResponsesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLResponsesTableViewController.m; sourceTree = "<group>"; };
+		306386751E643F1D004822ED /* MCLResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLResponse.h; sourceTree = "<group>"; };
+		306386761E643F1D004822ED /* MCLResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLResponse.m; sourceTree = "<group>"; };
 		306EA6E319D598F800BB4DC8 /* MCLInternetConnectionErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLInternetConnectionErrorView.h; sourceTree = "<group>"; };
 		306EA6E419D598F800BB4DC8 /* MCLInternetConnectionErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLInternetConnectionErrorView.m; sourceTree = "<group>"; };
 		306EA6E619D5992F00BB4DC8 /* MCLMServiceErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMServiceErrorView.h; sourceTree = "<group>"; };
@@ -431,15 +437,14 @@
 		305DD81D19A63517006514BD /* mclient */ = {
 			isa = PBXGroup;
 			children = (
-				305DD85819AB2EE0006514BD /* Controllers */,
-				303974911E16B08D003C8BC9 /* Extensions */,
 				305DD85A19AB2F07006514BD /* Models */,
+				305DD85819AB2EE0006514BD /* Controllers */,
+				305DD85919AB2EFE006514BD /* Views */,
+				3036F5951E263EE100ABC2CE /* Themes */,
 				304E5A471E1EB6790022FE8B /* Network */,
+				303974911E16B08D003C8BC9 /* Extensions */,
 				305E53AB19D4F4C5002B8E50 /* Storyboards */,
 				305DD81E19A63517006514BD /* Supporting Files */,
-				3036F5951E263EE100ABC2CE /* Themes */,
-				305E53AC19D4F509002B8E50 /* Vendor */,
-				305DD85919AB2EFE006514BD /* Views */,
 				305DD82619A63517006514BD /* MCLAppDelegate.h */,
 				305DD82719A63517006514BD /* MCLAppDelegate.m */,
 				30E70BF61E40B8B800534EDE /* MCLReadListMigrator.h */,
@@ -447,6 +452,7 @@
 				308EC3D719CC4DE800A0869F /* SplitViewButtonHandler.h */,
 				301FD00F19AB73160028C5C8 /* constants.h */,
 				305E53AA19D4F3EE002B8E50 /* utils.h */,
+				305E53AC19D4F509002B8E50 /* Vendor */,
 			);
 			path = mclient;
 			sourceTree = "<group>";
@@ -505,6 +511,8 @@
 				30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */,
 				305DD85519AB2A7C006514BD /* MCLThreadListTableViewController.h */,
 				305DD85619AB2A7C006514BD /* MCLThreadListTableViewController.m */,
+				306386721E6098D9004822ED /* MCLResponsesTableViewController.h */,
+				306386731E6098D9004822ED /* MCLResponsesTableViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -552,6 +560,8 @@
 				305DD85C19AB300F006514BD /* MCLBoard.m */,
 				305DD86119AB380C006514BD /* MCLMessage.h */,
 				305DD86219AB380C006514BD /* MCLMessage.m */,
+				306386751E643F1D004822ED /* MCLResponse.h */,
+				306386761E643F1D004822ED /* MCLResponse.m */,
 				305DD85E19AB3031006514BD /* MCLThread.h */,
 				305DD85F19AB3031006514BD /* MCLThread.m */,
 			);
@@ -940,6 +950,7 @@
 				301FD9A619C411D400E36A5B /* MCLErrorView.m in Sources */,
 				30E70BF81E40B8B900534EDE /* MCLReadListMigrator.m in Sources */,
 				30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */,
+				306386741E6098D9004822ED /* MCLResponsesTableViewController.m in Sources */,
 				308EC3DD19CC7BA600A0869F /* MCLDetailView.m in Sources */,
 				30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */,
 				306EA6E519D598F800BB4DC8 /* MCLInternetConnectionErrorView.m in Sources */,
@@ -961,6 +972,7 @@
 				30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */,
 				307A80EF19B8800E001B538D /* KeychainItemWrapper.m in Sources */,
 				307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */,
+				306386771E643F1D004822ED /* MCLResponse.m in Sources */,
 				305DD83119A63517006514BD /* MCLBoardListTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1149,7 +1161,7 @@
 				GCC_PREFIX_HEADER = "mclient/Supporting Files/mclient-Prefix.pch";
 				INFOPLIST_FILE = "mclient/Supporting Files/mclient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient;
+				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-beta";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1170,7 +1182,7 @@
 				GCC_PREFIX_HEADER = "mclient/Supporting Files/mclient-Prefix.pch";
 				INFOPLIST_FILE = "mclient/Supporting Files/mclient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient;
+				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-beta";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

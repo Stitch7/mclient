@@ -160,8 +160,8 @@
 
 - (void)configureTableView
 {
-    UINib *threadCellNib = [UINib nibWithNibName: @"MCLMessageListFrameStyleTableViewCell" bundle: nil];
-    [self.tableView registerNib: threadCellNib forCellReuseIdentifier: @"MessageCell"];
+    UINib *messageCellNib = [UINib nibWithNibName: @"MCLMessageListFrameStyleTableViewCell" bundle: nil];
+    [self.tableView registerNib: messageCellNib forCellReuseIdentifier: @"MessageCell"];
 
     // Add refresh control
     self.refreshControl = [[UIRefreshControl alloc] init];

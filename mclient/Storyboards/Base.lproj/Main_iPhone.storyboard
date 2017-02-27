@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="rS3-R9-Ivy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="rS3-R9-Ivy">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,6 +9,39 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Responses Table View Controller-->
+        <scene sceneID="O1d-xm-ekb">
+            <objects>
+                <tableViewController id="6H5-Rk-3xO" customClass="MCLResponsesTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="RzW-A5-ciZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ResponseCell" id="fgq-lK-EM4">
+                                <rect key="frame" x="0.0" y="56" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fgq-lK-EM4" id="vo7-PW-lKU">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="6H5-Rk-3xO" id="GPb-Sw-Vgr"/>
+                            <outlet property="delegate" destination="6H5-Rk-3xO" id="phT-Gk-FIH"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="rUF-U1-rfe"/>
+                    <connections>
+                        <segue destination="ahC-k9-qmS" kind="push" identifier="PushToMessageListWidmannStyle" id="76K-fR-LYe"/>
+                        <segue destination="jzy-9s-Xi8" kind="push" identifier="PushToMessageListFrameStyle" id="boO-JL-yW1"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="faN-p2-dN5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="200" y="-515"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="cUi-kZ-frf">
             <objects>
@@ -67,6 +100,9 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Boards" id="tQt-TN-PWz"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="KcS-bs-Y11" kind="modal" identifier="ModalToResponses" id="B4T-XF-DIt"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
             </objects>
@@ -364,6 +400,24 @@
             </objects>
             <point key="canvasLocation" x="1712" y="-869"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Q1m-qj-TV4">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="KcS-bs-Y11" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qQR-oy-Lbk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="6H5-Rk-3xO" kind="relationship" relationship="rootViewController" id="zqR-Jl-Y8D"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xah-1M-o2z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-249" y="-514"/>
+        </scene>
     </scenes>
     <resources>
         <image name="downButton.png" width="24" height="24"/>
@@ -375,6 +429,8 @@
         <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="boO-JL-yW1"/>
+        <segue reference="76K-fR-LYe"/>
         <segue reference="Yfh-AR-feN"/>
         <segue reference="zga-ee-uGB"/>
     </inferredMetricsTieBreakers>

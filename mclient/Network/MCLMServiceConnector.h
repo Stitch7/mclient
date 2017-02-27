@@ -36,6 +36,9 @@
                  login:(NSDictionary *)loginData
                  error:(NSError **)errorPtr;
 
+- (NSDictionary *)responsesForUsername:(NSString *)inUsername
+                         error:(NSError **)errorPtr;
+
 - (NSDictionary *)messageWithId:(NSNumber *)inMessageId
                     fromBoardId:(NSNumber *)inBoardId
                     andThreadId:(NSNumber *)inThreadId
