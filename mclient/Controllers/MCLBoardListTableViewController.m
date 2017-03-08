@@ -21,8 +21,6 @@
 #import "MCLLoadingView.h"
 #import "MCLVerifiyLoginView.h"
 
-#import "MCLReadListMigrator.h" // TODO: Remove in next release
-
 @interface MCLBoardListTableViewController ()
 
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
@@ -150,9 +148,6 @@
                     [navToolbarView loginStatusWithUsername:username];
                     [self saveValidLoginFlagWithValue:YES];
 
-                    // TODO: Remove in next release
-                    NSDictionary *loginData = @{@"username":username, @"password":password};
-                    [[[MCLReadListMigrator alloc] init] migrateWithLoginData:loginData];
                 }
             });
         });
