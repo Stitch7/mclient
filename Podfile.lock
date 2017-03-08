@@ -1,7 +1,9 @@
 PODS:
+  - BBBadgeBarButtonItem (1.2)
   - EDSunriseSet (2.0)
 
 DEPENDENCIES:
+  - BBBadgeBarButtonItem
   - EDSunriseSet (from `https://github.com/jelmerderonde/EDSunriseSet`)
 
 EXTERNAL SOURCES:
@@ -14,8 +16,9 @@ CHECKOUT OPTIONS:
     :git: https://github.com/jelmerderonde/EDSunriseSet
 
 SPEC CHECKSUMS:
+  BBBadgeBarButtonItem: c2fbca0bff18e21b70defc9438a8a5048008e7ca
   EDSunriseSet: 6cbe2d2405d3258f31e0c52c2f3e8b84dba65c53
 
-PODFILE CHECKSUM: 83f210e0171032ae849edcde7875df151b18adda
+PODFILE CHECKSUM: 5519a6905d0d448dd9295ee9add9ce35515493ca
 
 COCOAPODS: 1.2.0.rc.1

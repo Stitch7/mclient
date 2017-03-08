@@ -8,6 +8,7 @@
 
 #import "MCLResponsesTableViewController.h"
 
+#import "UIView+addConstraints.h"
 #import "constants.h"
 #import "KeychainItemWrapper.h"
 #import "MCLAppDelegate.h"
@@ -28,6 +29,7 @@
 @property (strong, nonatomic) MCLMessageListViewController *detailViewController;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
+@property (strong, nonatomic) MCLMessageResponsesClient *messageResponsesClient;
 @property (strong, nonatomic) NSMutableDictionary *responses;
 @property (strong, nonatomic) NSMutableArray *sectionKeys;
 @property (strong, nonatomic) NSMutableDictionary *sectionTitles;
@@ -66,6 +68,9 @@
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.clearsSelectionOnViewWillAppear = NO;
     }
+
+    self.messageResponsesClient = [[MCLMessageResponsesClient alloc] init];
+    self.messageResponsesClient.delegate = self;
 
     // Init + setup dateformatter for message dates
     self.dateFormatter = [[NSDateFormatter alloc] init];
@@ -113,8 +118,10 @@
     // Cache original tables separatorColor and set to clear to avoid flickering loading view
     [self.tableView setSeparatorColor:[UIColor clearColor]];
 
+    self.tableView.sectionHeaderHeight = UITableViewAutomaticDimension;
+
     // Set title to board name
-    self.title = @"Letzte Antworten"; // TODO: i18n
+    self.title = NSLocalizedString(@"Replies to your posts", nil);
 
     // Init refresh control
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -126,15 +133,9 @@
     [self.tableView addSubview:loadingView];
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    // Load data async
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSError *mServiceError;
-        NSDictionary *data = [[MCLMServiceConnector sharedConnector] responsesForUsername:self.username
-                                                                                    error:&mServiceError];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self fetchedData:data error:mServiceError];
-        });
-    });
+
+    [self.messageResponsesClient loadData];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -162,107 +163,7 @@
 - (void)reloadData
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSError *mServiceError;
-        NSDictionary *data = [[MCLMServiceConnector sharedConnector] responsesForUsername:self.username
-                                                                                    error:&mServiceError];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self fetchedData:data error:mServiceError];
-            [self.refreshControl endRefreshing];
-        });
-    });
-}
-
-- (void)fetchedData:(NSDictionary *)data error:(NSError *)error
-{
-    for (id subview in self.view.subviews) {
-        if ([[subview class] isSubclassOfClass: [MCLErrorView class]] ||
-            [[subview class] isSubclassOfClass: [MCLLoadingView class]]
-        ) {
-            [subview removeFromSuperview];
-        }
-    }
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-
-    if (error) {
-        switch (error.code) {
-            case -2:
-                [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:self.view.frame
-                                                                               hideSubLabel:YES]];
-                break;
-
-            default:
-                [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:self.view.frame
-                                                                          andText:[error localizedDescription]
-                                                                     hideSubLabel:YES]];
-                break;
-        }
-    } else {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
-        [dateFormatter setLocale:enUSPOSIXLocale];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-
-        NSDateFormatter *dateKeyFormatter = [[NSDateFormatter alloc] init];
-        [dateKeyFormatter setDateFormat: @"yyyy-MM-dd"];
-
-        NSDateFormatter *dateStrFormatter = [[NSDateFormatter alloc] init];
-        [dateStrFormatter setDoesRelativeDateFormatting:YES];
-        [dateStrFormatter setDateStyle:NSDateFormatterShortStyle];
-        [dateStrFormatter setTimeStyle:NSDateFormatterNoStyle];
-
-        self.sectionKeys = [NSMutableArray array];
-        self.sectionTitles = [NSMutableDictionary dictionary];
-        NSMutableDictionary *responses = [NSMutableDictionary dictionary];
-        for (id object in data) {
-            NSNumber *boardId = [object objectForKey:@"boardId"];
-            NSNumber *threadId = [object objectForKey:@"threadId"];
-            NSString *threadSubject = [object objectForKey:@"threadSubject"];
-            NSNumber *messageId = [object objectForKey:@"messageId"];
-            id isReadOpt = [object objectForKey:@"isRead"];
-            BOOL isRead = (isReadOpt != (id)[NSNull null] && isReadOpt != nil) ? [isReadOpt boolValue] : YES;
-            NSString *username = [object objectForKey:@"username"];
-            NSString *subject = [object objectForKey:@"subject"];
-            NSDate *date = [dateFormatter dateFromString:[object objectForKey:@"date"]];
-
-            NSString *sectionKey = [[dateKeyFormatter stringFromDate:date] stringByAppendingString:threadSubject];
-
-            NSMutableArray *responsesWithKey = [NSMutableArray array];
-            if (![self.sectionKeys containsObject:sectionKey]) {
-                [self.sectionKeys addObject:sectionKey];
-                NSString *dateStr = [dateStrFormatter stringFromDate:date];
-                NSString *sectionTitle = [[dateStr stringByAppendingString:@": "] stringByAppendingString:threadSubject];
-                [self.sectionTitles setObject:sectionTitle forKey:sectionKey];
-            }
-            else {
-                responsesWithKey = [self.responses objectForKey:sectionKey];
-            }
-
-            MCLResponse *response = [MCLResponse responseWithBoardId:boardId
-                                                            threadId:threadId
-                                                       threadSubject:threadSubject
-                                                           messageId:messageId
-                                                             subject:subject
-                                                            username:username
-                                                                date:date
-                                                                read:isRead];
-            [responsesWithKey addObject:response];
-
-            NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
-            NSMutableArray *sortedResponsesWithKey = [NSMutableArray arrayWithArray:[responsesWithKey sortedArrayUsingDescriptors:@[descriptor]]];
-
-            [responses setObject:sortedResponsesWithKey forKey:sectionKey];
-            self.responses = responses;
-        }
-
-        NSArray *sortedSections = [self.sectionKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-        self.sectionKeys = [NSMutableArray arrayWithArray:[[sortedSections reverseObjectEnumerator] allObjects]];
-
-        // Restore tables separatorColor
-        [self.tableView setSeparatorColor:[self.currentTheme tableViewSeparatorColor]];
-
-        [self.tableView reloadData];
-    }
+    [self.messageResponsesClient loadData];
 }
 
 #pragma mark - UITableViewDataSource
@@ -278,9 +179,31 @@
     return [messagesInSection count];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return [self.sectionTitles objectForKey:[self.sectionKeys objectAtIndex:section]];
+    CGFloat x = 10.0f;
+    CGFloat height = 25.0f;
+    CGFloat width = self.tableView.frame.size.width - x;
+    NSDictionary *titleDic = [self.sectionTitles objectForKey:[self.sectionKeys objectAtIndex:section]];
+
+    UILabel *dateLabel = [[UILabel alloc] init];
+    dateLabel.frame = CGRectMake(x, 5, width, height);
+    dateLabel.font = [UIFont boldSystemFontOfSize:12.0f];
+    dateLabel.textColor = [self.currentTheme tableViewHeaderTextColor];
+    dateLabel.text = [[titleDic objectForKey:@"date"] uppercaseString];
+
+    UILabel *subjectLabel = [[UILabel alloc] init];
+    CGFloat yOffset = height - 2.0f;
+    subjectLabel.frame = CGRectMake(x, yOffset, width, height);
+    subjectLabel.font = [UIFont systemFontOfSize:14.0f];
+    subjectLabel.textColor = [self.currentTheme tableViewHeaderTextColor];
+    subjectLabel.text = [titleDic objectForKey:@"subject"];
+
+    UIView *header = [[UIView alloc] init];
+    [header addSubview:dateLabel];
+    [header addSubview:subjectLabel];
+
+    return header;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -335,6 +258,11 @@
     return UITableViewAutomaticDimension;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 50;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *messagesInSection = [self.responses objectForKey:[self.sectionKeys objectAtIndex:indexPath.section]];
@@ -343,32 +271,60 @@
     [cell markRead];
     response.tempRead = YES;
 
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        // Hide popoverController in portrait mode
-        if (!UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
-            [self.masterPopoverController dismissPopoverAnimated:YES];
-        }
+    NSString *segueIdentifier = nil;
+    switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"threadView"]) {
+        case kMCLSettingsThreadViewWidmann:
+        default:
+            segueIdentifier = @"PushToMessageListWidmannStyle";
+            break;
 
-        MCLThread *thread = [MCLThread threadWithId:response.threadId
-                                            subject:response.threadSubject];
-        MCLBoard *board = [MCLBoard boardWithId:response.boardId name:nil];
-        [self.detailViewController setJumpToMessageId:response.messageId];
-        [self.detailViewController loadThread:thread fromBoard:board];
+        case kMCLSettingsThreadViewFrame:
+            segueIdentifier = @"PushToMessageListFrameStyle";
+            break;
     }
-    else {
-        NSString *segueIdentifier = nil;
-        switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"threadView"]) {
-            case kMCLSettingsThreadViewWidmann:
-            default:
-                segueIdentifier = @"PushToMessageListWidmannStyle";
-                break;
 
-            case kMCLSettingsThreadViewFrame:
-                segueIdentifier = @"PushToMessageListFrameStyle";
-                break;
+    [self performSegueWithIdentifier:segueIdentifier sender:cell];
+}
+
+#pragma mark - MCLMessageResponsesClientDelegate
+
+- (void)messageResponsesClient:(MCLMessageResponsesClient *)client foundUnreadResponses:(NSNumber *)numberOfUnreadResponses
+{
+}
+
+- (void)messageResponsesClient:(MCLMessageResponsesClient *)client fetchedData:(NSMutableDictionary *)responses sectionKeys:(NSMutableArray *)sectionKeys sectionTitles:(NSMutableDictionary *)sectionTitles
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [self removeOverlayViews];
+    if (self.refreshControl.isRefreshing) {
+        [self.refreshControl endRefreshing];
+    }
+
+    self.responses = responses;
+    self.sectionKeys = sectionKeys;
+    self.sectionTitles = sectionTitles;
+
+    [self.tableView setSeparatorColor:[self.currentTheme tableViewSeparatorColor]];
+    [self.tableView reloadData];
+}
+
+- (void)messageResponsesClient:(MCLMessageResponsesClient *)client failedWithError:(NSError *)error
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [self removeOverlayViews];
+    if (self.refreshControl.isRefreshing) {
+        [self.refreshControl endRefreshing];
+    }
+}
+
+- (void)removeOverlayViews
+{
+    for (id subview in self.view.subviews) {
+        if ([[subview class] isSubclassOfClass: [MCLErrorView class]] ||
+            [[subview class] isSubclassOfClass: [MCLLoadingView class]]
+        ) {
+            [subview removeFromSuperview];
         }
-
-        [self performSegueWithIdentifier:segueIdentifier sender:cell];
     }
 }
 

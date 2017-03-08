@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MCLMessageResponsesClient.h"
 
-@interface MCLResponsesTableViewController : UITableViewController
+@interface MCLResponsesTableViewController : UITableViewController <MCLMessageResponsesClientDelegate>
 
 @end

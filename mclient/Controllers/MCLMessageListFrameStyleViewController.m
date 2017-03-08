@@ -120,7 +120,17 @@
                 BOOL lastMessageExists = lastMessageId > 0;
                 BOOL lastMessageIsNotRead = !self.thread.lastMessageIsRead;
 
-                if (firstMessageIsRead && jumpToLatestPost && lastMessageExists && lastMessageIsNotRead) {
+                if (self.jumpToMessageId) {
+                    [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
+                        if (self.jumpToMessageId == message.messageId) {
+                            NSIndexPath *jumpToMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
+                            [self.tableView scrollToRowAtIndexPath:jumpToMessageIndexPath
+                                                  atScrollPosition:UITableViewScrollPositionTop
+                                                          animated:YES];
+                        }
+                    }];
+                }
+                else if (firstMessageIsRead && jumpToLatestPost && lastMessageExists && lastMessageIsNotRead) {
                     [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
                         if (self.thread.lastMessageId == message.messageId) {
                             NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
@@ -455,10 +465,10 @@
 
 #pragma mark - UITableViewDelegate
 
-- (void)selectLastMessage
+- (void)selectMessageWithId:(NSNumber *)selectMessageId
 {
     [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
-        if (self.thread.lastMessageId == message.messageId) {
+        if (selectMessageId == message.messageId) {
             NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
             [self.tableView selectRowAtIndexPath:latestMessageIndexPath
                                         animated:YES
@@ -470,7 +480,8 @@
 
 -(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
-    [self selectLastMessage];
+    NSNumber *messageId = self.jumpToMessageId ? self.jumpToMessageId : self.thread.lastMessageId;
+    [self selectMessageWithId:messageId];
 }
 
 - (NSString *)messageHtml:(MCLMessage *)message

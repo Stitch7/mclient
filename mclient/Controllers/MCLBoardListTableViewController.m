@@ -8,9 +8,12 @@
 
 #import "MCLBoardListTableViewController.h"
 
+#import "BBBadgeBarButtonItem.h"
+
 #import "KeychainItemWrapper.h"
 #import "MCLAppDelegate.h"
 #import "MCLMServiceConnector.h"
+#import "MCLMessageResponsesClient.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
 #import "MCLThreadListTableViewController.h"
@@ -26,6 +29,8 @@
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) NSMutableArray *boards;
 @property (strong, nonatomic) NSDictionary *images;
+@property (strong, nonatomic) MCLMessageResponsesClient *messageResponsesClient;
+@property (strong, nonatomic) BBBadgeBarButtonItem *responsesButtonItem;
 
 @end
 
@@ -59,15 +64,18 @@
                     @6: @"boardOT.png",
                     @26: @"boardKulturbeutel.png",
                     @8: @"boardOnlineGaming.png"};
+
+    self.messageResponsesClient = [[MCLMessageResponsesClient alloc] init];
+    self.messageResponsesClient.delegate = self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    [self showLoginStatus];
     [self configureNavigationBar];
     [self configureRefreshControl];
+    [self configureResponsesButton];
 
     // Visualize loading
     [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.frame]];
@@ -86,6 +94,7 @@
 {
     [super viewWillAppear:animated];
 
+    [self showLoginStatus];
     [self.tableView reloadData];
 
     self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
@@ -106,14 +115,16 @@
         }
     }
 
-    // Add VerifiyLoginView to navigationControllers toolbar
-    CGRect navToolbarFrame = self.navigationController.toolbar.bounds;
-    MCLVerifiyLoginView *navToolbarView = [[MCLVerifiyLoginView alloc] initWithFrame:navToolbarFrame];
-    [self.navigationController.toolbar addSubview:navToolbarView];
-
     // TODO: Both calls are required? Why?
-    [self.navigationController setToolbarHidden:NO animated:YES];
+    [self.navigationController setToolbarHidden:NO animated:NO];
     self.navigationController.toolbar.hidden = NO;
+
+    CGRect verifyLoginViewFrame = self.navigationController.toolbar.bounds;
+    verifyLoginViewFrame.size.width = verifyLoginViewFrame.size.width - 150.0f;
+    MCLVerifiyLoginView *verifyLoginView = [[MCLVerifiyLoginView alloc] initWithFrame:verifyLoginViewFrame];
+    UIBarButtonItem *verifyLoginViewItem = [[UIBarButtonItem alloc] initWithCustomView:verifyLoginView];
+
+    self.toolbarItems = [NSArray arrayWithObjects:self.responsesButtonItem, verifyLoginViewItem, nil];
 
     // Reading username + password from keychain
     NSString *keychainIdentifier = [[NSBundle mainBundle] bundleIdentifier];
@@ -126,7 +137,7 @@
 
     if (username.length == 0 || password.length == 0) {
         [self saveValidLoginFlagWithValue:NO];
-        [navToolbarView loginStatusNoLogin];
+        [verifyLoginView loginStatusNoLogin];
     } else {
         // Check login data async
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -139,15 +150,16 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (mServiceError) {
                     if ([mServiceError code] == 401) {
-                        [navToolbarView loginStatusNoLogin];
+                        [verifyLoginView loginStatusNoLogin];
                         [self saveValidLoginFlagWithValue:NO];
                     } else {
                         [self.navigationController setToolbarHidden:YES animated:YES];
                     }
                 } else {
-                    [navToolbarView loginStatusWithUsername:username];
+                    [verifyLoginView loginStatusWithUsername:username];
                     [self saveValidLoginFlagWithValue:YES];
 
+                    [self.messageResponsesClient loadData];
                 }
             });
         });
@@ -158,6 +170,7 @@
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:validLogin forKey:@"validLogin"];
+    [self.responsesButtonItem setEnabled:validLogin];
 }
 
 - (void)configureNavigationBar
@@ -178,6 +191,26 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
+}
+
+- (void)configureResponsesButton
+{
+    UIImage *responsesImage = [[UIImage imageNamed:@"responsesButton.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIButton *responsesButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 50.0f, 50.0f)];
+    [responsesButton setImage:responsesImage forState:UIControlStateNormal];
+    [responsesButton addTarget:self action:@selector(responsesButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+
+    self.responsesButtonItem = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:responsesButton];
+    self.responsesButtonItem.badgeOriginX = 0.0f;
+    self.responsesButtonItem.badgeOriginY = 8.0f;
+    self.responsesButtonItem.badgeValue = @"0";
+    self.responsesButtonItem.shouldHideBadgeAtZero = YES;
+    self.responsesButtonItem.badgePadding = 5;
+}
+
+- (void)responsesButtonTapped
+{
+    [self performSegueWithIdentifier:@"ModalToResponses" sender:nil];
 }
 
 - (void)reloadData
@@ -207,7 +240,7 @@
     }
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
-    if (error) {
+    if (error) {    
         if (error.code == -2) {
             [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:self.view.frame]];
         }
@@ -257,6 +290,21 @@
     cell.textLabel.text = board.name;
 
     return cell;
+}
+
+#pragma mark - MCLMessageResponsesClientDelegate 
+
+- (void)messageResponsesClient:(MCLMessageResponsesClient *)client foundUnreadResponses:(NSNumber *)numberOfUnreadResponses
+{
+    self.responsesButtonItem.badgeValue = [numberOfUnreadResponses stringValue];
+}
+
+- (void)messageResponsesClient:(MCLMessageResponsesClient *)client fetchedData:(NSMutableDictionary *)responses sectionKeys:(NSMutableArray *)sectionKeys sectionTitles:(NSMutableDictionary *)sectionTitles
+{
+}
+
+- (void)messageResponsesClient:(MCLMessageResponsesClient *)client failedWithError:(NSError *)error
+{
 }
 
 #pragma mark - MCLSettingsTableViewControllerDelegate

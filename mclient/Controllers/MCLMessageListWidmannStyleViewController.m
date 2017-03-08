@@ -115,6 +115,7 @@
         // Process data on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedData:data error:mServiceError];
+            [self selectInitialMessage];
         });
     });
 }
@@ -197,6 +198,7 @@
         // Process data on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
             [self fetchedData:data error:mServiceError];
+            [self selectInitialMessage];
         });
     });
 }
@@ -285,28 +287,42 @@
         }
 
         [self.tableView reloadData];
+    }
+}
 
-        // If new thread select first message
-        BOOL jumpToLatestPost = [[NSUserDefaults standardUserDefaults] boolForKey:@"jumpToLatestPost"];
-        if (!self.thread.isRead) {
-            NSIndexPath *firstMessageIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.tableView selectRowAtIndexPath:firstMessageIndexPath
-                                        animated:YES
-                                  scrollPosition:UITableViewScrollPositionTop];
-            [self tableView:self.tableView didSelectRowAtIndexPath:firstMessageIndexPath];
-        }
-        else if (jumpToLatestPost && self.thread.lastMessageId > 0) {
-            if (!self.thread.lastMessageIsRead) {
-                [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
-                    if (self.thread.lastMessageId == message.messageId) {
-                        NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
-                        [self.tableView scrollToRowAtIndexPath:latestMessageIndexPath
-                                              atScrollPosition:UITableViewScrollPositionTop
-                                                      animated:YES];
-                        self.thread.lastMessageRead = YES;
-                    }
-                }];
+- (void)selectInitialMessage
+{
+    // If new thread select first message
+    BOOL jumpToLatestPost = [[NSUserDefaults standardUserDefaults] boolForKey:@"jumpToLatestPost"];
+    if (self.jumpToMessageId) {
+        [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
+            if (self.jumpToMessageId == message.messageId) {
+                NSIndexPath *jumpToMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
+                [self.tableView scrollToRowAtIndexPath:jumpToMessageIndexPath
+                                      atScrollPosition:UITableViewScrollPositionTop
+                                              animated:YES];
             }
+        }];
+    }
+    else if (!self.thread.isRead) {
+        NSIndexPath *firstMessageIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView selectRowAtIndexPath:firstMessageIndexPath
+                                    animated:YES
+                              scrollPosition:UITableViewScrollPositionTop];
+        [self tableView:self.tableView didSelectRowAtIndexPath:firstMessageIndexPath];
+    }
+    else if (jumpToLatestPost && self.thread.lastMessageId > 0) {
+        if (!self.thread.lastMessageIsRead) {
+            self.jumpToMessageId = self.thread.lastMessageId;
+            [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
+                if (self.thread.lastMessageId == message.messageId) {
+                    NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
+                    [self.tableView scrollToRowAtIndexPath:latestMessageIndexPath
+                                          atScrollPosition:UITableViewScrollPositionTop
+                                                  animated:YES];
+                    self.thread.lastMessageRead = YES;
+                }
+            }];
         }
     }
 }
@@ -431,10 +447,10 @@
 
 #pragma mark - UITableViewDelegate
 
-- (void)selectLastMessage
+- (void)jumpToMessage
 {
     [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
-        if (self.thread.lastMessageId == message.messageId) {
+        if (self.jumpToMessageId == message.messageId) {
             NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
             [self.tableView selectRowAtIndexPath:latestMessageIndexPath
                                         animated:YES
@@ -446,7 +462,7 @@
 
 -(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
-    [self selectLastMessage];
+    [self jumpToMessage];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -559,7 +575,8 @@
                         [cell markRead];
                         self.thread.messagesRead = [NSNumber numberWithInteger:[self.thread.messagesRead intValue] + 1];
                         message.read = YES;
-                        if ([message.messageId isEqualToNumber:self.thread.lastMessageId]) {
+                        NSNumber *lastMessageId = self.thread.lastMessageId;
+                        if (lastMessageId && [message.messageId isEqualToNumber:lastMessageId]) {
                             self.thread.lastMessageRead = YES;
                         }
                     }
@@ -573,6 +590,8 @@
 
 - (void)putMessage:(MCLMessage *)message toCell:(MCLMessageListWidmannStyleTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    if (!message) { return; }
+
     [cell.messageTextWebView loadHTMLString:[self messageHtml:message] baseURL:nil];
     [self hideToolbarButtonsForMessage:message inCell:cell atIndexPath:indexPath];
 
