@@ -15,6 +15,8 @@
 {
     [[MCLThemeManager sharedManager] loadTheme];
 
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+
     return YES;
 }
 
@@ -31,6 +33,11 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     [[MCLThemeManager sharedManager] loadTheme];
+}
+
+-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    completionHandler(UIBackgroundFetchResultNewData);
 }
 
 @end
