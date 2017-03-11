@@ -23,6 +23,7 @@
 #import "MCLBoard.h"
 #import "MCLThread.h"
 #import "MCLMessage.h"
+#import "MCLNotificationHistory.h"
 
 
 @interface MCLMessageListWidmannStyleViewController ()
@@ -573,6 +574,7 @@
                     cell.messageText = message.text;
                     if (!message.isRead) {
                         [cell markRead];
+                        [[MCLNotificationHistory sharedNotificationHistory] removeMessageId:message.messageId];
                         self.thread.messagesRead = [NSNumber numberWithInteger:[self.thread.messagesRead intValue] + 1];
                         message.read = YES;
                         NSNumber *lastMessageId = self.thread.lastMessageId;

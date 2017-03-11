@@ -8,20 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol MCLMessageResponsesClientDelegate;
+extern NSString * const MCLMessageResponsesClientFoundUnreadResponsesNotification;
 
 @interface MCLMessageResponsesClient : NSObject
 
-@property (weak) id<MCLMessageResponsesClientDelegate> delegate;
+@property (nonatomic, copy) NSDictionary *responses;
+@property (nonatomic, copy) NSMutableArray *sectionKeys;
+@property (nonatomic, copy) NSMutableDictionary *sectionTitles;
 
-- (void)loadData;
-
-@end
-
-@protocol MCLMessageResponsesClientDelegate <NSObject>
-
-- (void)messageResponsesClient:(MCLMessageResponsesClient *)client foundUnreadResponses:(NSNumber *)numberOfUnreadResponses;
-- (void)messageResponsesClient:(MCLMessageResponsesClient *)client fetchedData:(NSMutableDictionary *)responses sectionKeys:(NSMutableArray *)sectionKeys sectionTitles:(NSMutableDictionary *)sectionTitles;
-- (void)messageResponsesClient:(MCLMessageResponsesClient *)client failedWithError:(NSError *)error;
++ (id)sharedClient;
+- (void)loadDataWithCompletion:(void (^)(NSDictionary *responses, NSArray *sectionKeys, NSDictionary *sectionTitles))completion;
+- (NSArray *)unreadResponses;
+- (NSNumber *)numberOfUnreadResponses;
 
 @end

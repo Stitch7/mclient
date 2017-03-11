@@ -25,6 +25,9 @@
 		301FD9AD19C5C79000E36A5B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9AC19C5C79000E36A5B /* Reachability.m */; };
 		3020A26819DA1B66007F46E2 /* isClosed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3020A26719DA1B66007F46E2 /* isClosed@2x.png */; };
 		3020FB611E6577B000C7217F /* MCLMessageResponsesClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3020FB601E6577AF00C7217F /* MCLMessageResponsesClient.m */; };
+		3020FB651E74582200C7217F /* UIApplication+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3020FB641E74582100C7217F /* UIApplication+Additions.m */; };
+		3020FB681E7459C400C7217F /* MCLNotificationHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3020FB671E7459C400C7217F /* MCLNotificationHistory.m */; };
+		3020FB6B1E746D4400C7217F /* MCLNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3020FB6A1E746D4400C7217F /* MCLNotificationManager.m */; };
 		302F462519BF443A00DC77D8 /* copyLinkButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */; };
 		3036F5981E26666600ABC2CE /* MCLThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3036F5971E26666600ABC2CE /* MCLThemeManager.m */; };
 		3036F59B1E266B3800ABC2CE /* MCLNightTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 3036F59A1E266B3800ABC2CE /* MCLNightTheme.m */; };
@@ -184,6 +187,12 @@
 		3020A26719DA1B66007F46E2 /* isClosed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isClosed@2x.png"; sourceTree = "<group>"; };
 		3020FB5F1E6577AF00C7217F /* MCLMessageResponsesClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageResponsesClient.h; sourceTree = "<group>"; };
 		3020FB601E6577AF00C7217F /* MCLMessageResponsesClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageResponsesClient.m; sourceTree = "<group>"; };
+		3020FB631E74582100C7217F /* UIApplication+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+Additions.h"; sourceTree = "<group>"; };
+		3020FB641E74582100C7217F /* UIApplication+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+Additions.m"; sourceTree = "<group>"; };
+		3020FB661E7459C400C7217F /* MCLNotificationHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLNotificationHistory.h; sourceTree = "<group>"; };
+		3020FB671E7459C400C7217F /* MCLNotificationHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLNotificationHistory.m; sourceTree = "<group>"; };
+		3020FB691E746D4400C7217F /* MCLNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLNotificationManager.h; sourceTree = "<group>"; };
+		3020FB6A1E746D4400C7217F /* MCLNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLNotificationManager.m; sourceTree = "<group>"; };
 		302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copyLinkButton@2x.png"; sourceTree = "<group>"; };
 		3036F5941E263E9800ABC2CE /* MCLTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLTheme.h; sourceTree = "<group>"; };
 		3036F5961E26666600ABC2CE /* MCLThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLThemeManager.h; sourceTree = "<group>"; };
@@ -377,8 +386,21 @@
 			children = (
 				305DD82619A63517006514BD /* MCLAppDelegate.h */,
 				305DD82719A63517006514BD /* MCLAppDelegate.m */,
+				3020FB631E74582100C7217F /* UIApplication+Additions.h */,
+				3020FB641E74582100C7217F /* UIApplication+Additions.m */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		3020FB6C1E74710700C7217F /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				3020FB661E7459C400C7217F /* MCLNotificationHistory.h */,
+				3020FB671E7459C400C7217F /* MCLNotificationHistory.m */,
+				3020FB691E746D4400C7217F /* MCLNotificationManager.h */,
+				3020FB6A1E746D4400C7217F /* MCLNotificationManager.m */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		3036F5951E263EE100ABC2CE /* Themes */ = {
@@ -395,7 +417,7 @@
 			path = Themes;
 			sourceTree = "<group>";
 		};
-		303974911E16B08D003C8BC9 /* Extensions */ = {
+		303974911E16B08D003C8BC9 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
 				30849D1D1E2B8C6C00626331 /* UIColor+Hex.h */,
@@ -403,7 +425,7 @@
 				3039748E1E16B083003C8BC9 /* UIView+addConstraints.h */,
 				3039748F1E16B083003C8BC9 /* UIView+addConstraints.m */,
 			);
-			path = Extensions;
+			path = Categories;
 			sourceTree = "<group>";
 		};
 		304E5A471E1EB6790022FE8B /* Network */ = {
@@ -455,15 +477,16 @@
 			isa = PBXGroup;
 			children = (
 				3020FB621E70897900C7217F /* Application */,
-				305DD85819AB2EE0006514BD /* Controllers */,
-				303974911E16B08D003C8BC9 /* Extensions */,
-				305DD85A19AB2F07006514BD /* Models */,
+				3020FB6C1E74710700C7217F /* Notifications */,
 				304E5A471E1EB6790022FE8B /* Network */,
-				305E53AB19D4F4C5002B8E50 /* Storyboards */,
-				305DD81E19A63517006514BD /* Supporting Files */,
-				3036F5951E263EE100ABC2CE /* Themes */,
-				305E53AC19D4F509002B8E50 /* Vendor */,
+				305DD85819AB2EE0006514BD /* Controllers */,
+				305DD85A19AB2F07006514BD /* Models */,
 				305DD85919AB2EFE006514BD /* Views */,
+				3036F5951E263EE100ABC2CE /* Themes */,
+				305E53AB19D4F4C5002B8E50 /* Storyboards */,
+				303974911E16B08D003C8BC9 /* Categories */,
+				305E53AC19D4F509002B8E50 /* Vendor */,
+				305DD81E19A63517006514BD /* Supporting Files */,
 				308EC3D719CC4DE800A0869F /* SplitViewButtonHandler.h */,
 				301FD00F19AB73160028C5C8 /* constants.h */,
 				305E53AA19D4F3EE002B8E50 /* utils.h */,
@@ -759,6 +782,11 @@
 					305DD81319A63517006514BD = {
 						DevelopmentTeam = J8XDHCNJQA;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					305DD83A19A63517006514BD = {
 						ProvisioningStyle = Automatic;
@@ -970,6 +998,7 @@
 				3036F59B1E266B3800ABC2CE /* MCLNightTheme.m in Sources */,
 				301FD9A619C411D400E36A5B /* MCLErrorView.m in Sources */,
 				30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */,
+				3020FB651E74582200C7217F /* UIApplication+Additions.m in Sources */,
 				306386741E6098D9004822ED /* MCLResponsesTableViewController.m in Sources */,
 				308EC3DD19CC7BA600A0869F /* MCLDetailView.m in Sources */,
 				30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */,
@@ -985,11 +1014,13 @@
 				305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */,
 				3036F5981E26666600ABC2CE /* MCLThemeManager.m in Sources */,
 				305DD85D19AB300F006514BD /* MCLBoard.m in Sources */,
+				3020FB6B1E746D4400C7217F /* MCLNotificationManager.m in Sources */,
 				301FD9A319C32FC600E36A5B /* MCLLoadingView.m in Sources */,
 				30A1BFAD19B4A8D4002439FE /* MCLSettingsTableViewController.m in Sources */,
 				3036F59E1E26798E00ABC2CE /* MCLDefaultTheme.m in Sources */,
 				303974901E16B083003C8BC9 /* UIView+addConstraints.m in Sources */,
 				30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */,
+				3020FB681E7459C400C7217F /* MCLNotificationHistory.m in Sources */,
 				307A80EF19B8800E001B538D /* KeychainItemWrapper.m in Sources */,
 				307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */,
 				306386771E643F1D004822ED /* MCLResponse.m in Sources */,

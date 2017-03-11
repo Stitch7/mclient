@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MCLSettingsTableViewController.h"
-#import "MCLMessageResponsesClient.h"
 
-@interface MCLBoardListTableViewController : UITableViewController <UISplitViewControllerDelegate, MCLSettingsTableViewControllerDelegate, MCLMessageResponsesClientDelegate>
+@interface MCLBoardListTableViewController : UITableViewController <UISplitViewControllerDelegate, MCLSettingsTableViewControllerDelegate>
 
 @end

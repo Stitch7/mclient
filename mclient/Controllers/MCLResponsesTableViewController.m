@@ -22,6 +22,7 @@
 #import "MCLBoard.h"
 #import "MCLThread.h"
 #import "MCLResponse.h"
+#import "MCLNotificationHistory.h"
 
 
 @interface MCLResponsesTableViewController ()
@@ -30,9 +31,9 @@
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) MCLMessageResponsesClient *messageResponsesClient;
-@property (strong, nonatomic) NSMutableDictionary *responses;
-@property (strong, nonatomic) NSMutableArray *sectionKeys;
-@property (strong, nonatomic) NSMutableDictionary *sectionTitles;
+@property (strong, nonatomic) NSDictionary *responses;
+@property (strong, nonatomic) NSArray *sectionKeys;
+@property (strong, nonatomic) NSDictionary *sectionTitles;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
@@ -69,8 +70,7 @@
         self.clearsSelectionOnViewWillAppear = NO;
     }
 
-    self.messageResponsesClient = [[MCLMessageResponsesClient alloc] init];
-    self.messageResponsesClient.delegate = self;
+    self.messageResponsesClient = [MCLMessageResponsesClient sharedClient];
 
     // Init + setup dateformatter for message dates
     self.dateFormatter = [[NSDateFormatter alloc] init];
@@ -84,7 +84,7 @@
     [super viewDidLoad];
 
     UINib *responseCellNib = [UINib nibWithNibName: @"MCLMessageListFrameStyleTableViewCell" bundle: nil];
-    [self.tableView registerNib: responseCellNib forCellReuseIdentifier: @"ResponseCell"];
+    [self.tableView registerNib:responseCellNib forCellReuseIdentifier:@"ResponseCell"];
 
     // On iPad replace splitviews detailViewController with MessageListViewController type depending on users settings
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
@@ -134,8 +134,7 @@
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
-    [self.messageResponsesClient loadData];
-    
+    [self reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -160,10 +159,34 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)removeOverlayViews
+{
+    for (id subview in self.view.subviews) {
+        if ([[subview class] isSubclassOfClass: [MCLErrorView class]] ||
+            [[subview class] isSubclassOfClass: [MCLLoadingView class]]
+        ) {
+            [subview removeFromSuperview];
+        }
+    }
+}
+
 - (void)reloadData
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [self.messageResponsesClient loadData];
+    [self.messageResponsesClient loadDataWithCompletion:^(NSDictionary *responses, NSArray *sectionKeys, NSDictionary *sectionTitles) {
+        self.responses = responses;
+        self.sectionKeys = sectionKeys;
+        self.sectionTitles = sectionTitles;
+
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [self removeOverlayViews];
+        if (self.refreshControl.isRefreshing) {
+            [self.refreshControl endRefreshing];
+        }
+
+        [self.tableView setSeparatorColor:[self.currentTheme tableViewSeparatorColor]];
+        [self.tableView reloadData];
+    }];
 }
 
 #pragma mark - UITableViewDataSource
@@ -286,48 +309,6 @@
     [self performSegueWithIdentifier:segueIdentifier sender:cell];
 }
 
-#pragma mark - MCLMessageResponsesClientDelegate
-
-- (void)messageResponsesClient:(MCLMessageResponsesClient *)client foundUnreadResponses:(NSNumber *)numberOfUnreadResponses
-{
-}
-
-- (void)messageResponsesClient:(MCLMessageResponsesClient *)client fetchedData:(NSMutableDictionary *)responses sectionKeys:(NSMutableArray *)sectionKeys sectionTitles:(NSMutableDictionary *)sectionTitles
-{
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    [self removeOverlayViews];
-    if (self.refreshControl.isRefreshing) {
-        [self.refreshControl endRefreshing];
-    }
-
-    self.responses = responses;
-    self.sectionKeys = sectionKeys;
-    self.sectionTitles = sectionTitles;
-
-    [self.tableView setSeparatorColor:[self.currentTheme tableViewSeparatorColor]];
-    [self.tableView reloadData];
-}
-
-- (void)messageResponsesClient:(MCLMessageResponsesClient *)client failedWithError:(NSError *)error
-{
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    [self removeOverlayViews];
-    if (self.refreshControl.isRefreshing) {
-        [self.refreshControl endRefreshing];
-    }
-}
-
-- (void)removeOverlayViews
-{
-    for (id subview in self.view.subviews) {
-        if ([[subview class] isSubclassOfClass: [MCLErrorView class]] ||
-            [[subview class] isSubclassOfClass: [MCLLoadingView class]]
-        ) {
-            [subview removeFromSuperview];
-        }
-    }
-}
-
 #pragma mark - Notifications
 
 - (void)themeChanged:(NSNotification *)notification
@@ -356,6 +337,8 @@
         [messageListVC setBoard:board];
         [messageListVC setThread:thread];
         [messageListVC setJumpToMessageId:response.messageId];
+
+        [[MCLNotificationHistory sharedNotificationHistory] removeResponse:response];
     }
 }
 

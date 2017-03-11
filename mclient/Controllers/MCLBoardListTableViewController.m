@@ -29,7 +29,6 @@
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) NSMutableArray *boards;
 @property (strong, nonatomic) NSDictionary *images;
-@property (strong, nonatomic) MCLMessageResponsesClient *messageResponsesClient;
 @property (strong, nonatomic) BBBadgeBarButtonItem *responsesButtonItem;
 
 @end
@@ -49,10 +48,7 @@
 {
     [super awakeFromNib];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(themeChanged:)
-                                                 name:MCLThemeChangedNotification
-                                               object:nil];
+    [self initNotifications];
 
     if (self.splitViewController) {
         [self.splitViewController setDelegate:self];
@@ -64,9 +60,19 @@
                     @6: @"boardOT.png",
                     @26: @"boardKulturbeutel.png",
                     @8: @"boardOnlineGaming.png"};
+}
 
-    self.messageResponsesClient = [[MCLMessageResponsesClient alloc] init];
-    self.messageResponsesClient.delegate = self;
+- (void)initNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(foundUnreadResponses:)
+                                                 name:MCLMessageResponsesClientFoundUnreadResponsesNotification
+                                               object:nil];
 }
 
 - (void)viewDidLoad
@@ -159,7 +165,7 @@
                     [verifyLoginView loginStatusWithUsername:username];
                     [self saveValidLoginFlagWithValue:YES];
 
-                    [self.messageResponsesClient loadData];
+                    [[MCLMessageResponsesClient sharedClient] loadDataWithCompletion:nil];
                 }
             });
         });
@@ -292,21 +298,6 @@
     return cell;
 }
 
-#pragma mark - MCLMessageResponsesClientDelegate 
-
-- (void)messageResponsesClient:(MCLMessageResponsesClient *)client foundUnreadResponses:(NSNumber *)numberOfUnreadResponses
-{
-    self.responsesButtonItem.badgeValue = [numberOfUnreadResponses stringValue];
-}
-
-- (void)messageResponsesClient:(MCLMessageResponsesClient *)client fetchedData:(NSMutableDictionary *)responses sectionKeys:(NSMutableArray *)sectionKeys sectionTitles:(NSMutableDictionary *)sectionTitles
-{
-}
-
-- (void)messageResponsesClient:(MCLMessageResponsesClient *)client failedWithError:(NSError *)error
-{
-}
-
 #pragma mark - MCLSettingsTableViewControllerDelegate
 
 - (void)settingsTableViewControllerDidFinish:(MCLSettingsTableViewController *)inController loginDataChanged:(BOOL)loginDataChanged
@@ -350,6 +341,11 @@
 {
     self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
     [self.tableView reloadData];
+}
+
+- (void)foundUnreadResponses:(NSNotification *)notification
+{
+    self.responsesButtonItem.badgeValue = [[[notification userInfo] objectForKey:@"numberOfUnreadResponses"] stringValue];
 }
 
 #pragma mark - Navigation
