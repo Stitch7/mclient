@@ -8,6 +8,7 @@
 
 #import "MCLNotificationHistory.h"
 #import "UIApplication+Additions.h"
+#import "MCLResponse.h"
 
 #define kUserDefaultsPoolKey @"MCLNotificationHistoryPool"
 
@@ -21,7 +22,7 @@
 
 @implementation MCLNotificationHistory
 
-#pragma mark - Singleton Methods -
+#pragma mark - Singleton Initializer
 
 + (id)sharedNotificationHistory
 {
@@ -32,7 +33,7 @@
 
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         NSMutableArray *pool;
-//        pool = [userDefaults objectForKey:kUserDefaultsPoolKey];
+        pool = [userDefaults mutableArrayValueForKey:kUserDefaultsPoolKey];
         if (!pool) {
             pool = [NSMutableArray array];
         }
@@ -44,15 +45,17 @@
     return sharedNotificationHistory;
 }
 
-#pragma mark - Public Methods -
+#pragma mark - Public Methods
 
 - (void)addResponse:(MCLResponse *)response
 {
-    if (![self.pool containsObject:response]) {
-        [self.pool addObject:response.messageId];
-        [self.userDefaults setObject:self.pool forKey:kUserDefaultsPoolKey];
-        [[UIApplication sharedApplication] incrementApplicationIconBadgeNumber];
+    if ([self.pool containsObject:response]) {
+        return;
     }
+
+    [self.pool addObject:response.messageId];
+    [self.userDefaults setObject:self.pool forKey:kUserDefaultsPoolKey];
+    [[UIApplication sharedApplication] incrementApplicationIconBadgeNumber];
 }
 
 - (void)removeResponse:(MCLResponse *)response
@@ -69,9 +72,10 @@
     }
 }
 
-- (BOOL)responseWasNotPresented:(MCLResponse *)response
+- (BOOL)responseWasAlreadyPresented:(MCLResponse *)response
 {
-    return ![self.pool containsObject:response.messageId];
+    return NO;
+    return [self.pool containsObject:response.messageId];
 }
 
 @end

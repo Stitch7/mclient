@@ -7,14 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MCLNotificationHistory.h"
+#import "MCLResponse.h"
 
 @interface MCLNotificationManager : NSObject
 
 + (id)sharedNotificationManager;
-
 - (void)sendLocalNotificationForResponse:(MCLResponse *)response;
-
-@property (strong, nonatomic) MCLNotificationHistory *notificationHistory;
 
 @end

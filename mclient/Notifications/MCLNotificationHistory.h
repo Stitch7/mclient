@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MCLResponse.h"
+
+@class MCLResponse;
 
 @interface MCLNotificationHistory : NSObject
 
@@ -16,6 +17,6 @@
 - (void)addResponse:(MCLResponse *)response;
 - (void)removeResponse:(MCLResponse *)response;
 - (void)removeMessageId:(NSNumber *)messageId;
-- (BOOL)responseWasNotPresented:(MCLResponse *)response;
+- (BOOL)responseWasAlreadyPresented:(MCLResponse *)response;
 
 @end

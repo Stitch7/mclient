@@ -12,12 +12,11 @@
 #import "MCLMessageResponsesClient.h"
 #import "MCLResponse.h"
 
-
 @implementation MCLAppDelegate
 
 @synthesize notificationAlert = _notificationAlert;
 
-# pragma mark - UIApplicationDelegate -
+# pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -44,24 +43,21 @@
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    NSLog(@"PERFORMING BACKGROUND FETCH - %@", [NSDate new]);
-
-//    __block UIBackgroundFetchResult result = UIBackgroundFetchResultNoData;
+    __block UIBackgroundFetchResult result = UIBackgroundFetchResultNoData;
     MCLMessageResponsesClient *messageResponsesClient = [MCLMessageResponsesClient sharedClient];
     [messageResponsesClient loadDataWithCompletion:^(NSDictionary *responses, NSArray *sectionKeys, NSDictionary *sectionTitles) {
         if ([[messageResponsesClient numberOfUnreadResponses] intValue] > 0) {
-//            result = UIBackgroundFetchResultNewData;
+            result = UIBackgroundFetchResultNewData;
             for (MCLResponse *response in [messageResponsesClient unreadResponses]) {
-                if ([self.notificationManager.notificationHistory responseWasNotPresented:response]) {
-                    [self.notificationManager sendLocalNotificationForResponse:response];
-                }
+                [self.notificationManager sendLocalNotificationForResponse:response];
             }
         }
+        completionHandler(result);
     }];
-    completionHandler(UIBackgroundFetchResultNewData);
 }
 
--(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
     if ([application applicationState] == UIApplicationStateActive) {
         [self presentNotificationWhileActive:notification];
     }
@@ -73,7 +69,7 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                         message:nil
                                                        delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"Ok", nil)
+                                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                               otherButtonTitles:nil];
         [self setNotificationAlert:alert];
     }

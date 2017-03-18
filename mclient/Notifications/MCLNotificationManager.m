@@ -7,11 +7,11 @@
 //
 
 #import "MCLNotificationManager.h"
-
+#import "MCLNotificationHistory.h"
 
 @implementation MCLNotificationManager
 
-#pragma mark - Singleton Methods -
+#pragma mark - Singleton Methods
 
 + (id)sharedNotificationManager
 {
@@ -19,6 +19,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedNotificationManager = [[self alloc] init];
+        [sharedNotificationManager initialize];
     });
 
     return sharedNotificationManager;
@@ -26,7 +27,6 @@
 
 - (void)initialize
 {
-    self.notificationHistory = [MCLNotificationHistory sharedNotificationHistory];
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
 
     UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
@@ -34,18 +34,23 @@
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 }
 
-#pragma mark - Public Methods -
+#pragma mark - Public Methods
 
 - (void)sendLocalNotificationForResponse:(MCLResponse *)response
 {
+    MCLNotificationHistory *notificationHistory = [MCLNotificationHistory sharedNotificationHistory];
+    if ([notificationHistory responseWasAlreadyPresented:response]) {
+        return;
+    }
+
     UILocalNotification *notification = [[UILocalNotification alloc] init];
-    notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"Antwort von %@:\n%@", nil), response.username, response.subject];
-    notification.soundName = UILocalNotificationDefaultSoundName;
+    notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"Response from %@:\n%@", nil), response.username, response.subject];
+    notification.soundName = @"zelda1.caf";
 
     UIApplication *application = [UIApplication sharedApplication];
     [application presentLocalNotificationNow:notification];
 
-    [self.notificationHistory addResponse:response];
+    [notificationHistory addResponse:response];
 }
 
 @end

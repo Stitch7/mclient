@@ -29,6 +29,7 @@
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) NSMutableArray *boards;
 @property (strong, nonatomic) NSDictionary *images;
+@property (assign, nonatomic) Boolean validLogin;
 @property (strong, nonatomic) BBBadgeBarButtonItem *responsesButtonItem;
 
 @end
@@ -60,6 +61,7 @@
                     @6: @"boardOT.png",
                     @26: @"boardKulturbeutel.png",
                     @8: @"boardOnlineGaming.png"};
+    self.validLogin = NO;
 }
 
 - (void)initNotifications
@@ -141,6 +143,12 @@
     NSString *password = [[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding];
     NSString *username = [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
 
+    if (self.validLogin) {
+        [verifyLoginView loginStatusWithUsername:username];
+        [[MCLMessageResponsesClient sharedClient] loadDataWithCompletion:nil];
+        return;
+    }
+
     if (username.length == 0 || password.length == 0) {
         [self saveValidLoginFlagWithValue:NO];
         [verifyLoginView loginStatusNoLogin];
@@ -176,6 +184,7 @@
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:validLogin forKey:@"validLogin"];
+    self.validLogin = validLogin;
     [self.responsesButtonItem setEnabled:validLogin];
 }
 
