@@ -127,7 +127,7 @@ Register at https://www.maniac-forum.de</string>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Night Mode" id="MNY-pr-L5C">
-                                <string key="footerTitle">Night mode can be enabled automatically at sunset, and disabled automatically at sunrise. To calculate the times you get asked for permission to gather location data. Location data is only ever gathered when you open the app, never in the background.</string>
+                                <string key="footerTitle">Night mode can be enabled automatically at sunset, and disabled automatically at sunrise. To calculate the times you get asked for permission to gather location data.</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="JKJ-M4-cgD">
                                         <rect key="frame" x="0.0" y="267" width="375" height="44"/>

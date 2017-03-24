@@ -197,6 +197,7 @@
 		3020FB6A1E746D4400C7217F /* MCLNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLNotificationManager.m; sourceTree = "<group>"; };
 		3020FB6D1E78A10900C7217F /* zelda2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = zelda2.caf; sourceTree = "<group>"; };
 		3020FB6E1E78A10900C7217F /* zelda1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = zelda1.caf; sourceTree = "<group>"; };
+		3020FB731E85BF7000C7217F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Settings.strings; sourceTree = "<group>"; };
 		302F462419BF443A00DC77D8 /* copyLinkButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copyLinkButton@2x.png"; sourceTree = "<group>"; };
 		3036F5941E263E9800ABC2CE /* MCLTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLTheme.h; sourceTree = "<group>"; };
 		3036F5961E26666600ABC2CE /* MCLThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLThemeManager.h; sourceTree = "<group>"; };
@@ -286,7 +287,6 @@
 		30849D1D1E2B8C6C00626331 /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
 		30849D1E1E2B8CB500626331 /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
 		30849D211E2BABBD00626331 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
-		30849D241E2BABFC00626331 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		30849D261E2BBD4300626331 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		30849D2A1E2BBED200626331 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		3086428319D18ED10027F932 /* messageIndention@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messageIndention@2x.png"; sourceTree = "<group>"; };
@@ -1117,7 +1117,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				30849D211E2BABBD00626331 /* Base */,
-				30849D241E2BABFC00626331 /* de */,
+				3020FB731E85BF7000C7217F /* de */,
 			);
 			name = Settings.storyboard;
 			path = .;

@@ -26,8 +26,8 @@
 /* Class = "UILabel"; text = "Preview"; ObjectID = "L7R-UJ-uhd"; */
 "L7R-UJ-uhd.text" = "Vorschau";
 
-/* Class = "UITableViewSection"; footerTitle = "Night mode can be enabled automatically at sunset, and disabled automatically at sunrise. To calculate the times you get asked for permission to gather location data. Location data is only ever gathered when you open the app, never in the background."; ObjectID = "MNY-pr-L5C"; */
-"MNY-pr-L5C.footerTitle" = "Nacht-Modus kann bei Sonnenaufgang und Sonnenuntergang automatisch umgeschaltet werden. Um die Zeiten dafür zu berechnen wird dein aktueller Standort benötigt. Standortdaten werden nur gesammelt während du die App startest, niemals im Hintergrund.";
+/* Class = "UITableViewSection"; footerTitle = "Night mode can be enabled automatically at sunset, and disabled automatically at sunrise. To calculate the times you get asked for permission to gather location data."; ObjectID = "MNY-pr-L5C"; */
+"MNY-pr-L5C.footerTitle" = "Nacht-Modus kann bei Sonnenaufgang und Sonnenuntergang automatisch umgeschaltet werden. Um die Zeiten dafür zu berechnen wird dein aktueller Standort benötigt.";
 
 /* Class = "UITableViewSection"; headerTitle = "Night Mode"; ObjectID = "MNY-pr-L5C"; */
 "MNY-pr-L5C.headerTitle" = "NACHT-MODUS";
