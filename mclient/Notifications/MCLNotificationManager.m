@@ -38,19 +38,12 @@
 
 - (void)sendLocalNotificationForResponse:(MCLResponse *)response
 {
-    MCLNotificationHistory *notificationHistory = [MCLNotificationHistory sharedNotificationHistory];
-    if ([notificationHistory responseWasAlreadyPresented:response]) {
-        return;
-    }
-
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"Response from %@:\n%@", nil), response.username, response.subject];
     notification.soundName = @"zelda1.caf";
 
     UIApplication *application = [UIApplication sharedApplication];
     [application presentLocalNotificationNow:notification];
-
-    [notificationHistory addResponse:response];
 }
 
 @end

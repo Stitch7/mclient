@@ -9,8 +9,10 @@
 #import "MCLAppDelegate.h"
 #import "UIApplication+Additions.h"
 #import "MCLThemeManager.h"
-#import "MCLMessageResponsesClient.h"
 #import "MCLResponse.h"
+#import "MCLMessageResponsesClient.h"
+#import "MCLNotificationHistory.h"
+
 
 @implementation MCLAppDelegate
 
@@ -45,11 +47,17 @@
 {
     __block UIBackgroundFetchResult result = UIBackgroundFetchResultNoData;
     MCLMessageResponsesClient *messageResponsesClient = [MCLMessageResponsesClient sharedClient];
+    MCLNotificationHistory *notificationHistory = [MCLNotificationHistory sharedNotificationHistory];
     [messageResponsesClient loadDataWithCompletion:^(NSDictionary *responses, NSArray *sectionKeys, NSDictionary *sectionTitles) {
         if ([[messageResponsesClient numberOfUnreadResponses] intValue] > 0) {
             result = UIBackgroundFetchResultNewData;
             for (MCLResponse *response in [messageResponsesClient unreadResponses]) {
+                if ([notificationHistory responseWasAlreadyPresented:response]) {
+                    continue;
+                }
+
                 [self.notificationManager sendLocalNotificationForResponse:response];
+                [notificationHistory addResponse:response];
             }
         }
         completionHandler(result);

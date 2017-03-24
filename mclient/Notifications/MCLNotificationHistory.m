@@ -49,7 +49,7 @@
 
 - (void)addResponse:(MCLResponse *)response
 {
-    if ([self.pool containsObject:response]) {
+    if ([self.pool containsObject:response.messageId]) {
         return;
     }
 
