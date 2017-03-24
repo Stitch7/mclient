@@ -14,7 +14,7 @@
 
 @class MCLReadSymbolView;
 
-@interface MCLMessageListWidmannStyleTableViewCell : UITableViewCell <AVSpeechSynthesizerDelegate>
+@interface MCLMessageListWidmannStyleTableViewCell : UITableViewCell <AVSpeechSynthesizerDelegate, WKScriptMessageHandler>
 
 @property (weak) id<MCLMessageListWidmannStyleTableViewCellDelegate> delegate;
 
@@ -44,6 +44,7 @@
 - (void)markRead;
 - (void)markUnread;
 - (void)enableNotificationButton:(BOOL)enable;
+- (void)contentHeightWithCompletion:(void (^)(CGFloat height))completionHandler;
 
 @end
 
@@ -53,5 +54,6 @@
 - (void)openProfileButtonPressed;
 - (void)editButtonPressed;
 - (void)replyButtonPressed;
+- (void)contentChanged;
 
 @end

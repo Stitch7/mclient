@@ -630,22 +630,13 @@
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
-    NSString *heightCode = @"Math.max(document.body.scrollHeight,"
-                            " document.body.offsetHeight,"
-                            " document.documentElement.clientHeight,"
-                            " document.documentElement.scrollHeight,"
-                            " document.documentElement.offsetHeight);";
-    [webView evaluateJavaScript:heightCode completionHandler:^(NSString *result, NSError *error) {
-        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-        MCLMessageListWidmannStyleTableViewCell *cell =
-            (MCLMessageListWidmannStyleTableViewCell *)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
-        [cell.messageToolbar setHidden:NO];
-
-        CGFloat contentHeight = [result doubleValue];
-        cell.messageTextWebViewHeightConstraint.constant = contentHeight + 44;
-
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    MCLMessageListWidmannStyleTableViewCell *cell =
+    (MCLMessageListWidmannStyleTableViewCell *)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+    [cell.messageToolbar setHidden:NO];
+    [cell contentHeightWithCompletion:^(CGFloat height) {
+        cell.messageTextWebViewHeightConstraint.constant = height;
         [self updateTableView];
-
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }];
 }
@@ -675,6 +666,16 @@
 - (void)replyButtonPressed
 {
     [self performSegueWithIdentifier:@"ModalToComposeReply" sender:nil];
+}
+
+- (void)contentChanged
+{
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    MCLMessageListWidmannStyleTableViewCell *cell = (MCLMessageListWidmannStyleTableViewCell *)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+    [cell contentHeightWithCompletion:^(CGFloat height) {
+        cell.messageTextWebViewHeightConstraint.constant = height;
+        [self updateTableView];
+    }];
 }
 
 #pragma mark - MCLComposeMessageViewControllerDelegate

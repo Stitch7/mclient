@@ -58,6 +58,7 @@
 
     WKWebViewConfiguration *webViewConfig = [[WKWebViewConfiguration alloc] init];
     webViewConfig.suppressesIncrementalRendering = YES;
+    [webViewConfig.userContentController addScriptMessageHandler:self name:@"mclient"];
 
     WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:webViewConfig];
     webView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -216,6 +217,15 @@
     self.messageSpeakButton.image = [UIImage imageNamed:@"speakButton.png"];
 }
 
+#pragma mark - WKScriptMessageHandler
+
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+    NSDictionary *sentData = (NSDictionary *)message.body;
+    if ([sentData[@"message"] isEqualToString:@"content-changed"]) {
+        [self.delegate contentChanged];
+    }
+}
+
 #pragma mark - Actions
 
 - (void)openProfileAction:(UIBarButtonItem *)sender
@@ -333,6 +343,17 @@
 - (void)replyAction:(UIBarButtonItem *)sender
 {
     [self.delegate replyButtonPressed];
+}
+
+- (void)contentHeightWithCompletion:(void (^)(CGFloat height))completionHandler
+{
+    NSString *heightCode = @"document.getElementById('content').clientHeight";
+    [self.messageTextWebView evaluateJavaScript:heightCode completionHandler:^(NSString *result, NSError *error) {
+        if (!error) {
+            CGFloat height = (CGFloat)[result doubleValue] + 54;
+            completionHandler(height);
+        }
+    }];
 }
 
 @end

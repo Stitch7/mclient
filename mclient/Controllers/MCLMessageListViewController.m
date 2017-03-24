@@ -25,6 +25,7 @@
         fontSizeValue = 3;
     }
     NSString *fontSize = [NSString stringWithFormat:@"%ldpx", (long)(fontSizeValue + 11)];
+    NSString *buttonFontSize = [NSString stringWithFormat:@"%ldpx", (long)(fontSizeValue + 9)];
     NSString *textColor = [currentTheme isDark] ? @"#fff" : @"#000";
     NSString *linkColor = [[currentTheme tintColor] cssString];
 
@@ -39,6 +40,7 @@
             "        } else {"
             "            obj.nextSibling.style.display = 'none';"
             "        }"
+            "        window.webkit.messageHandlers.mclient.postMessage({\"message\":\"content-changed\"});"
             "    }"
             "</script>"
             "<style>"
@@ -60,14 +62,18 @@
             "    img {"
             "        max-width: 100%%;"
             "    }"
-            "    button > img {"
-            "        content:url(\"http://www.maniac-forum.de/forum/images/spoiler.png\");"
-            "        width: 17px;"
+            "    button {"
+            "        border-radius: 3px;"
+            "        color: #0a60ff;"
+            "        font-size: %@;"
+            "        padding: 3px 7px;"
+            "        border: solid #0a60ff 1px;"
+            "        text-decoration: none;"
             "    }"
             "</style>"
             "</head>"
             "<body>%@</body>"
-            "</html>", fontSize, topMargin, textColor, linkColor, html];
+            "</html>", fontSize, topMargin, textColor, linkColor, buttonFontSize, html];
 }
 
 #pragma mark - Initializers
