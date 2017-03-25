@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hWg-ib-K7d">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -126,14 +126,47 @@ Register at https://www.maniac-forum.de</string>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="NOTIFICATIONS" footerTitle="Use the systems background fetch capability to get notified about new replies to your postings." id="03w-Ml-MZu">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="hba-yb-LGv">
+                                        <rect key="frame" x="0.0" y="268" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hba-yb-LGv" id="C2k-9i-b8e">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Background Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b2P-NH-jIN">
+                                                    <rect key="frame" x="18" y="11" width="290" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tgK-YH-jt6">
+                                                    <rect key="frame" x="313" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="backgroundNotificationsEnabledSwitchValueChangedAction:" destination="ecl-kD-BtA" eventType="valueChanged" id="BDR-9O-xm9"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="tgK-YH-jt6" firstAttribute="centerY" secondItem="C2k-9i-b8e" secondAttribute="centerY" id="8I0-7p-Mwa"/>
+                                                <constraint firstItem="b2P-NH-jIN" firstAttribute="leading" secondItem="C2k-9i-b8e" secondAttribute="leadingMargin" constant="10" id="FDb-3x-sc0"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="tgK-YH-jt6" secondAttribute="trailing" constant="5" id="Iom-ln-Pqp"/>
+                                                <constraint firstItem="b2P-NH-jIN" firstAttribute="centerY" secondItem="C2k-9i-b8e" secondAttribute="centerY" id="Or5-SZ-oP1"/>
+                                                <constraint firstItem="tgK-YH-jt6" firstAttribute="leading" secondItem="b2P-NH-jIN" secondAttribute="trailing" constant="5" id="oaQ-eA-H2r"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="Night Mode" id="MNY-pr-L5C">
                                 <string key="footerTitle">Night mode can be enabled automatically at sunset, and disabled automatically at sunrise. To calculate the times you get asked for permission to gather location data.</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="JKJ-M4-cgD">
-                                        <rect key="frame" x="0.0" y="267" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="404" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JKJ-M4-cgD" id="PtB-ae-VVM">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DME-wj-tpS">
@@ -159,10 +192,10 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="yBh-ez-9eS">
-                                        <rect key="frame" x="0.0" y="311" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="448" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yBh-ez-9eS" id="m6p-iw-SvJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Switch Automatically" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQm-Bk-cad">
@@ -193,7 +226,7 @@ Register at https://www.maniac-forum.de</string>
                                 <string key="footerTitle">You can choose between two different view styles for the the thread view. Widmann style is inspired by the mobile web app and Frames is a more classical design.</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="f9O-BL-1yq">
-                                        <rect key="frame" x="0.0" y="495" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="600" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="f9O-BL-1yq" id="keN-GL-k2M">
                                             <rect key="frame" x="0.0" y="0.0" width="336" height="43"/>
@@ -214,7 +247,7 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="dah-XY-ZlQ">
-                                        <rect key="frame" x="0.0" y="539" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="644" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dah-XY-ZlQ" id="PEg-5j-Hs2">
                                             <rect key="frame" x="0.0" y="0.0" width="336" height="43"/>
@@ -239,7 +272,7 @@ Register at https://www.maniac-forum.de</string>
                             <tableViewSection id="dEF-CN-x0h">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="9FY-ow-Hyd">
-                                        <rect key="frame" x="0.0" y="655" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="760" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9FY-ow-Hyd" id="Uj9-fB-Jcg">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
@@ -272,7 +305,7 @@ Register at https://www.maniac-forum.de</string>
                             <tableViewSection id="OFC-Vq-dnO">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="XPl-DW-327" detailTextLabel="EAh-0C-O91" style="IBUITableViewCellStyleValue1" id="sd3-lJ-h8l">
-                                        <rect key="frame" x="0.0" y="719" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="824" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sd3-lJ-h8l" id="pks-My-a3W">
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
@@ -303,7 +336,7 @@ Register at https://www.maniac-forum.de</string>
                             <tableViewSection headerTitle="SHOW IMAGES" id="dxZ-Ml-7OB">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="A9x-a9-9zf">
-                                        <rect key="frame" x="0.0" y="811" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="917" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="A9x-a9-9zf" id="MO8-os-mCM">
                                             <rect key="frame" x="0.0" y="0.0" width="336" height="43"/>
@@ -324,7 +357,7 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="RRF-by-2V6">
-                                        <rect key="frame" x="0.0" y="855" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="961" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RRF-by-2V6" id="1yg-t3-vqi">
                                             <rect key="frame" x="0.0" y="0.0" width="336" height="43"/>
@@ -345,7 +378,7 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="M0z-CT-3OR">
-                                        <rect key="frame" x="0.0" y="899" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1005" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M0z-CT-3OR" id="tMp-UC-PtB">
                                             <rect key="frame" x="0.0" y="0.0" width="336" height="43"/>
@@ -370,7 +403,7 @@ Register at https://www.maniac-forum.de</string>
                             <tableViewSection headerTitle="SIGNATURE" id="tY9-Fn-E9G">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5YV-zo-Yvu">
-                                        <rect key="frame" x="0.0" y="991" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1098" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5YV-zo-Yvu" id="Xeh-yv-fMc">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
@@ -399,7 +432,7 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="72" id="fFY-7R-rKU">
-                                        <rect key="frame" x="0.0" y="1035" width="375" height="72"/>
+                                        <rect key="frame" x="0.0" y="1142" width="375" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fFY-7R-rKU" id="3ID-op-sJ9">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="71"/>
@@ -440,6 +473,7 @@ Register at https://www.maniac-forum.de</string>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="1300"/>
                     <connections>
+                        <outlet property="backgroundNotificationsEnabledSwitch" destination="tgK-YH-jt6" id="rja-eO-2mh"/>
                         <outlet property="jumpToLatestMessageSwitch" destination="6Sj-nd-z3g" id="zFj-nJ-DtK"/>
                         <outlet property="nightModeAutomaticallySwitch" destination="9HA-ik-cBI" id="kz4-MV-VZG"/>
                         <outlet property="nightModeEnabledSwitch" destination="JRO-gI-ndV" id="jZj-EJ-lVm"/>
@@ -466,17 +500,17 @@ Register at https://www.maniac-forum.de</string>
                         <viewControllerLayoutGuide type="bottom" id="SUh-ug-nR7"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="EQG-q8-GI7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qNO-z8-SCh">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rzp-ZS-YYD">
-                                <rect key="frame" x="0.0" y="64" width="375" height="35"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="35"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="P6I-aI-eCi">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="35"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Preview" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="azi-58-lEd">
@@ -500,13 +534,13 @@ Register at https://www.maniac-forum.de</string>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ndd-1c-qVh">
-                                <rect key="frame" x="0.0" y="607" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="508" width="320" height="60"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="4bM-zz-KvM">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="oH5-ZS-qht">
-                                            <rect key="frame" x="73" y="15" width="229" height="31"/>
+                                            <rect key="frame" x="73" y="15" width="174" height="31"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="ZDT-2Z-dsy"/>
                                             </constraints>
@@ -519,7 +553,7 @@ Register at https://www.maniac-forum.de</string>
                                             </constraints>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fontIncrease.png" translatesAutoresizingMaskIntoConstraints="NO" id="oUn-8n-JM1">
-                                            <rect key="frame" x="328" y="14" width="32" height="32"/>
+                                            <rect key="frame" x="273" y="14" width="32" height="32"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="32" id="Wde-U8-MEK"/>
                                                 <constraint firstAttribute="width" constant="32" id="XGx-nR-ned"/>

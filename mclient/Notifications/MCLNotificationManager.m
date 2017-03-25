@@ -27,6 +27,18 @@
 
 - (void)initialize
 {
+    if (![self backgroundNotificationsEnabled]) {
+        [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
+        return;
+    }
+
+    [self registerBackgroundNotifications];
+}
+
+#pragma mark - Public Methods
+
+- (void)registerBackgroundNotifications
+{
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
 
     UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
@@ -34,13 +46,24 @@
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 }
 
-#pragma mark - Public Methods
+- (BOOL)backgroundNotificationsRegistered
+{
+    UIUserNotificationSettings *userNotificationSettings = [UIApplication sharedApplication].currentUserNotificationSettings;
+    return userNotificationSettings.types != UIUserNotificationTypeNone;
+}
+
+- (BOOL)backgroundNotificationsEnabled
+{
+    BOOL backgroundNotificationsEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"backgroundNotifications"];
+    return backgroundNotificationsEnabled ? backgroundNotificationsEnabled : NO;
+}
 
 - (void)sendLocalNotificationForResponse:(MCLResponse *)response
 {
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"Response from %@:\n%@", nil), response.username, response.subject];
     notification.soundName = @"zelda1.caf";
+    
 
     UIApplication *application = [UIApplication sharedApplication];
     [application presentLocalNotificationNow:notification];

@@ -11,6 +11,7 @@
 #import "MCLAppDelegate.h"
 #import "KeychainItemWrapper.h"
 #import "MCLMServiceConnector.h"
+#import "MCLNotificationManager.h"
 #import "MCLThemeManager.h"
 #import "MCLDefaultTheme.h"
 #import "MCLNightTheme.h"
@@ -33,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *settingsLoginDataStatusSpinner;
 @property (weak, nonatomic) IBOutlet UILabel *settingsLoginDataStatusLabel;
 @property (weak, nonatomic) IBOutlet UITableViewCell *settingsLoginDataStatusTableViewCell;
+@property (weak, nonatomic) IBOutlet UISwitch *backgroundNotificationsEnabledSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *settingsSignatureEnabledSwitch;
 @property (weak, nonatomic) IBOutlet MCLTextView *settingsSignatureTextView;
 @property (weak, nonatomic) IBOutlet UISwitch *jumpToLatestMessageSwitch;
@@ -43,9 +45,9 @@
 
 @implementation MCLSettingsTableViewController
 
-#define THREADVIEW_SECTION 2;
-#define FONTSIZE_SECTION 4;
-#define IMAGES_SECTION 5;
+#define THREADVIEW_SECTION 3;
+#define FONTSIZE_SECTION 5;
+#define IMAGES_SECTION 6;
 
 -(void)awakeFromNib
 {
@@ -61,6 +63,7 @@
 
     [self configureDismissKeyboardEvent];
     [self configureLoginSection];
+    [self configureNotificationsSection];
     [self configureSignatureSection];
     [self configureThreadSection];
     [self configureNightModeSection];
@@ -74,14 +77,34 @@
     [self.delegate settingsTableViewControllerDidFinish:self loginDataChanged:self.loginDataChanged];
 }
 
--(void)configureDismissKeyboardEvent
+- (void)configureDismissKeyboardEvent
 {
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     tap.cancelsTouchesInView = NO;
     [self.tableView addGestureRecognizer:tap];
 }
 
--(void)configureNightModeSection
+- (void)configureNotificationsSection
+{
+    BOOL backgroundNotificationsEnabled = [[MCLNotificationManager sharedNotificationManager] backgroundNotificationsEnabled];
+    self.backgroundNotificationsEnabledSwitch.on = backgroundNotificationsEnabled;
+    [self setbackgroundNotificationsEnabledSwitchEnabled:backgroundNotificationsEnabled];
+}
+
+- (void)setbackgroundNotificationsEnabledSwitchEnabled:(BOOL)enabled
+{
+    BOOL isRegistered = [[MCLNotificationManager sharedNotificationManager] backgroundNotificationsRegistered];
+    if (enabled || isRegistered) {
+        self.backgroundNotificationsEnabledSwitch.enabled = YES;
+        self.backgroundNotificationsEnabledSwitch.alpha = 1.0f;
+    }
+    else {
+        self.backgroundNotificationsEnabledSwitch.enabled = NO;
+        self.backgroundNotificationsEnabledSwitch.alpha = 0.6f;
+    }
+}
+
+- (void)configureNightModeSection
 {
     BOOL nightModeEnabled = [self.userDefaults boolForKey:@"nightModeEnabled"];
     BOOL nightModeAutomatically = [self.userDefaults boolForKey:@"nightModeAutomatically"];
@@ -100,12 +123,12 @@
     }
 }
 
--(void)configureImagesSection
+- (void)configureImagesSection
 {
     self.showImages = [self.userDefaults objectForKey:@"showImages"] ?: @(kMCLSettingsShowImagesAlways);
 }
 
--(void)configureThreadSection
+- (void)configureThreadSection
 {
     self.threadView = [self.userDefaults objectForKey:@"threadView"] ?: @(kMCLSettingsThreadViewWidmann);
     self.jumpToLatestMessageSwitch.on = [self.userDefaults boolForKey:@"jumpToLatestPost"];
@@ -173,9 +196,11 @@
                     } else {
                         self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Error: Could not connect to server", nil);
                     }
+                    [self setbackgroundNotificationsEnabledSwitchEnabled:NO];
                 } else {
                     self.settingsLoginDataStatusLabel.textColor = [theme successTextColor];
                     self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Login data is valid", nil);
+                    [self setbackgroundNotificationsEnabledSwitchEnabled:YES];
                 }
             });
         });
@@ -186,7 +211,7 @@
     }
 }
 
--(void)configureSignatureSection
+- (void)configureSignatureSection
 {
     if ([self.userDefaults objectForKey:@"signatureEnabled"] == nil) {
         self.settingsSignatureEnabledSwitch.on = YES;
@@ -199,7 +224,7 @@
     self.settingsSignatureTextView.text = [self.userDefaults objectForKey:@"signature"] ?: kSettingsSignatureTextDefault;
 }
 
--(void)configureAboutLabel
+- (void)configureAboutLabel
 {
     UILabel *aboutLabel = [[UILabel alloc] init];
     aboutLabel.numberOfLines = 2;
@@ -316,13 +341,13 @@
     [header.textLabel setTextColor:[self.themeManager.currentTheme tableViewHeaderTextColor]];
 }
 
--(void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section
 {
     UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
     [footer.textLabel setTextColor:[self.themeManager.currentTheme tableViewFooterTextColor]];
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int threadViewSection = THREADVIEW_SECTION;
     if (indexPath.section == threadViewSection) {
@@ -420,6 +445,13 @@
         self.loginDataChanged = YES;
     }
     self.lastPasswordTextFieldValue = sender.text;
+}
+
+- (IBAction)backgroundNotificationsEnabledSwitchValueChangedAction:(UISwitch *)sender {
+    [self.userDefaults setBool:sender.on forKey:@"backgroundNotifications"];
+    if (sender.on) {
+        [[MCLNotificationManager sharedNotificationManager] registerBackgroundNotifications];
+    }
 }
 
 - (IBAction)settingsSignatureEnabledSwitchValueChangedAction:(UISwitch *)sender

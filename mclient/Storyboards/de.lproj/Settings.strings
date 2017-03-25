@@ -61,3 +61,7 @@
 
 /* Class = "UILabel"; text = "Switch Automatically"; ObjectID = "xQm-Bk-cad"; */
 "xQm-Bk-cad.text" = "Automatisch umschalten";
+
+"03w-Ml-MZu.headerTitle" = "BENACHRICHTIGUNGEN";
+"b2P-NH-jIN.text" = "Hintergrundbenachrichtigungen";
+"03w-Ml-MZu.footerTitle" = "Nutze die Hintergrundaktualisierungs Funktion des Systems um dich über neue Antworten zu deinen Postings benachrichtigen zu lassen.";

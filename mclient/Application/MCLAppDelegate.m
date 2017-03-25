@@ -49,7 +49,7 @@
     MCLMessageResponsesClient *messageResponsesClient = [MCLMessageResponsesClient sharedClient];
     MCLNotificationHistory *notificationHistory = [MCLNotificationHistory sharedNotificationHistory];
     [messageResponsesClient loadDataWithCompletion:^(NSDictionary *responses, NSArray *sectionKeys, NSDictionary *sectionTitles) {
-        if ([[messageResponsesClient numberOfUnreadResponses] intValue] > 0) {
+        if ([messageResponsesClient numberOfUnreadResponses] > 0) {
             result = UIBackgroundFetchResultNewData;
             for (MCLResponse *response in [messageResponsesClient unreadResponses]) {
                 if ([notificationHistory responseWasAlreadyPresented:response]) {

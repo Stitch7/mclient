@@ -218,7 +218,7 @@
     self.responsesButtonItem = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:responsesButton];
     self.responsesButtonItem.badgeOriginX = 0.0f;
     self.responsesButtonItem.badgeOriginY = 8.0f;
-    self.responsesButtonItem.badgeValue = @"0";
+    self.responsesButtonItem.badgeValue = [NSString stringWithFormat: @"%ld", (long)[UIApplication sharedApplication].applicationIconBadgeNumber];
     self.responsesButtonItem.shouldHideBadgeAtZero = YES;
     self.responsesButtonItem.badgePadding = 5;
 }

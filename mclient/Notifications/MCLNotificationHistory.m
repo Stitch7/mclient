@@ -7,7 +7,6 @@
 //
 
 #import "MCLNotificationHistory.h"
-#import "UIApplication+Additions.h"
 #import "MCLResponse.h"
 
 #define kUserDefaultsPoolKey @"MCLNotificationHistoryPool"
@@ -55,7 +54,6 @@
 
     [self.pool addObject:response.messageId];
     [self.userDefaults setObject:self.pool forKey:kUserDefaultsPoolKey];
-    [[UIApplication sharedApplication] incrementApplicationIconBadgeNumber];
 }
 
 - (void)removeResponse:(MCLResponse *)response
@@ -68,7 +66,6 @@
     if ([self.pool containsObject:messageId]) {
         [self.pool removeObject:messageId];
         [self.userDefaults setObject:self.pool forKey:kUserDefaultsPoolKey];
-        [[UIApplication sharedApplication] decrementApplicationIconBadgeNumber];
     }
 }
 

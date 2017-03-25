@@ -12,6 +12,9 @@
 @interface MCLNotificationManager : NSObject
 
 + (id)sharedNotificationManager;
+- (void)registerBackgroundNotifications;
+- (BOOL)backgroundNotificationsRegistered;
+- (BOOL)backgroundNotificationsEnabled;
 - (void)sendLocalNotificationForResponse:(MCLResponse *)response;
 
 @end

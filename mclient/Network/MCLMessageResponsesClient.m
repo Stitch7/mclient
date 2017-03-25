@@ -126,10 +126,12 @@ NSString * const MCLMessageResponsesClientFoundUnreadResponsesNotification = @"M
         }
 
         [self fetchedData:data];
-            dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSInteger numberOfUnreadResponses = [self numberOfUnreadResponses];
+            [UIApplication sharedApplication].applicationIconBadgeNumber = numberOfUnreadResponses;
             NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                      self.responses, @"responses",
-                                     [self numberOfUnreadResponses], @"numberOfUnreadResponses", nil];
+                                     [NSNumber numberWithInteger:numberOfUnreadResponses], @"numberOfUnreadResponses", nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:MCLMessageResponsesClientFoundUnreadResponsesNotification
                                                                 object:self
                                                               userInfo:userInfo];
@@ -155,9 +157,9 @@ NSString * const MCLMessageResponsesClientFoundUnreadResponsesNotification = @"M
     return unreadResponses;
 }
 
-- (NSNumber *)numberOfUnreadResponses
+- (NSInteger)numberOfUnreadResponses
 {
-    return [NSNumber numberWithUnsignedInteger:[[self unreadResponses] count]];
+    return [[self unreadResponses] count];
 }
 
 @end
