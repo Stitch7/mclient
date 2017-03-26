@@ -48,16 +48,18 @@
     __block UIBackgroundFetchResult result = UIBackgroundFetchResultNoData;
     MCLMessageResponsesClient *messageResponsesClient = [MCLMessageResponsesClient sharedClient];
     MCLNotificationHistory *notificationHistory = [MCLNotificationHistory sharedNotificationHistory];
-    [messageResponsesClient loadDataWithCompletion:^(NSDictionary *responses, NSArray *sectionKeys, NSDictionary *sectionTitles) {
-        if ([messageResponsesClient numberOfUnreadResponses] > 0) {
-            result = UIBackgroundFetchResultNewData;
-            for (MCLResponse *response in [messageResponsesClient unreadResponses]) {
-                if ([notificationHistory responseWasAlreadyPresented:response]) {
-                    continue;
-                }
+    [messageResponsesClient loadDataWithCompletion:^(NSError *error, NSDictionary *responses, NSArray *sectionKeys, NSDictionary *sectionTitles) {
+        if (!error) {
+            result = UIBackgroundFetchResultNewData; // We cheat a little to be called as often as possible
+            if ([messageResponsesClient numberOfUnreadResponses] > 0) {
+                for (MCLResponse *response in [messageResponsesClient unreadResponses]) {
+                    if ([notificationHistory responseWasAlreadyPresented:response]) {
+                        continue;
+                    }
 
-                [self.notificationManager sendLocalNotificationForResponse:response];
-                [notificationHistory addResponse:response];
+                    [self.notificationManager sendLocalNotificationForResponse:response];
+                    [notificationHistory addResponse:response];
+                }
             }
         }
         completionHandler(result);

@@ -111,17 +111,20 @@ NSString * const MCLMessageResponsesClientFoundUnreadResponsesNotification = @"M
 
 #pragma mark - Public Methods -
 
-- (void)loadDataWithCompletion:(void (^)(NSDictionary *responses, NSArray *sectionKeys, NSDictionary *sectionTitles))completion
+- (void)loadDataWithCompletion:(void (^)(NSError *error, NSDictionary *responses, NSArray *sectionKeys, NSDictionary *sectionTitles))completion
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *mServiceError;
         NSDictionary *data = [[MCLMServiceConnector sharedConnector] responsesForUsername:[self usernameFromKeychain]
                                                                                     error:&mServiceError];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
         if (mServiceError) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(mServiceError, nil, nil, nil);
+            });
             return;
         }
 
@@ -137,7 +140,7 @@ NSString * const MCLMessageResponsesClientFoundUnreadResponsesNotification = @"M
                                                               userInfo:userInfo];
 
             if (completion) {
-                completion(self.responses, self.sectionKeys, self.sectionTitles);
+                completion(nil, self.responses, self.sectionKeys, self.sectionTitles);
             }
         });
     });
