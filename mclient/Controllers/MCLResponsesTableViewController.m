@@ -173,7 +173,11 @@
 - (void)reloadData
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [self.messageResponsesClient loadDataWithCompletion:^(NSDictionary *responses, NSArray *sectionKeys, NSDictionary *sectionTitles) {
+    [self.messageResponsesClient loadDataWithCompletion:^(NSError *error, NSDictionary *responses, NSArray *sectionKeys, NSDictionary *sectionTitles) {
+        if (error) {
+            return;
+        }
+
         self.responses = responses;
         self.sectionKeys = sectionKeys;
         self.sectionTitles = sectionTitles;

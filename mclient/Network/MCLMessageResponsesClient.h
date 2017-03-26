@@ -17,7 +17,7 @@ extern NSString * const MCLMessageResponsesClientFoundUnreadResponsesNotificatio
 @property (nonatomic, copy) NSMutableDictionary *sectionTitles;
 
 + (id)sharedClient;
-- (void)loadDataWithCompletion:(void (^)(NSDictionary *responses, NSArray *sectionKeys, NSDictionary *sectionTitles))completion;
+- (void)loadDataWithCompletion:(void (^)(NSError *error, NSDictionary *responses, NSArray *sectionKeys, NSDictionary *sectionTitles))completion;
 - (NSArray *)unreadResponses;
 - (NSInteger)numberOfUnreadResponses;
 

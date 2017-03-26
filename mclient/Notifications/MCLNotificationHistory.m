@@ -66,6 +66,7 @@
     if ([self.pool containsObject:messageId]) {
         [self.pool removeObject:messageId];
         [self.userDefaults setObject:self.pool forKey:kUserDefaultsPoolKey];
+        [self.userDefaults synchronize];
     }
 }
 
