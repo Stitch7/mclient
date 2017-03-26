@@ -312,6 +312,8 @@
 
     MCLThreadTableViewCell *cell =
         (MCLThreadTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    cell.index = indexPath.row;
+
     cell.separatorInset = UIEdgeInsetsZero;
 
     UIView *backgroundView = [[UIView alloc] initWithFrame:cell.frame];
@@ -364,6 +366,12 @@
     cell.badgeLabel.userInteractionEnabled = NO;
 
     [cell updateBadgeWithThread:thread andTheme:self.currentTheme];
+
+    // MGSWipe thingi
+    cell.delegate = self;
+    cell.leftSwipeSettings.transition = MGSwipeTransitionBorder;
+    cell.leftButtons = @[[MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"favoriteThreadCell"] backgroundColor:[self.currentTheme tintColor]],
+                         [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"hideThreadCell"] backgroundColor:[self.currentTheme modTextColor]]];
 
     return cell;
 }
@@ -462,6 +470,42 @@
     button.backgroundColor = [self.currentTheme tintColor];
 
     return @[button];
+}
+
+#pragma mark - MCLComposeMessageViewControllerDelegate
+
+- (BOOL)swipeTableCell:(nonnull MGSwipeTableCell*)cell tappedButtonAtIndex:(NSInteger)index direction:(MGSwipeDirection)direction fromExpansion:(BOOL)fromExpansion
+{
+    MCLThreadTableViewCell *threadCell = (MCLThreadTableViewCell *)cell;
+
+    switch (index) {
+        case 0:
+            NSLog(@"LIKE THIS THREAD DEN! i LIKE THIS THREAD -: %li", (long)index);
+            break;
+
+        case 1:
+            NSLog(@"FICK THIS THREAD %li!!!11elf", (long)index);
+
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Thread ausblenden?" message:@"Willst du diesen Thread wirklich ins Killfile verschieben?" preferredStyle:UIAlertControllerStyleAlert];
+
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Abbrechen" style:UIAlertActionStyleCancel handler:nil];
+            [alertController addAction:cancelAction];
+
+            UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Thread ausblenden" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                [self.threads removeObjectAtIndex:threadCell.index];
+                [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:threadCell.index inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
+            }];
+            [alertController addAction:confirmAction];
+
+
+            [self presentViewController:alertController animated:YES completion:^{
+
+            }];
+
+            break;
+    }
+
+    return NO;
 }
 
 #pragma mark - MCLComposeMessageViewControllerDelegate

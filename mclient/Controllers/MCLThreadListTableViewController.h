@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MGSwipeTableCell.h"
 #import "MCLComposeMessageViewController.h"
 #import "MCLMessageListViewController.h"
 
 @class MCLBoard;
 
-@interface MCLThreadListTableViewController : UITableViewController <MCLComposeMessageViewControllerDelegate, MCLMessageListDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
+@interface MCLThreadListTableViewController : UITableViewController <MGSwipeTableCellDelegate, MCLComposeMessageViewControllerDelegate, MCLMessageListDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
 @property (strong, nonatomic) MCLBoard *board;
 

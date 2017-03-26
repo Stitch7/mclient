@@ -7,14 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MGSwipeTableCell.h"
+
 
 @class MCLReadSymbolView;
 @class MCLBadgeView;
 @class MCLThread;
 @protocol MCLTheme;
 
-@interface MCLThreadTableViewCell : UITableViewCell
+@interface MCLThreadTableViewCell : MGSwipeTableCell
 
+@property (assign, nonatomic) NSInteger index;
 @property (strong, nonatomic) MCLThread *thread;
 @property (weak, nonatomic) IBOutlet MCLReadSymbolView *readSymbolView;
 @property (weak, nonatomic) IBOutlet UIImageView *threadIsStickyImageView;

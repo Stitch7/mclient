@@ -190,6 +190,8 @@
 
 - (void)configureNavigationBar
 {
+    self.title = @"m!client";
+
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"settingsButton.png"]
                                                                        style:UIBarButtonItemStylePlain
                                                                       target:self
@@ -282,6 +284,12 @@
 }
 
 #pragma mark - UITableViewDataSource
+
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+//    if (section > 0) { return nil; }
+//    return @"BOARDS";
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
