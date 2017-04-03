@@ -8,6 +8,7 @@
 
 #import "MCLNotificationManager.h"
 #import "MCLNotificationHistory.h"
+#import "MCLMessageResponsesClient.h"
 
 @implementation MCLNotificationManager
 
@@ -63,10 +64,29 @@
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"Response from %@:\n%@", nil), response.username, response.subject];
     notification.soundName = @"zelda1.caf";
-    
 
-    UIApplication *application = [UIApplication sharedApplication];
-    [application presentLocalNotificationNow:notification];
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+}
+
+- (void)notificateAboutNewResponsesWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    MCLMessageResponsesClient *messageResponsesClient = [MCLMessageResponsesClient sharedClient];
+    MCLNotificationHistory *notificationHistory = [MCLNotificationHistory sharedNotificationHistory];
+
+    [messageResponsesClient loadUnreadResponsesWithCompletion:^(NSError *error, NSArray *unreadResponses) {
+        if (!error && [unreadResponses count] > 0) {
+            for (MCLResponse *response in unreadResponses) {
+                if ([notificationHistory responseWasAlreadyPresented:response]) {
+                    continue;
+                }
+
+                [self sendLocalNotificationForResponse:response];
+                [notificationHistory addResponse:response];
+            }
+            [notificationHistory persist];
+        }
+        // We cheat a little to be called as often as possible
+        completionHandler(UIBackgroundFetchResultNewData);
+    }];
 }
 
 @end

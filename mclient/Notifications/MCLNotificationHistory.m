@@ -53,7 +53,6 @@
     }
 
     [self.pool addObject:response.messageId];
-    [self.userDefaults setObject:self.pool forKey:kUserDefaultsPoolKey];
 }
 
 - (void)removeResponse:(MCLResponse *)response
@@ -65,15 +64,19 @@
 {
     if ([self.pool containsObject:messageId]) {
         [self.pool removeObject:messageId];
-        [self.userDefaults setObject:self.pool forKey:kUserDefaultsPoolKey];
-        [self.userDefaults synchronize];
+        [self persist];
     }
 }
 
 - (BOOL)responseWasAlreadyPresented:(MCLResponse *)response
 {
-    return NO;
     return [self.pool containsObject:response.messageId];
+}
+
+- (void)persist
+{
+    [self.userDefaults setObject:[self.pool copy] forKey:kUserDefaultsPoolKey];
+    [self.userDefaults synchronize];
 }
 
 @end

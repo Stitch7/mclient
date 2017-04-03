@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>M!client Beta27032017a</string>
+	<string>M!client Beta03042017a</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIcons</key>
@@ -26,10 +26,14 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<string>3507</string>
 =======
 	<string>3494</string>
 >>>>>>> 58f9626... Fix notification history
+=======
+	<string>3540</string>
+>>>>>>> a34c98d... Improve Notifications
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

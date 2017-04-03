@@ -117,6 +117,7 @@
 		3093B79C19E2FA6C00F8FD5F /* profileButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 3093B79B19E2FA6C00F8FD5F /* profileButton.png */; };
 		30A1BFAD19B4A8D4002439FE /* MCLSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */; };
 		30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */; };
+		30B0B97B1E8AEED400925D0D /* MCLResponseContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B0B97A1E8AEED400925D0D /* MCLResponseContainer.m */; };
 		30D82AEF1E2A40B400898963 /* fontIncrease@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30D82AED1E2A40B400898963 /* fontIncrease@2x.png */; };
 		30D82AF01E2A40B400898963 /* fontDecrease@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30D82AEE1E2A40B400898963 /* fontDecrease@2x.png */; };
 		30D82AF31E2A42F700898963 /* MCLSettingsFontSizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D82AF21E2A42F700898963 /* MCLSettingsFontSizeViewController.m */; };
@@ -321,6 +322,8 @@
 		30A1BFAC19B4A8D4002439FE /* MCLSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsTableViewController.m; sourceTree = "<group>"; };
 		30A9D5E519D4CFFF00070268 /* MCLComposeMessagePreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessagePreviewViewController.h; sourceTree = "<group>"; };
 		30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLComposeMessagePreviewViewController.m; sourceTree = "<group>"; };
+		30B0B9791E8AEED400925D0D /* MCLResponseContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLResponseContainer.h; sourceTree = "<group>"; };
+		30B0B97A1E8AEED400925D0D /* MCLResponseContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLResponseContainer.m; sourceTree = "<group>"; };
 		30D82AED1E2A40B400898963 /* fontIncrease@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fontIncrease@2x.png"; sourceTree = "<group>"; };
 		30D82AEE1E2A40B400898963 /* fontDecrease@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fontDecrease@2x.png"; sourceTree = "<group>"; };
 		30D82AF11E2A42F700898963 /* MCLSettingsFontSizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLSettingsFontSizeViewController.h; sourceTree = "<group>"; };
@@ -613,6 +616,8 @@
 				305DD86219AB380C006514BD /* MCLMessage.m */,
 				306386751E643F1D004822ED /* MCLResponse.h */,
 				306386761E643F1D004822ED /* MCLResponse.m */,
+				30B0B9791E8AEED400925D0D /* MCLResponseContainer.h */,
+				30B0B97A1E8AEED400925D0D /* MCLResponseContainer.m */,
 				305DD85E19AB3031006514BD /* MCLThread.h */,
 				305DD85F19AB3031006514BD /* MCLThread.m */,
 			);
@@ -1015,6 +1020,7 @@
 				301FD9A619C411D400E36A5B /* MCLErrorView.m in Sources */,
 				30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */,
 				3020FB651E74582200C7217F /* UIApplication+Additions.m in Sources */,
+				30B0B97B1E8AEED400925D0D /* MCLResponseContainer.m in Sources */,
 				306386741E6098D9004822ED /* MCLResponsesTableViewController.m in Sources */,
 				308EC3DD19CC7BA600A0869F /* MCLDetailView.m in Sources */,
 				30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */,
@@ -1228,7 +1234,11 @@
 				GCC_PREFIX_HEADER = "mclient/Supporting Files/mclient-Prefix.pch";
 				INFOPLIST_FILE = "mclient/Supporting Files/mclient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-beta25032017c";
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-beta03042017a";
+>>>>>>> a34c98d... Improve Notifications
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1249,7 +1259,11 @@
 				GCC_PREFIX_HEADER = "mclient/Supporting Files/mclient-Prefix.pch";
 				INFOPLIST_FILE = "mclient/Supporting Files/mclient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-beta25032017c";
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-beta03042017a";
+>>>>>>> a34c98d... Improve Notifications
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

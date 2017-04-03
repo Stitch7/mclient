@@ -10,7 +10,6 @@
 
 #import "KeychainItemWrapper.h"
 #import "MCLMServiceConnector.h"
-
 #import "MCLResponse.h"
 
 NSString * const MCLMessageResponsesClientFoundUnreadResponsesNotification = @"MCLMessageResponsesClientFoundUnreadResponsesNotification";
@@ -40,7 +39,7 @@ NSString * const MCLMessageResponsesClientFoundUnreadResponsesNotification = @"M
     return [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)];
 }
 
-- (void)fetchedData:(NSDictionary *)data
+- (MCLResponseContainer *)fetchedData:(NSDictionary *)data
 {
     NSMutableArray *sectionKeys = [NSMutableArray array];
     NSMutableDictionary *sectionTitles = [NSMutableDictionary dictionary];
@@ -104,14 +103,51 @@ NSString * const MCLMessageResponsesClientFoundUnreadResponsesNotification = @"M
     NSArray *sortedSections = [sectionKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     sectionKeys = [NSMutableArray arrayWithArray:[[sortedSections reverseObjectEnumerator] allObjects]];
 
-    self.responses = responses;
-    self.sectionKeys = sectionKeys;
-    self.sectionTitles = sectionTitles;
+    return [[MCLResponseContainer alloc] initWithResponses:responses
+                                               sectionKeys:sectionKeys
+                                                 andTitles:sectionTitles];
 }
 
 #pragma mark - Public Methods -
 
-- (void)loadDataWithCompletion:(void (^)(NSError *error, NSDictionary *responses, NSArray *sectionKeys, NSDictionary *sectionTitles))completion
+- (void)loadUnreadResponsesWithCompletion:(void (^)(NSError *error, NSArray *unreadResponses))completion
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        NSError *mServiceError;
+        NSDictionary *data = [[MCLMServiceConnector sharedConnector] responsesForUsername:[self usernameFromKeychain]
+                                                                                    error:&mServiceError];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
+        if (mServiceError) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) {
+                    completion(mServiceError, nil);
+                }
+            });
+            return;
+        }
+
+        MCLResponseContainer *responseContainer = [self fetchedData:data];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSInteger numberOfUnreadResponses = [responseContainer numberOfUnreadResponses];
+            [UIApplication sharedApplication].applicationIconBadgeNumber = numberOfUnreadResponses;
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      responseContainer.responses, @"responses",
+                                      [NSNumber numberWithInteger:numberOfUnreadResponses], @"numberOfUnreadResponses", nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:MCLMessageResponsesClientFoundUnreadResponsesNotification
+                                                                object:self
+                                                              userInfo:userInfo];
+
+            if (completion) {
+                completion(nil, [responseContainer unreadResponses]);
+            }
+        });
+    });
+}
+
+- (void)loadResponsesWithCompletion:(void (^)(NSError *error, MCLResponseContainer *responseContainer))completion
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
@@ -123,46 +159,29 @@ NSString * const MCLMessageResponsesClientFoundUnreadResponsesNotification = @"M
 
         if (mServiceError) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                completion(mServiceError, nil, nil, nil);
+                if (completion) {
+                    completion(mServiceError, nil);
+                }
             });
             return;
         }
 
-        [self fetchedData:data];
+        MCLResponseContainer *responseContainer = [self fetchedData:data];
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSInteger numberOfUnreadResponses = [self numberOfUnreadResponses];
+            NSInteger numberOfUnreadResponses = [responseContainer numberOfUnreadResponses];
             [UIApplication sharedApplication].applicationIconBadgeNumber = numberOfUnreadResponses;
             NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     self.responses, @"responses",
-                                     [NSNumber numberWithInteger:numberOfUnreadResponses], @"numberOfUnreadResponses", nil];
+                                      responseContainer.responses, @"responses",
+                                      [NSNumber numberWithInteger:numberOfUnreadResponses], @"numberOfUnreadResponses", nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:MCLMessageResponsesClientFoundUnreadResponsesNotification
                                                                 object:self
                                                               userInfo:userInfo];
 
             if (completion) {
-                completion(nil, self.responses, self.sectionKeys, self.sectionTitles);
+                completion(nil, responseContainer);
             }
         });
     });
-}
-
-- (NSArray *)unreadResponses
-{
-    NSMutableArray *unreadResponses = [NSMutableArray array];
-    for (NSString *key in self.responses) {
-        for (MCLResponse *response in [self.responses objectForKey:key]) {
-            if (!response.isRead) {
-                [unreadResponses addObject:response];
-            }
-        }
-    }
-
-    return unreadResponses;
-}
-
-- (NSInteger)numberOfUnreadResponses
-{
-    return [[self unreadResponses] count];
 }
 
 @end

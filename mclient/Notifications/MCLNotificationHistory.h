@@ -18,5 +18,6 @@
 - (void)removeResponse:(MCLResponse *)response;
 - (void)removeMessageId:(NSNumber *)messageId;
 - (BOOL)responseWasAlreadyPresented:(MCLResponse *)response;
+- (void)persist;
 
 @end
