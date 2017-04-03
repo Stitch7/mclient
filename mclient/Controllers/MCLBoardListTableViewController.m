@@ -145,7 +145,7 @@
 
     if (self.validLogin) {
         [verifyLoginView loginStatusWithUsername:username];
-        [[MCLMessageResponsesClient sharedClient] loadDataWithCompletion:nil];
+        [[MCLMessageResponsesClient sharedClient] loadResponsesWithCompletion:nil];
         return;
     }
 
@@ -173,7 +173,7 @@
                     [verifyLoginView loginStatusWithUsername:username];
                     [self saveValidLoginFlagWithValue:YES];
 
-                    [[MCLMessageResponsesClient sharedClient] loadDataWithCompletion:nil];
+                    [[MCLMessageResponsesClient sharedClient] loadResponsesWithCompletion:nil];
                 }
             });
         });

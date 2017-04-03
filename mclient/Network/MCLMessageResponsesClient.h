@@ -7,18 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MCLResponseContainer.h"
 
 extern NSString * const MCLMessageResponsesClientFoundUnreadResponsesNotification;
 
 @interface MCLMessageResponsesClient : NSObject
 
-@property (nonatomic, copy) NSDictionary *responses;
-@property (nonatomic, copy) NSMutableArray *sectionKeys;
-@property (nonatomic, copy) NSMutableDictionary *sectionTitles;
-
 + (id)sharedClient;
-- (void)loadDataWithCompletion:(void (^)(NSError *error, NSDictionary *responses, NSArray *sectionKeys, NSDictionary *sectionTitles))completion;
-- (NSArray *)unreadResponses;
-- (NSInteger)numberOfUnreadResponses;
+- (void)loadResponsesWithCompletion:(void (^)(NSError *error, MCLResponseContainer *responseContainer))completion;
+- (void)loadUnreadResponsesWithCompletion:(void (^)(NSError *error, NSArray *unreadResponses))completion;
 
 @end

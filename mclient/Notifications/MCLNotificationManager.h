@@ -16,5 +16,6 @@
 - (BOOL)backgroundNotificationsRegistered;
 - (BOOL)backgroundNotificationsEnabled;
 - (void)sendLocalNotificationForResponse:(MCLResponse *)response;
+- (void)notificateAboutNewResponsesWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 
 @end

@@ -31,9 +31,7 @@
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) MCLMessageResponsesClient *messageResponsesClient;
-@property (strong, nonatomic) NSDictionary *responses;
-@property (strong, nonatomic) NSArray *sectionKeys;
-@property (strong, nonatomic) NSDictionary *sectionTitles;
+@property (strong, nonatomic) MCLResponseContainer *responseContainer;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
@@ -173,14 +171,12 @@
 - (void)reloadData
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [self.messageResponsesClient loadDataWithCompletion:^(NSError *error, NSDictionary *responses, NSArray *sectionKeys, NSDictionary *sectionTitles) {
+    [self.messageResponsesClient loadResponsesWithCompletion:^(NSError *error, MCLResponseContainer *responseContainer) {
         if (error) {
             return;
         }
 
-        self.responses = responses;
-        self.sectionKeys = sectionKeys;
-        self.sectionTitles = sectionTitles;
+        self.responseContainer = responseContainer;
 
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [self removeOverlayViews];
@@ -197,13 +193,12 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [self.sectionKeys count];
+    return [self.responseContainer.sectionKeys count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray *messagesInSection = [self.responses objectForKey:[self.sectionKeys objectAtIndex:section]];
-    return [messagesInSection count];
+    return [[self.responseContainer messagesInSection:section] count];
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -211,7 +206,7 @@
     CGFloat x = 10.0f;
     CGFloat height = 25.0f;
     CGFloat width = self.tableView.frame.size.width - x;
-    NSDictionary *titleDic = [self.sectionTitles objectForKey:[self.sectionKeys objectAtIndex:section]];
+    NSDictionary *titleDic = [self.responseContainer.sectionTitles objectForKey:[self.responseContainer.sectionKeys objectAtIndex:section]];
 
     UILabel *dateLabel = [[UILabel alloc] init];
     dateLabel.frame = CGRectMake(x, 5, width, height);
@@ -235,8 +230,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *messagesInSection = [self.responses objectForKey:[self.sectionKeys objectAtIndex:indexPath.section]];
-    MCLResponse *response = messagesInSection[indexPath.row];
+    MCLResponse *response = [self.responseContainer responseForIndexPath:indexPath];
 
     static NSString *cellIdentifier = @"ResponseCell";
     MCLMessageListFrameStyleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
@@ -292,8 +286,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *messagesInSection = [self.responses objectForKey:[self.sectionKeys objectAtIndex:indexPath.section]];
-    MCLResponse *response = messagesInSection[indexPath.row];
+    MCLResponse *response = [self.responseContainer responseForIndexPath:indexPath];
     MCLMessageListFrameStyleTableViewCell *cell = (MCLMessageListFrameStyleTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     [cell markRead];
     response.tempRead = YES;
@@ -330,9 +323,7 @@
         [segue.identifier isEqualToString:@"PushToMessageListFrameStyle"]
     ) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-
-        NSArray *messagesInSection = [self.responses objectForKey:[self.sectionKeys objectAtIndex:indexPath.section]];
-        MCLResponse *response = messagesInSection[indexPath.row];
+        MCLResponse *response = [self.responseContainer responseForIndexPath:indexPath];
         MCLBoard *board = [MCLBoard boardWithId:response.boardId name:nil];
         MCLThread *thread = [MCLThread threadWithId:response.threadId
                                             subject:response.threadSubject];
