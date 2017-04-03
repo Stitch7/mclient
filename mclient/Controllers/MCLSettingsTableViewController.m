@@ -431,11 +431,18 @@
 
 - (IBAction)settingsUsernameEditingDidEndAction:(UITextField *)sender
 {
-    if (![sender.text isEqualToString:self.lastUsernameTextFieldValue]) {
+    NSString *input = [sender.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+
+    if (![input isEqualToString:sender.text]) {
+        sender.text = input;
+    }
+
+    if (![input isEqualToString:self.lastUsernameTextFieldValue]) {
         [self testLogin];
         self.loginDataChanged = YES;
     }
-    self.lastUsernameTextFieldValue = sender.text;
+
+    self.lastUsernameTextFieldValue = input;
 }
 
 - (IBAction)settingsPasswordEditingDidEndAction:(UITextField *)sender
