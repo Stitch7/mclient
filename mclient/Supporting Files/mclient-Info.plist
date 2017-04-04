@@ -25,19 +25,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-	<string>3507</string>
-=======
-	<string>3494</string>
->>>>>>> 58f9626... Fix notification history
-=======
-	<string>3540</string>
->>>>>>> a34c98d... Improve Notifications
-=======
-	<string>3542</string>
->>>>>>> 9b79993... Decrease badge icon when unread response was read
+	<string>3552</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
