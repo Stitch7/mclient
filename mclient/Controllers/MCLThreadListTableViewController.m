@@ -134,7 +134,10 @@
     self.refreshControl = refreshControl;
 
     // Visualize loading
-    MCLLoadingView *loadingView = [[MCLLoadingView alloc] initWithFrame:self.view.frame];
+    CGRect loadingFrame = CGRectMake(0, 0,
+                                     self.navigationController.view.frame.size.width,
+                                     self.view.frame.size.height);
+    MCLLoadingView *loadingView = [[MCLLoadingView alloc] initWithFrame:loadingFrame];
     [self.tableView addSubview:loadingView];
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
