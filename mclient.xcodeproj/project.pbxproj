@@ -1235,10 +1235,14 @@
 				INFOPLIST_FILE = "mclient/Supporting Files/mclient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-beta25032017c";
 =======
 				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-beta03042017a";
 >>>>>>> a34c98d... Improve Notifications
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient;
+>>>>>>> b4ec4b5... Correct bundle identifier
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1260,10 +1264,14 @@
 				INFOPLIST_FILE = "mclient/Supporting Files/mclient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-beta25032017c";
 =======
 				PRODUCT_BUNDLE_IDENTIFIER = "re.reitz.mclient-beta03042017a";
 >>>>>>> a34c98d... Improve Notifications
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient;
+>>>>>>> b4ec4b5... Correct bundle identifier
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
