@@ -75,7 +75,7 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
 
     if (dateComponents.hour == self.sunset.hour &&
         dateComponents.minute > self.sunset.minute
-        ) {
+    ) {
         return YES;
     }
 
@@ -104,7 +104,7 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
     if (dateComponents.hour == self.sunrise.hour &&
         dateComponents.minute == self.sunrise.minute &&
         dateComponents.second <= self.sunrise.second
-        ) {
+    ) {
         return YES;
     }
     
