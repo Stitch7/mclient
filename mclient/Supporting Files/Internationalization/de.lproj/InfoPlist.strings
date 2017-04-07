@@ -1,0 +1,6 @@
+/* Localized versions of Info.plist keys */
+
+NSPhotoLibraryAddUsageDescription = "Zugriff auf die Fotobibliothek ist nötig um Bilder aus Postings zu speichern.";
+NSPhotoLibraryUsageDescription = "Zugriff auf die Fotobibliothek ist nötig um Bilder in Postings hinzuzufügen.";
+NSLocationWhenInUseUsageDescription = "Standort wird benötigt um die Zeit des Sonnenaufgangs und Sonnenuntergangs für den automatischen Nachtmodus zu berechnen.";
+NSCameraUsageDescription = "Zugriff auf die Kammera ist nötig um Bilder aus der heraus für Postings zu schießen.";

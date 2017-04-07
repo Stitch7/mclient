@@ -2,8 +2,8 @@
 //  MCLNotificationHistory.m
 //  mclient
 //
-//  Created by Christopher Reitz on 11/03/2017.
-//  Copyright © 2017 Christopher Reitz. All rights reserved.
+//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  See LICENSE file in the project root for full license information.
 //
 
 #import "MCLNotificationHistory.h"
@@ -22,27 +22,20 @@
 
 @implementation MCLNotificationHistory
 
-#pragma mark - Singleton Initializer
+#pragma mark - Initializers
 
-+ (id)sharedNotificationHistory
+- (instancetype)init
 {
-    static MCLNotificationHistory *sharedNotificationHistory = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedNotificationHistory = [[self alloc] init];
+    self = [super init];
+    if (!self) return nil;
 
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSMutableArray *pool;
-        pool = [userDefaults mutableArrayValueForKey:kUserDefaultsPoolKey];
-        if (!pool) {
-            pool = [NSMutableArray array];
-        }
+    self.userDefaults = [NSUserDefaults standardUserDefaults];
+    self.pool = [self.userDefaults mutableArrayValueForKey:kUserDefaultsPoolKey];
+    if (!self.pool) {
+        self.pool = [NSMutableArray array];
+    }
 
-        [sharedNotificationHistory setUserDefaults:userDefaults];
-        [sharedNotificationHistory setPool:pool];
-    });
-
-    return sharedNotificationHistory;
+    return self;
 }
 
 #pragma mark - Public Methods

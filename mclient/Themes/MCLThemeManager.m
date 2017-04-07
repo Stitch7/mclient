@@ -2,63 +2,55 @@
 //  MCLThemeManager.m
 //  mclient
 //
-//  Created by Christopher Reitz on 11/01/2017.
-//  Copyright © 2017 Christopher Reitz. All rights reserved.
+//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  See LICENSE file in the project root for full license information.
 //
 
 #import "MCLThemeManager.h"
 
-#import <CoreLocation/CoreLocation.h>
-#import <WebKit/WebKit.h>
+@import CoreLocation;
+@import WebKit;
 
 #import "EDSunriseSet.h"
 
+#import "MCLSettings.h"
 #import "MCLTheme.h"
 #import "MCLDefaultTheme.h"
 #import "MCLNightTheme.h"
-#import "MCLDetailView.h"
 #import "MCLLoadingView.h"
 #import "MCLErrorView.h"
 #import "MCLReadSymbolView.h"
 #import "MCLBadgeView.h"
 
+
 NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
 
 @interface MCLThemeManager()
 
+@property (strong, nonatomic) MCLSettings *settings;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) NSDateComponents *sunrise;
 @property (strong, nonatomic) NSDateComponents *sunset;
 
 @end
 
-
 @implementation MCLThemeManager
 
-#pragma mark Initializers
+#pragma mark - Initializers
 
-- (instancetype)init
+- (instancetype)initWithSettings:(MCLSettings *)settings
 {
     self = [super init];
-    if (self) {
-        [self initiliazeLocationManager];
-        [self updateSun];
-    }
+    if (!self) return nil;
+
+    self.settings = settings;
+    [self initiliazeLocationManager];
+    [self updateSun];
+    
     return self;
 }
 
-+ (id)sharedManager
-{
-    static MCLThemeManager *sharedThemeManager = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedThemeManager = [[self alloc] init];
-    });
-
-    return sharedThemeManager;
-}
-
-#pragma mark Sunset
+#pragma mark - Sunset
 
 - (void)initiliazeLocationManager
 {
@@ -111,11 +103,11 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
     return NO;
 }
 
-#pragma mark Public
+#pragma mark - Public
 
 - (void)updateSun
 {
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"nightModeAutomatically"]) {
+    if (![self.settings isSettingActivated:MCLSettingNightModeAutomatically]) {
         return;
     }
 
@@ -149,27 +141,24 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
 
 - (void)loadTheme
 {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"nightModeAutomatically"]) {
+    if ([self.settings isSettingActivated:MCLSettingNightModeAutomatically]) {
         [self loadThemeBasedOnTime];
     }
     else {
-        [self loadThemeBasedOnUserDefaults];
+        [self loadThemeBasedOnSettings];
     }
 }
 
-- (void)loadThemeBasedOnUserDefaults
+- (void)loadThemeBasedOnSettings
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     id <MCLTheme> theme;
-    MCLThemeManager *themeManager = [MCLThemeManager sharedManager];
-
-    if ([userDefaults boolForKey:@"nightModeEnabled"]) {
+    if ([self.settings isSettingActivated:MCLSettingNightModeEnabled]) {
         theme = [[MCLNightTheme alloc] init];
     } else {
         theme = [[MCLDefaultTheme alloc] init];
     }
 
-    [themeManager applyTheme:theme];
+    [self applyTheme:theme];
 }
 
 - (void)loadThemeBasedOnTime
@@ -178,14 +167,12 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
     NSDateComponents *now = [calendar components:NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond
                                         fromDate:[NSDate date]];
     id <MCLTheme> theme;
-    MCLThemeManager *themeManager = [MCLThemeManager sharedManager];
-
     if ([self isAfterSunset:now] || [self isBeforeSunrise:now]) {
         theme = [[MCLNightTheme alloc] init];
     } else {
         theme = [[MCLDefaultTheme alloc] init];
     }
-    [themeManager applyTheme:theme];
+    [self applyTheme:theme];
 }
 
 - (void)applyTheme: (id <MCLTheme>)theme
@@ -217,11 +204,20 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
     [[UISearchBar appearance] setBackgroundImage:[[UIImage alloc] init]];
     [[UISearchBar appearance] setBackgroundColor:[theme searchBarBackgroundColor]];
 
-    [[UITableViewCell appearance] setBackgroundColor:[theme tableViewCellBackgroundColor]];
-    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UITableViewCell class]]] setTextColor:[theme textColor]];
+//    [[UITableViewCell appearance] setBackgroundColor:[theme tableViewCellBackgroundColor]];
+//    NSArray<Class <UIAppearanceContainer>> *classes = @[NSClassFromString(@"MCLBoardListTableViewController"), NSClassFromString(@"MCLThreadListTableViewController")];
+////                                                        NSClassFromString(@"MCLMessageListViewController"),
+////                                                        NSClassFromString(@"MCLProfileTableViewController")];
+//    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:classes] setBackgroundColor:[theme tableViewCellBackgroundColor]];
+    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLBoardListTableViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
+    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLDetailViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
+    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLResponsesTableViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
+    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLSettingsViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
+    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLThreadListTableViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
+    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLMessageListViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
+    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLProfileTableViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
 
-    [[MCLDetailView appearance] setBackgroundColor:[theme backgroundColor]];
-    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[MCLDetailView class]]] setTextColor:[theme overlayTextColor]];
+    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UITableViewCell class]]] setTextColor:[theme textColor]];
 
     [[MCLLoadingView appearance] setBackgroundColor:[theme backgroundColor]];
     [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[MCLLoadingView class]]] setTextColor:[theme overlayTextColor]];
@@ -233,9 +229,7 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
 
     [[MCLReadSymbolView appearance] setColor:[theme tintColor]];
 
-    UIActivityIndicatorViewStyle indicatorViewStyle = [theme isDark]
-        ? UIActivityIndicatorViewStyleWhite
-        : UIActivityIndicatorViewStyleGray;
+    UIActivityIndicatorViewStyle indicatorViewStyle = [theme isDark] ? UIActivityIndicatorViewStyleWhite : UIActivityIndicatorViewStyleGray;
     [[UIActivityIndicatorView appearance] setActivityIndicatorViewStyle:indicatorViewStyle];
 
     [[UITextView appearance] setBackgroundColor:[theme textViewBackgroundColor]];
@@ -248,7 +242,7 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
     [[WKWebView appearance] setBackgroundColor:[theme webViewBackgroundColor]];
     [[UIScrollView appearanceWhenContainedInInstancesOfClasses:@[[WKWebView class]]] setBackgroundColor:[theme webViewBackgroundColor]];
 
-    [[NSUserDefaults standardUserDefaults] setInteger:[theme identifier] forKey:@"theme"];
+    [self.settings setInteger:[theme identifier] forSetting:MCLSettingTheme];
 
     NSArray *windows = [UIApplication sharedApplication].windows;
     for (UIWindow *window in windows) {

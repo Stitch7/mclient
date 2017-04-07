@@ -2,21 +2,15 @@
 //  MCLAppDelegate.h
 //  mclient
 //
-//  Created by Christopher Reitz on 21.08.14.
-//  Copyright (c) 2014 Christopher Reitz. All rights reserved.
+//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  See LICENSE file in the project root for full license information.
 //
 
-#import <UIKit/UIKit.h>
-#import <CoreLocation/CoreLocation.h>
-#import <AudioToolbox/AudioToolbox.h>
-#import "MCLNotificationManager.h"
+@protocol MCLDependencyBag;
 
-@interface MCLAppDelegate : UIResponder <UIApplicationDelegate> {
-    SystemSoundID _notificationSound;
-}
+@interface MCLAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) UIAlertView *notificationAlert;
-@property (strong, nonatomic) MCLNotificationManager *notificationManager;
+@property (strong, nonatomic) id <MCLDependencyBag> bag;
 
 @end

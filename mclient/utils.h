@@ -2,8 +2,8 @@
 //  utils.h
 //  mclient
 //
-//  Created by Christopher Reitz on 26.09.14.
-//  Copyright (c) 2014 Christopher Reitz. All rights reserved.
+//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  See LICENSE file in the project root for full license information.
 //
 
 #define mustOverride() @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:@"%s must be overridden in a subclass/category", __PRETTY_FUNCTION__] userInfo:nil]

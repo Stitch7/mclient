@@ -1,0 +1,44 @@
+#fastlane_version "2.61.0"
+#xcversion(version: "9.0.1")
+
+default_platform :ios
+
+lane :alpha do
+
+  cocoapods
+  cert
+  sigh
+
+  # build settings
+  gym(
+    scheme: "mclient-alpha",
+    export_method: "ad-hoc"
+  )
+
+  # upload to HockeyApp
+  hockey(
+    api_token: "850b28e704a14aa993df89cb7f7020ad",
+    release_type: "2"
+  )
+
+end
+
+lane :beta do
+
+  cocoapods
+  cert
+  sigh
+
+  # build settings
+  gym(
+    scheme: "mclient-beta",
+    export_method: "ad-hoc"
+  )
+
+  # upload to HockeyApp
+  hockey(
+    api_token: "850b28e704a14aa993df89cb7f7020ad",
+    release_type: "0"
+  )
+
+end

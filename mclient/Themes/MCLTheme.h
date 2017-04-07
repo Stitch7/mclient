@@ -2,17 +2,16 @@
 //  MCLTheme.h
 //  mclient
 //
-//  Created by Christopher Reitz on 11/01/2017.
-//  Copyright © 2017 Christopher Reitz. All rights reserved.
+//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  See LICENSE file in the project root for full license information.
 //
-
-#import <Foundation/Foundation.h>
 
 @protocol MCLTheme <NSObject>
 
 - (NSUInteger)identifier;
 - (BOOL)isDark;
 - (UIColor *)tintColor;
+- (NSString *)cssTintColor; // 007aff
 - (UIColor *)backgroundColor;
 - (UIColor *)textColor;
 - (UIColor *)detailTextColor;

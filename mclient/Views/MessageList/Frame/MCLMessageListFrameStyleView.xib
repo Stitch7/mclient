@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13147.4"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MCLMessageListFrameStyleViewController">
+            <connections>
+                <outlet property="bottomFrame" destination="XZF-bV-lQx" id="QiC-VA-NEr"/>
+                <outlet property="tableView" destination="QZS-hZ-tLG" id="0kv-Yq-ktx"/>
+                <outlet property="toolbar" destination="eR6-AN-hCj" id="EeQ-jG-CsF"/>
+                <outlet property="topFrame" destination="Zr4-KV-EcB" id="sI2-fd-IwW"/>
+                <outlet property="topFrameHeightConstraint" destination="K1Q-0D-Ptx" id="1WP-xe-gh7"/>
+                <outlet property="view" destination="iN0-l3-epB" id="ns4-cU-pRh"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zr4-KV-EcB">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
+                    <subviews>
+                        <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eR6-AN-hCj" customClass="MCLMessageToolbar">
+                            <rect key="frame" x="0.0" y="356" width="375" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="kM4-A5-UKz"/>
+                            </constraints>
+                            <items/>
+                        </toolbar>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="eR6-AN-hCj" secondAttribute="bottom" id="Fph-xf-UM5"/>
+                        <constraint firstItem="eR6-AN-hCj" firstAttribute="leading" secondItem="Zr4-KV-EcB" secondAttribute="leading" id="GKs-m1-v9k"/>
+                        <constraint firstAttribute="height" constant="400" id="K1Q-0D-Ptx"/>
+                        <constraint firstAttribute="trailing" secondItem="eR6-AN-hCj" secondAttribute="trailing" id="yKm-jT-8OC"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XZF-bV-lQx">
+                    <rect key="frame" x="0.0" y="400" width="375" height="267"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QZS-hZ-tLG">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="267"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="xqD-HR-hnh"/>
+                                <outlet property="delegate" destination="-1" id="Q8E-F5-Q61"/>
+                            </connections>
+                        </tableView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="QZS-hZ-tLG" firstAttribute="leading" secondItem="XZF-bV-lQx" secondAttribute="leading" id="O7y-9X-YMJ"/>
+                        <constraint firstItem="QZS-hZ-tLG" firstAttribute="top" secondItem="XZF-bV-lQx" secondAttribute="top" id="df4-4M-SxF"/>
+                        <constraint firstAttribute="bottom" secondItem="QZS-hZ-tLG" secondAttribute="bottom" id="jRx-r8-EwY"/>
+                        <constraint firstAttribute="trailing" secondItem="QZS-hZ-tLG" secondAttribute="trailing" id="z6C-I9-6JP"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Zr4-KV-EcB" secondAttribute="trailing" id="BYp-Ka-Nyy"/>
+                <constraint firstItem="XZF-bV-lQx" firstAttribute="top" secondItem="Zr4-KV-EcB" secondAttribute="bottom" id="HgA-HM-Nw7"/>
+                <constraint firstAttribute="bottom" secondItem="XZF-bV-lQx" secondAttribute="bottom" id="Jaj-3W-h2r"/>
+                <constraint firstItem="Zr4-KV-EcB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="OYz-Kz-o83"/>
+                <constraint firstItem="Zr4-KV-EcB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="alO-1y-NRD"/>
+                <constraint firstAttribute="trailing" secondItem="XZF-bV-lQx" secondAttribute="trailing" id="ufA-OK-hlq"/>
+                <constraint firstItem="XZF-bV-lQx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="yu7-y9-k0m"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <point key="canvasLocation" x="17" y="66"/>
+        </view>
+    </objects>
+</document>

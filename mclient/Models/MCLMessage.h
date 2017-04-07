@@ -2,14 +2,29 @@
 //  MCLMessage.h
 //  mclient
 //
-//  Created by Christopher Reitz on 25.08.14.
-//  Copyright (c) 2014 Christopher Reitz. All rights reserved.
+//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  See LICENSE file in the project root for full license information.
 //
 
-#import <Foundation/Foundation.h>
+@protocol MCLTheme;
+
+@class MCLBoard;
+@class MCLThread;
+@class MCLResponse;
+
+typedef NS_ENUM(NSUInteger, kMCLComposeType) {
+    kMCLComposeTypeThread,
+    kMCLComposeTypeReply,
+    kMCLComposeTypeEdit
+};
 
 @interface MCLMessage : NSObject
 
+@property (strong, nonatomic) MCLBoard *board;
+@property (strong, nonatomic) MCLThread *thread;
+@property (strong, nonatomic) MCLMessage *nextMessage;
+
+@property (strong) NSNumber *boardId;
 @property (strong) NSNumber *messageId;
 @property (assign, nonatomic, getter=isRead) BOOL read;
 @property (strong) NSNumber *level;
@@ -30,5 +45,12 @@
                      username:(NSString *)inUsername
                       subject:(NSString *)inSubject
                          date:(NSDate *)inDate;
+
++ (MCLMessage *)messageFromResponse:(MCLResponse *)response;
+
++ (MCLMessage *)messageFromJSON:(NSDictionary *)json;
+
+- (void)updateFromMessageTextJSON:(NSDictionary *)json;
+- (NSString *)messageHtmlWithTopMargin:(int)topMargin andTheme:(id <MCLTheme>)currentTheme;
 
 @end

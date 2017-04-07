@@ -2,8 +2,8 @@
 //  MCLResponseContainer.m
 //  mclient
 //
-//  Created by Christopher Reitz on 28/03/2017.
-//  Copyright © 2017 Christopher Reitz. All rights reserved.
+//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  See LICENSE file in the project root for full license information.
 //
 
 #import "MCLResponseContainer.h"
@@ -18,7 +18,7 @@
 
 @implementation MCLResponseContainer
 
-- (id)initWithResponses:(NSDictionary *)responses sectionKeys:(NSArray *)sectionKeys andTitles:(NSDictionary *)sectionTitles
+- (instancetype)initWithResponses:(NSDictionary *)responses sectionKeys:(NSArray *)sectionKeys andTitles:(NSDictionary *)sectionTitles
 {
     self = [super init];
     if (self) {

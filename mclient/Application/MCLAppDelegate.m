@@ -2,46 +2,49 @@
 //  MCLAppDelegate.m
 //  mclient
 //
-//  Created by Christopher Reitz on 21.08.14.
-//  Copyright (c) 2014 Christopher Reitz. All rights reserved.
+//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  See LICENSE file in the project root for full license information.
 //
 
 #import "MCLAppDelegate.h"
+
 #import "UIApplication+Additions.h"
+#import "MCLAppDependencyBag.h"
+#import "MCLFeatures.h"
 #import "MCLThemeManager.h"
 #import "MCLNotificationManager.h"
+#import "MCLRouter.h"
+#import "MCLAppRouterDelegate.h"
+
 
 @implementation MCLAppDelegate
 
-@synthesize notificationAlert = _notificationAlert;
-
-# pragma mark - UIApplicationDelegate
+#pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[MCLThemeManager sharedManager] loadTheme];
+    self.bag = [[MCLAppDependencyBag alloc] init];
+    self.window = [self.bag makeRootWindow];
 
     return YES;
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [[MCLThemeManager sharedManager] loadTheme];
+    [self.bag.themeManager loadTheme];
 }
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    [[MCLNotificationManager sharedNotificationManager] notificateAboutNewResponsesWithCompletionHandler:completionHandler];
+    [self.bag.notificationManager notificateAboutNewResponsesWithCompletionHandler:completionHandler];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    NSLog(@"-------------------------");
+    NSLog(@"DID RECEIVE NOTIFICATION:");
+    NSLog(@"%@", notification);
+    NSLog(@"-------------------------");
 }
 
 @end

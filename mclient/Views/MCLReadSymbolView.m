@@ -2,11 +2,12 @@
 //  MCLReadSymbolView.m
 //  mclient
 //
-//  Created by Christopher Reitz on 29.08.14.
-//  Copyright (c) 2014 Christopher Reitz. All rights reserved.
+//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  See LICENSE file in the project root for full license information.
 //
 
 #import "MCLReadSymbolView.h"
+
 
 @interface MCLReadSymbolView ()
 
@@ -16,7 +17,7 @@
 
 @implementation MCLReadSymbolView
 
-- (id)initWithCoder:(NSCoder*)coder
+- (instancetype)initWithCoder:(NSCoder*)coder
 {
     if (self = [super initWithCoder:coder]) {
         [self commonInit];
@@ -25,7 +26,7 @@
     return self;
 }
 
-- (id)initWithFrame:(CGRect)rect
+- (instancetype)initWithFrame:(CGRect)rect
 {
     if (self = [super initWithFrame:rect]) {
         [self commonInit];

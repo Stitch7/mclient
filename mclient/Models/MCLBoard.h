@@ -2,17 +2,18 @@
 //  MCLBoard.h
 //  mclient
 //
-//  Created by Christopher Reitz on 25.08.14.
-//  Copyright (c) 2014 Christopher Reitz. All rights reserved.
+//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  See LICENSE file in the project root for full license information.
 //
-
-#import <Foundation/Foundation.h>
 
 @interface MCLBoard : NSObject
 
 @property (strong, nonatomic) NSNumber *boardId;
 @property (strong, nonatomic) NSString *name;
 
++ (MCLBoard *)boardWithId:(NSNumber *)inBoardId;
 + (MCLBoard *)boardWithId:(NSNumber *)inBoardId name:(NSString *)inName;
++ (MCLBoard *)boardFromJSON:(NSDictionary *)json;
+- (UIImage *)image;
 
 @end

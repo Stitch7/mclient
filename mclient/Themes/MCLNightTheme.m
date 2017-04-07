@@ -2,8 +2,8 @@
 //  MCLNightTheme.m
 //  mclient
 //
-//  Created by Christopher Reitz on 11/01/2017.
-//  Copyright © 2017 Christopher Reitz. All rights reserved.
+//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  See LICENSE file in the project root for full license information.
 //
 
 #import "MCLNightTheme.h"
@@ -23,17 +23,18 @@
 
 @implementation MCLNightTheme
 
-- (id)init
+- (instancetype)init
 {
-    if (self = [super init]) {
-        self.flatRedColor = [UIColor colorWithRed:0.95 green:0.26 blue:0.28 alpha:1.0];
-        self.royalBlueColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0];
-        self.silverColor = [UIColor colorWithRed:0.93 green:0.94 blue:0.95 alpha:1.0];
-        self.grayColor = [UIColor colorWithRed:0.20 green:0.20 blue:0.20 alpha:1.0];
-        self.darkGrayColor = [UIColor colorWithRed:0.56 green:0.56 blue:0.58 alpha:1.0];
-        self.totalDarkGrayColor = [UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0];
-        self.notSoTotalDarkGrayColor = [UIColor colorWithRed:0.07 green:0.07 blue:0.07 alpha:1.0];
-    }
+    self = [super init];
+    if (!self) return nil;
+
+    self.flatRedColor = [UIColor colorWithRed:0.95 green:0.26 blue:0.28 alpha:1.0];
+    self.royalBlueColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0];
+    self.silverColor = [UIColor colorWithRed:0.93 green:0.94 blue:0.95 alpha:1.0];
+    self.grayColor = [UIColor colorWithRed:0.20 green:0.20 blue:0.20 alpha:1.0];
+    self.darkGrayColor = [UIColor colorWithRed:0.56 green:0.56 blue:0.58 alpha:1.0];
+    self.totalDarkGrayColor = [UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0];
+    self.notSoTotalDarkGrayColor = [UIColor colorWithRed:0.07 green:0.07 blue:0.07 alpha:1.0];
 
     return self;
 }
@@ -53,6 +54,11 @@
 - (UIColor *)tintColor
 {
     return self.royalBlueColor;
+}
+
+- (NSString *)cssTintColor
+{
+    return @"007aff";
 }
 
 - (UIColor *)backgroundColor
@@ -95,7 +101,7 @@
     return self.flatRedColor;
 }
 
--(UIColor *)successTextColor
+- (UIColor *)successTextColor
 {
     return [UIColor colorWithRed:0.30 green:0.85 blue:0.39 alpha:1.0];
 }

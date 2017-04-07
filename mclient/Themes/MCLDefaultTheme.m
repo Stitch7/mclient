@@ -2,8 +2,8 @@
 //  MCLDefaultTheme.m
 //  mclient
 //
-//  Created by Christopher Reitz on 11/01/2017.
-//  Copyright © 2017 Christopher Reitz. All rights reserved.
+//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  See LICENSE file in the project root for full license information.
 //
 
 #import "MCLDefaultTheme.h"
@@ -17,11 +17,12 @@
 
 @implementation MCLDefaultTheme
 
-- (id)init
+- (instancetype)init
 {
-    if (self = [super init]) {
-        self.royalBlueColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0];
-    }
+    self = [super init];
+    if (!self) return nil;
+
+    self.royalBlueColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0];
 
     return self;
 }
@@ -41,6 +42,11 @@
 - (UIColor *)tintColor
 {
     return self.royalBlueColor;
+}
+
+- (NSString *)cssTintColor
+{
+    return @"007aff";
 }
 
 - (UIColor *)backgroundColor
@@ -83,7 +89,7 @@
     return [UIColor redColor];
 }
 
--(UIColor *)successTextColor
+- (UIColor *)successTextColor
 {
     return [UIColor colorWithRed:0.30 green:0.85 blue:0.39 alpha:1.0];
 }
@@ -120,7 +126,7 @@
 
 - (UIColor *)toolbarBackgroundColor
 {
-    return [UIColor groupTableViewBackgroundColor];
+    return [UIColor whiteColor];
 }
 
 - (UIColor *)tableViewHeaderTextColor

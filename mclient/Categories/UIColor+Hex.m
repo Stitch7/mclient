@@ -2,8 +2,8 @@
 //  UIColor+Hex.m
 //  mclient
 //
-//  Created by Christopher Reitz on 15/01/2017.
-//  Copyright © 2017 Christopher Reitz. All rights reserved.
+//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  See LICENSE file in the project root for full license information.
 //
 
 #import "UIColor+Hex.h"
@@ -26,12 +26,12 @@
     return ((uint)alpha << 24) | ((uint)red << 16) | ((uint)green << 8) | ((uint)blue);
 }
 
-- (NSString*)cssString {
-    uint hex = [self hex];
-    if ((hex & 0xFF000000) == 0xFF000000)
-        return [NSString stringWithFormat:@"#%06x", hex & 0xFFFFFF];
-    
-    return [NSString stringWithFormat:@"#%08x", hex];
-}
+//- (NSString*)cssString {
+//    uint hex = [self hex];
+//    if ((hex & 0xFF000000) == 0xFF000000)
+//        return [NSString stringWithFormat:@"#%06x", hex & 0xFFFFFF];
+//
+//    return [NSString stringWithFormat:@"#%08x", hex];
+//}
 
 @end

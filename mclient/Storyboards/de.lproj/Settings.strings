@@ -14,6 +14,9 @@
 /* Class = "UILabel"; text = "Jump to latest Post"; ObjectID = "F5e-Z8-s9N"; */
 "F5e-Z8-s9N.text" = "Zum letzten Post springen";
 
+/* Class = "UILabel"; text = "Open Links in Safari"; ObjectID = "hll-o3-la6.text"; */
+"hll-o3-la6.text" = "Links in Safari öffnen";
+
 /* Class = "UILabel"; text = "Always"; ObjectID = "IbE-Ea-778"; */
 "IbE-Ea-778.text" = "Immer";
 
@@ -61,6 +64,9 @@
 
 /* Class = "UILabel"; text = "Switch Automatically"; ObjectID = "xQm-Bk-cad"; */
 "xQm-Bk-cad.text" = "Automatisch umschalten";
+
+"Bbz-uB-lDT.headerTitle" = "KILLFILE VERWALTEN";
+"Fap-wu-fB0.text" = "Ausgeblendete Threads";
 
 "03w-Ml-MZu.headerTitle" = "BENACHRICHTIGUNGEN";
 "b2P-NH-jIN.text" = "Hintergrundbenachrichtigungen";

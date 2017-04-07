@@ -6,6 +6,10 @@
 build/
 DerivedData/
 
+## Certs
+*.cer
+*.mobileprovision
+
 ## Various settings
 *.pbxuser
 !default.pbxuser
@@ -27,6 +31,8 @@ xcuserdata/
 *.dSYM.zip
 *.dSYM
 
-# CocoaPods
+## CocoaPods
 Pods/
 
+## Fastlane
+fastlane/report.xml

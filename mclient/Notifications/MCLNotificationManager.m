@@ -2,38 +2,42 @@
 //  MCLNotificationManager.m
 //  mclient
 //
-//  Created by Christopher Reitz on 11/03/2017.
-//  Copyright © 2017 Christopher Reitz. All rights reserved.
+//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  See LICENSE file in the project root for full license information.
 //
 
 #import "MCLNotificationManager.h"
+
+#import "MCLDependencyBag.h"
+#import "MCLSettings.h"
 #import "MCLNotificationHistory.h"
-#import "MCLMessageResponsesClient.h"
+#import "MCLMessageResponsesRequest.h"
+
+@interface MCLNotificationManager ()
+
+@property (strong, nonatomic) id <MCLDependencyBag> bag;
+
+@end
 
 @implementation MCLNotificationManager
 
-#pragma mark - Singleton Methods
+#pragma mark - Initializers
 
-+ (id)sharedNotificationManager
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag
 {
-    static MCLNotificationManager *sharedNotificationManager = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedNotificationManager = [[self alloc] init];
-        [sharedNotificationManager initialize];
-    });
+    self = [super init];
+    if (!self) return nil;
 
-    return sharedNotificationManager;
-}
+    self.bag = bag;
+    self.history = [[MCLNotificationHistory alloc] init];
 
-- (void)initialize
-{
-    if (![self backgroundNotificationsEnabled]) {
+    if ([self backgroundNotificationsEnabled]) {
+        [self registerBackgroundNotifications];
+    } else {
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
-        return;
     }
 
-    [self registerBackgroundNotifications];
+    return self;
 }
 
 #pragma mark - Public Methods
@@ -55,34 +59,33 @@
 
 - (BOOL)backgroundNotificationsEnabled
 {
-    BOOL backgroundNotificationsEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"backgroundNotifications"];
-    return backgroundNotificationsEnabled ? backgroundNotificationsEnabled : NO;
+    return [self.bag.settings integerForSetting:MCLSettingThreadView] ?: NO;
 }
 
 - (void)sendLocalNotificationForResponse:(MCLResponse *)response
 {
     UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.alertAction = NSLocalizedString(@"Open", nil);
     notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"Response from %@:\n%@", nil), response.username, response.subject];
     notification.soundName = @"zelda1.caf";
 
     [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }
 
-- (void)notificateAboutNewResponsesWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    MCLMessageResponsesClient *messageResponsesClient = [MCLMessageResponsesClient sharedClient];
-    MCLNotificationHistory *notificationHistory = [MCLNotificationHistory sharedNotificationHistory];
-
-    [messageResponsesClient loadUnreadResponsesWithCompletion:^(NSError *error, NSArray *unreadResponses) {
+- (void)notificateAboutNewResponsesWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    MCLMessageResponsesRequest *messageResponsesRequest = [[MCLMessageResponsesRequest alloc] initWithBag:self.bag];
+    [messageResponsesRequest loadUnreadResponsesWithCompletion:^(NSError *error, NSArray *unreadResponses) {
         if (!error && [unreadResponses count] > 0) {
             for (MCLResponse *response in unreadResponses) {
-                if ([notificationHistory responseWasAlreadyPresented:response]) {
+                if ([self.history responseWasAlreadyPresented:response]) {
                     continue;
                 }
 
                 [self sendLocalNotificationForResponse:response];
-                [notificationHistory addResponse:response];
+                [self.history addResponse:response];
             }
-            [notificationHistory persist];
+            [self.history persist];
         }
         // We cheat a little to be called as often as possible
         completionHandler(UIBackgroundFetchResultNewData);

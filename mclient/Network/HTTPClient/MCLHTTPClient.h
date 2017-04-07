@@ -1,0 +1,34 @@
+//
+//  MCLHTTPClient.h
+//  mclient
+//
+//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  See LICENSE file in the project root for full license information.
+//
+
+@class MCLLogin;
+
+@protocol MCLHTTPClient <NSObject>
+
+- (instancetype)initWithLogin:(MCLLogin *)login;
+
+- (void)getRequestToUrlString:(NSString *)urlString
+                   needsLogin:(BOOL)needsLogin
+            completionHandler:(void (^)(NSError *error, NSDictionary *json))completion;
+
+- (void)postRequestToUrlString:(NSString *)urlString
+                      withVars:(NSDictionary *)vars
+                    needsLogin:(BOOL)needsLogin
+             completionHandler:(void (^)(NSError *error, NSDictionary *json))completion;
+
+- (void)putRequestToUrlString:(NSString *)urlString
+                     withVars:(NSDictionary *)vars
+                   needsLogin:(BOOL)needsLogin
+            completionHandler:(void (^)(NSError *error, NSDictionary *json))completion;
+
+- (void)deleteRequestToUrlString:(NSString *)urlString
+                        withVars:(NSDictionary *)vars
+                      needsLogin:(BOOL)needsLogin
+               completionHandler:(void (^)(NSError *error, NSDictionary *json))completion;
+
+@end

@@ -1,0 +1,6 @@
+/* Localized versions of Info.plist keys */
+
+NSPhotoLibraryAddUsageDescription = "Access to photo library is needed to save images from postings.";
+NSPhotoLibraryUsageDescription = "Access to photo library is needed to add images to postings.";
+NSLocationWhenInUseUsageDescription = "Location is needed to calculate the times for sunrise and sunset for the automatic night mode.";
+NSCameraUsageDescription = "Access to the camera is needed to take pictures for postings inside the app.";

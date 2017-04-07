@@ -2,11 +2,9 @@
 //  MCLThemeManager.h
 //  mclient
 //
-//  Created by Christopher Reitz on 11/01/2017.
-//  Copyright © 2017 Christopher Reitz. All rights reserved.
+//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  See LICENSE file in the project root for full license information.
 //
-
-#import <Foundation/Foundation.h>
 
 extern NSString * const MCLThemeChangedNotification;
 
@@ -16,12 +14,14 @@ typedef NS_ENUM(NSUInteger, kMCLTheme) {
 };
 
 @protocol MCLTheme;
+@class MCLSettings;
 
 @interface MCLThemeManager : NSObject
 
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
 
-+ (id)sharedManager;
+- (instancetype)initWithSettings:(MCLSettings *)settings;
+
 - (void)updateSun;
 - (void)loadTheme;
 - (void)applyTheme: (id <MCLTheme>)theme;
