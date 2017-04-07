@@ -593,7 +593,8 @@
                         [[MCLNotificationHistory sharedNotificationHistory] removeMessageId:message.messageId];
                         self.thread.messagesRead = [NSNumber numberWithInteger:[self.thread.messagesRead intValue] + 1];
                         message.read = YES;
-                        if ([message.messageId isEqualToNumber:self.thread.lastMessageId]) {
+                        NSNumber *lastMessageId = self.thread.lastMessageId;
+                        if (lastMessageId && [message.messageId isEqualToNumber:lastMessageId]) {
                             self.thread.lastMessageRead = YES;
                         }
                     }
