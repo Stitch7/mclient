@@ -183,7 +183,6 @@
 		306FC86D1F93A39F001EB7E9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81919A63517006514BD /* CoreGraphics.framework */; };
 		306FC86E1F93A39F001EB7E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81B19A63517006514BD /* UIKit.framework */; };
 		306FC86F1F93A39F001EB7E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81719A63517006514BD /* Foundation.framework */; };
-		306FC8701F93A39F001EB7E9 /* libPods-mclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 064E0AFA20768528C9F3DBC4 /* libPods-mclient.a */; };
 		306FC8721F93A39F001EB7E9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 305DD83519A63517006514BD /* Images.xcassets */; };
 		306FC8731F93A39F001EB7E9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3038D58519F65E21005E7D3D /* Localizable.strings */; };
 		306FC8741F93A39F001EB7E9 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30849D221E2BABBD00626331 /* Settings.storyboard */; };
@@ -485,7 +484,7 @@
 		30EE8B7C1FC1E481008417F6 /* MCLErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EE8B791FC1E480008417F6 /* MCLErrorViewController.m */; };
 		30EE8B7D1FC1E481008417F6 /* MCLErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EE8B791FC1E480008417F6 /* MCLErrorViewController.m */; };
 		30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */; };
-		6D6B1F285BC087406939F28A /* libPods-mclient-dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F541358EDA8A88ED2BDAA5 /* libPods-mclient-dev.a */; };
+		839E66741FFE6CF700E16A90 /* libPods-mclient-dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 839E66751FFE6CF700E16A90 /* libPods-mclient-dev.a */; };
 		9EE211CB7E8449C1FBA6DA94 /* libPods-mclient-store.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE932B0459D07DA9BDC39CA5 /* libPods-mclient-store.a */; };
 		A1CFD7E72C7BF591AEFE4A90 /* libPods-mclient-beta.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91BFBD8B3A80811FE65B8AA7 /* libPods-mclient-beta.a */; };
 		DF0C723DDF8FBB9E621A8681 /* libPods-mclient-alpha.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0327F55EE60F09E80D15CAC /* libPods-mclient-alpha.a */; };
@@ -751,6 +750,7 @@
 		6AD6CEED842851C8B3A4D075 /* Pods-mclient-store.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mclient-store.release.xcconfig"; path = "Pods/Target Support Files/Pods-mclient-store/Pods-mclient-store.release.xcconfig"; sourceTree = "<group>"; };
 		6D828B188AA687512F11BC26 /* Pods-mclient-store.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mclient-store.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mclient-store/Pods-mclient-store.debug.xcconfig"; sourceTree = "<group>"; };
 		77F541358EDA8A88ED2BDAA5 /* libPods-mclient-dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mclient-dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		839E66751FFE6CF700E16A90 /* libPods-mclient-dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-mclient-dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		91BFBD8B3A80811FE65B8AA7 /* libPods-mclient-beta.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mclient-beta.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0FFD84988F136FB335FA1A8 /* Pods-mclient-beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mclient-beta.release.xcconfig"; path = "Pods/Target Support Files/Pods-mclient-beta/Pods-mclient-beta.release.xcconfig"; sourceTree = "<group>"; };
 		D4418B032CC14175D4768FE5 /* Pods-mclient-dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mclient-dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-mclient-dev/Pods-mclient-dev.release.xcconfig"; sourceTree = "<group>"; };
@@ -788,14 +788,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				839E66741FFE6CF700E16A90 /* libPods-mclient-dev.a in Frameworks */,
 				306FC86A1F93A39F001EB7E9 /* SafariServices.framework in Frameworks */,
 				306FC86B1F93A39F001EB7E9 /* CoreLocation.framework in Frameworks */,
 				306FC86C1F93A39F001EB7E9 /* Security.framework in Frameworks */,
 				306FC86D1F93A39F001EB7E9 /* CoreGraphics.framework in Frameworks */,
 				306FC86E1F93A39F001EB7E9 /* UIKit.framework in Frameworks */,
 				306FC86F1F93A39F001EB7E9 /* Foundation.framework in Frameworks */,
-				306FC8701F93A39F001EB7E9 /* libPods-mclient.a in Frameworks */,
-				6D6B1F285BC087406939F28A /* libPods-mclient-dev.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1082,6 +1081,7 @@
 		305DD81619A63517006514BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				839E66751FFE6CF700E16A90 /* libPods-mclient-dev.a */,
 				30827BA91F3A3D3900014769 /* SafariServices.framework */,
 				30849D1B1E2AA40900626331 /* CoreLocation.framework */,
 				307A80F019B8804F001B538D /* Security.framework */,
