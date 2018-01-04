@@ -2,7 +2,7 @@
 //  MCLResponsesTableViewController.m
 //  mclient
 //
-//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -16,9 +16,6 @@
 #import "MCLMarkUnreadResponsesAsReadRequest.h"
 #import "MCLMessageListViewController.h"
 #import "MCLThemeManager.h"
-#import "MCLMServiceErrorView.h"
-#import "MCLInternetConnectionErrorView.h"
-#import "MCLLoadingView.h"
 #import "MCLMessageListFrameStyleTableViewCell.h"
 #import "MCLBoard.h"
 #import "MCLThread.h"
@@ -29,10 +26,9 @@
 
 @interface MCLResponsesTableViewController ()
 
+@property (strong, nonatomic) id <MCLDependencyBag> bag;
 @property (strong, nonatomic) MCLMessageListViewController *detailViewController;
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
-@property (strong, nonatomic) MCLMessageResponsesRequest *messageResponsesRequest;
-@property (strong, nonatomic) MCLResponseContainer *responseContainer;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
 @end
@@ -41,14 +37,13 @@
 
 #pragma mark - Initializers
 
-// TODO: - We get launched via storyboard atm
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag
 {
-    self = [super init];
+    self = [super initWithStyle:UITableViewStyleGrouped];
     if (!self) return nil;
 
     self.bag = bag;
-//    [self initialize];
+    [self configure];
 
     return self;
 }
@@ -58,19 +53,14 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#pragma mark - UIViewController life cycle
-
-- (void)awakeFromNib
+- (void)configure
 {
-    [super awakeFromNib];
-
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(themeChanged:)
                                                  name:MCLThemeChangedNotification
                                                object:nil];
 
     self.currentTheme = self.bag.themeManager.currentTheme;
-    self.messageResponsesRequest = [[MCLMessageResponsesRequest alloc] init];
 
     // Init + setup dateformatter for message dates
     self.dateFormatter = [[NSDateFormatter alloc] init];
@@ -79,41 +69,13 @@
     [self.dateFormatter setTimeStyle:NSDateFormatterShortStyle];
 }
 
+#pragma mark - UIViewController life cycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    [self configureNaigationBar];
     [self configureTableView];
-
-    // Visualize loading
-    MCLLoadingView *loadingView = [[MCLLoadingView alloc] initWithFrame:self.view.frame];
-    [self.tableView addSubview:loadingView];
-
-    [self reloadData];
-}
-
-- (void)configureNaigationBar
-{
-    self.title = NSLocalizedString(@"Replies to your posts", nil);
-
-    if ([self isModal]) {
-        UIBarButtonItem *downButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"downButton"]
-                                                                       style:UIBarButtonItemStylePlain
-                                                                      target:self
-                                                                      action:@selector(downButtonPressed)];
-        self.navigationItem.leftBarButtonItem = downButton;
-    }
-
-    UIBarButtonItem *markAllAsReadButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"markAsRead"]
-                                                              landscapeImagePhone:nil
-                                                                            style:UIBarButtonItemStylePlain
-                                                                           target:self
-                                                                           action:@selector(markAllAsReadButtonButtonPressed)];
-
-    BOOL markAllAsReadButtonIsEnabled = [UIApplication sharedApplication].applicationIconBadgeNumber > 0;
-    [markAllAsReadButton setEnabled:markAllAsReadButtonIsEnabled];
-    self.navigationItem.rightBarButtonItem = markAllAsReadButton;
 }
 
 - (void)configureTableView
@@ -166,7 +128,7 @@
         }
 
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
-        [self reloadData];
+//        [self reloadData];
     }];
 }
 
@@ -182,34 +144,38 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)removeOverlayViews
+#pragma mark - MCLLoadingContentViewControllerDelegate
+
+- (NSString *)loadingViewControllerRequestsTitleString:(MCLLoadingViewController *)loadingViewController
 {
-    for (id subview in self.view.subviews) {
-        if ([[subview class] isSubclassOfClass: [MCLErrorView class]] ||
-            [[subview class] isSubclassOfClass: [MCLLoadingView class]]
-        ) {
-            [subview removeFromSuperview];
-        }
-    }
+    return NSLocalizedString(@"Replies to your posts", nil);
 }
 
-- (void)reloadData
+- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController configureNavigationItem:(UINavigationItem *)navigationItem
 {
-    [self.messageResponsesRequest loadResponsesWithCompletion:^(NSError *error, MCLResponseContainer *responseContainer) {
-        if (error) {
-            return;
-        }
+    if ([self isModal]) {
+        UIBarButtonItem *downButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"downButton"]
+                                                                       style:UIBarButtonItemStylePlain
+                                                                      target:self
+                                                                      action:@selector(downButtonPressed)];
+        navigationItem.leftBarButtonItem = downButton;
+    }
 
-        self.responseContainer = responseContainer;
+    UIBarButtonItem *markAllAsReadButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"markAsRead"]
+                                                              landscapeImagePhone:nil
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(markAllAsReadButtonButtonPressed)];
 
-        [self removeOverlayViews];
-        if (self.refreshControl.isRefreshing) {
-            [self.refreshControl endRefreshing];
-        }
+    BOOL markAllAsReadButtonIsEnabled = [UIApplication sharedApplication].applicationIconBadgeNumber > 0;
+    [markAllAsReadButton setEnabled:markAllAsReadButtonIsEnabled];
+    navigationItem.rightBarButtonItem = markAllAsReadButton;
+}
 
-        [self.tableView setSeparatorColor:[self.currentTheme tableViewSeparatorColor]];
-        [self.tableView reloadData];
-    }];
+- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData
+{
+    self.responseContainer = [newData firstObject];
+    [self.tableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource

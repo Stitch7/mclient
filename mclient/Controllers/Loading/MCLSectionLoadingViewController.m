@@ -2,7 +2,7 @@
 //  MCLSectionLoadingViewController.m
 //  mclient
 //
-//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 #pragma mark - TODO: A lot of code duplications. Refactor to subclass MCLLoadingViewController
@@ -310,13 +310,6 @@ static NSString *kQueueOperationsChanged = @"kQueueOperationsChanged";
     [self stopLoading];
 
     [self addErrorViewContoller:error];
-
-//    [self configureErrorView];
-//    self.errorView.label.text = [error localizedDescription];
-////    self.automaticallyAdjustsScrollViewInsets = YES;
-//    [self.view addSubview:self.errorView];
-//    [self.errorView constrainEdgesTo:self.view];
-//    [self updateNavigationController];
 }
 
 - (void)removeErrorView

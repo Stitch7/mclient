@@ -2,7 +2,7 @@
 //  MCLAppDependencyBag.m
 //  mclient
 //
-//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -24,7 +24,7 @@
 
 @interface MCLAppDependencyBag () <IMGSessionDelegate>
 
-@end;
+@end
 
 @implementation MCLAppDependencyBag
 
@@ -75,7 +75,7 @@
     }
 
     BITHockeyManager *hockeyManager = [BITHockeyManager sharedHockeyManager];
-    [hockeyManager configureWithIdentifier:kHockeyKey];
+    [hockeyManager configureWithIdentifier:[NSString stringWithFormat:@"%@", HOCKEYAPP_ID]];
     [hockeyManager.crashManager setCrashManagerStatus:BITCrashManagerStatusAlwaysAsk];
     [hockeyManager startManager];
     [hockeyManager.authenticator authenticateInstallation];

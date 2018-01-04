@@ -2,7 +2,7 @@
 //  MCLMessageResponsesRequest.m
 //  mclient
 //
-//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -22,6 +22,8 @@ NSString * const MCLUnreadResponsesFoundNotification = @"MCLUnreadResponsesFound
 @end
 
 @implementation MCLMessageResponsesRequest
+
+@synthesize httpClient;
 
 #pragma mark - Initializers
 
@@ -149,4 +151,27 @@ NSString * const MCLUnreadResponsesFoundNotification = @"MCLUnreadResponsesFound
         completion(error, [responseContainer unreadResponses]);
     }];
 }
+
+- (void)loadWithCompletionHandler:(void (^)(NSError *, NSArray *))completion
+{
+    NSString *username = [self.bag.login username];
+    NSString *urlString = [NSString stringWithFormat:@"%@/user/%@/responses", kMServiceBaseURL, username];
+    [self.bag.httpClient getRequestToUrlString:urlString
+                                    needsLogin:YES
+                             completionHandler:^(NSError *error, NSDictionary *json) {
+                                 if (error) {
+                                     if (completion) {
+                                         completion(error, nil);
+                                     }
+                                     return;
+                                 }
+
+                                 MCLResponseContainer *responseContainer = [self fetchedData:json];
+                                 NSArray *responses = [NSArray arrayWithObject:responseContainer];
+                                 if (completion) {
+                                     completion(nil, responses);
+                                 }
+                             }];
+}
+
 @end

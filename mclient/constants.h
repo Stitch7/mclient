@@ -2,7 +2,7 @@
 //  constants.h
 //  mclient
 //
-//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -16,6 +16,5 @@
 
 #define kImgurID @"b432fef195584ba"
 #define kImgurSecret @"309834c415d62245b40d5f58c2e8c1fc8707d0d1"
-#define kHockeyKey @"1fbbedb73c534cbea66852e2d4d6b5f7"
 
 #define kSettingsSignatureTextDefault @"gesendet mit m!client für iOS"

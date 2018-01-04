@@ -2629,8 +2629,10 @@
 				GCC_PREFIX_HEADER = "mclient/Supporting Files/mclient-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
+					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
 					"FEATURE_STAGE=\"$(STAGE)\"",
 				);
+				HOCKEYAPP_ID = 1fbbedb73c534cbea66852e2d4d6b5f7;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-alpha-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.alpha;
@@ -2657,8 +2659,10 @@
 				GCC_PREFIX_HEADER = "mclient/Supporting Files/mclient-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
+					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
 					"FEATURE_STAGE=\"$(STAGE)\"",
 				);
+				HOCKEYAPP_ID = 1fbbedb73c534cbea66852e2d4d6b5f7;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-alpha-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.alpha;
@@ -2735,7 +2739,9 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FEATURE_STAGE=\"$(STAGE)\"",
+					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
 				);
+				HOCKEYAPP_ID = "";
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.dev;
@@ -2762,7 +2768,9 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FEATURE_STAGE=\"$(STAGE)\"",
+					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
 				);
+				HOCKEYAPP_ID = "";
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.dev;
@@ -2789,7 +2797,9 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FEATURE_STAGE=\"$(STAGE)\"",
+					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
 				);
+				HOCKEYAPP_ID = "";
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-store-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient;
@@ -2816,7 +2826,9 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FEATURE_STAGE=\"$(STAGE)\"",
+					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
 				);
+				HOCKEYAPP_ID = "";
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-store-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient;
@@ -2844,7 +2856,9 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FEATURE_STAGE=\"$(STAGE)\"",
+					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
 				);
+				HOCKEYAPP_ID = edeacf933441432d909f9f4cb37eac80;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.beta;
@@ -2872,7 +2886,9 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FEATURE_STAGE=\"$(STAGE)\"",
+					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
 				);
+				HOCKEYAPP_ID = edeacf933441432d909f9f4cb37eac80;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.beta;

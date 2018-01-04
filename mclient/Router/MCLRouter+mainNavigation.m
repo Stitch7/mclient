@@ -2,7 +2,7 @@
 //  MCLRouter+mainNavigation.m
 //  mclient
 //
-//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -29,6 +29,7 @@
 #import "MCLProfileTableViewController.h"
 #import "MCLThreadListRequest.h"
 #import "MCLMessageListRequest.h"
+#import "MCLMessageResponsesRequest.h"
 #import "MCLProfileRequest.h"
 
 
@@ -48,13 +49,18 @@
 
 - (MCLResponsesTableViewController *)modalToResponses
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Responses" bundle:nil];
-    UINavigationController *navigationVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLResponsesNavigationController"];
-    navigationVC.modalPresentationStyle = UIModalPresentationFormSheet;
-    MCLResponsesTableViewController *responsesVC = navigationVC.viewControllers[0];
-    responsesVC.bag = self.bag; // TODO: - do proper DI
+    MCLMessageResponsesRequest *responsesRequest = [[MCLMessageResponsesRequest alloc] initWithBag:self.bag];
+    MCLResponsesTableViewController *responsesVC = [[MCLResponsesTableViewController alloc] initWithBag:self.bag];
 
+    MCLLoadingViewController *loadingVC = [[MCLLoadingViewController alloc] initWithBag:self.bag
+                                                                                request:responsesRequest
+                                                                  contentViewController:responsesVC configure:^(NSArray *data) {
+                                                                      responsesVC.responseContainer = [data firstObject];
+                                                                  }];
+
+    UINavigationController *navigationVC = [[UINavigationController alloc] initWithRootViewController:loadingVC];
     if (self.splitViewViewController.collapsed) {
+        navigationVC.modalPresentationStyle = UIModalPresentationFormSheet;
         [self.masterNavigationController presentViewController:navigationVC animated:YES completion:nil];
     } else {
         [self.detailNavigationController pushViewController:responsesVC animated:YES];
@@ -157,14 +163,12 @@
 
     if (self.splitViewViewController.collapsed) {
         [masterNavigationController pushViewController:self.detailViewController animated:YES];
+    } else if (!forceDetailPush && [self currentDetailVcIsMessageList]) {
+        UIViewController *currentDetailVC = [[self.detailNavigationController viewControllers] lastObject];
+        MCLMessageListLoadingViewController *loadingVC = (MCLMessageListLoadingViewController *)currentDetailVC;
+        [loadingVC loadThread:thread];
     } else {
-        if (!forceDetailPush && [self currentDetailVcIsMessageList]) {
-            UIViewController *currentDetailVC = [[self.detailNavigationController viewControllers] lastObject];
-            MCLMessageListLoadingViewController *loadingVC = (MCLMessageListLoadingViewController *)currentDetailVC;
-            [loadingVC loadThread:thread];
-        } else {
-            [self.detailNavigationController pushViewController:self.detailViewController animated:YES];
-        }
+        [self.detailNavigationController pushViewController:self.detailViewController animated:YES];
     }
 
     return messageListVC;
@@ -189,7 +193,10 @@
     assert(message.thread != nil);
     assert(message.thread.board != nil);
 
-    return [self pushToThread:message.thread forceDetailPush:NO onMasterNavigationController:masterNavigationController jumpToMessageId:message.messageId];
+    return [self pushToThread:message.thread
+              forceDetailPush:NO
+ onMasterNavigationController:masterNavigationController
+              jumpToMessageId:message.messageId];
 }
 
 @end

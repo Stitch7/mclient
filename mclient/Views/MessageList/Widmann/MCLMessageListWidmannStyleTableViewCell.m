@@ -2,7 +2,7 @@
 //  MCLMessageListWidmannStyleTableViewCell.m
 //  mclient
 //
-//  Copyright © 2014 - 2017 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -24,9 +24,10 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        [self configure];
-    }
+    if (!self) return nil;
+
+    [self configure];
+
     return self;
 }
 
@@ -173,7 +174,7 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
     self.subjectLabel.textColor = [self.currentTheme textColor];
 
     self.usernameLabel.text = message.username;
-    if ([message.username isEqualToString:self.login.username]) {
+    if ([message.username isEqualToString:self.toolbar.login.username]) {
         self.usernameLabel.textColor = [self.currentTheme ownUsernameTextColor];
     }
     else if (message.isMod) {
