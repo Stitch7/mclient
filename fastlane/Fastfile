@@ -18,7 +18,14 @@ lane :alpha do
   # upload to HockeyApp
   hockey(
     api_token: "850b28e704a14aa993df89cb7f7020ad",
-    release_type: "2"
+    release_type: "2",
+    notes_type: "0",
+    notes: "
+      # Changelog 
+      * Huhu 
+      * Fix
+      * Glitch
+    "
   )
 
 end
@@ -38,7 +45,11 @@ lane :beta do
   # upload to HockeyApp
   hockey(
     api_token: "850b28e704a14aa993df89cb7f7020ad",
-    release_type: "0"
+    release_type: "0",
+    notes_type: "0",
+    notes: "
+      * Durcheinander beim entfernen von Favoriten behoben.
+    "
   )
 
 end

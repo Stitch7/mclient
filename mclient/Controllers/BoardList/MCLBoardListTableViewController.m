@@ -366,6 +366,7 @@ typedef NS_ENUM(NSInteger, MCLBoardListSection) {
 - (UITableViewCell *)favoriteCellForRowIndexPath:(NSIndexPath *)indexPath
 {
     MCLThreadTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:MCLThreadTableViewCellIdentifier];
+    cell.index = indexPath.row;
     cell.login = self.bag.login;
     cell.currentTheme = self.bag.themeManager.currentTheme;
     cell.thread = self.favorites[indexPath.row];

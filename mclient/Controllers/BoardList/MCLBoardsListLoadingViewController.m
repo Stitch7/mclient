@@ -9,6 +9,7 @@
 #import "MCLBoardsListLoadingViewController.h"
 
 #import "MCLLogin.h"
+#import "MCLBoardListTableViewController.h"
 #import "MCLThreadListTableViewController.h"
 
 @interface MCLBoardsListLoadingViewController ()
@@ -54,7 +55,7 @@
                                                object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(favoritesChanged)
+                                             selector:@selector(favoritesChanged:)
                                                  name:MCLFavoritedChangedNotification
                                                object:nil];
 }
@@ -65,9 +66,14 @@
 //    [self load];
 }
 
-- (void)favoritesChanged
+- (void)favoritesChanged:(NSNotification *)notification
 {
+    if ([notification.object isKindOfClass:[MCLBoardListTableViewController class]]) {
+        return;
+    }
+
     [self load];
+
 }
 
 @end
