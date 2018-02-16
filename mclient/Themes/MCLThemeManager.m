@@ -232,9 +232,12 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
     UIActivityIndicatorViewStyle indicatorViewStyle = [theme isDark] ? UIActivityIndicatorViewStyleWhite : UIActivityIndicatorViewStyleGray;
     [[UIActivityIndicatorView appearance] setActivityIndicatorViewStyle:indicatorViewStyle];
 
+    UIKeyboardAppearance keyboardAppearance = [theme isDark] ? UIKeyboardAppearanceDark : UIKeyboardAppearanceLight;
+
+//    [[UITextView appearance] setKeyboardAppearance:keyboardAppearance]; // Crashes on runtime -> similar to this: https://openradar.appspot.com/6468254625
+    [[UITextView appearance] setTextColor:[theme textViewTextColor]];
     [[UITextView appearance] setBackgroundColor:[theme textViewBackgroundColor]];
 
-    UIKeyboardAppearance keyboardAppearance = [theme isDark] ? UIKeyboardAppearanceDark : UIKeyboardAppearanceLight;
     [[UITextField appearance] setKeyboardAppearance:keyboardAppearance];
     [[UITextField appearance] setTextColor:[theme textViewTextColor]];
 

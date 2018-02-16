@@ -13,6 +13,8 @@
 
 @implementation MCLTextView
 
+@synthesize themeManager = _themeManager;
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
@@ -42,7 +44,11 @@
                                              selector:@selector(themeChanged:)
                                                  name:MCLThemeChangedNotification
                                                object:nil];
+}
 
+- (void)setThemeManager:(MCLThemeManager *)themeManager
+{
+    _themeManager = themeManager;
     [self themeChanged:nil];
 }
 

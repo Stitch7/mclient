@@ -48,9 +48,17 @@ static void *ProgressObserverContext = &ProgressObserverContext;
 - (instancetype)init
 {
     self = [super init];
-    if (!self) {
-        return nil;
-    }
+    if (!self) return nil;
+
+    [self configure];
+
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (!self) return nil;
 
     [self configure];
 
@@ -133,7 +141,6 @@ static void *ProgressObserverContext = &ProgressObserverContext;
                                                                    style:UIBarButtonItemStylePlain
                                                                   target:self
                                                                   action:@selector(downButtonPressed)];
-//    self.navigationItem.leftBarButtonItem = downButton;
     self.navigationItem.leftBarButtonItem = downButton;
 
     self.composePreviewButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Preview", nil)
@@ -178,6 +185,7 @@ static void *ProgressObserverContext = &ProgressObserverContext;
 
 - (void)configureTextField
 {
+    self.composeTextTextField.themeManager = self.bag.themeManager;
     self.composeTextTextField.errorHandler = self;
     self.composeTextTextField.text = self.text;
 
