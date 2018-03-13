@@ -59,7 +59,7 @@
 
 - (BOOL)backgroundNotificationsEnabled
 {
-    return [self.bag.settings integerForSetting:MCLSettingThreadView] ?: NO;
+    return [self.bag.settings integerForSetting:MCLSettingBackgroundNotifications] ?: NO;
 }
 
 - (void)sendLocalNotificationForResponse:(MCLResponse *)response

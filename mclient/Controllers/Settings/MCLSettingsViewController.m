@@ -93,22 +93,25 @@
 
 - (void)configureNotificationsSection
 {
-    BOOL backgroundNotificationsEnabled = [self.bag.notificationManager backgroundNotificationsEnabled];
-    self.backgroundNotificationsEnabledSwitch.on = backgroundNotificationsEnabled;
-    [self setbackgroundNotificationsEnabledSwitchEnabled:backgroundNotificationsEnabled];
+    self.backgroundNotificationsEnabledSwitch.on = NO;
+    self.backgroundNotificationsEnabledSwitch.enabled = NO;
+    self.backgroundNotificationsEnabledSwitch.alpha = 0.6f;
+//    BOOL backgroundNotificationsEnabled = [self.bag.notificationManager backgroundNotificationsEnabled];
+//    self.backgroundNotificationsEnabledSwitch.on = backgroundNotificationsEnabled;
+//    [self setbackgroundNotificationsEnabledSwitchEnabled:backgroundNotificationsEnabled];
 }
 
 - (void)setbackgroundNotificationsEnabledSwitchEnabled:(BOOL)enabled
 {
-    BOOL isRegistered = [self.bag.notificationManager backgroundNotificationsRegistered];
-    if (enabled || isRegistered) {
-        self.backgroundNotificationsEnabledSwitch.enabled = YES;
-        self.backgroundNotificationsEnabledSwitch.alpha = 1.0f;
-    }
-    else {
-        self.backgroundNotificationsEnabledSwitch.enabled = NO;
-        self.backgroundNotificationsEnabledSwitch.alpha = 0.6f;
-    }
+//    BOOL isRegistered = [self.bag.notificationManager backgroundNotificationsRegistered];
+//    if (enabled || isRegistered) {
+//        self.backgroundNotificationsEnabledSwitch.enabled = YES;
+//        self.backgroundNotificationsEnabledSwitch.alpha = 1.0f;
+//    }
+//    else {
+//        self.backgroundNotificationsEnabledSwitch.enabled = NO;
+//        self.backgroundNotificationsEnabledSwitch.alpha = 0.6f;
+//    }
 }
 
 - (void)configureNightModeSection

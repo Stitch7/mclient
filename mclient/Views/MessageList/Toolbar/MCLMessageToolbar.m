@@ -115,7 +115,9 @@
 
 - (void)notificationAction:(UIBarButtonItem *)sender
 {
-    [self.messageToolbarDelegate messageToolbar:self requestsToToggleNotificationButton:sender];
+    [self.messageToolbarDelegate messageToolbar:self requestsToToggleNotificationButton:sender
+                                     forMessage:self.message
+                          withCompletionHandler:nil];
 }
 
 - (void)editAction:(UIBarButtonItem *)sender
@@ -170,8 +172,10 @@
     self.message.notification = enable;
 
     if (enable) {
+        self.notificationButton.tag = 1;
         self.notificationButton.image = [UIImage imageNamed:@"notificationButtonEnabled"];
     } else {
+        self.notificationButton.tag = 0;
         self.notificationButton.image = [UIImage imageNamed:@"notificationButtonDisabled"];
     }
 }

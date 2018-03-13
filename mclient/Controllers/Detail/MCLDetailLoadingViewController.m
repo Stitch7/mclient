@@ -51,7 +51,7 @@
 
 - (void)favoritesChanged
 {
-    [self load];
+    [self refresh];
 }
 
 @end

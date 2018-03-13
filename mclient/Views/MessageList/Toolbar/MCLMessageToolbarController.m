@@ -11,7 +11,7 @@
 @import WebKit;
 
 #import "MCLDependencyBag.h"
-#import "MCLNotificationStatusRequest.h"
+#import "MCLNotificationRequest.h"
 #import "MCLUser.h"
 #import "MCLBoard.h"
 #import "MCLMessage.h"
@@ -62,7 +62,6 @@
 {
     if (self.speechSynthesizer.speaking) {
         [self.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
-        self.toolbar.speakButton.image = [UIImage imageNamed:@"speakButton"];
     }
 }
 
@@ -92,22 +91,21 @@
     [self.messageListViewController presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)messageToolbar:(MCLMessageToolbar *)toolbar requestsToToggleNotificationButton:(UIBarButtonItem *)notificationButton
+- (void)messageToolbar:(MCLMessageToolbar *)toolbar requestsToToggleNotificationButton:(UIBarButtonItem *)notificationButton forMessage:(MCLMessage *)message withCompletionHandler:(void (^)(void))completionHandler
 {
-    MCLNotificationStatusRequest *request = [[MCLNotificationStatusRequest alloc] initWithClient:self.bag.httpClient
-                                                                                         message:self.message];
+    MCLNotificationRequest *request = [[MCLNotificationRequest alloc] initWithClient:self.bag.httpClient
+                                                                             message:message];
     [request loadWithCompletionHandler:^(NSError *error, NSArray *json) {
         NSString *alertTitle, *alertMessage;
         if (error) {
             alertTitle = NSLocalizedString(@"Error", nil);
             alertMessage = [error localizedDescription];
         } else if (notificationButton.tag == 1) {
-            [self.toolbar enableNotificationButton:NO];
+            [toolbar enableNotificationButton:NO];
             alertTitle = NSLocalizedString(@"Notification disabled", nil);
             alertMessage = NSLocalizedString(@"You will no longer receive Emails if anyone replies to this message", nil);
         } else {
-            [notificationButton setTag:1];
-            [self.toolbar enableNotificationButton:YES];
+            [toolbar enableNotificationButton:YES];
             alertTitle = NSLocalizedString(@"Notification enabled", nil);
             alertMessage = NSLocalizedString(@"You will receive an Email if anyone replies to this message", nil);
         }
@@ -123,15 +121,19 @@
                                                          }];
         [alert addAction:okAction];
 
+        if (completionHandler) {
+            completionHandler();
+        }
         [self.messageListViewController presentViewController:alert animated:YES completion:nil];
     }];
 }
 
 - (void)messageToolbar:(MCLMessageToolbar *)toolbar requestsToSpeakMessage:(MCLMessage *)message
 {
+    self.toolbar = toolbar;
+
     if (self.speechSynthesizer.speaking) {
-        [self.speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
-        self.toolbar.speakButton.image = [UIImage imageNamed:@"speakButton"];
+        [self stopSpeaking];
 
         return;
     }
@@ -184,7 +186,8 @@
 
 - (void)messageToolbar:(MCLMessageToolbar *)toolbar requestsToEditMessage:(MCLMessage *)message
 {
-    [self.bag.router modalToEditMessage:message];
+    MCLComposeMessageViewController *composeMessageVC = [self.bag.router modalToEditMessage:message];
+    composeMessageVC.delegate = self.messageListViewController;
 }
 
 - (void)messageToolbar:(MCLMessageToolbar *)toolbar requestsToReplyToMessage:(MCLMessage *)message
@@ -201,6 +204,11 @@
 }
 
 - (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance:(AVSpeechUtterance *)utterance
+{
+    self.toolbar.speakButton.image = [UIImage imageNamed:@"speakButton"];
+}
+
+- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didCancelSpeechUtterance:(AVSpeechUtterance *)utterance
 {
     self.toolbar.speakButton.image = [UIImage imageNamed:@"speakButton"];
 }

@@ -48,7 +48,7 @@ lane :beta do
     release_type: "0",
     notes_type: "0",
     notes: "
-      * Durcheinander beim entfernen von Favoriten behoben.
+      * mj als Tester hinzugefügt
     "
   )
 

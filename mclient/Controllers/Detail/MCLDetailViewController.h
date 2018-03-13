@@ -17,7 +17,7 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *tableViewLeadingConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *tableViewTrailingConstraint;
 
-@property (strong, nonatomic) NSArray *favorites;
+@property (strong, nonatomic) NSMutableArray *favorites;
 
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
 

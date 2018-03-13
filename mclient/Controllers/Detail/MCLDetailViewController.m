@@ -16,12 +16,14 @@
 #import "MCLBoard.h"
 #import "MCLThread.h"
 #import "MCLFavoritesRequest.h"
+#import "MCLFavoriteThreadToggleRequest.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
 #import "MCLSplitViewController.h"
 #import "MCLLoadingViewController.h"
 #import "MCLLogoLabel.h"
 #import "MCLThreadTableViewCell.h"
+#import "MCLThreadListTableViewController.h"
 
 
 @interface MCLDetailViewController () <UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate>
@@ -80,7 +82,7 @@
 - (void)configure
 {
     self.currentTheme = self.bag.themeManager.currentTheme;
-    self.favorites = [[NSArray alloc] init];
+    self.favorites = [[NSMutableArray alloc] init];
 }
 
 - (void)configureView
@@ -113,6 +115,12 @@
 - (UILabel *)loadingViewControllerRequestsTitleLabel:(MCLLoadingViewController *)loadingViewController
 {
     return [[MCLLogoLabel alloc] initWithThemeManager:self.bag.themeManager];
+}
+
+- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData
+{
+    self.favorites = [newData mutableCopy];
+    [self.tableView reloadData];
 }
 
 #pragma mark - UITableView Datasource
@@ -149,6 +157,7 @@
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
     MCLThreadTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:MCLThreadTableViewCellIdentifier];
+    cell.index = indexPath.row;
     cell.login = self.bag.login;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.currentTheme = self.bag.themeManager.currentTheme;
@@ -185,6 +194,36 @@
     MCLThread *thread = [self.favorites objectAtIndex:indexPath.row];
     thread.board = [MCLBoard boardWithId:thread.boardId name:@""];
     [self.bag.router pushToThread:thread];
+}
+
+#pragma mark - MGSwipeTableCellDelegate
+
+- (BOOL)swipeTableCell:(nonnull MGSwipeTableCell*)cell tappedButtonAtIndex:(NSInteger)index direction:(MGSwipeDirection)direction fromExpansion:(BOOL)fromExpansion
+{
+    MCLThreadTableViewCell *favoriteCell = (MCLThreadTableViewCell *)cell;
+    MCLThread *thread = self.favorites[favoriteCell.index];
+
+    [favoriteCell hideSwipeAnimated:YES];
+
+    [self.favorites removeObjectAtIndex:favoriteCell.index];
+    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:favoriteCell.index inSection:0]]
+                          withRowAnimation:UITableViewRowAnimationLeft];
+//    [self.tableView reloadData];
+    MCLFavoriteThreadToggleRequest *favoriteThreadToggleRequest = [[MCLFavoriteThreadToggleRequest alloc] initWithClient:self.bag.httpClient
+                                                                                                                  thread:thread];
+    favoriteThreadToggleRequest.forceRemove = YES;
+    [favoriteThreadToggleRequest loadWithCompletionHandler:^(NSError *error, NSArray *result) {
+        // TODO: - error handling
+        if (error) {
+            return;
+        }
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:MCLFavoritedChangedNotification
+                                                            object:self
+                                                          userInfo:nil];
+    }];
+
+    return NO;
 }
 
 #pragma mark - Notifications

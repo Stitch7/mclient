@@ -438,6 +438,10 @@
 		309648211EA4053E00C16379 /* MCLRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 309648201EA4053E00C16379 /* MCLRouter.m */; };
 		309A1EEE1F76646500EE60C2 /* MCLAppRouterDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 309A1EED1F76646500EE60C2 /* MCLAppRouterDelegate.m */; };
 		30A1BFAD19B4A8D4002439FE /* MCLSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A1BFAC19B4A8D4002439FE /* MCLSettingsViewController.m */; };
+		30A69ABD204920E300904E73 /* MCLEditTextRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A69ABB204920E300904E73 /* MCLEditTextRequest.m */; };
+		30A69ABE204920E300904E73 /* MCLEditTextRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A69ABB204920E300904E73 /* MCLEditTextRequest.m */; };
+		30A69ABF204920E300904E73 /* MCLEditTextRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A69ABB204920E300904E73 /* MCLEditTextRequest.m */; };
+		30A69AC0204920E300904E73 /* MCLEditTextRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A69ABB204920E300904E73 /* MCLEditTextRequest.m */; };
 		30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */; };
 		30AC60F61F3F89E7000A6639 /* MCLMessageTextViewToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 30AC60F51F3F89E7000A6639 /* MCLMessageTextViewToolbar.m */; };
 		30B0B97B1E8AEED400925D0D /* MCLResponseContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B0B97A1E8AEED400925D0D /* MCLResponseContainer.m */; };
@@ -695,6 +699,8 @@
 		309A1EED1F76646500EE60C2 /* MCLAppRouterDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLAppRouterDelegate.m; sourceTree = "<group>"; };
 		30A1BFAB19B4A8D4002439FE /* MCLSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLSettingsViewController.h; sourceTree = "<group>"; };
 		30A1BFAC19B4A8D4002439FE /* MCLSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsViewController.m; sourceTree = "<group>"; };
+		30A69ABB204920E300904E73 /* MCLEditTextRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLEditTextRequest.m; sourceTree = "<group>"; };
+		30A69ABC204920E300904E73 /* MCLEditTextRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLEditTextRequest.h; sourceTree = "<group>"; };
 		30A9D5E519D4CFFF00070268 /* MCLComposeMessagePreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessagePreviewViewController.h; sourceTree = "<group>"; };
 		30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLComposeMessagePreviewViewController.m; sourceTree = "<group>"; };
 		30AC60F41F3F89E7000A6639 /* MCLMessageTextViewToolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMessageTextViewToolbar.h; sourceTree = "<group>"; };
@@ -845,6 +851,8 @@
 				30D664381F22747300E72025 /* MCLRequest.h */,
 				306169441E98F76300DBD96F /* MCLBoardListRequest.h */,
 				306169451E98F76300DBD96F /* MCLBoardListRequest.m */,
+				30A69ABC204920E300904E73 /* MCLEditTextRequest.h */,
+				30A69ABB204920E300904E73 /* MCLEditTextRequest.m */,
 				3027A7EF1E9D780E00EC89EB /* MCLFavoritesRequest.h */,
 				3027A7F01E9D780E00EC89EB /* MCLFavoritesRequest.m */,
 				30B893161F7820EF00E584FA /* MCLFavoriteThreadToggleRequest.h */,
@@ -1650,6 +1658,11 @@
 					3090CB371FA89A5C0085C9AF = {
 						DevelopmentTeam = J8XDHCNJQA;
 						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -2111,6 +2124,7 @@
 				3020FB6B1E746D4400C7217F /* MCLNotificationManager.m in Sources */,
 				30DD817A1FB7B386007BF235 /* MCLFeatures+Names.m in Sources */,
 				30DD81831FB7B499007BF235 /* MCLBoardsListLoadingViewController.m in Sources */,
+				30A69ABE204920E300904E73 /* MCLEditTextRequest.m in Sources */,
 				305E54A91F2A65B8004002E6 /* MCLPacmanLoadingView.m in Sources */,
 				301FD9A319C32FC600E36A5B /* MCLLoadingView.m in Sources */,
 				302D19E61F2CEE8600E2FC2B /* MCLLoginRequest.m in Sources */,
@@ -2220,6 +2234,7 @@
 				306FC8461F93A39F001EB7E9 /* MCLNotificationStatusRequest.m in Sources */,
 				306FC8471F93A39F001EB7E9 /* MCLThemeManager.m in Sources */,
 				306FC8481F93A39F001EB7E9 /* MCLModalNavigationController.m in Sources */,
+				30A69ABD204920E300904E73 /* MCLEditTextRequest.m in Sources */,
 				306FC8491F93A39F001EB7E9 /* MCLBoard.m in Sources */,
 				306FC84A1F93A39F001EB7E9 /* MCLNotificationManager.m in Sources */,
 				306FC84B1F93A39F001EB7E9 /* MCLPacmanLoadingView.m in Sources */,
@@ -2321,6 +2336,7 @@
 				3090CAF51FA7ED1E0085C9AF /* MCLNotificationManager.m in Sources */,
 				30DD817C1FB7B387007BF235 /* MCLFeatures+Names.m in Sources */,
 				30DD81851FB7B49A007BF235 /* MCLBoardsListLoadingViewController.m in Sources */,
+				30A69AC0204920E300904E73 /* MCLEditTextRequest.m in Sources */,
 				3090CAF61FA7ED1E0085C9AF /* MCLPacmanLoadingView.m in Sources */,
 				3090CAF71FA7ED1E0085C9AF /* MCLLoadingView.m in Sources */,
 				3090CAF81FA7ED1E0085C9AF /* MCLLoginRequest.m in Sources */,
@@ -2422,6 +2438,7 @@
 				3090CB721FA89A5C0085C9AF /* MCLNotificationManager.m in Sources */,
 				30DD817B1FB7B387007BF235 /* MCLFeatures+Names.m in Sources */,
 				30DD81841FB7B49A007BF235 /* MCLBoardsListLoadingViewController.m in Sources */,
+				30A69ABF204920E300904E73 /* MCLEditTextRequest.m in Sources */,
 				3090CB731FA89A5C0085C9AF /* MCLPacmanLoadingView.m in Sources */,
 				3090CB741FA89A5C0085C9AF /* MCLLoadingView.m in Sources */,
 				3090CB751FA89A5C0085C9AF /* MCLLoginRequest.m in Sources */,
@@ -2863,7 +2880,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "342f9cd0-5383-4c8e-8d73-4abf8239cdf0";
+				PROVISIONING_PROFILE = "7bfe92d9-d05d-4f09-9d07-fc9e1c8cbb8c";
 				PROVISIONING_PROFILE_SPECIFIER = "mclient beta 02/18";
 				STAGE = 1;
 				WRAPPER_EXTENSION = app;
@@ -2893,7 +2910,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "342f9cd0-5383-4c8e-8d73-4abf8239cdf0";
+				PROVISIONING_PROFILE = "8b5abd5b-27ab-410c-85fa-49b110eedfbb";
 				PROVISIONING_PROFILE_SPECIFIER = "mclient beta 02/18";
 				STAGE = 1;
 				WRAPPER_EXTENSION = app;

@@ -66,7 +66,7 @@
         topPadding = topPadding > 0 ? topPadding : 0;
     }
 
-    NSLog(@"~~~~~~~VIEW WILL LAYOUT DA SUBVIEWS!!!: %f  -  %f  -  %f", viewHeight, contentViewHeight, topPadding);
+//    NSLog(@"~~~~~~~viewWillLayoutSubviews: %f  -  %f  -  %f", viewHeight, contentViewHeight, topPadding);
 
     UIEdgeInsets insets = UIEdgeInsetsMake(topPadding, 0, 0, 0);
     self.errorView.scrollView.contentInset = insets;

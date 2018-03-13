@@ -50,9 +50,11 @@
     [self.httpClient getRequestToUrlString:urlString
                                 needsLogin:YES
                          completionHandler:^(NSError *error, NSDictionary *json) {
-                             [self.message updateFromMessageTextJSON:json];
                              NSMutableArray *response = [[NSMutableArray alloc] init];
-                             [response addObject:json];
+                             if (!error) {
+                                 [self.message updateFromMessageTextJSON:json];
+                                 [response addObject:json];
+                             }
                              completionHandler(error, response);
                          }];
 }

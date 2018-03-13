@@ -15,6 +15,9 @@
 #import "MCLComposeMessageViewController.h"
 #import "MCLComposeMessagePreviewViewController.h"
 
+#import "MCLDependencyBag.h"
+#import "MCLEditTextRequest.h"
+
 @implementation MCLRouter (composeMessage)
 
 - (MCLComposeMessageViewController *)modalToComposeThreadToBoard:(MCLBoard *)board
@@ -68,9 +71,13 @@
     editMessageVC.subject = message.subject;
     editMessageVC.text = message.text;
 //    composeThreadVC.delegate = delegate;
+     MCLModalNavigationController *navigationVC = [[MCLModalNavigationController alloc] initWithRootViewController:editMessageVC];
 
-    MCLModalNavigationController *navigationVC = [[MCLModalNavigationController alloc] initWithRootViewController:editMessageVC];
-    [self.masterNavigationController presentViewController:navigationVC animated:YES completion:nil];
+    MCLEditTextRequest *request = [[MCLEditTextRequest alloc] initWithClient:self.bag.httpClient message:message];
+    [request loadWithCompletionHandler:^(NSError *error, NSArray *data) {
+        editMessageVC.text = [[data firstObject] objectForKey:@"editText"];
+        [self.masterNavigationController presentViewController:navigationVC animated:YES completion:nil];
+    }];
 
     return editMessageVC;
 }

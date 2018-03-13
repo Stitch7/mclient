@@ -155,6 +155,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MCLMessage *message = self.messages[indexPath.row];
+    message.board = self.board;
+    message.boardId = self.board.boardId;
     message.thread = self.thread;
 
     BOOL isSelectedRow = indexPath.row == [tableView indexPathForSelectedRow].row;
@@ -261,6 +263,7 @@
 
 - (void)putMessage:(MCLMessage *)message toCell:(MCLMessageListWidmannStyleTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    [cell.toolbar updateBarButtonsWithMessage:message];
     [cell.webView loadHTMLString:[message messageHtmlWithTopMargin:0 andTheme:self.bag.themeManager.currentTheme] baseURL:nil];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
 }

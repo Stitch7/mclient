@@ -161,6 +161,9 @@
     NSInteger i = indexPath.row;
     id <MCLTheme> currenTheme = self.bag.themeManager.currentTheme;
     MCLMessage *message = [self messageForIndexPath:indexPath];
+    message.board = self.board;
+    message.boardId = self.board.boardId;
+    message.thread = self.thread;
 
     MCLMessageListFrameStyleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MCLMessageListFrameStyleTableViewCellIdentifier
                                                                                   forIndexPath:indexPath];
@@ -300,6 +303,7 @@
     [super themeChanged:notification];
 
     self.view.backgroundColor = [self.bag.themeManager.currentTheme backgroundColor];
+    self.tableView.backgroundColor = [self.bag.themeManager.currentTheme backgroundColor];
 
     if (notification) {
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];

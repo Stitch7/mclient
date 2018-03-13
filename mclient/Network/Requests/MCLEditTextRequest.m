@@ -1,24 +1,24 @@
 //
-//  MCLNotificationRequest.m
+//  MCLEditTextRequest.m
 //  mclient
 //
 //  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
-#import "MCLNotificationRequest.h"
+#import "MCLEditTextRequest.h"
 
 #import "MCLHTTPClient.h"
 #import "MCLBoard.h"
 #import "MCLMessage.h"
 
-@interface MCLNotificationRequest ()
+@interface MCLEditTextRequest ()
 
 @property (strong, nonatomic) MCLMessage *message;
 
 @end
 
-@implementation MCLNotificationRequest
+@implementation MCLEditTextRequest
 
 @synthesize httpClient;
 
@@ -43,12 +43,14 @@
     assert(self.message.boardId != nil);
     assert(self.message.messageId != nil);
 
-    NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/notification/%@",
+    NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/edit-text/%@",
                            kMServiceBaseURL, self.message.boardId, self.message.messageId];
     [self.httpClient getRequestToUrlString:urlString
                                 needsLogin:YES
                          completionHandler:^(NSError *error, NSDictionary *json) {
-                             completionHandler(error, nil);
+                             NSMutableArray *data = [NSMutableArray new];
+                             [data addObject:json];
+                             completionHandler(error, data);
                          }];
 }
 

@@ -46,7 +46,7 @@
         completionHandler(error, result);
     };
 
-    if (!self.thread.isFavorite && !self.forceRemove) {
+    if (self.thread.isFavorite && !self.forceRemove) {
         [self.httpClient postRequestToUrlString:urlString
                                        withVars:nil
                                      needsLogin:YES

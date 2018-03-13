@@ -279,7 +279,8 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 - (void)addThreadToFavorites:(MCLThreadTableViewCell *)threadCell
 {
     MCLThread *thread = [self isSearching] ? self.searchResults[threadCell.index] : self.threads[threadCell.index];
-    [threadCell setFavorite:!thread.isFavorite];
+    thread.favorite = !thread.isFavorite;
+    [threadCell setFavorite:thread.isFavorite];
     [threadCell hideSwipeAnimated:YES];
 
     [[[MCLFavoriteThreadToggleRequest alloc] initWithClient:self.bag.httpClient thread:thread] loadWithCompletionHandler:^(NSError *error, NSArray *result) {

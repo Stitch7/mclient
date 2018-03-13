@@ -15,7 +15,7 @@
 - (void)messageToolbar:(MCLMessageToolbar *)toolbar requestsToOpenProfileFromUser:(MCLUser *)user;
 - (void)messageToolbar:(MCLMessageToolbar *)toolbar requestsToCopyMessageLinkToClipboard:(MCLMessage *)message;
 - (void)messageToolbar:(MCLMessageToolbar *)toolbar requestsToSpeakMessage:(MCLMessage *)message;
-- (void)messageToolbar:(MCLMessageToolbar *)toolbar requestsToToggleNotificationButton:(UIBarButtonItem *)notificationButton;
+- (void)messageToolbar:(MCLMessageToolbar *)toolbar requestsToToggleNotificationButton:(UIBarButtonItem *)notificationButton forMessage:(MCLMessage *)message withCompletionHandler:(void (^)(void))completionHandler;
 - (void)messageToolbar:(MCLMessageToolbar *)toolbar requestsToEditMessage:(MCLMessage *)message;
 - (void)messageToolbar:(MCLMessageToolbar *)toolbar requestsToReplyToMessage:(MCLMessage *)message;
 

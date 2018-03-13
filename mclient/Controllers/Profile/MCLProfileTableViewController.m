@@ -15,7 +15,6 @@
 
 @interface MCLProfileTableViewController ()
 
-@property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) UIImage *profileImage;
 
 @end
@@ -90,7 +89,7 @@
 
         if (self.profileImage) {
             UIImageView *imageView = [[UIImageView alloc] initWithImage:self.profileImage];
-            [imageView.layer setBorderColor:[[self.currentTheme tableViewSeparatorColor] CGColor]];
+            [imageView.layer setBorderColor:[[self.bag.themeManager.currentTheme tableViewSeparatorColor] CGColor]];
             [imageView.layer setBorderWidth:0.5f];
 
             CGRect imageViewFrame = imageView.frame;
@@ -105,7 +104,7 @@
 
         cell.textLabel.text = [NSLocalizedString(key, nil) stringByAppendingString:@":"];
 
-        cell.detailTextLabel.textColor = [self.currentTheme detailTextColor];
+        cell.detailTextLabel.textColor = [self.bag.themeManager.currentTheme detailTextColor];
 
         NSString *detailText = [self.profileData objectForKey:key];
         cell.detailTextLabel.text = detailText.length ? detailText : @"-";

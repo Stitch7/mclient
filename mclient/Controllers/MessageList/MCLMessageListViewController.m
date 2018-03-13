@@ -233,6 +233,20 @@
 - (void)messageSentWithType:(NSUInteger)type
 {
     [self.loadingViewController refresh];
+
+    // "Thank you for your contribution \"%@\"" // TODO: i18n
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Nachricht erfolgreich gepostet!"
+                                                                   message:@""
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction * action) {
+
+
+                                            }]];;
+
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - Abstract methods

@@ -34,10 +34,10 @@
     [self.bag.themeManager loadTheme];
 }
 
-- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-{
-    [self.bag.notificationManager notificateAboutNewResponsesWithCompletionHandler:completionHandler];
-}
+//- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+//{
+//    [self.bag.notificationManager notificateAboutNewResponsesWithCompletionHandler:completionHandler];
+//}
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
