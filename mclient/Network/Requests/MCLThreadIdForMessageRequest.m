@@ -39,7 +39,10 @@
 
 - (void)loadWithCompletionHandler:(void (^)(NSError*, NSArray*))completionHandler
 {
-    assert(self.message.board.boardId != nil);
+    if (self.message.board.boardId == nil) {
+        completionHandler([[NSError alloc] init], nil);
+        return;
+    }
 
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/thread-for-message/%@",
                            kMServiceBaseURL, self.message.board.boardId, self.message.messageId];

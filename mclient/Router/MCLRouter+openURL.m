@@ -99,7 +99,6 @@
                                                                                          message:message];
     [request loadWithCompletionHandler:^(NSError *error, NSArray *data) {
         if (error || data == nil) {
-            NSLog(@"MCLThreadIdForMessageRequest Error: %@", error.description);
             [self openLink:url];
         } else {
             message.thread.threadId = [data firstObject];
