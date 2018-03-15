@@ -185,7 +185,7 @@
     assert(message.thread != nil);
     assert(message.thread.board != nil);
 
-    return [self pushToThread:message.thread forceDetailPush:YES];
+    return [self pushToThread:message.thread forceDetailPush:YES onMasterNavigationController:self.masterNavigationController jumpToMessageId:message.messageId];
 }
 
 - (MCLMessageListViewController *)pushToMessage:(MCLMessage *)message onMasterNavigationController:(UINavigationController *)masterNavigationController
