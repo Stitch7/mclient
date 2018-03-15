@@ -105,6 +105,15 @@ static void *ProgressObserverContext = &ProgressObserverContext;
     [self themeChanged:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    // Workaround for greyed out preview button after push back (Bug in iOS11)
+    self.navigationController.navigationBar.tintAdjustmentMode = UIViewTintAdjustmentModeNormal;
+    self.navigationController.navigationBar.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];

@@ -49,6 +49,7 @@ lane :beta do
     notes_type: "0",
     notes: "
       * Links auf andere Postings öffnen jetzt auch direkt das Posting und nicht nur den dazugehörigen Thread.      
+      * Vorschau Button beim schreiben eine neuen Posts ist jetzt nicht mehr ausgegraut wenn man aus der Vorschau wieder zurück navigiert (war ein iOS11 Bug, Workaround implementiert)
     "
   )
 
