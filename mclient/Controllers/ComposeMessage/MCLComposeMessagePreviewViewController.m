@@ -151,27 +151,13 @@
                 if ([self.delegate respondsToSelector:@selector(handleRotationChangeInBackground)]) {
                     [self.delegate handleRotationChangeInBackground];
                 }
-                [self.delegate messageSentWithType:self.type];
 
-                NSString *alertMessage;
-                if (self.type == kMCLComposeTypeEdit) {
-                    alertMessage = [NSString stringWithFormat:NSLocalizedString(@"Your message \"%@\" was changed", nil), self.subject];
-                } else {
-                    alertMessage = [NSString stringWithFormat:NSLocalizedString(@"Thank you for your contribution \"%@\"", nil), self.subject];
-                }
+                MCLMessage *message = [[MCLMessage alloc] init];
+                message.subject = self.subject;
+                message.text = self.text;
+                message.username = self.bag.login.username;
 
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Confirmation", nil)
-                                                                               message:alertMessage
-                                                                        preferredStyle:UIAlertControllerStyleAlert];
-
-                UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
-                                                                   style:UIAlertActionStyleCancel
-                                                                 handler:^(UIAlertAction * action) {
-                                                                     [alert dismissViewControllerAnimated:YES completion:nil];
-                                                                 }];
-                [alert addAction:okAction];
-
-                [self presentViewController:alert animated:YES completion:nil];
+                [self.delegate message:message sentWithType:self.type];
             }];
         }
     };

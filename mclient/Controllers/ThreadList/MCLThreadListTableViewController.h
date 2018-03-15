@@ -23,6 +23,7 @@ extern NSString * const MCLFavoritedChangedNotification;
 @property (strong, nonatomic) id <MCLDependencyBag> bag;
 @property (strong, nonatomic) MCLBoard *board;
 @property (strong, nonatomic) NSMutableArray *threads;
+@property (weak, nonatomic) MCLLoadingViewController *loadingViewController;
 
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
 

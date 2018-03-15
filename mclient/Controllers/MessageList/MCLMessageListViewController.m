@@ -230,21 +230,24 @@
 
 #pragma mark - MCLComposeMessageViewControllerDelegate
 
-- (void)messageSentWithType:(NSUInteger)type
+- (void)message:(MCLMessage *)message sentWithType:(NSUInteger)type
 {
     [self.loadingViewController refresh];
 
-    // "Thank you for your contribution \"%@\"" // TODO: i18n
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Nachricht erfolgreich gepostet!"
-                                                                   message:@""
+    NSString *alertMessage;
+    if (type == kMCLComposeTypeEdit) {
+        alertMessage = [NSString stringWithFormat:NSLocalizedString(@"Your message \"%@\" was changed", nil), message.subject];
+    } else {
+        alertMessage = [NSString stringWithFormat:NSLocalizedString(@"Thank you for your contribution \"%@\"", nil), message.subject];
+    }
+
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Confirmation", nil)
+                                                                   message:alertMessage
                                                             preferredStyle:UIAlertControllerStyleAlert];
 
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
                                               style:UIAlertActionStyleDefault
-                                            handler:^(UIAlertAction * action) {
-
-
-                                            }]];;
+                                            handler:nil]];;
 
     [self presentViewController:alert animated:YES completion:nil];
 }

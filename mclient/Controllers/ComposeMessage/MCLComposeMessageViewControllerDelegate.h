@@ -6,10 +6,12 @@
 //  See LICENSE file in the project root for full license information.
 //
 
+@class MCLMessage;
+
 @protocol MCLComposeMessageViewControllerDelegate <NSObject>
 
 @required
-- (void)messageSentWithType:(NSUInteger)type;
+- (void)message:(MCLMessage *)message sentWithType:(NSUInteger)type;
 
 @optional
 - (void)handleRotationChangeInBackground;

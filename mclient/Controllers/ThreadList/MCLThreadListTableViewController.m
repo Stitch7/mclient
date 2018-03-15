@@ -19,11 +19,12 @@
 #import "MCLThemeManager.h"
 #import "MCLMessageListViewController.h"
 #import "MCLThreadTableViewCell.h"
-#import "MCLThread.h"
 #import "MCLBoard.h"
+#import "MCLThread.h"
+#import "MCLMessage.h"
 #import "MCLBadgeView.h"
-
 #import "MCLSplitViewController.h"
+#import "MCLLoadingViewController.h"
 
 NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotification";
 
@@ -331,9 +332,20 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 
 #pragma mark - MCLComposeMessageViewControllerDelegate
 
-- (void)messageSentWithType:(NSUInteger)type
+- (void)message:(MCLMessage *)message sentWithType:(NSUInteger)type
 {
-    [self.tableView reloadData];
+    [self.loadingViewController refresh];
+
+    NSString *alertMessage = [NSString stringWithFormat:NSLocalizedString(@"Thank you for your contribution \"%@\"", nil), message.subject];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Confirmation", nil)
+                                                                   message:alertMessage
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
+                                              style:UIAlertActionStyleDefault
+                                            handler:nil]];;
+
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - MCLMessageListDelegate
