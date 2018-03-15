@@ -224,7 +224,8 @@
 
 - (NSString *)percentEscapeString:(NSString *)string
 {
-    return [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+    NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789"];
+    return [string stringByAddingPercentEncodingWithAllowedCharacters:set];
 }
 
 @end
