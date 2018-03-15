@@ -9,7 +9,7 @@
 @import WebKit;
 
 @protocol MCLMessageListWidmannStyleTableViewCellDelegate;
-@protocol MCLTheme;
+@protocol MCLDependencyBag;
 
 @class MCLLogin;
 @class MCLMessage;
@@ -23,7 +23,7 @@ extern NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier;
 @property (weak) id<MCLMessageListWidmannStyleTableViewCellDelegate> delegate;
 
 @property (strong, nonatomic) MCLLogin *login;
-@property (strong, nonatomic) id <MCLTheme> currentTheme;
+@property (strong, nonatomic) id <MCLDependencyBag> bag;
 @property (strong, nonatomic) MCLMessage *message;
 @property (strong, nonatomic) MCLMessage *nextMessage;
 

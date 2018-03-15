@@ -93,8 +93,10 @@
             MCLMessage *previewMessage = [[MCLMessage alloc] init];
             previewMessage.textHtml = [[data firstObject] objectForKey:key];
             previewMessage.textHtmlWithImages = previewMessage.textHtml;
+            NSNumber *imageSetting = [self.bag.settings objectForSetting:MCLSettingShowImages];
             self.previewText = [previewMessage messageHtmlWithTopMargin:20
-                                                               andTheme:[self.bag.themeManager currentTheme]];
+                                                               theme:[self.bag.themeManager currentTheme]
+                                                           imageSetting:imageSetting];
             [self.webView loadHTMLString:self.previewText baseURL:nil];
         }
     }];

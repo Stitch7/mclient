@@ -48,7 +48,9 @@ lane :beta do
     release_type: "0",
     notes_type: "0",
     notes: "
-      * mj als Tester hinzugefügt
+      * Nach Anfrage von Rocco Nutzungsbedingungen, Datenschutzerklärung und Impressum des Forums hinzugefügt (Einstellungsdialog ganz unten).
+      * Die Einstellung ob Bilder in Postings eingebettet werden funktioniert jetzt wieder
+      * Abe's iPad als Testdevice hinzugefügt
     "
   )
 

@@ -8,9 +8,10 @@
 
 #import "MCLMessageListFrameStyleViewController.h"
 
+#import "UIView+addConstraints.h"
 #import "MCLDependencyBag.h"
 #import "MCLNotificationManager.h"
-#import "UIView+addConstraints.h"
+#import "MCLSettings.h"
 #import "MCLRouter.h"
 #import "MCLMessageRequest.h"
 #import "MCLLogin.h"
@@ -292,7 +293,8 @@
 - (void)loadMessage:(MCLMessage *)message fromCell:(MCLMessageListFrameStyleTableViewCell *)cell
 {
     cell.messageText = message.text;
-    [self.webView loadHTMLString:[message messageHtmlWithTopMargin:15 andTheme:self.bag.themeManager.currentTheme] baseURL:nil];
+    NSNumber *imageSetting = [self.bag.settings objectForSetting:MCLSettingShowImages];
+    [self.webView loadHTMLString:[message messageHtmlWithTopMargin:15 theme:self.bag.themeManager.currentTheme imageSetting:imageSetting] baseURL:nil];
     [self.toolbar updateBarButtonsWithMessage:message];
 }
 

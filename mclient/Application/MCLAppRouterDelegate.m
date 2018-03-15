@@ -62,7 +62,7 @@
                                                                                 request:favoritesRequest
                                                                   contentViewController:detailVC
                                                                               configure:^(NSArray *favorites) {
-                                                                                  detailVC.favorites = favorites;
+                                                                                  detailVC.favorites = [favorites mutableCopy];
                                                                               }];
     return loadingVC;
 }

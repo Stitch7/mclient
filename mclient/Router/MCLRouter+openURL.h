@@ -9,9 +9,11 @@
 #import "MCLRouter.h"
 
 @class MCLMessageListViewController;
+@class SFSafariViewController;
 
 @interface MCLRouter (openURL)
 
 - (MCLMessageListViewController *)pushToURL:(NSURL *)destinationURL;
+- (SFSafariViewController *)openRawManiacForumURL:(NSURL *)destinationURL fromPresentingViewController:(UIViewController *)presentingViewController;
 
 @end

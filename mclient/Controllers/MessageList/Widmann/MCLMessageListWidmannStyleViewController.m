@@ -167,7 +167,7 @@
     cell.indexPath = indexPath;
     cell.toolbar.messageToolbarDelegate = self.messageToolbarController;
     cell.login = self.bag.login;
-    cell.currentTheme = self.bag.themeManager.currentTheme;
+    cell.bag = self.bag;
     cell.dateFormatter = self.dateFormatter;
 //    cell.active = indexPath.row > 0 && indexPath.row == [tableView indexPathForSelectedRow].row;
     cell.active = indexPath.row > 0 && isSelectedRow;
@@ -264,7 +264,8 @@
 - (void)putMessage:(MCLMessage *)message toCell:(MCLMessageListWidmannStyleTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     [cell.toolbar updateBarButtonsWithMessage:message];
-    [cell.webView loadHTMLString:[message messageHtmlWithTopMargin:0 andTheme:self.bag.themeManager.currentTheme] baseURL:nil];
+    NSNumber *imageSetting = [self.bag.settings objectForSetting:MCLSettingShowImages];
+    [cell.webView loadHTMLString:[message messageHtmlWithTopMargin:0 theme:self.bag.themeManager.currentTheme imageSetting:imageSetting] baseURL:nil];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
 }
 

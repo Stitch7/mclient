@@ -32,6 +32,25 @@
     return messageListViewController;
 }
 
+- (SFSafariViewController *)openRawManiacForumURL:(NSURL *)destinationURL fromPresentingViewController:(UIViewController *)presentingViewController
+{
+    SFSafariViewController *safariVC;
+    if (@available(iOS 11.0, *)) {
+        SFSafariViewControllerConfiguration *safariConfig = [[SFSafariViewControllerConfiguration alloc] init];
+        safariConfig.entersReaderIfAvailable = YES;
+        safariVC = [[SFSafariViewController alloc] initWithURL:destinationURL configuration:safariConfig];
+    } else {
+        safariVC = [[SFSafariViewController alloc] initWithURL:destinationURL entersReaderIfAvailable:YES];
+        safariVC.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    [safariVC setModalPresentationStyle:UIModalPresentationCustom];
+    [safariVC setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+
+    [presentingViewController presentViewController:safariVC animated:YES completion:nil];
+
+    return safariVC;
+}
+
 - (BOOL)isManiacURL:(NSURL *)url
 {
     return [url.host hasSuffix:@"maniac-forum.de"];

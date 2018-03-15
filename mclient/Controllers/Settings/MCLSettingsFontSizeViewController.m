@@ -140,7 +140,8 @@
     MCLMessage *previewMessage = [[MCLMessage alloc] init];
     previewMessage.textHtml = [self seamanDiaryPostingText];
     previewMessage.textHtmlWithImages = previewMessage.textHtml;
-    NSString *previewText = [previewMessage messageHtmlWithTopMargin:55 andTheme:self.bag.themeManager.currentTheme];
+    NSNumber *imageSetting = [self.bag.settings objectForSetting:MCLSettingShowImages];
+    NSString *previewText = [previewMessage messageHtmlWithTopMargin:55 theme:self.bag.themeManager.currentTheme imageSetting:imageSetting];
     [self.webView loadHTMLString:previewText baseURL:nil];
 }
 

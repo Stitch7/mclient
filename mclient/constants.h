@@ -12,7 +12,7 @@
 //#define kMServiceBaseURL @"http://192.168.178.36:8080"
 #define kMServiceBaseURL @"https://nerds.berlin/mservice-beta/"
 
-#define kManiacForumURL @"https://www.maniac-forum.de/forum/pxmboard.php"
+#define kManiacForumURL @"https://www.maniac-forum.de/"
 
 #define kImgurID @"b432fef195584ba"
 #define kImgurSecret @"309834c415d62245b40d5f58c2e8c1fc8707d0d1"

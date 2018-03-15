@@ -95,10 +95,10 @@
     }
 }
 
-- (NSString *)messageHtmlWithTopMargin:(int)topMargin andTheme:(id <MCLTheme>)theme
+- (NSString *)messageHtmlWithTopMargin:(int)topMargin theme:(id <MCLTheme>)theme imageSetting:(NSNumber *)imageSetting
 {
     NSString *messageHtml = @"";
-    switch ([[NSUserDefaults standardUserDefaults] integerForKey:@"showImages"]) {
+    switch ([imageSetting integerValue]) {
         case kMCLSettingsShowImagesAlways:
         default:
             messageHtml = self.textHtmlWithImages;

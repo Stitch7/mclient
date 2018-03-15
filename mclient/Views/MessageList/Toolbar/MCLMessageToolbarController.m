@@ -74,7 +74,7 @@
 
 - (void)messageToolbar:(MCLMessageToolbar *)toolbar requestsToCopyMessageLinkToClipboard:(MCLMessage *)message
 {
-    NSString *link = [NSString stringWithFormat:@"%@?mode=message&brdid=%@&msgid=%@", kManiacForumURL, message.board.boardId, message.messageId];
+    NSString *link = [NSString stringWithFormat:@"%@forum/pxmboard.php?mode=message&brdid=%@&msgid=%@", kManiacForumURL, message.board.boardId, message.messageId];
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = link;
 

@@ -8,9 +8,13 @@
 
 #import "MCLSettingsViewController.h"
 
+@import SafariServices;
+
+#import "utils.h"
 #import "MCLDependencyBag.h"
 #import "MCLFeatures.h"
 #import "MCLSettings.h"
+#import "MCLRouter+openURL.h"
 #import "MCLLogin.h"
 #import "MCLNotificationManager.h"
 #import "MCLThemeManager.h"
@@ -51,6 +55,7 @@
 #define THREADVIEW_SECTION 3;
 #define FONTSIZE_SECTION 4;
 #define IMAGES_SECTION 7;
+#define INFO_SECTION 9;
 
 - (void)awakeFromNib
 {
@@ -70,6 +75,7 @@
     [self configureSignatureSection];
     [self configureThreadSection];
     [self configureNightModeSection];
+    [self configureImagesSection];
     [self configureAboutLabel];
 
 //    if (![self.bag.features isFeatureWithNameEnabled:MCLFeatureKillFileThreads]) {
@@ -242,11 +248,15 @@
     aboutLabel.textAlignment = NSTextAlignmentCenter;
     aboutLabel.textColor = [UIColor darkGrayColor];
 
-    NSString *aboutText = NSLocalizedString(@"Version %@ (%@)\nCopyright © 2014-2017 Christopher Reitz aka Stitch", nil);
+    NSString *aboutText = @"Version %@ (%@)\nCopyright © 2014-%@ Christopher Reitz aka Stitch";
+    NSDateFormatter *yearFormatter = [[NSDateFormatter alloc] init];
+    [yearFormatter setDateFormat:@"yyyy"];
+    NSString *yearString = [yearFormatter stringFromDate:[NSDate date]];
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     aboutLabel.text = [NSString stringWithFormat:aboutText,
                        [infoDictionary objectForKey:@"CFBundleShortVersionString"],
-                       [infoDictionary objectForKey:@"CFBundleVersion"]];
+                       [infoDictionary objectForKey:@"CFBundleVersion"],
+                       yearString];
 
     self.tableView.tableFooterView = aboutLabel;
     [aboutLabel setNeedsLayout];
@@ -358,38 +368,80 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int threadViewSection = THREADVIEW_SECTION;
-    if (indexPath.section == threadViewSection) {
-        for (int row = 0; row < [self.tableView numberOfRowsInSection:threadViewSection]; row++) {
-            NSIndexPath *cellPath = [NSIndexPath indexPathForRow:row inSection:threadViewSection];
-            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:cellPath];
-            if (row == indexPath.row) {
-                [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-                self.threadView = @(row);
-                [self.bag.settings setInteger:row forSetting:MCLSettingThreadView];
-                [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            } else {
-                [cell setAccessoryType:UITableViewCellAccessoryNone];
-            }
-        }
-    }
+    const int threadViewSection = THREADVIEW_SECTION;
+    const int imagesSection = IMAGES_SECTION;
+    const int infoSection = INFO_SECTION;
 
-    int imagesSection = IMAGES_SECTION;
-    if (indexPath.section == imagesSection) {
-        for (int row = 0; row < [self.tableView numberOfRowsInSection:imagesSection]; row++) {
-            NSIndexPath *cellPath = [NSIndexPath indexPathForRow:row inSection:imagesSection];
-            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:cellPath];
-            if (row == indexPath.row) {
-                [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-                self.showImages = @(row);
-                [self.bag.settings setInteger:row forSetting:MCLSettingShowImages];
-                [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            } else {
-                [cell setAccessoryType:UITableViewCellAccessoryNone];
-            }
+    switch (indexPath.section) {
+        case threadViewSection:
+            [self didSelectRowInThreadViewSectionAtIndexPath:indexPath];
+            break;
+
+        case imagesSection:
+            [self didSelectRowInImagesSectionAtIndexPath:indexPath];
+            break;
+
+        case infoSection:
+            [self didSelectRowInInfoSectionAtIndexPath:indexPath];
+            break;
+    }
+}
+
+- (void)didSelectRowInThreadViewSectionAtIndexPath:(NSIndexPath *)indexPath
+{
+    int threadViewSection = THREADVIEW_SECTION;
+    for (int row = 0; row < [self.tableView numberOfRowsInSection:threadViewSection]; row++) {
+        NSIndexPath *cellPath = [NSIndexPath indexPathForRow:row inSection:threadViewSection];
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:cellPath];
+        if (row == indexPath.row) {
+            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+            self.threadView = @(row);
+            [self.bag.settings setInteger:row forSetting:MCLSettingThreadView];
+            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        } else {
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
     }
 }
+
+- (void)didSelectRowInImagesSectionAtIndexPath:(NSIndexPath *)indexPath
+{
+    int imagesSection = IMAGES_SECTION;
+    for (int row = 0; row < [self.tableView numberOfRowsInSection:imagesSection]; row++) {
+        NSIndexPath *cellPath = [NSIndexPath indexPathForRow:row inSection:imagesSection];
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:cellPath];
+        if (row == indexPath.row) {
+            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+            self.showImages = @(row);
+            [self.bag.settings setInteger:row forSetting:MCLSettingShowImages];
+            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        } else {
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+        }
+    }
+}
+
+- (void)didSelectRowInInfoSectionAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *page;
+    switch (indexPath.row) {
+        case 0:
+            page = @"terms.html";
+            break;
+
+        case 1:
+            page = @"privacy.html";
+            break;
+
+        case 2:
+            page = @"imprint.html";
+            break;
+    }
+
+    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@", kManiacForumURL, page]];
+    [self.bag.router openRawManiacForumURL:url fromPresentingViewController:self];
+}
+
 
 #pragma mark - UITextFieldDelegate
 
@@ -533,10 +585,11 @@
     if ([segue.identifier isEqualToString:@"PushToSettingsFontSize"]) {
         MCLSettingsFontSizeViewController *fontSizeVC = (MCLSettingsFontSizeViewController *)segue.destinationViewController;
         fontSizeVC.bag = self.bag;
-    } else if ([segue.identifier isEqualToString:@"PushToThreadsKillfile"]) {
-        MCLThreadKillfileViewController *killfileThreadsVC = (MCLThreadKillfileViewController *)segue.destinationViewController;
-        killfileThreadsVC.bag = self.bag;
     }
+//    else if ([segue.identifier isEqualToString:@"PushToThreadsKillfile"]) {
+//        MCLThreadKillfileViewController *killfileThreadsVC = (MCLThreadKillfileViewController *)segue.destinationViewController;
+//        killfileThreadsVC.bag = self.bag;
+//    }
 }
 
 @end

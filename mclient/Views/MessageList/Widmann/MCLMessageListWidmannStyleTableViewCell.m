@@ -11,6 +11,9 @@
 @import AVFoundation;
 
 #import "UIView+addConstraints.h"
+#import "MCLDependencyBag.h"
+#import "MCLSettings.h"
+#import "MCLThemeManager.h"
 #import "MCLTheme.h"
 #import "MCLMessage.h"
 #import "MCLLogin.h"
@@ -146,46 +149,49 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.separatorInset = UIEdgeInsetsZero;
 
+    id <MCLTheme> currentTheme = self.bag.themeManager.currentTheme;
+
     [self indentView:self.indentionConstraint withLevel:message.level];
 
     self.indentionImageView.image = [self.indentionImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    self.indentionImageView.tintColor = [self.currentTheme tableViewSeparatorColor];
+    self.indentionImageView.tintColor = [currentTheme tableViewSeparatorColor];
 
     if (self.isActive) {
-        self.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
-        self.webView.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
-        self.webView.scrollView.backgroundColor = [self.currentTheme tableViewCellSelectedBackgroundColor];
+        self.backgroundColor = [currentTheme tableViewCellSelectedBackgroundColor];
+        self.webView.backgroundColor = [currentTheme tableViewCellSelectedBackgroundColor];
+        self.webView.scrollView.backgroundColor = [currentTheme tableViewCellSelectedBackgroundColor];
 
         [self.toolbar setHidden:NO];
-        [self.webView loadHTMLString:[message messageHtmlWithTopMargin:0 andTheme:self.currentTheme] baseURL:nil];
+        NSNumber *imageSetting = [self.bag.settings objectForSetting:MCLSettingShowImages];
+        [self.webView loadHTMLString:[message messageHtmlWithTopMargin:0 theme:currentTheme imageSetting:imageSetting] baseURL:nil];
     }
     else {
-        self.backgroundColor = [self.currentTheme tableViewCellBackgroundColor];
+        self.backgroundColor = [currentTheme tableViewCellBackgroundColor];
         [self.toolbar setHidden:YES];
         self.webViewHeightConstraint.constant = 0;
     }
 
     self.toolbar.message = message;
-    [self.toolbar setBarTintColor:[self.currentTheme tableViewCellSelectedBackgroundColor]];
+    [self.toolbar setBarTintColor:[currentTheme tableViewCellSelectedBackgroundColor]];
 
     self.indentionImageView.hidden = (self.indexPath.row == 0);
 
     self.subjectLabel.text = message.subject;
-    self.subjectLabel.textColor = [self.currentTheme textColor];
+    self.subjectLabel.textColor = [currentTheme textColor];
 
     self.usernameLabel.text = message.username;
     if ([message.username isEqualToString:self.toolbar.login.username]) {
-        self.usernameLabel.textColor = [self.currentTheme ownUsernameTextColor];
+        self.usernameLabel.textColor = [currentTheme ownUsernameTextColor];
     }
     else if (message.isMod) {
-        self.usernameLabel.textColor = [self.currentTheme modTextColor];
+        self.usernameLabel.textColor = [currentTheme modTextColor];
     }
     else {
-        self.usernameLabel.textColor = [self.currentTheme usernameTextColor];
+        self.usernameLabel.textColor = [currentTheme usernameTextColor];
     }
 
     self.dateLabel.text = [self.dateFormatter stringFromDate:message.date];
-    self.dateLabel.textColor = [self.currentTheme detailTextColor];
+    self.dateLabel.textColor = [currentTheme detailTextColor];
 
     if (self.indexPath.row == 0 || message.isRead) {
         [self markRead];

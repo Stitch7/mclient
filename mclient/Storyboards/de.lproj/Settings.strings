@@ -65,8 +65,10 @@
 /* Class = "UILabel"; text = "Switch Automatically"; ObjectID = "xQm-Bk-cad"; */
 "xQm-Bk-cad.text" = "Automatisch umschalten";
 
-"Bbz-uB-lDT.headerTitle" = "KILLFILE VERWALTEN";
-"Fap-wu-fB0.text" = "Ausgeblendete Threads";
+"Bbz-uB-lDT.headerTitle" = "INFORMATIONEN";
+"Fap-wu-fB0.text" = "Nutzungsbedingungen";
+"LVI-Wv-6BK.text" = "Datenschutzerklärung";
+"f5C-ge-YX7.text" = "Impressum (www.maniac-forum.de)";
 
 "03w-Ml-MZu.headerTitle" = "BENACHRICHTIGUNGEN";
 "b2P-NH-jIN.text" = "Hintergrundbenachrichtigungen";
