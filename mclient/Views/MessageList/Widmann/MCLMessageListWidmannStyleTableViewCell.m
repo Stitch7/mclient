@@ -201,6 +201,11 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
     }
 }
 
+- (void)setNextMessage:(MCLMessage *)nextMessage
+{
+    self.toolbar.nextMessage = nextMessage;
+}
+
 - (void)setLogin:(MCLLogin *)login
 {
     self.toolbar.login = login;

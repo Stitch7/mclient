@@ -161,8 +161,6 @@
 
     BOOL isSelectedRow = indexPath.row == [tableView indexPathForSelectedRow].row;
 
-    [self nextMessageForIndexPath:indexPath];
-
     MCLMessageListWidmannStyleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MCLMessageListWidmannStyleTableViewCellIdentifier];
     cell.indexPath = indexPath;
     cell.toolbar.messageToolbarDelegate = self.messageToolbarController;
@@ -263,6 +261,7 @@
 
 - (void)putMessage:(MCLMessage *)message toCell:(MCLMessageListWidmannStyleTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    message.nextMessage = [self nextMessageForIndexPath:indexPath];
     [cell.toolbar updateBarButtonsWithMessage:message];
     NSNumber *imageSetting = [self.bag.settings objectForSetting:MCLSettingShowImages];
     [cell.webView loadHTMLString:[message messageHtmlWithTopMargin:0 theme:self.bag.themeManager.currentTheme imageSetting:imageSetting] baseURL:nil];
