@@ -23,8 +23,6 @@
 #import "MCLComposeMessageViewControllerDelegate.h"
 #import "MCLMessageTextViewToolbar.h"
 
-static void *ProgressObserverContext = &ProgressObserverContext;
-
 @interface MCLComposeMessageViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *cameraButton;
@@ -430,19 +428,17 @@ static void *ProgressObserverContext = &ProgressObserverContext;
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    NSData *imageData = UIImagePNGRepresentation(image);
+//    NSData *imageData = UIImagePNGRepresentation(image);
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.7f);
 
-    NSProgress *progress = [NSProgress progressWithTotalUnitCount:1];
-    [progress addObserver:self
-               forKeyPath:NSStringFromSelector(@selector(fractionCompleted))
-                  options:NSKeyValueObservingOptionInitial
-                  context:ProgressObserverContext];
-    [progress becomeCurrentWithPendingUnitCount:1];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     [IMGImageRequest uploadImageWithData:imageData
                                    title:self.subject
                                 progress:^(NSProgress *progress) {
-
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        [self.progressView setProgress:(float)progress.fractionCompleted animated:YES];
+                                    });
                                 }
                                  success:^(IMGImage *image) {
                                      [self dissmissProgressViewWithSuccess:YES block:^{
@@ -463,6 +459,7 @@ static void *ProgressObserverContext = &ProgressObserverContext;
                                                                      handler:nil];
                                          [alert addAction:yesButton];
 
+                                         [self.view endEditing:YES];
                                          [self presentViewController:alert animated:YES completion:nil];
                                      }];
                                  }];
@@ -475,6 +472,8 @@ static void *ProgressObserverContext = &ProgressObserverContext;
 
 - (void)dissmissProgressViewWithSuccess:(BOOL)success block:(void(^)(void))block
 {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
     if (success) {
         self.progressView.mode = MRProgressOverlayViewModeCheckmark;
         self.progressView.titleLabelText = @"Succeed";
@@ -491,21 +490,11 @@ static void *ProgressObserverContext = &ProgressObserverContext;
             self.progressView.titleLabelText = @"Uploading";
             self.progressView.progress = 0;
 
-            [self.composeTextTextField becomeFirstResponder];
+            if (success) {
+                [self.composeTextTextField becomeFirstResponder];
+            }
         }];
     } afterDelay:0.5];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if (context == ProgressObserverContext) {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            NSProgress *progress = object;
-            [self.progressView setProgress:(float)progress.fractionCompleted animated:YES];
-        }];
-    } else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
 }
 
 - (void)performBlock:(void(^)(void))block afterDelay:(NSTimeInterval)delay {
