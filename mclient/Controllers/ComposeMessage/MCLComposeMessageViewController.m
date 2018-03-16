@@ -416,11 +416,65 @@
             [self presentViewController:alert animated:YES completion:nil];
         } else {
             NSString *quoteString = [[data firstObject] objectForKey:@"quote"];
-            NSString *textViewContent = [@"\n\n" stringByAppendingString:self.composeTextTextField.text];
-            self.composeTextTextField.text = [quoteString stringByAppendingString:textViewContent];
+            NSArray *rawQuoteBlocks = [quoteString componentsSeparatedByString:@"\n"];
+            NSMutableArray *quoteBlocks = [[NSMutableArray alloc] init];
+            BOOL quoteOfQuoteRemoved = NO;
+            for (NSString *rawQuoteBlock in rawQuoteBlocks) {
+                if ([rawQuoteBlock isEqualToString:@">"] ||
+                    [rawQuoteBlock hasPrefix:@">>"] ||
+                    [rawQuoteBlock hasPrefix:@">-------------"] ||
+                    [[rawQuoteBlock lowercaseString] hasPrefix:@">gesendet mit"]) {
+                    quoteOfQuoteRemoved = YES;
+                    continue;
+                }
+                [quoteBlocks addObject:rawQuoteBlock];
+            }
+
+            if ([quoteBlocks count] == 1 && !quoteOfQuoteRemoved) {
+                NSString *textViewContent = [@"\n\n" stringByAppendingString:self.composeTextTextField.text];
+                self.composeTextTextField.text = [quoteString stringByAppendingString:textViewContent];
+            }
+            else {
+                [self presentQuotePickerActionSheet:quoteBlocks quoteString:quoteString];
+            }
         }
         [sender setEnabled:YES];
     }];
+}
+
+- (void)presentQuotePickerActionSheet:(NSMutableArray *)quoteBlocks quoteString:(NSString *)quoteString
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Select quote", nil)
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+
+    for (NSString *quoteBlock in quoteBlocks) {
+        UIAlertAction *action = [UIAlertAction actionWithTitle:[quoteBlock substringFromIndex:1]
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * action) {
+                                                           NSString *textViewContent = self.composeTextTextField.text;
+                                                           if (textViewContent.length > 0) {
+                                                               textViewContent = [textViewContent stringByAppendingString:@"\n\n"];
+                                                           }
+                                                           self.composeTextTextField.text = [[textViewContent stringByAppendingString:quoteBlock] stringByAppendingString:@"\n"];
+                                                       }];
+        [alert addAction:action];
+    }
+
+    UIAlertAction *fullQuoteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Full quote", nil)
+                                                              style:UIAlertActionStyleDestructive
+                                                            handler:^(UIAlertAction * action) {
+                                                                NSString *textViewContent = [@"\n\n" stringByAppendingString:self.composeTextTextField.text];
+                                                                self.composeTextTextField.text = [quoteString stringByAppendingString:textViewContent];
+                                                            }];
+    [alert addAction:fullQuoteAction];
+
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:nil];
+    [alert addAction:cancelAction];
+
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
