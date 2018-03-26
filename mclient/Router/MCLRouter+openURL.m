@@ -13,6 +13,7 @@
 #import "MCLRouter+mainNavigation.h"
 #import "MCLThreadIdForMessageRequest.h"
 #import "MCLSettings.h"
+#import "MCLThemeManager.h"
 #import "MCLTheme.h"
 #import "MCLMessage.h"
 #import "MCLThread.h"
@@ -39,12 +40,17 @@
         SFSafariViewControllerConfiguration *safariConfig = [[SFSafariViewControllerConfiguration alloc] init];
         safariConfig.entersReaderIfAvailable = YES;
         safariVC = [[SFSafariViewController alloc] initWithURL:destinationURL configuration:safariConfig];
-    } else {
+    } else if (@available(iOS 10.0, *)) {
         safariVC = [[SFSafariViewController alloc] initWithURL:destinationURL entersReaderIfAvailable:YES];
         safariVC.automaticallyAdjustsScrollViewInsets = NO;
+    } else { // Fallback for iOS9
+        [UIApplication.sharedApplication openURL:destinationURL];
+        return nil;
     }
     [safariVC setModalPresentationStyle:UIModalPresentationCustom];
     [safariVC setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    safariVC.preferredBarTintColor = [self.bag.themeManager.currentTheme navigationBarBackgroundColor];
+    safariVC.preferredControlTintColor = [self.bag.themeManager.currentTheme tintColor];
 
     [presentingViewController presentViewController:safariVC animated:YES completion:nil];
 
@@ -63,15 +69,21 @@
         return nil;
     }
 
-    SFSafariViewController *safariVC = [[SFSafariViewController alloc] initWithURL:url];
-    safariVC.preferredBarTintColor = [self.currentTheme navigationBarBackgroundColor];
-    safariVC.preferredControlTintColor = [self.currentTheme tintColor];
+     // Weird code, because it's not possible to mix @available with other conditions
+    if (@available(iOS 10.0, *)) {
+        SFSafariViewController *safariVC = [[SFSafariViewController alloc] initWithURL:url];
+        safariVC.preferredBarTintColor = [self.bag.themeManager.currentTheme navigationBarBackgroundColor];
+        safariVC.preferredControlTintColor = [self.bag.themeManager.currentTheme tintColor];
 
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:safariVC];
-    [navigationController setNavigationBarHidden:YES animated:NO];
-    [self.masterNavigationController presentViewController:navigationController animated:YES completion:nil];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:safariVC];
+        [navigationController setNavigationBarHidden:YES animated:NO];
+        [self.masterNavigationController presentViewController:navigationController animated:YES completion:nil];
 
-    return safariVC;
+        return safariVC;
+    } else {
+        [UIApplication.sharedApplication openURL:url];
+        return nil;
+    }
 }
 
 - (MCLMessageListViewController *)pushToMessageFromUrl:(NSURL *)url
