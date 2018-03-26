@@ -209,7 +209,7 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    // this method must be implement too or nothing will work
+    // this method must be at least implemented too or nothing will work
 }
 
 #pragma mark - UITableViewDelegate

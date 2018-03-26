@@ -48,7 +48,7 @@ NSString *const MCLThreadTableViewCellIdentifier = @"ThreadCell";
     self.threadSubjectLabel.text = thread.subject;
 
     self.threadUsernameLabel.text = thread.username;
-    if ([thread.username isEqualToString:self.login.username]) {
+    if (self.login.valid && [thread.username isEqualToString:self.login.username]) {
         self.threadUsernameLabel.textColor = [theme ownUsernameTextColor];
     } else if (thread.isMod) {
         self.threadUsernameLabel.textColor = [theme modTextColor];

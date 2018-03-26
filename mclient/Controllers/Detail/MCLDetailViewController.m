@@ -13,6 +13,7 @@
 #import "MCLDependencyBag.h"
 #import "UIView+addConstraints.h"
 #import "MCLRouter+mainNavigation.h"
+#import "MCLLogin.h"
 #import "MCLBoard.h"
 #import "MCLThread.h"
 #import "MCLFavoritesRequest.h"
@@ -197,7 +198,12 @@
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger favoritesCount = [self.favorites count];
-    self.tableView.backgroundView = favoritesCount == 0 ? self.noDataView : nil;
+
+    if (favoritesCount == 0 && self.bag.login.valid) {
+        self.tableView.backgroundView = self.noDataView;
+    } else {
+        self.tableView.backgroundView = nil;
+    }
 
     return favoritesCount;
 }

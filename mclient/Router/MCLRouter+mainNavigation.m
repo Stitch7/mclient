@@ -95,7 +95,8 @@
     threadListVC.board = board;
 
     MCLThreadListRequest *threadListRequest = [[MCLThreadListRequest alloc] initWithClient:self.bag.httpClient
-                                                                                     board:board];
+                                                                                     board:board
+                                                                                     login:self.bag.login];
     MCLLoadingViewController *loadingVC = [[MCLLoadingViewController alloc] initWithBag:self.bag
                                                                                 request:threadListRequest
                                                                   contentViewController:threadListVC

@@ -11,10 +11,11 @@
 
 @protocol MCLHTTPClient;
 @class MCLBoard;
+@class MCLLogin;
 
 @interface MCLThreadListRequest : NSObject <MCLRequest>
 
-- (instancetype)initWithClient:(id <MCLHTTPClient>)httpClient board:(MCLBoard *)board;
+- (instancetype)initWithClient:(id <MCLHTTPClient>)httpClient board:(MCLBoard *)board login:(MCLLogin *)login;
 - (void)loadWithCompletionHandler:(void (^)(NSError*, NSArray*))completionHandler;
 
 @end
