@@ -20,7 +20,7 @@
 
 #pragma mark - Initializers
 
-- (instancetype)initWithBag:(id<MCLDependencyBag>)bag requests:(NSArray<__kindof id<MCLRequest>> *)requests forViewController:(UIViewController *)viewController
+- (instancetype)initWithBag:(id<MCLDependencyBag>)bag requests:(NSDictionary *)requests forViewController:(UIViewController *)viewController
 {
     self = [super initWithBag:bag requests:requests forViewController:viewController];
     if (!self) return nil;

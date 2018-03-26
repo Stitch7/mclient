@@ -16,7 +16,7 @@
 #import "UIView+addConstraints.h"
 #import "MCLThemeManager.h"
 #import "MCLTheme.h"
-#import "MCLLoadingViewControllerDelegate.h"
+#import "MCLSectionLoadingViewControllerDelegate.h"
 #import "MCLRequest.h"
 #import "MCLPacmanLoadingView.h"
 #import "MCLMServiceErrorView.h"
@@ -28,8 +28,7 @@ static NSString *kQueueOperationsChanged = @"kQueueOperationsChanged";
 
 @interface MCLSectionLoadingViewController ()
 
-@property (strong, nonatomic) NSMutableArray *data;
-@property (strong, nonatomic) NSArray<__kindof id<MCLRequest>> *requests;
+@property (strong, nonatomic) NSDictionary *requests;
 @property (strong, nonatomic) NSOperationQueue *queue;
 @property (assign, nonatomic, getter=isLoading) BOOL loading;
 @property (assign, nonatomic, getter=hasError) BOOL error;
@@ -45,7 +44,7 @@ static NSString *kQueueOperationsChanged = @"kQueueOperationsChanged";
 
 #pragma mark - Initializers
 
-- (instancetype)initWithBag:(id <MCLDependencyBag>)bag requests:(NSArray<__kindof id<MCLRequest>> *)requests forViewController:(UIViewController *)contentViewController
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag requests:(NSDictionary *)requests forViewController:(UIViewController *)contentViewController
 {
     self = [super init];
     if (!self) return nil;
@@ -55,8 +54,8 @@ static NSString *kQueueOperationsChanged = @"kQueueOperationsChanged";
     [self initialize];
 
     self.contentViewController = contentViewController;
-    if ([[contentViewController class] conformsToProtocol:@protocol(MCLLoadingViewControllerDelegate)]) {
-        self.delegate = (UIViewController <MCLLoadingViewControllerDelegate> *) contentViewController;
+    if ([[contentViewController class] conformsToProtocol:@protocol(MCLSectionLoadingViewControllerDelegate)]) {
+        self.delegate = (UIViewController <MCLSectionLoadingViewControllerDelegate> *) contentViewController;
     }
 
     [self addContentViewContoller:contentViewController];
@@ -246,8 +245,8 @@ static NSString *kQueueOperationsChanged = @"kQueueOperationsChanged";
     }
 
     [self removeNetworkConnectionAvailableView];
-    self.data = [[NSMutableArray alloc] init];
-    for (id<MCLRequest> request in self.requests) {
+    for (NSNumber *key in self.requests) {
+        id<MCLRequest> request = [self.requests objectForKey:key];
         AsyncBlockOperation *operation = [AsyncBlockOperation blockOperationWithBlock:^(AsyncBlockOperation *op) {
             [request loadWithCompletionHandler:^(NSError *error, NSArray *data) {
                 [self stopLoading];
@@ -257,10 +256,8 @@ static NSString *kQueueOperationsChanged = @"kQueueOperationsChanged";
                     return;
                 }
 
-                [self.data addObject:data];
-
-                if ([self.delegate respondsToSelector:@selector(loadingViewController:hasRefreshedWithData:)]) {
-                    [self.delegate loadingViewController:nil hasRefreshedWithData:self.data];
+                if ([self.delegate respondsToSelector:@selector(loadingViewController:hasRefreshedWithData:forKey:)]) {
+                    [self.delegate loadingViewController:nil hasRefreshedWithData:data forKey:key];
                 }
 
                 [self updateNavigationController];

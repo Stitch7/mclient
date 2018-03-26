@@ -8,12 +8,18 @@
 
 #import "MGSwipeTableCell.h"
 
-#import "MCLLoadingViewControllerDelegate.h"
+#import "MCLSectionLoadingViewControllerDelegate.h"
 #import "MCLSettingsViewController.h"
+
+// Sections
+typedef NS_ENUM(NSInteger, MCLBoardListSection) {
+    MCLBoardListSectionBoards = 0,
+    MCLBoardListSectionFavorites = 1,
+};
 
 @protocol MCLDependencyBag;
 
-@interface MCLBoardListTableViewController : UITableViewController <MGSwipeTableCellDelegate, MCLLoadingViewControllerDelegate, MCLSettingsTableViewControllerDelegate>
+@interface MCLBoardListTableViewController : UITableViewController <MGSwipeTableCellDelegate, MCLSectionLoadingViewControllerDelegate, MCLSettingsTableViewControllerDelegate>
 
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
 

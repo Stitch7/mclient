@@ -523,6 +523,7 @@
 		301203531E03704500B06FF6 /* MCLMessageListFrameStyleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MCLMessageListFrameStyleView.xib; sourceTree = "<group>"; };
 		301203581E037DEC00B06FF6 /* MCLMessageListFrameStyleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageListFrameStyleViewController.h; sourceTree = "<group>"; };
 		301203591E037DEC00B06FF6 /* MCLMessageListFrameStyleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListFrameStyleViewController.m; sourceTree = "<group>"; };
+		30166C3A206307A700C4F015 /* MCLSectionLoadingViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLSectionLoadingViewControllerDelegate.h; sourceTree = "<group>"; };
 		301E24B419BB02EB00943EC6 /* MCLProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLProfileTableViewController.h; sourceTree = "<group>"; };
 		301E24B519BB02EB00943EC6 /* MCLProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLProfileTableViewController.m; sourceTree = "<group>"; };
 		301FD00F19AB73160028C5C8 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
@@ -1487,6 +1488,7 @@
 				30E217681F268B530030FC9A /* MCLLoadingViewControllerDelegate.h */,
 				305E54AD1F2CCD36004002E6 /* MCLSectionLoadingViewController.h */,
 				305E54AC1F2CCD36004002E6 /* MCLSectionLoadingViewController.m */,
+				30166C3A206307A700C4F015 /* MCLSectionLoadingViewControllerDelegate.h */,
 			);
 			path = Loading;
 			sourceTree = "<group>";

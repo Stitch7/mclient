@@ -47,7 +47,8 @@
     MCLBoardListTableViewController *boardsListVC = [[MCLBoardListTableViewController alloc] initWithBag:self.bag];
     MCLBoardListRequest *boardListRequest = [[MCLBoardListRequest alloc] initWithClient:self.bag.httpClient];
     MCLFavoritesRequest *favoritesRequest = [[MCLFavoritesRequest alloc] initWithClient:self.bag.httpClient];
-    NSArray *requests = @[boardListRequest, favoritesRequest];
+    NSDictionary *requests = @{@(MCLBoardListSectionBoards): boardListRequest,
+                               @(MCLBoardListSectionFavorites): favoritesRequest};
     MCLBoardsListLoadingViewController *loadingVC = [[MCLBoardsListLoadingViewController alloc] initWithBag:self.bag
                                                                                                    requests:requests
                                                                                           forViewController:boardsListVC];

@@ -29,16 +29,12 @@
 #import "MCLLogoLabel.h"
 #import "MCLVerifiyLoginView.h"
 
-// Sections
-typedef NS_ENUM(NSInteger, MCLBoardListSection) {
-    MCLBoardListSectionBoards = 0,
-    MCLBoardListSectionFavorites = 1,
-};
 
 @interface MCLBoardListTableViewController ()
 
 @property (strong, nonatomic) id <MCLDependencyBag> bag;
-@property (strong, nonatomic) NSMutableArray *data;
+@property (strong, nonatomic) NSMutableArray *boards;
+@property (strong, nonatomic) NSMutableArray *favorites;
 @property (strong, nonatomic) MCLMessageListViewController *detailViewController;
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) BBBadgeBarButtonItem *responsesButtonItem;
@@ -169,19 +165,19 @@ typedef NS_ENUM(NSInteger, MCLBoardListSection) {
     [self.tableView setContentInset:UIEdgeInsetsMake(8, 0, 0, 0)];
 }
 
-#pragma mark - MCLLoadingContentViewControllerDelegate
+#pragma mark - MCLSectionLoadingViewControllerDelegate
 
-- (NSString *)loadingViewControllerRequestsTitleString:(MCLLoadingViewController *)loadingViewController
+- (NSString *)loadingViewControllerRequestsTitleString:(MCLSectionLoadingViewController *)loadingViewController
 {
     return NSLocalizedString(@"Boards", nil);
 }
 
-- (UILabel *)loadingViewControllerRequestsTitleLabel:(MCLLoadingViewController *)loadingViewController 
+- (UILabel *)loadingViewControllerRequestsTitleLabel:(MCLSectionLoadingViewController *)loadingViewController
 {
     return [self noDetailVC] ? [[MCLLogoLabel alloc] initWithThemeManager:self.bag.themeManager] : nil;
 }
 
-- (NSArray<__kindof UIBarButtonItem *> *)loadingViewControllerRequestsToolbarItems:(MCLLoadingViewController *)loadingViewController
+- (NSArray<__kindof UIBarButtonItem *> *)loadingViewControllerRequestsToolbarItems:(MCLSectionLoadingViewController *)loadingViewController
 {
     UIBarButtonItem *flexibleItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                                    target:nil
@@ -197,7 +193,7 @@ typedef NS_ENUM(NSInteger, MCLBoardListSection) {
                                      nil];
 }
 
-- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController configureNavigationItem:(UINavigationItem *)navigationItem
+- (void)loadingViewController:(MCLSectionLoadingViewController *)loadingViewController configureNavigationItem:(UINavigationItem *)navigationItem
 {
     if ([self.bag.features isFeatureWithNameEnabled:MCLFeatureFullSearch]) {
         navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"searchButton"]
@@ -217,9 +213,18 @@ typedef NS_ENUM(NSInteger, MCLBoardListSection) {
                                                                         action:@selector(settingsButtonPressed:)];
 }
 
-- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData
+- (void)loadingViewController:(MCLSectionLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData forKey:(NSNumber *)key
 {
-    self.data = [newData copy];
+    switch ([key integerValue]) {
+        case MCLBoardListSectionBoards:
+            self.boards = [newData copy];
+            break;
+
+        case MCLBoardListSectionFavorites:
+            self.favorites = [newData copy];
+            break;
+    }
+
     [self.tableView reloadData];
 }
 
@@ -251,19 +256,6 @@ typedef NS_ENUM(NSInteger, MCLBoardListSection) {
 
 
 #pragma mark - UITableViewDataSource
-
-- (NSArray *)boards
-{
-    return [self.data objectAtIndex:0];
-}
-
-- (NSArray *)favorites
-{
-    if ([self.data count] > 1) {
-        return [self.data objectAtIndex:1];
-    }
-    return nil;
-}
 
 - (BOOL)noDetailVC
 {
@@ -426,8 +418,7 @@ typedef NS_ENUM(NSInteger, MCLBoardListSection) {
 
     [favoriteCell hideSwipeAnimated:YES];
 
-    NSMutableArray *favorites = [self.data objectAtIndex:MCLBoardListSectionFavorites];
-    [favorites removeObjectAtIndex:favoriteCell.index];
+    [self.favorites removeObjectAtIndex:favoriteCell.index];
     [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:favoriteCell.index inSection:1]]
                           withRowAnimation:UITableViewRowAnimationLeft];
     [self.tableView reloadData];
