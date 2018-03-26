@@ -57,7 +57,6 @@ NSString *const MCLThreadTableViewCellIdentifier = @"ThreadCell";
     }
 
     self.threadDateImageView.image = [self.threadDateImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    self.threadDateImageView.tintColor = thread.lastMessageIsRead ? [theme detailTextColor] : [theme tintColor];
 
     NSDate *threadDate = thread.lastMessageDate ? thread.lastMessageDate : thread.date;
     self.threadDateLabel.text = [dateFormatter stringFromDate:threadDate];
@@ -113,8 +112,8 @@ NSString *const MCLThreadTableViewCellIdentifier = @"ThreadCell";
 
 - (void)updateBadgeWithThread:(MCLThread *)thread andTheme:(id <MCLTheme>)theme
 {
+    self.threadDateImageView.tintColor = thread.lastMessageIsRead ? [theme detailTextColor] : [theme tintColor];
     self.badgeView.backgroundColor = [theme badgeViewBackgroundColor];
-
     self.badgeLabel.text = [thread.messagesCount stringValue];
 
     if ([thread.messagesCount intValue] > 999 && !thread.isSticky) {
