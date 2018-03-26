@@ -153,14 +153,6 @@
 
 - (void)loadingViewController:(MCLLoadingViewController *)loadingViewController configureNavigationItem:(UINavigationItem *)navigationItem
 {
-    if ([self isModal]) {
-        UIBarButtonItem *downButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"downButton"]
-                                                                       style:UIBarButtonItemStylePlain
-                                                                      target:self
-                                                                      action:@selector(downButtonPressed)];
-        navigationItem.leftBarButtonItem = downButton;
-    }
-
     UIBarButtonItem *markAllAsReadButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"markAsRead"]
                                                               landscapeImagePhone:nil
                                                                             style:UIBarButtonItemStylePlain

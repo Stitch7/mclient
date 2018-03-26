@@ -21,9 +21,8 @@
 @interface MCLRouter (mainNavigation)
 
 - (MCLSettingsViewController *)modalToSettings;
-- (MCLResponsesTableViewController *)modalToResponses;
 - (MCLProfileTableViewController *)modalToProfileFromUser:(MCLUser *)user;
-
+- (MCLResponsesTableViewController *)pushToResponses;
 - (MCLThreadListTableViewController *)pushToThreadListFromBoard:(MCLBoard *)board;
 - (MCLMessageListViewController *)pushToThread:(MCLThread *)thread;
 - (MCLMessageListViewController *)pushToThread:(MCLThread *)thread onMasterNavigationController:(UINavigationController *)masterNavigationController;

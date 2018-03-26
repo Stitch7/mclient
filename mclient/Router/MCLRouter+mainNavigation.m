@@ -47,28 +47,6 @@
     return settingsVC;
 }
 
-- (MCLResponsesTableViewController *)modalToResponses
-{
-    MCLMessageResponsesRequest *responsesRequest = [[MCLMessageResponsesRequest alloc] initWithBag:self.bag];
-    MCLResponsesTableViewController *responsesVC = [[MCLResponsesTableViewController alloc] initWithBag:self.bag];
-
-    MCLLoadingViewController *loadingVC = [[MCLLoadingViewController alloc] initWithBag:self.bag
-                                                                                request:responsesRequest
-                                                                  contentViewController:responsesVC configure:^(NSArray *data) {
-                                                                      responsesVC.responseContainer = [data firstObject];
-                                                                  }];
-
-    UINavigationController *navigationVC = [[UINavigationController alloc] initWithRootViewController:loadingVC];
-    if (self.splitViewViewController.collapsed) {
-        navigationVC.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self.masterNavigationController presentViewController:navigationVC animated:YES completion:nil];
-    } else {
-        [self.detailNavigationController pushViewController:responsesVC animated:YES];
-    }
-
-    return responsesVC;
-}
-
 - (MCLProfileTableViewController *)modalToProfileFromUser:(MCLUser *)user
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Profile" bundle:nil];
@@ -89,6 +67,26 @@
     [self.masterNavigationController presentViewController:navigationVC animated:YES completion:nil];
 
     return profileVC;
+}
+
+- (MCLResponsesTableViewController *)pushToResponses
+{
+    MCLMessageResponsesRequest *responsesRequest = [[MCLMessageResponsesRequest alloc] initWithBag:self.bag];
+    MCLResponsesTableViewController *responsesVC = [[MCLResponsesTableViewController alloc] initWithBag:self.bag];
+
+    MCLLoadingViewController *loadingVC = [[MCLLoadingViewController alloc] initWithBag:self.bag
+                                                                                request:responsesRequest
+                                                                  contentViewController:responsesVC configure:^(NSArray *data) {
+                                                                      responsesVC.responseContainer = [data firstObject];
+                                                                  }];
+
+    if (self.splitViewViewController.collapsed) {
+        [self.masterNavigationController pushViewController:loadingVC animated:YES];
+    } else {
+        [self.detailNavigationController pushViewController:loadingVC animated:YES];
+    }
+
+    return responsesVC;
 }
 
 - (MCLThreadListTableViewController *)pushToThreadListFromBoard:(MCLBoard *)board

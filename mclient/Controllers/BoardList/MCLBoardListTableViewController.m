@@ -467,7 +467,7 @@
 
 - (void)responsesButtonPressed
 {
-    [self.bag.router modalToResponses];
+    [self.bag.router pushToResponses];
 }
 
 #pragma mark - Notifications

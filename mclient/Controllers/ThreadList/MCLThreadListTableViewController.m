@@ -189,7 +189,9 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
                                               backgroundColor:[self.currentTheme modTextColor]]];
     }
 
-    cell.leftButtons = leftButtons;
+    if (self.bag.login.valid) {
+        cell.leftButtons = leftButtons;
+    }
 
     // After feature toggle removal
 //    cell.leftButtons = @[[MGSwipeButton buttonWithTitle:@"" icon:favoriteImage backgroundColor:[self.currentTheme tintColor]],
