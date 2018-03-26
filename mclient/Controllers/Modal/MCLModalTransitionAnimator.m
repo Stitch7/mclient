@@ -8,9 +8,6 @@
 
 #import "MCLModalTransitionAnimator.h"
 
-#import "MCLBoardListTableViewController.h"
-#import "MCLSectionLoadingViewController.h"
-
 @implementation MCLModalTransitionAnimator
 
 - (instancetype)init
@@ -57,21 +54,19 @@
                              toView.center = center;
                              fromView.transform = CGAffineTransformMakeScale(0.92, 0.92);
 
-//                             UISplitViewController *splitVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-//                             UINavigationController *navVC = [splitVC.viewControllers firstObject];
-//                             MCLSectionLoadingViewController *loadingVC = (MCLSectionLoadingViewController *)navVC.topViewController;
-//                             MCLBoardListTableViewController *boardsVC = (MCLBoardListTableViewController *)loadingVC.contentViewController;
-//
-////                             UIView *deckView = [[UIView alloc] initWithFrame:fromView.frame];
-////                             deckView.backgroundColor = [UIColor redColor];
-////                             [boardsVC.view addSubview:deckView];
-////                             [boardsVC.view bringSubviewToFront:deckView];
-//
-//                             boardsVC.tableView.backgroundColor = [UIColor darkGrayColor];
+                             toView.layer.cornerRadius = 10;
+                             toView.layer.masksToBounds = true;
+                             fromView.layer.cornerRadius = 10;
+                             fromView.layer.masksToBounds = true;
 
                          } else {
                              fromView.center = center;
                              toView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+
+                             toView.layer.cornerRadius = 0;
+                             toView.layer.masksToBounds = false;
+                             fromView.layer.cornerRadius = 0;
+                             fromView.layer.masksToBounds = false;
                          }
                      }
                      completion:^(BOOL finished) {
