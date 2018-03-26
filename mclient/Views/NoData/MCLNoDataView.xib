@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MCLNoDataView">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="98v-Fi-0kI"/>
+                <outlet property="helpButton" destination="dmc-Y2-lrq" id="Y7Q-w6-WNL"/>
+                <outlet property="messageLabel" destination="fCU-ge-ogM" id="MoL-wQ-FJM"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="124"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Imj-BD-5GN">
+                    <rect key="frame" x="148" y="51" width="79" height="22"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fCU-ge-ogM">
+                            <rect key="frame" x="0.0" y="0.0" width="42" height="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dmc-Y2-lrq">
+                            <rect key="frame" x="57" y="0.0" width="22" height="22"/>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="fCU-ge-ogM" firstAttribute="top" secondItem="Imj-BD-5GN" secondAttribute="top" id="9Ur-fm-eIZ"/>
+                        <constraint firstItem="fCU-ge-ogM" firstAttribute="leading" secondItem="Imj-BD-5GN" secondAttribute="leading" id="HCW-XT-1SC"/>
+                        <constraint firstAttribute="bottom" secondItem="fCU-ge-ogM" secondAttribute="bottom" id="R0X-sn-Rgd"/>
+                        <constraint firstItem="dmc-Y2-lrq" firstAttribute="top" secondItem="Imj-BD-5GN" secondAttribute="top" id="YIT-2f-i1z"/>
+                        <constraint firstAttribute="trailing" secondItem="dmc-Y2-lrq" secondAttribute="trailing" id="eWh-c6-HbW"/>
+                        <constraint firstItem="dmc-Y2-lrq" firstAttribute="leading" secondItem="fCU-ge-ogM" secondAttribute="trailing" constant="15" id="kAf-ld-mox"/>
+                        <constraint firstAttribute="bottom" secondItem="dmc-Y2-lrq" secondAttribute="bottom" id="lqH-dk-GKf"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Imj-BD-5GN" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="2y0-RV-0wk"/>
+                <constraint firstItem="Imj-BD-5GN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Mj5-ij-3KQ"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="35" y="73"/>
+        </view>
+    </objects>
+</document>

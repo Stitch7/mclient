@@ -453,6 +453,14 @@
 		30C813831FBA6AE80044A656 /* MCLSettings+Keys.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C813811FBA2A5D0044A656 /* MCLSettings+Keys.m */; };
 		30C813841FBA6AE90044A656 /* MCLSettings+Keys.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C813811FBA2A5D0044A656 /* MCLSettings+Keys.m */; };
 		30C813851FBA6AE90044A656 /* MCLSettings+Keys.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C813811FBA2A5D0044A656 /* MCLSettings+Keys.m */; };
+		30C9B52B205AAB8600FD3C31 /* MCLNoDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9B52A205AAB8600FD3C31 /* MCLNoDataView.m */; };
+		30C9B52C205AAB8700FD3C31 /* MCLNoDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9B52A205AAB8600FD3C31 /* MCLNoDataView.m */; };
+		30C9B52D205AAB8700FD3C31 /* MCLNoDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9B52A205AAB8600FD3C31 /* MCLNoDataView.m */; };
+		30C9B52E205AAB8700FD3C31 /* MCLNoDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C9B52A205AAB8600FD3C31 /* MCLNoDataView.m */; };
+		30C9B531205D7FA300FD3C31 /* MCLNoDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30C9B530205D7FA300FD3C31 /* MCLNoDataView.xib */; };
+		30C9B532205D820700FD3C31 /* MCLNoDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30C9B530205D7FA300FD3C31 /* MCLNoDataView.xib */; };
+		30C9B533205D820700FD3C31 /* MCLNoDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30C9B530205D7FA300FD3C31 /* MCLNoDataView.xib */; };
+		30C9B534205D820800FD3C31 /* MCLNoDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30C9B530205D7FA300FD3C31 /* MCLNoDataView.xib */; };
 		30D214611F15561B00C77563 /* MCLSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D214601F15561B00C77563 /* MCLSplitViewController.m */; };
 		30D2CD991F63E89B00FF35EB /* MCLDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D2CD971F63E89B00FF35EB /* MCLDetailViewController.m */; };
 		30D82AF31E2A42F700898963 /* MCLSettingsFontSizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D82AF21E2A42F700898963 /* MCLSettingsFontSizeViewController.m */; };
@@ -719,6 +727,9 @@
 		30BD47611E97097300DBB27B /* UIViewController+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Additions.m"; sourceTree = "<group>"; };
 		30C813801FBA2A5D0044A656 /* MCLSettings+Keys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MCLSettings+Keys.h"; sourceTree = "<group>"; };
 		30C813811FBA2A5D0044A656 /* MCLSettings+Keys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MCLSettings+Keys.m"; sourceTree = "<group>"; };
+		30C9B529205AAB8600FD3C31 /* MCLNoDataView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLNoDataView.h; sourceTree = "<group>"; };
+		30C9B52A205AAB8600FD3C31 /* MCLNoDataView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLNoDataView.m; sourceTree = "<group>"; };
+		30C9B530205D7FA300FD3C31 /* MCLNoDataView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MCLNoDataView.xib; sourceTree = "<group>"; };
 		30D2145F1F15561B00C77563 /* MCLSplitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLSplitViewController.h; sourceTree = "<group>"; };
 		30D214601F15561B00C77563 /* MCLSplitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLSplitViewController.m; sourceTree = "<group>"; };
 		30D2CD961F63E89B00FF35EB /* MCLDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLDetailViewController.h; sourceTree = "<group>"; };
@@ -1186,10 +1197,10 @@
 		305DD85919AB2EFE006514BD /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				30B893191F88012400E584FA /* Logo */,
 				305DE8121F2E470200EC34AE /* Board */,
 				305DE8111F2E46E400EC34AE /* Error */,
 				305E54A61F2A658A004002E6 /* Loading */,
+				30B893191F88012400E584FA /* Logo */,
 				3012032F1E031D7500B06FF6 /* MCLBadgeView.h */,
 				301203301E031D7500B06FF6 /* MCLBadgeView.m */,
 				307D797419B0B3B30096A217 /* MCLReadSymbolView.h */,
@@ -1197,6 +1208,7 @@
 				3061A68D1EA148180047E798 /* MCLToast.h */,
 				3061A68E1EA148180047E798 /* MCLToast.m */,
 				3006EF901F26709C0054F27F /* MessageList */,
+				30C9B52F205AAB8E00FD3C31 /* NoData */,
 				305DE8151F2E52FB00EC34AE /* TextView */,
 				3006EF8F1F26708A0054F27F /* ThreadTableViewCell */,
 			);
@@ -1361,6 +1373,16 @@
 				30C813811FBA2A5D0044A656 /* MCLSettings+Keys.m */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		30C9B52F205AAB8E00FD3C31 /* NoData */ = {
+			isa = PBXGroup;
+			children = (
+				30C9B529205AAB8600FD3C31 /* MCLNoDataView.h */,
+				30C9B52A205AAB8600FD3C31 /* MCLNoDataView.m */,
+				30C9B530205D7FA300FD3C31 /* MCLNoDataView.xib */,
+			);
+			path = NoData;
 			sourceTree = "<group>";
 		};
 		30D2CD9B1F63E8A300FF35EB /* Detail */ = {
@@ -1713,6 +1735,7 @@
 				3004E5AC1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib in Resources */,
 				3096481B1EA180E500C16379 /* delete.caf in Resources */,
 				308B81E91F63FC9700C878FB /* MCLDetailViewController.xib in Resources */,
+				30C9B532205D820700FD3C31 /* MCLNoDataView.xib in Resources */,
 				30EAE21C1F1C1F770035DFC9 /* ComposeMessage.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1746,6 +1769,7 @@
 				306FC8821F93A39F001EB7E9 /* MCLThreadTableViewCell.xib in Resources */,
 				306FC8831F93A39F001EB7E9 /* delete.caf in Resources */,
 				306FC8841F93A39F001EB7E9 /* MCLDetailViewController.xib in Resources */,
+				30C9B531205D7FA300FD3C31 /* MCLNoDataView.xib in Resources */,
 				306FC8851F93A39F001EB7E9 /* ComposeMessage.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1771,6 +1795,7 @@
 				3090CB2B1FA7ED1E0085C9AF /* MCLThreadTableViewCell.xib in Resources */,
 				3090CB2C1FA7ED1E0085C9AF /* delete.caf in Resources */,
 				3090CB2D1FA7ED1E0085C9AF /* MCLDetailViewController.xib in Resources */,
+				30C9B534205D820800FD3C31 /* MCLNoDataView.xib in Resources */,
 				3090CB2E1FA7ED1E0085C9AF /* ComposeMessage.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1796,6 +1821,7 @@
 				3090CBA81FA89A5C0085C9AF /* MCLThreadTableViewCell.xib in Resources */,
 				3090CBA91FA89A5C0085C9AF /* delete.caf in Resources */,
 				3090CBAA1FA89A5C0085C9AF /* MCLDetailViewController.xib in Resources */,
+				30C9B533205D820700FD3C31 /* MCLNoDataView.xib in Resources */,
 				3090CBAB1FA89A5C0085C9AF /* ComposeMessage.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2122,6 +2148,7 @@
 				302381F81F9373C400764FAE /* MCLNotificationStatusRequest.m in Sources */,
 				3036F5981E26666600ABC2CE /* MCLThemeManager.m in Sources */,
 				30526E131F48613E00BCC354 /* MCLModalNavigationController.m in Sources */,
+				30C9B52C205AAB8700FD3C31 /* MCLNoDataView.m in Sources */,
 				305DD85D19AB300F006514BD /* MCLBoard.m in Sources */,
 				3020FB6B1E746D4400C7217F /* MCLNotificationManager.m in Sources */,
 				30DD817A1FB7B386007BF235 /* MCLFeatures+Names.m in Sources */,
@@ -2232,6 +2259,7 @@
 				306FC8421F93A39F001EB7E9 /* MCLMessageToolbarController.m in Sources */,
 				306FC8431F93A39F001EB7E9 /* MCLThreadTableViewCell.m in Sources */,
 				306FC8441F93A39F001EB7E9 /* MCLThreadIdForMessageRequest.m in Sources */,
+				30C9B52B205AAB8600FD3C31 /* MCLNoDataView.m in Sources */,
 				306FC8451F93A39F001EB7E9 /* MCLThreadListTableViewController.m in Sources */,
 				306FC8461F93A39F001EB7E9 /* MCLNotificationStatusRequest.m in Sources */,
 				306FC8471F93A39F001EB7E9 /* MCLThemeManager.m in Sources */,
@@ -2334,6 +2362,7 @@
 				3090CAF11FA7ED1E0085C9AF /* MCLNotificationStatusRequest.m in Sources */,
 				3090CAF21FA7ED1E0085C9AF /* MCLThemeManager.m in Sources */,
 				3090CAF31FA7ED1E0085C9AF /* MCLModalNavigationController.m in Sources */,
+				30C9B52E205AAB8700FD3C31 /* MCLNoDataView.m in Sources */,
 				3090CAF41FA7ED1E0085C9AF /* MCLBoard.m in Sources */,
 				3090CAF51FA7ED1E0085C9AF /* MCLNotificationManager.m in Sources */,
 				30DD817C1FB7B387007BF235 /* MCLFeatures+Names.m in Sources */,
@@ -2436,6 +2465,7 @@
 				3090CB6E1FA89A5C0085C9AF /* MCLNotificationStatusRequest.m in Sources */,
 				3090CB6F1FA89A5C0085C9AF /* MCLThemeManager.m in Sources */,
 				3090CB701FA89A5C0085C9AF /* MCLModalNavigationController.m in Sources */,
+				30C9B52D205AAB8700FD3C31 /* MCLNoDataView.m in Sources */,
 				3090CB711FA89A5C0085C9AF /* MCLBoard.m in Sources */,
 				3090CB721FA89A5C0085C9AF /* MCLNotificationManager.m in Sources */,
 				30DD817B1FB7B387007BF235 /* MCLFeatures+Names.m in Sources */,

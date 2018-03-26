@@ -24,11 +24,13 @@
 #import "MCLLogoLabel.h"
 #import "MCLThreadTableViewCell.h"
 #import "MCLThreadListTableViewController.h"
+#import "MCLNoDataView.h"
 
 
 @interface MCLDetailViewController () <UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate>
 
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
+@property (strong, nonatomic) MCLNoDataView *noDataView;
 
 @end
 
@@ -53,6 +55,7 @@
 {
     [super viewDidLoad];
 
+    [self configureNotifications];
     [self configureView];
     [self configureTableView];
 }
@@ -85,6 +88,19 @@
     self.favorites = [[NSMutableArray alloc] init];
 }
 
+- (void)configureNotifications
+{
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(loginStateDidChanged:)
+//                                                 name:MCLLoginStateDidChangeNotification
+//                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
+}
+
 - (void)configureView
 {
     self.view.backgroundColor = [self.currentTheme tableViewBackgroundColor];
@@ -97,6 +113,12 @@
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+
+    NSDictionary *help = @{MCLNoDataViewHelpTitleKey: NSLocalizedString(@"favorites_help_title", nil),
+                           MCLNoDataViewHelpMessageKey: NSLocalizedString(@"favorites_help_message", nil)};
+    self.noDataView = [[MCLNoDataView alloc] initWithMessage:NSLocalizedString(@"NO FAVORITES", nil)
+                                                        help:help
+                                        parentViewController:self];
 }
 
 - (void)menuButtonPressed
@@ -174,7 +196,10 @@
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.favorites count];
+    NSInteger favoritesCount = [self.favorites count];
+    self.tableView.backgroundView = favoritesCount == 0 ? self.noDataView : nil;
+
+    return favoritesCount;
 }
 
 #pragma mark - UITableViewDelegate
