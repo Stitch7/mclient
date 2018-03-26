@@ -49,7 +49,9 @@
                                  needsLogin:NO
                           completionHandler:^(NSError *error, NSDictionary *json) {
                               NSMutableArray *data = [NSMutableArray new];
-                              [data addObject:json];
+                              if (json) {
+                                  [data addObject:json];
+                              }
                               completionHandler(error, data);
                           }];
 }

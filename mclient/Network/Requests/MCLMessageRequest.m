@@ -51,7 +51,7 @@
                                 needsLogin:YES
                          completionHandler:^(NSError *error, NSDictionary *json) {
                              NSMutableArray *response = [[NSMutableArray alloc] init];
-                             if (!error) {
+                             if (!error && json) {
                                  [self.message updateFromMessageTextJSON:json];
                                  [response addObject:json];
                              }
