@@ -91,10 +91,10 @@
 
 - (void)configureNotifications
 {
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(loginStateDidChanged:)
-//                                                 name:MCLLoginStateDidChangeNotification
-//                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loginStateDidChanged:)
+                                                 name:MCLLoginStateDidChangeNotification
+                                               object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(themeChanged:)
@@ -115,11 +115,23 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 
-    NSDictionary *help = @{MCLNoDataViewHelpTitleKey: NSLocalizedString(@"favorites_help_title", nil),
-                           MCLNoDataViewHelpMessageKey: NSLocalizedString(@"favorites_help_message", nil)};
-    self.noDataView = [[MCLNoDataView alloc] initWithMessage:NSLocalizedString(@"NO FAVORITES", nil)
-                                                        help:help
-                                        parentViewController:self];
+    [self configureNoDataView];
+}
+
+- (void)configureNoDataView
+{
+    if (self.bag.login.valid) {
+        NSDictionary *help = @{MCLNoDataViewHelpTitleKey: NSLocalizedString(@"favorites_help_title", nil),
+                               MCLNoDataViewHelpMessageKey: NSLocalizedString(@"favorites_help_message", nil)};
+
+        self.noDataView = [[MCLNoDataView alloc] initWithMessage:NSLocalizedString(@"NO FAVORITES", nil)
+                                                            help:help
+                                            parentViewController:self];
+    } else {
+        self.noDataView = [[MCLNoDataView alloc] initWithMessage:NSLocalizedString(@"PLEASE LOGIN TO SEE YOUR FAVORITES", nil)
+                                                            help:nil
+                                            parentViewController:self];
+    }
 }
 
 - (void)menuButtonPressed
@@ -199,7 +211,7 @@
 {
     NSInteger favoritesCount = [self.favorites count];
 
-    if (favoritesCount == 0 && self.bag.login.valid) {
+    if (favoritesCount == 0) {
         self.tableView.backgroundView = self.noDataView;
     } else {
         self.tableView.backgroundView = nil;
@@ -258,6 +270,11 @@
 }
 
 #pragma mark - Notifications
+
+- (void)loginStateDidChanged:(NSNotification *)notification
+{
+    [self configureNoDataView];
+}
 
 - (void)themeChanged:(NSNotification *)notification
 {

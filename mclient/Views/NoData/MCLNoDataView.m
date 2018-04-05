@@ -56,7 +56,11 @@ NSString * const MCLNoDataViewHelpMessageKey = @"helpMessageKey";
     self.messageLabel.text = self.messageText;
     self.messageLabel.textColor = [UIColor darkGrayColor];
 
-    [self.helpButton addTarget:self action:@selector(helpButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    if (self.helpDict) {
+        [self.helpButton addTarget:self action:@selector(helpButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        self.helpButton.hidden = YES;
+    }
 }
 
 #pragma mark - Actions

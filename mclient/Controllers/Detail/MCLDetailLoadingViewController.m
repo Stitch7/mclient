@@ -8,6 +8,7 @@
 
 #import "MCLDetailLoadingViewController.h"
 
+#import "MCLLogin.h"
 #import "MCLThreadListTableViewController.h"
 
 @implementation MCLDetailLoadingViewController
@@ -44,12 +45,22 @@
 - (void)configureNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(favoritesChanged)
+                                             selector:@selector(loginStateDidChanged:)
+                                                 name:MCLLoginStateDidChangeNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(favoritesChanged:)
                                                  name:MCLFavoritedChangedNotification
                                                object:nil];
 }
 
-- (void)favoritesChanged
+- (void)loginStateDidChanged:(NSNotification *)notification
+{
+    [self refresh];
+}
+
+- (void)favoritesChanged:(NSNotification *)notification
 {
     [self refresh];
 }
