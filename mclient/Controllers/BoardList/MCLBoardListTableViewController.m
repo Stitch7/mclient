@@ -33,7 +33,7 @@
 @interface MCLBoardListTableViewController ()
 
 @property (strong, nonatomic) id <MCLDependencyBag> bag;
-@property (strong, nonatomic) NSMutableArray *boards;
+@property (strong, nonatomic) NSArray *boards;
 @property (strong, nonatomic) NSMutableArray *favorites;
 @property (strong, nonatomic) MCLMessageListViewController *detailViewController;
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
@@ -221,7 +221,7 @@
             break;
 
         case MCLBoardListSectionFavorites:
-            self.favorites = [newData copy];
+            self.favorites = [newData mutableCopy];
             break;
     }
 
