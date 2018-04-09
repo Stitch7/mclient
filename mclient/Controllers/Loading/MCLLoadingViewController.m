@@ -35,7 +35,7 @@
 
 # pragma mark: - Initializers
 
-- (instancetype)initWithBag:(id <MCLDependencyBag>)bag request:(id<MCLRequest>)request contentViewController:(UIViewController *)contentViewController configure:(void (^)(NSArray*))configure
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag request:(id<MCLRequest>)request contentViewController:(UIViewController *)contentViewController
 {
     self = [super init];
     if (!self) return nil;
@@ -43,7 +43,6 @@
     self.bag = bag;
     self.request = request;
     self.contentViewController = contentViewController;
-    self.configure = configure;
 
     [self initialize];
 
@@ -218,8 +217,10 @@
             return;
         }
 
-        self.configure(data);
         [self addContentViewContoller:self.contentViewController];
+        if ([self.delegate respondsToSelector:@selector(loadingViewController:hasRefreshedWithData:)]) {
+            [self.delegate loadingViewController:self hasRefreshedWithData:data];
+        }
     }];
 }
 

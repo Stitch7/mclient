@@ -61,10 +61,7 @@
     MCLFavoritesRequest *favoritesRequest = [[MCLFavoritesRequest alloc] initWithClient:self.bag.httpClient];
     MCLDetailLoadingViewController *loadingVC = [[MCLDetailLoadingViewController alloc] initWithBag:self.bag
                                                                                 request:favoritesRequest
-                                                                  contentViewController:detailVC
-                                                                              configure:^(NSArray *favorites) {
-                                                                                  detailVC.favorites = [favorites mutableCopy];
-                                                                              }];
+                                                                  contentViewController:detailVC];
     return loadingVC;
 }
 

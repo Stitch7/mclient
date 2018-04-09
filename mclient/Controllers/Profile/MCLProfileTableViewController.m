@@ -70,6 +70,13 @@
                                                                        action:@selector(doneButtonPressed:)];
 }
 
+- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData
+{
+    self.profileKeys = [newData.firstObject copy];
+    self.profileData = [newData.lastObject copy];
+    [self.tableView reloadData];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

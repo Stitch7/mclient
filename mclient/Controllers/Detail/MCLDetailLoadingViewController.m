@@ -15,9 +15,9 @@
 
 #pragma mark - Initializers
 
-- (instancetype)initWithBag:(id <MCLDependencyBag>)bag request:(id<MCLRequest>)request contentViewController:(UIViewController *)contentViewController configure:(void (^)(NSArray*))configure;
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag request:(id<MCLRequest>)request contentViewController:(UIViewController *)contentViewController
 {
-    self = [super initWithBag:bag request:request contentViewController:contentViewController configure:configure];
+    self = [super initWithBag:bag request:request contentViewController:contentViewController];
     if (!self) return nil;
 
     [self configureNotifications];

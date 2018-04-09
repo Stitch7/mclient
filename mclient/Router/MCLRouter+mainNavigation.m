@@ -57,10 +57,7 @@
     MCLProfileRequest *profileRequest = [[MCLProfileRequest alloc] initWithClient:self.bag.httpClient user:user];
     MCLLoadingViewController *loadingVC = [[MCLLoadingViewController alloc] initWithBag:self.bag
                                                                                 request:profileRequest
-                                                                  contentViewController:profileVC configure:^(NSArray *profile) {
-                                                                      profileVC.profileKeys = [profile.firstObject copy];
-                                                                      profileVC.profileData = [profile.lastObject copy];
-                                                                  }];
+                                                                  contentViewController:profileVC];
 
     loadingVC.modalPresentationStyle = UIModalPresentationFormSheet;
     MCLModalNavigationController *navigationVC = [[MCLModalNavigationController alloc] initWithRootViewController:loadingVC];
@@ -76,9 +73,7 @@
 
     MCLLoadingViewController *loadingVC = [[MCLLoadingViewController alloc] initWithBag:self.bag
                                                                                 request:responsesRequest
-                                                                  contentViewController:responsesVC configure:^(NSArray *data) {
-                                                                      responsesVC.responseContainer = [data firstObject];
-                                                                  }];
+                                                                  contentViewController:responsesVC];
 
     if (self.splitViewViewController.collapsed) {
         [self.masterNavigationController pushViewController:loadingVC animated:YES];
@@ -99,10 +94,7 @@
                                                                                      login:self.bag.login];
     MCLLoadingViewController *loadingVC = [[MCLLoadingViewController alloc] initWithBag:self.bag
                                                                                 request:threadListRequest
-                                                                  contentViewController:threadListVC
-                                                                              configure:^(NSArray *threads) {
-                                                                                  threadListVC.threads = [threads copy];
-                                                                              }];
+                                                                  contentViewController:threadListVC];
     loadingVC.title = board.name;
     [self.masterNavigationController pushViewController:loadingVC animated:YES];
 
@@ -146,18 +138,15 @@
     }
     messageListVC.board = thread.board;
     messageListVC.thread = thread;
+    if (messageId) {
+        messageListVC.jumpToMessageId = messageId;
+    }
 
     MCLMessageListRequest *messageListRequest = [[MCLMessageListRequest alloc] initWithClient:self.bag.httpClient
                                                                                        thread:thread];
     self.detailViewController = [[MCLMessageListLoadingViewController alloc] initWithBag:self.bag
                                                                                  request:messageListRequest
-                                                                   contentViewController:messageListVC
-                                                                               configure:^(NSArray *messages) {
-                                                                                   if (messageId) {
-                                                                                       messageListVC.jumpToMessageId = messageId;
-                                                                                   }
-                                                                                   messageListVC.messages = [messages copy];
-                                                                               }];
+                                                                   contentViewController:messageListVC];
     self.detailViewController.navigationItem.titleView = [messageListVC titleLabel];
 
     if (self.splitViewViewController.collapsed) {
