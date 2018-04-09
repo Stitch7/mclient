@@ -11,6 +11,8 @@
 @protocol MCLDependencyBag;
 @protocol MCLSettingsTableViewControllerDelegate;
 
+extern NSString *const MCLThreadViewStyleChangedNotification;
+
 @interface MCLSettingsViewController : UITableViewController <UITextFieldDelegate, UITextViewDelegate, MCLSettingsFontSizeViewControllerDelegate>
 
 @property (weak) id<MCLSettingsTableViewControllerDelegate> delegate;

@@ -201,6 +201,10 @@
 		306FC8831F93A39F001EB7E9 /* delete.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3096481A1EA180CE00C16379 /* delete.caf */; };
 		306FC8841F93A39F001EB7E9 /* MCLDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 308B81E81F63FC9700C878FB /* MCLDetailViewController.xib */; };
 		306FC8851F93A39F001EB7E9 /* ComposeMessage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EAE21B1F1C1E400035DFC9 /* ComposeMessage.storyboard */; };
+		3070D31E207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D31D207968E500F42BFF /* MCLMultilineTitleLabel.m */; };
+		3070D31F207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D31D207968E500F42BFF /* MCLMultilineTitleLabel.m */; };
+		3070D320207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D31D207968E500F42BFF /* MCLMultilineTitleLabel.m */; };
+		3070D321207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D31D207968E500F42BFF /* MCLMultilineTitleLabel.m */; };
 		3070D325207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D324207A60C200F42BFF /* MCLLicenseTableViewController.m */; };
 		3070D326207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D324207A60C200F42BFF /* MCLLicenseTableViewController.m */; };
 		3070D327207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D324207A60C200F42BFF /* MCLLicenseTableViewController.m */; };
@@ -690,6 +694,8 @@
 		306EA6E619D5992F00BB4DC8 /* MCLMServiceErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMServiceErrorView.h; sourceTree = "<group>"; };
 		306EA6E719D5992F00BB4DC8 /* MCLMServiceErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMServiceErrorView.m; sourceTree = "<group>"; };
 		306FC88C1F93A39F001EB7E9 /* mclient-dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mclient-dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3070D31C207968E500F42BFF /* MCLMultilineTitleLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMultilineTitleLabel.h; sourceTree = "<group>"; };
+		3070D31D207968E500F42BFF /* MCLMultilineTitleLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLMultilineTitleLabel.m; sourceTree = "<group>"; };
 		3070D323207A60C200F42BFF /* MCLLicenseTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLLicenseTableViewController.h; sourceTree = "<group>"; };
 		3070D324207A60C200F42BFF /* MCLLicenseTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLLicenseTableViewController.m; sourceTree = "<group>"; };
 		3070D32A207A6BBA00F42BFF /* MCLLicenseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLLicenseViewController.h; sourceTree = "<group>"; };
@@ -1236,6 +1242,7 @@
 				30C9B52F205AAB8E00FD3C31 /* NoData */,
 				305DE8151F2E52FB00EC34AE /* TextView */,
 				3006EF8F1F26708A0054F27F /* ThreadTableViewCell */,
+				3070D322207968F900F42BFF /* MultilineTitleView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1369,6 +1376,15 @@
 				3039748C1E16A1F4003C8BC9 /* MCLMessageListWidmannStyleTableViewCell.m */,
 			);
 			path = Widmann;
+			sourceTree = "<group>";
+		};
+		3070D322207968F900F42BFF /* MultilineTitleView */ = {
+			isa = PBXGroup;
+			children = (
+				3070D31C207968E500F42BFF /* MCLMultilineTitleLabel.h */,
+				3070D31D207968E500F42BFF /* MCLMultilineTitleLabel.m */,
+			);
+			path = MultilineTitleView;
 			sourceTree = "<group>";
 		};
 		3070D329207A6B9800F42BFF /* License */ = {
@@ -2189,6 +2205,7 @@
 				301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */,
 				303C59521F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.m in Sources */,
 				305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */,
+				3070D31F207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */,
 				302381F81F9373C400764FAE /* MCLNotificationStatusRequest.m in Sources */,
 				3036F5981E26666600ABC2CE /* MCLThemeManager.m in Sources */,
 				30526E131F48613E00BCC354 /* MCLModalNavigationController.m in Sources */,
@@ -2304,6 +2321,7 @@
 				306FC83F1F93A39F001EB7E9 /* Reachability.m in Sources */,
 				306FC8401F93A39F001EB7E9 /* MCLMarkThreadAsReadRequest.m in Sources */,
 				306FC8411F93A39F001EB7E9 /* MCLToast.m in Sources */,
+				3070D31E207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */,
 				306FC8421F93A39F001EB7E9 /* MCLMessageToolbarController.m in Sources */,
 				306FC8431F93A39F001EB7E9 /* MCLThreadTableViewCell.m in Sources */,
 				306FC8441F93A39F001EB7E9 /* MCLThreadIdForMessageRequest.m in Sources */,
@@ -2411,6 +2429,7 @@
 				3090CAEE1FA7ED1E0085C9AF /* MCLThreadTableViewCell.m in Sources */,
 				3090CAEF1FA7ED1E0085C9AF /* MCLThreadIdForMessageRequest.m in Sources */,
 				3090CAF01FA7ED1E0085C9AF /* MCLThreadListTableViewController.m in Sources */,
+				3070D321207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */,
 				3090CAF11FA7ED1E0085C9AF /* MCLNotificationStatusRequest.m in Sources */,
 				3090CAF21FA7ED1E0085C9AF /* MCLThemeManager.m in Sources */,
 				3090CAF31FA7ED1E0085C9AF /* MCLModalNavigationController.m in Sources */,
@@ -2518,6 +2537,7 @@
 				3090CB6B1FA89A5C0085C9AF /* MCLThreadTableViewCell.m in Sources */,
 				3090CB6C1FA89A5C0085C9AF /* MCLThreadIdForMessageRequest.m in Sources */,
 				3090CB6D1FA89A5C0085C9AF /* MCLThreadListTableViewController.m in Sources */,
+				3070D320207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */,
 				3090CB6E1FA89A5C0085C9AF /* MCLNotificationStatusRequest.m in Sources */,
 				3090CB6F1FA89A5C0085C9AF /* MCLThemeManager.m in Sources */,
 				3090CB701FA89A5C0085C9AF /* MCLModalNavigationController.m in Sources */,

@@ -128,6 +128,9 @@ NSString *const MCLThreadTableViewCellIdentifier = @"ThreadCell";
         // gray
         self.badgeLabel.textColor = [UIColor darkGrayColor];
     }
+
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
 }
 
 @end

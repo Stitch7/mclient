@@ -24,6 +24,7 @@
 #import "MCLMessageToolbar.h"
 #import "MCLSplitViewController.h"
 #import "MCLLoadingViewController.h"
+#import "MCLMultilineTitleLabel.h"
 
 
 @implementation MCLMessageListViewController
@@ -101,26 +102,7 @@
 
 - (UILabel *)titleLabel
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 480, 44)];
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [self.bag.themeManager.currentTheme textColor];
-    label.numberOfLines = 2;
-    label.font = [UIFont boldSystemFontOfSize: 15.0f];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
-
-    NSString *title = self.thread.subject;
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:title];
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.lineSpacing = 0.5;
-    paragraphStyle.hyphenationFactor = 1.0;
-    paragraphStyle.alignment = NSTextAlignmentCenter;
-    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, title.length)];
-    label.attributedText = attributedString;
-
-    self.titleLabel = label;
-
-    return label;
+    return [[MCLMultilineTitleLabel alloc] initWithThemeManager:self.bag.themeManager andTitle:self.thread.subject];
 }
 
 - (void)loadingViewControllerStartsRefreshing:(MCLLoadingViewController *)loadingViewController
@@ -174,7 +156,6 @@
 
 - (void)themeChanged:(NSNotification *)notification
 {
-    self.titleLabel.textColor = [self.bag.themeManager.currentTheme navigationBarTextColor];
 }
 
 # pragma mark - 

@@ -25,6 +25,7 @@
 #import "MCLLicenseTableViewController.h"
 #import "MCLThreadKillfileViewController.h"
 
+NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChangedNotification";
 
 @interface MCLSettingsViewController ()
 
@@ -403,6 +404,8 @@
             [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
     }
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:MCLThreadViewStyleChangedNotification object:self];
 }
 
 - (void)didSelectRowInImagesSectionAtIndexPath:(NSIndexPath *)indexPath
