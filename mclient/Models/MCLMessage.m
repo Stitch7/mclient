@@ -52,7 +52,6 @@
     message.username = response.username;
     message.date = response.date;
     message.read = response.read;
-//    response.tempRead = inRead;
 
     return message;
 }
@@ -92,6 +91,12 @@
     self.textHtmlWithImages = [json objectForKey:@"textHtmlWithImages"];
     if ([json objectForKey:@"notification"] != [NSNull null]) {
         self.notification = [[json objectForKey:@"notification"] boolValue];
+    }
+    if ([json objectForKey:@"userBlockedByYou"] != [NSNull null]) {
+        self.userBlockedByYou = [[json objectForKey:@"userBlockedByYou"] boolValue];
+    }
+    if ([json objectForKey:@"userBlockedYou"] != [NSNull null]) {
+        self.userBlockedYou = [[json objectForKey:@"userBlockedYou"] boolValue];
     }
 }
 

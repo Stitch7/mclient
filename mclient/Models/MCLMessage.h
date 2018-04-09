@@ -37,6 +37,8 @@ typedef NS_ENUM(NSUInteger, kMCLComposeType) {
 @property (strong) NSString *textHtml;
 @property (strong) NSString *textHtmlWithImages;
 @property (assign, nonatomic) BOOL notification;
+@property (assign, nonatomic) BOOL userBlockedByYou;
+@property (assign, nonatomic) BOOL userBlockedYou;
 
 + (MCLMessage *)messageWithId:(NSNumber *)inMessageId
                          read:(BOOL)inRead
