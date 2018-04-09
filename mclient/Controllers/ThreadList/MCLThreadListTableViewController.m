@@ -78,6 +78,8 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
     self.currentTheme = self.bag.themeManager.currentTheme;
 }
 
+#pragma mark - Configuration
+
 - (void)configureNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -357,6 +359,8 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
     NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;
     MCLThreadTableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
     [selectedCell updateBadgeWithThread:inThread andTheme:self.currentTheme];
+    [self.tableView reloadRowsAtIndexPaths:@[selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
 #pragma mark - UISearchResultsUpdating

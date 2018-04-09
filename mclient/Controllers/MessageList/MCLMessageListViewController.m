@@ -111,9 +111,14 @@
 - (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData
 {
     self.messages = [newData copy];
-    NSIndexPath *top = [NSIndexPath indexPathForRow:NSNotFound inSection:0];
-    [self.tableView scrollToRowAtIndexPath:top atScrollPosition:UITableViewScrollPositionTop animated:NO];
-    [self.tableView reloadData];
+
+    [UIView animateWithDuration:0 animations:^{
+        NSIndexPath *top = [NSIndexPath indexPathForRow:NSNotFound inSection:0];
+        [self.tableView scrollToRowAtIndexPath:top atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        [self.tableView reloadData];
+    } completion:^(BOOL finished) {
+        [self selectInitialMessage];
+    }];
 }
 
 - (void)backButtonPressed:(UIBarButtonItem *)sender
@@ -180,6 +185,7 @@
                                       atScrollPosition:UITableViewScrollPositionTop
                                               animated:YES];
                 [self tableView:self.tableView didSelectRowAtIndexPath:jumpToMessageIndexPath];
+                *stop = YES;
             }
         }];
 
@@ -195,6 +201,7 @@
                                               animated:YES];
                 self.thread.lastMessageRead = YES;
                 [self tableView:self.tableView didSelectRowAtIndexPath:latestMessageIndexPath];
+                *stop = YES;
             }
         }];
 

@@ -126,6 +126,13 @@
     assert(thread.board != nil);
     assert(thread.board.boardId != nil);
 
+    if (!forceDetailPush && [self currentDetailVcIsMessageList]) {
+        UIViewController *currentDetailVC = [[self.detailNavigationController viewControllers] lastObject];
+        MCLMessageListLoadingViewController *loadingVC = (MCLMessageListLoadingViewController *)currentDetailVC;
+        [loadingVC loadThread:thread];
+        return [loadingVC.childViewControllers firstObject];
+    }
+
     MCLMessageListViewController *messageListVC;
     switch ([self.bag.settings integerForSetting:MCLSettingThreadView]) {
         case kMCLSettingsThreadViewWidmann:
@@ -151,10 +158,6 @@
 
     if (self.splitViewViewController.collapsed) {
         [masterNavigationController pushViewController:self.detailViewController animated:YES];
-    } else if (!forceDetailPush && [self currentDetailVcIsMessageList]) {
-        UIViewController *currentDetailVC = [[self.detailNavigationController viewControllers] lastObject];
-        MCLMessageListLoadingViewController *loadingVC = (MCLMessageListLoadingViewController *)currentDetailVC;
-        [loadingVC loadThread:thread];
     } else {
         [self.detailNavigationController pushViewController:self.detailViewController animated:YES];
     }

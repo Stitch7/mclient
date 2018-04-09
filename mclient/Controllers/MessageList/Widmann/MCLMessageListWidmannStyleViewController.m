@@ -42,12 +42,6 @@
 
     [self configureNotifications];
     [self configureTableView];
-
-    [UIView animateWithDuration:0 animations:^{
-        [self.tableView reloadData];
-    } completion:^(BOOL finished) {
-        [self selectInitialMessage];
-    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -109,6 +103,7 @@
                 [self.tableView scrollToRowAtIndexPath:jumpToMessageIndexPath
                                       atScrollPosition:UITableViewScrollPositionTop
                                               animated:YES];
+                *stop = YES;
             }
         }];
     }
@@ -122,14 +117,24 @@
     }
     // if jump to latest post feature enabled and last message is unread selected latest message
     else if (jumpToLatestPostSetting && !self.thread.lastMessageIsRead && self.thread.lastMessageId > 0) {
-        self.jumpToMessageId = self.thread.lastMessageId;
         [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
             if (self.thread.lastMessageId == message.messageId) {
                 NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
-                [self.tableView scrollToRowAtIndexPath:latestMessageIndexPath
-                                      atScrollPosition:UITableViewScrollPositionTop
-                                              animated:YES];
+                UITableViewCell *latestMessageCell = [self.tableView cellForRowAtIndexPath:latestMessageIndexPath];
+                if ([self.tableView.visibleCells containsObject:latestMessageCell]) {
+                    [self.tableView selectRowAtIndexPath:latestMessageIndexPath
+                                                animated:YES
+                                          scrollPosition:UITableViewScrollPositionTop];
+                    [self tableView:self.tableView didSelectRowAtIndexPath:latestMessageIndexPath];
+                } else {
+                    self.jumpToMessageId = self.thread.lastMessageId;
+                    [self.tableView scrollToRowAtIndexPath:latestMessageIndexPath
+                                          atScrollPosition:UITableViewScrollPositionTop
+                                                  animated:YES];
+                }
+
                 self.thread.lastMessageRead = YES;
+                *stop = YES;
             }
         }];
     }
@@ -192,6 +197,8 @@
                                         animated:YES
                                   scrollPosition:UITableViewScrollPositionTop];
             [self tableView:self.tableView didSelectRowAtIndexPath:latestMessageIndexPath];
+            self.jumpToMessageId = nil;
+            *stop = YES;
         }
     }];
 }

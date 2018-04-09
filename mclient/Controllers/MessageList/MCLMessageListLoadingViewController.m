@@ -14,8 +14,41 @@
 #import "MCLMessageListRequest.h"
 #import "MCLMessageListViewController.h"
 #import "MCLLoadingViewControllerDelegate.h"
+#import "MCLSettingsViewController.h"
 
 @implementation MCLMessageListLoadingViewController
+
+#pragma mark - Initializers
+
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag request:(id<MCLRequest>)request contentViewController:(UIViewController *)contentViewController
+{
+    self = [super initWithBag:bag request:request contentViewController:contentViewController];
+    if (!self) return nil;
+
+    [self configureNotifications];
+
+    return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Notifications
+
+- (void)configureNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(threadViewStyleChanged:)
+                                                 name:MCLThreadViewStyleChangedNotification
+                                               object:nil];
+}
+
+- (void)threadViewStyleChanged:(NSNotification *)notification
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 #pragma mark - Public
 
@@ -26,9 +59,9 @@
 
     self.request = [[MCLMessageListRequest alloc] initWithClient:self.bag.httpClient thread:thread];
 
-    MCLMessageListViewController *contentViewController = ((MCLMessageListViewController *)self.contentViewController);
-    [contentViewController setBoard:thread.board];
-    [contentViewController setThread:thread];
+    MCLMessageListViewController *messageListVC = ((MCLMessageListViewController *)self.contentViewController);
+    [messageListVC setBoard:thread.board];
+    [messageListVC setThread:thread];
     [self updateTitle];
     
     [self startLoading];
@@ -40,9 +73,7 @@
             return;
         }
 
-        if ([self.delegate respondsToSelector:@selector(loadingViewController:hasRefreshedWithData:)]) {
-            [self.delegate loadingViewController:self hasRefreshedWithData:data];
-        }
+        [messageListVC loadingViewController:self hasRefreshedWithData:data];
     }];
 }
 

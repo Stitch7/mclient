@@ -60,12 +60,6 @@
     [self configureWebView];
     [self configureToolbar];
     [self configureTableView];
-
-    [UIView animateWithDuration:0 animations:^{
-        [self.tableView reloadData];
-    } completion:^(BOOL finished) {
-        [self selectInitialMessage];
-    }];
 }
 
 - (void)showLoadingScreenOnTopFrame
@@ -225,6 +219,7 @@
                                         animated:YES
                                   scrollPosition:UITableViewScrollPositionTop];
             [self tableView:self.tableView didSelectRowAtIndexPath:latestMessageIndexPath];
+            *stop = YES;
         }
     }];
 }
