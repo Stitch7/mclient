@@ -201,6 +201,22 @@
 		306FC8831F93A39F001EB7E9 /* delete.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3096481A1EA180CE00C16379 /* delete.caf */; };
 		306FC8841F93A39F001EB7E9 /* MCLDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 308B81E81F63FC9700C878FB /* MCLDetailViewController.xib */; };
 		306FC8851F93A39F001EB7E9 /* ComposeMessage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EAE21B1F1C1E400035DFC9 /* ComposeMessage.storyboard */; };
+		3070D325207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D324207A60C200F42BFF /* MCLLicenseTableViewController.m */; };
+		3070D326207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D324207A60C200F42BFF /* MCLLicenseTableViewController.m */; };
+		3070D327207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D324207A60C200F42BFF /* MCLLicenseTableViewController.m */; };
+		3070D328207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D324207A60C200F42BFF /* MCLLicenseTableViewController.m */; };
+		3070D32C207A6BBA00F42BFF /* MCLLicenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D32B207A6BBA00F42BFF /* MCLLicenseViewController.m */; };
+		3070D32D207A6BBA00F42BFF /* MCLLicenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D32B207A6BBA00F42BFF /* MCLLicenseViewController.m */; };
+		3070D32E207A6BBA00F42BFF /* MCLLicenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D32B207A6BBA00F42BFF /* MCLLicenseViewController.m */; };
+		3070D32F207A6BBA00F42BFF /* MCLLicenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D32B207A6BBA00F42BFF /* MCLLicenseViewController.m */; };
+		3070D332207A845500F42BFF /* MCLLicenseContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D331207A845500F42BFF /* MCLLicenseContainer.m */; };
+		3070D333207A845500F42BFF /* MCLLicenseContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D331207A845500F42BFF /* MCLLicenseContainer.m */; };
+		3070D334207A845500F42BFF /* MCLLicenseContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D331207A845500F42BFF /* MCLLicenseContainer.m */; };
+		3070D335207A845500F42BFF /* MCLLicenseContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D331207A845500F42BFF /* MCLLicenseContainer.m */; };
+		3070D339207A948000F42BFF /* MCLLicense.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D338207A948000F42BFF /* MCLLicense.m */; };
+		3070D33A207A948000F42BFF /* MCLLicense.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D338207A948000F42BFF /* MCLLicense.m */; };
+		3070D33B207A948000F42BFF /* MCLLicense.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D338207A948000F42BFF /* MCLLicense.m */; };
+		3070D33C207A948000F42BFF /* MCLLicense.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D338207A948000F42BFF /* MCLLicense.m */; };
 		307A80821F6411DA00A580FE /* MCLMessageListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 307A80811F6411DA00A580FE /* MCLMessageListLoadingViewController.m */; };
 		307A80F119B8804F001B538D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307A80F019B8804F001B538D /* Security.framework */; };
 		307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D797519B0B3B30096A217 /* MCLReadSymbolView.m */; };
@@ -674,6 +690,15 @@
 		306EA6E619D5992F00BB4DC8 /* MCLMServiceErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMServiceErrorView.h; sourceTree = "<group>"; };
 		306EA6E719D5992F00BB4DC8 /* MCLMServiceErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMServiceErrorView.m; sourceTree = "<group>"; };
 		306FC88C1F93A39F001EB7E9 /* mclient-dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mclient-dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3070D323207A60C200F42BFF /* MCLLicenseTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLLicenseTableViewController.h; sourceTree = "<group>"; };
+		3070D324207A60C200F42BFF /* MCLLicenseTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLLicenseTableViewController.m; sourceTree = "<group>"; };
+		3070D32A207A6BBA00F42BFF /* MCLLicenseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLLicenseViewController.h; sourceTree = "<group>"; };
+		3070D32B207A6BBA00F42BFF /* MCLLicenseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLLicenseViewController.m; sourceTree = "<group>"; };
+		3070D330207A835A00F42BFF /* MCLLicenseContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLLicenseContainer.h; sourceTree = "<group>"; };
+		3070D331207A845500F42BFF /* MCLLicenseContainer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLLicenseContainer.m; sourceTree = "<group>"; };
+		3070D336207A899600F42BFF /* MCLLicenseContainer+Texts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MCLLicenseContainer+Texts.h"; sourceTree = "<group>"; };
+		3070D337207A948000F42BFF /* MCLLicense.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLLicense.h; sourceTree = "<group>"; };
+		3070D338207A948000F42BFF /* MCLLicense.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLLicense.m; sourceTree = "<group>"; };
 		307A80801F6411DA00A580FE /* MCLMessageListLoadingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMessageListLoadingViewController.h; sourceTree = "<group>"; };
 		307A80811F6411DA00A580FE /* MCLMessageListLoadingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListLoadingViewController.m; sourceTree = "<group>"; };
 		307A80F019B8804F001B538D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1346,6 +1371,22 @@
 			path = Widmann;
 			sourceTree = "<group>";
 		};
+		3070D329207A6B9800F42BFF /* License */ = {
+			isa = PBXGroup;
+			children = (
+				3070D337207A948000F42BFF /* MCLLicense.h */,
+				3070D338207A948000F42BFF /* MCLLicense.m */,
+				3070D330207A835A00F42BFF /* MCLLicenseContainer.h */,
+				3070D331207A845500F42BFF /* MCLLicenseContainer.m */,
+				3070D336207A899600F42BFF /* MCLLicenseContainer+Texts.h */,
+				3070D323207A60C200F42BFF /* MCLLicenseTableViewController.h */,
+				3070D324207A60C200F42BFF /* MCLLicenseTableViewController.m */,
+				3070D32A207A6BBA00F42BFF /* MCLLicenseViewController.h */,
+				3070D32B207A6BBA00F42BFF /* MCLLicenseViewController.m */,
+			);
+			path = License;
+			sourceTree = "<group>";
+		};
 		30827BA81F35CF0C00014769 /* Internationalization */ = {
 			isa = PBXGroup;
 			children = (
@@ -1431,6 +1472,7 @@
 				30D82AF21E2A42F700898963 /* MCLSettingsFontSizeViewController.m */,
 				30A1BFAB19B4A8D4002439FE /* MCLSettingsViewController.h */,
 				30A1BFAC19B4A8D4002439FE /* MCLSettingsViewController.m */,
+				3070D329207A6B9800F42BFF /* License */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -2094,6 +2136,7 @@
 			files = (
 				301203311E031D7500B06FF6 /* MCLBadgeView.m in Sources */,
 				305208941F4303D700D3178C /* MCLModalTransitionAnimator.m in Sources */,
+				3070D32D207A6BBA00F42BFF /* MCLLicenseViewController.m in Sources */,
 				305DD86019AB3031006514BD /* MCLThread.m in Sources */,
 				30849D1F1E2B8CB500626331 /* UIColor+Hex.m in Sources */,
 				302381FB1F9373E000764FAE /* MCLNotificationRequest.m in Sources */,
@@ -2135,6 +2178,7 @@
 				305208971F43094D00D3178C /* MCLModalPresentationController.m in Sources */,
 				308346211E9E8E5400C11033 /* MCLThreadKillfileViewController.m in Sources */,
 				30D214611F15561B00C77563 /* MCLSplitViewController.m in Sources */,
+				3070D33A207A948000F42BFF /* MCLLicense.m in Sources */,
 				306EA6E819D5992F00BB4DC8 /* MCLMServiceErrorView.m in Sources */,
 				305DD82819A63517006514BD /* MCLAppDelegate.m in Sources */,
 				3039748A1E1694C8003C8BC9 /* MCLMessageListWidmannStyleViewController.m in Sources */,
@@ -2169,6 +2213,7 @@
 				302382011F937CBD00764FAE /* MCLKillfileThreadsRequest.m in Sources */,
 				305DE8101F2E46DD00EC34AE /* MCLMessageToolbar.m in Sources */,
 				304373441FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */,
+				3070D326207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
 				305DE8181F2E608200EC34AE /* MCLRouter+mainNavigation.m in Sources */,
 				30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */,
 				30BD475F1E956D9000DBB27B /* MCLLogin.m in Sources */,
@@ -2187,6 +2232,7 @@
 				30DB7F7E1F8D5CFC00766501 /* MCLFeatures.m in Sources */,
 				3003BE0A1F9389B300103F4B /* MCLFoundationHTTPClient.m in Sources */,
 				30DD81771FB454AE007BF235 /* MCLAppDependencyBag.m in Sources */,
+				3070D333207A845500F42BFF /* MCLLicenseContainer.m in Sources */,
 				302382001F937CBD00764FAE /* MCLKillfileThreadToggleRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2205,6 +2251,7 @@
 			files = (
 				306FC8111F93A39F001EB7E9 /* MCLBadgeView.m in Sources */,
 				3090CBB61FA8B4DE0085C9AF /* MCLBoardsListLoadingViewController.m in Sources */,
+				3070D32C207A6BBA00F42BFF /* MCLLicenseViewController.m in Sources */,
 				306FC8121F93A39F001EB7E9 /* MCLModalTransitionAnimator.m in Sources */,
 				306FC8131F93A39F001EB7E9 /* MCLThread.m in Sources */,
 				306FC8141F93A39F001EB7E9 /* UIColor+Hex.m in Sources */,
@@ -2246,6 +2293,7 @@
 				306FC8341F93A39F001EB7E9 /* MCLSearchThreadsRequest.m in Sources */,
 				306FC8351F93A39F001EB7E9 /* MCLLogoLabel.m in Sources */,
 				306FC8361F93A39F001EB7E9 /* MCLThreadListRequest.m in Sources */,
+				3070D339207A948000F42BFF /* MCLLicense.m in Sources */,
 				306FC8371F93A39F001EB7E9 /* MCLMessageListRequest.m in Sources */,
 				306FC8381F93A39F001EB7E9 /* MCLModalPresentationController.m in Sources */,
 				306FC8391F93A39F001EB7E9 /* MCLThreadKillfileViewController.m in Sources */,
@@ -2280,6 +2328,7 @@
 				306FC8551F93A39F001EB7E9 /* MCLMessageRequest.m in Sources */,
 				306FC8561F93A39F001EB7E9 /* UIViewController+Additions.m in Sources */,
 				304373431FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */,
+				3070D325207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
 				306FC8571F93A39F001EB7E9 /* MCLKillfileThreadsRequest.m in Sources */,
 				306FC8581F93A39F001EB7E9 /* MCLMessageToolbar.m in Sources */,
 				306FC8591F93A39F001EB7E9 /* MCLRouter+mainNavigation.m in Sources */,
@@ -2298,6 +2347,7 @@
 				306FC8651F93A39F001EB7E9 /* MCLBoardListTableViewController.m in Sources */,
 				306FC8661F93A39F001EB7E9 /* MCLFeatures.m in Sources */,
 				306FC8671F93A39F001EB7E9 /* MCLFoundationHTTPClient.m in Sources */,
+				3070D332207A845500F42BFF /* MCLLicenseContainer.m in Sources */,
 				306FC8681F93A39F001EB7E9 /* MCLKillfileThreadToggleRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2308,6 +2358,7 @@
 			files = (
 				3090CABD1FA7ED1E0085C9AF /* MCLBadgeView.m in Sources */,
 				3090CABE1FA7ED1E0085C9AF /* MCLModalTransitionAnimator.m in Sources */,
+				3070D32F207A6BBA00F42BFF /* MCLLicenseViewController.m in Sources */,
 				3090CABF1FA7ED1E0085C9AF /* MCLThread.m in Sources */,
 				3090CAC01FA7ED1E0085C9AF /* UIColor+Hex.m in Sources */,
 				3090CAC11FA7ED1E0085C9AF /* MCLNotificationRequest.m in Sources */,
@@ -2349,6 +2400,7 @@
 				3090CAE31FA7ED1E0085C9AF /* MCLModalPresentationController.m in Sources */,
 				3090CAE41FA7ED1E0085C9AF /* MCLThreadKillfileViewController.m in Sources */,
 				3090CAE51FA7ED1E0085C9AF /* MCLSplitViewController.m in Sources */,
+				3070D33C207A948000F42BFF /* MCLLicense.m in Sources */,
 				3090CAE61FA7ED1E0085C9AF /* MCLMServiceErrorView.m in Sources */,
 				3090CAE81FA7ED1E0085C9AF /* MCLAppDelegate.m in Sources */,
 				3090CAE91FA7ED1E0085C9AF /* MCLMessageListWidmannStyleViewController.m in Sources */,
@@ -2383,6 +2435,7 @@
 				3090CB021FA7ED1E0085C9AF /* MCLKillfileThreadsRequest.m in Sources */,
 				3090CB031FA7ED1E0085C9AF /* MCLMessageToolbar.m in Sources */,
 				304373461FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */,
+				3070D328207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
 				3090CB041FA7ED1E0085C9AF /* MCLRouter+mainNavigation.m in Sources */,
 				3090CB051FA7ED1E0085C9AF /* MCLVerifiyLoginView.m in Sources */,
 				3090CB061FA7ED1E0085C9AF /* MCLLogin.m in Sources */,
@@ -2401,6 +2454,7 @@
 				3090CB111FA7ED1E0085C9AF /* MCLFeatures.m in Sources */,
 				3090CB121FA7ED1E0085C9AF /* MCLFoundationHTTPClient.m in Sources */,
 				30DD81791FB454B0007BF235 /* MCLAppDependencyBag.m in Sources */,
+				3070D335207A845500F42BFF /* MCLLicenseContainer.m in Sources */,
 				3090CB131FA7ED1E0085C9AF /* MCLKillfileThreadToggleRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2411,6 +2465,7 @@
 			files = (
 				3090CB3A1FA89A5C0085C9AF /* MCLBadgeView.m in Sources */,
 				3090CB3B1FA89A5C0085C9AF /* MCLModalTransitionAnimator.m in Sources */,
+				3070D32E207A6BBA00F42BFF /* MCLLicenseViewController.m in Sources */,
 				3090CB3C1FA89A5C0085C9AF /* MCLThread.m in Sources */,
 				3090CB3D1FA89A5C0085C9AF /* UIColor+Hex.m in Sources */,
 				3090CB3E1FA89A5C0085C9AF /* MCLNotificationRequest.m in Sources */,
@@ -2452,6 +2507,7 @@
 				3090CB601FA89A5C0085C9AF /* MCLModalPresentationController.m in Sources */,
 				3090CB611FA89A5C0085C9AF /* MCLThreadKillfileViewController.m in Sources */,
 				3090CB621FA89A5C0085C9AF /* MCLSplitViewController.m in Sources */,
+				3070D33B207A948000F42BFF /* MCLLicense.m in Sources */,
 				3090CB631FA89A5C0085C9AF /* MCLMServiceErrorView.m in Sources */,
 				3090CB651FA89A5C0085C9AF /* MCLAppDelegate.m in Sources */,
 				3090CB661FA89A5C0085C9AF /* MCLMessageListWidmannStyleViewController.m in Sources */,
@@ -2486,6 +2542,7 @@
 				3090CB7F1FA89A5C0085C9AF /* MCLKillfileThreadsRequest.m in Sources */,
 				3090CB801FA89A5C0085C9AF /* MCLMessageToolbar.m in Sources */,
 				304373451FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */,
+				3070D327207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
 				3090CB811FA89A5C0085C9AF /* MCLRouter+mainNavigation.m in Sources */,
 				3090CB821FA89A5C0085C9AF /* MCLVerifiyLoginView.m in Sources */,
 				3090CB831FA89A5C0085C9AF /* MCLLogin.m in Sources */,
@@ -2504,6 +2561,7 @@
 				3090CB8E1FA89A5C0085C9AF /* MCLFeatures.m in Sources */,
 				3090CB8F1FA89A5C0085C9AF /* MCLFoundationHTTPClient.m in Sources */,
 				30DD81781FB454AF007BF235 /* MCLAppDependencyBag.m in Sources */,
+				3070D334207A845500F42BFF /* MCLLicenseContainer.m in Sources */,
 				3090CB901FA89A5C0085C9AF /* MCLKillfileThreadToggleRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

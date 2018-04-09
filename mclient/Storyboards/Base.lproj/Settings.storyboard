@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hWg-ib-K7d">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hWg-ib-K7d">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,7 +31,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="MCLSettingsViewController" extendedLayoutIncludesOpaqueBars="YES" id="ecl-kD-BtA" customClass="MCLSettingsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="g3z-6x-fKe">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1550"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1700"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
@@ -555,6 +555,69 @@ Register at https://www.maniac-forum.de</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="SiT-oA-PKf">
+                                        <rect key="frame" x="0.0" y="1454" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SiT-oA-PKf" id="dpn-2q-9bC">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Licenses" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dnv-Qf-VK0">
+                                                    <rect key="frame" x="26" y="11" width="302" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="dnv-Qf-VK0" firstAttribute="centerY" secondItem="dpn-2q-9bC" secondAttribute="centerY" id="Dxm-OR-7ts"/>
+                                                <constraint firstItem="dnv-Qf-VK0" firstAttribute="leading" secondItem="dpn-2q-9bC" secondAttribute="leadingMargin" constant="10" id="N7F-rR-wI8"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="dnv-Qf-VK0" secondAttribute="trailing" constant="5" id="PVA-yN-xcP"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="99z-hE-4O5">
+                                        <rect key="frame" x="0.0" y="1498" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="99z-hE-4O5" id="DMq-qr-EkQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Source Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NBb-8E-ZWy">
+                                                    <rect key="frame" x="26" y="11" width="302" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="NBb-8E-ZWy" firstAttribute="leading" secondItem="DMq-qr-EkQ" secondAttribute="leadingMargin" constant="10" id="Irh-El-2s7"/>
+                                                <constraint firstItem="NBb-8E-ZWy" firstAttribute="centerY" secondItem="DMq-qr-EkQ" secondAttribute="centerY" id="Uza-AE-6VR"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="NBb-8E-ZWy" secondAttribute="trailing" constant="5" id="ZQ9-di-rLs"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="W73-TY-poE">
+                                        <rect key="frame" x="0.0" y="1542" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="W73-TY-poE" id="eqM-Fb-AFp">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Browser Extension" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ys7-Hj-jLe">
+                                                    <rect key="frame" x="26" y="11" width="302" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Ys7-Hj-jLe" firstAttribute="leading" secondItem="eqM-Fb-AFp" secondAttribute="leadingMargin" constant="10" id="G1m-RX-REN"/>
+                                                <constraint firstItem="Ys7-Hj-jLe" firstAttribute="centerY" secondItem="eqM-Fb-AFp" secondAttribute="centerY" id="bml-rX-9pV"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Ys7-Hj-jLe" secondAttribute="trailing" constant="5" id="h3t-7C-LRN"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -571,7 +634,7 @@ Register at https://www.maniac-forum.de</string>
                         </barButtonItem>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="375" height="1550"/>
+                    <size key="freeformSize" width="375" height="1700"/>
                     <connections>
                         <outlet property="backgroundNotificationsEnabledSwitch" destination="tgK-YH-jt6" id="rja-eO-2mh"/>
                         <outlet property="jumpToLatestMessageSwitch" destination="6Sj-nd-z3g" id="zFj-nJ-DtK"/>

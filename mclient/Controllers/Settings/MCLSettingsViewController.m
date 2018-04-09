@@ -22,6 +22,7 @@
 #import "MCLNightTheme.h"
 #import "MCLTextView.h"
 #import "MCLSettingsFontSizeViewController.h"
+#import "MCLLicenseTableViewController.h"
 #import "MCLThreadKillfileViewController.h"
 
 
@@ -423,25 +424,45 @@
 
 - (void)didSelectRowInInfoSectionAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *page;
     switch (indexPath.row) {
         case 0:
-            page = @"terms.html";
+            [self openLegalDocument:@"terms.html"];
             break;
 
         case 1:
-            page = @"privacy.html";
+            [self openLegalDocument:@"privacy.html"];
             break;
 
         case 2:
-            page = @"imprint.html";
+            [self openLegalDocument:@"imprint.html"];
+            break;
+
+        case 3:
+            [self.navigationController pushViewController:[[MCLLicenseTableViewController alloc] initWithBag:self.bag]
+                                                 animated:YES];
+            break;
+
+        case 4:
+            [self openUrl:@"https://github.com/Stitch7/mclient"];
+            break;
+
+        case 5:
+            [self openUrl:@"https://github.com/Stitch7/mservice-webextension"];
             break;
     }
-
-    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@", kManiacForumURL, page]];
-    [self.bag.router openRawManiacForumURL:url fromPresentingViewController:self];
 }
 
+- (void)openUrl:(NSString *)urlString
+{
+    NSURL *url = [NSURL URLWithString:urlString];
+    [self.bag.router pushToURL:url fromPresentingViewController:self];
+}
+
+- (void)openLegalDocument:(NSString *)document
+{
+    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@", kManiacForumURL, document]];
+    [self.bag.router openRawManiacForumURL:url fromPresentingViewController:self];
+}
 
 #pragma mark - UITextFieldDelegate
 
