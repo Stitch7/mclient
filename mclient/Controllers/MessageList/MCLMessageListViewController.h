@@ -39,7 +39,6 @@
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
 
 - (void)initialize;
-- (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard;
 - (void)presentAlertWithError:(NSError *)error;
 - (void)themeChanged:(NSNotification *)notification;
 - (void)selectInitialMessage;

@@ -46,9 +46,4 @@
     }];
 }
 
-- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
-    NSLog(@"willTransitionToTraitCollection");
-}
-
 @end

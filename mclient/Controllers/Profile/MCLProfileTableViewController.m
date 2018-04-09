@@ -34,15 +34,7 @@
 {
     [super awakeFromNib];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(themeChanged:)
-                                                 name:MCLThemeChangedNotification
-                                               object:nil];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [self.tableView reloadData];
+    [self configureNotifications];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -52,6 +44,16 @@
     if ([self.delegate respondsToSelector:@selector(handleRotationChangeInBackground)]) {
         [self.delegate handleRotationChangeInBackground];
     }
+}
+
+#pragma mark - Configuration
+
+- (void)configureNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
 }
 
 #pragma mark - MCLLoadingContentViewControllerDelegate

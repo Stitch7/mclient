@@ -259,9 +259,4 @@
     mustOverride();
 }
 
-- (void)loadThread:(MCLThread *)inThread fromBoard:(MCLBoard *)inBoard
-{
-    mustOverride();
-}
-
 @end

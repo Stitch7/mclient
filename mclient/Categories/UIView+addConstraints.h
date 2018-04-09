@@ -9,7 +9,6 @@
 @interface UIView (addConstraints)
 
 - (void)addConstraints:(NSString *)string views:(NSDictionary<NSString *, id> *)views;
-
 - (void)constrainEdgesTo:(UIView *)view;
 - (void)constrainEdgesToMarginOf:(UIView *)view;
 - (void)constrainEqual:(NSLayoutAttribute)attribute toItem:(id)toItem toAttribute:(NSLayoutAttribute)toAttribute;
