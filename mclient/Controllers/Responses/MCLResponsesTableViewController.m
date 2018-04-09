@@ -8,12 +8,14 @@
 
 #import "MCLResponsesTableViewController.h"
 
+#import "MRProgress.h"
 #import "MCLDependencyBag.h"
 #import "UIViewController+Additions.h"
 #import "UIView+addConstraints.h"
 #import "MCLRouter+mainNavigation.h"
 #import "MCLLogin.h"
 #import "MCLMarkUnreadResponsesAsReadRequest.h"
+#import "MCLLoadingViewController.h"
 #import "MCLMessageListViewController.h"
 #import "MCLThemeManager.h"
 #import "MCLMessageListFrameStyleTableViewCell.h"
@@ -34,6 +36,20 @@
 @end
 
 @implementation MCLResponsesTableViewController
+
+#pragma mark - Lazy Properties
+
+- (NSDateFormatter *)dateFormatter
+{
+    if (!_dateFormatter) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        _dateFormatter.doesRelativeDateFormatting = YES;
+        _dateFormatter.dateStyle = NSDateFormatterShortStyle;
+        _dateFormatter.timeStyle = NSDateFormatterShortStyle;
+    }
+
+    return _dateFormatter;
+}
 
 #pragma mark - Initializers
 
@@ -61,12 +77,6 @@
                                                object:nil];
 
     self.currentTheme = self.bag.themeManager.currentTheme;
-
-    // Init + setup dateformatter for message dates
-    self.dateFormatter = [[NSDateFormatter alloc] init];
-    [self.dateFormatter setDoesRelativeDateFormatting:YES];
-    [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];
-    [self.dateFormatter setTimeStyle:NSDateFormatterShortStyle];
 }
 
 #pragma mark - UIViewController life cycle
@@ -82,12 +92,8 @@
 {
     self.tableView.sectionHeaderHeight = UITableViewAutomaticDimension;
 
-    UINib *responseCellNib = [UINib nibWithNibName: @"MCLMessageListFrameStyleTableViewCell" bundle: nil];
+    UINib *responseCellNib = [UINib nibWithNibName:@"MCLMessageListFrameStyleTableViewCell" bundle:nil];
     [self.tableView registerNib:responseCellNib forCellReuseIdentifier:@"ResponseCell"];
-
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl = refreshControl;
 }
 
 #pragma mark - Actions
@@ -119,29 +125,45 @@
 
 - (void)markUnreadResponsesAsRead
 {
+    MRProgressOverlayView *progressView = [MRProgressOverlayView showOverlayAddedTo:self.view animated:YES];
+    progressView.mode = MRProgressOverlayViewModeIndeterminateSmallDefault;
+    progressView.titleLabelText = NSLocalizedString(@"Loading…", nil);
     MCLMarkUnreadResponsesAsReadRequest *request = [[MCLMarkUnreadResponsesAsReadRequest alloc] initWithClient:self.bag.httpClient
                                                                                                          login:self.bag.login];
     [request loadWithCompletionHandler:^(NSError *error, NSArray *response) {
+        [MRProgressOverlayView dismissOverlayForView:self.view animated:YES];
+
         if (error) {
-            NSLog(@"%@", error);
+            [self presentAlertWithError:error];
             return;
         }
 
-        [self.navigationItem.rightBarButtonItem setEnabled:NO];
-//        [self reloadData];
+        [self.loadingViewController.navigationItem.rightBarButtonItem setEnabled:NO];
+        [self.loadingViewController refresh];
     }];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    [self.tableView reloadData];
 }
 
 - (void)downButtonPressed
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Helper
+
+- (void)presentAlertWithError:(NSError *)error
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
+                                                                   message:[error localizedDescription]
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * action) {
+                                                         [alert dismissViewControllerAnimated:YES completion:nil];
+                                                     }];
+    [alert addAction:okAction];
+
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - MCLLoadingContentViewControllerDelegate
@@ -158,15 +180,17 @@
                                                                             style:UIBarButtonItemStylePlain
                                                                            target:self
                                                                            action:@selector(markAllAsReadButtonButtonPressed)];
-
-    BOOL markAllAsReadButtonIsEnabled = [UIApplication sharedApplication].applicationIconBadgeNumber > 0;
-    [markAllAsReadButton setEnabled:markAllAsReadButtonIsEnabled];
+    [markAllAsReadButton setEnabled:NO];
     navigationItem.rightBarButtonItem = markAllAsReadButton;
 }
 
 - (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData
 {
     self.responseContainer = [newData firstObject];
+
+    BOOL markAllAsReadButtonIsEnabled = [self.responseContainer numberOfUnreadResponses] > 0;
+    [self.loadingViewController.navigationItem.rightBarButtonItem setEnabled:markAllAsReadButtonIsEnabled];
+
     [self.tableView reloadData];
 }
 

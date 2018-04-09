@@ -234,20 +234,18 @@
 {
     if (self.bag.login.valid) {
         [self.verifyLoginView loginStatusWithUsername:self.bag.login.username];
-        [[[MCLMessageResponsesRequest alloc] init] loadResponsesWithCompletion:nil];
+        [[[MCLMessageResponsesRequest alloc] initWithBag:self.bag] loadResponsesWithCompletion:nil];
         return;
     }
 
-    [self.bag.login testLoginWithCompletionHandler:^(NSError *error, BOOL success) {
-        [self updateVerifyLoginViewWithSuccess:success];
-    }];
+    [self.bag.login testLoginWithCompletionHandler:nil];
 }
 
 - (void)updateVerifyLoginViewWithSuccess:(BOOL)success
 {
     if (success) {
         [self.verifyLoginView loginStatusWithUsername:self.bag.login.username];
-        [[[MCLMessageResponsesRequest alloc] init] loadResponsesWithCompletion:nil];
+        [[[MCLMessageResponsesRequest alloc] initWithBag:self.bag] loadResponsesWithCompletion:nil];
     } else {
         [self.verifyLoginView loginStatusNoLogin];
     }

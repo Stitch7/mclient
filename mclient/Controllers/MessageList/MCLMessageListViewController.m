@@ -69,7 +69,6 @@
     return _dateFormatter;
 }
 
-
 #pragma mark - UIViewController
 
 - (void)viewDidLoad

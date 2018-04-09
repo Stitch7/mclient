@@ -482,7 +482,6 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-//    NSData *imageData = UIImagePNGRepresentation(image);
     NSData *imageData = UIImageJPEGRepresentation(image, 0.7f);
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;

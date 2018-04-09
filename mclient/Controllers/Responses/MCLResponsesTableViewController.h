@@ -10,10 +10,12 @@
 #import "MCLLoadingViewControllerDelegate.h"
 
 @protocol MCLDependencyBag;
+@class MCLLoadingViewController;
 @class MCLResponseContainer;
 
 @interface MCLResponsesTableViewController : UITableViewController <MCLLoadingViewControllerDelegate>
 
+@property (weak, nonatomic) MCLLoadingViewController *loadingViewController;
 @property (strong, nonatomic) MCLResponseContainer *responseContainer;
 
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
