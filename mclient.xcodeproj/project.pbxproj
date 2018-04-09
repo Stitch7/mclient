@@ -1239,10 +1239,10 @@
 				3061A68D1EA148180047E798 /* MCLToast.h */,
 				3061A68E1EA148180047E798 /* MCLToast.m */,
 				3006EF901F26709C0054F27F /* MessageList */,
+				3070D322207968F900F42BFF /* MultilineTitleView */,
 				30C9B52F205AAB8E00FD3C31 /* NoData */,
 				305DE8151F2E52FB00EC34AE /* TextView */,
 				3006EF8F1F26708A0054F27F /* ThreadTableViewCell */,
-				3070D322207968F900F42BFF /* MultilineTitleView */,
 			);
 			path = Views;
 			sourceTree = "<group>";

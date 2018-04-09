@@ -52,6 +52,7 @@
 - (void)configureWithTitle:(NSString *)title
 {
     self.frame = CGRectMake(0, 0, 480, 44);
+    self.font = [UIFont boldSystemFontOfSize: 15.0f];
     self.numberOfLines = 2;
 
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:title];
