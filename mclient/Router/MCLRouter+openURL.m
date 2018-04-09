@@ -23,11 +23,16 @@
 
 - (MCLMessageListViewController *)pushToURL:(NSURL *)destinationURL
 {
+    return [self pushToURL:destinationURL fromPresentingViewController:self.masterNavigationController];
+}
+
+- (MCLMessageListViewController *)pushToURL:(NSURL *)destinationURL fromPresentingViewController:(UIViewController *)presentingViewController
+{
     MCLMessageListViewController *messageListViewController = nil;
     if ([self isManiacURL:destinationURL]) {
         messageListViewController = [self pushToMessageFromUrl:destinationURL];
     } else {
-        [self openLink:destinationURL];
+        [self openLink:destinationURL fromPresentingViewController:presentingViewController];
     }
 
     return messageListViewController;
@@ -62,7 +67,7 @@
     return [url.host hasSuffix:@"maniac-forum.de"];
 }
  
-- (SFSafariViewController *)openLink:(NSURL *)url
+- (SFSafariViewController *)openLink:(NSURL *)url fromPresentingViewController:(UIViewController *)presentingViewController
 {
     if ([self.bag.settings isSettingActivated:MCLSettingOpenLinksInSafari]) {
         [UIApplication.sharedApplication openURL:url];
@@ -77,7 +82,7 @@
 
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:safariVC];
         [navigationController setNavigationBarHidden:YES animated:NO];
-        [self.masterNavigationController presentViewController:navigationController animated:YES completion:nil];
+        [presentingViewController presentViewController:navigationController animated:YES completion:nil];
 
         return safariVC;
     } else {
@@ -111,7 +116,7 @@
                                                                                          message:message];
     [request loadWithCompletionHandler:^(NSError *error, NSArray *data) {
         if (error || data == nil) {
-            [self openLink:url];
+            [self openLink:url fromPresentingViewController:self.masterNavigationController];
         } else {
             message.thread.threadId = [data firstObject];
             if ([data count] > 1) { // TODO: - hmpf
