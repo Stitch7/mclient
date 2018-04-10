@@ -125,7 +125,7 @@
     });
 
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    [[session dataTaskWithRequest:request completionHandler:^(NSData *responseData, NSURLResponse *response, NSError *responseError) {
+    NSURLSessionDataTask  *task = [session dataTaskWithRequest:request completionHandler:^(NSData *responseData, NSURLResponse *response, NSError *responseError) {
         NSDictionary *reply = nil;
         NSNumber *errorCode = nil;
         NSString *errorMessage = nil;
@@ -178,7 +178,9 @@
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
             completion(errorPtr, reply);
         });
-    }] resume];
+    }];
+    [task resume];
+    [session finishTasksAndInvalidate];
 }
 
 #pragma mark - Private Helpers
