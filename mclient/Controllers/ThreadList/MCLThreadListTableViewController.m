@@ -357,10 +357,12 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 - (void)messageListViewController:(MCLMessageListViewController *)inController didReadMessageOnThread:(MCLThread *)inThread
 {
     NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;
-    MCLThreadTableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
-    [selectedCell updateBadgeWithThread:inThread andTheme:self.currentTheme];
-    [self.tableView reloadRowsAtIndexPaths:@[selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-    [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    if (selectedIndexPath) {
+        MCLThreadTableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
+        [selectedCell updateBadgeWithThread:inThread andTheme:self.currentTheme];
+        [self.tableView reloadRowsAtIndexPaths:@[selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
 }
 
 #pragma mark - UISearchResultsUpdating
