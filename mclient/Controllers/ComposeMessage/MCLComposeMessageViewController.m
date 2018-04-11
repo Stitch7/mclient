@@ -494,12 +494,12 @@
                                     });
                                 }
                                  success:^(IMGImage *image) {
-                                     [self dissmissProgressViewWithSuccess:YES block:^{
+                                     [self dissmissProgressViewWithSuccess:YES completionHandler:^{
                                          [self.composeTextTextField addImage:image.url];
                                      }];
                                  }
                                  failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                     [self dissmissProgressViewWithSuccess:YES block:^{
+                                     [self dissmissProgressViewWithSuccess:YES completionHandler:^{
                                          NSLog(@"Imgur upload error: %@", error);
                                          UIAlertController *alert = [UIAlertController
                                                                      alertControllerWithTitle:@"Imgur upload error"
@@ -523,7 +523,7 @@
     }];
 }
 
-- (void)dissmissProgressViewWithSuccess:(BOOL)success block:(void(^)(void))block
+- (void)dissmissProgressViewWithSuccess:(BOOL)success completionHandler:(void(^)(void))completion
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
@@ -535,7 +535,7 @@
         self.progressView.titleLabelText = @"Failed";
     }
 
-    block();
+    completion();
 
     [self performBlock:^{
         [self.progressView dismiss:YES completion:^{
