@@ -192,8 +192,24 @@
 
 - (void)messageToolbar:(MCLMessageToolbar *)toolbar requestsToReplyToMessage:(MCLMessage *)message
 {
-    MCLComposeMessageViewController *composeMessageVC = [self.bag.router modalToComposeReplyToMessage:message];
-    composeMessageVC.delegate = self.messageListViewController;
+    if (message.userBlockedYou || message.userBlockedByYou) {
+        NSString *title = message.userBlockedYou
+            ? NSLocalizedString(@"You have been blocked by this user", nil)
+            : NSLocalizedString(@"User was blocked by you", nil);
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                       message:NSLocalizedString(@"You cannot reply to this post", nil)
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction *action) {
+                                                       [alert dismissViewControllerAnimated:YES completion:nil];
+                                                   }];
+        [alert addAction:ok];
+        [self.messageListViewController presentViewController:alert animated:YES completion:nil];
+    } else {
+        MCLComposeMessageViewController *composeMessageVC = [self.bag.router modalToComposeReplyToMessage:message];
+        composeMessageVC.delegate = self.messageListViewController;
+    }
 }
 
 #pragma mark - AVSpeechSynthesizerDelegate

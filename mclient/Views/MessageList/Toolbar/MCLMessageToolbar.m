@@ -163,7 +163,7 @@
         !([self.message.username isEqualToString:self.login.username] && self.nextMessage.level <= self.message.level);
     [self hide:hideEditButton barButton:self.editButton];
 
-    BOOL hideReplyButton = !self.login.valid || self.message.thread.isClosed || self.message.userBlockedYou || self.message.userBlockedByYou;
+    BOOL hideReplyButton = !self.login.valid || self.message.thread.isClosed;
     [self hide:hideReplyButton barButton:self.replyButton];
 }
 
