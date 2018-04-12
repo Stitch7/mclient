@@ -9,7 +9,7 @@
 // FEATURE_STAGE is defined in build settings
 #define kFeatureStage FEATURE_STAGE
 
-//#define kMServiceBaseURL @"http://192.168.178.36:8080"
+//#define kMServiceBaseURL @"http://192.168.178.35:8080"
 #define kMServiceBaseURL @"https://nerds.berlin/mservice-beta/"
 
 #define kManiacForumURL @"https://www.maniac-forum.de/"

@@ -12,9 +12,6 @@
 #import "MCLBoardListTableViewController.h"
 #import "MCLThreadListTableViewController.h"
 
-@interface MCLBoardsListLoadingViewController ()
-
-@end
 
 @implementation MCLBoardsListLoadingViewController
 

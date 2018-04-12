@@ -8,15 +8,15 @@
 
 #import "MCLRouter+composeMessage.h"
 
+#import "MCLDependencyBag.h"
 #import "MCLBoard.h"
 #import "MCLMessage.h"
 #import "MCLThread.h"
+#import "MCLEditTextRequest.h"
 #import "MCLModalNavigationController.h"
 #import "MCLComposeMessageViewController.h"
 #import "MCLComposeMessagePreviewViewController.h"
 
-#import "MCLDependencyBag.h"
-#import "MCLEditTextRequest.h"
 
 @implementation MCLRouter (composeMessage)
 
@@ -27,7 +27,6 @@
     composeThreadVC.bag = self.bag;
     composeThreadVC.boardId = board.boardId;
     composeThreadVC.type = kMCLComposeTypeThread;
-//    composeThreadVC.delegate = delegate;
 
     MCLModalNavigationController *navigationVC = [[MCLModalNavigationController alloc] initWithRootViewController:composeThreadVC];
     [self.masterNavigationController presentViewController:navigationVC animated:YES completion:nil];
@@ -44,7 +43,6 @@
     replyToMessageVC.threadId = message.thread.threadId;
     replyToMessageVC.boardId = message.board.boardId;
     replyToMessageVC.type = kMCLComposeTypeReply;
-//    composeThreadVC.delegate = delegate;
 
     NSString *subject = message.subject;
     NSString *subjectReplyPrefix = @"Re:";
@@ -70,8 +68,7 @@
     editMessageVC.type = kMCLComposeTypeEdit;
     editMessageVC.subject = message.subject;
     editMessageVC.text = message.text;
-//    composeThreadVC.delegate = delegate;
-     MCLModalNavigationController *navigationVC = [[MCLModalNavigationController alloc] initWithRootViewController:editMessageVC];
+    MCLModalNavigationController *navigationVC = [[MCLModalNavigationController alloc] initWithRootViewController:editMessageVC];
 
     MCLEditTextRequest *request = [[MCLEditTextRequest alloc] initWithClient:self.bag.httpClient message:message];
     [request loadWithCompletionHandler:^(NSError *error, NSArray *data) {

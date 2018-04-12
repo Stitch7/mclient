@@ -462,6 +462,10 @@
 		30A69ABE204920E300904E73 /* MCLEditTextRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A69ABB204920E300904E73 /* MCLEditTextRequest.m */; };
 		30A69ABF204920E300904E73 /* MCLEditTextRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A69ABB204920E300904E73 /* MCLEditTextRequest.m */; };
 		30A69AC0204920E300904E73 /* MCLEditTextRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A69ABB204920E300904E73 /* MCLEditTextRequest.m */; };
+		30A7149C207FDB6000554610 /* MCLModalOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A7149B207FDB6000554610 /* MCLModalOverlayView.m */; };
+		30A7149D207FDB6000554610 /* MCLModalOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A7149B207FDB6000554610 /* MCLModalOverlayView.m */; };
+		30A7149E207FDB6000554610 /* MCLModalOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A7149B207FDB6000554610 /* MCLModalOverlayView.m */; };
+		30A7149F207FDB6000554610 /* MCLModalOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A7149B207FDB6000554610 /* MCLModalOverlayView.m */; };
 		30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */; };
 		30AC60F61F3F89E7000A6639 /* MCLMessageTextViewToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 30AC60F51F3F89E7000A6639 /* MCLMessageTextViewToolbar.m */; };
 		30B0B97B1E8AEED400925D0D /* MCLResponseContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B0B97A1E8AEED400925D0D /* MCLResponseContainer.m */; };
@@ -741,6 +745,8 @@
 		30A1BFAC19B4A8D4002439FE /* MCLSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsViewController.m; sourceTree = "<group>"; };
 		30A69ABB204920E300904E73 /* MCLEditTextRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLEditTextRequest.m; sourceTree = "<group>"; };
 		30A69ABC204920E300904E73 /* MCLEditTextRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLEditTextRequest.h; sourceTree = "<group>"; };
+		30A7149A207FDB6000554610 /* MCLModalOverlayView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLModalOverlayView.h; sourceTree = "<group>"; };
+		30A7149B207FDB6000554610 /* MCLModalOverlayView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLModalOverlayView.m; sourceTree = "<group>"; };
 		30A9D5E519D4CFFF00070268 /* MCLComposeMessagePreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessagePreviewViewController.h; sourceTree = "<group>"; };
 		30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLComposeMessagePreviewViewController.m; sourceTree = "<group>"; };
 		30AC60F41F3F89E7000A6639 /* MCLMessageTextViewToolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMessageTextViewToolbar.h; sourceTree = "<group>"; };
@@ -1085,12 +1091,12 @@
 			children = (
 				30526E111F48613E00BCC354 /* MCLModalNavigationController.h */,
 				30526E121F48613E00BCC354 /* MCLModalNavigationController.m */,
+				305208951F43094D00D3178C /* MCLModalPresentationController.h */,
+				305208961F43094D00D3178C /* MCLModalPresentationController.m */,
 				305208921F4303D700D3178C /* MCLModalTransitionAnimator.h */,
 				305208931F4303D700D3178C /* MCLModalTransitionAnimator.m */,
 				305208981F430E8B00D3178C /* MCLModalTransitioningDelegate.h */,
 				305208991F430E8B00D3178C /* MCLModalTransitioningDelegate.m */,
-				305208951F43094D00D3178C /* MCLModalPresentationController.h */,
-				305208961F43094D00D3178C /* MCLModalPresentationController.m */,
 			);
 			path = Modal;
 			sourceTree = "<group>";
@@ -1239,6 +1245,7 @@
 				3061A68D1EA148180047E798 /* MCLToast.h */,
 				3061A68E1EA148180047E798 /* MCLToast.m */,
 				3006EF901F26709C0054F27F /* MessageList */,
+				30A714A0207FDB6700554610 /* ModalOverlay */,
 				3070D322207968F900F42BFF /* MultilineTitleView */,
 				30C9B52F205AAB8E00FD3C31 /* NoData */,
 				305DE8151F2E52FB00EC34AE /* TextView */,
@@ -1410,6 +1417,15 @@
 				3038D58519F65E21005E7D3D /* Localizable.strings */,
 			);
 			path = Internationalization;
+			sourceTree = "<group>";
+		};
+		30A714A0207FDB6700554610 /* ModalOverlay */ = {
+			isa = PBXGroup;
+			children = (
+				30A7149A207FDB6000554610 /* MCLModalOverlayView.h */,
+				30A7149B207FDB6000554610 /* MCLModalOverlayView.m */,
+			);
+			path = ModalOverlay;
 			sourceTree = "<group>";
 		};
 		30B893191F88012400E584FA /* Logo */ = {
@@ -2166,6 +2182,7 @@
 				30DBC8A61E285FAC00EF150B /* MCLTextView.m in Sources */,
 				3020FB611E6577B000C7217F /* MCLMessageResponsesRequest.m in Sources */,
 				305DD86319AB380C006514BD /* MCLMessage.m in Sources */,
+				30A7149D207FDB6000554610 /* MCLModalOverlayView.m in Sources */,
 				30D82AF31E2A42F700898963 /* MCLSettingsFontSizeViewController.m in Sources */,
 				302D19EF1F2E22B800E2FC2B /* MCLRouter+composeMessage.m in Sources */,
 				30DD817D1FB7B3DC007BF235 /* MCLMarkUnreadResponsesAsReadRequest.m in Sources */,
@@ -2282,6 +2299,7 @@
 				306FC81B1F93A39F001EB7E9 /* MCLMessageTextView.m in Sources */,
 				306FC81C1F93A39F001EB7E9 /* MCLProfileTableViewController.m in Sources */,
 				306FC81D1F93A39F001EB7E9 /* MCLTextView.m in Sources */,
+				30A7149C207FDB6000554610 /* MCLModalOverlayView.m in Sources */,
 				3057B8AF1FAE175B0046C427 /* MCLFeatures+Names.m in Sources */,
 				306FC81E1F93A39F001EB7E9 /* MCLMessageResponsesRequest.m in Sources */,
 				306FC81F1F93A39F001EB7E9 /* MCLMessage.m in Sources */,
@@ -2390,6 +2408,7 @@
 				3090CAC91FA7ED1E0085C9AF /* MCLTextView.m in Sources */,
 				3090CACA1FA7ED1E0085C9AF /* MCLMessageResponsesRequest.m in Sources */,
 				3090CACB1FA7ED1E0085C9AF /* MCLMessage.m in Sources */,
+				30A7149F207FDB6000554610 /* MCLModalOverlayView.m in Sources */,
 				3090CACC1FA7ED1E0085C9AF /* MCLSettingsFontSizeViewController.m in Sources */,
 				3090CACD1FA7ED1E0085C9AF /* MCLRouter+composeMessage.m in Sources */,
 				30DD817F1FB7B3DD007BF235 /* MCLMarkUnreadResponsesAsReadRequest.m in Sources */,
@@ -2498,6 +2517,7 @@
 				3090CB461FA89A5C0085C9AF /* MCLTextView.m in Sources */,
 				3090CB471FA89A5C0085C9AF /* MCLMessageResponsesRequest.m in Sources */,
 				3090CB481FA89A5C0085C9AF /* MCLMessage.m in Sources */,
+				30A7149E207FDB6000554610 /* MCLModalOverlayView.m in Sources */,
 				3090CB491FA89A5C0085C9AF /* MCLSettingsFontSizeViewController.m in Sources */,
 				3090CB4A1FA89A5C0085C9AF /* MCLRouter+composeMessage.m in Sources */,
 				30DD817E1FB7B3DD007BF235 /* MCLMarkUnreadResponsesAsReadRequest.m in Sources */,

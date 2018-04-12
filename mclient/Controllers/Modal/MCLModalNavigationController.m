@@ -10,6 +10,7 @@
 
 #import "MCLModalTransitioningDelegate.h"
 
+
 @interface MCLModalNavigationController ()
 
 @property(strong, nonatomic) id<UIViewControllerTransitioningDelegate> transitioningDelegate;
@@ -20,12 +21,10 @@
 
 #pragma mark - Initializers
 
--(instancetype)initWithRootViewController:(UIViewController *)rootViewController
+- (instancetype)initWithRootViewController:(UIViewController *)rootViewController
 {
     self = [super initWithRootViewController:rootViewController];
-    if (!self) {
-        return nil;
-    }
+    if (!self) return nil;
 
     [self configure];
 

@@ -7,12 +7,10 @@
 //
 
 #import "MCLModalPresentationController.h"
-#import "MCLTheme.h"
-#import "MCLThemeManager.h"
+
 
 @interface MCLModalPresentationController ()
 
-//@property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) UIView *dimmingView;
 
 @end
@@ -31,8 +29,6 @@
 
 - (void)configure
 {
-//    self.currentTheme = [[MCLThemeManager sharedManager] currentTheme];
-
     self.dimmingView = [[UIView alloc] init];
     self.dimmingView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
 }
@@ -48,7 +44,6 @@
     [self.containerView insertSubview:self.dimmingView atIndex:0];
 
     [self.presentedViewController.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
-//        self.dimmingView.alpha = [self.currentTheme isDark] ? 0.4 : 1.0;
         self.dimmingView.alpha = 1.0;
     } completion:nil];
 }

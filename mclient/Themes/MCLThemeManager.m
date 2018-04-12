@@ -21,6 +21,7 @@
 #import "MCLErrorView.h"
 #import "MCLReadSymbolView.h"
 #import "MCLBadgeView.h"
+#import "MCLModalOverlayView.h"
 
 
 NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
@@ -204,11 +205,6 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
     [[UISearchBar appearance] setBackgroundImage:[[UIImage alloc] init]];
     [[UISearchBar appearance] setBackgroundColor:[theme searchBarBackgroundColor]];
 
-//    [[UITableViewCell appearance] setBackgroundColor:[theme tableViewCellBackgroundColor]];
-//    NSArray<Class <UIAppearanceContainer>> *classes = @[NSClassFromString(@"MCLBoardListTableViewController"), NSClassFromString(@"MCLThreadListTableViewController")];
-////                                                        NSClassFromString(@"MCLMessageListViewController"),
-////                                                        NSClassFromString(@"MCLProfileTableViewController")];
-//    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:classes] setBackgroundColor:[theme tableViewCellBackgroundColor]];
     [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLBoardListTableViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
     [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLDetailViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
     [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLResponsesTableViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
@@ -244,6 +240,8 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
     [[UIWebView appearance] setBackgroundColor:[theme webViewBackgroundColor]];
     [[WKWebView appearance] setBackgroundColor:[theme webViewBackgroundColor]];
     [[UIScrollView appearanceWhenContainedInInstancesOfClasses:@[[WKWebView class]]] setBackgroundColor:[theme webViewBackgroundColor]];
+
+    [[MCLModalOverlayView appearance] setBackgroundColor:[theme tableViewCellBackgroundColor]];
 
     [self.settings setInteger:[theme identifier] forSetting:MCLSettingTheme];
 
