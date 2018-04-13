@@ -35,19 +35,22 @@ extern NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier;
 @property (strong, nonatomic) UILabel *subjectLabel;
 @property (strong, nonatomic) UILabel *usernameLabel;
 @property (strong, nonatomic) UILabel *dateLabel;
+@property (strong, nonatomic) UIView *webViewContainerView;
 @property (strong, nonatomic) WKWebView *webView;
 @property (strong, nonatomic) NSLayoutConstraint *webViewHeightConstraint;
 
 @property (strong, nonatomic) MCLReadSymbolView *readSymbolView;
 @property (strong, nonatomic) MCLMessageToolbar *toolbar;
 
+- (void)initWebviewWithMessage:(MCLMessage *)message;
+- (void)deinitWebview;
 - (void)markRead;
 - (void)markUnread;
 - (void)contentHeightWithCompletion:(void (^)(CGFloat height))completionHandler;
 
 @end
 
-@protocol MCLMessageListWidmannStyleTableViewCellDelegate <NSObject>
+@protocol MCLMessageListWidmannStyleTableViewCellDelegate <NSObject, WKNavigationDelegate>
 
 - (void)contentChanged;
 

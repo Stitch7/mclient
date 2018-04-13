@@ -65,20 +65,8 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
     MCLReadSymbolView *readSymbol = [[MCLReadSymbolView alloc] init];
     readSymbol.translatesAutoresizingMaskIntoConstraints = NO;
 
-    WKWebViewConfiguration *webViewConfig = [[WKWebViewConfiguration alloc] init];
-    webViewConfig.suppressesIncrementalRendering = YES;
-    [webViewConfig.userContentController addScriptMessageHandler:self name:@"mclient"];
-
-    WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:webViewConfig];
-    webView.translatesAutoresizingMaskIntoConstraints = NO;
-    webView.opaque = NO;
-    webView.scrollView.scrollEnabled = NO;
-    webView.scrollView.scrollsToTop = NO;
-    for (id subview in webView.subviews) {
-        if ([[subview class] isSubclassOfClass: [UIScrollView class]]) {
-            [subview setBounces:NO];
-        }
-    }
+    UIView *webViewContainerView = [[UIView alloc] init];
+    webViewContainerView.translatesAutoresizingMaskIntoConstraints = false;
 
     MCLMessageToolbar *toolbar = [[MCLMessageToolbar alloc] init];
 
@@ -87,7 +75,7 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
     [self.contentView addSubview:usernameLabel];
     [self.contentView addSubview:dateLabel];
     [self.contentView addSubview:readSymbol];
-    [self.contentView addSubview:webView];
+    [self.contentView addSubview:webViewContainerView];
     [self.contentView addSubview:toolbar];
 
     NSLayoutConstraint *indentionConstraint = [NSLayoutConstraint
@@ -100,7 +88,7 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
                                                constant:5.0f];
     [self.contentView addConstraint:indentionConstraint];
 
-    NSLayoutConstraint *webViewHeightConstraint = [NSLayoutConstraint constraintWithItem:webView
+    NSLayoutConstraint *webViewHeightConstraint = [NSLayoutConstraint constraintWithItem:webViewContainerView
                                                                                attribute:NSLayoutAttributeHeight
                                                                                relatedBy:NSLayoutRelationEqual
                                                                                   toItem:nil
@@ -114,20 +102,20 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
                                                          usernameLabel,
                                                          dateLabel,
                                                          readSymbol,
-                                                         webView,
+                                                         webViewContainerView,
                                                          toolbar);
 
     [self.contentView addConstraints:@"H:[indentionImageView(5)]" views:views];
     [self.contentView addConstraints:@"H:[indentionImageView(5)]-5-[subjectLabel]-5-|" views:views];
     [self.contentView addConstraints:@"H:[indentionImageView]-5-[usernameLabel]-5-[dateLabel]-5-[readSymbol(8)]" views:views];
-    [self.contentView addConstraints:@"H:|[webView]|" views:views];
+    [self.contentView addConstraints:@"H:|[webViewContainerView]|" views:views];
     [self.contentView addConstraints:@"H:|[toolbar]|" views:views];
 
     [self.contentView addConstraints:@"V:|-10-[indentionImageView(40)]" views:views];
-    [self.contentView addConstraints:@"V:|-10-[subjectLabel]-7-[usernameLabel]-10@999-[webView]" views:views];
+    [self.contentView addConstraints:@"V:|-10-[subjectLabel]-7-[usernameLabel]-10@999-[webViewContainerView]" views:views];
     [self.contentView addConstraints:@"V:[subjectLabel]-7-[dateLabel]" views:views];
     [self.contentView addConstraints:@"V:[subjectLabel]-10-[readSymbol(8)]" views:views];
-    [self.contentView addConstraints:@"V:[webView]|" views:views];
+    [self.contentView addConstraints:@"V:[webViewContainerView]|" views:views];
     [self.contentView addConstraints:@"V:[toolbar]|" views:views];
 
     self.indentionImageView = indentionImageView;
@@ -136,7 +124,7 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
     self.usernameLabel = usernameLabel;
     self.dateLabel = dateLabel;
     self.readSymbolView = readSymbol;
-    self.webView = webView;
+    self.webViewContainerView = webViewContainerView;
     self.webViewHeightConstraint = webViewHeightConstraint;
     self.toolbar = toolbar;
 }
@@ -145,7 +133,6 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
 {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     self.clipsToBounds = YES;
-
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.separatorInset = UIEdgeInsetsZero;
 
@@ -158,19 +145,13 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
 
     if (self.isActive) {
         self.backgroundColor = [currentTheme tableViewCellSelectedBackgroundColor];
-        self.webView.backgroundColor = [currentTheme tableViewCellSelectedBackgroundColor];
-        self.webView.scrollView.backgroundColor = [currentTheme tableViewCellSelectedBackgroundColor];
-
-        [self.toolbar setHidden:NO];
-        NSNumber *imageSetting = [self.bag.settings objectForSetting:MCLSettingShowImages];
-        [self.webView loadHTMLString:[message messageHtmlWithTopMargin:0 theme:currentTheme imageSetting:imageSetting] baseURL:nil];
-    }
-    else {
+        [self initWebviewWithMessage:message];
+    } else {
         self.backgroundColor = [currentTheme tableViewCellBackgroundColor];
-        [self.toolbar setHidden:YES];
-        self.webViewHeightConstraint.constant = 0;
+        [self deinitWebview];
     }
 
+    self.toolbar.hidden = !self.isActive;
     self.toolbar.message = message;
     [self.toolbar setBarTintColor:[currentTheme tableViewCellSelectedBackgroundColor]];
 
@@ -182,21 +163,18 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
     self.usernameLabel.text = message.username;
     if ([message.username isEqualToString:self.toolbar.login.username]) {
         self.usernameLabel.textColor = [currentTheme ownUsernameTextColor];
-    }
-    else if (message.isMod) {
+    } else if (message.isMod) {
         self.usernameLabel.textColor = [currentTheme modTextColor];
-    }
-    else {
+    } else {
         self.usernameLabel.textColor = [currentTheme usernameTextColor];
     }
 
     self.dateLabel.text = [self.dateFormatter stringFromDate:message.date];
     self.dateLabel.textColor = [currentTheme detailTextColor];
 
-    if (self.indexPath.row == 0 || message.isRead) {
+    if (message.isRead) {
         [self markRead];
-    }
-    else {
+    } else {
         [self markUnread];
     }
 }
@@ -209,6 +187,49 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
 - (void)setLogin:(MCLLogin *)login
 {
     self.toolbar.login = login;
+}
+
+- (void)initWebviewWithMessage:(MCLMessage *)message
+{
+    WKWebViewConfiguration *webViewConfig = [[WKWebViewConfiguration alloc] init];
+    webViewConfig.suppressesIncrementalRendering = YES;
+    [webViewConfig.userContentController addScriptMessageHandler:self name:@"mclient"];
+
+    self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:webViewConfig];
+    self.webView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.webView.opaque = NO;
+    self.webView.backgroundColor = [self.bag.themeManager.currentTheme tableViewCellSelectedBackgroundColor];
+    self.webView.scrollView.backgroundColor = [self.bag.themeManager.currentTheme tableViewCellSelectedBackgroundColor];
+    self.webView.scrollView.scrollEnabled = NO;
+    self.webView.scrollView.scrollsToTop = NO;
+    for (id subview in self.webView.subviews) {
+        if ([[subview class] isSubclassOfClass:[UIScrollView class]]) {
+            [subview setBounces:NO];
+        }
+    }
+
+    [self.webViewContainerView addSubview:self.webView];
+    [self.webView constrainEdgesTo:self.webViewContainerView];
+
+    [self.webView setNavigationDelegate:self.delegate];
+
+    NSNumber *imageSetting = [self.bag.settings objectForSetting:MCLSettingShowImages];
+    NSString *messageHtml = [message messageHtmlWithTopMargin:0
+                                                        theme:self.bag.themeManager.currentTheme
+                                                 imageSetting:imageSetting];
+    [self.webView loadHTMLString:messageHtml baseURL:nil];
+
+    [self.toolbar updateBarButtonsWithMessage:message];
+}
+
+- (void)deinitWebview
+{
+    self.webViewHeightConstraint.constant = 0;
+
+    if (self.webView) {
+        [self.webView removeFromSuperview];
+        self.webView = nil;
+    }
 }
 
 - (void)indentView:(NSLayoutConstraint *)indentionConstraint withLevel:(NSNumber *)level

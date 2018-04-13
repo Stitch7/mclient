@@ -26,6 +26,7 @@
 #import "MCLMessageToolbarController.h"
 #import "MCLMessageToolbar.h"
 
+
 @interface MCLMessageListWidmannStyleViewController ()
 
 @property (assign, nonatomic) CGFloat selectedCellHeight;
@@ -159,12 +160,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSIndexPath *selectedIndexPath = [tableView indexPathForSelectedRow];
+    BOOL isActive = selectedIndexPath ? indexPath.row == selectedIndexPath.row : false;
+
     MCLMessage *message = self.messages[indexPath.row];
     message.board = self.board;
     message.boardId = self.board.boardId;
     message.thread = self.thread;
-
-    BOOL isSelectedRow = indexPath.row == [tableView indexPathForSelectedRow].row;
 
     MCLMessageListWidmannStyleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MCLMessageListWidmannStyleTableViewCellIdentifier];
     cell.indexPath = indexPath;
@@ -172,16 +174,14 @@
     cell.login = self.bag.login;
     cell.bag = self.bag;
     cell.dateFormatter = self.dateFormatter;
-//    cell.active = indexPath.row > 0 && indexPath.row == [tableView indexPathForSelectedRow].row;
-    cell.active = indexPath.row > 0 && isSelectedRow;
-    if (isSelectedRow && self.selectedCellHeight) {
+    cell.active = isActive;
+    if (isActive && self.selectedCellHeight) {
         cell.webViewHeightConstraint.constant = self.selectedCellHeight;
     }
     cell.nextMessage = [self nextMessageForIndexPath:indexPath];
     cell.message = message;
     cell.delegate = self;
     [cell.toolbar updateBarButtons];
-    [cell.webView setNavigationDelegate:self];
 
     return cell;
 }
@@ -232,8 +232,6 @@
 {
     MCLMessageListWidmannStyleTableViewCell *cell = (MCLMessageListWidmannStyleTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     cell.backgroundColor = [self.bag.themeManager.currentTheme tableViewCellSelectedBackgroundColor];
-    cell.webView.backgroundColor = [self.bag.themeManager.currentTheme tableViewCellSelectedBackgroundColor];
-    cell.webView.scrollView.backgroundColor = [self.bag.themeManager.currentTheme tableViewCellSelectedBackgroundColor];
 
     MCLMessage *message = self.messages[indexPath.row];
     message.board = self.board;
@@ -269,9 +267,7 @@
 - (void)putMessage:(MCLMessage *)message toCell:(MCLMessageListWidmannStyleTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     message.nextMessage = [self nextMessageForIndexPath:indexPath];
-    [cell.toolbar updateBarButtonsWithMessage:message];
-    NSNumber *imageSetting = [self.bag.settings objectForSetting:MCLSettingShowImages];
-    [cell.webView loadHTMLString:[message messageHtmlWithTopMargin:0 theme:self.bag.themeManager.currentTheme imageSetting:imageSetting] baseURL:nil];
+    [cell initWebviewWithMessage:message];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
 }
 
@@ -279,7 +275,7 @@
 {
     MCLMessageListWidmannStyleTableViewCell *cell = (MCLMessageListWidmannStyleTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     cell.backgroundColor = [self.bag.themeManager.currentTheme tableViewCellBackgroundColor];
-    cell.webViewHeightConstraint.constant = 0.0;
+    [cell deinitWebview];
     [cell.toolbar setHidden:YES];
 
     [self.messageToolbarController stopSpeaking];
