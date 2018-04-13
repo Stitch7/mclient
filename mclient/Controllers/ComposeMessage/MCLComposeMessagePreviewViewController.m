@@ -8,7 +8,8 @@
 
 #import "MCLComposeMessagePreviewViewController.h"
 
-#import "Reachability.h"
+#import "RealReachability.h"
+
 #import "MCLDependencyBag.h"
 #import "MCLHTTPClient.h"
 #import "MCLSettings.h"
@@ -74,10 +75,9 @@
             NSString *key = @"";
             switch ([self.bag.settings integerForSetting:MCLSettingShowImages]) {
                 case kMCLSettingsShowImagesWifi: {
-                    Reachability *wifiReach = [Reachability reachabilityForLocalWiFi];
-                    key = [wifiReach currentReachabilityStatus] == ReachableViaWiFi
-                    ? @"previewTextHtmlWithImages"
-                    : @"previewTextHtml";
+                    key = [GLobalRealReachability currentReachabilityStatus] == RealStatusViaWiFi
+                        ? @"previewTextHtmlWithImages"
+                        : @"previewTextHtml";
                     break;
                 }
                 case kMCLSettingsShowImagesNever:

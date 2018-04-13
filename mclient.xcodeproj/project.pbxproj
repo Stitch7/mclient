@@ -20,7 +20,6 @@
 		301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */; };
 		301FD9A319C32FC600E36A5B /* MCLLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9A219C32FC600E36A5B /* MCLLoadingView.m */; };
 		301FD9A619C411D400E36A5B /* MCLErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9A519C411D400E36A5B /* MCLErrorView.m */; };
-		301FD9AD19C5C79000E36A5B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9AC19C5C79000E36A5B /* Reachability.m */; };
 		3020FB611E6577B000C7217F /* MCLMessageResponsesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3020FB601E6577AF00C7217F /* MCLMessageResponsesRequest.m */; };
 		3020FB651E74582200C7217F /* UIApplication+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3020FB641E74582100C7217F /* UIApplication+Additions.m */; };
 		3020FB681E7459C400C7217F /* MCLNotificationHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3020FB671E7459C400C7217F /* MCLNotificationHistory.m */; };
@@ -135,7 +134,6 @@
 		306FC83B1F93A39F001EB7E9 /* MCLMServiceErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 306EA6E719D5992F00BB4DC8 /* MCLMServiceErrorView.m */; };
 		306FC83D1F93A39F001EB7E9 /* MCLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD82719A63517006514BD /* MCLAppDelegate.m */; };
 		306FC83E1F93A39F001EB7E9 /* MCLMessageListWidmannStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 303974891E1694C8003C8BC9 /* MCLMessageListWidmannStyleViewController.m */; };
-		306FC83F1F93A39F001EB7E9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9AC19C5C79000E36A5B /* Reachability.m */; };
 		306FC8401F93A39F001EB7E9 /* MCLMarkThreadAsReadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 302381EB1F9352FF00764FAE /* MCLMarkThreadAsReadRequest.m */; };
 		306FC8411F93A39F001EB7E9 /* MCLToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 3061A68E1EA148180047E798 /* MCLToast.m */; };
 		306FC8421F93A39F001EB7E9 /* MCLMessageToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DE81A1F2F476500EC34AE /* MCLMessageToolbarController.m */; };
@@ -276,7 +274,6 @@
 		3090CAE61FA7ED1E0085C9AF /* MCLMServiceErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 306EA6E719D5992F00BB4DC8 /* MCLMServiceErrorView.m */; };
 		3090CAE81FA7ED1E0085C9AF /* MCLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD82719A63517006514BD /* MCLAppDelegate.m */; };
 		3090CAE91FA7ED1E0085C9AF /* MCLMessageListWidmannStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 303974891E1694C8003C8BC9 /* MCLMessageListWidmannStyleViewController.m */; };
-		3090CAEA1FA7ED1E0085C9AF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9AC19C5C79000E36A5B /* Reachability.m */; };
 		3090CAEB1FA7ED1E0085C9AF /* MCLMarkThreadAsReadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 302381EB1F9352FF00764FAE /* MCLMarkThreadAsReadRequest.m */; };
 		3090CAEC1FA7ED1E0085C9AF /* MCLToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 3061A68E1EA148180047E798 /* MCLToast.m */; };
 		3090CAED1FA7ED1E0085C9AF /* MCLMessageToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DE81A1F2F476500EC34AE /* MCLMessageToolbarController.m */; };
@@ -386,7 +383,6 @@
 		3090CB631FA89A5C0085C9AF /* MCLMServiceErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 306EA6E719D5992F00BB4DC8 /* MCLMServiceErrorView.m */; };
 		3090CB651FA89A5C0085C9AF /* MCLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD82719A63517006514BD /* MCLAppDelegate.m */; };
 		3090CB661FA89A5C0085C9AF /* MCLMessageListWidmannStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 303974891E1694C8003C8BC9 /* MCLMessageListWidmannStyleViewController.m */; };
-		3090CB671FA89A5C0085C9AF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9AC19C5C79000E36A5B /* Reachability.m */; };
 		3090CB681FA89A5C0085C9AF /* MCLMarkThreadAsReadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 302381EB1F9352FF00764FAE /* MCLMarkThreadAsReadRequest.m */; };
 		3090CB691FA89A5C0085C9AF /* MCLToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 3061A68E1EA148180047E798 /* MCLToast.m */; };
 		3090CB6A1FA89A5C0085C9AF /* MCLMessageToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DE81A1F2F476500EC34AE /* MCLMessageToolbarController.m */; };
@@ -565,8 +561,6 @@
 		301FD9A219C32FC600E36A5B /* MCLLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLLoadingView.m; sourceTree = "<group>"; };
 		301FD9A419C411D400E36A5B /* MCLErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLErrorView.h; sourceTree = "<group>"; };
 		301FD9A519C411D400E36A5B /* MCLErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLErrorView.m; sourceTree = "<group>"; };
-		301FD9AB19C5C79000E36A5B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		301FD9AC19C5C79000E36A5B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		3020FB5F1E6577AF00C7217F /* MCLMessageResponsesRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageResponsesRequest.h; sourceTree = "<group>"; };
 		3020FB601E6577AF00C7217F /* MCLMessageResponsesRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageResponsesRequest.m; sourceTree = "<group>"; };
 		3020FB631E74582100C7217F /* UIApplication+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+Additions.h"; sourceTree = "<group>"; };
@@ -1176,7 +1170,6 @@
 				301FD00F19AB73160028C5C8 /* constants.h */,
 				305E53AA19D4F3EE002B8E50 /* utils.h */,
 				305DD82319A63517006514BD /* main.m */,
-				305E53AC19D4F509002B8E50 /* Vendor */,
 			);
 			path = mclient;
 			sourceTree = "<group>";
@@ -1335,23 +1328,6 @@
 				30849D221E2BABBD00626331 /* Settings.storyboard */,
 			);
 			path = Storyboards;
-			sourceTree = "<group>";
-		};
-		305E53AC19D4F509002B8E50 /* Vendor */ = {
-			isa = PBXGroup;
-			children = (
-				305E53AD19D4F517002B8E50 /* Apple */,
-			);
-			path = Vendor;
-			sourceTree = "<group>";
-		};
-		305E53AD19D4F517002B8E50 /* Apple */ = {
-			isa = PBXGroup;
-			children = (
-				301FD9AB19C5C79000E36A5B /* Reachability.h */,
-				301FD9AC19C5C79000E36A5B /* Reachability.m */,
-			);
-			path = Apple;
 			sourceTree = "<group>";
 		};
 		305E54A61F2A658A004002E6 /* Loading */ = {
@@ -2215,7 +2191,6 @@
 				306EA6E819D5992F00BB4DC8 /* MCLMServiceErrorView.m in Sources */,
 				305DD82819A63517006514BD /* MCLAppDelegate.m in Sources */,
 				3039748A1E1694C8003C8BC9 /* MCLMessageListWidmannStyleViewController.m in Sources */,
-				301FD9AD19C5C79000E36A5B /* Reachability.m in Sources */,
 				302381EC1F9352FF00764FAE /* MCLMarkThreadAsReadRequest.m in Sources */,
 				3061A68F1EA148180047E798 /* MCLToast.m in Sources */,
 				305DE81B1F2F476500EC34AE /* MCLMessageToolbarController.m in Sources */,
@@ -2336,7 +2311,6 @@
 				306FC83B1F93A39F001EB7E9 /* MCLMServiceErrorView.m in Sources */,
 				306FC83D1F93A39F001EB7E9 /* MCLAppDelegate.m in Sources */,
 				306FC83E1F93A39F001EB7E9 /* MCLMessageListWidmannStyleViewController.m in Sources */,
-				306FC83F1F93A39F001EB7E9 /* Reachability.m in Sources */,
 				306FC8401F93A39F001EB7E9 /* MCLMarkThreadAsReadRequest.m in Sources */,
 				306FC8411F93A39F001EB7E9 /* MCLToast.m in Sources */,
 				3070D31E207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */,
@@ -2441,7 +2415,6 @@
 				3090CAE61FA7ED1E0085C9AF /* MCLMServiceErrorView.m in Sources */,
 				3090CAE81FA7ED1E0085C9AF /* MCLAppDelegate.m in Sources */,
 				3090CAE91FA7ED1E0085C9AF /* MCLMessageListWidmannStyleViewController.m in Sources */,
-				3090CAEA1FA7ED1E0085C9AF /* Reachability.m in Sources */,
 				3090CAEB1FA7ED1E0085C9AF /* MCLMarkThreadAsReadRequest.m in Sources */,
 				3090CAEC1FA7ED1E0085C9AF /* MCLToast.m in Sources */,
 				3090CAED1FA7ED1E0085C9AF /* MCLMessageToolbarController.m in Sources */,
@@ -2550,7 +2523,6 @@
 				3090CB631FA89A5C0085C9AF /* MCLMServiceErrorView.m in Sources */,
 				3090CB651FA89A5C0085C9AF /* MCLAppDelegate.m in Sources */,
 				3090CB661FA89A5C0085C9AF /* MCLMessageListWidmannStyleViewController.m in Sources */,
-				3090CB671FA89A5C0085C9AF /* Reachability.m in Sources */,
 				3090CB681FA89A5C0085C9AF /* MCLMarkThreadAsReadRequest.m in Sources */,
 				3090CB691FA89A5C0085C9AF /* MCLToast.m in Sources */,
 				3090CB6A1FA89A5C0085C9AF /* MCLMessageToolbarController.m in Sources */,

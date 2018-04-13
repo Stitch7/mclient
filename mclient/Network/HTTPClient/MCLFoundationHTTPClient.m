@@ -8,8 +8,10 @@
 
 #import "MCLFoundationHTTPClient.h"
 
-#import "Reachability.h"
+#import "RealReachability.h"
+
 #import "MCLLogin.h"
+
 
 @interface MCLFoundationHTTPClient ()
 
@@ -207,10 +209,8 @@
 
 - (BOOL)noInternetConnection
 {
-    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
-
-    return networkStatus == NotReachable;
+    ReachabilityStatus networkStatus = [GLobalRealReachability currentReachabilityStatus];
+    return networkStatus == RealStatusUnknown || networkStatus == RealStatusNotReachable;
 }
 
 - (NSString *)authValueFromLoginData:(NSDictionary *)loginData
