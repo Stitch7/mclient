@@ -83,7 +83,6 @@
 		305E54B11F2CE3EA004002E6 /* MCLSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 305E54B01F2CE3EA004002E6 /* MCLSettings.m */; };
 		306169461E98F76300DBD96F /* MCLBoardListRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 306169451E98F76300DBD96F /* MCLBoardListRequest.m */; };
 		306169491E9910D800DBD96F /* MCLBoardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 306169481E9910D800DBD96F /* MCLBoardTableViewCell.m */; };
-		3061A68F1EA148180047E798 /* MCLToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 3061A68E1EA148180047E798 /* MCLToast.m */; };
 		3061D76F1F76BFEF00FE1BBB /* MCLLogoLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3061D76E1F76BFEF00FE1BBB /* MCLLogoLabel.m */; };
 		306386741E6098D9004822ED /* MCLResponsesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 306386731E6098D9004822ED /* MCLResponsesTableViewController.m */; };
 		306386771E643F1D004822ED /* MCLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 306386761E643F1D004822ED /* MCLResponse.m */; };
@@ -135,7 +134,6 @@
 		306FC83D1F93A39F001EB7E9 /* MCLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD82719A63517006514BD /* MCLAppDelegate.m */; };
 		306FC83E1F93A39F001EB7E9 /* MCLMessageListWidmannStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 303974891E1694C8003C8BC9 /* MCLMessageListWidmannStyleViewController.m */; };
 		306FC8401F93A39F001EB7E9 /* MCLMarkThreadAsReadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 302381EB1F9352FF00764FAE /* MCLMarkThreadAsReadRequest.m */; };
-		306FC8411F93A39F001EB7E9 /* MCLToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 3061A68E1EA148180047E798 /* MCLToast.m */; };
 		306FC8421F93A39F001EB7E9 /* MCLMessageToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DE81A1F2F476500EC34AE /* MCLMessageToolbarController.m */; };
 		306FC8431F93A39F001EB7E9 /* MCLThreadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */; };
 		306FC8441F93A39F001EB7E9 /* MCLThreadIdForMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 303C59511F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.m */; };
@@ -275,7 +273,6 @@
 		3090CAE81FA7ED1E0085C9AF /* MCLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD82719A63517006514BD /* MCLAppDelegate.m */; };
 		3090CAE91FA7ED1E0085C9AF /* MCLMessageListWidmannStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 303974891E1694C8003C8BC9 /* MCLMessageListWidmannStyleViewController.m */; };
 		3090CAEB1FA7ED1E0085C9AF /* MCLMarkThreadAsReadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 302381EB1F9352FF00764FAE /* MCLMarkThreadAsReadRequest.m */; };
-		3090CAEC1FA7ED1E0085C9AF /* MCLToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 3061A68E1EA148180047E798 /* MCLToast.m */; };
 		3090CAED1FA7ED1E0085C9AF /* MCLMessageToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DE81A1F2F476500EC34AE /* MCLMessageToolbarController.m */; };
 		3090CAEE1FA7ED1E0085C9AF /* MCLThreadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */; };
 		3090CAEF1FA7ED1E0085C9AF /* MCLThreadIdForMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 303C59511F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.m */; };
@@ -384,7 +381,6 @@
 		3090CB651FA89A5C0085C9AF /* MCLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD82719A63517006514BD /* MCLAppDelegate.m */; };
 		3090CB661FA89A5C0085C9AF /* MCLMessageListWidmannStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 303974891E1694C8003C8BC9 /* MCLMessageListWidmannStyleViewController.m */; };
 		3090CB681FA89A5C0085C9AF /* MCLMarkThreadAsReadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 302381EB1F9352FF00764FAE /* MCLMarkThreadAsReadRequest.m */; };
-		3090CB691FA89A5C0085C9AF /* MCLToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 3061A68E1EA148180047E798 /* MCLToast.m */; };
 		3090CB6A1FA89A5C0085C9AF /* MCLMessageToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DE81A1F2F476500EC34AE /* MCLMessageToolbarController.m */; };
 		3090CB6B1FA89A5C0085C9AF /* MCLThreadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */; };
 		3090CB6C1FA89A5C0085C9AF /* MCLThreadIdForMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 303C59511F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.m */; };
@@ -677,8 +673,6 @@
 		306169451E98F76300DBD96F /* MCLBoardListRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLBoardListRequest.m; sourceTree = "<group>"; };
 		306169471E9910D800DBD96F /* MCLBoardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLBoardTableViewCell.h; sourceTree = "<group>"; };
 		306169481E9910D800DBD96F /* MCLBoardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLBoardTableViewCell.m; sourceTree = "<group>"; };
-		3061A68D1EA148180047E798 /* MCLToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLToast.h; sourceTree = "<group>"; };
-		3061A68E1EA148180047E798 /* MCLToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLToast.m; sourceTree = "<group>"; };
 		3061D76D1F76BFEF00FE1BBB /* MCLLogoLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLLogoLabel.h; sourceTree = "<group>"; };
 		3061D76E1F76BFEF00FE1BBB /* MCLLogoLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLLogoLabel.m; sourceTree = "<group>"; };
 		306386721E6098D9004822ED /* MCLResponsesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLResponsesTableViewController.h; sourceTree = "<group>"; };
@@ -1227,20 +1221,16 @@
 		305DD85919AB2EFE006514BD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				30A714A1207FE0DF00554610 /* Badge */,
 				305DE8121F2E470200EC34AE /* Board */,
 				305DE8111F2E46E400EC34AE /* Error */,
 				305E54A61F2A658A004002E6 /* Loading */,
 				30B893191F88012400E584FA /* Logo */,
-				3012032F1E031D7500B06FF6 /* MCLBadgeView.h */,
-				301203301E031D7500B06FF6 /* MCLBadgeView.m */,
-				307D797419B0B3B30096A217 /* MCLReadSymbolView.h */,
-				307D797519B0B3B30096A217 /* MCLReadSymbolView.m */,
-				3061A68D1EA148180047E798 /* MCLToast.h */,
-				3061A68E1EA148180047E798 /* MCLToast.m */,
 				3006EF901F26709C0054F27F /* MessageList */,
 				30A714A0207FDB6700554610 /* ModalOverlay */,
 				3070D322207968F900F42BFF /* MultilineTitleView */,
 				30C9B52F205AAB8E00FD3C31 /* NoData */,
+				30A714A2207FE0F000554610 /* ReadSymbol */,
 				305DE8151F2E52FB00EC34AE /* TextView */,
 				3006EF8F1F26708A0054F27F /* ThreadTableViewCell */,
 			);
@@ -1402,6 +1392,24 @@
 				30A7149B207FDB6000554610 /* MCLModalOverlayView.m */,
 			);
 			path = ModalOverlay;
+			sourceTree = "<group>";
+		};
+		30A714A1207FE0DF00554610 /* Badge */ = {
+			isa = PBXGroup;
+			children = (
+				3012032F1E031D7500B06FF6 /* MCLBadgeView.h */,
+				301203301E031D7500B06FF6 /* MCLBadgeView.m */,
+			);
+			path = Badge;
+			sourceTree = "<group>";
+		};
+		30A714A2207FE0F000554610 /* ReadSymbol */ = {
+			isa = PBXGroup;
+			children = (
+				307D797419B0B3B30096A217 /* MCLReadSymbolView.h */,
+				307D797519B0B3B30096A217 /* MCLReadSymbolView.m */,
+			);
+			path = ReadSymbol;
 			sourceTree = "<group>";
 		};
 		30B893191F88012400E584FA /* Logo */ = {
@@ -2192,7 +2200,6 @@
 				305DD82819A63517006514BD /* MCLAppDelegate.m in Sources */,
 				3039748A1E1694C8003C8BC9 /* MCLMessageListWidmannStyleViewController.m in Sources */,
 				302381EC1F9352FF00764FAE /* MCLMarkThreadAsReadRequest.m in Sources */,
-				3061A68F1EA148180047E798 /* MCLToast.m in Sources */,
 				305DE81B1F2F476500EC34AE /* MCLMessageToolbarController.m in Sources */,
 				301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */,
 				303C59521F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.m in Sources */,
@@ -2312,7 +2319,6 @@
 				306FC83D1F93A39F001EB7E9 /* MCLAppDelegate.m in Sources */,
 				306FC83E1F93A39F001EB7E9 /* MCLMessageListWidmannStyleViewController.m in Sources */,
 				306FC8401F93A39F001EB7E9 /* MCLMarkThreadAsReadRequest.m in Sources */,
-				306FC8411F93A39F001EB7E9 /* MCLToast.m in Sources */,
 				3070D31E207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */,
 				306FC8421F93A39F001EB7E9 /* MCLMessageToolbarController.m in Sources */,
 				306FC8431F93A39F001EB7E9 /* MCLThreadTableViewCell.m in Sources */,
@@ -2416,7 +2422,6 @@
 				3090CAE81FA7ED1E0085C9AF /* MCLAppDelegate.m in Sources */,
 				3090CAE91FA7ED1E0085C9AF /* MCLMessageListWidmannStyleViewController.m in Sources */,
 				3090CAEB1FA7ED1E0085C9AF /* MCLMarkThreadAsReadRequest.m in Sources */,
-				3090CAEC1FA7ED1E0085C9AF /* MCLToast.m in Sources */,
 				3090CAED1FA7ED1E0085C9AF /* MCLMessageToolbarController.m in Sources */,
 				3090CAEE1FA7ED1E0085C9AF /* MCLThreadTableViewCell.m in Sources */,
 				3090CAEF1FA7ED1E0085C9AF /* MCLThreadIdForMessageRequest.m in Sources */,
@@ -2524,7 +2529,6 @@
 				3090CB651FA89A5C0085C9AF /* MCLAppDelegate.m in Sources */,
 				3090CB661FA89A5C0085C9AF /* MCLMessageListWidmannStyleViewController.m in Sources */,
 				3090CB681FA89A5C0085C9AF /* MCLMarkThreadAsReadRequest.m in Sources */,
-				3090CB691FA89A5C0085C9AF /* MCLToast.m in Sources */,
 				3090CB6A1FA89A5C0085C9AF /* MCLMessageToolbarController.m in Sources */,
 				3090CB6B1FA89A5C0085C9AF /* MCLThreadTableViewCell.m in Sources */,
 				3090CB6C1FA89A5C0085C9AF /* MCLThreadIdForMessageRequest.m in Sources */,
