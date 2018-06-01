@@ -64,9 +64,16 @@
             image = [UIImage imageNamed:@"boardKulturbeutel"];
             break;
 
-        default:
-            image = [UIImage imageNamed:@"boardDefault"];
+        default: {
+            if ([self.name isEqualToString:@"EM"] || [self.name isEqualToString:@"WM"]) {
+                image = [UIImage imageNamed:@"boardSoccer"];
+            } else if ([self.name isEqualToString:@"E3"]) {
+                image = [UIImage imageNamed:@"boardE3"];
+            } else {
+                image = [UIImage imageNamed:@"boardDefault"];
+            }
             break;
+        }
     }
 
     return [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
