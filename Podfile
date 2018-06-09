@@ -7,7 +7,7 @@ def mclient_pods
   pod 'EDSunriseSet', :git => 'https://github.com/Tricertops/EDSunriseSet'
   pod 'BBBadgeBarButtonItem'
   pod 'MGSwipeTableCell'
-  pod 'Valet'
+  pod 'Valet', '~> 2.4.2'
   pod 'DGActivityIndicatorView'
   pod 'AsyncBlockOperation'
   pod 'ImgurSession', :git => 'https://github.com/mileswd/ImgurSession'

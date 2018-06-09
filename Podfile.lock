@@ -18,12 +18,12 @@ PODS:
   - BBBadgeBarButtonItem (1.2)
   - DGActivityIndicatorView (2.1.1)
   - EDSunriseSet (1.0)
-  - HockeySDK (5.0.0):
-    - HockeySDK/DefaultLib (= 5.0.0)
-  - HockeySDK/DefaultLib (5.0.0)
+  - HockeySDK (5.1.2):
+    - HockeySDK/DefaultLib (= 5.1.2)
+  - HockeySDK/DefaultLib (5.1.2)
   - ImgurSession (1.3):
     - AFNetworking (= 3.1.0)
-  - MGSwipeTableCell (1.6.1)
+  - MGSwipeTableCell (1.6.7)
   - MRProgress (0.8.3):
     - MRProgress/ActivityIndicator (= 0.8.3)
     - MRProgress/Blur (= 0.8.3)
@@ -63,7 +63,18 @@ DEPENDENCIES:
   - ImgurSession (from `https://github.com/mileswd/ImgurSession`)
   - MGSwipeTableCell
   - MRProgress
-  - Valet
+  - Valet (~> 2.4.2)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - AsyncBlockOperation
+    - BBBadgeBarButtonItem
+    - DGActivityIndicatorView
+    - HockeySDK
+    - MGSwipeTableCell
+    - MRProgress
+    - Valet
 
 EXTERNAL SOURCES:
   EDSunriseSet:
@@ -85,13 +96,12 @@ SPEC CHECKSUMS:
   BBBadgeBarButtonItem: c2fbca0bff18e21b70defc9438a8a5048008e7ca
   DGActivityIndicatorView: ff2c76073d79692f724863c8dd38685866a03cb6
   EDSunriseSet: eae541a8f534b0751deb0a618828667a7382cc70
-  HockeySDK: 82bf8dcbe1af3c87c24dc98924fcf2e2ba5be8c4
+  HockeySDK: 38b7e2726af1ea86ae97ce4b5de33ab0817e3500
   ImgurSession: e11a605652cfe8aebfb6a9a4ea5b752654f14e2f
-  MGSwipeTableCell: 19a1d65dcc1ceaea42eb44bb2adae32101904514
+  MGSwipeTableCell: fb20e983988bde2b8d0df29c2d9e1d8ffd10b74a
   MRProgress: 16de7cc9f347e8846797a770db102a323fe7ef09
-  RealReachability: a8c483900986a0f3305733961effbfbb00637a02
   Valet: 14463ef24fab8fd5809044ecedb61484b799fdd6
 
-PODFILE CHECKSUM: 33baebdfb61d816b13450899ef02b866c5b7224d
+PODFILE CHECKSUM: a1c25a42f68ad2d463b31bce9e8ff50a2a5a45de
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.2
