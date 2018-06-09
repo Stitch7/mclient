@@ -85,13 +85,6 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 //    }
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-
-    [self.delegate settingsTableViewControllerDidFinish:self loginDataChanged:self.loginDataChanged];
-}
-
 - (void)configureDismissKeyboardEvent
 {
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
@@ -219,6 +212,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
             }
         }];
     } else {
+        [self.bag.login logout];
         [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
         self.settingsLoginDataStatusLabel.textColor = [UIColor darkGrayColor];
         self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Please enter username and password", nil);

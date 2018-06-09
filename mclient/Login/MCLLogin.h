@@ -8,6 +8,7 @@
 
 extern NSString * const MCLLoginStateDidChangeNotification;
 extern NSString * const MCLLoginStateKey;
+extern NSString * const MCLLoginInitialAttemptKey;
 
 @protocol MCLDependencyBag;
 
@@ -22,5 +23,6 @@ extern NSString * const MCLLoginStateKey;
 - (void)updateUsername:(NSString *)username;
 - (void)updatePassword:(NSString *)password;
 - (void)testLoginWithCompletionHandler:(void (^)(NSError*, BOOL))completionHandler;
+- (void)logout;
 
 @end

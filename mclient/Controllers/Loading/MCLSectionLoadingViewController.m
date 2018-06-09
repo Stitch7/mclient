@@ -56,6 +56,9 @@ static NSString *kQueueOperationsChanged = @"kQueueOperationsChanged";
     self.contentViewController = contentViewController;
     if ([[contentViewController class] conformsToProtocol:@protocol(MCLSectionLoadingViewControllerDelegate)]) {
         self.delegate = (UIViewController <MCLSectionLoadingViewControllerDelegate> *) contentViewController;
+        if ([self.delegate respondsToSelector:@selector(loadingViewController)]) {
+            self.delegate.loadingViewController = self;
+        }
     }
 
     [self addContentViewContoller:contentViewController];

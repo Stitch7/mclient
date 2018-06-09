@@ -59,8 +59,10 @@
 
 - (void)loginStateDidChanged:(NSNotification *)notification
 {
-    // crashes... :-|
-//    [self load];
+    BOOL initialAttempt = [[notification.userInfo objectForKey:MCLLoginInitialAttemptKey] boolValue];
+    if (!initialAttempt) {
+        [self load];
+    }
 }
 
 - (void)favoritesChanged:(NSNotification *)notification

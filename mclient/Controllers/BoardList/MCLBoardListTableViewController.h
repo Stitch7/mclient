@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, MCLBoardListSection) {
 
 @protocol MCLDependencyBag;
 
-@interface MCLBoardListTableViewController : UITableViewController <MGSwipeTableCellDelegate, MCLSectionLoadingViewControllerDelegate, MCLSettingsTableViewControllerDelegate>
+@interface MCLBoardListTableViewController : UITableViewController <MGSwipeTableCellDelegate, MCLSectionLoadingViewControllerDelegate>
 
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
 

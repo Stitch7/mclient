@@ -40,6 +40,7 @@
 @property (strong, nonatomic) BBBadgeBarButtonItem *responsesButtonItem;
 @property (strong, nonatomic) BBBadgeBarButtonItem *privateMessagesButtonItem;
 @property (strong, nonatomic) MCLVerifiyLoginView *verifyLoginView;
+@property (assign, nonatomic) BOOL alreadyAppeared;
 
 @end
 
@@ -54,6 +55,7 @@
 
     self.bag = bag;
     self.currentTheme = self.bag.themeManager.currentTheme;
+    self.alreadyAppeared = NO;
     [self configureNotifications];
     [self configureToolbarButtons];
 
@@ -104,12 +106,15 @@
     [self configureTableView];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
 
-    [self updateLoginStatus];
-    [self.tableView reloadData];
+    if (self.alreadyAppeared && self.bag.login.valid) {
+        [[[MCLMessageResponsesRequest alloc] initWithBag:self.bag] loadResponsesWithCompletion:nil];
+    }
+
+    self.alreadyAppeared = YES;
 }
 
 #pragma mark - Configuration
@@ -218,6 +223,9 @@
     switch ([key integerValue]) {
         case MCLBoardListSectionBoards:
             self.boards = [newData copy];
+            if (!self.bag.login.valid) {
+                self.favorites = nil;
+            }
             break;
 
         case MCLBoardListSectionFavorites:
@@ -233,12 +241,15 @@
 - (void)updateLoginStatus
 {
     if (self.bag.login.valid) {
-        [self.verifyLoginView loginStatusWithUsername:self.bag.login.username];
-        [[[MCLMessageResponsesRequest alloc] initWithBag:self.bag] loadResponsesWithCompletion:nil];
-        return;
+        [self updateVerifyLoginViewWithSuccess:YES];
+    } else {
+        [self.bag.login testLoginWithCompletionHandler:^(NSError *error, BOOL success) {
+            if (error) {
+                [self updateVerifyLoginViewWithSuccess:NO];
+                return;
+            }
+        }];
     }
-
-    [self.bag.login testLoginWithCompletionHandler:nil];
 }
 
 - (void)updateVerifyLoginViewWithSuccess:(BOOL)success
@@ -251,7 +262,6 @@
     }
     [self.responsesButtonItem setEnabled:success];
 }
-
 
 #pragma mark - UITableViewDataSource
 
@@ -300,13 +310,15 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (![self showFavoritesSection]) {
-        return nil;
-    }
-
     switch (section) {
-        case MCLBoardListSectionBoards: return NSLocalizedString(@"BOARDS", nil); break;
-        case MCLBoardListSectionFavorites: return NSLocalizedString(@"FAVORITES", nil); break;
+        case MCLBoardListSectionBoards:
+            return NSLocalizedString(@"BOARDS", nil);
+            break;
+        case MCLBoardListSectionFavorites:
+            if ([self showFavoritesSection]) {
+                return NSLocalizedString(@"FAVORITES", nil);
+            }
+            break;
     }
 
     return nil;
@@ -314,7 +326,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//    return [self showFavoritesSection] ? 2 : 1;
     return 2;
 }
 
@@ -446,21 +457,11 @@
     [selectedCell updateBadgeWithThread:inThread andTheme:self.currentTheme];
 }
 
-#pragma mark - MCLSettingsTableViewControllerDelegate
-
-- (void)settingsTableViewControllerDidFinish:(MCLSettingsViewController *)inController loginDataChanged:(BOOL)loginDataChanged
-{
-    if (loginDataChanged) {
-        [self updateLoginStatus];
-    }
-}
-
 #pragma mark - Actions
 
 - (void)settingsButtonPressed:(UIBarButtonItem *)sender
 {
-    MCLSettingsViewController *settingsVC = [self.bag.router modalToSettings];
-    settingsVC.delegate = self;
+    [self.bag.router modalToSettings];
 }
 
 - (void)responsesButtonPressed

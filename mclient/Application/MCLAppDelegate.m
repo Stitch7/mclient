@@ -14,6 +14,7 @@
 #import "MCLThemeManager.h"
 #import "MCLNotificationManager.h"
 #import "MCLRouter.h"
+#import "MCLLogin.h"
 #import "MCLAppRouterDelegate.h"
 
 
@@ -25,6 +26,7 @@
 {
     self.bag = [[MCLAppDependencyBag alloc] init];
     self.window = [self.bag makeRootWindow];
+    [self.bag.login testLoginWithCompletionHandler:nil];
 
     return YES;
 }

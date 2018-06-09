@@ -14,10 +14,14 @@
 
 NSString * const MCLLoginStateDidChangeNotification = @"MCLLoginStateDidChangeNotification";
 NSString * const MCLLoginStateKey = @"MCLLoginValid";
+NSString * const MCLLoginInitialAttemptKey = @"InitialAttempt";
+NSString * const MCLLoginUsernameKey = @"username";
+NSString * const MCLLoginPasswordKey = @"password";
 
 @interface MCLLogin ()
 
 @property (strong, nonatomic) id <MCLDependencyBag> bag;
+@property (assign, readwrite) BOOL initialAttempt;
 @property (assign, readwrite) BOOL valid;
 @property (strong, nonatomic) VALValet *valet;
 
@@ -40,9 +44,10 @@ NSString * const MCLLoginStateKey = @"MCLLoginValid";
 
 #pragma mark - Lazy properties
 
-- (NSString *)username {
+- (NSString *)username
+{
     if (!_username) {
-        _username = [self.valet stringForKey:@"username"];
+        _username = [self.valet stringForKey:MCLLoginUsernameKey];
     }
 
     return _username;
@@ -51,12 +56,13 @@ NSString * const MCLLoginStateKey = @"MCLLoginValid";
 - (void)updateUsername:(NSString *)username
 {
     _username = username;
-    [self.valet setString:username forKey:@"username"];
+    [self.valet setString:username forKey:MCLLoginUsernameKey];
 }
 
-- (NSString *)password {
+- (NSString *)password
+{
     if (!_password) {
-        _password = [self.valet stringForKey:@"password"];
+        _password = [self.valet stringForKey:MCLLoginPasswordKey];
     }
 
     return _password;
@@ -65,16 +71,27 @@ NSString * const MCLLoginStateKey = @"MCLLoginValid";
 - (void)updatePassword:(NSString *)password
 {
     _password = password;
-    [self.valet setString:password forKey:@"password"];
+    [self.valet setString:password forKey:MCLLoginPasswordKey];
+}
+
+- (void)logout
+{
+    _username = nil;
+    _password = nil;
+    [self.valet removeObjectForKey:MCLLoginUsernameKey];
+    [self.valet removeObjectForKey:MCLLoginPasswordKey];
+    self.valid = NO;
+    [self postLoginStateDidChangeNotification];
 }
 
 #pragma mark - Configuration
 
 - (void)configure
 {
+    self.initialAttempt = YES;
+    self.valid = NO;
     NSString *keychainIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     self.valet = [[VALValet alloc] initWithIdentifier:keychainIdentifier accessibility:VALAccessibilityWhenUnlocked];
-    self.valid = NO;
 }
 
 #pragma mark - Public Methods
@@ -91,17 +108,20 @@ NSString * const MCLLoginStateKey = @"MCLLoginValid";
 
 - (void)testLoginWithCompletionHandler:(void (^)(NSError*, BOOL))completionHandler
 {
-    if (!self.username || !self.password.length || self.username.length == 0 || self.password.length == 0) {
+    if ([self credentialsAreInvalid]) {
         self.valid = NO;
-        completionHandler(nil, NO);
+        [self postLoginStateDidChangeNotification];
+        if (completionHandler) {
+            completionHandler(nil, NO);
+        }
         return;
     }
 
-    MCLLoginRequest *request = [[MCLLoginRequest alloc] initWithClient:self.bag.httpClient login:self];
-    [request loadWithCompletionHandler:^(NSError *error, NSArray *data) {
+    MCLLoginRequest *loginRequest = [[MCLLoginRequest alloc] initWithClient:self.bag.httpClient login:self];
+    [loginRequest loadWithCompletionHandler:^(NSError *error, NSArray *data) {
         BOOL success = !error;
         self.valid = success;
-        [self postLoginStateDidChangeNotification:success];
+        [self postLoginStateDidChangeNotification];
 
         if (completionHandler) {
             completionHandler(error, success);
@@ -111,12 +131,20 @@ NSString * const MCLLoginStateKey = @"MCLLoginValid";
 
 #pragma mark - Private Methods
 
-- (void)postLoginStateDidChangeNotification:(BOOL)success
+- (BOOL)credentialsAreInvalid
 {
-    NSDictionary *userInfo = @{MCLLoginStateKey:[NSNumber numberWithBool:success]};
+    return !self.username || !self.password || self.username.length == 0 || self.password.length == 0;
+}
+
+- (void)postLoginStateDidChangeNotification
+{
+    NSDictionary *userInfo = @{MCLLoginStateKey:[NSNumber numberWithBool:self.valid],
+                               MCLLoginInitialAttemptKey:[NSNumber numberWithBool:self.initialAttempt]};
     [[NSNotificationCenter defaultCenter] postNotificationName:MCLLoginStateDidChangeNotification
                                                         object:self
                                                       userInfo:userInfo];
+
+    self.initialAttempt = NO;
 }
 
 @end
