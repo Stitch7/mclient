@@ -13,7 +13,6 @@ def mclient_pods
   pod 'ImgurSession', :git => 'https://github.com/mileswd/ImgurSession'
   #pod 'MRProgress', :git => 'https://github.com/thirdiron/MRProgress'
   pod 'MRProgress'
-  pod 'RealReachability'
   pod 'HockeySDK'
 
 end

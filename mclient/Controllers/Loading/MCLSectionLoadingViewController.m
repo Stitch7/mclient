@@ -10,7 +10,7 @@
 #import "MCLSectionLoadingViewController.h"
 
 #import <AsyncBlockOperation/AsyncBlockOperation.h>
-#import "RealReachability.h"
+#import "Reachability.h"
 
 #import "MCLDependencyBag.h"
 #import "UIView+addConstraints.h"
@@ -321,8 +321,10 @@ static NSString *kQueueOperationsChanged = @"kQueueOperationsChanged";
 
 - (BOOL)noNetworkConnectionAvailable
 {
-    ReachabilityStatus status = [GLobalRealReachability currentReachabilityStatus];
-    return status == RealStatusUnknown || status == RealStatusNotReachable;
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+
+    return networkStatus == NotReachable;
 }
 
 - (void)showNetworkConnectionAvailableView

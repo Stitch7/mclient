@@ -8,8 +8,7 @@
 
 #import "MCLMessage.h"
 
-#import "RealReachability.h"
-
+#import "Reachability.h"
 #import "UIColor+Hex.h"
 #import "MCLSettings.h"
 #import "MCLTheme.h"
@@ -111,7 +110,8 @@
             break;
 
         case kMCLSettingsShowImagesWifi: {
-            messageHtml = [GLobalRealReachability currentReachabilityStatus] == RealStatusViaWiFi
+            Reachability *wifiReach = [Reachability reachabilityForLocalWiFi];
+            messageHtml = [wifiReach currentReachabilityStatus] == ReachableViaWiFi
                 ? self.textHtmlWithImages
                 : self.textHtml;
             break;

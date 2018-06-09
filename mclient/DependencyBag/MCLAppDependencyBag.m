@@ -10,7 +10,6 @@
 
 #import "MCLAppDependencyBag.h"
 
-#import "RealReachability.h"
 #import "ImgurSession.h"
 
 #import "MCLAppRouterDelegate.h"
@@ -64,7 +63,6 @@
 
     [self.themeManager loadTheme];
 
-    [GLobalRealReachability startNotifier];
     [IMGSession anonymousSessionWithClientID:kImgurID withDelegate:self];
 }
 

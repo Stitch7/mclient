@@ -87,6 +87,10 @@
 		306386741E6098D9004822ED /* MCLResponsesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 306386731E6098D9004822ED /* MCLResponsesTableViewController.m */; };
 		306386771E643F1D004822ED /* MCLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 306386761E643F1D004822ED /* MCLResponse.m */; };
 		306888D61F27D7C100B0D915 /* MCLRouter+openURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 306888D51F27D7C100B0D915 /* MCLRouter+openURL.m */; };
+		306DFF9720C3FC98002B5C18 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 306DFF9620C3FC98002B5C18 /* Reachability.m */; };
+		306DFF9820C3FC98002B5C18 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 306DFF9620C3FC98002B5C18 /* Reachability.m */; };
+		306DFF9920C3FC98002B5C18 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 306DFF9620C3FC98002B5C18 /* Reachability.m */; };
+		306DFF9A20C3FC98002B5C18 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 306DFF9620C3FC98002B5C18 /* Reachability.m */; };
 		306EA6E519D598F800BB4DC8 /* MCLInternetConnectionErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 306EA6E419D598F800BB4DC8 /* MCLInternetConnectionErrorView.m */; };
 		306EA6E819D5992F00BB4DC8 /* MCLMServiceErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 306EA6E719D5992F00BB4DC8 /* MCLMServiceErrorView.m */; };
 		306FC8111F93A39F001EB7E9 /* MCLBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 301203301E031D7500B06FF6 /* MCLBadgeView.m */; };
@@ -681,6 +685,8 @@
 		306386761E643F1D004822ED /* MCLResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLResponse.m; sourceTree = "<group>"; };
 		306888D41F27D7C100B0D915 /* MCLRouter+openURL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MCLRouter+openURL.h"; sourceTree = "<group>"; };
 		306888D51F27D7C100B0D915 /* MCLRouter+openURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MCLRouter+openURL.m"; sourceTree = "<group>"; };
+		306DFF9420C3FAF0002B5C18 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		306DFF9620C3FC98002B5C18 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		306EA6E319D598F800BB4DC8 /* MCLInternetConnectionErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLInternetConnectionErrorView.h; sourceTree = "<group>"; };
 		306EA6E419D598F800BB4DC8 /* MCLInternetConnectionErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLInternetConnectionErrorView.m; sourceTree = "<group>"; };
 		306EA6E619D5992F00BB4DC8 /* MCLMServiceErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMServiceErrorView.h; sourceTree = "<group>"; };
@@ -1069,6 +1075,7 @@
 			isa = PBXGroup;
 			children = (
 				3003BE0B1F938E1F00103F4B /* HTTPClient */,
+				306DFF9520C3FAFB002B5C18 /* Reachability */,
 				3006EF8E1F2670750054F27F /* Requests */,
 			);
 			path = Network;
@@ -1349,6 +1356,15 @@
 				3039748C1E16A1F4003C8BC9 /* MCLMessageListWidmannStyleTableViewCell.m */,
 			);
 			path = Widmann;
+			sourceTree = "<group>";
+		};
+		306DFF9520C3FAFB002B5C18 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				306DFF9420C3FAF0002B5C18 /* Reachability.h */,
+				306DFF9620C3FC98002B5C18 /* Reachability.m */,
+			);
+			path = Reachability;
 			sourceTree = "<group>";
 		};
 		3070D322207968F900F42BFF /* MultilineTitleView */ = {
@@ -2168,6 +2184,7 @@
 				3070D326207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
 				305DE8181F2E608200EC34AE /* MCLRouter+mainNavigation.m in Sources */,
 				30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */,
+				306DFF9820C3FC98002B5C18 /* Reachability.m in Sources */,
 				30BD475F1E956D9000DBB27B /* MCLLogin.m in Sources */,
 				306888D61F27D7C100B0D915 /* MCLRouter+openURL.m in Sources */,
 				306169491E9910D800DBD96F /* MCLBoardTableViewCell.m in Sources */,
@@ -2283,6 +2300,7 @@
 				3070D325207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
 				306FC8571F93A39F001EB7E9 /* MCLKillfileThreadsRequest.m in Sources */,
 				306FC8581F93A39F001EB7E9 /* MCLMessageToolbar.m in Sources */,
+				306DFF9720C3FC98002B5C18 /* Reachability.m in Sources */,
 				306FC8591F93A39F001EB7E9 /* MCLRouter+mainNavigation.m in Sources */,
 				306FC85A1F93A39F001EB7E9 /* MCLVerifiyLoginView.m in Sources */,
 				306FC85B1F93A39F001EB7E9 /* MCLLogin.m in Sources */,
@@ -2390,6 +2408,7 @@
 				3070D328207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
 				3090CB041FA7ED1E0085C9AF /* MCLRouter+mainNavigation.m in Sources */,
 				3090CB051FA7ED1E0085C9AF /* MCLVerifiyLoginView.m in Sources */,
+				306DFF9A20C3FC98002B5C18 /* Reachability.m in Sources */,
 				3090CB061FA7ED1E0085C9AF /* MCLLogin.m in Sources */,
 				3090CB071FA7ED1E0085C9AF /* MCLRouter+openURL.m in Sources */,
 				3090CB081FA7ED1E0085C9AF /* MCLBoardTableViewCell.m in Sources */,
@@ -2497,6 +2516,7 @@
 				3070D327207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
 				3090CB811FA89A5C0085C9AF /* MCLRouter+mainNavigation.m in Sources */,
 				3090CB821FA89A5C0085C9AF /* MCLVerifiyLoginView.m in Sources */,
+				306DFF9920C3FC98002B5C18 /* Reachability.m in Sources */,
 				3090CB831FA89A5C0085C9AF /* MCLLogin.m in Sources */,
 				3090CB841FA89A5C0085C9AF /* MCLRouter+openURL.m in Sources */,
 				3090CB851FA89A5C0085C9AF /* MCLBoardTableViewCell.m in Sources */,

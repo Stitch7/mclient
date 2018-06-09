@@ -41,7 +41,6 @@
                       [MCLLicense licenseWithName:@"AsyncBlockOperation" andText:MCLLicenseAsyncBlockOperation],
                       [MCLLicense licenseWithName:@"ImgurSession" andText:MCLLicenseImgurSession],
                       [MCLLicense licenseWithName:@"MRProgress" andText:MCLLicenseMRProgress],
-                      [MCLLicense licenseWithName:@"RealReachability" andText:MCLLicenseRealReachability],
                       [MCLLicense licenseWithName:@"HockeySDK" andText:MCLLicenseHockeySDK]];
 }
 
