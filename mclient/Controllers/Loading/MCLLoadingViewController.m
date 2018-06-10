@@ -265,7 +265,7 @@
     }
 
     [self.request loadWithCompletionHandler:^(NSError *error, NSArray *data) {
-        if (error || !data) {
+        if ((error && error.code != 401) || !data) {
             [self showErrorView:error];
             return;
         }
