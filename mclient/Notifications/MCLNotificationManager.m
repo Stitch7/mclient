@@ -65,6 +65,7 @@
 - (void)sendLocalNotificationForResponse:(MCLResponse *)response
 {
     UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.userInfo = @{@"response": response};
     notification.alertAction = NSLocalizedString(@"Open", nil);
     notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"Response from %@:\n%@", nil), response.username, response.subject];
     notification.soundName = @"zelda1.caf";

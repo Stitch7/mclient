@@ -1744,6 +1744,11 @@
 					306FC80E1F93A39F001EB7E9 = {
 						DevelopmentTeam = J8XDHCNJQA;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					3090CABA1FA7ED1E0085C9AF = {
 						DevelopmentTeam = J8XDHCNJQA;
