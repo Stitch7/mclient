@@ -16,39 +16,63 @@
 
 @end
 
-#pragma mark -
-
 @implementation MCLMessageTextView
+
+#pragma mark - Initializers
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-    if (self = [super initWithFrame:frame]) {
-        [self configure];
-    }
+    self = [super initWithFrame:frame];
+    if (!self) return nil;
+
+    [self configure];
 
     return self;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
-    if (self = [super initWithCoder:aDecoder]) {
-        [self configure];
-    }
+    self = [super initWithCoder:aDecoder];
+    if (!self) return nil;
+
+    [self configure];
 
     return self;
 }
+
+#pragma mark - Configuration
 
 - (void)configure
 {
     [super configure];
 
     self.delegate = self;
-
     self.textContainer.lineFragmentPadding = 0;
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [self configureNotifications];
+    [self configureMenuItems];
+}
 
+- (void)configureNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onMenuItemDismissed:)
+                                                 name:UIMenuControllerDidHideMenuNotification
+                                               object:nil];
+}
+
+- (void)configureMenuItems
+{
     self.menuItems = @[[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Spoiler", nil) action:@selector(formatSelectionAsSpoiler:)],
                        [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Link", nil) action:@selector(formatSelectionAsLink:)],
                        [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Image", nil) action:@selector(formatSelectionAsImage:)]];
@@ -61,15 +85,13 @@
     self.menuItemsSubmenuFormatTextActive = NO;
 
     [[UIMenuController sharedMenuController] setMenuItems:self.menuItems];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMenuItemDismissed:) name:UIMenuControllerDidHideMenuNotification object:nil];
 }
 
 #pragma mark - MenuController
 
 - (void)onMenuItemDismissed:(id)sender
 {
-    if (self.menuItemsSubmenuFormatTextActive == YES){
+    if (self.menuItemsSubmenuFormatTextActive == YES) {
         [[UIMenuController sharedMenuController] setMenuItems:self.menuItems];
         self.menuItemsSubmenuFormatTextActive = NO;
     }
@@ -228,7 +250,6 @@
     self.selectedRange = selectedRange;
 }
 
-
 #pragma mark - UITextViewDelegate
 
 - (void)textViewDidChange:(UITextView *)textView
@@ -246,7 +267,6 @@
     CGRect caretRect = [textView caretRectForPosition:self.selectedTextRange.end];
     [textView scrollRectToVisible:caretRect animated:NO];
 }
-
 
 #pragma mark - Keyboard notifications
 

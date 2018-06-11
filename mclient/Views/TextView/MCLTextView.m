@@ -17,18 +17,20 @@
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-    if (self = [super initWithFrame:frame]) {
-        [self configure];
-    }
+    self = [super initWithFrame:frame];
+    if (!self) return nil;
+
+    [self configure];
 
     return self;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
-    if (self = [super initWithCoder:aDecoder]) {
-        [self configure];
-    }
+    self = [super initWithCoder:aDecoder];
+    if (!self) return nil;
+    
+    [self configure];
 
     return self;
 }
