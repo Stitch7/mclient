@@ -112,11 +112,14 @@
     self.messages = [newData copy];
 
     [UIView animateWithDuration:0 animations:^{
-        NSIndexPath *top = [NSIndexPath indexPathForRow:NSNotFound inSection:0];
-        [self.tableView scrollToRowAtIndexPath:top atScrollPosition:UITableViewScrollPositionTop animated:NO];
         [self.tableView reloadData];
     } completion:^(BOOL finished) {
-        [self selectInitialMessage];
+        [UIView animateWithDuration:0 animations:^{
+            NSIndexPath *top = [NSIndexPath indexPathForRow:NSNotFound inSection:0];
+            [self.tableView scrollToRowAtIndexPath:top atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        } completion:^(BOOL finished) {
+            [self selectInitialMessage];
+        }];
     }];
 }
 
