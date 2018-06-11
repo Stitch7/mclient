@@ -101,7 +101,7 @@
 - (void)markAllAsReadButtonButtonPressed
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Confirmation", nil)
-                                                                   message:NSLocalizedString(@"Mark all runread responses as read?", nil)
+                                                                   message:NSLocalizedString(@"Mark all unread responses as read?", nil)
                                                             preferredStyle:UIAlertControllerStyleAlert];
 
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
