@@ -20,6 +20,8 @@
 
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag requests:(NSDictionary *)requests forViewController:(UIViewController *)viewController;
 
+- (void)configureNotifications;
+
 - (void)load;
 - (void)updateTitle;
 

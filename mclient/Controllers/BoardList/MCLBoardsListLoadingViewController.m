@@ -15,23 +15,6 @@
 
 @implementation MCLBoardsListLoadingViewController
 
-#pragma mark - Initializers
-
-- (instancetype)initWithBag:(id<MCLDependencyBag>)bag requests:(NSDictionary *)requests forViewController:(UIViewController *)viewController
-{
-    self = [super initWithBag:bag requests:requests forViewController:viewController];
-    if (!self) return nil;
-
-    [self configureNotifications];
-
-    return self;
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 #pragma mark - UIViewController life cycle
 
 -(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -46,6 +29,8 @@
 
 - (void)configureNotifications
 {
+    [super configureNotifications];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(loginStateDidChanged:)
                                                  name:MCLLoginStateDidChangeNotification

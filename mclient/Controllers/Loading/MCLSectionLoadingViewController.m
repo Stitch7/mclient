@@ -51,7 +51,7 @@ static NSString *kQueueOperationsChanged = @"kQueueOperationsChanged";
 
     self.bag = bag;
     self.requests = requests;
-    [self initialize];
+    [self configure];
 
     self.contentViewController = contentViewController;
     if ([[contentViewController class] conformsToProtocol:@protocol(MCLSectionLoadingViewControllerDelegate)]) {
@@ -70,9 +70,10 @@ static NSString *kQueueOperationsChanged = @"kQueueOperationsChanged";
 - (void)dealloc
 {
     [self.queue removeObserver:self forKeyPath:@"operations" context:&kQueueOperationsChanged];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)initialize
+- (void)configure
 {
     self.queue = [[NSOperationQueue alloc] init];
     [self.queue addObserver:self forKeyPath:@"operations" options:0 context:&kQueueOperationsChanged];
@@ -80,6 +81,7 @@ static NSString *kQueueOperationsChanged = @"kQueueOperationsChanged";
     self.loading = NO;
     self.noNetworkConnection = NO;
 
+    [self configureNotifications];
     [self configureLoadingView];
 }
 
@@ -96,6 +98,14 @@ static NSString *kQueueOperationsChanged = @"kQueueOperationsChanged";
                                change:change
                               context:context];
     }
+}
+
+- (void)configureNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
 }
 
 - (void)configureErrorView
@@ -193,12 +203,12 @@ static NSString *kQueueOperationsChanged = @"kQueueOperationsChanged";
         return;
     }
 
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    [refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    if (!self.delegate.refreshControl) {
+        self.delegate.refreshControl = [[UIRefreshControl alloc] init];
+        [self.delegate.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    }
 
-    refreshControl.backgroundColor = [self.bag.themeManager.currentTheme tableViewBackgroundColor];
-
-    self.delegate.refreshControl = refreshControl;
+    self.delegate.refreshControl.backgroundColor = [self.bag.themeManager.currentTheme tableViewBackgroundColor];
 }
 
 - (void)updateNavigationController
@@ -351,6 +361,13 @@ static NSString *kQueueOperationsChanged = @"kQueueOperationsChanged";
 
     self.noNetworkConnection = NO;
     [self.networkConnectionErrorView removeFromSuperview];
+}
+
+#pragma mark - Notifications
+
+- (void)themeChanged:(NSNotification *)notification
+{
+    [self updateRefreshControl];
 }
 
 @end
