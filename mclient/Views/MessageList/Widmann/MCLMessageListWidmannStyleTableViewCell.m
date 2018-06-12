@@ -264,11 +264,28 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
 
 - (void)contentHeightWithCompletion:(void (^)(CGFloat height))completionHandler
 {
+    CGFloat offset = 54;
+
     NSString *heightCode = @"document.getElementById('content').clientHeight";
     [self.webView evaluateJavaScript:heightCode completionHandler:^(NSString *result, NSError *error) {
         if (!error) {
-            CGFloat height = (CGFloat)[result doubleValue] + 54;
+            CGFloat height = (CGFloat)[result doubleValue] + offset;
             completionHandler(height);
+
+            // Sometimes height gets evaluated wrong, let's calculate it again after 0.5 secs
+            // and reinvoke completion handler if new result differs
+            double delayInSeconds = 0.5;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+                [self.webView evaluateJavaScript:heightCode completionHandler:^(NSString *result2, NSError *error2) {
+                    if (!error2) {
+                        CGFloat newHeight = (CGFloat)[result2 doubleValue] + offset;
+                        if (newHeight != height) {
+                            completionHandler(newHeight);
+                        }
+                    }
+                }];
+            });
         }
     }];
 }
