@@ -17,6 +17,7 @@
 @property (strong) NSDate *date;
 @property (assign, nonatomic, getter=isRead) BOOL read;
 @property (nonatomic, assign, getter=isTemporaryRead) BOOL tempRead;
+@property (nonatomic, readonly) NSDictionary *propertyList;
 
 + (MCLResponse *)responseWithBoardId:(NSNumber *)inBoardId
                             threadId:(NSNumber *)inThreadId

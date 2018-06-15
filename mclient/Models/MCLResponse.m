@@ -10,6 +10,8 @@
 
 @implementation MCLResponse
 
+#pragma mark - Initializers
+
 + (MCLResponse *)responseWithBoardId:(NSNumber *)inBoardId
                             threadId:(NSNumber *)inThreadId
                        threadSubject:(NSString *)inThreadSubject
@@ -32,6 +34,20 @@
     response.tempRead = inRead;
 
     return response;
+}
+
+#pragma mark - Computed properties
+
+- (NSDictionary *)propertyList
+{
+    return @{@"boardId": self.boardId,
+             @"threadId": self.threadId,
+             @"threadSubject": self.threadSubject,
+             @"messageId": self.messageId,
+             @"subject": self.subject,
+             @"username": self.username,
+             @"date": self.date,
+             @"read": [NSNumber numberWithBool:self.read]};
 }
 
 @end
