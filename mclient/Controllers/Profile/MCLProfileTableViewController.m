@@ -37,15 +37,6 @@
     [self configureNotifications];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-
-    if ([self.delegate respondsToSelector:@selector(handleRotationChangeInBackground)]) {
-        [self.delegate handleRotationChangeInBackground];
-    }
-}
-
 #pragma mark - Configuration
 
 - (void)configureNotifications

@@ -11,16 +11,12 @@
 
 @protocol MCLDependencyBag;
 @protocol MCLComposeMessageViewControllerDelegate;
+@class MCLMessage;
 
 @interface MCLComposeMessageViewController : UIViewController <MCLMessageTextViewErrorHandler, MCLMessageTextViewToolbarDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) id <MCLDependencyBag> bag;
 @property (weak) id<MCLComposeMessageViewControllerDelegate> delegate;
-@property (assign) NSUInteger type;
-@property (strong, nonatomic) NSNumber *boardId;
-@property (strong, nonatomic) NSNumber *threadId;
-@property (strong, nonatomic) NSNumber *messageId;
-@property (strong, nonatomic) NSString *subject;
-@property (strong, nonatomic) NSString *text;
+@property (strong, nonatomic) MCLMessage *message;
 
 @end

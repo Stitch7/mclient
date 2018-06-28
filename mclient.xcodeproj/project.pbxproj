@@ -464,6 +464,10 @@
 		30A7149F207FDB6000554610 /* MCLModalOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A7149B207FDB6000554610 /* MCLModalOverlayView.m */; };
 		30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */; };
 		30AC60F61F3F89E7000A6639 /* MCLMessageTextViewToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 30AC60F51F3F89E7000A6639 /* MCLMessageTextViewToolbar.m */; };
+		30B049E720D6325700B74AF7 /* MCLSendMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B049E620D6325700B74AF7 /* MCLSendMessageRequest.m */; };
+		30B049E820D6325700B74AF7 /* MCLSendMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B049E620D6325700B74AF7 /* MCLSendMessageRequest.m */; };
+		30B049E920D6325700B74AF7 /* MCLSendMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B049E620D6325700B74AF7 /* MCLSendMessageRequest.m */; };
+		30B049EA20D6325700B74AF7 /* MCLSendMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B049E620D6325700B74AF7 /* MCLSendMessageRequest.m */; };
 		30B0B97B1E8AEED400925D0D /* MCLResponseContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B0B97A1E8AEED400925D0D /* MCLResponseContainer.m */; };
 		30B2F0151F292AD9000B1E65 /* MCLMessageListRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B2F0141F292AD9000B1E65 /* MCLMessageListRequest.m */; };
 		30B893181F7820EF00E584FA /* MCLFavoriteThreadToggleRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B893171F7820EF00E584FA /* MCLFavoriteThreadToggleRequest.m */; };
@@ -746,6 +750,8 @@
 		30AC60F41F3F89E7000A6639 /* MCLMessageTextViewToolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMessageTextViewToolbar.h; sourceTree = "<group>"; };
 		30AC60F51F3F89E7000A6639 /* MCLMessageTextViewToolbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLMessageTextViewToolbar.m; sourceTree = "<group>"; };
 		30AC60F71F3F8DC2000A6639 /* MCLMessageTextViewToolbarDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMessageTextViewToolbarDelegate.h; sourceTree = "<group>"; };
+		30B049E520D6325700B74AF7 /* MCLSendMessageRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLSendMessageRequest.h; sourceTree = "<group>"; };
+		30B049E620D6325700B74AF7 /* MCLSendMessageRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLSendMessageRequest.m; sourceTree = "<group>"; };
 		30B0B9791E8AEED400925D0D /* MCLResponseContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLResponseContainer.h; sourceTree = "<group>"; };
 		30B0B97A1E8AEED400925D0D /* MCLResponseContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLResponseContainer.m; sourceTree = "<group>"; };
 		30B2F0131F292AD9000B1E65 /* MCLMessageListRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMessageListRequest.h; sourceTree = "<group>"; };
@@ -932,6 +938,8 @@
 				303C59511F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.m */,
 				3006EF941F267A270054F27F /* MCLThreadListRequest.h */,
 				3006EF951F267A270054F27F /* MCLThreadListRequest.m */,
+				30B049E520D6325700B74AF7 /* MCLSendMessageRequest.h */,
+				30B049E620D6325700B74AF7 /* MCLSendMessageRequest.m */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -1630,6 +1638,7 @@
 				305DD81219A63517006514BD /* Resources */,
 				3020A26919DCD01C007F46E2 /* ShellScript */,
 				915089E796B40A81786A6247 /* [CP] Copy Pods Resources */,
+				389F1456958574E2BD694556 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1668,6 +1677,7 @@
 				306FC8711F93A39F001EB7E9 /* Resources */,
 				306FC8861F93A39F001EB7E9 /* ShellScript */,
 				306FC8881F93A39F001EB7E9 /* [CP] Copy Pods Resources */,
+				D771CE1D82F214611E4A54E8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1688,6 +1698,7 @@
 				3090CB1C1FA7ED1E0085C9AF /* Resources */,
 				3090CB2F1FA7ED1E0085C9AF /* ShellScript */,
 				7CD1D19C1D2F7C1087B35108 /* [CP] Copy Pods Resources */,
+				507D108F6FEDDCE074E9FC48 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1708,6 +1719,7 @@
 				3090CB991FA89A5C0085C9AF /* Resources */,
 				3090CBAC1FA89A5C0085C9AF /* ShellScript */,
 				36486020FCA41E407BF393EA /* [CP] Copy Pods Resources */,
+				AB6ECD89667DB20F9F0A702F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1991,11 +2003,11 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-dev/Pods-mclient-dev-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/HockeySDK/HockeySDKResources.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/HockeySDKResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2035,15 +2047,45 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/HockeySDK/HockeySDKResources.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/HockeySDKResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		389F1456958574E2BD694556 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		507D108F6FEDDCE074E9FC48 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-store/Pods-mclient-store-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7CD1D19C1D2F7C1087B35108 /* [CP] Copy Pods Resources */ = {
@@ -2053,11 +2095,11 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-store/Pods-mclient-store-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/HockeySDK/HockeySDKResources.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/HockeySDKResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2071,15 +2113,30 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/HockeySDK/HockeySDKResources.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/HockeySDKResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AB6ECD89667DB20F9F0A702F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BDE502EB68C5CD955DC8D394 /* [CP] Check Pods Manifest.lock */ = {
@@ -2098,6 +2155,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D771CE1D82F214611E4A54E8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-dev/Pods-mclient-dev-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2161,6 +2233,7 @@
 				301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */,
 				303C59521F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.m in Sources */,
 				305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */,
+				30B049E820D6325700B74AF7 /* MCLSendMessageRequest.m in Sources */,
 				3070D31F207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */,
 				302381F81F9373C400764FAE /* MCLNotificationStatusRequest.m in Sources */,
 				3036F5981E26666600ABC2CE /* MCLThemeManager.m in Sources */,
@@ -2277,6 +2350,7 @@
 				306FC83D1F93A39F001EB7E9 /* MCLAppDelegate.m in Sources */,
 				306FC83E1F93A39F001EB7E9 /* MCLMessageListWidmannStyleViewController.m in Sources */,
 				306FC8401F93A39F001EB7E9 /* MCLMarkThreadAsReadRequest.m in Sources */,
+				30B049E720D6325700B74AF7 /* MCLSendMessageRequest.m in Sources */,
 				3070D31E207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */,
 				306FC8421F93A39F001EB7E9 /* MCLMessageToolbarController.m in Sources */,
 				306FC8431F93A39F001EB7E9 /* MCLThreadTableViewCell.m in Sources */,
@@ -2385,6 +2459,7 @@
 				3090CAEE1FA7ED1E0085C9AF /* MCLThreadTableViewCell.m in Sources */,
 				3090CAEF1FA7ED1E0085C9AF /* MCLThreadIdForMessageRequest.m in Sources */,
 				3090CAF01FA7ED1E0085C9AF /* MCLThreadListTableViewController.m in Sources */,
+				30B049EA20D6325700B74AF7 /* MCLSendMessageRequest.m in Sources */,
 				3070D321207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */,
 				3090CAF11FA7ED1E0085C9AF /* MCLNotificationStatusRequest.m in Sources */,
 				3090CAF21FA7ED1E0085C9AF /* MCLThemeManager.m in Sources */,
@@ -2493,6 +2568,7 @@
 				3090CB6B1FA89A5C0085C9AF /* MCLThreadTableViewCell.m in Sources */,
 				3090CB6C1FA89A5C0085C9AF /* MCLThreadIdForMessageRequest.m in Sources */,
 				3090CB6D1FA89A5C0085C9AF /* MCLThreadListTableViewController.m in Sources */,
+				30B049E920D6325700B74AF7 /* MCLSendMessageRequest.m in Sources */,
 				3070D320207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */,
 				3090CB6E1FA89A5C0085C9AF /* MCLNotificationStatusRequest.m in Sources */,
 				3090CB6F1FA89A5C0085C9AF /* MCLThemeManager.m in Sources */,

@@ -40,6 +40,8 @@ typedef NS_ENUM(NSUInteger, kMCLComposeType) {
 @property (assign, nonatomic) BOOL userBlockedByYou;
 @property (assign, nonatomic) BOOL userBlockedYou;
 
+@property (assign) NSUInteger type;
+
 + (MCLMessage *)messageWithId:(NSNumber *)inMessageId
                          read:(BOOL)inRead
                         level:(NSNumber *)inLevel
@@ -47,6 +49,15 @@ typedef NS_ENUM(NSUInteger, kMCLComposeType) {
                      username:(NSString *)inUsername
                       subject:(NSString *)inSubject
                          date:(NSDate *)inDate;
+
++ (MCLMessage *)messagePreviewWithType:(NSUInteger)type
+                             messageId:(NSNumber *)inMessageId
+                               boardId:(NSNumber *)inBoardId
+                              threadId:(NSNumber *)inThreadId
+                               subject:(NSString *)inSubject
+                                  text:(NSString *)inText;
+
++ (MCLMessage *)messageNewWithBoard:(MCLBoard *)board;
 
 + (MCLMessage *)messageFromResponse:(MCLResponse *)response;
 

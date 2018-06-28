@@ -14,10 +14,12 @@
 #import "MRProgressOverlayView.h"
 
 #import "MCLDependencyBag.h"
+#import "MCLRouter+composeMessage.h"
 #import "MCLSettings.h"
 #import "MCLQuoteMessageRequest.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
+#import "MCLThread.h"
 #import "MCLMessage.h"
 #import "MCLComposeMessagePreviewViewController.h"
 #import "MCLComposeMessageViewControllerDelegate.h"
@@ -26,14 +28,14 @@
 @interface MCLComposeMessageViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *cameraButton;
-@property (weak, nonatomic) IBOutlet UIButton *composeQuoteButton;
-@property (weak, nonatomic) IBOutlet UILabel *composeSubjectLabel;
-@property (weak, nonatomic) IBOutlet UITextField *composeSubjectTextField;
-@property (weak, nonatomic) IBOutlet UIView *composeSeparatorView;
-@property (weak, nonatomic) IBOutlet MCLMessageTextView *composeTextTextField;
+@property (weak, nonatomic) IBOutlet UIButton *quoteButton;
+@property (weak, nonatomic) IBOutlet UILabel *subjectLabel;
+@property (weak, nonatomic) IBOutlet UITextField *subjectTextField;
+@property (weak, nonatomic) IBOutlet UIView *separatorView;
+@property (weak, nonatomic) IBOutlet MCLMessageTextView *textView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *separatorViewHeight;
 
-@property (strong, nonatomic) UIBarButtonItem *composePreviewButton;
+@property (strong, nonatomic) UIBarButtonItem *previewButton;
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
 @property (strong, nonatomic) MRProgressOverlayView *progressView;
 
@@ -93,7 +95,7 @@
     [self configureProgressView];
 
     // Color like in Apple Mail
-    self.composeSubjectLabel.textColor = [UIColor colorWithRed:142/255.0f green:142/255.0f blue:147/255.0f alpha:1.0f];
+    self.subjectLabel.textColor = [UIColor colorWithRed:142/255.0f green:142/255.0f blue:147/255.0f alpha:1.0f];
 
     [self configureSeparatorView];
     [self configureQuoteButton];
@@ -112,20 +114,11 @@
     self.navigationController.navigationBar.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-
-    if ([self.delegate respondsToSelector:@selector(handleRotationChangeInBackground)]) {
-        [self.delegate handleRotationChangeInBackground];
-    }
-}
-
 #pragma mark - Configuration
 
 - (void)configureTitle
 {
-    switch (self.type) {
+    switch (self.message.type) {
         case kMCLComposeTypeThread:
             self.title = NSLocalizedString(@"Create Thread", nil);
             break;
@@ -150,11 +143,11 @@
                                                                   action:@selector(downButtonPressed)];
     self.navigationItem.leftBarButtonItem = downButton;
 
-    self.composePreviewButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Preview", nil)
+    self.previewButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Preview", nil)
                                                                  style:UIBarButtonItemStylePlain
                                                                 target:self
                                                                 action:@selector(previewButtonPressed)];
-    self.navigationItem.rightBarButtonItem = self.composePreviewButton;
+    self.navigationItem.rightBarButtonItem = self.previewButton;
 }
 
 - (void)configureProgressView
@@ -172,34 +165,34 @@
 
 - (void)configureQuoteButton
 {
-    BOOL isHidden = self.type == kMCLComposeTypeThread;
-    [self.composeQuoteButton setHidden:isHidden];
+    BOOL isHidden = self.message.type == kMCLComposeTypeThread;
+    [self.quoteButton setHidden:isHidden];
 }
 
 - (void)configureSubjectField
 {
-    self.composeSubjectLabel.text = NSLocalizedString(@"Subject", nil);
-    self.composeSubjectTextField.delegate = self;
+    self.subjectLabel.text = NSLocalizedString(@"Subject", nil);
+    self.subjectTextField.delegate = self;
 
-    if (self.subject) {
-        self.composeSubjectTextField.text = self.subject;
-        [self.composeTextTextField becomeFirstResponder];
+    if (self.message.subject) {
+        self.subjectTextField.text = self.message.subject;
+        [self.textView becomeFirstResponder];
     } else {
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
-        [self.composeSubjectTextField becomeFirstResponder];
+        [self.subjectTextField becomeFirstResponder];
     }
 }
 
 - (void)configureTextField
 {
-    self.composeTextTextField.themeManager = self.bag.themeManager;
-    self.composeTextTextField.errorHandler = self;
-    self.composeTextTextField.text = self.text;
+    self.textView.themeManager = self.bag.themeManager;
+    self.textView.errorHandler = self;
+    self.textView.text = self.message.text;
 
     MCLMessageTextViewToolbar *textViewToolbar = [[MCLMessageTextViewToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
     textViewToolbar.messageTextViewToolbarDelegate = self;
-    textViewToolbar.type = self.type;
-    self.composeTextTextField.inputAccessoryView = textViewToolbar;
+    textViewToolbar.type = self.message.type;
+    self.textView.inputAccessoryView = textViewToolbar;
 }
 
 #pragma mark - MCLMessageTextViewErrorHandler
@@ -240,9 +233,9 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if (textField == self.composeSubjectTextField) {
+    if (textField == self.subjectTextField) {
         [textField resignFirstResponder];
-        [self.composeTextTextField becomeFirstResponder];
+        [self.textView becomeFirstResponder];
     }
     
     return NO;
@@ -250,8 +243,8 @@
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField
 {
-    if (textField == self.composeSubjectTextField) {
-        self.composePreviewButton.enabled = NO;
+    if (textField == self.subjectTextField) {
+        self.previewButton.enabled = NO;
     }
 
     return YES;
@@ -262,7 +255,7 @@
     BOOL shouldChangeCharacters = YES;
 
     // Limit subject field to 56 characters
-    if (textField == self.composeSubjectTextField) {
+    if (textField == self.subjectTextField) {
         NSUInteger subjectMaxlength = 56;
 
         NSUInteger oldLength = [textField.text length];
@@ -271,7 +264,7 @@
         NSUInteger newLength = oldLength - rangeLength + replacementLength;
 
         // Disable send button if subject field is empty
-        self.composePreviewButton.enabled = newLength > 0;
+        self.previewButton.enabled = newLength > 0;
 
         shouldChangeCharacters = newLength <= subjectMaxlength || [string rangeOfString: @"\n"].location != NSNotFound;
     }
@@ -289,56 +282,59 @@
 
 - (void)previewButtonPressed
 {
-    [self performSegueWithIdentifier:@"PushToPreview" sender:nil];
+    [self.bag.router pushToPreviewForMessage:[self buildMessage]];
 }
 
 #pragma mark - MCLMessageTextViewToolbarDelegate
 
 - (void)messageTextViewToolbar:(MCLMessageTextViewToolbar *)toolbar boldButtonPressed:(UIBarButtonItem *)sender
 {
-    [self.composeTextTextField formatBold];
+    [self.textView formatBold];
 }
 
 - (void)messageTextViewToolbar:(MCLMessageTextViewToolbar *)toolbar italicButtonPressed:(UIBarButtonItem *)sender
 {
-    [self.composeTextTextField formatItalic];
+    [self.textView formatItalic];
 }
 
 - (void)messageTextViewToolbar:(MCLMessageTextViewToolbar *)toolbar underlineButtonPressed:(UIBarButtonItem *)sender
 {
-    [self.composeTextTextField formatUnderline];
+    [self.textView formatUnderline];
 }
 
 - (void)messageTextViewToolbar:(MCLMessageTextViewToolbar *)toolbar strikestroughButtonPressed:(UIBarButtonItem *)sender
 {
-    [self.composeTextTextField formatStroke];
+    [self.textView formatStroke];
 }
 
 - (void)messageTextViewToolbar:(MCLMessageTextViewToolbar *)toolbar spoilerButtonPressed:(UIBarButtonItem *)sender
 {
-    [self.composeTextTextField formatSpoiler];
+    [self.textView formatSpoiler];
 }
 
 - (void)messageTextViewToolbar:(MCLMessageTextViewToolbar *)toolbar cameraButtonPressed:(UIBarButtonItem *)sender;
 {
-    [self.composeTextTextField resignFirstResponder];
+    [self.textView resignFirstResponder];
 
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil
                                                                          message:nil //@"Bild hinzufügen"
                                                                   preferredStyle:UIAlertControllerStyleActionSheet];
 
-    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Abbrechen" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [self.composeTextTextField becomeFirstResponder];
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Abbrechen" style:UIAlertActionStyleCancel // TODO: i18n
+                                                  handler:^(UIAlertAction *action) {
+        [self.textView becomeFirstResponder];
     }]];
 
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        [actionSheet addAction:[UIAlertAction actionWithTitle:@"Foto aufnehmen" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [actionSheet addAction:[UIAlertAction actionWithTitle:@"Foto aufnehmen" // TODO: i18n
+                                                        style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self showCamera:sender];
         }]];
     }
 
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
-        [actionSheet addAction:[UIAlertAction actionWithTitle:@"Aus Album auswählen" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [actionSheet addAction:[UIAlertAction actionWithTitle:@"Aus Album auswählen" // TODO: i18n
+                                                        style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self showPhotoPicker:sender];
         }]];
     }
@@ -351,7 +347,7 @@
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
     if (authStatus == AVAuthorizationStatusDenied) {
         UIAlertController *alertController =
-        [UIAlertController alertControllerWithTitle:@"Unable to access the Camera"
+        [UIAlertController alertControllerWithTitle:@"Unable to access the Camera"  // TODO: i18n
                                             message:@"To enable access, go to Settings > Privacy > Camera and turn on Camera access for this app."
                                      preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
@@ -398,8 +394,8 @@
     [sender setEnabled:NO];
 
     MCLMessage *message = [[MCLMessage alloc] init];
-    message.boardId = self.boardId;
-    message.messageId = self.messageId;
+    message.boardId = self.message.boardId;
+    message.messageId = self.message.messageId;
 
     MCLQuoteMessageRequest *request = [[MCLQuoteMessageRequest alloc] initWithClient:self.bag.httpClient
                                                                              message:message];
@@ -431,8 +427,8 @@
             }
 
             if ([quoteBlocks count] == 1 && !quoteOfQuoteRemoved) {
-                NSString *textViewContent = [@"\n\n" stringByAppendingString:self.composeTextTextField.text];
-                self.composeTextTextField.text = [quoteString stringByAppendingString:textViewContent];
+                NSString *textViewContent = [@"\n\n" stringByAppendingString:self.textView.text];
+                self.textView.text = [quoteString stringByAppendingString:textViewContent];
             }
             else {
                 [self presentQuotePickerActionSheet:quoteBlocks quoteString:quoteString];
@@ -452,11 +448,11 @@
         UIAlertAction *action = [UIAlertAction actionWithTitle:[quoteBlock substringFromIndex:1]
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * action) {
-                                                           NSString *textViewContent = self.composeTextTextField.text;
+                                                           NSString *textViewContent = self.textView.text;
                                                            if (textViewContent.length > 0) {
                                                                textViewContent = [textViewContent stringByAppendingString:@"\n\n"];
                                                            }
-                                                           self.composeTextTextField.text = [[textViewContent stringByAppendingString:quoteBlock] stringByAppendingString:@"\n"];
+                                                           self.textView.text = [[textViewContent stringByAppendingString:quoteBlock] stringByAppendingString:@"\n"];
                                                        }];
         [alert addAction:action];
     }
@@ -464,8 +460,8 @@
     UIAlertAction *fullQuoteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Full quote", nil)
                                                               style:UIAlertActionStyleDestructive
                                                             handler:^(UIAlertAction * action) {
-                                                                NSString *textViewContent = [@"\n\n" stringByAppendingString:self.composeTextTextField.text];
-                                                                self.composeTextTextField.text = [quoteString stringByAppendingString:textViewContent];
+                                                                NSString *textViewContent = [@"\n\n" stringByAppendingString:self.textView.text];
+                                                                self.textView.text = [quoteString stringByAppendingString:textViewContent];
                                                             }];
     [alert addAction:fullQuoteAction];
 
@@ -487,7 +483,7 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     [IMGImageRequest uploadImageWithData:imageData
-                                   title:self.subject
+                                   title:self.message.subject
                                 progress:^(NSProgress *progress) {
                                     dispatch_async(dispatch_get_main_queue(), ^{
                                         [self.progressView setProgress:(float)progress.fractionCompleted animated:YES];
@@ -495,19 +491,19 @@
                                 }
                                  success:^(IMGImage *image) {
                                      [self dissmissProgressViewWithSuccess:YES completionHandler:^{
-                                         [self.composeTextTextField addImage:image.url];
+                                         [self.textView addImage:image.url];
                                      }];
                                  }
                                  failure:^(NSURLSessionDataTask *task, NSError *error) {
                                      [self dissmissProgressViewWithSuccess:YES completionHandler:^{
                                          NSLog(@"Imgur upload error: %@", error);
                                          UIAlertController *alert = [UIAlertController
-                                                                     alertControllerWithTitle:@"Imgur upload error"
+                                                                     alertControllerWithTitle:@"Imgur upload error"  // TODO: i18n
                                                                      message:error.localizedDescription
                                                                      preferredStyle:UIAlertControllerStyleAlert];
 
                                          UIAlertAction *yesButton = [UIAlertAction
-                                                                     actionWithTitle:@"OK"
+                                                                     actionWithTitle:@"OK"  // TODO: i18n
                                                                      style:UIAlertActionStyleDefault
                                                                      handler:nil];
                                          [alert addAction:yesButton];
@@ -544,7 +540,7 @@
             self.progressView.progress = 0;
 
             if (success) {
-                [self.composeTextTextField becomeFirstResponder];
+                [self.textView becomeFirstResponder];
             }
         }];
     } afterDelay:0.5];
@@ -561,7 +557,7 @@
     self.imagePickerController = nil;
 
     [self dismissViewControllerAnimated:YES completion:^{
-        [self.composeTextTextField becomeFirstResponder];
+        [self.textView becomeFirstResponder];
     }];
 }
 
@@ -571,36 +567,34 @@
 {
     id <MCLTheme> currentTheme = self.bag.themeManager.currentTheme;
     self.view.backgroundColor = [currentTheme backgroundColor];
-    self.composeSeparatorView.backgroundColor = [currentTheme tableViewSeparatorColor];
+    self.separatorView.backgroundColor = [currentTheme tableViewSeparatorColor];
 }
 
- #pragma mark - Navigation
+ #pragma mark - Private
 
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
-     if ([segue.identifier isEqualToString:@"PushToPreview"]) {
-         NSString *messageText = [self.composeTextTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
-         if (self.type == kMCLComposeTypeThread || self.type == kMCLComposeTypeReply) {
-             BOOL signatureEnabled = [self.bag.settings isSettingActivated:MCLSettingSignatureEnabled orDefault:YES];
-             if (signatureEnabled) {
-                 NSString *signature = [self.bag.settings objectForSetting:MCLSettingSignatureText
-                                                                 orDefault:kSettingsSignatureTextDefault];
-                 messageText = [messageText stringByAppendingString:@"\n\n"];
-                 messageText = [messageText stringByAppendingString:signature];
-             }
-         }
+- (MCLMessage *)buildMessage
+{
+    assert(self.message.type);
 
-         MCLComposeMessagePreviewViewController *composeMessagePreviewVC = segue.destinationViewController;
-         [composeMessagePreviewVC setBag:self.bag];
-         [composeMessagePreviewVC setDelegate:self.delegate];
-         [composeMessagePreviewVC setType:self.type];
-         [composeMessagePreviewVC setBoardId:self.boardId];
-         [composeMessagePreviewVC setThreadId:self.threadId];
-         [composeMessagePreviewVC setMessageId:self.messageId];
-         [composeMessagePreviewVC setSubject:self.composeSubjectTextField.text];
-         [composeMessagePreviewVC setText:messageText];
-     }
- }
+    NSString *messageText = [self.textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (self.message.type == kMCLComposeTypeThread || self.message.type == kMCLComposeTypeReply) {
+        BOOL signatureEnabled = [self.bag.settings isSettingActivated:MCLSettingSignatureEnabled orDefault:YES];
+        if (signatureEnabled) {
+            NSString *signature = [self.bag.settings objectForSetting:MCLSettingSignatureText
+                                                            orDefault:kSettingsSignatureTextDefault];
+            messageText = [messageText stringByAppendingString:@"\n\n"];
+            messageText = [messageText stringByAppendingString:signature];
+        }
+    }
+
+    MCLMessage *message = [MCLMessage messagePreviewWithType:self.message.type
+                                                   messageId:self.message.messageId
+                                                     boardId:self.message.boardId
+                                                    threadId:self.message.thread.threadId
+                                                     subject:self.subjectTextField.text
+                                                        text:messageText];
+    return message;
+}
 
 @end

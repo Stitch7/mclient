@@ -9,23 +9,14 @@
 #import "MCLLoadingViewControllerDelegate.h"
 
 @protocol MCLDependencyBag;
-@protocol MCLProfileTableViewControllerDelegate;
 @class MCLUser;
 
 @interface MCLProfileTableViewController : UITableViewController <MCLLoadingViewControllerDelegate>
 
 @property (strong, nonatomic) id <MCLDependencyBag> bag;
-@property (weak) id<MCLProfileTableViewControllerDelegate> delegate;
 @property (strong, nonatomic) MCLUser *user;
 
 @property (strong, nonatomic) NSMutableDictionary *profileData;
 @property (strong, nonatomic) NSArray *profileKeys;
-
-@end
-
-@protocol MCLProfileTableViewControllerDelegate <NSObject>
-
-@optional
-- (void)handleRotationChangeInBackground;
 
 @end

@@ -13,20 +13,21 @@
 #import "MCLHTTPClient.h"
 #import "MCLSettings.h"
 #import "MCLPreviewMessageRequest.h"
+#import "MCLSendMessageRequest.h"
 #import "MCLLogin.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
 #import "MCLLoadingView.h"
 #import "MCLMServiceErrorView.h"
 #import "MCLInternetConnectionErrorView.h"
+#import "MCLMultilineTitleLabel.h"
 #import "MCLMessageListViewController.h"
 #import "MCLMessage.h"
+#import "MCLThread.h"
 
 @interface MCLComposeMessagePreviewViewController ()
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property (weak, nonatomic) IBOutlet UISwitch *notificationSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *notificationSwitchLabel;
 @property (strong, nonatomic) UIBarButtonItem *sendButton;
 @property (strong, nonatomic) NSString *previewText;
 
@@ -34,105 +35,80 @@
 
 @implementation MCLComposeMessagePreviewViewController
 
-- (void)viewDidLoad
+#pragma mark - MCLLoadingContentViewControllerDelegate
+
+- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController configureNavigationItem:(UINavigationItem *)navigationItem
 {
-    [super viewDidLoad];
-
-    [self configureNavigationBar];
-
-    self.webView.delegate = self;
-
-    if (self.type == kMCLComposeTypeEdit) {
-        [self.notificationSwitch setHidden:YES];
-        [self.notificationSwitchLabel setHidden:YES];
-    }
-
-    [self.sendButton setEnabled:NO];
-    [self.view addSubview:[[MCLLoadingView alloc] initWithFrame:self.view.frame]];
-
-    MCLMessage *message = [[MCLMessage alloc] init];
-    message.boardId = self.boardId;
-    message.text = self.text;
-
-    [[[MCLPreviewMessageRequest alloc] initWithClient:self.bag.httpClient message:message] loadWithCompletionHandler:^(NSError *error, NSArray *data) {
-        if (error) {
-            switch (error.code) {
-                case -2:
-                    [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:self.view.frame
-                                                                                   hideSubLabel:YES]];
-                    break;
-
-                default:
-                    [self.view addSubview:[[MCLMServiceErrorView alloc] initWithFrame:self.view.frame
-                                                                              andText:[error localizedDescription]
-                                                                         hideSubLabel:YES]];
-                    break;
-            }
-        } else {
-            [self.sendButton setEnabled:YES];
-
-            NSString *key = @"";
-            switch ([self.bag.settings integerForSetting:MCLSettingShowImages]) {
-                case kMCLSettingsShowImagesWifi: {
-                    Reachability *wifiReach = [Reachability reachabilityForLocalWiFi];
-                    key = [wifiReach currentReachabilityStatus] == ReachableViaWiFi
-                        ? @"previewTextHtmlWithImages"
-                        : @"previewTextHtml";
-                    break;
-                }
-                case kMCLSettingsShowImagesNever:
-                    key = @"previewTextHtml";
-                    break;
-
-                case kMCLSettingsShowImagesAlways:
-                default:
-                    key = @"previewTextHtmlWithImages";
-                    break;
-            }
-
-            MCLMessage *previewMessage = [[MCLMessage alloc] init];
-            previewMessage.textHtml = [[data firstObject] objectForKey:key];
-            previewMessage.textHtmlWithImages = previewMessage.textHtml;
-            NSNumber *imageSetting = [self.bag.settings objectForSetting:MCLSettingShowImages];
-            self.previewText = [previewMessage messageHtmlWithTopMargin:20
-                                                               theme:[self.bag.themeManager currentTheme]
-                                                           imageSetting:imageSetting];
-            [self.webView loadHTMLString:self.previewText baseURL:nil];
-        }
-    }];
-}
-
-#pragma mark - Configuration
-
-- (void)configureNavigationBar
-{
-    self.title = self.subject;
+    navigationItem.title = self.message.subject;
     self.sendButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Send", nil)
                                                        style:UIBarButtonItemStylePlain
                                                       target:self
                                                       action:@selector(sendButtonPressed:)];
-    self.navigationItem.rightBarButtonItem = self.sendButton;
+    self.sendButton.enabled = NO;
+    navigationItem.rightBarButtonItem = self.sendButton;
 }
 
-#pragma mark - UIWebViewDelegate
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView
+- (NSString *)loadingViewControllerRequestsTitleString:(MCLLoadingViewController *)loadingViewController
 {
-    // UIWebView object has fully loaded.
-    if ([[webView stringByEvaluatingJavaScriptFromString:@"document.readyState"] isEqualToString:@"complete"]) {
-        for (id subview in self.view.subviews) {
-            if ([[subview class] isSubclassOfClass: [MCLLoadingView class]]) {
-                [subview removeFromSuperview];
-            }
+    return self.message.subject;
+}
+
+- (UILabel *)loadingViewControllerRequestsTitleLabel:(MCLLoadingViewController *)loadingViewController
+{
+    return [self titleLabel];
+}
+
+- (UILabel *)titleLabel
+{
+    return [[MCLMultilineTitleLabel alloc] initWithThemeManager:self.bag.themeManager andTitle:self.message.subject];
+}
+
+- (void)loadingViewControllerStartsRefreshing:(MCLLoadingViewController *)loadingViewController
+{ }
+
+- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData
+{
+    NSArray *data = [newData copy];
+
+    self.sendButton.enabled = YES;
+
+    NSString *key = @"";
+    switch ([self.bag.settings integerForSetting:MCLSettingShowImages]) {
+        case kMCLSettingsShowImagesWifi: {
+            Reachability *wifiReach = [Reachability reachabilityForLocalWiFi];
+            key = [wifiReach currentReachabilityStatus] == ReachableViaWiFi
+                ? @"previewTextHtmlWithImages"
+                : @"previewTextHtml";
+            break;
         }
+        case kMCLSettingsShowImagesNever:
+            key = @"previewTextHtml";
+            break;
+
+        case kMCLSettingsShowImagesAlways:
+        default:
+            key = @"previewTextHtmlWithImages";
+            break;
     }
+
+    MCLMessage *previewMessage = [[MCLMessage alloc] init];
+    previewMessage.textHtml = [[data firstObject] objectForKey:key];
+    previewMessage.textHtmlWithImages = previewMessage.textHtml;
+    NSNumber *imageSetting = [self.bag.settings objectForSetting:MCLSettingShowImages];
+    self.previewText = [previewMessage messageHtmlWithTopMargin:20
+                                                          theme:[self.bag.themeManager currentTheme]
+                                                   imageSetting:imageSetting];
+    [self.webView loadHTMLString:self.previewText baseURL:nil];
 }
 
 #pragma mark - Actions
 
 - (void)sendButtonPressed:(id)sender
 {
-    id completionHandler = ^(NSError *error, NSDictionary *data) {
+    self.sendButton.enabled = NO;
+
+    MCLSendMessageRequest *sendRequest = [[MCLSendMessageRequest alloc] initWithClient:self.bag.httpClient message:self.message];
+    [sendRequest loadWithCompletionHandler:^(NSError *error, NSArray *data) {
         if (error) {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
                                                                            message:[error localizedDescription]
@@ -145,61 +121,16 @@
                                                              }];
             [alert addAction:okAction];
 
-            [self presentViewController:alert animated:YES completion:nil];
+            [self presentViewController:alert animated:YES completion:^{
+                self.sendButton.enabled = YES;
+            }];
+
         } else {
             [self dismissViewControllerAnimated:YES completion:^{
-                if ([self.delegate respondsToSelector:@selector(handleRotationChangeInBackground)]) {
-                    [self.delegate handleRotationChangeInBackground];
-                }
-
-                MCLMessage *message = [[MCLMessage alloc] init];
-                message.subject = self.subject;
-                message.text = self.text;
-                message.username = self.bag.login.username;
-
-                [self.delegate message:message sentWithType:self.type];
+                [self.delegate message:self.message sentWithType:self.message.type];
             }];
         }
-    };
-
-    switch (self.type) {
-        case kMCLComposeTypeThread: {
-            NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message", kMServiceBaseURL, self.boardId];
-            NSDictionary *vars = @{@"subject":self.subject,
-                                   @"text":self.text,
-                                   @"notification":[NSString stringWithFormat:@"%d", self.notificationSwitch.on]};
-            [self.bag.httpClient postRequestToUrlString:urlString
-                                               withVars:vars
-                                             needsLogin:YES
-                                      completionHandler:completionHandler];
-            break;
-        }
-        case kMCLComposeTypeReply: {
-            NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message/%@",
-                                   kMServiceBaseURL, self.boardId, self.messageId];
-            NSDictionary *vars = @{@"threadId":[self.threadId stringValue],
-                                   @"subject":self.subject,
-                                   @"text":self.text,
-                                   @"notification":[NSString stringWithFormat:@"%d", self.notificationSwitch.on]};
-            [self.bag.httpClient postRequestToUrlString:urlString
-                                               withVars:vars
-                                             needsLogin:YES
-                                      completionHandler:completionHandler];
-            break;
-        }
-        case kMCLComposeTypeEdit: {
-            NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/message/%@",
-                                   kMServiceBaseURL, self.boardId, self.messageId];
-            NSDictionary *vars = @{@"threadId":[self.threadId stringValue],
-                                   @"subject":self.subject,
-                                   @"text":self.text};
-            [self.bag.httpClient putRequestToUrlString:urlString
-                                              withVars:vars
-                                            needsLogin:YES
-                                     completionHandler:completionHandler];
-            break;
-        }
-    }
+    }];
 }
 
 @end

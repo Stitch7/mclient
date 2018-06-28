@@ -11,6 +11,15 @@
 @implementation MCLThread
 
 + (MCLThread *)threadWithId:(NSNumber *)inThreadId
+{
+    MCLThread *thread = [[MCLThread alloc] init];
+
+    thread.threadId = inThreadId;
+
+    return thread;
+}
+
++ (MCLThread *)threadWithId:(NSNumber *)inThreadId
                     subject:(NSString *)inSubject
 {
     MCLThread *thread = [[MCLThread alloc] init];

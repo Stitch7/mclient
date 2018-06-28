@@ -13,7 +13,9 @@
 #import "MCLMessage.h"
 #import "MCLThread.h"
 #import "MCLEditTextRequest.h"
+#import "MCLPreviewMessageRequest.h"
 #import "MCLModalNavigationController.h"
+#import "MCLLoadingViewController.h"
 #import "MCLComposeMessageViewController.h"
 #import "MCLComposeMessagePreviewViewController.h"
 
@@ -25,55 +27,51 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"ComposeMessage" bundle:nil];
     MCLComposeMessageViewController *composeThreadVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLComposeMessageViewController"];
     composeThreadVC.bag = self.bag;
-    composeThreadVC.boardId = board.boardId;
-    composeThreadVC.type = kMCLComposeTypeThread;
+    composeThreadVC.message = [MCLMessage messageNewWithBoard:board];
 
-    MCLModalNavigationController *navigationVC = [[MCLModalNavigationController alloc] initWithRootViewController:composeThreadVC];
-    [self.masterNavigationController presentViewController:navigationVC animated:YES completion:nil];
+    self.modalNavigationController = [[MCLModalNavigationController alloc] initWithRootViewController:composeThreadVC];
+    [self.masterNavigationController presentViewController:self.modalNavigationController animated:YES completion:nil];
 
     return composeThreadVC;
 }
 
 - (MCLComposeMessageViewController *)modalToComposeReplyToMessage:(MCLMessage *)message
 {
+    message.type = kMCLComposeTypeReply;
+
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"ComposeMessage" bundle:nil];
     MCLComposeMessageViewController *replyToMessageVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLComposeMessageViewController"];
     replyToMessageVC.bag = self.bag;
-    replyToMessageVC.messageId = message.messageId;
-    replyToMessageVC.threadId = message.thread.threadId;
-    replyToMessageVC.boardId = message.board.boardId;
-    replyToMessageVC.type = kMCLComposeTypeReply;
 
     NSString *subject = message.subject;
     NSString *subjectReplyPrefix = @"Re:";
     if ([subject length] < 3 || ![[subject substringToIndex:3] isEqualToString:subjectReplyPrefix]) {
         subject = [subjectReplyPrefix stringByAppendingString:subject];
     }
-    replyToMessageVC.subject = subject;
+    message.subject = subject;
 
-    MCLModalNavigationController *navigationVC = [[MCLModalNavigationController alloc] initWithRootViewController:replyToMessageVC];
-    [self.masterNavigationController presentViewController:navigationVC animated:YES completion:nil];
+    replyToMessageVC.message = message;
+
+    self.modalNavigationController = [[MCLModalNavigationController alloc] initWithRootViewController:replyToMessageVC];
+    [self.masterNavigationController presentViewController:self.modalNavigationController animated:YES completion:nil];
 
     return replyToMessageVC;
 }
 
 - (MCLComposeMessageViewController *)modalToEditMessage:(MCLMessage *)message
 {
+    message.type = kMCLComposeTypeEdit;
+
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"ComposeMessage" bundle:nil];
     MCLComposeMessageViewController *editMessageVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLComposeMessageViewController"];
     editMessageVC.bag = self.bag;
-    editMessageVC.messageId = message.messageId;
-    editMessageVC.threadId = message.thread.threadId;
-    editMessageVC.boardId = message.board.boardId;
-    editMessageVC.type = kMCLComposeTypeEdit;
-    editMessageVC.subject = message.subject;
-    editMessageVC.text = message.text;
-    MCLModalNavigationController *navigationVC = [[MCLModalNavigationController alloc] initWithRootViewController:editMessageVC];
+    editMessageVC.message = message;
+    self.modalNavigationController = [[MCLModalNavigationController alloc] initWithRootViewController:editMessageVC];
 
     MCLEditTextRequest *request = [[MCLEditTextRequest alloc] initWithClient:self.bag.httpClient message:message];
     [request loadWithCompletionHandler:^(NSError *error, NSArray *data) {
-        editMessageVC.text = [[data firstObject] objectForKey:@"editText"];
-        [self.masterNavigationController presentViewController:navigationVC animated:YES completion:nil];
+        editMessageVC.message.text = [[data firstObject] objectForKey:@"editText"];
+        [self.masterNavigationController presentViewController:self.modalNavigationController animated:YES completion:nil];
     }];
 
     return editMessageVC;
@@ -81,9 +79,19 @@
 
 - (MCLComposeMessagePreviewViewController *)pushToPreviewForMessage:(MCLMessage *)message
 {
-//    MCLComposeMessagePreviewViewController
+    MCLPreviewMessageRequest *previewMessageRequest = [[MCLPreviewMessageRequest alloc] initWithClient:self.bag.httpClient message:message];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"ComposeMessage" bundle:nil];
+    MCLComposeMessagePreviewViewController *previewMessageVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLComposeMessagePreviewViewController"];
+    previewMessageVC.bag = self.bag;
+    previewMessageVC.message = message;
 
-    return nil;
+    MCLLoadingViewController *loadingVC = [[MCLLoadingViewController alloc] initWithBag:self.bag
+                                                                                request:previewMessageRequest
+                                                                  contentViewController:previewMessageVC];
+
+    [self.modalNavigationController pushViewController:loadingVC animated:YES];
+
+    return previewMessageVC;
 }
 
 @end

@@ -13,7 +13,4 @@
 @required
 - (void)message:(MCLMessage *)message sentWithType:(NSUInteger)type;
 
-@optional
-- (void)handleRotationChangeInBackground;
-
 @end

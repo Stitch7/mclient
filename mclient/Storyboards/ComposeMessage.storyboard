@@ -85,12 +85,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="dww-sR-PAV"/>
                     <connections>
-                        <outlet property="composeSeparatorView" destination="dBr-j7-Faf" id="urN-Sk-44m"/>
-                        <outlet property="composeSubjectLabel" destination="lLE-ZD-y7f" id="uXP-u4-1CS"/>
-                        <outlet property="composeSubjectTextField" destination="eMi-aQ-oh8" id="5tJ-fv-eKd"/>
-                        <outlet property="composeTextTextField" destination="gpF-EP-97R" id="mAC-sh-G0e"/>
+                        <outlet property="separatorView" destination="dBr-j7-Faf" id="ydW-eY-fUg"/>
                         <outlet property="separatorViewHeight" destination="WRK-Je-DjQ" id="2nW-tE-yNh"/>
-                        <segue destination="wXy-Kt-Ipn" kind="show" identifier="PushToPreview" id="dZu-ye-Pyz"/>
+                        <outlet property="subjectLabel" destination="lLE-ZD-y7f" id="Nmn-xp-xVj"/>
+                        <outlet property="subjectTextField" destination="eMi-aQ-oh8" id="ISO-s4-rzK"/>
+                        <outlet property="textView" destination="gpF-EP-97R" id="uRI-zF-bfM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6K2-HO-C7z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -109,32 +108,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XXw-o4-j4w">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="544"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <dataDetectorType key="dataDetectorTypes"/>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="haV-0s-Sgf">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wqL-PI-oLz">
-                                <rect key="frame" x="699" y="552" width="51" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                            </switch>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enable email notification" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQc-DV-FB0">
-                                <rect key="frame" x="449" y="557" width="55" height="21"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="haV-0s-Sgf" firstAttribute="top" secondItem="x9Y-cm-sJf" secondAttribute="bottom" id="IL9-SG-4wm"/>
+                            <constraint firstItem="qTl-St-egc" firstAttribute="top" secondItem="haV-0s-Sgf" secondAttribute="bottom" id="Itr-Nm-rea"/>
+                            <constraint firstItem="haV-0s-Sgf" firstAttribute="leading" secondItem="luz-ny-D3s" secondAttribute="leading" id="Xb5-3G-zZb"/>
+                            <constraint firstAttribute="trailing" secondItem="haV-0s-Sgf" secondAttribute="trailing" id="c7g-kK-FlO"/>
+                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="Title" id="jqH-N6-o7q"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="notificationSwitch" destination="wqL-PI-oLz" id="Zpy-Jb-bBh"/>
-                        <outlet property="notificationSwitchLabel" destination="cQc-DV-FB0" id="Xb7-2P-4fj"/>
-                        <outlet property="webView" destination="XXw-o4-j4w" id="WlQ-MU-HAA"/>
+                        <outlet property="webView" destination="haV-0s-Sgf" id="Kv7-zb-WXY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0XO-gT-JAS" userLabel="First Responder" sceneMemberID="firstResponder"/>

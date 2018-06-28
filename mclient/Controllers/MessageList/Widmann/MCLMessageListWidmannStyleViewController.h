@@ -12,6 +12,6 @@
 #import "MCLMessageListWidmannStyleTableViewCell.h"
 #import "MCLProfileTableViewController.h"
 
-@interface MCLMessageListWidmannStyleViewController : MCLMessageListViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, WKNavigationDelegate, MCLMessageListWidmannStyleTableViewCellDelegate, MCLProfileTableViewControllerDelegate>
+@interface MCLMessageListWidmannStyleViewController : MCLMessageListViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, WKNavigationDelegate, MCLMessageListWidmannStyleTableViewCellDelegate>
 
 @end

@@ -30,6 +30,8 @@
 @property (nonatomic, assign, getter=lastMessageIsRead) BOOL lastMessageRead;
 @property (strong) NSDate *lastMessageDate;
 
++ (MCLThread *)threadWithId:(NSNumber *)inThreadId;
+
 + (MCLThread *)threadWithId:(NSNumber *)inThreadId
                     subject:(NSString *)inSubject;
 

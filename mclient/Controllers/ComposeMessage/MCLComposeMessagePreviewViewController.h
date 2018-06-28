@@ -6,8 +6,17 @@
 //  See LICENSE file in the project root for full license information.
 //
 
-#import "MCLComposeMessageViewController.h"
+#import "MCLLoadingViewControllerDelegate.h"
 
-@interface MCLComposeMessagePreviewViewController : MCLComposeMessageViewController <UIWebViewDelegate>
+@protocol MCLDependencyBag;
+@protocol MCLComposeMessageViewControllerDelegate;
+
+@class MCLMessage;
+
+@interface MCLComposeMessagePreviewViewController : UIViewController <UIWebViewDelegate, MCLLoadingViewControllerDelegate>
+
+@property (strong, nonatomic) id <MCLDependencyBag> bag;
+@property (weak) id<MCLComposeMessageViewControllerDelegate> delegate;
+@property (strong, nonatomic) MCLMessage *message;
 
 @end

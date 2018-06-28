@@ -15,7 +15,7 @@
 
 @class MCLMessageToolbar;
 
-@interface MCLMessageListFrameStyleViewController : MCLMessageListViewController <MCLProfileTableViewControllerDelegate, MCLComposeMessageViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, WKNavigationDelegate, AVSpeechSynthesizerDelegate>
+@interface MCLMessageListFrameStyleViewController : MCLMessageListViewController <UITableViewDelegate, UITableViewDataSource, WKNavigationDelegate, AVSpeechSynthesizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *topFrame;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topFrameHeightConstraint;

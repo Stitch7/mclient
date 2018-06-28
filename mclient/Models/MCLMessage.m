@@ -38,6 +38,36 @@
     return message;
 }
 
++ (MCLMessage *)messagePreviewWithType:(NSUInteger)type
+                             messageId:(NSNumber *)inMessageId
+                               boardId:(NSNumber *)inBoardId
+                              threadId:(NSNumber *)inThreadId
+                               subject:(NSString *)inSubject
+                                  text:(NSString *)inText
+{
+    MCLMessage *message = [[MCLMessage alloc] init];
+    message.type = type;
+    message.messageId = inMessageId;
+    message.board = [MCLBoard boardWithId:inBoardId];
+    message.thread = [MCLThread threadWithId:inThreadId];
+    message.thread.boardId = inBoardId;
+    message.thread.board = message.board;
+    message.boardId = inBoardId;
+    message.subject = inSubject;
+    message.text = inText;
+
+    return message;
+}
+
++ (MCLMessage *)messageNewWithBoard:(MCLBoard *)board
+{
+    MCLMessage *message = [[MCLMessage alloc] init];
+    message.boardId = board.boardId;
+    message.board = board;
+
+    return message;
+}
+
 + (MCLMessage *)messageFromResponse:(MCLResponse *)response
 {
     MCLMessage *message = [[MCLMessage alloc] init];
