@@ -235,7 +235,12 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
 - (void)indentView:(NSLayoutConstraint *)indentionConstraint withLevel:(NSNumber *)level
 {
     int indention = 15;
-    indentionConstraint.constant = 0 + (indention * [level integerValue]);
+
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    CGFloat maxWidth = screenWidth - screenWidth * 0.2;
+    CGFloat newVal = 0 + (indention * [level integerValue]);
+
+    indentionConstraint.constant = newVal > maxWidth ? maxWidth : newVal;
 }
 
 - (void)markRead
