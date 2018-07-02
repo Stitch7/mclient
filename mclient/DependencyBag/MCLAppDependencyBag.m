@@ -20,6 +20,8 @@
 #import "MCLThemeManager.h"
 #import "MCLFoundationHTTPClient.h"
 #import "MCLNotificationManager.h"
+#import "MCLLaunchViewController.h"
+#import "MCLBoardListTableViewController.h"
 
 @interface MCLAppDependencyBag () <IMGSessionDelegate>
 
@@ -57,6 +59,7 @@
     self.login = [[MCLLogin alloc] initWithBag:self];
     self.httpClient = [[MCLFoundationHTTPClient alloc] initWithLogin:self.login];
     self.router = [[MCLRouter alloc] initWithBag:self];
+    self.router.delegate = [[MCLAppRouterDelegate alloc] initWithBag:self];
     self.settings = [[MCLSettings alloc] initWithUserDefaults:[NSUserDefaults standardUserDefaults]];
     self.notificationManager = [[MCLNotificationManager alloc] initWithBag:self];
     self.themeManager = [[MCLThemeManager alloc] initWithSettings:self.settings];
@@ -82,9 +85,20 @@
 
 #pragma mark - Public
 
-- (UIWindow *)makeRootWindow
+- (void)launchRootWindow:(void (^)(UIWindow *window))windowHandler
 {
-    return [self.router makeRootWindowWithDelegate:[[MCLAppRouterDelegate alloc] initWithBag:self]];
+    UIWindow *rootWindow = [self.router makeRootWindow];
+    MCLBoardListTableViewController *boardsListVC = (MCLBoardListTableViewController *)self.router.masterViewController.childViewControllers.firstObject;
+
+    UIWindow *launchWindow = [self.router makeLaunchWindow];
+    windowHandler(launchWindow);
+
+    [self.login testLoginWithCompletionHandler:^(NSError *error, BOOL success) {
+        [boardsListVC updateVerifyLoginViewWithSuccess:success];
+
+        [self.router replaceRootWindow:rootWindow];
+        windowHandler(rootWindow);
+    }];
 }
 
 @end

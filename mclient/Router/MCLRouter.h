@@ -25,6 +25,9 @@
 @property (strong, nonatomic) UIViewController *detailViewController;
 
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
-- (UIWindow *)makeRootWindowWithDelegate:(id<MCLRouterDelegate>)delegate;
+
+- (UIWindow *)makeLaunchWindow;
+- (UIWindow *)makeRootWindow;
+- (void)replaceRootWindow:(UIWindow *)newWindow;
 
 @end

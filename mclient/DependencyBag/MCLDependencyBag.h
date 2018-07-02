@@ -24,6 +24,6 @@
 @property (strong, nonatomic) MCLThemeManager *themeManager;
 @property (strong, nonatomic) id <MCLHTTPClient> httpClient;
 
-- (UIWindow *)makeRootWindow;
+- (void)launchRootWindow:(void (^)(UIWindow *window))windowHandler;
 
 @end

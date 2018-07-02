@@ -74,7 +74,6 @@
 		305DD85D19AB300F006514BD /* MCLBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85C19AB300F006514BD /* MCLBoard.m */; };
 		305DD86019AB3031006514BD /* MCLThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD85F19AB3031006514BD /* MCLThread.m */; };
 		305DD86319AB380C006514BD /* MCLMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD86219AB380C006514BD /* MCLMessage.m */; };
-		305DE80D1F2E3C8900EC34AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 305DE80C1F2E3C8900EC34AE /* LaunchScreen.storyboard */; };
 		305DE8101F2E46DD00EC34AE /* MCLMessageToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DE80F1F2E46DD00EC34AE /* MCLMessageToolbar.m */; };
 		305DE8181F2E608200EC34AE /* MCLRouter+mainNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DE8171F2E608200EC34AE /* MCLRouter+mainNavigation.m */; };
 		305DE81B1F2F476500EC34AE /* MCLMessageToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DE81A1F2F476500EC34AE /* MCLMessageToolbarController.m */; };
@@ -193,7 +192,6 @@
 		306FC8791F93A39F001EB7E9 /* features-development.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F861F8D688800766501 /* features-development.plist */; };
 		306FC87A1F93A39F001EB7E9 /* features-store.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F891F8D69D900766501 /* features-store.plist */; };
 		306FC87B1F93A39F001EB7E9 /* features-testing.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F881F8D69D900766501 /* features-testing.plist */; };
-		306FC87D1F93A39F001EB7E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 305DE80C1F2E3C8900EC34AE /* LaunchScreen.storyboard */; };
 		306FC87E1F93A39F001EB7E9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 305DD82019A63517006514BD /* InfoPlist.strings */; };
 		306FC8801F93A39F001EB7E9 /* zelda1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6E1E78A10900C7217F /* zelda1.caf */; };
 		306FC8811F93A39F001EB7E9 /* Responses.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EA21051F0EAD5C0064A0A3 /* Responses.storyboard */; };
@@ -332,7 +330,6 @@
 		3090CB241FA7ED1E0085C9AF /* features-development.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F861F8D688800766501 /* features-development.plist */; };
 		3090CB251FA7ED1E0085C9AF /* features-store.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F891F8D69D900766501 /* features-store.plist */; };
 		3090CB261FA7ED1E0085C9AF /* features-testing.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F881F8D69D900766501 /* features-testing.plist */; };
-		3090CB271FA7ED1E0085C9AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 305DE80C1F2E3C8900EC34AE /* LaunchScreen.storyboard */; };
 		3090CB281FA7ED1E0085C9AF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 305DD82019A63517006514BD /* InfoPlist.strings */; };
 		3090CB291FA7ED1E0085C9AF /* zelda1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6E1E78A10900C7217F /* zelda1.caf */; };
 		3090CB2A1FA7ED1E0085C9AF /* Responses.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EA21051F0EAD5C0064A0A3 /* Responses.storyboard */; };
@@ -440,7 +437,6 @@
 		3090CBA11FA89A5C0085C9AF /* features-development.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F861F8D688800766501 /* features-development.plist */; };
 		3090CBA21FA89A5C0085C9AF /* features-store.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F891F8D69D900766501 /* features-store.plist */; };
 		3090CBA31FA89A5C0085C9AF /* features-testing.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F881F8D69D900766501 /* features-testing.plist */; };
-		3090CBA41FA89A5C0085C9AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 305DE80C1F2E3C8900EC34AE /* LaunchScreen.storyboard */; };
 		3090CBA51FA89A5C0085C9AF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 305DD82019A63517006514BD /* InfoPlist.strings */; };
 		3090CBA61FA89A5C0085C9AF /* zelda1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6E1E78A10900C7217F /* zelda1.caf */; };
 		3090CBA71FA89A5C0085C9AF /* Responses.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EA21051F0EAD5C0064A0A3 /* Responses.storyboard */; };
@@ -473,6 +469,18 @@
 		30B893181F7820EF00E584FA /* MCLFavoriteThreadToggleRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B893171F7820EF00E584FA /* MCLFavoriteThreadToggleRequest.m */; };
 		30BD475F1E956D9000DBB27B /* MCLLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 30BD475E1E956D9000DBB27B /* MCLLogin.m */; };
 		30BD47621E97097300DBB27B /* UIViewController+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 30BD47611E97097300DBB27B /* UIViewController+Additions.m */; };
+		30C04CDD20EA49F700A1D92F /* MCLComposeMessageToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C04CDC20EA49F700A1D92F /* MCLComposeMessageToolbarController.m */; };
+		30C04CDE20EA49F700A1D92F /* MCLComposeMessageToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C04CDC20EA49F700A1D92F /* MCLComposeMessageToolbarController.m */; };
+		30C04CDF20EA49F700A1D92F /* MCLComposeMessageToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C04CDC20EA49F700A1D92F /* MCLComposeMessageToolbarController.m */; };
+		30C04CE020EA49F700A1D92F /* MCLComposeMessageToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C04CDC20EA49F700A1D92F /* MCLComposeMessageToolbarController.m */; };
+		30C0871520E50A5A00503CE5 /* MCLLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C0871420E50A5A00503CE5 /* MCLLaunchViewController.m */; };
+		30C0871620E50A5B00503CE5 /* MCLLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C0871420E50A5A00503CE5 /* MCLLaunchViewController.m */; };
+		30C0871720E50A5B00503CE5 /* MCLLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C0871420E50A5A00503CE5 /* MCLLaunchViewController.m */; };
+		30C0871820E50A5B00503CE5 /* MCLLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C0871420E50A5A00503CE5 /* MCLLaunchViewController.m */; };
+		30C0871A20E50C3000503CE5 /* LaunchScreenActive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30C0871920E50C3000503CE5 /* LaunchScreenActive.storyboard */; };
+		30C0871B20E50C3000503CE5 /* LaunchScreenActive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30C0871920E50C3000503CE5 /* LaunchScreenActive.storyboard */; };
+		30C0871C20E50C3000503CE5 /* LaunchScreenActive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30C0871920E50C3000503CE5 /* LaunchScreenActive.storyboard */; };
+		30C0871D20E50C3000503CE5 /* LaunchScreenActive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30C0871920E50C3000503CE5 /* LaunchScreenActive.storyboard */; };
 		30C813821FBA2A5D0044A656 /* MCLSettings+Keys.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C813811FBA2A5D0044A656 /* MCLSettings+Keys.m */; };
 		30C813831FBA6AE80044A656 /* MCLSettings+Keys.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C813811FBA2A5D0044A656 /* MCLSettings+Keys.m */; };
 		30C813841FBA6AE90044A656 /* MCLSettings+Keys.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C813811FBA2A5D0044A656 /* MCLSettings+Keys.m */; };
@@ -662,7 +670,6 @@
 		305DD85F19AB3031006514BD /* MCLThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLThread.m; sourceTree = "<group>"; };
 		305DD86119AB380C006514BD /* MCLMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessage.h; sourceTree = "<group>"; };
 		305DD86219AB380C006514BD /* MCLMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessage.m; sourceTree = "<group>"; };
-		305DE80C1F2E3C8900EC34AE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		305DE80E1F2E46DD00EC34AE /* MCLMessageToolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMessageToolbar.h; sourceTree = "<group>"; };
 		305DE80F1F2E46DD00EC34AE /* MCLMessageToolbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLMessageToolbar.m; sourceTree = "<group>"; };
 		305DE8131F2E510D00EC34AE /* MCLMessageToolbarDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMessageToolbarDelegate.h; sourceTree = "<group>"; };
@@ -762,6 +769,11 @@
 		30BD475E1E956D9000DBB27B /* MCLLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLLogin.m; sourceTree = "<group>"; };
 		30BD47601E97097300DBB27B /* UIViewController+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Additions.h"; sourceTree = "<group>"; };
 		30BD47611E97097300DBB27B /* UIViewController+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Additions.m"; sourceTree = "<group>"; };
+		30C04CDB20EA49F700A1D92F /* MCLComposeMessageToolbarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessageToolbarController.h; sourceTree = "<group>"; };
+		30C04CDC20EA49F700A1D92F /* MCLComposeMessageToolbarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLComposeMessageToolbarController.m; sourceTree = "<group>"; };
+		30C0871320E50A5A00503CE5 /* MCLLaunchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLLaunchViewController.h; sourceTree = "<group>"; };
+		30C0871420E50A5A00503CE5 /* MCLLaunchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLLaunchViewController.m; sourceTree = "<group>"; };
+		30C0871920E50C3000503CE5 /* LaunchScreenActive.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreenActive.storyboard; sourceTree = "<group>"; };
 		30C813801FBA2A5D0044A656 /* MCLSettings+Keys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MCLSettings+Keys.h"; sourceTree = "<group>"; };
 		30C813811FBA2A5D0044A656 /* MCLSettings+Keys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MCLSettings+Keys.m"; sourceTree = "<group>"; };
 		30C9B529205AAB8600FD3C31 /* MCLNoDataView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLNoDataView.h; sourceTree = "<group>"; };
@@ -1221,6 +1233,7 @@
 				30D6643C1F266F4800E72025 /* ComposeMessage */,
 				30D2CD9B1F63E8A300FF35EB /* Detail */,
 				30D664401F266F7A00E72025 /* Killfile */,
+				30C0871E20E514FA00503CE5 /* Launch */,
 				30E217691F268D9A0030FC9A /* Loading */,
 				304164E71F2E28AB00198683 /* SplitView */,
 				30D6643B1F266F3400E72025 /* MessageList */,
@@ -1327,7 +1340,7 @@
 			isa = PBXGroup;
 			children = (
 				30EAE21B1F1C1E400035DFC9 /* ComposeMessage.storyboard */,
-				305DE80C1F2E3C8900EC34AE /* LaunchScreen.storyboard */,
+				30C0871920E50C3000503CE5 /* LaunchScreenActive.storyboard */,
 				30EA21031F0EAD210064A0A3 /* Profile.storyboard */,
 				30EA21051F0EAD5C0064A0A3 /* Responses.storyboard */,
 				30849D221E2BABBD00626331 /* Settings.storyboard */,
@@ -1445,6 +1458,15 @@
 			path = Logo;
 			sourceTree = "<group>";
 		};
+		30C0871E20E514FA00503CE5 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				30C0871320E50A5A00503CE5 /* MCLLaunchViewController.h */,
+				30C0871420E50A5A00503CE5 /* MCLLaunchViewController.m */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
 		30C8137F1FBA2A310044A656 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -1498,6 +1520,8 @@
 			children = (
 				30A9D5E519D4CFFF00070268 /* MCLComposeMessagePreviewViewController.h */,
 				30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */,
+				30C04CDB20EA49F700A1D92F /* MCLComposeMessageToolbarController.h */,
+				30C04CDC20EA49F700A1D92F /* MCLComposeMessageToolbarController.m */,
 				30E8B89719B3CBF40067DD1F /* MCLComposeMessageViewController.h */,
 				30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */,
 				3057B8AC1FAE0EEE0046C427 /* MCLComposeMessageViewControllerDelegate.h */,
@@ -1812,10 +1836,10 @@
 				3012032E1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
 				3020FB701E78BB4400C7217F /* zelda2.caf in Resources */,
 				30EA21041F0EAD210064A0A3 /* Profile.storyboard in Resources */,
+				30C0871B20E50C3000503CE5 /* LaunchScreenActive.storyboard in Resources */,
 				30DB7F871F8D688800766501 /* features-development.plist in Resources */,
 				30DB7F8A1F8D6A0E00766501 /* features-store.plist in Resources */,
 				30DB7F8B1F8D6A0E00766501 /* features-testing.plist in Resources */,
-				305DE80D1F2E3C8900EC34AE /* LaunchScreen.storyboard in Resources */,
 				305DD82219A63517006514BD /* InfoPlist.strings in Resources */,
 				3020FB711E78BB4400C7217F /* zelda1.caf in Resources */,
 				30EA21061F0EAD5C0064A0A3 /* Responses.storyboard in Resources */,
@@ -1846,10 +1870,10 @@
 				306FC8761F93A39F001EB7E9 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
 				306FC8771F93A39F001EB7E9 /* zelda2.caf in Resources */,
 				306FC8781F93A39F001EB7E9 /* Profile.storyboard in Resources */,
+				30C0871A20E50C3000503CE5 /* LaunchScreenActive.storyboard in Resources */,
 				306FC8791F93A39F001EB7E9 /* features-development.plist in Resources */,
 				306FC87A1F93A39F001EB7E9 /* features-store.plist in Resources */,
 				306FC87B1F93A39F001EB7E9 /* features-testing.plist in Resources */,
-				306FC87D1F93A39F001EB7E9 /* LaunchScreen.storyboard in Resources */,
 				306FC87E1F93A39F001EB7E9 /* InfoPlist.strings in Resources */,
 				306FC8801F93A39F001EB7E9 /* zelda1.caf in Resources */,
 				306FC8811F93A39F001EB7E9 /* Responses.storyboard in Resources */,
@@ -1872,10 +1896,10 @@
 				3090CB211FA7ED1E0085C9AF /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
 				3090CB221FA7ED1E0085C9AF /* zelda2.caf in Resources */,
 				3090CB231FA7ED1E0085C9AF /* Profile.storyboard in Resources */,
+				30C0871D20E50C3000503CE5 /* LaunchScreenActive.storyboard in Resources */,
 				3090CB241FA7ED1E0085C9AF /* features-development.plist in Resources */,
 				3090CB251FA7ED1E0085C9AF /* features-store.plist in Resources */,
 				3090CB261FA7ED1E0085C9AF /* features-testing.plist in Resources */,
-				3090CB271FA7ED1E0085C9AF /* LaunchScreen.storyboard in Resources */,
 				3090CB281FA7ED1E0085C9AF /* InfoPlist.strings in Resources */,
 				3090CB291FA7ED1E0085C9AF /* zelda1.caf in Resources */,
 				3090CB2A1FA7ED1E0085C9AF /* Responses.storyboard in Resources */,
@@ -1898,10 +1922,10 @@
 				3090CB9E1FA89A5C0085C9AF /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
 				3090CB9F1FA89A5C0085C9AF /* zelda2.caf in Resources */,
 				3090CBA01FA89A5C0085C9AF /* Profile.storyboard in Resources */,
+				30C0871C20E50C3000503CE5 /* LaunchScreenActive.storyboard in Resources */,
 				3090CBA11FA89A5C0085C9AF /* features-development.plist in Resources */,
 				3090CBA21FA89A5C0085C9AF /* features-store.plist in Resources */,
 				3090CBA31FA89A5C0085C9AF /* features-testing.plist in Resources */,
-				3090CBA41FA89A5C0085C9AF /* LaunchScreen.storyboard in Resources */,
 				3090CBA51FA89A5C0085C9AF /* InfoPlist.strings in Resources */,
 				3090CBA61FA89A5C0085C9AF /* zelda1.caf in Resources */,
 				3090CBA71FA89A5C0085C9AF /* Responses.storyboard in Resources */,
@@ -2181,6 +2205,7 @@
 			files = (
 				301203311E031D7500B06FF6 /* MCLBadgeView.m in Sources */,
 				305208941F4303D700D3178C /* MCLModalTransitionAnimator.m in Sources */,
+				30C0871620E50A5B00503CE5 /* MCLLaunchViewController.m in Sources */,
 				3070D32D207A6BBA00F42BFF /* MCLLicenseViewController.m in Sources */,
 				305DD86019AB3031006514BD /* MCLThread.m in Sources */,
 				30849D1F1E2B8CB500626331 /* UIColor+Hex.m in Sources */,
@@ -2199,6 +2224,7 @@
 				30D82AF31E2A42F700898963 /* MCLSettingsFontSizeViewController.m in Sources */,
 				302D19EF1F2E22B800E2FC2B /* MCLRouter+composeMessage.m in Sources */,
 				30DD817D1FB7B3DC007BF235 /* MCLMarkUnreadResponsesAsReadRequest.m in Sources */,
+				30C04CDE20EA49F700A1D92F /* MCLComposeMessageToolbarController.m in Sources */,
 				305DD82419A63517006514BD /* main.m in Sources */,
 				3036F59B1E266B3800ABC2CE /* MCLNightTheme.m in Sources */,
 				301FD9A619C411D400E36A5B /* MCLErrorView.m in Sources */,
@@ -2298,6 +2324,7 @@
 			files = (
 				306FC8111F93A39F001EB7E9 /* MCLBadgeView.m in Sources */,
 				3090CBB61FA8B4DE0085C9AF /* MCLBoardsListLoadingViewController.m in Sources */,
+				30C0871520E50A5A00503CE5 /* MCLLaunchViewController.m in Sources */,
 				3070D32C207A6BBA00F42BFF /* MCLLicenseViewController.m in Sources */,
 				306FC8121F93A39F001EB7E9 /* MCLModalTransitionAnimator.m in Sources */,
 				306FC8131F93A39F001EB7E9 /* MCLThread.m in Sources */,
@@ -2316,6 +2343,7 @@
 				3057B8AF1FAE175B0046C427 /* MCLFeatures+Names.m in Sources */,
 				306FC81E1F93A39F001EB7E9 /* MCLMessageResponsesRequest.m in Sources */,
 				306FC81F1F93A39F001EB7E9 /* MCLMessage.m in Sources */,
+				30C04CDD20EA49F700A1D92F /* MCLComposeMessageToolbarController.m in Sources */,
 				30104AFC1FA4E8980053CECE /* MCLDetailNavigationController.m in Sources */,
 				306FC8201F93A39F001EB7E9 /* MCLSettingsFontSizeViewController.m in Sources */,
 				306FC8211F93A39F001EB7E9 /* MCLRouter+composeMessage.m in Sources */,
@@ -2407,6 +2435,7 @@
 			files = (
 				3090CABD1FA7ED1E0085C9AF /* MCLBadgeView.m in Sources */,
 				3090CABE1FA7ED1E0085C9AF /* MCLModalTransitionAnimator.m in Sources */,
+				30C0871820E50A5B00503CE5 /* MCLLaunchViewController.m in Sources */,
 				3070D32F207A6BBA00F42BFF /* MCLLicenseViewController.m in Sources */,
 				3090CABF1FA7ED1E0085C9AF /* MCLThread.m in Sources */,
 				3090CAC01FA7ED1E0085C9AF /* UIColor+Hex.m in Sources */,
@@ -2425,6 +2454,7 @@
 				3090CACC1FA7ED1E0085C9AF /* MCLSettingsFontSizeViewController.m in Sources */,
 				3090CACD1FA7ED1E0085C9AF /* MCLRouter+composeMessage.m in Sources */,
 				30DD817F1FB7B3DD007BF235 /* MCLMarkUnreadResponsesAsReadRequest.m in Sources */,
+				30C04CE020EA49F700A1D92F /* MCLComposeMessageToolbarController.m in Sources */,
 				3090CACE1FA7ED1E0085C9AF /* main.m in Sources */,
 				3090CACF1FA7ED1E0085C9AF /* MCLNightTheme.m in Sources */,
 				3090CAD01FA7ED1E0085C9AF /* MCLErrorView.m in Sources */,
@@ -2516,6 +2546,7 @@
 			files = (
 				3090CB3A1FA89A5C0085C9AF /* MCLBadgeView.m in Sources */,
 				3090CB3B1FA89A5C0085C9AF /* MCLModalTransitionAnimator.m in Sources */,
+				30C0871720E50A5B00503CE5 /* MCLLaunchViewController.m in Sources */,
 				3070D32E207A6BBA00F42BFF /* MCLLicenseViewController.m in Sources */,
 				3090CB3C1FA89A5C0085C9AF /* MCLThread.m in Sources */,
 				3090CB3D1FA89A5C0085C9AF /* UIColor+Hex.m in Sources */,
@@ -2534,6 +2565,7 @@
 				3090CB491FA89A5C0085C9AF /* MCLSettingsFontSizeViewController.m in Sources */,
 				3090CB4A1FA89A5C0085C9AF /* MCLRouter+composeMessage.m in Sources */,
 				30DD817E1FB7B3DD007BF235 /* MCLMarkUnreadResponsesAsReadRequest.m in Sources */,
+				30C04CDF20EA49F700A1D92F /* MCLComposeMessageToolbarController.m in Sources */,
 				3090CB4B1FA89A5C0085C9AF /* main.m in Sources */,
 				3090CB4C1FA89A5C0085C9AF /* MCLNightTheme.m in Sources */,
 				3090CB4D1FA89A5C0085C9AF /* MCLErrorView.m in Sources */,

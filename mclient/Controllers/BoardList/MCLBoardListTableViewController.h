@@ -23,4 +23,6 @@ typedef NS_ENUM(NSInteger, MCLBoardListSection) {
 
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
 
+- (void)updateVerifyLoginViewWithSuccess:(BOOL)success;
+
 @end

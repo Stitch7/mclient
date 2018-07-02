@@ -13,10 +13,13 @@
 #import "MCLLogin.h"
 #import "MCLThemeManager.h"
 #import "MCLSplitViewController.h"
+#import "MCLLaunchViewController.h"
 #import "MCLDetailNavigationController.h"
 
 
 @interface MCLRouter () <UISplitViewControllerDelegate>
+
+@property (assign, nonatomic) BOOL alreadyConfigured;
 
 @end
 
@@ -29,6 +32,7 @@
     self = [super init];
     if (!self) return nil;
 
+    self.alreadyConfigured = NO;
     self.bag = bag;
 
     return self;
@@ -36,8 +40,18 @@
 
 #pragma mark - Configuration
 
+- (void)configureIfNecessary
+{
+    if (!self.alreadyConfigured) {
+        [self configure];
+        self.alreadyConfigured = YES;
+    }
+}
+
 - (void)configure
 {
+    assert(self.delegate != nil);
+    
     self.splitViewViewController = [[MCLSplitViewController alloc] initWithBag:self.bag];
     self.masterViewController = [self.delegate createMasterViewControllerForRouter:self];
     self.masterNavigationController = [[UINavigationController alloc] initWithRootViewController:self.masterViewController];
@@ -55,7 +69,6 @@
         self.splitViewViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
     }
 }
-
 
 #pragma mark - UISplitViewControllerDelegate
 
@@ -79,19 +92,56 @@
     return [self.delegate handleSplitViewSeparatingForRouter:self];
 }
 
-#pragma mark - Public Methods
+#pragma mark - Private Helper
 
-- (UIWindow *)makeRootWindowWithDelegate:(id<MCLRouterDelegate>)delegate
+- (UIWindow *)makeWindowWithViewController:(UIViewController *)rootViewController
 {
-    self.delegate = delegate;
-    [self configure];
     UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    window.rootViewController = self.splitViewViewController;
+    window.rootViewController = rootViewController;
     [window makeKeyAndVisible];
 
     self.rootWindow = window;
 
     return window;
+}
+
+#pragma mark - Public Methods
+
+- (UIWindow *)makeLaunchWindow
+{
+    [self configureIfNecessary];
+
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"LaunchScreenActive" bundle:nil];
+    MCLLaunchViewController *launchVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLLaunchViewController"];
+
+    return [self makeWindowWithViewController:launchVC];
+}
+
+- (UIWindow *)makeRootWindow
+{
+    [self configureIfNecessary];
+    self.rootWindow = [self makeWindowWithViewController:self.splitViewViewController];
+
+    return self.rootWindow;
+}
+
+- (void)replaceRootWindow:(UIWindow *)newWindow
+{
+    MCLLaunchViewController *launchVC = (MCLLaunchViewController *)self.rootWindow.rootViewController;
+    UIView *toView = newWindow.rootViewController.view;
+    toView.frame = self.rootWindow.bounds;
+    [launchVC.loadingContainerView setHidden:YES];
+    UIView *snapShotView = [self.rootWindow snapshotViewAfterScreenUpdates:YES];
+
+    [newWindow.rootViewController.view addSubview:snapShotView];
+    self.rootWindow = newWindow;
+
+    [UIView animateWithDuration:0.3 animations:^{
+        snapShotView.layer.opacity = 0;
+        snapShotView.layer.transform = CATransform3DMakeScale(1.5, 1.5, 1.5);
+    } completion:^(BOOL finished) {
+        [snapShotView removeFromSuperview];
+    }];
 }
 
 @end

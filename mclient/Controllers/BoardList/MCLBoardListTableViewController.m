@@ -64,20 +64,21 @@
 
 - (void)configureNotifications
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(loginStateDidChanged:)
-                                                 name:MCLLoginStateDidChangeNotification
-                                               object:nil];
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self
+                           selector:@selector(loginStateDidChanged:)
+                               name:MCLLoginStateDidChangeNotification
+                             object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(themeChanged:)
-                                                 name:MCLThemeChangedNotification
-                                               object:nil];
+    [notificationCenter addObserver:self
+                           selector:@selector(themeChanged:)
+                               name:MCLThemeChangedNotification
+                             object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(foundUnreadResponses:)
-                                                 name:MCLUnreadResponsesFoundNotification
-                                               object:nil];
+    [notificationCenter addObserver:self
+                           selector:@selector(foundUnreadResponses:)
+                               name:MCLUnreadResponsesFoundNotification
+                             object:nil];
 }
 
 - (void)dealloc
@@ -250,17 +251,6 @@
             }
         }];
     }
-}
-
-- (void)updateVerifyLoginViewWithSuccess:(BOOL)success
-{
-    if (success) {
-        [self.verifyLoginView loginStatusWithUsername:self.bag.login.username];
-        [[[MCLMessageResponsesRequest alloc] initWithBag:self.bag] loadResponsesWithCompletion:nil];
-    } else {
-        [self.verifyLoginView loginStatusNoLogin];
-    }
-    [self.responsesButtonItem setEnabled:success];
 }
 
 #pragma mark - UITableViewDataSource
@@ -487,5 +477,20 @@
 {
     self.responsesButtonItem.badgeValue = [[[notification userInfo] objectForKey:@"numberOfUnreadResponses"] stringValue];
 }
+
+#pragma mark - Public
+
+- (void)updateVerifyLoginViewWithSuccess:(BOOL)success
+{
+    if (success) {
+        [self.verifyLoginView loginStatusWithUsername:self.bag.login.username];
+        [[[MCLMessageResponsesRequest alloc] initWithBag:self.bag] loadResponsesWithCompletion:nil];
+    } else {
+        [self.verifyLoginView loginStatusNoLogin];
+    }
+    [self.responsesButtonItem setEnabled:success];
+}
+
+
 
 @end

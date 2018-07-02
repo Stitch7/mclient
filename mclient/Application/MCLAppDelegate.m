@@ -25,8 +25,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.bag = [[MCLAppDependencyBag alloc] init];
-    self.window = [self.bag makeRootWindow];
-    [self.bag.login testLoginWithCompletionHandler:nil];
+    [self.bag launchRootWindow:^(UIWindow *window) {
+        self.window = window;
+    }];
 
     return YES;
 }
