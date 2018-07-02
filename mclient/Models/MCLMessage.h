@@ -66,4 +66,6 @@ typedef NS_ENUM(NSUInteger, kMCLComposeType) {
 - (void)updateFromMessageTextJSON:(NSDictionary *)json;
 - (NSString *)messageHtmlWithTopMargin:(int)topMargin theme:(id <MCLTheme>)theme imageSetting:(NSNumber *)imageSetting;
 
+- (NSString *)actionTitle;
+
 @end

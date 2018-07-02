@@ -13,7 +13,9 @@
 @protocol MCLComposeMessageViewControllerDelegate;
 @class MCLMessage;
 
-@interface MCLComposeMessageViewController : UIViewController <MCLMessageTextViewErrorHandler, MCLMessageTextViewToolbarDelegate, UITextFieldDelegate>
+@interface MCLComposeMessageViewController : UIViewController <MCLMessageTextViewErrorHandler, UITextFieldDelegate>
+
+@property (weak, nonatomic) IBOutlet MCLMessageTextView *textView;
 
 @property (strong, nonatomic) id <MCLDependencyBag> bag;
 @property (weak) id<MCLComposeMessageViewControllerDelegate> delegate;

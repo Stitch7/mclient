@@ -227,4 +227,20 @@
             "</html>", fontSize, topMargin, textColor, linkColor, buttonFontSize, html];
 }
 
+- (NSString *)actionTitle
+{
+    switch (self.type) {
+        case kMCLComposeTypeThread:
+            return NSLocalizedString(@"Create Thread", nil);
+
+        case kMCLComposeTypeReply:
+            return NSLocalizedString(@"Reply", nil);
+
+        case kMCLComposeTypeEdit:
+            return NSLocalizedString(@"Edit", nil);
+    }
+
+    return nil;
+}
+
 @end

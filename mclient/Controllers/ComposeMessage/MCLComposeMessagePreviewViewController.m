@@ -101,6 +101,24 @@
     [self.webView loadHTMLString:self.previewText baseURL:nil];
 }
 
+#pragma mark - Helper
+
+- (void)presentError:(NSError *)error witchCompletion:(void (^)(void))completion
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
+                                                                   message:[error localizedDescription]
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
+                                                       style:UIAlertActionStyleCancel
+                                                     handler:^(UIAlertAction * action) {
+                                                         [alert dismissViewControllerAnimated:YES completion:nil];
+                                                     }];
+    [alert addAction:okAction];
+
+    [self presentViewController:alert animated:YES completion:completion];
+}
+
 #pragma mark - Actions
 
 - (void)sendButtonPressed:(id)sender
@@ -110,26 +128,15 @@
     MCLSendMessageRequest *sendRequest = [[MCLSendMessageRequest alloc] initWithClient:self.bag.httpClient message:self.message];
     [sendRequest loadWithCompletionHandler:^(NSError *error, NSArray *data) {
         if (error) {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
-                                                                           message:[error localizedDescription]
-                                                                    preferredStyle:UIAlertControllerStyleAlert];
-
-            UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
-                                                               style:UIAlertActionStyleCancel
-                                                             handler:^(UIAlertAction * action) {
-                                                                 [alert dismissViewControllerAnimated:YES completion:nil];
-                                                             }];
-            [alert addAction:okAction];
-
-            [self presentViewController:alert animated:YES completion:^{
+            [self presentError:error witchCompletion:^{
                 self.sendButton.enabled = YES;
             }];
-
-        } else {
-            [self dismissViewControllerAnimated:YES completion:^{
-                [self.delegate message:self.message sentWithType:self.message.type];
-            }];
+            return;
         }
+
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self.delegate message:self.message sentWithType:self.message.type];
+        }];
     }];
 }
 
