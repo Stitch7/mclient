@@ -9,6 +9,7 @@
 #import "MCLComposeMessagePreviewViewController.h"
 
 #import "Reachability.h"
+#import "UIViewController+Additions.h"
 #import "MCLDependencyBag.h"
 #import "MCLHTTPClient.h"
 #import "MCLSettings.h"
@@ -99,24 +100,6 @@
                                                           theme:[self.bag.themeManager currentTheme]
                                                    imageSetting:imageSetting];
     [self.webView loadHTMLString:self.previewText baseURL:nil];
-}
-
-#pragma mark - Helper
-
-- (void)presentError:(NSError *)error witchCompletion:(void (^)(void))completion
-{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
-                                                                   message:[error localizedDescription]
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
-                                                       style:UIAlertActionStyleCancel
-                                                     handler:^(UIAlertAction * action) {
-                                                         [alert dismissViewControllerAnimated:YES completion:nil];
-                                                     }];
-    [alert addAction:okAction];
-
-    [self presentViewController:alert animated:YES completion:completion];
 }
 
 #pragma mark - Actions

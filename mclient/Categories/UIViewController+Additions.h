@@ -10,5 +10,9 @@
 
 - (void)removeOverlayViews;
 - (BOOL)isModal;
+- (void)presentError:(NSError *)error;
+- (void)presentError:(NSError *)error witchCompletion:(void (^)(void))completion;
+- (void)presentErrorWithMessage:(NSString *)message;
+- (void)presentErrorWithMessage:(NSString *)message witchCompletion:(void (^)(void))completion;
 
 @end

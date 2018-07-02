@@ -13,6 +13,7 @@
 #import "ImgurSession.h"
 #import "MRProgressOverlayView.h"
 
+#import "UIViewController+Additions.h"
 #import "MCLDependencyBag.h"
 #import "MCLComposeMessageViewController.h"
 #import "MCLMessage.h"
@@ -171,15 +172,7 @@
                                                                              message:message];
     [request loadWithCompletionHandler:^(NSError *error, NSArray *data) {
         if (error) {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
-                                                                           message:[error localizedDescription]
-                                                                    preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
-                                                      style:UIAlertActionStyleCancel
-                                                    handler:^(UIAlertAction * action) {
-                                                        [alert dismissViewControllerAnimated:YES completion:nil];
-                                                    }]];
-            [self.parentViewController presentViewController:alert animated:YES completion:nil];
+            [self.parentViewController presentError:error];
         } else {
             NSString *quoteString = [[data firstObject] objectForKey:@"quote"];
             NSArray *rawQuoteBlocks = [quoteString componentsSeparatedByString:@"\n"];
@@ -267,19 +260,8 @@
                                  failure:^(NSURLSessionDataTask *task, NSError *error) {
                                      [self dissmissProgressViewWithSuccess:YES completionHandler:^{
                                          NSLog(@"Imgur upload error: %@", error);
-                                         UIAlertController *alert = [UIAlertController
-                                                                     alertControllerWithTitle:NSLocalizedString(@"image_upload_error", nil)
-                                                                     message:error.localizedDescription
-                                                                     preferredStyle:UIAlertControllerStyleAlert];
-
-                                         UIAlertAction *yesButton = [UIAlertAction
-                                                                     actionWithTitle:NSLocalizedString(@"OK", nil)
-                                                                     style:UIAlertActionStyleDefault
-                                                                     handler:nil];
-                                         [alert addAction:yesButton];
-
                                          [self.parentViewController.view endEditing:YES];
-                                         [self.parentViewController presentViewController:alert animated:YES completion:nil];
+                                         [self.parentViewController presentError:error];
                                      }];
                                  }];
     self.imagePickerController = nil;

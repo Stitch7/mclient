@@ -8,6 +8,7 @@
 
 #import "MCLComposeMessageViewController.h"
 
+#import "UIViewController+Additions.h"
 #import "MCLDependencyBag.h"
 #import "MCLRouter+composeMessage.h"
 #import "MCLSettings.h"
@@ -177,34 +178,12 @@
 
 - (void)invalidURLPasted
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
-                                                                   message:NSLocalizedString(@"Selected text is not a valid URL", nil)
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
-                                                       style:UIAlertActionStyleDefault
-                                                     handler:^(UIAlertAction * action) {
-                                                         [alert dismissViewControllerAnimated:YES completion:nil];
-                                                     }];
-    [alert addAction:okAction];
-
-    [self presentViewController:alert animated:YES completion:nil];
+    [self presentErrorWithMessage:NSLocalizedString(@"Selected text is not a valid URL", nil)];
 }
 
 - (void)invalidImageURLPasted
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
-                                                                   message:NSLocalizedString(@"Selected text is not a valid image URL", nil)
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
-                                                       style:UIAlertActionStyleDefault
-                                                     handler:^(UIAlertAction *action) {
-                                                         [alert dismissViewControllerAnimated:YES completion:nil];
-                                                     }];
-    [alert addAction:okAction];
-
-    [self presentViewController:alert animated:YES completion:nil];
+    [self presentErrorWithMessage:NSLocalizedString(@"Selected text is not a valid image URL", nil)];
 }
 
 #pragma mark - UITextFieldDelegate

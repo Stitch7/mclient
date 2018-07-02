@@ -8,6 +8,7 @@
 
 #import "MCLMessageListWidmannStyleViewController.h"
 
+#import "UIViewController+Additions.h"
 #import "MCLDependencyBag.h"
 #import "MCLSettings.h"
 #import "MCLThemeManager.h"
@@ -243,8 +244,7 @@
             if (error) {
                 [tableView deselectRowAtIndexPath:indexPath animated:NO];
                 [tableView.delegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
-                [self presentAlertWithError:error];
-
+                [self presentError:error];
                 return;
             }
 

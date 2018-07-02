@@ -38,4 +38,34 @@
     return NO;
 }
 
+- (void)presentError:(NSError *)error
+{
+    [self presentError:error witchCompletion:nil];
+}
+
+- (void)presentError:(NSError *)error witchCompletion:(void (^)(void))completion
+{
+    [self presentErrorWithMessage:[error localizedDescription] witchCompletion:completion];
+}
+
+- (void)presentErrorWithMessage:(NSString *)message
+{
+    [self presentErrorWithMessage:message witchCompletion:nil];
+}
+
+- (void)presentErrorWithMessage:(NSString *)message witchCompletion:(void (^)(void))completion;
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
+                                              style:UIAlertActionStyleCancel
+                                            handler:^(UIAlertAction *action) {
+                                                [alert dismissViewControllerAnimated:YES completion:nil];
+                                            }]];
+
+    [self presentViewController:alert animated:YES completion:completion];
+}
+
 @end

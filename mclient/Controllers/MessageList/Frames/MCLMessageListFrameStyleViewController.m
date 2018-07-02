@@ -9,6 +9,7 @@
 #import "MCLMessageListFrameStyleViewController.h"
 
 #import "UIView+addConstraints.h"
+#import "UIViewController+Additions.h"
 #import "MCLDependencyBag.h"
 #import "MCLNotificationManager.h"
 #import "MCLSettings.h"
@@ -261,7 +262,7 @@
         [self removeLoadingScreenOnTopFrame];
 
         if (error) {
-            [self presentAlertWithError:error];
+            [self presentError:error];
             return;
         }
 

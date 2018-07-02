@@ -141,24 +141,6 @@
     }
 }
 
-#pragma mark - Helper
-
-- (void)presentAlertWithError:(NSError *)error
-{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
-                                                                   message:[error localizedDescription]
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
-                                                       style:UIAlertActionStyleDefault
-                                                     handler:^(UIAlertAction * action) {
-                                                         [alert dismissViewControllerAnimated:YES completion:nil];
-                                                     }];
-    [alert addAction:okAction];
-
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
 #pragma mark - Notifications
 
 - (void)themeChanged:(NSNotification *)notification
