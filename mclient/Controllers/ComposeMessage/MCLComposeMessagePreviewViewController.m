@@ -36,6 +36,14 @@
 
 @implementation MCLComposeMessagePreviewViewController
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    id <MCLTheme> currentTheme = self.bag.themeManager.currentTheme;
+    self.view.backgroundColor = [currentTheme backgroundColor];
+}
+
 #pragma mark - MCLLoadingContentViewControllerDelegate
 
 - (void)loadingViewController:(MCLLoadingViewController *)loadingViewController configureNavigationItem:(UINavigationItem *)navigationItem
