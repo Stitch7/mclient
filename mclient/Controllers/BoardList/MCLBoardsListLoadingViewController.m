@@ -17,7 +17,7 @@
 
 #pragma mark - UIViewController life cycle
 
--(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [coordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self updateTitle];
@@ -57,7 +57,6 @@
     }
 
     [self load];
-
 }
 
 @end

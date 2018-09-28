@@ -56,6 +56,7 @@
     self.features = [[MCLFeatures alloc] initWithStage:kFeatureStage];
 
     [self configureCrashReporter];
+
     self.login = [[MCLLogin alloc] initWithBag:self];
     self.httpClient = [[MCLFoundationHTTPClient alloc] initWithLogin:self.login];
     self.router = [[MCLRouter alloc] initWithBag:self];

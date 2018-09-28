@@ -186,7 +186,7 @@
 {
     if (hide) {
         [barButton setEnabled:NO];
-        [barButton setTintColor: [UIColor clearColor]];
+        [barButton setTintColor:[UIColor clearColor]];
     } else {
         [barButton setEnabled:YES];
         [barButton setTintColor:nil];
