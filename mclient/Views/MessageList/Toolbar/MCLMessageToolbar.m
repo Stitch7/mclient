@@ -159,8 +159,10 @@
     }
 
     BOOL hideEditButton =
-        !self.login.valid || self.message.thread.isClosed ||
-        !([self.message.username isEqualToString:self.login.username] && self.nextMessage.level <= self.message.level);
+        self.message.thread.isClosed ||
+        !self.login.valid ||
+        ![self.message.username isEqualToString:self.login.username] ||
+        [self.nextMessage.level compare:self.message.level] == NSOrderedDescending;
     [self hide:hideEditButton barButton:self.editButton];
 
     BOOL hideReplyButton = !self.login.valid || self.message.thread.isClosed;
