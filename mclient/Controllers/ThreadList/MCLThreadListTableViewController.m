@@ -8,6 +8,7 @@
 
 #import "MCLThreadListTableViewController.h"
 
+#import "UISearchBar+getSearchField.h"
 #import "MCLDependencyBag.h"
 #import "MCLFeatures.h"
 #import "MCLRouter+mainNavigation.h"
@@ -118,25 +119,9 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleProminent;
 
     // TODO: Why does UIAppearance not work here?
-    UITextField *searchField = [self searchViewForTextFieldBg:self.searchController.searchBar];
+    UITextField *searchField = [self.searchController.searchBar getSearchField];
     [searchField setBackgroundColor:[self.currentTheme searchFieldBackgroundColor]];
     [searchField setTextColor:[self.currentTheme searchFieldTextColor]];
-}
-
-- (UITextField*)searchViewForTextFieldBg:(UIView*)view
-{
-    if ([view isKindOfClass:[UITextField class]]) {
-        return (UITextField *)view;
-    }
-
-    UITextField *searchTextField;
-    for (UIView *subview in view.subviews) {
-        searchTextField = [self searchViewForTextFieldBg:subview];
-        if (searchTextField) {
-            break;
-        }
-    }
-    return searchTextField;
 }
 
 #pragma mark - MCLLoadingContentViewControllerDelegate
