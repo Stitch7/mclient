@@ -56,6 +56,10 @@
 		305208971F43094D00D3178C /* MCLModalPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305208961F43094D00D3178C /* MCLModalPresentationController.m */; };
 		3052089A1F430E8B00D3178C /* MCLModalTransitioningDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 305208991F430E8B00D3178C /* MCLModalTransitioningDelegate.m */; };
 		30526E131F48613E00BCC354 /* MCLModalNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30526E121F48613E00BCC354 /* MCLModalNavigationController.m */; };
+		30543086215D1D64008F29C0 /* UISearchBar+getSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = 30543085215D1D64008F29C0 /* UISearchBar+getSearchField.m */; };
+		30543087215D1D64008F29C0 /* UISearchBar+getSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = 30543085215D1D64008F29C0 /* UISearchBar+getSearchField.m */; };
+		30543088215D1D64008F29C0 /* UISearchBar+getSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = 30543085215D1D64008F29C0 /* UISearchBar+getSearchField.m */; };
+		30543089215D1D64008F29C0 /* UISearchBar+getSearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = 30543085215D1D64008F29C0 /* UISearchBar+getSearchField.m */; };
 		3057B8AF1FAE175B0046C427 /* MCLFeatures+Names.m in Sources */ = {isa = PBXBuildFile; fileRef = 3057B8AE1FAE175B0046C427 /* MCLFeatures+Names.m */; };
 		305DD81819A63517006514BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81719A63517006514BD /* Foundation.framework */; };
 		305DD81A19A63517006514BD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305DD81919A63517006514BD /* CoreGraphics.framework */; };
@@ -194,7 +198,6 @@
 		306FC87B1F93A39F001EB7E9 /* features-testing.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F881F8D69D900766501 /* features-testing.plist */; };
 		306FC87E1F93A39F001EB7E9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 305DD82019A63517006514BD /* InfoPlist.strings */; };
 		306FC8801F93A39F001EB7E9 /* zelda1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6E1E78A10900C7217F /* zelda1.caf */; };
-		306FC8811F93A39F001EB7E9 /* Responses.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EA21051F0EAD5C0064A0A3 /* Responses.storyboard */; };
 		306FC8821F93A39F001EB7E9 /* MCLThreadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */; };
 		306FC8831F93A39F001EB7E9 /* delete.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3096481A1EA180CE00C16379 /* delete.caf */; };
 		306FC8841F93A39F001EB7E9 /* MCLDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 308B81E81F63FC9700C878FB /* MCLDetailViewController.xib */; };
@@ -222,6 +225,14 @@
 		307A80821F6411DA00A580FE /* MCLMessageListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 307A80811F6411DA00A580FE /* MCLMessageListLoadingViewController.m */; };
 		307A80F119B8804F001B538D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307A80F019B8804F001B538D /* Security.framework */; };
 		307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D797519B0B3B30096A217 /* MCLReadSymbolView.m */; };
+		3081130C20F0A78300DED6B0 /* MCLQuote.m in Sources */ = {isa = PBXBuildFile; fileRef = 3081130B20F0A78300DED6B0 /* MCLQuote.m */; };
+		3081130D20F0A78300DED6B0 /* MCLQuote.m in Sources */ = {isa = PBXBuildFile; fileRef = 3081130B20F0A78300DED6B0 /* MCLQuote.m */; };
+		3081130E20F0A78300DED6B0 /* MCLQuote.m in Sources */ = {isa = PBXBuildFile; fileRef = 3081130B20F0A78300DED6B0 /* MCLQuote.m */; };
+		3081130F20F0A78300DED6B0 /* MCLQuote.m in Sources */ = {isa = PBXBuildFile; fileRef = 3081130B20F0A78300DED6B0 /* MCLQuote.m */; };
+		3081139620F115D300DED6B0 /* MCLRouter+Tetromino.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3081139520F115D300DED6B0 /* MCLRouter+Tetromino.swift */; };
+		3081139720F115D300DED6B0 /* MCLRouter+Tetromino.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3081139520F115D300DED6B0 /* MCLRouter+Tetromino.swift */; };
+		3081139820F115D300DED6B0 /* MCLRouter+Tetromino.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3081139520F115D300DED6B0 /* MCLRouter+Tetromino.swift */; };
+		3081139920F115D300DED6B0 /* MCLRouter+Tetromino.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3081139520F115D300DED6B0 /* MCLRouter+Tetromino.swift */; };
 		30827BAA1F3A3D3900014769 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30827BA91F3A3D3900014769 /* SafariServices.framework */; };
 		308346211E9E8E5400C11033 /* MCLThreadKillfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 308346201E9E8E5300C11033 /* MCLThreadKillfileViewController.m */; };
 		30849D1C1E2AA40900626331 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30849D1B1E2AA40900626331 /* CoreLocation.framework */; };
@@ -332,7 +343,6 @@
 		3090CB261FA7ED1E0085C9AF /* features-testing.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F881F8D69D900766501 /* features-testing.plist */; };
 		3090CB281FA7ED1E0085C9AF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 305DD82019A63517006514BD /* InfoPlist.strings */; };
 		3090CB291FA7ED1E0085C9AF /* zelda1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6E1E78A10900C7217F /* zelda1.caf */; };
-		3090CB2A1FA7ED1E0085C9AF /* Responses.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EA21051F0EAD5C0064A0A3 /* Responses.storyboard */; };
 		3090CB2B1FA7ED1E0085C9AF /* MCLThreadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */; };
 		3090CB2C1FA7ED1E0085C9AF /* delete.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3096481A1EA180CE00C16379 /* delete.caf */; };
 		3090CB2D1FA7ED1E0085C9AF /* MCLDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 308B81E81F63FC9700C878FB /* MCLDetailViewController.xib */; };
@@ -439,7 +449,6 @@
 		3090CBA31FA89A5C0085C9AF /* features-testing.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F881F8D69D900766501 /* features-testing.plist */; };
 		3090CBA51FA89A5C0085C9AF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 305DD82019A63517006514BD /* InfoPlist.strings */; };
 		3090CBA61FA89A5C0085C9AF /* zelda1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6E1E78A10900C7217F /* zelda1.caf */; };
-		3090CBA71FA89A5C0085C9AF /* Responses.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EA21051F0EAD5C0064A0A3 /* Responses.storyboard */; };
 		3090CBA81FA89A5C0085C9AF /* MCLThreadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */; };
 		3090CBA91FA89A5C0085C9AF /* delete.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3096481A1EA180CE00C16379 /* delete.caf */; };
 		3090CBAA1FA89A5C0085C9AF /* MCLDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 308B81E81F63FC9700C878FB /* MCLDetailViewController.xib */; };
@@ -473,14 +482,18 @@
 		30C04CDE20EA49F700A1D92F /* MCLComposeMessageToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C04CDC20EA49F700A1D92F /* MCLComposeMessageToolbarController.m */; };
 		30C04CDF20EA49F700A1D92F /* MCLComposeMessageToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C04CDC20EA49F700A1D92F /* MCLComposeMessageToolbarController.m */; };
 		30C04CE020EA49F700A1D92F /* MCLComposeMessageToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C04CDC20EA49F700A1D92F /* MCLComposeMessageToolbarController.m */; };
+		30C04CEB20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C04CEA20EA782600A1D92F /* SwiftyGiphyHelper.swift */; };
+		30C04CEC20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C04CEA20EA782600A1D92F /* SwiftyGiphyHelper.swift */; };
+		30C04CED20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C04CEA20EA782600A1D92F /* SwiftyGiphyHelper.swift */; };
+		30C04CEE20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C04CEA20EA782600A1D92F /* SwiftyGiphyHelper.swift */; };
 		30C0871520E50A5A00503CE5 /* MCLLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C0871420E50A5A00503CE5 /* MCLLaunchViewController.m */; };
 		30C0871620E50A5B00503CE5 /* MCLLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C0871420E50A5A00503CE5 /* MCLLaunchViewController.m */; };
 		30C0871720E50A5B00503CE5 /* MCLLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C0871420E50A5A00503CE5 /* MCLLaunchViewController.m */; };
 		30C0871820E50A5B00503CE5 /* MCLLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C0871420E50A5A00503CE5 /* MCLLaunchViewController.m */; };
-		30C0871A20E50C3000503CE5 /* LaunchScreenActive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30C0871920E50C3000503CE5 /* LaunchScreenActive.storyboard */; };
-		30C0871B20E50C3000503CE5 /* LaunchScreenActive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30C0871920E50C3000503CE5 /* LaunchScreenActive.storyboard */; };
-		30C0871C20E50C3000503CE5 /* LaunchScreenActive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30C0871920E50C3000503CE5 /* LaunchScreenActive.storyboard */; };
-		30C0871D20E50C3000503CE5 /* LaunchScreenActive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30C0871920E50C3000503CE5 /* LaunchScreenActive.storyboard */; };
+		30C0871A20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30C0871920E50C3000503CE5 /* LaunchScreen.storyboard */; };
+		30C0871B20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30C0871920E50C3000503CE5 /* LaunchScreen.storyboard */; };
+		30C0871C20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30C0871920E50C3000503CE5 /* LaunchScreen.storyboard */; };
+		30C0871D20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30C0871920E50C3000503CE5 /* LaunchScreen.storyboard */; };
 		30C813821FBA2A5D0044A656 /* MCLSettings+Keys.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C813811FBA2A5D0044A656 /* MCLSettings+Keys.m */; };
 		30C813831FBA6AE80044A656 /* MCLSettings+Keys.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C813811FBA2A5D0044A656 /* MCLSettings+Keys.m */; };
 		30C813841FBA6AE90044A656 /* MCLSettings+Keys.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C813811FBA2A5D0044A656 /* MCLSettings+Keys.m */; };
@@ -520,7 +533,6 @@
 		30E88C8A1F1FE6FE00EDB446 /* MCLLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E88C891F1FE6FE00EDB446 /* MCLLoadingViewController.m */; };
 		30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */; };
 		30EA21041F0EAD210064A0A3 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EA21031F0EAD210064A0A3 /* Profile.storyboard */; };
-		30EA21061F0EAD5C0064A0A3 /* Responses.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EA21051F0EAD5C0064A0A3 /* Responses.storyboard */; };
 		30EA21091F0EDE160064A0A3 /* MCLUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EA21081F0EDE160064A0A3 /* MCLUser.m */; };
 		30EAE21C1F1C1F770035DFC9 /* ComposeMessage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EAE21B1F1C1E400035DFC9 /* ComposeMessage.storyboard */; };
 		30EE8B7A1FC1E481008417F6 /* MCLErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EE8B791FC1E480008417F6 /* MCLErrorViewController.m */; };
@@ -641,6 +653,8 @@
 		305208991F430E8B00D3178C /* MCLModalTransitioningDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLModalTransitioningDelegate.m; sourceTree = "<group>"; };
 		30526E111F48613E00BCC354 /* MCLModalNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLModalNavigationController.h; sourceTree = "<group>"; };
 		30526E121F48613E00BCC354 /* MCLModalNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLModalNavigationController.m; sourceTree = "<group>"; };
+		30543084215D1D64008F29C0 /* UISearchBar+getSearchField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UISearchBar+getSearchField.h"; sourceTree = "<group>"; };
+		30543085215D1D64008F29C0 /* UISearchBar+getSearchField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UISearchBar+getSearchField.m"; sourceTree = "<group>"; };
 		3057B8AC1FAE0EEE0046C427 /* MCLComposeMessageViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessageViewControllerDelegate.h; sourceTree = "<group>"; };
 		3057B8AD1FAE175B0046C427 /* MCLFeatures+Names.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MCLFeatures+Names.h"; sourceTree = "<group>"; };
 		3057B8AE1FAE175B0046C427 /* MCLFeatures+Names.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MCLFeatures+Names.m"; sourceTree = "<group>"; };
@@ -719,6 +733,9 @@
 		307A80F019B8804F001B538D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		307D797419B0B3B30096A217 /* MCLReadSymbolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadSymbolView.h; sourceTree = "<group>"; };
 		307D797519B0B3B30096A217 /* MCLReadSymbolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadSymbolView.m; sourceTree = "<group>"; };
+		3081130A20F0A78300DED6B0 /* MCLQuote.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLQuote.h; sourceTree = "<group>"; };
+		3081130B20F0A78300DED6B0 /* MCLQuote.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLQuote.m; sourceTree = "<group>"; };
+		3081139520F115D300DED6B0 /* MCLRouter+Tetromino.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MCLRouter+Tetromino.swift"; sourceTree = "<group>"; };
 		30827BA91F3A3D3900014769 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		3083461F1E9E8E5300C11033 /* MCLThreadKillfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLThreadKillfileViewController.h; sourceTree = "<group>"; };
 		308346201E9E8E5300C11033 /* MCLThreadKillfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLThreadKillfileViewController.m; sourceTree = "<group>"; };
@@ -771,9 +788,11 @@
 		30BD47611E97097300DBB27B /* UIViewController+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Additions.m"; sourceTree = "<group>"; };
 		30C04CDB20EA49F700A1D92F /* MCLComposeMessageToolbarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessageToolbarController.h; sourceTree = "<group>"; };
 		30C04CDC20EA49F700A1D92F /* MCLComposeMessageToolbarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLComposeMessageToolbarController.m; sourceTree = "<group>"; };
+		30C04CE120EA778900A1D92F /* mclient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mclient-Bridging-Header.h"; sourceTree = "<group>"; };
+		30C04CEA20EA782600A1D92F /* SwiftyGiphyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyGiphyHelper.swift; sourceTree = "<group>"; };
 		30C0871320E50A5A00503CE5 /* MCLLaunchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLLaunchViewController.h; sourceTree = "<group>"; };
 		30C0871420E50A5A00503CE5 /* MCLLaunchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLLaunchViewController.m; sourceTree = "<group>"; };
-		30C0871920E50C3000503CE5 /* LaunchScreenActive.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreenActive.storyboard; sourceTree = "<group>"; };
+		30C0871920E50C3000503CE5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		30C813801FBA2A5D0044A656 /* MCLSettings+Keys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MCLSettings+Keys.h"; sourceTree = "<group>"; };
 		30C813811FBA2A5D0044A656 /* MCLSettings+Keys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MCLSettings+Keys.m"; sourceTree = "<group>"; };
 		30C9B529205AAB8600FD3C31 /* MCLNoDataView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLNoDataView.h; sourceTree = "<group>"; };
@@ -802,7 +821,6 @@
 		30E8B89719B3CBF40067DD1F /* MCLComposeMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessageViewController.h; sourceTree = "<group>"; };
 		30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLComposeMessageViewController.m; sourceTree = "<group>"; };
 		30EA21031F0EAD210064A0A3 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
-		30EA21051F0EAD5C0064A0A3 /* Responses.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Responses.storyboard; sourceTree = "<group>"; };
 		30EA21071F0EDE160064A0A3 /* MCLUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLUser.h; sourceTree = "<group>"; };
 		30EA21081F0EDE160064A0A3 /* MCLUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLUser.m; sourceTree = "<group>"; };
 		30EAE21B1F1C1E400035DFC9 /* ComposeMessage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ComposeMessage.storyboard; sourceTree = "<group>"; };
@@ -1006,6 +1024,7 @@
 				305DE8171F2E608200EC34AE /* MCLRouter+mainNavigation.m */,
 				306888D41F27D7C100B0D915 /* MCLRouter+openURL.h */,
 				306888D51F27D7C100B0D915 /* MCLRouter+openURL.m */,
+				3081139520F115D300DED6B0 /* MCLRouter+Tetromino.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -1069,6 +1088,8 @@
 				3039748F1E16B083003C8BC9 /* UIView+addConstraints.m */,
 				30BD47601E97097300DBB27B /* UIViewController+Additions.h */,
 				30BD47611E97097300DBB27B /* UIViewController+Additions.m */,
+				30543084215D1D64008F29C0 /* UISearchBar+getSearchField.h */,
+				30543085215D1D64008F29C0 /* UISearchBar+getSearchField.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1204,6 +1225,7 @@
 				30827BA81F35CF0C00014769 /* Internationalization */,
 				3057B8AB1FAE055F0046C427 /* Info-plist */,
 				305DD82519A63517006514BD /* mclient-Prefix.pch */,
+				30C04CE120EA778900A1D92F /* mclient-Bridging-Header.h */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -1232,6 +1254,7 @@
 				30D664421F266F8C00E72025 /* BoardList */,
 				30D6643C1F266F4800E72025 /* ComposeMessage */,
 				30D2CD9B1F63E8A300FF35EB /* Detail */,
+				3081139A20F26B3900DED6B0 /* Error */,
 				30D664401F266F7A00E72025 /* Killfile */,
 				30C0871E20E514FA00503CE5 /* Launch */,
 				30E217691F268D9A0030FC9A /* Loading */,
@@ -1280,6 +1303,8 @@
 				305DD85F19AB3031006514BD /* MCLThread.m */,
 				30EA21071F0EDE160064A0A3 /* MCLUser.h */,
 				30EA21081F0EDE160064A0A3 /* MCLUser.m */,
+				3081130A20F0A78300DED6B0 /* MCLQuote.h */,
+				3081130B20F0A78300DED6B0 /* MCLQuote.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1289,8 +1314,6 @@
 			children = (
 				301FD9A419C411D400E36A5B /* MCLErrorView.h */,
 				301FD9A519C411D400E36A5B /* MCLErrorView.m */,
-				30EE8B781FC1E480008417F6 /* MCLErrorViewController.h */,
-				30EE8B791FC1E480008417F6 /* MCLErrorViewController.m */,
 				306EA6E319D598F800BB4DC8 /* MCLInternetConnectionErrorView.h */,
 				306EA6E419D598F800BB4DC8 /* MCLInternetConnectionErrorView.m */,
 				306EA6E619D5992F00BB4DC8 /* MCLMServiceErrorView.h */,
@@ -1340,9 +1363,8 @@
 			isa = PBXGroup;
 			children = (
 				30EAE21B1F1C1E400035DFC9 /* ComposeMessage.storyboard */,
-				30C0871920E50C3000503CE5 /* LaunchScreenActive.storyboard */,
+				30C0871920E50C3000503CE5 /* LaunchScreen.storyboard */,
 				30EA21031F0EAD210064A0A3 /* Profile.storyboard */,
-				30EA21051F0EAD5C0064A0A3 /* Responses.storyboard */,
 				30849D221E2BABBD00626331 /* Settings.storyboard */,
 			);
 			path = Storyboards;
@@ -1411,6 +1433,15 @@
 				3070D32B207A6BBA00F42BFF /* MCLLicenseViewController.m */,
 			);
 			path = License;
+			sourceTree = "<group>";
+		};
+		3081139A20F26B3900DED6B0 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				30EE8B781FC1E480008417F6 /* MCLErrorViewController.h */,
+				30EE8B791FC1E480008417F6 /* MCLErrorViewController.m */,
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 		30827BA81F35CF0C00014769 /* Internationalization */ = {
@@ -1525,6 +1556,7 @@
 				30E8B89719B3CBF40067DD1F /* MCLComposeMessageViewController.h */,
 				30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */,
 				3057B8AC1FAE0EEE0046C427 /* MCLComposeMessageViewControllerDelegate.h */,
+				30C04CEA20EA782600A1D92F /* SwiftyGiphyHelper.swift */,
 			);
 			path = ComposeMessage;
 			sourceTree = "<group>";
@@ -1662,7 +1694,6 @@
 				305DD81219A63517006514BD /* Resources */,
 				3020A26919DCD01C007F46E2 /* ShellScript */,
 				915089E796B40A81786A6247 /* [CP] Copy Pods Resources */,
-				389F1456958574E2BD694556 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1701,7 +1732,6 @@
 				306FC8711F93A39F001EB7E9 /* Resources */,
 				306FC8861F93A39F001EB7E9 /* ShellScript */,
 				306FC8881F93A39F001EB7E9 /* [CP] Copy Pods Resources */,
-				D771CE1D82F214611E4A54E8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1722,7 +1752,6 @@
 				3090CB1C1FA7ED1E0085C9AF /* Resources */,
 				3090CB2F1FA7ED1E0085C9AF /* ShellScript */,
 				7CD1D19C1D2F7C1087B35108 /* [CP] Copy Pods Resources */,
-				507D108F6FEDDCE074E9FC48 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1743,7 +1772,6 @@
 				3090CB991FA89A5C0085C9AF /* Resources */,
 				3090CBAC1FA89A5C0085C9AF /* ShellScript */,
 				36486020FCA41E407BF393EA /* [CP] Copy Pods Resources */,
-				AB6ECD89667DB20F9F0A702F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1761,11 +1789,12 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = MCL;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Christopher Reitz";
 				TargetAttributes = {
 					305DD81319A63517006514BD = {
 						DevelopmentTeam = J8XDHCNJQA;
+						LastSwiftMigration = 0940;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -1779,6 +1808,7 @@
 					};
 					306FC80E1F93A39F001EB7E9 = {
 						DevelopmentTeam = J8XDHCNJQA;
+						LastSwiftMigration = 0940;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -1788,10 +1818,12 @@
 					};
 					3090CABA1FA7ED1E0085C9AF = {
 						DevelopmentTeam = J8XDHCNJQA;
+						LastSwiftMigration = 0940;
 						ProvisioningStyle = Automatic;
 					};
 					3090CB371FA89A5C0085C9AF = {
 						DevelopmentTeam = J8XDHCNJQA;
+						LastSwiftMigration = 0940;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -1836,13 +1868,12 @@
 				3012032E1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
 				3020FB701E78BB4400C7217F /* zelda2.caf in Resources */,
 				30EA21041F0EAD210064A0A3 /* Profile.storyboard in Resources */,
-				30C0871B20E50C3000503CE5 /* LaunchScreenActive.storyboard in Resources */,
+				30C0871B20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */,
 				30DB7F871F8D688800766501 /* features-development.plist in Resources */,
 				30DB7F8A1F8D6A0E00766501 /* features-store.plist in Resources */,
 				30DB7F8B1F8D6A0E00766501 /* features-testing.plist in Resources */,
 				305DD82219A63517006514BD /* InfoPlist.strings in Resources */,
 				3020FB711E78BB4400C7217F /* zelda1.caf in Resources */,
-				30EA21061F0EAD5C0064A0A3 /* Responses.storyboard in Resources */,
 				3004E5AC1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib in Resources */,
 				3096481B1EA180E500C16379 /* delete.caf in Resources */,
 				308B81E91F63FC9700C878FB /* MCLDetailViewController.xib in Resources */,
@@ -1870,13 +1901,12 @@
 				306FC8761F93A39F001EB7E9 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
 				306FC8771F93A39F001EB7E9 /* zelda2.caf in Resources */,
 				306FC8781F93A39F001EB7E9 /* Profile.storyboard in Resources */,
-				30C0871A20E50C3000503CE5 /* LaunchScreenActive.storyboard in Resources */,
+				30C0871A20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */,
 				306FC8791F93A39F001EB7E9 /* features-development.plist in Resources */,
 				306FC87A1F93A39F001EB7E9 /* features-store.plist in Resources */,
 				306FC87B1F93A39F001EB7E9 /* features-testing.plist in Resources */,
 				306FC87E1F93A39F001EB7E9 /* InfoPlist.strings in Resources */,
 				306FC8801F93A39F001EB7E9 /* zelda1.caf in Resources */,
-				306FC8811F93A39F001EB7E9 /* Responses.storyboard in Resources */,
 				306FC8821F93A39F001EB7E9 /* MCLThreadTableViewCell.xib in Resources */,
 				306FC8831F93A39F001EB7E9 /* delete.caf in Resources */,
 				306FC8841F93A39F001EB7E9 /* MCLDetailViewController.xib in Resources */,
@@ -1896,13 +1926,12 @@
 				3090CB211FA7ED1E0085C9AF /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
 				3090CB221FA7ED1E0085C9AF /* zelda2.caf in Resources */,
 				3090CB231FA7ED1E0085C9AF /* Profile.storyboard in Resources */,
-				30C0871D20E50C3000503CE5 /* LaunchScreenActive.storyboard in Resources */,
+				30C0871D20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */,
 				3090CB241FA7ED1E0085C9AF /* features-development.plist in Resources */,
 				3090CB251FA7ED1E0085C9AF /* features-store.plist in Resources */,
 				3090CB261FA7ED1E0085C9AF /* features-testing.plist in Resources */,
 				3090CB281FA7ED1E0085C9AF /* InfoPlist.strings in Resources */,
 				3090CB291FA7ED1E0085C9AF /* zelda1.caf in Resources */,
-				3090CB2A1FA7ED1E0085C9AF /* Responses.storyboard in Resources */,
 				3090CB2B1FA7ED1E0085C9AF /* MCLThreadTableViewCell.xib in Resources */,
 				3090CB2C1FA7ED1E0085C9AF /* delete.caf in Resources */,
 				3090CB2D1FA7ED1E0085C9AF /* MCLDetailViewController.xib in Resources */,
@@ -1922,13 +1951,12 @@
 				3090CB9E1FA89A5C0085C9AF /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
 				3090CB9F1FA89A5C0085C9AF /* zelda2.caf in Resources */,
 				3090CBA01FA89A5C0085C9AF /* Profile.storyboard in Resources */,
-				30C0871C20E50C3000503CE5 /* LaunchScreenActive.storyboard in Resources */,
+				30C0871C20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */,
 				3090CBA11FA89A5C0085C9AF /* features-development.plist in Resources */,
 				3090CBA21FA89A5C0085C9AF /* features-store.plist in Resources */,
 				3090CBA31FA89A5C0085C9AF /* features-testing.plist in Resources */,
 				3090CBA51FA89A5C0085C9AF /* InfoPlist.strings in Resources */,
 				3090CBA61FA89A5C0085C9AF /* zelda1.caf in Resources */,
-				3090CBA71FA89A5C0085C9AF /* Responses.storyboard in Resources */,
 				3090CBA81FA89A5C0085C9AF /* MCLThreadTableViewCell.xib in Resources */,
 				3090CBA91FA89A5C0085C9AF /* delete.caf in Resources */,
 				3090CBAA1FA89A5C0085C9AF /* MCLDetailViewController.xib in Resources */,
@@ -2027,11 +2055,17 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-dev/Pods-mclient-dev-resources.sh",
-				$PODS_CONFIGURATION_BUILD_DIR/HockeySDK/HockeySDKResources.bundle,
+				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
+				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem.png",
+				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@2x.png",
+				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@3x.png",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/HockeySDKResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem@3x.png",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2071,45 +2105,21 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-resources.sh",
-				$PODS_CONFIGURATION_BUILD_DIR/HockeySDK/HockeySDKResources.bundle,
+				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
+				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem.png",
+				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@2x.png",
+				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@3x.png",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/HockeySDKResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem@3x.png",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		389F1456958574E2BD694556 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		507D108F6FEDDCE074E9FC48 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-store/Pods-mclient-store-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7CD1D19C1D2F7C1087B35108 /* [CP] Copy Pods Resources */ = {
@@ -2119,11 +2129,17 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-store/Pods-mclient-store-resources.sh",
-				$PODS_CONFIGURATION_BUILD_DIR/HockeySDK/HockeySDKResources.bundle,
+				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
+				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem.png",
+				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@2x.png",
+				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@3x.png",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/HockeySDKResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem@3x.png",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2137,30 +2153,21 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-resources.sh",
-				$PODS_CONFIGURATION_BUILD_DIR/HockeySDK/HockeySDKResources.bundle,
+				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
+				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem.png",
+				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@2x.png",
+				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@3x.png",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/HockeySDKResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem@3x.png",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AB6ECD89667DB20F9F0A702F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BDE502EB68C5CD955DC8D394 /* [CP] Check Pods Manifest.lock */ = {
@@ -2179,21 +2186,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D771CE1D82F214611E4A54E8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-dev/Pods-mclient-dev-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2256,6 +2248,7 @@
 				3039748A1E1694C8003C8BC9 /* MCLMessageListWidmannStyleViewController.m in Sources */,
 				302381EC1F9352FF00764FAE /* MCLMarkThreadAsReadRequest.m in Sources */,
 				305DE81B1F2F476500EC34AE /* MCLMessageToolbarController.m in Sources */,
+				30543087215D1D64008F29C0 /* UISearchBar+getSearchField.m in Sources */,
 				301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */,
 				303C59521F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.m in Sources */,
 				305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */,
@@ -2280,7 +2273,9 @@
 				3036F59E1E26798E00ABC2CE /* MCLDefaultTheme.m in Sources */,
 				303974901E16B083003C8BC9 /* UIView+addConstraints.m in Sources */,
 				307A80821F6411DA00A580FE /* MCLMessageListLoadingViewController.m in Sources */,
+				3081130D20F0A78300DED6B0 /* MCLQuote.m in Sources */,
 				302D19EC1F2E218C00E2FC2B /* MCLMessageRequest.m in Sources */,
+				30C04CEC20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */,
 				30BD47621E97097300DBB27B /* UIViewController+Additions.m in Sources */,
 				302382011F937CBD00764FAE /* MCLKillfileThreadsRequest.m in Sources */,
 				305DE8101F2E46DD00EC34AE /* MCLMessageToolbar.m in Sources */,
@@ -2288,6 +2283,7 @@
 				3070D326207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
 				305DE8181F2E608200EC34AE /* MCLRouter+mainNavigation.m in Sources */,
 				30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */,
+				3081139720F115D300DED6B0 /* MCLRouter+Tetromino.swift in Sources */,
 				306DFF9820C3FC98002B5C18 /* Reachability.m in Sources */,
 				30BD475F1E956D9000DBB27B /* MCLLogin.m in Sources */,
 				306888D61F27D7C100B0D915 /* MCLRouter+openURL.m in Sources */,
@@ -2375,6 +2371,7 @@
 				306FC8391F93A39F001EB7E9 /* MCLThreadKillfileViewController.m in Sources */,
 				306FC83A1F93A39F001EB7E9 /* MCLSplitViewController.m in Sources */,
 				306FC83B1F93A39F001EB7E9 /* MCLMServiceErrorView.m in Sources */,
+				30543086215D1D64008F29C0 /* UISearchBar+getSearchField.m in Sources */,
 				306FC83D1F93A39F001EB7E9 /* MCLAppDelegate.m in Sources */,
 				306FC83E1F93A39F001EB7E9 /* MCLMessageListWidmannStyleViewController.m in Sources */,
 				306FC8401F93A39F001EB7E9 /* MCLMarkThreadAsReadRequest.m in Sources */,
@@ -2399,7 +2396,9 @@
 				306FC8501F93A39F001EB7E9 /* MCLDetailViewController.m in Sources */,
 				306FC8511F93A39F001EB7E9 /* MCLSectionLoadingViewController.m in Sources */,
 				306FC8521F93A39F001EB7E9 /* MCLDefaultTheme.m in Sources */,
+				3081130C20F0A78300DED6B0 /* MCLQuote.m in Sources */,
 				306FC8531F93A39F001EB7E9 /* UIView+addConstraints.m in Sources */,
+				30C04CEB20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */,
 				306FC8541F93A39F001EB7E9 /* MCLMessageListLoadingViewController.m in Sources */,
 				306FC8551F93A39F001EB7E9 /* MCLMessageRequest.m in Sources */,
 				306FC8561F93A39F001EB7E9 /* UIViewController+Additions.m in Sources */,
@@ -2407,6 +2406,7 @@
 				3070D325207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
 				306FC8571F93A39F001EB7E9 /* MCLKillfileThreadsRequest.m in Sources */,
 				306FC8581F93A39F001EB7E9 /* MCLMessageToolbar.m in Sources */,
+				3081139620F115D300DED6B0 /* MCLRouter+Tetromino.swift in Sources */,
 				306DFF9720C3FC98002B5C18 /* Reachability.m in Sources */,
 				306FC8591F93A39F001EB7E9 /* MCLRouter+mainNavigation.m in Sources */,
 				306FC85A1F93A39F001EB7E9 /* MCLVerifiyLoginView.m in Sources */,
@@ -2486,6 +2486,7 @@
 				3090CAE91FA7ED1E0085C9AF /* MCLMessageListWidmannStyleViewController.m in Sources */,
 				3090CAEB1FA7ED1E0085C9AF /* MCLMarkThreadAsReadRequest.m in Sources */,
 				3090CAED1FA7ED1E0085C9AF /* MCLMessageToolbarController.m in Sources */,
+				30543089215D1D64008F29C0 /* UISearchBar+getSearchField.m in Sources */,
 				3090CAEE1FA7ED1E0085C9AF /* MCLThreadTableViewCell.m in Sources */,
 				3090CAEF1FA7ED1E0085C9AF /* MCLThreadIdForMessageRequest.m in Sources */,
 				3090CAF01FA7ED1E0085C9AF /* MCLThreadListTableViewController.m in Sources */,
@@ -2510,7 +2511,9 @@
 				3090CAFD1FA7ED1E0085C9AF /* MCLDefaultTheme.m in Sources */,
 				3090CAFE1FA7ED1E0085C9AF /* UIView+addConstraints.m in Sources */,
 				3090CAFF1FA7ED1E0085C9AF /* MCLMessageListLoadingViewController.m in Sources */,
+				3081130F20F0A78300DED6B0 /* MCLQuote.m in Sources */,
 				3090CB001FA7ED1E0085C9AF /* MCLMessageRequest.m in Sources */,
+				30C04CEE20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */,
 				3090CB011FA7ED1E0085C9AF /* UIViewController+Additions.m in Sources */,
 				3090CB021FA7ED1E0085C9AF /* MCLKillfileThreadsRequest.m in Sources */,
 				3090CB031FA7ED1E0085C9AF /* MCLMessageToolbar.m in Sources */,
@@ -2518,6 +2521,7 @@
 				3070D328207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
 				3090CB041FA7ED1E0085C9AF /* MCLRouter+mainNavigation.m in Sources */,
 				3090CB051FA7ED1E0085C9AF /* MCLVerifiyLoginView.m in Sources */,
+				3081139920F115D300DED6B0 /* MCLRouter+Tetromino.swift in Sources */,
 				306DFF9A20C3FC98002B5C18 /* Reachability.m in Sources */,
 				3090CB061FA7ED1E0085C9AF /* MCLLogin.m in Sources */,
 				3090CB071FA7ED1E0085C9AF /* MCLRouter+openURL.m in Sources */,
@@ -2597,6 +2601,7 @@
 				3090CB661FA89A5C0085C9AF /* MCLMessageListWidmannStyleViewController.m in Sources */,
 				3090CB681FA89A5C0085C9AF /* MCLMarkThreadAsReadRequest.m in Sources */,
 				3090CB6A1FA89A5C0085C9AF /* MCLMessageToolbarController.m in Sources */,
+				30543088215D1D64008F29C0 /* UISearchBar+getSearchField.m in Sources */,
 				3090CB6B1FA89A5C0085C9AF /* MCLThreadTableViewCell.m in Sources */,
 				3090CB6C1FA89A5C0085C9AF /* MCLThreadIdForMessageRequest.m in Sources */,
 				3090CB6D1FA89A5C0085C9AF /* MCLThreadListTableViewController.m in Sources */,
@@ -2621,7 +2626,9 @@
 				3090CB7A1FA89A5C0085C9AF /* MCLDefaultTheme.m in Sources */,
 				3090CB7B1FA89A5C0085C9AF /* UIView+addConstraints.m in Sources */,
 				3090CB7C1FA89A5C0085C9AF /* MCLMessageListLoadingViewController.m in Sources */,
+				3081130E20F0A78300DED6B0 /* MCLQuote.m in Sources */,
 				3090CB7D1FA89A5C0085C9AF /* MCLMessageRequest.m in Sources */,
+				30C04CED20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */,
 				3090CB7E1FA89A5C0085C9AF /* UIViewController+Additions.m in Sources */,
 				3090CB7F1FA89A5C0085C9AF /* MCLKillfileThreadsRequest.m in Sources */,
 				3090CB801FA89A5C0085C9AF /* MCLMessageToolbar.m in Sources */,
@@ -2629,6 +2636,7 @@
 				3070D327207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
 				3090CB811FA89A5C0085C9AF /* MCLRouter+mainNavigation.m in Sources */,
 				3090CB821FA89A5C0085C9AF /* MCLVerifiyLoginView.m in Sources */,
+				3081139820F115D300DED6B0 /* MCLRouter+Tetromino.swift in Sources */,
 				306DFF9920C3FC98002B5C18 /* Reachability.m in Sources */,
 				3090CB831FA89A5C0085C9AF /* MCLLogin.m in Sources */,
 				3090CB841FA89A5C0085C9AF /* MCLRouter+openURL.m in Sources */,
@@ -2757,6 +2765,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "7aaf6062-003c-4222-a704-536030a26dcd";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "mclient-Swift.h";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2805,6 +2815,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PROVISIONING_PROFILE = "7aaf6062-003c-4222-a704-536030a26dcd";
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "mclient-Swift.h";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2815,6 +2828,7 @@
 			baseConfigurationReference = F6C441B531631851AA2E637B /* Pods-mclient-alpha.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Reitz (J8XDHCNJQA)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -2831,11 +2845,15 @@
 				HOCKEYAPP_ID = 1fbbedb73c534cbea66852e2d4d6b5f7;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-alpha-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.alpha;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "5ec29718-9041-48a9-92a2-f78393a92c43";
 				PROVISIONING_PROFILE_SPECIFIER = "mclient alpha 02/18";
 				STAGE = 1;
+				SWIFT_OBJC_BRIDGING_HEADER = "mclient/Supporting Files/mclient-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2845,6 +2863,7 @@
 			baseConfigurationReference = 33361BAC6DFDB5FE864E553C /* Pods-mclient-alpha.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Reitz (J8XDHCNJQA)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -2861,11 +2880,14 @@
 				HOCKEYAPP_ID = 1fbbedb73c534cbea66852e2d4d6b5f7;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-alpha-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.alpha;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "5ec29718-9041-48a9-92a2-f78393a92c43";
 				PROVISIONING_PROFILE_SPECIFIER = "mclient alpha 02/18";
 				STAGE = 1;
+				SWIFT_OBJC_BRIDGING_HEADER = "mclient/Supporting Files/mclient-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2873,6 +2895,7 @@
 		305DD85019A63517006514BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/mclient.app/mclient";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -2900,6 +2923,7 @@
 		305DD85119A63517006514BD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/mclient.app/mclient";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -2925,6 +2949,7 @@
 			baseConfigurationReference = 40D0EC0E52259350601550A2 /* Pods-mclient-dev.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -2940,11 +2965,14 @@
 				HOCKEYAPP_ID = "";
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STAGE = 0;
+				SWIFT_OBJC_BRIDGING_HEADER = "mclient/Supporting Files/mclient-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2954,6 +2982,7 @@
 			baseConfigurationReference = D4418B032CC14175D4768FE5 /* Pods-mclient-dev.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -2969,11 +2998,13 @@
 				HOCKEYAPP_ID = "";
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STAGE = 0;
+				SWIFT_OBJC_BRIDGING_HEADER = "mclient/Supporting Files/mclient-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2983,6 +3014,7 @@
 			baseConfigurationReference = 6D828B188AA687512F11BC26 /* Pods-mclient-store.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Reitz (J8XDHCNJQA)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -2998,11 +3030,15 @@
 				HOCKEYAPP_ID = "";
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-store-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STAGE = 2;
+				SWIFT_OBJC_BRIDGING_HEADER = "mclient/Supporting Files/mclient-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -3012,6 +3048,7 @@
 			baseConfigurationReference = 6AD6CEED842851C8B3A4D075 /* Pods-mclient-store.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Reitz (J8XDHCNJQA)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -3027,11 +3064,14 @@
 				HOCKEYAPP_ID = "";
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-store-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STAGE = 2;
+				SWIFT_OBJC_BRIDGING_HEADER = "mclient/Supporting Files/mclient-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -3041,6 +3081,7 @@
 			baseConfigurationReference = 1AC2BE060C003CCAE7C725A3 /* Pods-mclient-beta.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Reitz (J8XDHCNJQA)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -3057,11 +3098,15 @@
 				HOCKEYAPP_ID = edeacf933441432d909f9f4cb37eac80;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "06b55ff0-0c09-4094-9f00-8da801391520";
 				PROVISIONING_PROFILE_SPECIFIER = "mclient beta 02/18";
 				STAGE = 1;
+				SWIFT_OBJC_BRIDGING_HEADER = "mclient/Supporting Files/mclient-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -3071,6 +3116,7 @@
 			baseConfigurationReference = C0FFD84988F136FB335FA1A8 /* Pods-mclient-beta.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Reitz (J8XDHCNJQA)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -3087,11 +3133,14 @@
 				HOCKEYAPP_ID = edeacf933441432d909f9f4cb37eac80;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8b5abd5b-27ab-410c-85fa-49b110eedfbb";
 				PROVISIONING_PROFILE_SPECIFIER = "mclient beta 02/18";
 				STAGE = 1;
+				SWIFT_OBJC_BRIDGING_HEADER = "mclient/Supporting Files/mclient-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

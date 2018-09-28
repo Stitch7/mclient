@@ -15,17 +15,20 @@
 
 #import "UIViewController+Additions.h"
 #import "MCLDependencyBag.h"
+#import "MCLRouter+composeMessage.h"
 #import "MCLComposeMessageViewController.h"
 #import "MCLMessage.h"
+#import "MCLQuote.h"
 #import "MCLQuoteMessageRequest.h"
 #import "MCLMessageTextView.h"
 
 
-@interface MCLComposeMessageToolbarController ()
+@interface MCLComposeMessageToolbarController () <SwiftyGiphyHelperDelegate>
 
 @property (weak, nonatomic) MCLComposeMessageViewController *parentViewController;
 @property (strong, nonatomic) UIImagePickerController *imagePickerController;
 @property (strong, nonatomic) MRProgressOverlayView *progressView;
+@property (strong, nonatomic) SwiftyGiphyHelper *giphyHelper;
 
 @end
 
@@ -86,8 +89,8 @@
 {
     [self.parentViewController.textView resignFirstResponder];
 
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil
-                                                                         message:nil // TODO: @"Bild hinzufügen" -> ???
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"camera_action_choose_title", nil)
+                                                                         message:nil
                                                                   preferredStyle:UIAlertControllerStyleActionSheet];
 
     [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
@@ -110,6 +113,11 @@
                                                         }]];
     }
 
+    [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"camera_action_giphy", nil)
+                                                    style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                                                        [self showGiphy:sender];
+                                                    }]];
+
     [self.parentViewController presentViewController:actionSheet animated:YES completion:nil];
 }
 
@@ -125,14 +133,13 @@
         [alertController addAction:ok];
 
         [self.parentViewController presentViewController:alertController animated:YES completion:nil];
-    }
-    else if (authStatus == AVAuthorizationStatusNotDetermined)
+    } else if (authStatus == AVAuthorizationStatusNotDetermined) {
         [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
             if (granted) {
                 [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera fromButton:sender];
             }
         }];
-    else {
+    } else {
         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera fromButton:sender];
     }
 }
@@ -142,80 +149,55 @@
     [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary fromButton:sender];
 }
 
+- (void)showGiphy:(id)sender
+{
+    self.giphyHelper = [self.parentViewController.bag.router modalToGiphy];
+    self.giphyHelper.delegate = self;
+}
+
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType fromButton:(UIBarButtonItem *)button
 {
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
-    imagePickerController.sourceType = sourceType;
+    UIImagePickerController *imagePickerController = [self.parentViewController.bag.router modalToImagePickerForSourceType:sourceType fromButton:button];
     imagePickerController.delegate = self;
-    imagePickerController.modalPresentationStyle =
-    (sourceType == UIImagePickerControllerSourceTypeCamera) ? UIModalPresentationFullScreen : UIModalPresentationPopover;
-
-    UIPopoverPresentationController *presentationController = imagePickerController.popoverPresentationController;
-    presentationController.barButtonItem = button;
-    presentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-
     self.imagePickerController = imagePickerController;
-
-    [self.parentViewController presentViewController:imagePickerController animated:YES completion:nil];
 }
 
 - (void)messageTextViewToolbar:(MCLMessageTextViewToolbar *)toolbar quoteButtonPressed:(UIBarButtonItem *)sender
 {
     [sender setEnabled:NO];
 
-    MCLMessage *message = [[MCLMessage alloc] init];
-    message.boardId = self.parentViewController.message.boardId;
-    message.messageId = self.parentViewController.message.messageId;
-
     MCLQuoteMessageRequest *request = [[MCLQuoteMessageRequest alloc] initWithClient:self.parentViewController.bag.httpClient
-                                                                             message:message];
+                                                                             message:self.parentViewController.message];
     [request loadWithCompletionHandler:^(NSError *error, NSArray *data) {
         if (error) {
             [self.parentViewController presentError:error];
         } else {
-            NSString *quoteString = [[data firstObject] objectForKey:@"quote"];
-            NSArray *rawQuoteBlocks = [quoteString componentsSeparatedByString:@"\n"];
-            NSMutableArray *quoteBlocks = [[NSMutableArray alloc] init];
-            BOOL quoteOfQuoteRemoved = NO;
-            for (NSString *rawQuoteBlock in rawQuoteBlocks) {
-                if ([rawQuoteBlock isEqualToString:@">"] ||
-                    [rawQuoteBlock hasPrefix:@">>"] ||
-                    [rawQuoteBlock hasPrefix:@">-------------"] ||
-                    [[rawQuoteBlock lowercaseString] hasPrefix:@">gesendet mit"]) {
-                    quoteOfQuoteRemoved = YES;
-                    continue;
-                }
-                [quoteBlocks addObject:rawQuoteBlock];
-            }
-
-            if ([quoteBlocks count] == 1 && !quoteOfQuoteRemoved) {
-                NSString *textViewContent = [@"\n\n" stringByAppendingString:self.parentViewController.textView.text];
-                self.parentViewController.textView.text = [quoteString stringByAppendingString:textViewContent];
-            }
-            else {
-                [self presentQuotePickerActionSheet:quoteBlocks quoteString:quoteString];
+            MCLQuote *quote = [data firstObject];
+            if ([quote hasBlocks]) {
+                [self presentPickerActionSheetForQuote:quote];
+            } else {
+                [quote appendToTextField:self.parentViewController.textView];
             }
         }
         [sender setEnabled:YES];
     }];
 }
 
-- (void)presentQuotePickerActionSheet:(NSMutableArray *)quoteBlocks quoteString:(NSString *)quoteString
+- (void)presentPickerActionSheetForQuote:(MCLQuote *)quote
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Select quote", nil)
                                                                    message:nil
                                                             preferredStyle:UIAlertControllerStyleActionSheet];
 
-    for (NSString *quoteBlock in quoteBlocks) {
-        UIAlertAction *action = [UIAlertAction actionWithTitle:[quoteBlock substringFromIndex:1]
+    for (NSString *block in quote.blocks) {
+        UIAlertAction *action = [UIAlertAction actionWithTitle:[block substringFromIndex:1]
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * action) {
                                                            NSString *textViewContent = self.parentViewController.textView.text;
                                                            if (textViewContent.length > 0) {
                                                                textViewContent = [textViewContent stringByAppendingString:@"\n\n"];
                                                            }
-                                                           self.parentViewController.textView.text = [[textViewContent stringByAppendingString:quoteBlock] stringByAppendingString:@"\n"];
+                                                           self.parentViewController.textView.text = [[textViewContent stringByAppendingString:block] stringByAppendingString:@"\n"];
                                                        }];
         [alert addAction:action];
     }
@@ -224,7 +206,7 @@
                                                               style:UIAlertActionStyleDestructive
                                                             handler:^(UIAlertAction * action) {
                                                                 NSString *textViewContent = [@"\n\n" stringByAppendingString:self.parentViewController.textView.text];
-                                                                self.parentViewController.textView.text = [quoteString stringByAppendingString:textViewContent];
+                                                                self.parentViewController.textView.text = [quote.string stringByAppendingString:textViewContent];
                                                             }];
     [alert addAction:fullQuoteAction];
 
@@ -309,6 +291,23 @@
     self.imagePickerController = nil;
 
     [self.parentViewController dismissViewControllerAnimated:YES completion:^{
+        [self.parentViewController.textView becomeFirstResponder];
+    }];
+}
+
+#pragma mark - SwiftyGiphyHelperDelegate
+
+- (void)giphyControllerDidCancel
+{
+    [self.parentViewController.bag.router dismissModalWithCompletion:^{
+        [self.parentViewController.textView becomeFirstResponder];
+    }];
+}
+
+- (void)giphyControllerDidSelectGifWithUrl:(NSURL * _Nonnull)url
+{
+    [self.parentViewController.bag.router dismissModalWithCompletion:^{
+        [self.parentViewController.textView addImage:url];
         [self.parentViewController.textView becomeFirstResponder];
     }];
 }

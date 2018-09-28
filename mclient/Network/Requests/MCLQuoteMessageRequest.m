@@ -11,6 +11,7 @@
 #import "MCLHTTPClient.h"
 #import "MCLBoard.h"
 #import "MCLMessage.h"
+#import "MCLQuote.h"
 
 @interface MCLQuoteMessageRequest ()
 
@@ -50,7 +51,8 @@
                          completionHandler:^(NSError *error, NSDictionary *json) {
                              NSMutableArray *data = [NSMutableArray new];
                              if (json) {
-                                 [data addObject:json];
+                                 MCLQuote *quote = [MCLQuote quoteFromJSON:json];
+                                 [data addObject:quote];
                              }
                              completionHandler(error, data);
                          }];

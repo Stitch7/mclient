@@ -6,8 +6,13 @@
 //  See LICENSE file in the project root for full license information.
 //
 
+@protocol MCLDependencyBag;
+@class MCLMServiceErrorView;
+
 @interface MCLErrorViewController : UIViewController
 
-- (instancetype)initWithError:(NSError *)error;
+@property (strong, nonatomic) MCLMServiceErrorView *errorView;
+
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag error:(NSError *)error;
 
 @end

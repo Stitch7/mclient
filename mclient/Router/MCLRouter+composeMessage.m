@@ -8,7 +8,10 @@
 
 #import "MCLRouter+composeMessage.h"
 
+@import SwiftyGiphy;
+
 #import "MCLDependencyBag.h"
+#import "MCLThemeManager.h"
 #import "MCLBoard.h"
 #import "MCLMessage.h"
 #import "MCLThread.h"
@@ -92,6 +95,42 @@
     [self.modalNavigationController pushViewController:loadingVC animated:YES];
 
     return previewMessageVC;
+}
+
+- (UIImagePickerController *)modalToImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType fromButton:(UIBarButtonItem *)button
+{
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    imagePickerController.sourceType = sourceType;
+//    imagePickerController.delegate = self;
+    imagePickerController.modalPresentationStyle =
+        (sourceType == UIImagePickerControllerSourceTypeCamera) ? UIModalPresentationFullScreen : UIModalPresentationPopover;
+
+    UIPopoverPresentationController *presentationController = imagePickerController.popoverPresentationController;
+    presentationController.barButtonItem = button;
+    presentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+
+//    self.imagePickerController = imagePickerController;
+
+    [self.modalNavigationController presentViewController:imagePickerController animated:YES completion:nil];
+
+    return imagePickerController;
+}
+
+- (SwiftyGiphyHelper *)modalToGiphy
+{
+    SwiftyGiphyHelper *giphyHelper = [[SwiftyGiphyHelper alloc] initWithApiKey:kGiphyKey];
+    SwiftyGiphyViewController *giphyVC = [giphyHelper makeGiphyViewControllerWithTheme:self.bag.themeManager.currentTheme];
+
+    UINavigationController *giphyNavController = [[UINavigationController alloc] initWithRootViewController:giphyVC];
+    [self.modalNavigationController presentViewController:giphyNavController animated:YES completion:nil];
+
+    return giphyHelper;
+}
+
+- (void)dismissModalWithCompletion: (void (^)(void))completion
+{
+    [self.modalNavigationController dismissViewControllerAnimated:YES completion:completion];
 }
 
 @end

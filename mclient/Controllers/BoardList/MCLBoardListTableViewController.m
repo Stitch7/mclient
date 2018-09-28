@@ -118,6 +118,11 @@
     self.alreadyAppeared = YES;
 }
 
+- (void)didReceiveMemoryWarning
+{
+    
+}
+
 #pragma mark - Configuration
 
 - (void)configureToolbarButtons

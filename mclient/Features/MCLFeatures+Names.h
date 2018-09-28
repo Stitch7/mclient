@@ -10,3 +10,4 @@ extern NSString *const MCLFeatureCrashReporter;
 extern NSString *const MCLFeatureKillFileThreads;
 extern NSString *const MCLFeatureFullSearch;
 extern NSString *const MCLFeaturePrivateMessages;
+extern NSString *const MCLFeatureTetris;

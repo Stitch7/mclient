@@ -204,6 +204,9 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
 
     [[UISearchBar appearance] setBackgroundImage:[[UIImage alloc] init]];
     [[UISearchBar appearance] setBackgroundColor:[theme searchBarBackgroundColor]];
+    // TODO: Why does this not work? Workaround done with UISearchBar+getSearchField
+    // [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTextColor:[theme searchFieldTextColor]];
+    // [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[theme searchFieldBackgroundColor]];
 
     [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLBoardListTableViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
     [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLDetailViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];

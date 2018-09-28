@@ -9,24 +9,33 @@
 #import "MCLErrorViewController.h"
 
 #import "UIView+addConstraints.h"
-
+#import "MCLDependencyBag.h"
+#import "MCLFeatures.h"
+#import "MCLRouter.h"
 #import "MCLMServiceErrorView.h"
 
 @interface MCLErrorViewController ()
 
+@property (strong, nonatomic) id <MCLDependencyBag> bag;
 @property (strong, nonatomic) NSError *error;
-@property (strong, nonatomic) MCLMServiceErrorView *errorView;
 
 @end
 
 @implementation MCLErrorViewController
 
-- (instancetype)initWithError:(NSError *)error
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag error:(NSError *)error
 {
     self = [super init];
     if (!self) return nil;
 
+    self.bag = bag;
     self.errorView = [[MCLMServiceErrorView alloc] initWithFrame:CGRectZero andText:[error localizedDescription]];
+
+    if (![self.bag.features isFeatureWithNameEnabled:MCLFeatureTetris]) {
+        self.errorView.gameButton.enabled = NO;
+        self.errorView.gameButton.hidden = YES;
+    }
+    [self.errorView.gameButton addTarget:self action:@selector(gameButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     return self;
 }
@@ -57,7 +66,6 @@
         return;
     }
 
-//    CGFloat viewHeight = self.view.frame.size.height;
     CGFloat viewHeight = [UIScreen mainScreen].bounds.size.height;
     CGFloat topPadding = 0;
     if (contentViewHeight < viewHeight) {
@@ -65,8 +73,6 @@
         topPadding = ((viewHeight - navbarHeight) / 2) - (contentViewHeight / 1.6);
         topPadding = topPadding > 0 ? topPadding : 0;
     }
-
-//    NSLog(@"~~~~~~~viewWillLayoutSubviews: %f  -  %f  -  %f", viewHeight, contentViewHeight, topPadding);
 
     UIEdgeInsets insets = UIEdgeInsetsMake(topPadding, 0, 0, 0);
     self.errorView.scrollView.contentInset = insets;
@@ -76,5 +82,11 @@
     }];
 }
 
+#pragma mark - Actions
+
+- (void)gameButtonPressed:(UIButton *)sender
+{
+    (void)[self.bag.router modalToGame];
+}
 
 @end

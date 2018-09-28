@@ -14,6 +14,7 @@
 @property (strong, nonatomic) NSString *labelText;
 @property (strong, nonatomic) UIImageView *image;
 @property (strong, nonatomic) UIButton *button;
+@property (strong, nonatomic) UIButton *gameButton;
 @property (assign, nonatomic) BOOL hideSubLabel;
 
 - (instancetype)initWithFrame:(CGRect)frame hideSubLabel:(BOOL)hideSubLabel;

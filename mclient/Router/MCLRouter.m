@@ -111,8 +111,9 @@
 {
     [self configureIfNecessary];
 
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"LaunchScreenActive" bundle:nil];
-    MCLLaunchViewController *launchVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLLaunchViewController"];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil];
+    UIViewController *storyboardLaunchVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLLaunchViewController"];
+    MCLLaunchViewController *launchVC = [[MCLLaunchViewController alloc] initWithLaunchViewController:storyboardLaunchVC];
 
     return [self makeWindowWithViewController:launchVC];
 }
@@ -127,10 +128,8 @@
 
 - (void)replaceRootWindow:(UIWindow *)newWindow
 {
-    MCLLaunchViewController *launchVC = (MCLLaunchViewController *)self.rootWindow.rootViewController;
     UIView *toView = newWindow.rootViewController.view;
     toView.frame = self.rootWindow.bounds;
-    [launchVC.loadingContainerView setHidden:YES];
     UIView *snapShotView = [self.rootWindow snapshotViewAfterScreenUpdates:YES];
 
     [newWindow.rootViewController.view addSubview:snapShotView];

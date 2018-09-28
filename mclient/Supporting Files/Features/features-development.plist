@@ -10,5 +10,7 @@
 	<false/>
 	<key>PrivateMessages</key>
 	<false/>
+	<key>Tetris</key>
+	<true/>
 </dict>
 </plist>

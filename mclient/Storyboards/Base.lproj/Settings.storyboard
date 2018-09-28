@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hWg-ib-K7d">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hWg-ib-K7d">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -696,7 +696,7 @@ Register at https://www.maniac-forum.de</string>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="DUg-WU-HvF"/>
                                 </constraints>
-                                <blurEffect style="dark"/>
+                                <blurEffect style="extraLight"/>
                             </visualEffectView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ndd-1c-qVh">
                                 <rect key="frame" x="0.0" y="508" width="320" height="60"/>
@@ -738,7 +738,7 @@ Register at https://www.maniac-forum.de</string>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="nBE-oA-Sdc"/>
                                 </constraints>
-                                <blurEffect style="dark"/>
+                                <blurEffect style="extraLight"/>
                             </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

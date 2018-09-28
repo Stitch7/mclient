@@ -35,7 +35,6 @@
                          @"domicile",
                          @"accountNo",
                          @"registrationDate",
-                         @"email",
                          @"icq",
                          @"homepage",
                          @"firstGame",

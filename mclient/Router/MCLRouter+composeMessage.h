@@ -12,6 +12,7 @@
 @class MCLMessage;
 @class MCLComposeMessageViewController;
 @class MCLComposeMessagePreviewViewController;
+@class SwiftyGiphyHelper;
 
 @interface MCLRouter (composeMessage)
 
@@ -19,5 +20,10 @@
 - (MCLComposeMessageViewController *)modalToComposeReplyToMessage:(MCLMessage *)message;
 - (MCLComposeMessageViewController *)modalToEditMessage:(MCLMessage *)message;
 - (MCLComposeMessagePreviewViewController *)pushToPreviewForMessage:(MCLMessage *)message;
+
+- (UIImagePickerController *)modalToImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType fromButton:(UIBarButtonItem *)button;
+
+- (SwiftyGiphyHelper *)modalToGiphy;
+- (void)dismissModalWithCompletion: (void (^)(void))completion;
 
 @end

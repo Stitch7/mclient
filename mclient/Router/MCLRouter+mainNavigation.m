@@ -41,8 +41,8 @@
     MCLSettingsViewController *settingsVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLSettingsViewController"];
     settingsVC.bag = self.bag; // TODO: - do proper DI
 
-    MCLModalNavigationController *navigationVC = [[MCLModalNavigationController alloc] initWithRootViewController:settingsVC];
-    [self.masterNavigationController presentViewController:navigationVC animated:YES completion:nil];
+    self.modalNavigationController = [[MCLModalNavigationController alloc] initWithRootViewController:settingsVC];
+    [self.masterNavigationController presentViewController:self.modalNavigationController animated:YES completion:nil];
 
     return settingsVC;
 }

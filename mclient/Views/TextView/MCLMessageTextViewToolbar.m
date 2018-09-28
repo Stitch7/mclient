@@ -11,7 +11,6 @@
 #import "MCLMessage.h"
 #import "MCLMessageTextViewToolbarDelegate.h"
 
-#pragma mark -
 
 @implementation MCLMessageTextViewToolbar
 
@@ -19,18 +18,20 @@
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-    if (self = [super initWithFrame:frame]) {
-        [self configure];
-    }
+    self = [super initWithFrame:frame];
+    if (!self) return nil;
+
+    [self configure];
 
     return self;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
-    if (self = [super initWithCoder:aDecoder]) {
-        [self configure];
-    }
+    self = [super initWithCoder:aDecoder];
+    if (!self) return nil;
+
+    [self configure];
 
     return self;
 }
@@ -69,7 +70,7 @@
                                                                        target:self
                                                                        action:@selector(spoilerButtonPressed:)];
 
-    UIImage *cameraImage = [[UIImage imageNamed:@"cameraButton"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIImage *cameraImage = [[UIImage imageNamed:@"addImageButton"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIBarButtonItem *cameraButton = [[UIBarButtonItem alloc] initWithImage:cameraImage
                                                                      style:UIBarButtonItemStylePlain
                                                                     target:self
@@ -111,7 +112,6 @@
     self.barStyle = UIBarStyleBlackTranslucent;
     self.items = toolbarItems;
     [self sizeToFit];
-
 }
 
 - (void)setType:(NSUInteger)type

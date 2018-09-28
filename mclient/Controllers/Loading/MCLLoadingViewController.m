@@ -71,7 +71,6 @@
 {
     self.errorView = [[MCLMServiceErrorView alloc] init];
     self.errorView.translatesAutoresizingMaskIntoConstraints = NO;
-//    [self.errorView constrainEdgesTo:self.view];
 }
 
 # pragma mark: - UIViewController life cycle
@@ -190,9 +189,10 @@
 
 - (void)addErrorViewContoller:(NSError *)error
 {
-    self.errorViewController = [[MCLErrorViewController alloc] initWithError:error];
+    self.errorViewController = [[MCLErrorViewController alloc] initWithBag:self.bag error:error];
 
-    [self updateNavigationController];
+    [self.errorViewController.errorView.button addTarget:self action:@selector(errorViewButtonPressed:)
+                                        forControlEvents:UIControlEventTouchUpInside];
 
     self.errorViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -203,6 +203,15 @@
 
     [self.errorViewController.view constrainEdgesTo:self.view];
     [self.errorViewController didMoveToParentViewController:self];
+}
+
+- (void)errorViewButtonPressed:(UIButton *)sender
+{
+    [self.errorViewController.view removeFromSuperview];
+    [self.errorViewController removeFromParentViewController];
+    self.error = NO;
+    [self startLoading];
+    [self load];
 }
 
 #pragma mark - Public
@@ -242,10 +251,11 @@
 
 - (void)showErrorView:(NSError *)error
 {
-//    [self.view addSubview:self.errorView];
     if (self.hasError) {
         return;
     }
+
+    [self.navigationItem setRightBarButtonItem:nil];
 
     self.error = YES;
     [self stopLoading];

@@ -12,6 +12,7 @@
 
 #import "UIView+addConstraints.h"
 
+
 @implementation MCLErrorView
 
 #pragma mark - Initializers
@@ -106,6 +107,11 @@
     button.layer.cornerRadius = 10;
     button.layer.borderColor = button.tintColor.CGColor;
 
+    UIButton *gameButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    gameButton.translatesAutoresizingMaskIntoConstraints = NO;
+    gameButton.titleLabel.font = [UIFont systemFontOfSize:12.0f];
+    [gameButton setTitle: NSLocalizedString(@"Let's play a game", nil) forState:UIControlStateNormal];
+
     UIView *spacerBottom = [[UIView alloc] init];
     spacerBottom.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -113,6 +119,7 @@
     [contentView addSubview:label];
     [contentView addSubview:image];
     [contentView addSubview:button];
+    [contentView addSubview:gameButton];
     [contentView addSubview:spacerBottom];
 
     [contentView addConstraints:@"H:|-[spacerTop]-|" views:NSDictionaryOfVariableBindings(spacerTop)];
@@ -144,10 +151,17 @@
                                                             attribute:NSLayoutAttributeCenterX
                                                            multiplier:1.0
                                                              constant:0]];
-//    [contentView addConstraints:@"H:|-25-[button]-25-|" views:NSDictionaryOfVariableBindings(button)];
 
-    NSDictionary *views = NSDictionaryOfVariableBindings(spacerTop, label, image, button, spacerBottom);
-    [contentView addConstraints:@"V:|-[spacerTop(20)][label]-25-[image]-30-[button(36)][spacerBottom]-|" views:views];
+    [contentView addConstraint:[NSLayoutConstraint constraintWithItem:contentView
+                                                            attribute:NSLayoutAttributeCenterX
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:gameButton
+                                                            attribute:NSLayoutAttributeCenterX
+                                                           multiplier:1.0
+                                                             constant:0]];
+
+    NSDictionary *views = NSDictionaryOfVariableBindings(spacerTop, label, image, button, gameButton, spacerBottom);
+    [contentView addConstraints:@"V:|-[spacerTop(20)][label]-25-[image]-30-[button(36)]-40-[gameButton][spacerBottom]-|" views:views];
 
     [contentView addConstraints:@"H:|-[spacerBottom]-|" views:NSDictionaryOfVariableBindings(spacerBottom)];
 
@@ -156,9 +170,9 @@
     self.label = label;
     self.image = image;
     self.button = button;
+    self.gameButton = gameButton;
 
     [self configure];
-//    button.hidden = self.hideSubLabel;
 }
 
 # pragma mark - Abstract

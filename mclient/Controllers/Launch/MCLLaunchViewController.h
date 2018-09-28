@@ -10,7 +10,6 @@
 
 @interface MCLLaunchViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UILabel *logoLabel;
-@property (weak, nonatomic) IBOutlet UIView *loadingContainerView;
+- (instancetype)initWithLaunchViewController:(UIViewController *)launchViewController;
 
 @end

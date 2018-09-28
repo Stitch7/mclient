@@ -235,7 +235,7 @@ static NSString *kQueueOperationsChanged = @"kQueueOperationsChanged";
 
 - (void)addErrorViewContoller:(NSError *)error
 {
-    self.errorViewController = [[MCLErrorViewController alloc] initWithError:error];
+    self.errorViewController = [[MCLErrorViewController alloc] initWithBag:self.bag error:error];
 
     [self updateNavigationController];
 

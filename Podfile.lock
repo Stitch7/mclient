@@ -18,6 +18,7 @@ PODS:
   - BBBadgeBarButtonItem (1.2)
   - DGActivityIndicatorView (2.1.1)
   - EDSunriseSet (1.0)
+  - FLAnimatedImage (1.0.12)
   - HockeySDK (5.1.2):
     - HockeySDK/DefaultLib (= 5.1.2)
   - HockeySDK/DefaultLib (5.1.2)
@@ -52,6 +53,17 @@ PODS:
   - MRProgress/ProgressBaseClass (0.8.3)
   - MRProgress/Stopable (0.8.3):
     - MRProgress/Helper
+  - NSTimer-Blocks (0.0.1)
+  - ObjectMapper (3.3.0)
+  - SDWebImage/Core (4.4.2)
+  - SDWebImage/GIF (4.4.2):
+    - FLAnimatedImage (~> 1.0)
+    - SDWebImage/Core
+  - SwiftyGiphy (1.1.1):
+    - FLAnimatedImage (~> 1.0)
+    - NSTimer-Blocks
+    - ObjectMapper (~> 3.3)
+    - SDWebImage/GIF
   - Valet (2.4.2)
 
 DEPENDENCIES:
@@ -63,13 +75,31 @@ DEPENDENCIES:
   - ImgurSession (from `https://github.com/mileswd/ImgurSession`)
   - MGSwipeTableCell
   - MRProgress
+  - SwiftyGiphy (from `https://github.com/Stitch7/SwiftyGiphy`)
   - Valet (~> 2.4.2)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - AsyncBlockOperation
+    - BBBadgeBarButtonItem
+    - DGActivityIndicatorView
+    - FLAnimatedImage
+    - HockeySDK
+    - MGSwipeTableCell
+    - MRProgress
+    - NSTimer-Blocks
+    - ObjectMapper
+    - SDWebImage
+    - Valet
 
 EXTERNAL SOURCES:
   EDSunriseSet:
     :git: https://github.com/Tricertops/EDSunriseSet
   ImgurSession:
     :git: https://github.com/mileswd/ImgurSession
+  SwiftyGiphy:
+    :git: https://github.com/Stitch7/SwiftyGiphy
 
 CHECKOUT OPTIONS:
   EDSunriseSet:
@@ -78,6 +108,9 @@ CHECKOUT OPTIONS:
   ImgurSession:
     :commit: d4c306545f90b79d58f5422e394258e7009313c7
     :git: https://github.com/mileswd/ImgurSession
+  SwiftyGiphy:
+    :commit: db148170922e6f5cfda0f6b52ef99fd3ff0be47f
+    :git: https://github.com/Stitch7/SwiftyGiphy
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -85,12 +118,17 @@ SPEC CHECKSUMS:
   BBBadgeBarButtonItem: c2fbca0bff18e21b70defc9438a8a5048008e7ca
   DGActivityIndicatorView: ff2c76073d79692f724863c8dd38685866a03cb6
   EDSunriseSet: eae541a8f534b0751deb0a618828667a7382cc70
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   HockeySDK: 38b7e2726af1ea86ae97ce4b5de33ab0817e3500
   ImgurSession: e11a605652cfe8aebfb6a9a4ea5b752654f14e2f
   MGSwipeTableCell: fb20e983988bde2b8d0df29c2d9e1d8ffd10b74a
   MRProgress: 16de7cc9f347e8846797a770db102a323fe7ef09
+  NSTimer-Blocks: 88faf9aef5f250ead087f3f67ae642517083bf36
+  ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
+  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
+  SwiftyGiphy: f91fb774668fa491b6659de4b413c470cbafe534
   Valet: 14463ef24fab8fd5809044ecedb61484b799fdd6
 
-PODFILE CHECKSUM: 4b62a526f3031693be7a725d6b9b3bbd3f156b02
+PODFILE CHECKSUM: 2ac31e04a65c640545a08e979989c7e156329d7c
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.3
