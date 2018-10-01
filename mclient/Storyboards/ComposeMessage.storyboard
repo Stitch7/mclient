@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Bpt-4P-M2q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Bpt-4P-M2q">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -29,10 +30,6 @@
         <scene sceneID="Zi5-L0-lLr">
             <objects>
                 <viewController storyboardIdentifier="MCLComposeMessageViewController" id="ZYZ-aV-2jk" customClass="MCLComposeMessageViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="JtK-d5-b8f"/>
-                        <viewControllerLayoutGuide type="bottom" id="A3I-hj-4bJ"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Set-bo-Aco">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -77,11 +74,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="A3I-hj-4bJ" firstAttribute="top" secondItem="yjz-F0-JKQ" secondAttribute="bottom" id="3Gl-4C-Cja"/>
-                            <constraint firstItem="yjz-F0-JKQ" firstAttribute="leading" secondItem="Set-bo-Aco" secondAttribute="leading" constant="15" id="Gxu-yn-x02"/>
-                            <constraint firstAttribute="trailing" secondItem="yjz-F0-JKQ" secondAttribute="trailing" constant="4" id="Qij-Ff-Z4p"/>
-                            <constraint firstItem="yjz-F0-JKQ" firstAttribute="top" secondItem="JtK-d5-b8f" secondAttribute="bottom" constant="4" id="sDY-Ff-oh8"/>
+                            <constraint firstItem="kwv-Ai-d7R" firstAttribute="bottom" secondItem="yjz-F0-JKQ" secondAttribute="bottom" id="3Gl-4C-Cja"/>
+                            <constraint firstItem="yjz-F0-JKQ" firstAttribute="leading" secondItem="kwv-Ai-d7R" secondAttribute="leading" constant="15" id="Gxu-yn-x02"/>
+                            <constraint firstItem="kwv-Ai-d7R" firstAttribute="trailing" secondItem="yjz-F0-JKQ" secondAttribute="trailing" constant="4" id="Qij-Ff-Z4p"/>
+                            <constraint firstItem="yjz-F0-JKQ" firstAttribute="top" secondItem="kwv-Ai-d7R" secondAttribute="top" constant="4" id="sDY-Ff-oh8"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="kwv-Ai-d7R"/>
                     </view>
                     <navigationItem key="navigationItem" id="dww-sR-PAV"/>
                     <connections>
@@ -100,10 +98,6 @@
         <scene sceneID="nfI-rB-0Gm">
             <objects>
                 <viewController storyboardIdentifier="MCLComposeMessagePreviewViewController" automaticallyAdjustsScrollViewInsets="NO" id="wXy-Kt-Ipn" customClass="MCLComposeMessagePreviewViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="x9Y-cm-sJf"/>
-                        <viewControllerLayoutGuide type="bottom" id="qTl-St-egc"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="luz-ny-D3s">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -115,11 +109,12 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="haV-0s-Sgf" firstAttribute="top" secondItem="x9Y-cm-sJf" secondAttribute="bottom" id="IL9-SG-4wm"/>
-                            <constraint firstItem="qTl-St-egc" firstAttribute="top" secondItem="haV-0s-Sgf" secondAttribute="bottom" id="Itr-Nm-rea"/>
-                            <constraint firstItem="haV-0s-Sgf" firstAttribute="leading" secondItem="luz-ny-D3s" secondAttribute="leading" id="Xb5-3G-zZb"/>
-                            <constraint firstAttribute="trailing" secondItem="haV-0s-Sgf" secondAttribute="trailing" id="c7g-kK-FlO"/>
+                            <constraint firstItem="haV-0s-Sgf" firstAttribute="top" secondItem="IdW-bV-mob" secondAttribute="top" id="IL9-SG-4wm"/>
+                            <constraint firstItem="IdW-bV-mob" firstAttribute="bottom" secondItem="haV-0s-Sgf" secondAttribute="bottom" id="Itr-Nm-rea"/>
+                            <constraint firstItem="haV-0s-Sgf" firstAttribute="leading" secondItem="IdW-bV-mob" secondAttribute="leading" id="Xb5-3G-zZb"/>
+                            <constraint firstItem="IdW-bV-mob" firstAttribute="trailing" secondItem="haV-0s-Sgf" secondAttribute="trailing" id="c7g-kK-FlO"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="IdW-bV-mob"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="Title" id="jqH-N6-o7q"/>
