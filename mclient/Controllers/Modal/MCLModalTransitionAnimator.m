@@ -62,10 +62,9 @@
 
                              [self addRoundedCornersToView:toView];
                              [self addRoundedCornersToView:fromView];
-
                          } else {
                              fromView.center = center;
-                             toView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                             toView.transform = CGAffineTransformIdentity;
 
                              [self removeRoundedCornersFromView:toView];
                              [self removeRoundedCornersFromView:fromView];
