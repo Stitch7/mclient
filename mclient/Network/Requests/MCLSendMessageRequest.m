@@ -37,9 +37,6 @@
 
 - (void)loadWithCompletionHandler:(void (^)(NSError*, NSArray*))completionHandler
 {
-//    // TODO: - Remove checks if we are really sure ;)
-    assert(self.message.type);
-
     void (^completion)(NSError *error, NSDictionary *json) = ^(NSError *error, NSDictionary *json) {
         NSMutableArray *data = [NSMutableArray new];
         if (json) {
