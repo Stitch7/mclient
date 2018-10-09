@@ -11,7 +11,8 @@
 - (NSUInteger)identifier;
 - (BOOL)isDark;
 - (UIColor *)tintColor;
-- (NSString *)cssTintColor; // 007aff
+- (NSString *)cssTintColor;
+- (NSString *)cssQuoteColor;
 - (UIColor *)backgroundColor;
 - (UIColor *)textColor;
 - (UIColor *)detailTextColor;

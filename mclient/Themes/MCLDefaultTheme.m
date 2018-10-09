@@ -49,6 +49,11 @@
     return @"007aff";
 }
 
+- (NSString *)cssQuoteColor
+{
+    return @"808080";
+}
+
 - (UIColor *)backgroundColor
 {
     return [UIColor whiteColor];

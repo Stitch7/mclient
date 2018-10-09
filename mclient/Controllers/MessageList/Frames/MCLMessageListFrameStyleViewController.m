@@ -289,8 +289,9 @@
 - (void)loadMessage:(MCLMessage *)message fromCell:(MCLMessageListFrameStyleTableViewCell *)cell
 {
     cell.messageText = message.text;
+    NSInteger fontSize = [self.bag.settings integerForSetting:MCLSettingFontSize];
     NSNumber *imageSetting = [self.bag.settings objectForSetting:MCLSettingShowImages];
-    [self.webView loadHTMLString:[message messageHtmlWithTopMargin:15 theme:self.bag.themeManager.currentTheme imageSetting:imageSetting] baseURL:nil];
+    [self.webView loadHTMLString:[message messageHtmlWithTopMargin:15 theme:self.bag.themeManager.currentTheme fontSize:fontSize imageSetting:imageSetting] baseURL:nil];
     [self.toolbar updateBarButtonsWithMessage:message];
 }
 

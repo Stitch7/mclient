@@ -130,7 +130,7 @@
     }
 }
 
-- (NSString *)messageHtmlWithTopMargin:(int)topMargin theme:(id <MCLTheme>)theme imageSetting:(NSNumber *)imageSetting
+- (NSString *)messageHtmlWithTopMargin:(int)topMargin theme:(id <MCLTheme>)theme fontSize:(NSInteger)fontSize imageSetting:(NSNumber *)imageSetting
 {
     NSString *messageHtml = @"";
     switch ([imageSetting integerValue]) {
@@ -152,33 +152,30 @@
     }
 
     return [self messageHtmlSkeletonForHtml:messageHtml
-                              withTopMargin:topMargin
-                                   andTheme:theme];
+                                  topMargin:topMargin
+                                   fontSize:fontSize
+                                      theme:theme];
 }
 
 # pragma mark - Private Methods
 
-- (NSString *)messageHtmlSkeletonForHtml:(NSString *)html withTopMargin:(int)topMargin andTheme:(id <MCLTheme>)currentTheme
+- (NSString *)messageHtmlSkeletonForHtml:(NSString *)html topMargin:(int)topMargin fontSize:(NSInteger)fontSizeValue theme:(id <MCLTheme>)currentTheme
 {
-    NSInteger fontSizeValue = [[NSUserDefaults standardUserDefaults] integerForKey:@"fontSize"];
+    NSString *editedHtml = [html stringByReplacingOccurrencesOfString:@" color=\"#808080\"" withString:@""];
+    editedHtml = [editedHtml stringByReplacingOccurrencesOfString:@"<font>&gt;" withString:@"<font>"];
+    editedHtml = [editedHtml stringByReplacingOccurrencesOfString:@"<br>\n&gt;" withString:@"<br>"];
+
     if (!fontSizeValue) {
         fontSizeValue = 3;
     }
-
     NSInteger buttonFontSizeValue = fontSizeValue + 9;
     fontSizeValue = fontSizeValue + 11;
-
-    // TODO: crash?
     NSString *fontSize = [@(fontSizeValue) stringValue];
     NSString *buttonFontSize = [@(buttonFontSizeValue) stringValue];
 
-//        NSString *fontSize = [NSString stringWithFormat:@"%ldpx", (long)(fontSizeValue + 11)];
-//        NSString *buttonFontSize = [NSString stringWithFormat:@"%ldpx", (long)(fontSizeValue + 9)];
-//    NSString *fontSize = @"14";
-//    NSString *buttonFontSize = @"14";
-
-    NSString *textColor = [currentTheme isDark] ? @"#fff" : @"#000";
+    NSString *textColor = [currentTheme isDark] ? @"fff" : @"000";
     NSString *linkColor = [currentTheme cssTintColor];
+    NSString *quoteColor = [currentTheme cssQuoteColor];
 
     return [NSString stringWithFormat:@""
             "<html>"
@@ -204,11 +201,19 @@
             "        margin: %ipx 20px 10px 20px;"
             "        padding: 0px;"
             "        background-color: transparent;"
-            "        color: %@;"
+            "        color: #%@;"
             "    }"
             "    a {"
             "        word-break: break-all;"
-            "        color: %@;"
+            "        color: #%@;"
+            "    }"
+            "    font {" // quotes
+            "        display: block;"
+            "        padding-left: 10px;"
+            "        margin-bottom: -15px;"
+            "        border-left: 2px solid;"
+            "        border-color: #%@;"
+            "        color: #%@;"
             "    }"
             "    img {"
             "        max-width: 100%%;"
@@ -217,6 +222,7 @@
             "        border-radius: 3px;"
             "        color: #0a60ff;"
             "        font-size: %@;"
+            "        font-weight: bold;"
             "        padding: 3px 7px;"
             "        border: solid #0a60ff 1px;"
             "        text-decoration: none;"
@@ -224,7 +230,7 @@
             "</style>"
             "</head>"
             "<body>%@</body>"
-            "</html>", fontSize, topMargin, textColor, linkColor, buttonFontSize, html];
+            "</html>", fontSize, topMargin, textColor, linkColor, quoteColor, quoteColor, buttonFontSize, editedHtml];
 }
 
 - (NSString *)actionTitle
