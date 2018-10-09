@@ -30,10 +30,10 @@
 "L7R-UJ-uhd.text" = "Vorschau";
 
 /* Class = "UITableViewSection"; footerTitle = "Night mode can be enabled automatically at sunset, and disabled automatically at sunrise. To calculate the times you get asked for permission to gather location data."; ObjectID = "MNY-pr-L5C"; */
-"MNY-pr-L5C.footerTitle" = "Nacht-Modus kann bei Sonnenaufgang und Sonnenuntergang automatisch umgeschaltet werden. Um die Zeiten dafür zu berechnen wird dein aktueller Standort benötigt.";
+"MNY-pr-L5C.footerTitle" = "Dark Mode kann bei Sonnenaufgang und Sonnenuntergang automatisch umgeschaltet werden. Um die Zeiten dafür zu berechnen wird dein aktueller Standort benötigt.";
 
 /* Class = "UITableViewSection"; headerTitle = "Night Mode"; ObjectID = "MNY-pr-L5C"; */
-"MNY-pr-L5C.headerTitle" = "NACHT-MODUS";
+"MNY-pr-L5C.headerTitle" = "DARK MODE";
 
 /* Class = "UILabel"; text = "Only in WiFI Network"; ObjectID = "SxL-9L-Hxa"; */
 "SxL-9L-Hxa.text" = "Nur wenn mit WLAN verbunden";

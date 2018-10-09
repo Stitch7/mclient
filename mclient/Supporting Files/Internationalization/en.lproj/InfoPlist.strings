@@ -2,5 +2,5 @@
 
 NSPhotoLibraryAddUsageDescription = "Access to photo library is needed to save images from postings.";
 NSPhotoLibraryUsageDescription = "Access to photo library is needed to add images to postings.";
-NSLocationWhenInUseUsageDescription = "Location is needed to calculate the times for sunrise and sunset for the automatic night mode.";
+NSLocationWhenInUseUsageDescription = "Location is needed to calculate the times for sunrise and sunset for the automatic change to dark mode.";
 NSCameraUsageDescription = "Access to the camera is needed to take pictures for postings inside the app.";
