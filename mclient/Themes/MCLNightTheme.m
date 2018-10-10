@@ -18,6 +18,7 @@
 @property (strong, nonatomic) UIColor *darkGrayColor;
 @property (strong, nonatomic) UIColor *totalDarkGrayColor;
 @property (strong, nonatomic) UIColor *notSoTotalDarkGrayColor;
+@property (strong, nonatomic) UIColor *nearlyBlackColor;
 
 @end
 
@@ -35,6 +36,7 @@
     self.darkGrayColor = [UIColor colorWithRed:0.56 green:0.56 blue:0.58 alpha:1.0];
     self.totalDarkGrayColor = [UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0];
     self.notSoTotalDarkGrayColor = [UIColor colorWithRed:0.07 green:0.07 blue:0.07 alpha:1.0];
+    self.nearlyBlackColor = [UIColor colorWithRed:0.05 green:0.05 blue:0.05 alpha:1.0];
 
     return self;
 }
@@ -68,7 +70,7 @@
 
 - (UIColor *)backgroundColor
 {
-    return [UIColor blackColor];
+    return self.nearlyBlackColor;
 }
 
 - (UIColor *)textColor
@@ -128,12 +130,12 @@
 
 - (UIColor *)textViewDisabledTextColor
 {
-    return [UIColor blackColor];
+    return self.nearlyBlackColor;
 }
 
 - (UIColor *)navigationBarBackgroundColor
 {
-    return [UIColor blackColor];
+    return self.nearlyBlackColor;
 }
 
 - (UIColor *)navigationBarTextColor
@@ -143,12 +145,12 @@
 
 - (UIColor *)toolbarBackgroundColor
 {
-    return [UIColor blackColor];
+    return self.nearlyBlackColor;
 }
 
 - (UIColor *)tableViewBackgroundColor
 {
-    return [UIColor blackColor];
+    return self.nearlyBlackColor;
 }
 
 - (UIColor *)tableViewHeaderTextColor
@@ -168,12 +170,12 @@
 
 - (UIColor *)refreshControlBackgroundColor
 {
-    return [UIColor blackColor];
+    return self.nearlyBlackColor;
 }
 
 - (UIColor *)searchBarBackgroundColor
 {
-    return [UIColor blackColor];
+    return self.nearlyBlackColor;
 }
 
 - (UIColor *)searchFieldBackgroundColor
@@ -193,17 +195,17 @@
 
 - (UIColor *)tableViewCellSelectedBackgroundColor
 {
-    return [UIColor blackColor];
+    return self.nearlyBlackColor;
 }
 
 - (UIColor *)badgeViewBackgroundColor
 {
-    return [UIColor blackColor];
+    return self.nearlyBlackColor;
 }
 
 - (UIColor *)webViewBackgroundColor
 {
-    return [UIColor blackColor];
+    return self.nearlyBlackColor;
 }
 
 @end
