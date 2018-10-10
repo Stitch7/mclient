@@ -130,8 +130,12 @@
     }
 }
 
-- (NSString *)messageHtmlWithTopMargin:(int)topMargin theme:(id <MCLTheme>)theme fontSize:(NSInteger)fontSize imageSetting:(NSNumber *)imageSetting
+- (NSString *)messageHtmlWithTopMargin:(int)topMargin theme:(id <MCLTheme>)theme settings:(MCLSettings *)settings
 {
+    NSNumber *imageSetting = [settings objectForSetting:MCLSettingShowImages];
+    NSInteger fontSize = [settings integerForSetting:MCLSettingFontSize];
+    BOOL classicQuoteDesign = [settings isSettingActivated:MCLSettingClassicQuoteDesign];
+
     NSString *messageHtml = @"";
     switch ([imageSetting integerValue]) {
         case kMCLSettingsShowImagesAlways:
@@ -154,27 +158,33 @@
     return [self messageHtmlSkeletonForHtml:messageHtml
                                   topMargin:topMargin
                                    fontSize:fontSize
+                         classicQuoteDesign:classicQuoteDesign
                                       theme:theme];
 }
 
 # pragma mark - Private Methods
 
-- (NSString *)messageHtmlSkeletonForHtml:(NSString *)html topMargin:(int)topMargin fontSize:(NSInteger)fontSizeValue theme:(id <MCLTheme>)currentTheme
+- (NSString *)messageHtmlSkeletonForHtml:(NSString *)html topMargin:(int)topMargin fontSize:(NSInteger)fontSize classicQuoteDesign:(BOOL)classicQuoteDesign theme:(id <MCLTheme>)currentTheme
 {
-    NSString *editedHtml = [html stringByReplacingOccurrencesOfString:@" color=\"#808080\"" withString:@""];
-    editedHtml = [editedHtml stringByReplacingOccurrencesOfString:@"<font>&gt;" withString:@"<font>"];
-    editedHtml = [editedHtml stringByReplacingOccurrencesOfString:@"<br>\n&gt;" withString:@"<br>"];
+    NSString *editedHtml = html;
+    if (!classicQuoteDesign) {
+        editedHtml = [editedHtml stringByReplacingOccurrencesOfString:@" color=\"#808080\"" withString:@""];
+        editedHtml = [editedHtml stringByReplacingOccurrencesOfString:@"<font>&gt;" withString:@"<font>"];
+        editedHtml = [editedHtml stringByReplacingOccurrencesOfString:@"<br>\n&gt;" withString:@"<br>"];
+    }
 
+    NSInteger fontSizeValue = fontSize;
     if (!fontSizeValue) {
         fontSizeValue = 3;
     }
     NSInteger buttonFontSizeValue = fontSizeValue + 9;
     fontSizeValue = fontSizeValue + 11;
-    NSString *fontSize = [@(fontSizeValue) stringValue];
+    NSString *fontSizeStr = [@(fontSizeValue) stringValue];
     NSString *buttonFontSize = [@(buttonFontSizeValue) stringValue];
 
     NSString *textColor = [currentTheme isDark] ? @"fff" : @"000";
     NSString *linkColor = [currentTheme cssTintColor];
+    NSString *classicQuoteDesignDisabled = classicQuoteDesign ? @"-DEACTIVED" : @"";
     NSString *quoteColor = [currentTheme cssQuoteColor];
 
     return [NSString stringWithFormat:@""
@@ -194,26 +204,26 @@
             "<style>"
             "    * {"
             "        font-family: \"Helvetica Neue\";"
-            "        font-size: %@;"
+            "        font-size: %@;" // fontSizeStr
             "        -webkit-text-size-adjust: none;"
             "    }"
             "    body {"
-            "        margin: %ipx 20px 10px 20px;"
+            "        margin: %ipx 20px 10px 20px;" // topMargin
             "        padding: 0px;"
             "        background-color: transparent;"
-            "        color: #%@;"
+            "        color: #%@;" // textColor
             "    }"
             "    a {"
             "        word-break: break-all;"
-            "        color: #%@;"
+            "        color: #%@;" // linkColor
             "    }"
-            "    font {" // quotes
+            "    font%@ {" // classicQuoteDesignDisabled
             "        display: block;"
             "        padding-left: 10px;"
             "        margin-bottom: -15px;"
             "        border-left: 2px solid;"
-            "        border-color: #%@;"
-            "        color: #%@;"
+            "        border-color: #%@;" // quoteColor
+            "        color: #%@;" // quoteColor
             "    }"
             "    img {"
             "        max-width: 100%%;"
@@ -221,7 +231,7 @@
             "    button {"
             "        border-radius: 3px;"
             "        color: #0a60ff;"
-            "        font-size: %@;"
+            "        font-size: %@;" // buttonFontSize
             "        font-weight: bold;"
             "        padding: 3px 7px;"
             "        border: solid #0a60ff 1px;"
@@ -229,8 +239,9 @@
             "    }"
             "</style>"
             "</head>"
-            "<body>%@</body>"
-            "</html>", fontSize, topMargin, textColor, linkColor, quoteColor, quoteColor, buttonFontSize, editedHtml];
+            "<body>%@</body>" // editedHtml
+            "</html>",
+            fontSizeStr, topMargin, textColor, linkColor, classicQuoteDesignDisabled, quoteColor, quoteColor, buttonFontSize, editedHtml];
 }
 
 - (NSString *)actionTitle

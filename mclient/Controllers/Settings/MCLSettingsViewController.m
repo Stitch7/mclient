@@ -47,6 +47,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 @property (weak, nonatomic) IBOutlet MCLTextView *settingsSignatureTextView;
 @property (weak, nonatomic) IBOutlet UISwitch *jumpToLatestMessageSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *openLinksInSafariSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *classicQuoteDesignSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *nightModeEnabledSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *nightModeAutomaticallySwitch;
 
@@ -56,8 +57,8 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 
 #define THREADVIEW_SECTION 3;
 #define FONTSIZE_SECTION 4;
-#define IMAGES_SECTION 7;
-#define INFO_SECTION 9;
+#define IMAGES_SECTION 8;
+#define INFO_SECTION 10;
 
 - (void)awakeFromNib
 {
@@ -146,6 +147,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
                                                 orDefault:@(kMCLSettingsThreadViewWidmann)];
     self.jumpToLatestMessageSwitch.on = [self.bag.settings isSettingActivated:MCLSettingJumpToLatestPost];
     self.openLinksInSafariSwitch.on = [self.bag.settings isSettingActivated:MCLSettingOpenLinksInSafari];
+    self.classicQuoteDesignSwitch.on = [self.bag.settings isSettingActivated:MCLSettingClassicQuoteDesign];
 }
 
 - (void)configureLoginSection
@@ -545,14 +547,19 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     [self signatureTextViewEnabled:sender.on];
 }
 
+- (IBAction)jumpToLatestPostEnabledSwitchValueChangedAction:(UISwitch *)sender
+{
+    [self.bag.settings setBool:sender.on forSetting:MCLSettingJumpToLatestPost];
+}
+
 - (IBAction)openLinksInSafariEnabledSwitchValueChangedAction:(UISwitch *)sender
 {
     [self.bag.settings setBool:sender.on forSetting:MCLSettingOpenLinksInSafari];
 }
 
-- (IBAction)jumpToLatestPostEnabledSwitchValueChangedAction:(UISwitch *)sender
+- (IBAction)classicQuoteDesignEnabledSwitchValueChangedAction:(UISwitch *)sender
 {
-    [self.bag.settings setBool:sender.on forSetting:MCLSettingJumpToLatestPost];
+    [self.bag.settings setBool:sender.on forSetting:MCLSettingClassicQuoteDesign];
 }
 
 - (IBAction)nightModeEnabledSwitchValueChangedAction:(UISwitch *)sender

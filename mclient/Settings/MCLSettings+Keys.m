@@ -18,4 +18,5 @@ NSString * const MCLSettingSignatureText = @"signature";
 NSString * const MCLSettingFontSize = @"fontSize";
 NSString * const MCLSettingTheme = @"theme";
 NSString * const MCLSettingOpenLinksInSafari = @"MCLSettingOpenLinksInSafari";
+NSString * const MCLSettingClassicQuoteDesign = @"classicQuoteDesign";
 NSString * const MCLSettingBackgroundNotifications = @"backgroundNotifications";

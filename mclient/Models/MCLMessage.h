@@ -11,6 +11,7 @@
 @class MCLBoard;
 @class MCLThread;
 @class MCLResponse;
+@class MCLSettings;
 
 typedef NS_ENUM(NSUInteger, kMCLComposeType) {
     kMCLComposeTypeThread,
@@ -67,8 +68,7 @@ typedef NS_ENUM(NSUInteger, kMCLComposeType) {
 
 - (NSString *)messageHtmlWithTopMargin:(int)topMargin
                                  theme:(id <MCLTheme>)theme
-                              fontSize:(NSInteger)fontSize
-                          imageSetting:(NSNumber *)imageSetting;
+                              settings:(MCLSettings *)settings;
 
 - (NSString *)actionTitle;
 

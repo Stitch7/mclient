@@ -16,6 +16,7 @@ extern NSString *const MCLSettingSignatureText;
 extern NSString *const MCLSettingFontSize;
 extern NSString *const MCLSettingTheme;
 extern NSString *const MCLSettingOpenLinksInSafari;
+extern NSString *const MCLSettingClassicQuoteDesign;
 extern NSString *const MCLSettingBackgroundNotifications;
 
 typedef NS_ENUM(NSUInteger, kMCLSettingsThreadView) {

@@ -1,21 +1,33 @@
 
+/* Class = "UITableViewSection"; footerTitle = "Use the systems background fetch capability to get notified about new replies to your postings."; ObjectID = "03w-Ml-MZu"; */
+"03w-Ml-MZu.footerTitle" = "Nutze die Hintergrundaktualisierungs Funktion des Systems um dich über neue Antworten zu deinen Postings benachrichtigen zu lassen.";
+
+/* Class = "UITableViewSection"; headerTitle = "NOTIFICATIONS"; ObjectID = "03w-Ml-MZu"; */
+"03w-Ml-MZu.headerTitle" = "BENACHRICHTIGUNGEN";
+
 /* Class = "UILabel"; text = "Widmann Style"; ObjectID = "1uH-yH-PBJ"; */
 "1uH-yH-PBJ.text" = "Widmann Style";
 
-/* Class = "UITableViewSection"; footerTitle = "You can choose between two different view Styles for the the thread view. Widmann style is inspired by the mobile web app and Frames is a more classical design."; ObjectID = "7Km-hk-O45"; */
+/* Class = "UITableViewSection"; footerTitle = "You can choose between two different view styles for the the thread view. Widmann style is inspired by the mobile web app and Frames is a more classical design."; ObjectID = "7Km-hk-O45"; */
 "7Km-hk-O45.footerTitle" = "Du kannst aus zwei verschiedenen Styles für die Thread Ansicht wählen. Widmann Style ist inspiriert von der mobilen Web App, Frames ist eine klassischere Variante.";
 
 /* Class = "UITableViewSection"; headerTitle = "THREAD VIEW"; ObjectID = "7Km-hk-O45"; */
 "7Km-hk-O45.headerTitle" = "THREAD ANSICHT";
 
+/* Class = "UITableViewSection"; headerTitle = "INFORMATION"; ObjectID = "Bbz-uB-lDT"; */
+"Bbz-uB-lDT.headerTitle" = "INFORMATIONEN";
+
 /* Class = "UILabel"; text = "Enable"; ObjectID = "DME-wj-tpS"; */
 "DME-wj-tpS.text" = "Aktivieren";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "EAh-0C-O91"; */
+"EAh-0C-O91.text" = "";
 
 /* Class = "UILabel"; text = "Jump to latest Post"; ObjectID = "F5e-Z8-s9N"; */
 "F5e-Z8-s9N.text" = "Zum letzten Post springen";
 
-/* Class = "UILabel"; text = "Open Links in Safari"; ObjectID = "hll-o3-la6.text"; */
-"hll-o3-la6.text" = "Links in Safari öffnen";
+/* Class = "UILabel"; text = "Terms of use"; ObjectID = "Fap-wu-fB0"; */
+"Fap-wu-fB0.text" = "Nutzungsbedingungen";
 
 /* Class = "UILabel"; text = "Always"; ObjectID = "IbE-Ea-778"; */
 "IbE-Ea-778.text" = "Immer";
@@ -26,14 +38,17 @@
 /* Class = "UILabel"; text = "loginDataStatusLabel"; ObjectID = "Kto-1S-ge8"; */
 "Kto-1S-ge8.text" = "loginDataStatusLabel";
 
-/* Class = "UILabel"; text = "Preview"; ObjectID = "L7R-UJ-uhd"; */
-"L7R-UJ-uhd.text" = "Vorschau";
+/* Class = "UILabel"; text = "Data privacy statement"; ObjectID = "LVI-Wv-6BK"; */
+"LVI-Wv-6BK.text" = "Datenschutzerklärung";
 
-/* Class = "UITableViewSection"; footerTitle = "Night mode can be enabled automatically at sunset, and disabled automatically at sunrise. To calculate the times you get asked for permission to gather location data."; ObjectID = "MNY-pr-L5C"; */
+/* Class = "UITableViewSection"; footerTitle = "Dark mode can be enabled automatically at sunset, and disabled automatically at sunrise. To calculate the times you get asked for permission to gather location data."; ObjectID = "MNY-pr-L5C"; */
 "MNY-pr-L5C.footerTitle" = "Dark Mode kann bei Sonnenaufgang und Sonnenuntergang automatisch umgeschaltet werden. Um die Zeiten dafür zu berechnen wird dein aktueller Standort benötigt.";
 
-/* Class = "UITableViewSection"; headerTitle = "Night Mode"; ObjectID = "MNY-pr-L5C"; */
+/* Class = "UITableViewSection"; headerTitle = "Dark Mode"; ObjectID = "MNY-pr-L5C"; */
 "MNY-pr-L5C.headerTitle" = "DARK MODE";
+
+/* Class = "UILabel"; text = "Source Code"; ObjectID = "NBb-8E-ZWy"; */
+"NBb-8E-ZWy.text" = "Quellcode";
 
 /* Class = "UILabel"; text = "Only in WiFI Network"; ObjectID = "SxL-9L-Hxa"; */
 "SxL-9L-Hxa.text" = "Nur wenn mit WLAN verbunden";
@@ -41,11 +56,26 @@
 /* Class = "UILabel"; text = "Font Size"; ObjectID = "XPl-DW-327"; */
 "XPl-DW-327.text" = "Schriftgröße";
 
+/* Class = "UILabel"; text = "Desktop Browser Extension"; ObjectID = "Ys7-Hj-jLe"; */
+"Ys7-Hj-jLe.text" = "Desktop Browser Extension";
+
 /* Class = "UILabel"; text = "Frames"; ObjectID = "axW-gz-TjX"; */
 "axW-gz-TjX.text" = "Frames";
 
+/* Class = "UILabel"; text = "Preview"; ObjectID = "azi-58-lEd"; */
+"azi-58-lEd.text" = "Vorschau";
+
+/* Class = "UILabel"; text = "Background Notifications"; ObjectID = "b2P-NH-jIN"; */
+"b2P-NH-jIN.text" = "Hintergrundbenachrichtigungen";
+
+/* Class = "UILabel"; text = "Licenses"; ObjectID = "dnv-Qf-VK0"; */
+"dnv-Qf-VK0.text" = "Lizenzen";
+
 /* Class = "UITableViewSection"; headerTitle = "SHOW IMAGES"; ObjectID = "dxZ-Ml-7OB"; */
 "dxZ-Ml-7OB.headerTitle" = "BILDER ANZEIGEN";
+
+/* Class = "UILabel"; text = "Imprint (www.maniac-forum.de)"; ObjectID = "f5C-ge-YX7"; */
+"f5C-ge-YX7.text" = "Impressum (www.maniac-forum.de)";
 
 /* Class = "UITableViewSection"; footerTitle = "Need an account? \nRegister at https://www.maniac-forum.de"; ObjectID = "h0H-z1-ncm"; */
 "h0H-z1-ncm.footerTitle" = "Du hast keinen Account?\nRegistrierung unter https://www.maniac-forum.de";
@@ -53,8 +83,14 @@
 /* Class = "UITableViewSection"; headerTitle = "LOGIN DATA"; ObjectID = "h0H-z1-ncm"; */
 "h0H-z1-ncm.headerTitle" = "LOGIN DATEN";
 
+/* Class = "UILabel"; text = "Open Links in Safari"; ObjectID = "hll-o3-la6"; */
+"hll-o3-la6.text" = "Links in Safari öffnen";
+
 /* Class = "UILabel"; text = "Signature enabled"; ObjectID = "itk-zT-27W"; */
 "itk-zT-27W.text" = "Signatur aktiviert";
+
+/* Class = "UILabel"; text = "Classic Quote Design"; ObjectID = "pov-jM-C45"; */
+"pov-jM-C45.text" = "Klassisches Quote Design";
 
 /* Class = "UITableViewSection"; headerTitle = "SIGNATURE"; ObjectID = "tY9-Fn-E9G"; */
 "tY9-Fn-E9G.headerTitle" = "SIGNATUR";
@@ -64,15 +100,3 @@
 
 /* Class = "UILabel"; text = "Switch Automatically"; ObjectID = "xQm-Bk-cad"; */
 "xQm-Bk-cad.text" = "Automatisch umschalten";
-
-"Bbz-uB-lDT.headerTitle" = "INFORMATIONEN";
-"Fap-wu-fB0.text" = "Nutzungsbedingungen";
-"LVI-Wv-6BK.text" = "Datenschutzerklärung";
-"f5C-ge-YX7.text" = "Impressum (www.maniac-forum.de)";
-"dnv-Qf-VK0.text" = "Lizenzen";
-"NBb-8E-ZWy.text" = "Quellcode";
-"Ys7-Hj-jLe.text" = "Desktop Browser Extension";
-
-"03w-Ml-MZu.headerTitle" = "BENACHRICHTIGUNGEN";
-"b2P-NH-jIN.text" = "Hintergrundbenachrichtigungen";
-"03w-Ml-MZu.footerTitle" = "Nutze die Hintergrundaktualisierungs Funktion des Systems um dich über neue Antworten zu deinen Postings benachrichtigen zu lassen.";

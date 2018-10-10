@@ -595,7 +595,6 @@
 		3020FB6A1E746D4400C7217F /* MCLNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLNotificationManager.m; sourceTree = "<group>"; };
 		3020FB6D1E78A10900C7217F /* zelda2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = zelda2.caf; sourceTree = "<group>"; };
 		3020FB6E1E78A10900C7217F /* zelda1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = zelda1.caf; sourceTree = "<group>"; };
-		3020FB731E85BF7000C7217F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Settings.strings; sourceTree = "<group>"; };
 		302381EA1F9352FF00764FAE /* MCLMarkThreadAsReadRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMarkThreadAsReadRequest.h; sourceTree = "<group>"; };
 		302381EB1F9352FF00764FAE /* MCLMarkThreadAsReadRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLMarkThreadAsReadRequest.m; sourceTree = "<group>"; };
 		302381ED1F93580800764FAE /* MCLQuoteMessageRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLQuoteMessageRequest.h; sourceTree = "<group>"; };
@@ -631,6 +630,7 @@
 		3036F59A1E266B3800ABC2CE /* MCLNightTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLNightTheme.m; sourceTree = "<group>"; };
 		3036F59C1E26798E00ABC2CE /* MCLDefaultTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLDefaultTheme.h; sourceTree = "<group>"; };
 		3036F59D1E26798E00ABC2CE /* MCLDefaultTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLDefaultTheme.m; sourceTree = "<group>"; };
+		30380555216DF70C00D035DA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Settings.strings; sourceTree = "<group>"; };
 		3038D58119F65E0C005E7D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3038D58219F65E0D005E7D3D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3038D58419F65E21005E7D3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2704,7 +2704,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				30849D211E2BABBD00626331 /* Base */,
-				3020FB731E85BF7000C7217F /* de */,
+				30380555216DF70C00D035DA /* de */,
 			);
 			name = Settings.storyboard;
 			path = .;

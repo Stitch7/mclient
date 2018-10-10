@@ -213,12 +213,9 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
 
     [self.webView setNavigationDelegate:self.delegate];
 
-    NSInteger fontSize = [self.bag.settings integerForSetting:MCLSettingFontSize];
-    NSNumber *imageSetting = [self.bag.settings objectForSetting:MCLSettingShowImages];
     NSString *messageHtml = [message messageHtmlWithTopMargin:0
                                                         theme:self.bag.themeManager.currentTheme
-                                                     fontSize:fontSize
-                                                 imageSetting:imageSetting];
+                                                     settings:self.bag.settings];
     [self.webView loadHTMLString:messageHtml baseURL:nil];
 
     [self.toolbar updateBarButtonsWithMessage:message];
