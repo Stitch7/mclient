@@ -75,33 +75,33 @@
 - (void)loadingViewControllerStartsRefreshing:(MCLLoadingViewController *)loadingViewController
 { }
 
-- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData
+- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData forKey:(NSNumber *)key
 {
     NSArray *data = [newData copy];
 
     self.sendButton.enabled = YES;
 
-    NSString *key = @"";
+    NSString *messageTextKey = @"";
     switch ([self.bag.settings integerForSetting:MCLSettingShowImages]) {
         case kMCLSettingsShowImagesWifi: {
             Reachability *wifiReach = [Reachability reachabilityForLocalWiFi];
-            key = [wifiReach currentReachabilityStatus] == ReachableViaWiFi
+            messageTextKey = [wifiReach currentReachabilityStatus] == ReachableViaWiFi
                 ? @"previewTextHtmlWithImages"
                 : @"previewTextHtml";
             break;
         }
         case kMCLSettingsShowImagesNever:
-            key = @"previewTextHtml";
+            messageTextKey = @"previewTextHtml";
             break;
 
         case kMCLSettingsShowImagesAlways:
         default:
-            key = @"previewTextHtmlWithImages";
+            messageTextKey = @"previewTextHtmlWithImages";
             break;
     }
 
     MCLMessage *previewMessage = [[MCLMessage alloc] init];
-    previewMessage.textHtml = [[data firstObject] objectForKey:key];
+    previewMessage.textHtml = [[data firstObject] objectForKey:messageTextKey];
     previewMessage.textHtmlWithImages = previewMessage.textHtml;
     self.previewText = [previewMessage messageHtmlWithTopMargin:20
                                                           theme:[self.bag.themeManager currentTheme]

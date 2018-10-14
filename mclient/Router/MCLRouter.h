@@ -17,7 +17,7 @@
 @property (strong, nonatomic) id <MCLDependencyBag> bag;
 @property (strong) id<MCLRouterDelegate> delegate;
 @property (weak, nonatomic) UIWindow *rootWindow;
-@property (strong, nonatomic) MCLSplitViewController *splitViewViewController;
+@property (strong, nonatomic) MCLSplitViewController *splitViewController;
 @property (strong, nonatomic) UINavigationController *masterNavigationController;
 @property (strong, nonatomic) UINavigationController *detailNavigationController;
 @property (strong, nonatomic) UINavigationController *modalNavigationController;

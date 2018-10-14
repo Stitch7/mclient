@@ -104,10 +104,7 @@
     return [[MCLMultilineTitleLabel alloc] initWithThemeManager:self.bag.themeManager andTitle:self.thread.subject];
 }
 
-//- (void)loadingViewControllerStartsRefreshing:(MCLLoadingViewController *)loadingViewController
-//{ }
-
-- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData
+- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData forKey:(NSNumber *)key
 {
     self.messages = [newData copy];
 

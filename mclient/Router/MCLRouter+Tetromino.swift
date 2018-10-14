@@ -11,10 +11,10 @@
 public extension MCLRouter {
     @objc @discardableResult public func modalToGame() -> UINavigationController {
 //        let gameVC = TetrominoTouch().makeGameController(bounds: UIScreen.main.bounds)
-//        masterNavigationController.present(gameVC, animated: true)
-//
-//        return gameVC
-        return UINavigationController()
+        let gameVC = UINavigationController()
+        masterNavigationController.present(gameVC, animated: true)
+
+        return gameVC
     }
 }
 

@@ -52,7 +52,7 @@
 {
     assert(self.delegate != nil);
     
-    self.splitViewViewController = [[MCLSplitViewController alloc] initWithBag:self.bag];
+    self.splitViewController = [[MCLSplitViewController alloc] initWithBag:self.bag];
     self.masterViewController = [self.delegate createMasterViewControllerForRouter:self];
     self.masterNavigationController = [[UINavigationController alloc] initWithRootViewController:self.masterViewController];
     self.detailViewController = [self.delegate createDetailViewControllerForRouter:self];
@@ -62,11 +62,11 @@
     NSMutableArray *splitViews = [[NSMutableArray alloc] init];
     [splitViews addObject:self.masterNavigationController];
     [splitViews addObject:self.detailNavigationController];
-    self.splitViewViewController.viewControllers = splitViews;
-    self.splitViewViewController.delegate = self;
+    self.splitViewController.viewControllers = splitViews;
+    self.splitViewController.delegate = self;
     
-    if (!self.splitViewViewController.isCollapsed) {
-        self.splitViewViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+    if (!self.splitViewController.isCollapsed) {
+        self.splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
     }
 }
 
@@ -121,7 +121,7 @@
 - (UIWindow *)makeRootWindow
 {
     [self configureIfNecessary];
-    self.rootWindow = [self makeWindowWithViewController:self.splitViewViewController];
+    self.rootWindow = [self makeWindowWithViewController:self.splitViewController];
 
     return self.rootWindow;
 }

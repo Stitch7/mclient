@@ -89,14 +89,14 @@
 - (void)launchRootWindow:(void (^)(UIWindow *window))windowHandler
 {
     UIWindow *rootWindow = [self.router makeRootWindow];
-    MCLBoardListTableViewController *boardsListVC = (MCLBoardListTableViewController *)self.router.masterViewController.childViewControllers.firstObject;
-
     UIWindow *launchWindow = [self.router makeLaunchWindow];
     windowHandler(launchWindow);
 
     [self.login testLoginWithCompletionHandler:^(NSError *error, BOOL success) {
-        [boardsListVC updateVerifyLoginViewWithSuccess:success];
-
+        MCLBoardListTableViewController *boardsListVC = (MCLBoardListTableViewController *)self.router.masterViewController.childViewControllers.firstObject;
+        if ([boardsListVC isKindOfClass:[MCLBoardListTableViewController class]]) {
+            [boardsListVC updateVerifyLoginViewWithSuccess:success];
+        }
         [self.router replaceRootWindow:rootWindow];
         windowHandler(rootWindow);
     }];

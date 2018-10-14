@@ -157,7 +157,7 @@
 
 - (UIColor *)refreshControlBackgroundColor
 {
-    return [UIColor whiteColor];
+    return [UIColor groupTableViewBackgroundColor];
 }
 
 - (UIColor *)searchBarBackgroundColor

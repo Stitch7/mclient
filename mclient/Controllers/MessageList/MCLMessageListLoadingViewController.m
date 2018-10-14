@@ -13,6 +13,7 @@
 #import "MCLThread.h"
 #import "MCLMessageListRequest.h"
 #import "MCLMessageListViewController.h"
+#import "MCLErrorViewController.h"
 #import "MCLLoadingViewControllerDelegate.h"
 #import "MCLSettingsViewController.h"
 
@@ -57,7 +58,8 @@
     assert(thread.board != nil);
     assert(thread.boardId != nil);
 
-    self.request = [[MCLMessageListRequest alloc] initWithClient:self.bag.httpClient thread:thread];
+    MCLMessageListRequest *request = [[MCLMessageListRequest alloc] initWithClient:self.bag.httpClient thread:thread];
+    self.requests = @{@(0): request};
 
     MCLMessageListViewController *messageListVC = ((MCLMessageListViewController *)self.contentViewController);
     [messageListVC setBoard:thread.board];
@@ -65,15 +67,15 @@
     [self updateTitle];
     
     [self startLoading];
-    [self.request loadWithCompletionHandler:^(NSError *error, NSArray *data) {
+    [request loadWithCompletionHandler:^(NSError *error, NSArray *data) {
         [self stopLoading];
 
         if (error || !data) {
-            [self showErrorView:error];
+            [self showErrorOfType:kMCLErrorTypeGeneral error:error];
             return;
         }
 
-        [messageListVC loadingViewController:self hasRefreshedWithData:data];
+        [messageListVC loadingViewController:self hasRefreshedWithData:data forKey:@(0)];
     }];
 }
 

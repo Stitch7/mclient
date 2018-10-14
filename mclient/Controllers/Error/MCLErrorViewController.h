@@ -7,12 +7,18 @@
 //
 
 @protocol MCLDependencyBag;
-@class MCLMServiceErrorView;
+@class MCLErrorView;
+
+typedef NS_ENUM(NSUInteger, kMCLErrorType) {
+    kMCLErrorTypeNoInternetConnection,
+    kMCLErrorTypeGeneral
+};
 
 @interface MCLErrorViewController : UIViewController
 
-@property (strong, nonatomic) MCLMServiceErrorView *errorView;
+@property (assign, nonatomic) NSUInteger errorType;
+@property (strong, nonatomic) MCLErrorView *errorView;
 
-- (instancetype)initWithBag:(id <MCLDependencyBag>)bag error:(NSError *)error;
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag type:(NSUInteger)type error:(NSError *)error;
 
 @end

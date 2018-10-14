@@ -6,8 +6,8 @@
 //  See LICENSE file in the project root for full license information.
 //
 
-#import "MCLSectionLoadingViewController.h"
+#import "MCLLoadingViewController.h"
 
-@interface MCLBoardsListLoadingViewController : MCLSectionLoadingViewController
+@interface MCLBoardsListLoadingViewController : MCLLoadingViewController
 
 @end

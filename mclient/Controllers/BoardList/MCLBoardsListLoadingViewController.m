@@ -8,6 +8,7 @@
 
 #import "MCLBoardsListLoadingViewController.h"
 
+#import "MCLDependencyBag.h"
 #import "MCLLogin.h"
 #import "MCLBoardListTableViewController.h"
 #import "MCLThreadListTableViewController.h"
@@ -22,6 +23,22 @@
     [coordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self updateTitle];
         [[self.delegate tableView] reloadData];
+    }];
+}
+
+#pragma mark - MCLLoadingViewController overrides
+
+- (void)errorViewButtonPressed:(UIButton *)sender
+{
+    [self removeErrorViewController];
+    [self startLoading];
+
+    // We need to relogin in case when network connection on startup failed
+    [self.bag.login testLoginWithCompletionHandler:^(NSError* error, BOOL success) {
+        MCLBoardListTableViewController *boardsListVC = (MCLBoardListTableViewController *)self.contentViewController;
+        [boardsListVC updateVerifyLoginViewWithSuccess:success];
+
+        [self load];
     }];
 }
 

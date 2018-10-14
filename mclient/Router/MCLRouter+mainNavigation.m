@@ -39,7 +39,7 @@
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
     MCLSettingsViewController *settingsVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLSettingsViewController"];
-    settingsVC.bag = self.bag; // TODO: - do proper DI
+    settingsVC.bag = self.bag;
 
     self.modalNavigationController = [[MCLModalNavigationController alloc] initWithRootViewController:settingsVC];
     [self.masterNavigationController presentViewController:self.modalNavigationController animated:YES completion:nil];
@@ -75,7 +75,7 @@
                                                                                 request:responsesRequest
                                                                   contentViewController:responsesVC];
 
-    if (self.splitViewViewController.collapsed) {
+    if (self.splitViewController.collapsed) {
         [self.masterNavigationController pushViewController:loadingVC animated:YES];
     } else {
         [self.detailNavigationController pushViewController:loadingVC animated:YES];
@@ -156,7 +156,7 @@
                                                                    contentViewController:messageListVC];
     self.detailViewController.navigationItem.titleView = [messageListVC titleLabel];
 
-    if (self.splitViewViewController.collapsed) {
+    if (self.splitViewController.collapsed) {
         [masterNavigationController pushViewController:self.detailViewController animated:YES];
     } else {
         [self.detailNavigationController pushViewController:self.detailViewController animated:YES];

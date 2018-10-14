@@ -81,9 +81,6 @@
     // Tie contentView width to main view width
     [mainView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[contentView(==mainView)]" options:0 metrics:0 views:viewsDictionary]];
 
-//    scrollView.backgroundColor = [UIColor redColor];
-//    contentView.backgroundColor = [UIColor greenColor];
-
     UIView *spacerTop = [[UIView alloc] init];
     spacerTop.translatesAutoresizingMaskIntoConstraints = NO;
 

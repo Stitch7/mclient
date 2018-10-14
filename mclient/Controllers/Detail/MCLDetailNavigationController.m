@@ -42,7 +42,7 @@ NSString * const MCLDisplayModeChangedNotification = @"MCLDisplayModeChangedNoti
 - (UIImage *)displayModeButtonItemImage
 {
     if (!_displayModeButtonItemImage) {
-        _displayModeButtonItemImage = self.bag.router.splitViewViewController.displayModeButtonItem.image;
+        _displayModeButtonItemImage = self.bag.router.splitViewController.displayModeButtonItem.image;
     }
 
     return _displayModeButtonItemImage;
@@ -86,7 +86,7 @@ NSString * const MCLDisplayModeChangedNotification = @"MCLDisplayModeChangedNoti
                                                             action:@selector(displayModeButtonItemPressed:)];
 
     item.tag = sender.tag;
-    UIBarButtonItem *displayModeButtonItem = self.bag.router.splitViewViewController.displayModeButtonItem;
+    UIBarButtonItem *displayModeButtonItem = self.bag.router.splitViewController.displayModeButtonItem;
 
     // Use the afterDelay variant to avoid the possible leak warning
     [displayModeButtonItem.target performSelector:displayModeButtonItem.action

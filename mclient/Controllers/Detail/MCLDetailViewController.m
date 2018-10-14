@@ -136,7 +136,7 @@
 
 - (void)menuButtonPressed
 {
-    self.bag.router.splitViewViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+    self.bag.router.splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
 }
 
 #pragma mark - MCLLoadingContentViewControllerDelegate
@@ -152,7 +152,7 @@
     return [[MCLLogoLabel alloc] initWithThemeManager:self.bag.themeManager];
 }
 
-- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData
+- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData forKey:(NSNumber *)key
 {
     self.favorites = [newData mutableCopy];
     [self.tableView reloadData];

@@ -184,7 +184,7 @@
     navigationItem.rightBarButtonItem = markAllAsReadButton;
 }
 
-- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData
+- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData forKey:(NSNumber *)key
 {
     self.responseContainer = [newData firstObject];
 

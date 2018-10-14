@@ -63,7 +63,7 @@
                                                                        action:@selector(doneButtonPressed:)];
 }
 
-- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData
+- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData forKey:(NSNumber *)key
 {
     self.profileKeys = [newData.firstObject copy];
     self.profileData = [newData.lastObject copy];

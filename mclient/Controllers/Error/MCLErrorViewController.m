@@ -13,6 +13,7 @@
 #import "MCLFeatures.h"
 #import "MCLRouter.h"
 #import "MCLMServiceErrorView.h"
+#import "MCLInternetConnectionErrorView.h"
 
 @interface MCLErrorViewController ()
 
@@ -23,13 +24,19 @@
 
 @implementation MCLErrorViewController
 
-- (instancetype)initWithBag:(id <MCLDependencyBag>)bag error:(NSError *)error
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag type:(NSUInteger)type error:(NSError *)error
 {
     self = [super init];
     if (!self) return nil;
 
     self.bag = bag;
-    self.errorView = [[MCLMServiceErrorView alloc] initWithFrame:CGRectZero andText:[error localizedDescription]];
+    self.errorType = type;
+
+    if (type == kMCLErrorTypeNoInternetConnection) {
+        self.errorView = [[MCLInternetConnectionErrorView alloc] init];
+    } else {
+        self.errorView = [[MCLMServiceErrorView alloc] initWithFrame:CGRectZero andText:[error localizedDescription]];
+    }
 
     if (![self.bag.features isFeatureWithNameEnabled:MCLFeatureTetris]) {
         self.errorView.gameButton.enabled = NO;

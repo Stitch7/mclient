@@ -8,7 +8,7 @@
 
 #import "MGSwipeTableCell.h"
 
-#import "MCLSectionLoadingViewControllerDelegate.h"
+#import "MCLLoadingViewControllerDelegate.h"
 #import "MCLSettingsViewController.h"
 
 // Sections
@@ -19,7 +19,9 @@ typedef NS_ENUM(NSInteger, MCLBoardListSection) {
 
 @protocol MCLDependencyBag;
 
-@interface MCLBoardListTableViewController : UITableViewController <MGSwipeTableCellDelegate, MCLSectionLoadingViewControllerDelegate>
+@interface MCLBoardListTableViewController : UITableViewController <MGSwipeTableCellDelegate, MCLLoadingViewControllerDelegate>
+
+@property (assign, nonatomic) BOOL needsRefreshLoginState;
 
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
 

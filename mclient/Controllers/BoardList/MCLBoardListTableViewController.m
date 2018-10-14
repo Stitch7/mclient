@@ -59,6 +59,8 @@
     [self configureNotifications];
     [self configureToolbarButtons];
 
+    self.needsRefreshLoginState = NO;
+
     return self;
 }
 
@@ -141,9 +143,14 @@
     self.responsesButtonItem = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:responsesButton];
     self.responsesButtonItem.badgeOriginX = 0.0f;
     self.responsesButtonItem.badgeOriginY = 8.0f;
-    self.responsesButtonItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)[UIApplication sharedApplication].applicationIconBadgeNumber];
     self.responsesButtonItem.shouldHideBadgeAtZero = YES;
     self.responsesButtonItem.badgePadding = 5;
+    [self updateResponsesButtonItemBadgeValueFromApplicationIconBadgeNumber];
+}
+
+- (void)updateResponsesButtonItemBadgeValueFromApplicationIconBadgeNumber
+{
+    self.responsesButtonItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)[UIApplication sharedApplication].applicationIconBadgeNumber];
 }
 
 - (void)configurePrivateMessagesButton
@@ -176,19 +183,19 @@
     [self.tableView setContentInset:UIEdgeInsetsMake(8, 0, 0, 0)];
 }
 
-#pragma mark - MCLSectionLoadingViewControllerDelegate
+#pragma mark - MCLLoadingViewControllerDelegate
 
-- (NSString *)loadingViewControllerRequestsTitleString:(MCLSectionLoadingViewController *)loadingViewController
+- (NSString *)loadingViewControllerRequestsTitleString:(MCLLoadingViewController *)loadingViewController
 {
     return NSLocalizedString(@"Boards", nil);
 }
 
-- (UILabel *)loadingViewControllerRequestsTitleLabel:(MCLSectionLoadingViewController *)loadingViewController
+- (UILabel *)loadingViewControllerRequestsTitleLabel:(MCLLoadingViewController *)loadingViewController
 {
     return [self noDetailVC] ? [[MCLLogoLabel alloc] initWithThemeManager:self.bag.themeManager] : nil;
 }
 
-- (NSArray<__kindof UIBarButtonItem *> *)loadingViewControllerRequestsToolbarItems:(MCLSectionLoadingViewController *)loadingViewController
+- (NSArray<__kindof UIBarButtonItem *> *)loadingViewControllerRequestsToolbarItems:(MCLLoadingViewController *)loadingViewController
 {
     UIBarButtonItem *flexibleItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                                    target:nil
@@ -204,7 +211,7 @@
                                      nil];
 }
 
-- (void)loadingViewController:(MCLSectionLoadingViewController *)loadingViewController configureNavigationItem:(UINavigationItem *)navigationItem
+- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController configureNavigationItem:(UINavigationItem *)navigationItem
 {
     if ([self.bag.features isFeatureWithNameEnabled:MCLFeatureFullSearch]) {
         navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"searchButton"]
@@ -224,7 +231,7 @@
                                                                         action:@selector(settingsButtonPressed:)];
 }
 
-- (void)loadingViewController:(MCLSectionLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData forKey:(NSNumber *)key
+- (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData forKey:(NSNumber *)key
 {
     switch ([key integerValue]) {
         case MCLBoardListSectionBoards:
@@ -262,8 +269,7 @@
 
 - (BOOL)noDetailVC
 {
-    BOOL noDetail = self.bag.router.splitViewViewController.isCollapsed;
-    return noDetail;
+    return !self.splitViewController || self.bag.router.splitViewController.isCollapsed;
 }
 
 - (BOOL)showFavoritesSection
@@ -307,7 +313,9 @@
 {
     switch (section) {
         case MCLBoardListSectionBoards:
-            return NSLocalizedString(@"BOARDS", nil);
+            if ([self noDetailVC]) {
+                return NSLocalizedString(@"BOARDS", nil);
+            }
             break;
         case MCLBoardListSectionFavorites:
             if ([self showFavoritesSection]) {
@@ -490,12 +498,13 @@
     if (success) {
         [self.verifyLoginView loginStatusWithUsername:self.bag.login.username];
         [[[MCLMessageResponsesRequest alloc] initWithBag:self.bag] loadResponsesWithCompletion:nil];
+        [self.responsesButtonItem setEnabled:YES];
+        [self updateResponsesButtonItemBadgeValueFromApplicationIconBadgeNumber];
     } else {
         [self.verifyLoginView loginStatusNoLogin];
+        self.responsesButtonItem.badgeValue = 0;
+        [self.responsesButtonItem setEnabled:NO];
     }
-    [self.responsesButtonItem setEnabled:success];
 }
-
-
 
 @end
