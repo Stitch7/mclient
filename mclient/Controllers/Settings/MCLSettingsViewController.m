@@ -18,8 +18,8 @@
 #import "MCLLogin.h"
 #import "MCLNotificationManager.h"
 #import "MCLThemeManager.h"
-#import "MCLDefaultTheme.h"
-#import "MCLNightTheme.h"
+#import "MCLLightTheme.h"
+#import "MCLDarkTheme.h"
 #import "MCLTextField.h"
 #import "MCLTextView.h"
 #import "MCLSettingsFontSizeViewController.h"
@@ -49,8 +49,8 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 @property (weak, nonatomic) IBOutlet UISwitch *jumpToLatestMessageSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *openLinksInSafariSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *classicQuoteDesignSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *nightModeEnabledSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *nightModeAutomaticallySwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *darkModeEnabledSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *darkModeAutomaticallySwitch;
 
 @end
 
@@ -78,7 +78,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     [self configureNotificationsSection];
     [self configureSignatureSection];
     [self configureThreadSection];
-    [self configureNightModeSection];
+    [self configureDarkModeSection];
     [self configureImagesSection];
     [self configureAboutLabel];
 
@@ -117,22 +117,22 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     }
 }
 
-- (void)configureNightModeSection
+- (void)configureDarkModeSection
 {
-    BOOL nightModeEnabled = [self.bag.settings isSettingActivated:MCLSettingNightModeEnabled];
-    BOOL nightModeAutomatically = [self.bag.settings isSettingActivated:MCLSettingNightModeAutomatically];
+    BOOL darkModeEnabled = [self.bag.settings isSettingActivated:MCLSettingDarkModeEnabled];
+    BOOL darkModeAutomatically = [self.bag.settings isSettingActivated:MCLSettingDarkModeAutomatically];
 
-    self.nightModeEnabledSwitch.on = nightModeEnabled;
-    self.nightModeAutomaticallySwitch.on = nightModeAutomatically;
+    self.darkModeEnabledSwitch.on = darkModeEnabled;
+    self.darkModeAutomaticallySwitch.on = darkModeAutomatically;
 
-    if (nightModeEnabled) {
-        self.nightModeAutomaticallySwitch.enabled = NO;
-        self.nightModeAutomaticallySwitch.alpha = 0.6f;
+    if (darkModeEnabled) {
+        self.darkModeAutomaticallySwitch.enabled = NO;
+        self.darkModeAutomaticallySwitch.alpha = 0.6f;
     }
 
-    if (nightModeAutomatically) {
-        self.nightModeEnabledSwitch.enabled = NO;
-        self.nightModeEnabledSwitch.alpha = 0.6f;
+    if (darkModeAutomatically) {
+        self.darkModeEnabledSwitch.enabled = NO;
+        self.darkModeEnabledSwitch.alpha = 0.6f;
     }
 }
 
@@ -563,41 +563,41 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     [self.bag.settings setBool:sender.on forSetting:MCLSettingClassicQuoteDesign];
 }
 
-- (IBAction)nightModeEnabledSwitchValueChangedAction:(UISwitch *)sender
+- (IBAction)darkModeEnabledSwitchValueChangedAction:(UISwitch *)sender
 {
-    [self.bag.settings setBool:sender.on forSetting:MCLSettingNightModeEnabled];
+    [self.bag.settings setBool:sender.on forSetting:MCLSettingDarkModeEnabled];
 
     if (sender.on) {
-        self.nightModeAutomaticallySwitch.enabled = NO;
-        self.nightModeAutomaticallySwitch.alpha = 0.6f;
-        [self.bag.settings setBool:NO forSetting:MCLSettingNightModeAutomatically];
+        self.darkModeAutomaticallySwitch.enabled = NO;
+        self.darkModeAutomaticallySwitch.alpha = 0.6f;
+        [self.bag.settings setBool:NO forSetting:MCLSettingDarkModeAutomatically];
     }
     else {
-        self.nightModeAutomaticallySwitch.enabled = YES;
-        self.nightModeAutomaticallySwitch.alpha = 1.0f;
+        self.darkModeAutomaticallySwitch.enabled = YES;
+        self.darkModeAutomaticallySwitch.alpha = 1.0f;
     }
 
-    NSUInteger themeName = sender.on ? kMCLThemeNight : kMCLThemeDefault;
+    NSUInteger themeName = sender.on ? kMCLThemeDark : kMCLThemeLight;
     [self.bag.settings setInteger:themeName forSetting:MCLSettingTheme];
 
     [self.themeManager loadTheme];
     [self.tableView reloadData];
 }
 
-- (IBAction)nightModeAutomaticallySwitchValueChangedAction:(UISwitch *)sender
+- (IBAction)darkModeAutomaticallySwitchValueChangedAction:(UISwitch *)sender
 {
-    [self.bag.settings setBool:sender.on forSetting:MCLSettingNightModeAutomatically];
+    [self.bag.settings setBool:sender.on forSetting:MCLSettingDarkModeAutomatically];
 
     if (sender.on) {
         // Trigger dialog asking for location permission
         [self.themeManager updateSun];
 
-        self.nightModeEnabledSwitch.enabled = NO;
-        self.nightModeEnabledSwitch.alpha = 0.6f;
-        [self.bag.settings setBool:NO forSetting:MCLSettingNightModeEnabled];
+        self.darkModeEnabledSwitch.enabled = NO;
+        self.darkModeEnabledSwitch.alpha = 0.6f;
+        [self.bag.settings setBool:NO forSetting:MCLSettingDarkModeEnabled];
     } else {
-        self.nightModeEnabledSwitch.enabled = YES;
-        self.nightModeEnabledSwitch.alpha = 1.0f;
+        self.darkModeEnabledSwitch.enabled = YES;
+        self.darkModeEnabledSwitch.alpha = 1.0f;
     }
 
     [self.themeManager loadTheme];

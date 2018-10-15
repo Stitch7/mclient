@@ -1,5 +1,5 @@
 //
-//  MCLNightTheme.h
+//  MCLDarkTheme.h
 //  mclient
 //
 //  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
@@ -8,6 +8,6 @@
 
 #import "MCLTheme.h"
 
-@interface MCLNightTheme : NSObject <MCLTheme>
+@interface MCLDarkTheme : NSObject <MCLTheme>
 
 @end

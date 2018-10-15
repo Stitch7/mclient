@@ -6,8 +6,8 @@
 //  See LICENSE file in the project root for full license information.
 //
 
-extern NSString *const MCLSettingNightModeEnabled;
-extern NSString *const MCLSettingNightModeAutomatically;
+extern NSString *const MCLSettingDarkModeEnabled;
+extern NSString *const MCLSettingDarkModeAutomatically;
 extern NSString *const MCLSettingShowImages;
 extern NSString *const MCLSettingThreadView;
 extern NSString *const MCLSettingJumpToLatestPost;

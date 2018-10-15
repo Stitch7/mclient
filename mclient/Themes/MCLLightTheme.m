@@ -1,21 +1,21 @@
 //
-//  MCLDefaultTheme.m
+//  MCLLightTheme.m
 //  mclient
 //
 //  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
-#import "MCLDefaultTheme.h"
+#import "MCLLightTheme.h"
 #import "MCLThemeManager.h"
 
-@interface MCLDefaultTheme()
+@interface MCLLightTheme()
 
 @property (strong, nonatomic) UIColor *royalBlueColor;
 
 @end
 
-@implementation MCLDefaultTheme
+@implementation MCLLightTheme
 
 - (instancetype)init
 {
@@ -31,7 +31,7 @@
 
 - (NSUInteger)identifier
 {
-    return kMCLThemeDefault;
+    return kMCLThemeLight;
 }
 
 - (BOOL)isDark

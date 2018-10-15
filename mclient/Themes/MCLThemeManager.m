@@ -15,8 +15,8 @@
 
 #import "MCLSettings.h"
 #import "MCLTheme.h"
-#import "MCLDefaultTheme.h"
-#import "MCLNightTheme.h"
+#import "MCLLightTheme.h"
+#import "MCLDarkTheme.h"
 #import "MCLLoadingView.h"
 #import "MCLErrorView.h"
 #import "MCLReadSymbolView.h"
@@ -109,7 +109,7 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
 
 - (void)updateSun
 {
-    if (![self.settings isSettingActivated:MCLSettingNightModeAutomatically]) {
+    if (![self.settings isSettingActivated:MCLSettingDarkModeAutomatically]) {
         return;
     }
 
@@ -143,7 +143,7 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
 
 - (void)loadTheme
 {
-    if ([self.settings isSettingActivated:MCLSettingNightModeAutomatically]) {
+    if ([self.settings isSettingActivated:MCLSettingDarkModeAutomatically]) {
         [self loadThemeBasedOnTime];
     }
     else {
@@ -154,10 +154,10 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
 - (void)loadThemeBasedOnSettings
 {
     id <MCLTheme> theme;
-    if ([self.settings isSettingActivated:MCLSettingNightModeEnabled]) {
-        theme = [[MCLNightTheme alloc] init];
+    if ([self.settings isSettingActivated:MCLSettingDarkModeEnabled]) {
+        theme = [[MCLDarkTheme alloc] init];
     } else {
-        theme = [[MCLDefaultTheme alloc] init];
+        theme = [[MCLLightTheme alloc] init];
     }
 
     [self applyTheme:theme];
@@ -170,9 +170,9 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
                                         fromDate:[NSDate date]];
     id <MCLTheme> theme;
     if ([self isAfterSunset:now] || [self isBeforeSunrise:now]) {
-        theme = [[MCLNightTheme alloc] init];
+        theme = [[MCLDarkTheme alloc] init];
     } else {
-        theme = [[MCLDefaultTheme alloc] init];
+        theme = [[MCLLightTheme alloc] init];
     }
     [self applyTheme:theme];
 }

@@ -25,7 +25,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>9965</string>
+	<string>9970</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -38,7 +38,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Access to the camera is needed to take pictures for postings inside the app.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Location is needed to calculate the times for sunrise and sunset for the automatic night mode.</string>
+	<string>Location is needed to calculate the times for sunrise and sunset for the automatic change to dark mode.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Access to photo library is needed to save images from postings.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

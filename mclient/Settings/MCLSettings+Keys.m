@@ -8,8 +8,8 @@
 
 #import "MCLSettings+Keys.h"
 
-NSString * const MCLSettingNightModeEnabled = @"nightModeEnabled";
-NSString * const MCLSettingNightModeAutomatically = @"nightModeAutomatically";
+NSString * const MCLSettingDarkModeEnabled = @"darkModeEnabled";
+NSString * const MCLSettingDarkModeAutomatically = @"darkModeAutomatically";
 NSString * const MCLSettingShowImages = @"showImages";
 NSString * const MCLSettingThreadView = @"threadView";
 NSString * const MCLSettingJumpToLatestPost = @"jumpToLatestPost";
@@ -17,6 +17,6 @@ NSString * const MCLSettingSignatureEnabled = @"signatureEnabled";
 NSString * const MCLSettingSignatureText = @"signature";
 NSString * const MCLSettingFontSize = @"fontSize";
 NSString * const MCLSettingTheme = @"theme";
-NSString * const MCLSettingOpenLinksInSafari = @"MCLSettingOpenLinksInSafari";
+NSString * const MCLSettingOpenLinksInSafari = @"openLinksInSafari";
 NSString * const MCLSettingClassicQuoteDesign = @"classicQuoteDesign";
 NSString * const MCLSettingBackgroundNotifications = @"backgroundNotifications";

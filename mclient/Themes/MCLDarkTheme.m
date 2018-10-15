@@ -1,15 +1,15 @@
 //
-//  MCLNightTheme.m
+//  MCLDarkTheme.m
 //  mclient
 //
 //  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
-#import "MCLNightTheme.h"
+#import "MCLDarkTheme.h"
 #import "MCLThemeManager.h"
 
-@interface MCLNightTheme()
+@interface MCLDarkTheme()
 
 @property (strong, nonatomic) UIColor *flatRedColor;
 @property (strong, nonatomic) UIColor *royalBlueColor;
@@ -22,7 +22,7 @@
 
 @end
 
-@implementation MCLNightTheme
+@implementation MCLDarkTheme
 
 - (instancetype)init
 {
@@ -45,7 +45,7 @@
 
 - (NSUInteger)identifier
 {
-    return kMCLThemeNight;
+    return kMCLThemeDark;
 }
 
 - (BOOL)isDark

@@ -8,7 +8,7 @@
 
 #import "MCLLaunchViewController.h"
 
-#import "MCLDefaultTheme.h"
+#import "MCLLightTheme.h"
 #import "UIView+addConstraints.h"
 #import "MCLPacmanLoadingView.h"
 
@@ -61,7 +61,7 @@ NSInteger const MCLLaunchViewLoadingContainerViewTag = 2;
 
 - (void)configurePacmanView
 {
-    MCLPacmanLoadingView *loadingView = [[MCLPacmanLoadingView alloc] initWithTheme:[[MCLDefaultTheme alloc] init]];
+    MCLPacmanLoadingView *loadingView = [[MCLPacmanLoadingView alloc] initWithTheme:[[MCLLightTheme alloc] init]];
     loadingView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.loadingContainerView insertSubview:loadingView atIndex:0];
     [loadingView constrainEdgesTo:self.loadingContainerView];

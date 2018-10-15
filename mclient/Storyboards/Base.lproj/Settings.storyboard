@@ -177,7 +177,7 @@ Register at https://www.maniac-forum.de</string>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JRO-gI-ndV">
                                                     <rect key="frame" x="305" y="6.5" width="51" height="31"/>
                                                     <connections>
-                                                        <action selector="nightModeEnabledSwitchValueChangedAction:" destination="ecl-kD-BtA" eventType="valueChanged" id="O2q-6D-0Eb"/>
+                                                        <action selector="darkModeEnabledSwitchValueChangedAction:" destination="ecl-kD-BtA" eventType="valueChanged" id="O2q-6D-0Eb"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
@@ -206,7 +206,7 @@ Register at https://www.maniac-forum.de</string>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9HA-ik-cBI">
                                                     <rect key="frame" x="305" y="6.5" width="51" height="31"/>
                                                     <connections>
-                                                        <action selector="nightModeAutomaticallySwitchValueChangedAction:" destination="ecl-kD-BtA" eventType="valueChanged" id="vQC-xs-uXW"/>
+                                                        <action selector="darkModeAutomaticallySwitchValueChangedAction:" destination="ecl-kD-BtA" eventType="valueChanged" id="vQC-xs-uXW"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
@@ -670,9 +670,9 @@ Register at https://www.maniac-forum.de</string>
                     <connections>
                         <outlet property="backgroundNotificationsEnabledSwitch" destination="tgK-YH-jt6" id="rja-eO-2mh"/>
                         <outlet property="classicQuoteDesignSwitch" destination="Tdi-KI-8h8" id="bj9-0B-Hbd"/>
+                        <outlet property="darkModeAutomaticallySwitch" destination="9HA-ik-cBI" id="kz4-MV-VZG"/>
+                        <outlet property="darkModeEnabledSwitch" destination="JRO-gI-ndV" id="jZj-EJ-lVm"/>
                         <outlet property="jumpToLatestMessageSwitch" destination="6Sj-nd-z3g" id="zFj-nJ-DtK"/>
-                        <outlet property="nightModeAutomaticallySwitch" destination="9HA-ik-cBI" id="kz4-MV-VZG"/>
-                        <outlet property="nightModeEnabledSwitch" destination="JRO-gI-ndV" id="jZj-EJ-lVm"/>
                         <outlet property="openLinksInSafariSwitch" destination="usG-kx-Uej" id="LYE-qS-RCT"/>
                         <outlet property="settingsDoneButton" destination="SR3-29-7UZ" id="Yeq-ZU-5qf"/>
                         <outlet property="settingsLoginDataStatusLabel" destination="Kto-1S-ge8" id="RO6-bd-OD0"/>

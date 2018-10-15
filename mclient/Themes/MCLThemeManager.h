@@ -9,8 +9,8 @@
 extern NSString * const MCLThemeChangedNotification;
 
 typedef NS_ENUM(NSUInteger, kMCLTheme) {
-    kMCLThemeDefault,
-    kMCLThemeNight
+    kMCLThemeLight,
+    kMCLThemeDark
 };
 
 @protocol MCLTheme;
