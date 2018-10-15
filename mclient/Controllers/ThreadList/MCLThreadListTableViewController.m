@@ -9,6 +9,7 @@
 #import "MCLThreadListTableViewController.h"
 
 #import "UISearchBar+getSearchField.h"
+#import "UIViewController+Additions.h"
 #import "MCLDependencyBag.h"
 #import "MCLFeatures.h"
 #import "MCLRouter+mainNavigation.h"
@@ -278,7 +279,9 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 
     [[[MCLFavoriteThreadToggleRequest alloc] initWithClient:self.bag.httpClient thread:thread] loadWithCompletionHandler:^(NSError *error, NSArray *result) {
         if (error) {
-            // TODO: - Show Error to user?
+            thread.favorite = !thread.isFavorite;
+            [threadCell setFavorite:thread.isFavorite];
+            [self presentError:error];
             return;
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:MCLFavoritedChangedNotification
