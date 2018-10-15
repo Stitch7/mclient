@@ -36,6 +36,8 @@
 
 @implementation MCLComposeMessagePreviewViewController
 
+#pragma mark - UIViewController life cycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

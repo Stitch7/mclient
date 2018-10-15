@@ -20,6 +20,7 @@
 #import "MCLThemeManager.h"
 #import "MCLDefaultTheme.h"
 #import "MCLNightTheme.h"
+#import "MCLTextField.h"
 #import "MCLTextView.h"
 #import "MCLSettingsFontSizeViewController.h"
 #import "MCLLicenseTableViewController.h"
@@ -37,8 +38,8 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 @property (strong, nonatomic) NSString *lastPasswordTextFieldValue;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsDoneButton;
-@property (weak, nonatomic) IBOutlet UITextField *settingsUsernameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *settingsPasswordTextField;
+@property (weak, nonatomic) IBOutlet MCLTextField *settingsUsernameTextField;
+@property (weak, nonatomic) IBOutlet MCLTextField *settingsPasswordTextField;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *settingsLoginDataStatusSpinner;
 @property (weak, nonatomic) IBOutlet UILabel *settingsLoginDataStatusLabel;
 @property (weak, nonatomic) IBOutlet UITableViewCell *settingsLoginDataStatusTableViewCell;

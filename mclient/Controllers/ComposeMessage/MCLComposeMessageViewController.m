@@ -20,15 +20,14 @@
 #import "MCLComposeMessageToolbarController.h"
 #import "MCLComposeMessagePreviewViewController.h"
 #import "MCLComposeMessageViewControllerDelegate.h"
+#import "MCLTextField.h"
 #import "MCLMessageTextViewToolbar.h"
 
 
 @interface MCLComposeMessageViewController ()
 
-@property (weak, nonatomic) IBOutlet UIButton *cameraButton;
-@property (weak, nonatomic) IBOutlet UIButton *quoteButton;
 @property (weak, nonatomic) IBOutlet UILabel *subjectLabel;
-@property (weak, nonatomic) IBOutlet UITextField *subjectTextField;
+@property (weak, nonatomic) IBOutlet MCLTextField *subjectTextField;
 @property (weak, nonatomic) IBOutlet UIView *separatorView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *separatorViewHeight;
 
@@ -89,11 +88,7 @@
 
     [self configureNavigationBar];
 
-    // Color like in Apple Mail
-    self.subjectLabel.textColor = [UIColor colorWithRed:142/255.0f green:142/255.0f blue:147/255.0f alpha:1.0f];
-
     [self configureSeparatorView];
-    [self configureQuoteButton];
     [self configureSubjectField];
     [self configureTextField];
 
@@ -133,21 +128,17 @@
     self.navigationItem.rightBarButtonItem = self.previewButton;
 }
 
-
 - (void)configureSeparatorView
 {
     self.separatorViewHeight.constant = 0.5;
 }
 
-- (void)configureQuoteButton
-{
-    BOOL isHidden = self.message.type == kMCLComposeTypeThread;
-    [self.quoteButton setHidden:isHidden];
-}
-
 - (void)configureSubjectField
 {
+    // Color like in Apple Mail
+    self.subjectLabel.textColor = [UIColor colorWithRed:142/255.0f green:142/255.0f blue:147/255.0f alpha:1.0f];
     self.subjectLabel.text = NSLocalizedString(@"Subject", nil);
+
     self.subjectTextField.delegate = self;
 
     if (self.message.subject) {

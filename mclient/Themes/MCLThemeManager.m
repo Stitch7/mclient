@@ -20,6 +20,7 @@
 #import "MCLLoadingView.h"
 #import "MCLErrorView.h"
 #import "MCLReadSymbolView.h"
+#import "MCLTextField.h"
 #import "MCLBadgeView.h"
 #import "MCLModalOverlayView.h"
 
@@ -239,6 +240,7 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
 
     [[UITextField appearance] setKeyboardAppearance:keyboardAppearance];
     [[UITextField appearance] setTextColor:[theme textViewTextColor]];
+    [[MCLTextField appearance] setClearButtonColor:[theme textViewTextColor]];
 
     [[UIWebView appearance] setBackgroundColor:[theme webViewBackgroundColor]];
     [[WKWebView appearance] setBackgroundColor:[theme webViewBackgroundColor]];

@@ -52,6 +52,10 @@
 		304373441FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304373411FF55D05007AF151 /* MCLDetailLoadingViewController.m */; };
 		304373451FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304373411FF55D05007AF151 /* MCLDetailLoadingViewController.m */; };
 		304373461FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304373411FF55D05007AF151 /* MCLDetailLoadingViewController.m */; };
+		304D47FF21747CAA00300D42 /* MCLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 304D47FE21747CAA00300D42 /* MCLTextField.m */; };
+		304D480021747CAA00300D42 /* MCLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 304D47FE21747CAA00300D42 /* MCLTextField.m */; };
+		304D480121747CAA00300D42 /* MCLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 304D47FE21747CAA00300D42 /* MCLTextField.m */; };
+		304D480221747CAA00300D42 /* MCLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 304D47FE21747CAA00300D42 /* MCLTextField.m */; };
 		305208941F4303D700D3178C /* MCLModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 305208931F4303D700D3178C /* MCLModalTransitionAnimator.m */; };
 		305208971F43094D00D3178C /* MCLModalPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 305208961F43094D00D3178C /* MCLModalPresentationController.m */; };
 		3052089A1F430E8B00D3178C /* MCLModalTransitioningDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 305208991F430E8B00D3178C /* MCLModalTransitioningDelegate.m */; };
@@ -641,6 +645,8 @@
 		303C59511F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLThreadIdForMessageRequest.m; sourceTree = "<group>"; };
 		304373411FF55D05007AF151 /* MCLDetailLoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLDetailLoadingViewController.m; sourceTree = "<group>"; };
 		304373421FF55D06007AF151 /* MCLDetailLoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLDetailLoadingViewController.h; sourceTree = "<group>"; };
+		304D47FD21747CAA00300D42 /* MCLTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLTextField.h; sourceTree = "<group>"; };
+		304D47FE21747CAA00300D42 /* MCLTextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLTextField.m; sourceTree = "<group>"; };
 		305208921F4303D700D3178C /* MCLModalTransitionAnimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLModalTransitionAnimator.h; sourceTree = "<group>"; };
 		305208931F4303D700D3178C /* MCLModalTransitionAnimator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLModalTransitionAnimator.m; sourceTree = "<group>"; };
 		305208951F43094D00D3178C /* MCLModalPresentationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLModalPresentationController.h; sourceTree = "<group>"; };
@@ -1105,6 +1111,15 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		304D480321747CB100300D42 /* TextField */ = {
+			isa = PBXGroup;
+			children = (
+				304D47FD21747CAA00300D42 /* MCLTextField.h */,
+				304D47FE21747CAA00300D42 /* MCLTextField.m */,
+			);
+			path = TextField;
+			sourceTree = "<group>";
+		};
 		304E5A471E1EB6790022FE8B /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -1275,6 +1290,7 @@
 				3070D322207968F900F42BFF /* MultilineTitleView */,
 				30C9B52F205AAB8E00FD3C31 /* NoData */,
 				30A714A2207FE0F000554610 /* ReadSymbol */,
+				304D480321747CB100300D42 /* TextField */,
 				305DE8151F2E52FB00EC34AE /* TextView */,
 				3006EF8F1F26708A0054F27F /* ThreadTableViewCell */,
 			);
@@ -2219,6 +2235,7 @@
 				309A1EEE1F76646500EE60C2 /* MCLAppRouterDelegate.m in Sources */,
 				30B0B97B1E8AEED400925D0D /* MCLResponseContainer.m in Sources */,
 				30B893181F7820EF00E584FA /* MCLFavoriteThreadToggleRequest.m in Sources */,
+				304D480021747CAA00300D42 /* MCLTextField.m in Sources */,
 				306386741E6098D9004822ED /* MCLResponsesTableViewController.m in Sources */,
 				30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */,
 				306EA6E519D598F800BB4DC8 /* MCLInternetConnectionErrorView.m in Sources */,
@@ -2341,6 +2358,7 @@
 				306FC8281F93A39F001EB7E9 /* MCLPreviewMessageRequest.m in Sources */,
 				306FC8291F93A39F001EB7E9 /* MCLModalTransitioningDelegate.m in Sources */,
 				3036A0E41FA4A763000A69DD /* MCLMarkUnreadResponsesAsReadRequest.m in Sources */,
+				304D47FF21747CAA00300D42 /* MCLTextField.m in Sources */,
 				306FC82A1F93A39F001EB7E9 /* UIApplication+Additions.m in Sources */,
 				306FC82B1F93A39F001EB7E9 /* MCLAppRouterDelegate.m in Sources */,
 				306FC82C1F93A39F001EB7E9 /* MCLResponseContainer.m in Sources */,
@@ -2455,6 +2473,7 @@
 				3090CAD71FA7ED1E0085C9AF /* MCLAppRouterDelegate.m in Sources */,
 				3090CAD81FA7ED1E0085C9AF /* MCLResponseContainer.m in Sources */,
 				3090CAD91FA7ED1E0085C9AF /* MCLFavoriteThreadToggleRequest.m in Sources */,
+				304D480221747CAA00300D42 /* MCLTextField.m in Sources */,
 				3090CADA1FA7ED1E0085C9AF /* MCLResponsesTableViewController.m in Sources */,
 				3090CADB1FA7ED1E0085C9AF /* MCLComposeMessageViewController.m in Sources */,
 				3090CADC1FA7ED1E0085C9AF /* MCLInternetConnectionErrorView.m in Sources */,
@@ -2569,6 +2588,7 @@
 				3090CB541FA89A5C0085C9AF /* MCLAppRouterDelegate.m in Sources */,
 				3090CB551FA89A5C0085C9AF /* MCLResponseContainer.m in Sources */,
 				3090CB561FA89A5C0085C9AF /* MCLFavoriteThreadToggleRequest.m in Sources */,
+				304D480121747CAA00300D42 /* MCLTextField.m in Sources */,
 				3090CB571FA89A5C0085C9AF /* MCLResponsesTableViewController.m in Sources */,
 				3090CB581FA89A5C0085C9AF /* MCLComposeMessageViewController.m in Sources */,
 				3090CB591FA89A5C0085C9AF /* MCLInternetConnectionErrorView.m in Sources */,
