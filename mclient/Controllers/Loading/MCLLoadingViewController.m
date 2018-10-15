@@ -124,14 +124,14 @@ static NSString *kQueueKeyPath = @"operations";
 {
     [super viewWillAppear:animated];
 
-    [self toggleToolbarVisibility];
+    [self toggleToolbarVisibility:YES];
 }
 
 #pragma mark - Private
 
-- (void)toggleToolbarVisibility
+- (void)toggleToolbarVisibility:(BOOL)viewControllerIsOnScreen
 {
-    BOOL toolbarIsHidden = !self.toolbarItems;
+    BOOL toolbarIsHidden = !self.toolbarItems || !viewControllerIsOnScreen;
     [self.navigationController setToolbarHidden:toolbarIsHidden animated:NO];
 }
 
@@ -154,7 +154,8 @@ static NSString *kQueueKeyPath = @"operations";
 
     if ([self.delegate respondsToSelector:@selector(loadingViewControllerRequestsToolbarItems:)]) {
         self.toolbarItems = [self.delegate loadingViewControllerRequestsToolbarItems:nil];
-        [self toggleToolbarVisibility];
+        BOOL viewControllerIsOnScreen = self.viewIfLoaded.window != nil;
+        [self toggleToolbarVisibility:viewControllerIsOnScreen];
     } else {
         [self.navigationController setToolbarHidden:YES animated:NO];
         self.navigationController.toolbar.hidden = YES;
