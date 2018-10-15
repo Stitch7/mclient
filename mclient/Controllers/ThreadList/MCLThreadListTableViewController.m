@@ -192,12 +192,13 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MCLThread *thread = [self isSearching] ? self.searchResults[indexPath.row] : self.threads[indexPath.row];
-    BOOL hasUnreadMessages = thread.messagesRead < thread.messagesCount;
+    BOOL hasUnreadMessages = [thread.messagesRead compare:thread.messagesCount] == NSOrderedAscending;
 
     return hasUnreadMessages;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
     // this method must be at least implemented too or nothing will work
 }
 
