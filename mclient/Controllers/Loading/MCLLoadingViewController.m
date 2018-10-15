@@ -101,8 +101,7 @@ static NSString *kQueueKeyPath = @"operations";
         if ([self.queue.operations count] == 0) {
             [self endRefreshing];
         }
-    }
-    else {
+    } else {
         [super observeValueForKeyPath:keyPath
                              ofObject:object
                                change:change
@@ -233,7 +232,7 @@ static NSString *kQueueKeyPath = @"operations";
     [self updateRefreshControl];
 }
 
-- (void)addErrorViewContollerWithType:(NSUInteger)type error:(NSError *)error
+- (void)addErrorViewControllerWithType:(NSUInteger)type error:(NSError *)error
 {
     self.errorViewController = [[MCLErrorViewController alloc] initWithBag:self.bag type:type error:error];
 
@@ -261,7 +260,6 @@ static NSString *kQueueKeyPath = @"operations";
 
 - (void)errorViewButtonPressed:(UIButton *)sender
 {
-    [self removeErrorViewController];
     [self startLoading];
     [self load];
 }
@@ -316,6 +314,10 @@ static NSString *kQueueKeyPath = @"operations";
 
 - (void)startLoading
 {
+    if (self.state == kMCLLoadingStateError) {
+        [self removeErrorViewController];
+    }
+
     self.state = kMCLLoadingStateLoading;
     self.loadingView = [[MCLPacmanLoadingView alloc] initWithTheme:self.bag.themeManager.currentTheme];
     self.loadingView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -338,7 +340,7 @@ static NSString *kQueueKeyPath = @"operations";
     self.state = kMCLLoadingStateError;
     [self stopLoading];
 
-    [self addErrorViewContollerWithType:type error:error];
+    [self addErrorViewControllerWithType:type error:error];
 }
 
 - (BOOL)noNetworkConnectionAvailable
