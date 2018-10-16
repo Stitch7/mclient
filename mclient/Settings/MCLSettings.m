@@ -62,10 +62,33 @@
     return [self.userDefaults integerForKey:setting];
 }
 
+- (NSInteger)integerForSetting:(NSString *)setting orDefault:(NSInteger)defaultValue
+{
+    if ([self objectForSetting:setting]) {
+        return [self.userDefaults integerForKey:setting];
+    }
+
+    return defaultValue;
+}
+
 - (void)setInteger:(NSInteger)value forSetting:(NSString *)setting
 {
     [self.userDefaults setInteger:value forKey:setting];
     [self persist];
+}
+
+- (NSNumber *)numberForSetting:(NSString *)setting
+{
+    return @([self.userDefaults integerForKey:setting]);
+}
+
+- (NSNumber *)numberForSetting:(NSString *)setting orDefault:(NSInteger)defaultValue
+{
+    if ([self objectForSetting:setting]) {
+        return @([self.userDefaults integerForKey:setting]);
+    }
+
+    return @(defaultValue);
 }
 
 - (id)objectForSetting:(NSString *)setting
@@ -84,7 +107,38 @@
     [self persist];
 }
 
+- (NSDictionary *)dictionaryWithAllSettings
+{
+    return @{MCLSettingDarkModeEnabled:         [self stringForIsSettingActivated:MCLSettingDarkModeEnabled],
+             MCLSettingDarkModeAutomatically:   [self stringForIsSettingActivated:MCLSettingDarkModeAutomatically],
+             MCLSettingShowImages:              [self numberForSetting:MCLSettingShowImages],
+             MCLSettingThreadView:              [self numberForSetting:MCLSettingThreadView],
+             MCLSettingJumpToLatestPost:        [self stringForIsSettingActivated:MCLSettingJumpToLatestPost],
+             MCLSettingSignatureEnabled:        [self stringForIsSettingActivated:MCLSettingSignatureEnabled orDefault:YES],
+             MCLSettingSignatureText:           [self objectForSetting:MCLSettingSignatureText orDefault:kSettingsSignatureTextDefault],
+             MCLSettingFontSize:                [self numberForSetting:MCLSettingFontSize orDefault:3],
+             MCLSettingTheme:                   [self numberForSetting:MCLSettingTheme orDefault:0],
+             MCLSettingOpenLinksInSafari:       [self stringForIsSettingActivated:MCLSettingOpenLinksInSafari],
+             MCLSettingClassicQuoteDesign:      [self stringForIsSettingActivated:MCLSettingClassicQuoteDesign],
+             MCLSettingBackgroundNotifications: [self stringForIsSettingActivated:MCLSettingBackgroundNotifications]};
+}
+
 #pragma mark - Private
+
+- (NSString *)stringForIsSettingActivated:(NSString *)setting
+{
+    return [self isSettingActivated:setting] ? @"YES" : @"NO";
+}
+
+- (NSString *)stringForIsSettingActivated:(NSString *)setting orDefault:(BOOL)defaultValue
+{
+    BOOL isActivated = defaultValue;
+    if ([self objectForSetting:setting]) {
+        isActivated = [self isSettingActivated:setting];
+    }
+
+    return isActivated ? @"YES" : @"NO";
+}
 
 - (BOOL)persist
 {

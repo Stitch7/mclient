@@ -13,6 +13,7 @@ def mclient_pods
   pod 'ImgurSession', :git => 'https://github.com/mileswd/ImgurSession'
   pod 'MRProgress'
   pod 'HockeySDK'
+  pod 'Inapptics'
   pod 'SwiftyGiphy', :modular_headers => true, :git => 'https://github.com/Stitch7/SwiftyGiphy'
 
   #pod 'TetrominoTouchKit', :path => "../Tetromino/TetrominoTouchKit"

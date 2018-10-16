@@ -1700,6 +1700,7 @@
 				305DD81219A63517006514BD /* Resources */,
 				3020A26919DCD01C007F46E2 /* ShellScript */,
 				915089E796B40A81786A6247 /* [CP] Copy Pods Resources */,
+				FA52AA84528CE9754F4B9540 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1738,6 +1739,7 @@
 				306FC8711F93A39F001EB7E9 /* Resources */,
 				306FC8861F93A39F001EB7E9 /* ShellScript */,
 				306FC8881F93A39F001EB7E9 /* [CP] Copy Pods Resources */,
+				0BE9BCA63CC6D6A1DDED4754 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1758,6 +1760,7 @@
 				3090CB1C1FA7ED1E0085C9AF /* Resources */,
 				3090CB2F1FA7ED1E0085C9AF /* ShellScript */,
 				7CD1D19C1D2F7C1087B35108 /* [CP] Copy Pods Resources */,
+				ACD4BC4858FF892670D9F05C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1778,6 +1781,7 @@
 				3090CB991FA89A5C0085C9AF /* Resources */,
 				3090CBAC1FA89A5C0085C9AF /* ShellScript */,
 				36486020FCA41E407BF393EA /* [CP] Copy Pods Resources */,
+				D5DCFF2B77874A40C98632C9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1974,6 +1978,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0BE9BCA63CC6D6A1DDED4754 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-dev/Pods-mclient-dev-frameworks.sh",
+				"${PODS_ROOT}/Inapptics/Inapptics.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Inapptics.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-dev/Pods-mclient-dev-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		1A347A1B8D4054A3F13D8800 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2176,6 +2202,28 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		ACD4BC4858FF892670D9F05C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-store/Pods-mclient-store-frameworks.sh",
+				"${PODS_ROOT}/Inapptics/Inapptics.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Inapptics.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-store/Pods-mclient-store-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		BDE502EB68C5CD955DC8D394 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2192,6 +2240,50 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D5DCFF2B77874A40C98632C9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-frameworks.sh",
+				"${PODS_ROOT}/Inapptics/Inapptics.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Inapptics.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FA52AA84528CE9754F4B9540 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-frameworks.sh",
+				"${PODS_ROOT}/Inapptics/Inapptics.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Inapptics.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2847,12 +2939,13 @@
 					"$(inherited)",
 					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
 					"FEATURE_STAGE=\"$(STAGE)\"",
+					"INAPPTICS_TOKEN=\\@\\\"$(INAPPTICS_TOKEN)\\\"",
 				);
 				HOCKEYAPP_ID = 1fbbedb73c534cbea66852e2d4d6b5f7;
+				INAPPTICS_TOKEN = c35d63c0d08711e8a2b11f53263fef55;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-alpha-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.alpha;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "5ec29718-9041-48a9-92a2-f78393a92c43";
@@ -2882,12 +2975,13 @@
 					"$(inherited)",
 					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
 					"FEATURE_STAGE=\"$(STAGE)\"",
+					"INAPPTICS_TOKEN=\\@\\\"$(INAPPTICS_TOKEN)\\\"",
 				);
 				HOCKEYAPP_ID = 1fbbedb73c534cbea66852e2d4d6b5f7;
+				INAPPTICS_TOKEN = c35d63c0d08711e8a2b11f53263fef55;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-alpha-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.alpha;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "5ec29718-9041-48a9-92a2-f78393a92c43";
@@ -2967,8 +3061,10 @@
 					"$(inherited)",
 					"FEATURE_STAGE=\"$(STAGE)\"",
 					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
+					"INAPPTICS_TOKEN=\\@\\\"$(INAPPTICS_TOKEN)\\\"",
 				);
 				HOCKEYAPP_ID = "";
+				INAPPTICS_TOKEN = ba782f30d08011e8a2b11f53263fef55;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -3000,8 +3096,10 @@
 					"$(inherited)",
 					"FEATURE_STAGE=\"$(STAGE)\"",
 					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
+					"INAPPTICS_TOKEN=\\@\\\"$(INAPPTICS_TOKEN)\\\"",
 				);
 				HOCKEYAPP_ID = "";
+				INAPPTICS_TOKEN = ba782f30d08011e8a2b11f53263fef55;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-dev-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -3032,12 +3130,13 @@
 					"$(inherited)",
 					"FEATURE_STAGE=\"$(STAGE)\"",
 					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
+					"INAPPTICS_TOKEN=\\@\\\"$(INAPPTICS_TOKEN)\\\"",
 				);
 				HOCKEYAPP_ID = "";
+				INAPPTICS_TOKEN = 961fed70d08611e8a2b11f53263fef55;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-store-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3066,12 +3165,13 @@
 					"$(inherited)",
 					"FEATURE_STAGE=\"$(STAGE)\"",
 					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
+					"INAPPTICS_TOKEN=\\@\\\"$(INAPPTICS_TOKEN)\\\"",
 				);
 				HOCKEYAPP_ID = "";
+				INAPPTICS_TOKEN = 961fed70d08611e8a2b11f53263fef55;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-store-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3100,12 +3200,13 @@
 					"$(inherited)",
 					"FEATURE_STAGE=\"$(STAGE)\"",
 					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
+					"INAPPTICS_TOKEN=\\@\\\"$(INAPPTICS_TOKEN)\\\"",
 				);
 				HOCKEYAPP_ID = edeacf933441432d909f9f4cb37eac80;
+				INAPPTICS_TOKEN = 491f5ca0d08511e8a2b11f53263fef55;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "06b55ff0-0c09-4094-9f00-8da801391520";
@@ -3135,12 +3236,13 @@
 					"$(inherited)",
 					"FEATURE_STAGE=\"$(STAGE)\"",
 					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
+					"INAPPTICS_TOKEN=\\@\\\"$(INAPPTICS_TOKEN)\\\"",
 				);
 				HOCKEYAPP_ID = edeacf933441432d909f9f4cb37eac80;
+				INAPPTICS_TOKEN = 491f5ca0d08511e8a2b11f53263fef55;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-beta-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8b5abd5b-27ab-410c-85fa-49b110eedfbb";

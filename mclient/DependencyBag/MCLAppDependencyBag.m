@@ -7,6 +7,7 @@
 //
 
 @import HockeySDK;
+@import Inapptics;
 
 #import "MCLAppDependencyBag.h"
 
@@ -53,7 +54,7 @@
 
 - (void)configure
 {
-    self.features = [[MCLFeatures alloc] initWithStage:kFeatureStage];
+    self.features = [[MCLFeatures alloc] initWithStage:FEATURE_STAGE];
 
     [self configureCrashReporter];
 
@@ -66,6 +67,7 @@
     self.themeManager = [[MCLThemeManager alloc] initWithSettings:self.settings];
 
     [self.themeManager loadTheme];
+    [self configureAnalytics];
 
     [IMGSession anonymousSessionWithClientID:kImgurID withDelegate:self];
 }
@@ -77,11 +79,18 @@
     }
 
     BITHockeyManager *hockeyManager = [BITHockeyManager sharedHockeyManager];
-    [hockeyManager configureWithIdentifier:[NSString stringWithFormat:@"%@", HOCKEYAPP_ID]];
+    [hockeyManager configureWithIdentifier:HOCKEYAPP_ID];
     [hockeyManager.crashManager setCrashManagerStatus:BITCrashManagerStatusAlwaysAsk];
     [hockeyManager startManager];
     [hockeyManager.authenticator authenticateInstallation];
     [hockeyManager.updateManager checkForUpdate];
+}
+
+- (void)configureAnalytics
+{
+    [Inapptics letsGoWithAppToken:INAPPTICS_TOKEN crashReportingEnabled:NO];
+    [Inapptics setUserName:self.login.username];
+    [Inapptics.user set:[self.settings dictionaryWithAllSettings]];
 }
 
 #pragma mark - Public

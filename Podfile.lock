@@ -24,6 +24,7 @@ PODS:
   - HockeySDK/DefaultLib (5.1.2)
   - ImgurSession (1.3):
     - AFNetworking (= 3.1.0)
+  - Inapptics (2.0.4)
   - MGSwipeTableCell (1.6.7)
   - MRProgress (0.8.3):
     - MRProgress/ActivityIndicator (= 0.8.3)
@@ -73,6 +74,7 @@ DEPENDENCIES:
   - EDSunriseSet (from `https://github.com/Tricertops/EDSunriseSet`)
   - HockeySDK
   - ImgurSession (from `https://github.com/mileswd/ImgurSession`)
+  - Inapptics
   - MGSwipeTableCell
   - MRProgress
   - SwiftyGiphy (from `https://github.com/Stitch7/SwiftyGiphy`)
@@ -86,6 +88,7 @@ SPEC REPOS:
     - DGActivityIndicatorView
     - FLAnimatedImage
     - HockeySDK
+    - Inapptics
     - MGSwipeTableCell
     - MRProgress
     - NSTimer-Blocks
@@ -121,6 +124,7 @@ SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   HockeySDK: 38b7e2726af1ea86ae97ce4b5de33ab0817e3500
   ImgurSession: e11a605652cfe8aebfb6a9a4ea5b752654f14e2f
+  Inapptics: 0957e8ff6d208c8ce0c8f895791b6d85d69cf878
   MGSwipeTableCell: fb20e983988bde2b8d0df29c2d9e1d8ffd10b74a
   MRProgress: 16de7cc9f347e8846797a770db102a323fe7ef09
   NSTimer-Blocks: 88faf9aef5f250ead087f3f67ae642517083bf36
@@ -129,6 +133,6 @@ SPEC CHECKSUMS:
   SwiftyGiphy: f91fb774668fa491b6659de4b413c470cbafe534
   Valet: 14463ef24fab8fd5809044ecedb61484b799fdd6
 
-PODFILE CHECKSUM: 2ac31e04a65c640545a08e979989c7e156329d7c
+PODFILE CHECKSUM: e97201ab615d0f0acc3c02d801df47cbcb546cf8
 
 COCOAPODS: 1.5.3

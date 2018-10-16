@@ -17,9 +17,13 @@
 - (BOOL)isSettingActivated:(NSString *)setting;
 - (BOOL)isSettingActivated:(NSString *)setting orDefault:(BOOL)defaultValue;
 - (NSInteger)integerForSetting:(NSString *)setting;
+- (NSInteger)integerForSetting:(NSString *)setting orDefault:(NSInteger)defaultValue;
 - (void)setInteger:(NSInteger)value forSetting:(NSString *)setting;
+- (NSNumber *)numberForSetting:(NSString *)setting;
+- (NSNumber *)numberForSetting:(NSString *)setting orDefault:(NSInteger)defaultValue;
 - (id)objectForSetting:(NSString *)setting;
 - (id)objectForSetting:(NSString *)setting orDefault:(id)defaultValue;
 - (void)setObject:(id)object forSetting:(NSString *)setting;
+- (NSDictionary *)dictionaryWithAllSettings;
 
 @end
