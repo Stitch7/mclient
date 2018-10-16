@@ -28,4 +28,6 @@
                                 date:(NSDate *)inDate
                                 read:(BOOL)inRead;
 
++ (MCLResponse *)responseWithPropertyList:(NSDictionary *)propertyList;
+
 @end

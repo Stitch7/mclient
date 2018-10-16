@@ -29,5 +29,6 @@
 - (UIWindow *)makeLaunchWindow;
 - (UIWindow *)makeRootWindow;
 - (void)replaceRootWindow:(UIWindow *)newWindow;
+- (void)dismissModalIfPresentedWithCompletionHandler:(void(^)(BOOL dismissed))completionHandler;
 
 @end

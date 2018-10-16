@@ -6,10 +6,9 @@
 //  See LICENSE file in the project root for full license information.
 //
 
-#import "MCLResponse.h"
-
 @protocol MCLDependencyBag;
 @class MCLNotificationHistory;
+@class MCLResponse;
 
 @interface MCLNotificationManager : NSObject
 
@@ -22,5 +21,6 @@
 - (BOOL)backgroundNotificationsEnabled;
 - (void)sendLocalNotificationForResponse:(MCLResponse *)response;
 - (void)notificateAboutNewResponsesWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
+- (void)handleReceivedNotification:(UILocalNotification *)notification;
 
 @end

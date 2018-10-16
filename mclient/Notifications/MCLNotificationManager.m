@@ -12,6 +12,10 @@
 #import "MCLSettings.h"
 #import "MCLNotificationHistory.h"
 #import "MCLMessageResponsesRequest.h"
+#import "MCLRouter+mainNavigation.h"
+#import "MCLMessage.h"
+#import "MCLResponse.h"
+
 
 @interface MCLNotificationManager ()
 
@@ -90,6 +94,15 @@
         }
         // We cheat a little to be called as often as possible
         completionHandler(UIBackgroundFetchResultNewData);
+    }];
+}
+
+- (void)handleReceivedNotification:(UILocalNotification *)notification
+{
+    [self.bag.router dismissModalIfPresentedWithCompletionHandler:^(BOOL dismissed) {
+        MCLResponse *response = [MCLResponse responseWithPropertyList:notification.userInfo];
+        MCLMessage *message = [MCLMessage messageFromResponse:response];
+        [self.bag.router pushToMessage:message];
     }];
 }
 

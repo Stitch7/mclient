@@ -8,14 +8,9 @@
 
 #import "MCLAppDelegate.h"
 
-#import "UIApplication+Additions.h"
 #import "MCLAppDependencyBag.h"
-#import "MCLFeatures.h"
 #import "MCLThemeManager.h"
 #import "MCLNotificationManager.h"
-#import "MCLRouter.h"
-#import "MCLLogin.h"
-#import "MCLAppRouterDelegate.h"
 
 
 @implementation MCLAppDelegate
@@ -40,6 +35,11 @@
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     [self.bag.notificationManager notificateAboutNewResponsesWithCompletionHandler:completionHandler];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    [self.bag.notificationManager handleReceivedNotification:notification];
 }
 
 @end

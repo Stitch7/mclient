@@ -143,4 +143,20 @@
     }];
 }
 
+- (void)dismissModalIfPresentedWithCompletionHandler:(void(^)(BOOL dismissed))completionHandler
+{
+    if ([self.modalNavigationController presentingViewController]) {
+        [self.modalNavigationController dismissViewControllerAnimated:YES completion:^{
+            if (completionHandler) {
+                completionHandler(YES);
+            }
+        }];
+        return;
+    }
+
+    if (completionHandler) {
+        completionHandler(NO);
+    }
+}
+
 @end

@@ -36,6 +36,23 @@
     return response;
 }
 
++ (MCLResponse *)responseWithPropertyList:(NSDictionary *)propertyList
+{
+    MCLResponse *response = [[MCLResponse alloc] init];
+
+    response.boardId = [propertyList valueForKey:@"boardId"];
+    response.threadId = [propertyList valueForKey:@"threadId"];
+    response.threadSubject = [propertyList valueForKey:@"threadSubject"];
+    response.messageId = [propertyList valueForKey:@"messageId"];
+    response.subject = [propertyList valueForKey:@"subject"];
+    response.username = [propertyList valueForKey:@"username"];
+    response.date = [propertyList valueForKey:@"date"];
+    response.read = [[propertyList valueForKey:@"read"] boolValue];
+    response.tempRead = [[propertyList valueForKey:@"read"] boolValue];
+
+    return response;
+}
+
 #pragma mark - Computed properties
 
 - (NSDictionary *)propertyList
