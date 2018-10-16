@@ -15,6 +15,7 @@
 #import "MCLRouter+mainNavigation.h"
 #import "MCLRouter+openURL.h"
 #import "MCLThemeManager.h"
+#import "MCLSoundEffectPlayer.h"
 #import "MCLLogin.h"
 #import "MCLUser.h"
 #import "MCLBoard.h"
@@ -206,8 +207,10 @@
     NSString *alertMessage;
     if (type == kMCLComposeTypeEdit) {
         alertMessage = [NSString stringWithFormat:NSLocalizedString(@"Your message \"%@\" was changed", nil), message.subject];
+        [self.bag.soundEffectPlayer playEditPostingSound];
     } else {
         alertMessage = [NSString stringWithFormat:NSLocalizedString(@"Thank you for your contribution \"%@\"", nil), message.subject];
+        [self.bag.soundEffectPlayer playCreatePostingSound];
     }
 
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Confirmation", nil)

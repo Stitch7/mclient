@@ -11,6 +11,7 @@
 #import "MCLDependencyBag.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
+#import "MCLSoundEffectPlayer.h"
 #import "MCLUser.h"
 
 @interface MCLProfileTableViewController ()
@@ -149,6 +150,7 @@
 
 - (void)doneButtonPressed:(UIBarButtonItem *)sender
 {
+    [self.bag.soundEffectPlayer playCloseSound];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

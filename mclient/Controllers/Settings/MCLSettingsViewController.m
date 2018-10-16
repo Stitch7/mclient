@@ -18,6 +18,7 @@
 #import "MCLLogin.h"
 #import "MCLNotificationManager.h"
 #import "MCLThemeManager.h"
+#import "MCLSoundEffectPlayer.h"
 #import "MCLLightTheme.h"
 #import "MCLDarkTheme.h"
 #import "MCLTextField.h"
@@ -506,6 +507,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 
 - (IBAction)settingsDoneAction:(UIBarButtonItem *)sender
 {
+    [self.bag.soundEffectPlayer playCloseSound];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

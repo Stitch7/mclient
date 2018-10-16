@@ -32,7 +32,7 @@
     composeThreadVC.bag = self.bag;
     composeThreadVC.message = [MCLMessage messageNewWithBoard:board];
 
-    self.modalNavigationController = [[MCLModalNavigationController alloc] initWithRootViewController:composeThreadVC];
+    self.modalNavigationController = [[MCLModalNavigationController alloc] initWithBag:self.bag rootViewController:composeThreadVC];
     [self.masterNavigationController presentViewController:self.modalNavigationController animated:YES completion:nil];
 
     return composeThreadVC;
@@ -55,7 +55,7 @@
 
     replyToMessageVC.message = message;
 
-    self.modalNavigationController = [[MCLModalNavigationController alloc] initWithRootViewController:replyToMessageVC];
+    self.modalNavigationController = [[MCLModalNavigationController alloc] initWithBag:self.bag rootViewController:replyToMessageVC];
     [self.masterNavigationController presentViewController:self.modalNavigationController animated:YES completion:nil];
 
     return replyToMessageVC;
@@ -69,7 +69,7 @@
     MCLComposeMessageViewController *editMessageVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLComposeMessageViewController"];
     editMessageVC.bag = self.bag;
     editMessageVC.message = message;
-    self.modalNavigationController = [[MCLModalNavigationController alloc] initWithRootViewController:editMessageVC];
+    self.modalNavigationController = [[MCLModalNavigationController alloc] initWithBag:self.bag rootViewController:editMessageVC];
 
     MCLEditTextRequest *request = [[MCLEditTextRequest alloc] initWithClient:self.bag.httpClient message:message];
     [request loadWithCompletionHandler:^(NSError *error, NSArray *data) {

@@ -15,6 +15,7 @@
 #import "MCLQuoteMessageRequest.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
+#import "MCLSoundEffectPlayer.h"
 #import "MCLThread.h"
 #import "MCLMessage.h"
 #import "MCLComposeMessageToolbarController.h"
@@ -225,6 +226,7 @@
 - (void)downButtonPressed
 {
     [self.view endEditing:YES];
+    [self.bag.soundEffectPlayer playCloseSound];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

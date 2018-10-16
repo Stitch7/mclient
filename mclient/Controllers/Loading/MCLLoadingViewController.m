@@ -15,6 +15,7 @@
 #import "UIView+addConstraints.h"
 #import "MCLThemeManager.h"
 #import "MCLTheme.h"
+#import "MCLSoundEffectPlayer.h"
 #import "MCLLoadingViewControllerDelegate.h"
 #import "MCLRequest.h"
 #import "MCLPacmanLoadingView.h"
@@ -308,6 +309,7 @@ static NSString *kQueueKeyPath = @"operations";
     }
 
     if ([self.delegate.refreshControl isRefreshing]) {
+        [self.bag.soundEffectPlayer playReloadSound];
         [self.delegate.refreshControl endRefreshing];
     }
 }

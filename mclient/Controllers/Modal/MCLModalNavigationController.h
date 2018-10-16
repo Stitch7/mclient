@@ -6,6 +6,10 @@
 //  See LICENSE file in the project root for full license information.
 //
 
+@protocol MCLDependencyBag;
+
 @interface MCLModalNavigationController : UINavigationController
+
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag rootViewController:(UIViewController *)rootViewController;
 
 @end

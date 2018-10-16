@@ -24,8 +24,7 @@
 		3020FB651E74582200C7217F /* UIApplication+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3020FB641E74582100C7217F /* UIApplication+Additions.m */; };
 		3020FB681E7459C400C7217F /* MCLNotificationHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3020FB671E7459C400C7217F /* MCLNotificationHistory.m */; };
 		3020FB6B1E746D4400C7217F /* MCLNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3020FB6A1E746D4400C7217F /* MCLNotificationManager.m */; };
-		3020FB701E78BB4400C7217F /* zelda2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6D1E78A10900C7217F /* zelda2.caf */; };
-		3020FB711E78BB4400C7217F /* zelda1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6E1E78A10900C7217F /* zelda1.caf */; };
+		3020FB711E78BB4400C7217F /* notification.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6E1E78A10900C7217F /* notification.caf */; };
 		302381EC1F9352FF00764FAE /* MCLMarkThreadAsReadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 302381EB1F9352FF00764FAE /* MCLMarkThreadAsReadRequest.m */; };
 		302381EF1F93580800764FAE /* MCLQuoteMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 302381EE1F93580800764FAE /* MCLQuoteMessageRequest.m */; };
 		302381F21F9369E900764FAE /* MCLPreviewMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 302381F11F9369E900764FAE /* MCLPreviewMessageRequest.m */; };
@@ -120,7 +119,7 @@
 		306FC8221F93A39F001EB7E9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD82319A63517006514BD /* main.m */; };
 		306FC8231F93A39F001EB7E9 /* MCLDarkTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 3036F59A1E266B3800ABC2CE /* MCLDarkTheme.m */; };
 		306FC8241F93A39F001EB7E9 /* MCLErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9A519C411D400E36A5B /* MCLErrorView.m */; };
-		306FC8251F93A39F001EB7E9 /* MCLSoundeffectPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3096481D1EA2508600C16379 /* MCLSoundeffectPlayer.m */; };
+		306FC8251F93A39F001EB7E9 /* MCLSoundEffectPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3096481D1EA2508600C16379 /* MCLSoundEffectPlayer.m */; };
 		306FC8261F93A39F001EB7E9 /* MCLComposeMessagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */; };
 		306FC8271F93A39F001EB7E9 /* MCLQuoteMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 302381EE1F93580800764FAE /* MCLQuoteMessageRequest.m */; };
 		306FC8281F93A39F001EB7E9 /* MCLPreviewMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 302381F11F9369E900764FAE /* MCLPreviewMessageRequest.m */; };
@@ -194,15 +193,13 @@
 		306FC8741F93A39F001EB7E9 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30849D221E2BABBD00626331 /* Settings.storyboard */; };
 		306FC8751F93A39F001EB7E9 /* MCLMessageListFrameStyleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 301203531E03704500B06FF6 /* MCLMessageListFrameStyleView.xib */; };
 		306FC8761F93A39F001EB7E9 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3012032C1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib */; };
-		306FC8771F93A39F001EB7E9 /* zelda2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6D1E78A10900C7217F /* zelda2.caf */; };
 		306FC8781F93A39F001EB7E9 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EA21031F0EAD210064A0A3 /* Profile.storyboard */; };
 		306FC8791F93A39F001EB7E9 /* features-development.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F861F8D688800766501 /* features-development.plist */; };
 		306FC87A1F93A39F001EB7E9 /* features-store.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F891F8D69D900766501 /* features-store.plist */; };
 		306FC87B1F93A39F001EB7E9 /* features-testing.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F881F8D69D900766501 /* features-testing.plist */; };
 		306FC87E1F93A39F001EB7E9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 305DD82019A63517006514BD /* InfoPlist.strings */; };
-		306FC8801F93A39F001EB7E9 /* zelda1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6E1E78A10900C7217F /* zelda1.caf */; };
+		306FC8801F93A39F001EB7E9 /* notification.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6E1E78A10900C7217F /* notification.caf */; };
 		306FC8821F93A39F001EB7E9 /* MCLThreadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */; };
-		306FC8831F93A39F001EB7E9 /* delete.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3096481A1EA180CE00C16379 /* delete.caf */; };
 		306FC8841F93A39F001EB7E9 /* MCLDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 308B81E81F63FC9700C878FB /* MCLDetailViewController.xib */; };
 		306FC8851F93A39F001EB7E9 /* ComposeMessage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EAE21B1F1C1E400035DFC9 /* ComposeMessage.storyboard */; };
 		3070D31E207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D31D207968E500F42BFF /* MCLMultilineTitleLabel.m */; };
@@ -225,6 +222,46 @@
 		3070D33A207A948000F42BFF /* MCLLicense.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D338207A948000F42BFF /* MCLLicense.m */; };
 		3070D33B207A948000F42BFF /* MCLLicense.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D338207A948000F42BFF /* MCLLicense.m */; };
 		3070D33C207A948000F42BFF /* MCLLicense.m in Sources */ = {isa = PBXBuildFile; fileRef = 3070D338207A948000F42BFF /* MCLLicense.m */; };
+		30753B732176157B009647E9 /* removeThreadFromFavorites.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6B2176157A009647E9 /* removeThreadFromFavorites.caf */; };
+		30753B742176157B009647E9 /* removeThreadFromFavorites.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6B2176157A009647E9 /* removeThreadFromFavorites.caf */; };
+		30753B752176157B009647E9 /* removeThreadFromFavorites.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6B2176157A009647E9 /* removeThreadFromFavorites.caf */; };
+		30753B762176157B009647E9 /* removeThreadFromFavorites.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6B2176157A009647E9 /* removeThreadFromFavorites.caf */; };
+		30753B772176157B009647E9 /* addThreadToFavorites.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6C2176157A009647E9 /* addThreadToFavorites.caf */; };
+		30753B782176157B009647E9 /* addThreadToFavorites.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6C2176157A009647E9 /* addThreadToFavorites.caf */; };
+		30753B792176157B009647E9 /* addThreadToFavorites.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6C2176157A009647E9 /* addThreadToFavorites.caf */; };
+		30753B7A2176157B009647E9 /* addThreadToFavorites.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6C2176157A009647E9 /* addThreadToFavorites.caf */; };
+		30753B7B2176157B009647E9 /* createPosting.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6D2176157A009647E9 /* createPosting.caf */; };
+		30753B7C2176157B009647E9 /* createPosting.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6D2176157A009647E9 /* createPosting.caf */; };
+		30753B7D2176157B009647E9 /* createPosting.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6D2176157A009647E9 /* createPosting.caf */; };
+		30753B7E2176157B009647E9 /* createPosting.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6D2176157A009647E9 /* createPosting.caf */; };
+		30753B7F2176157B009647E9 /* editPosting.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6E2176157A009647E9 /* editPosting.caf */; };
+		30753B802176157B009647E9 /* editPosting.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6E2176157A009647E9 /* editPosting.caf */; };
+		30753B812176157B009647E9 /* editPosting.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6E2176157A009647E9 /* editPosting.caf */; };
+		30753B822176157B009647E9 /* editPosting.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6E2176157A009647E9 /* editPosting.caf */; };
+		30753B832176157B009647E9 /* error.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6F2176157B009647E9 /* error.caf */; };
+		30753B842176157B009647E9 /* error.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6F2176157B009647E9 /* error.caf */; };
+		30753B852176157B009647E9 /* error.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6F2176157B009647E9 /* error.caf */; };
+		30753B862176157B009647E9 /* error.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6F2176157B009647E9 /* error.caf */; };
+		30753B872176157B009647E9 /* open.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B702176157B009647E9 /* open.caf */; };
+		30753B882176157B009647E9 /* open.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B702176157B009647E9 /* open.caf */; };
+		30753B892176157B009647E9 /* open.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B702176157B009647E9 /* open.caf */; };
+		30753B8A2176157B009647E9 /* open.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B702176157B009647E9 /* open.caf */; };
+		30753B8B2176157B009647E9 /* reload.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B712176157B009647E9 /* reload.caf */; };
+		30753B8C2176157B009647E9 /* reload.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B712176157B009647E9 /* reload.caf */; };
+		30753B8D2176157B009647E9 /* reload.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B712176157B009647E9 /* reload.caf */; };
+		30753B8E2176157B009647E9 /* reload.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B712176157B009647E9 /* reload.caf */; };
+		30753B8F2176157B009647E9 /* close.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B722176157B009647E9 /* close.caf */; };
+		30753B902176157B009647E9 /* close.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B722176157B009647E9 /* close.caf */; };
+		30753B912176157B009647E9 /* close.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B722176157B009647E9 /* close.caf */; };
+		30753B922176157B009647E9 /* close.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B722176157B009647E9 /* close.caf */; };
+		30753B9F21765C55009647E9 /* markAllAsRead.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B9E21765C55009647E9 /* markAllAsRead.caf */; };
+		30753BA021765C55009647E9 /* markAllAsRead.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B9E21765C55009647E9 /* markAllAsRead.caf */; };
+		30753BA121765C55009647E9 /* markAllAsRead.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B9E21765C55009647E9 /* markAllAsRead.caf */; };
+		30753BA221765C55009647E9 /* markAllAsRead.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B9E21765C55009647E9 /* markAllAsRead.caf */; };
+		30753BA421765F04009647E9 /* tick.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BA321765F04009647E9 /* tick.caf */; };
+		30753BA521765F04009647E9 /* tick.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BA321765F04009647E9 /* tick.caf */; };
+		30753BA621765F04009647E9 /* tick.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BA321765F04009647E9 /* tick.caf */; };
+		30753BA721765F04009647E9 /* tick.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BA321765F04009647E9 /* tick.caf */; };
 		307A80821F6411DA00A580FE /* MCLMessageListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 307A80811F6411DA00A580FE /* MCLMessageListLoadingViewController.m */; };
 		307A80F119B8804F001B538D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307A80F019B8804F001B538D /* Security.framework */; };
 		307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D797519B0B3B30096A217 /* MCLReadSymbolView.m */; };
@@ -264,7 +301,7 @@
 		3090CACE1FA7ED1E0085C9AF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD82319A63517006514BD /* main.m */; };
 		3090CACF1FA7ED1E0085C9AF /* MCLDarkTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 3036F59A1E266B3800ABC2CE /* MCLDarkTheme.m */; };
 		3090CAD01FA7ED1E0085C9AF /* MCLErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9A519C411D400E36A5B /* MCLErrorView.m */; };
-		3090CAD11FA7ED1E0085C9AF /* MCLSoundeffectPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3096481D1EA2508600C16379 /* MCLSoundeffectPlayer.m */; };
+		3090CAD11FA7ED1E0085C9AF /* MCLSoundEffectPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3096481D1EA2508600C16379 /* MCLSoundEffectPlayer.m */; };
 		3090CAD21FA7ED1E0085C9AF /* MCLComposeMessagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */; };
 		3090CAD31FA7ED1E0085C9AF /* MCLQuoteMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 302381EE1F93580800764FAE /* MCLQuoteMessageRequest.m */; };
 		3090CAD41FA7ED1E0085C9AF /* MCLPreviewMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 302381F11F9369E900764FAE /* MCLPreviewMessageRequest.m */; };
@@ -338,15 +375,13 @@
 		3090CB1F1FA7ED1E0085C9AF /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30849D221E2BABBD00626331 /* Settings.storyboard */; };
 		3090CB201FA7ED1E0085C9AF /* MCLMessageListFrameStyleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 301203531E03704500B06FF6 /* MCLMessageListFrameStyleView.xib */; };
 		3090CB211FA7ED1E0085C9AF /* MCLMessageListFrameStyleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3012032C1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib */; };
-		3090CB221FA7ED1E0085C9AF /* zelda2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6D1E78A10900C7217F /* zelda2.caf */; };
 		3090CB231FA7ED1E0085C9AF /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EA21031F0EAD210064A0A3 /* Profile.storyboard */; };
 		3090CB241FA7ED1E0085C9AF /* features-development.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F861F8D688800766501 /* features-development.plist */; };
 		3090CB251FA7ED1E0085C9AF /* features-store.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F891F8D69D900766501 /* features-store.plist */; };
 		3090CB261FA7ED1E0085C9AF /* features-testing.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F881F8D69D900766501 /* features-testing.plist */; };
 		3090CB281FA7ED1E0085C9AF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 305DD82019A63517006514BD /* InfoPlist.strings */; };
-		3090CB291FA7ED1E0085C9AF /* zelda1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6E1E78A10900C7217F /* zelda1.caf */; };
+		3090CB291FA7ED1E0085C9AF /* notification.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6E1E78A10900C7217F /* notification.caf */; };
 		3090CB2B1FA7ED1E0085C9AF /* MCLThreadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */; };
-		3090CB2C1FA7ED1E0085C9AF /* delete.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3096481A1EA180CE00C16379 /* delete.caf */; };
 		3090CB2D1FA7ED1E0085C9AF /* MCLDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 308B81E81F63FC9700C878FB /* MCLDetailViewController.xib */; };
 		3090CB2E1FA7ED1E0085C9AF /* ComposeMessage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EAE21B1F1C1E400035DFC9 /* ComposeMessage.storyboard */; };
 		3090CB3A1FA89A5C0085C9AF /* MCLBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 301203301E031D7500B06FF6 /* MCLBadgeView.m */; };
@@ -369,7 +404,7 @@
 		3090CB4B1FA89A5C0085C9AF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 305DD82319A63517006514BD /* main.m */; };
 		3090CB4C1FA89A5C0085C9AF /* MCLDarkTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 3036F59A1E266B3800ABC2CE /* MCLDarkTheme.m */; };
 		3090CB4D1FA89A5C0085C9AF /* MCLErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9A519C411D400E36A5B /* MCLErrorView.m */; };
-		3090CB4E1FA89A5C0085C9AF /* MCLSoundeffectPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3096481D1EA2508600C16379 /* MCLSoundeffectPlayer.m */; };
+		3090CB4E1FA89A5C0085C9AF /* MCLSoundEffectPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3096481D1EA2508600C16379 /* MCLSoundEffectPlayer.m */; };
 		3090CB4F1FA89A5C0085C9AF /* MCLComposeMessagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A9D5E619D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m */; };
 		3090CB501FA89A5C0085C9AF /* MCLQuoteMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 302381EE1F93580800764FAE /* MCLQuoteMessageRequest.m */; };
 		3090CB511FA89A5C0085C9AF /* MCLPreviewMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 302381F11F9369E900764FAE /* MCLPreviewMessageRequest.m */; };
@@ -443,20 +478,17 @@
 		3090CB9C1FA89A5C0085C9AF /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30849D221E2BABBD00626331 /* Settings.storyboard */; };
 		3090CB9D1FA89A5C0085C9AF /* MCLMessageListFrameStyleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 301203531E03704500B06FF6 /* MCLMessageListFrameStyleView.xib */; };
 		3090CB9E1FA89A5C0085C9AF /* MCLMessageListFrameStyleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3012032C1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib */; };
-		3090CB9F1FA89A5C0085C9AF /* zelda2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6D1E78A10900C7217F /* zelda2.caf */; };
 		3090CBA01FA89A5C0085C9AF /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EA21031F0EAD210064A0A3 /* Profile.storyboard */; };
 		3090CBA11FA89A5C0085C9AF /* features-development.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F861F8D688800766501 /* features-development.plist */; };
 		3090CBA21FA89A5C0085C9AF /* features-store.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F891F8D69D900766501 /* features-store.plist */; };
 		3090CBA31FA89A5C0085C9AF /* features-testing.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F881F8D69D900766501 /* features-testing.plist */; };
 		3090CBA51FA89A5C0085C9AF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 305DD82019A63517006514BD /* InfoPlist.strings */; };
-		3090CBA61FA89A5C0085C9AF /* zelda1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6E1E78A10900C7217F /* zelda1.caf */; };
+		3090CBA61FA89A5C0085C9AF /* notification.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3020FB6E1E78A10900C7217F /* notification.caf */; };
 		3090CBA81FA89A5C0085C9AF /* MCLThreadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */; };
-		3090CBA91FA89A5C0085C9AF /* delete.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3096481A1EA180CE00C16379 /* delete.caf */; };
 		3090CBAA1FA89A5C0085C9AF /* MCLDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 308B81E81F63FC9700C878FB /* MCLDetailViewController.xib */; };
 		3090CBAB1FA89A5C0085C9AF /* ComposeMessage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EAE21B1F1C1E400035DFC9 /* ComposeMessage.storyboard */; };
 		3090CBB61FA8B4DE0085C9AF /* MCLBoardsListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3090CBB51FA8B4DE0085C9AF /* MCLBoardsListLoadingViewController.m */; };
-		3096481B1EA180E500C16379 /* delete.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3096481A1EA180CE00C16379 /* delete.caf */; };
-		3096481E1EA2508600C16379 /* MCLSoundeffectPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3096481D1EA2508600C16379 /* MCLSoundeffectPlayer.m */; };
+		3096481E1EA2508600C16379 /* MCLSoundEffectPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3096481D1EA2508600C16379 /* MCLSoundEffectPlayer.m */; };
 		309648211EA4053E00C16379 /* MCLRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 309648201EA4053E00C16379 /* MCLRouter.m */; };
 		309A1EEE1F76646500EE60C2 /* MCLAppRouterDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 309A1EED1F76646500EE60C2 /* MCLAppRouterDelegate.m */; };
 		30A1BFAD19B4A8D4002439FE /* MCLSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A1BFAC19B4A8D4002439FE /* MCLSettingsViewController.m */; };
@@ -593,8 +625,7 @@
 		3020FB671E7459C400C7217F /* MCLNotificationHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLNotificationHistory.m; sourceTree = "<group>"; };
 		3020FB691E746D4400C7217F /* MCLNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLNotificationManager.h; sourceTree = "<group>"; };
 		3020FB6A1E746D4400C7217F /* MCLNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLNotificationManager.m; sourceTree = "<group>"; };
-		3020FB6D1E78A10900C7217F /* zelda2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = zelda2.caf; sourceTree = "<group>"; };
-		3020FB6E1E78A10900C7217F /* zelda1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = zelda1.caf; sourceTree = "<group>"; };
+		3020FB6E1E78A10900C7217F /* notification.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = notification.caf; sourceTree = "<group>"; };
 		302381EA1F9352FF00764FAE /* MCLMarkThreadAsReadRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMarkThreadAsReadRequest.h; sourceTree = "<group>"; };
 		302381EB1F9352FF00764FAE /* MCLMarkThreadAsReadRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLMarkThreadAsReadRequest.m; sourceTree = "<group>"; };
 		302381ED1F93580800764FAE /* MCLQuoteMessageRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLQuoteMessageRequest.h; sourceTree = "<group>"; };
@@ -730,6 +761,16 @@
 		3070D336207A899600F42BFF /* MCLLicenseContainer+Texts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MCLLicenseContainer+Texts.h"; sourceTree = "<group>"; };
 		3070D337207A948000F42BFF /* MCLLicense.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLLicense.h; sourceTree = "<group>"; };
 		3070D338207A948000F42BFF /* MCLLicense.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLLicense.m; sourceTree = "<group>"; };
+		30753B6B2176157A009647E9 /* removeThreadFromFavorites.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = removeThreadFromFavorites.caf; sourceTree = "<group>"; };
+		30753B6C2176157A009647E9 /* addThreadToFavorites.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = addThreadToFavorites.caf; sourceTree = "<group>"; };
+		30753B6D2176157A009647E9 /* createPosting.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = createPosting.caf; sourceTree = "<group>"; };
+		30753B6E2176157A009647E9 /* editPosting.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = editPosting.caf; sourceTree = "<group>"; };
+		30753B6F2176157B009647E9 /* error.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = error.caf; sourceTree = "<group>"; };
+		30753B702176157B009647E9 /* open.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = open.caf; sourceTree = "<group>"; };
+		30753B712176157B009647E9 /* reload.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = reload.caf; sourceTree = "<group>"; };
+		30753B722176157B009647E9 /* close.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = close.caf; sourceTree = "<group>"; };
+		30753B9E21765C55009647E9 /* markAllAsRead.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = markAllAsRead.caf; sourceTree = "<group>"; };
+		30753BA321765F04009647E9 /* tick.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tick.caf; sourceTree = "<group>"; };
 		307A80801F6411DA00A580FE /* MCLMessageListLoadingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMessageListLoadingViewController.h; sourceTree = "<group>"; };
 		307A80811F6411DA00A580FE /* MCLMessageListLoadingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListLoadingViewController.m; sourceTree = "<group>"; };
 		307A80F019B8804F001B538D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -757,9 +798,8 @@
 		3090CBB31FA89A5C0085C9AF /* mclient-alpha-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "mclient-alpha-Info.plist"; path = "/Users/cre/Work/mclient/mclient/Supporting Files/Info-plist/mclient-alpha-Info.plist"; sourceTree = "<absolute>"; };
 		3090CBB41FA8B4DE0085C9AF /* MCLBoardsListLoadingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLBoardsListLoadingViewController.h; sourceTree = "<group>"; };
 		3090CBB51FA8B4DE0085C9AF /* MCLBoardsListLoadingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLBoardsListLoadingViewController.m; sourceTree = "<group>"; };
-		3096481A1EA180CE00C16379 /* delete.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = delete.caf; sourceTree = "<group>"; };
-		3096481C1EA2508600C16379 /* MCLSoundeffectPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLSoundeffectPlayer.h; sourceTree = "<group>"; };
-		3096481D1EA2508600C16379 /* MCLSoundeffectPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLSoundeffectPlayer.m; sourceTree = "<group>"; };
+		3096481C1EA2508600C16379 /* MCLSoundEffectPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLSoundEffectPlayer.h; sourceTree = "<group>"; };
+		3096481D1EA2508600C16379 /* MCLSoundEffectPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLSoundEffectPlayer.m; sourceTree = "<group>"; };
 		3096481F1EA4053E00C16379 /* MCLRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLRouter.h; sourceTree = "<group>"; };
 		309648201EA4053E00C16379 /* MCLRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLRouter.m; sourceTree = "<group>"; };
 		309A1EEB1F765EAC00EE60C2 /* MCLRouterDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLRouterDelegate.h; sourceTree = "<group>"; };
@@ -1048,20 +1088,26 @@
 				3020FB671E7459C400C7217F /* MCLNotificationHistory.m */,
 				3020FB691E746D4400C7217F /* MCLNotificationManager.h */,
 				3020FB6A1E746D4400C7217F /* MCLNotificationManager.m */,
-				3096481C1EA2508600C16379 /* MCLSoundeffectPlayer.h */,
-				3096481D1EA2508600C16379 /* MCLSoundeffectPlayer.m */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
 		};
-		3020FB6F1E78A10F00C7217F /* Sounds */ = {
+		3020FB6F1E78A10F00C7217F /* Soundeffects */ = {
 			isa = PBXGroup;
 			children = (
-				3096481A1EA180CE00C16379 /* delete.caf */,
-				3020FB6E1E78A10900C7217F /* zelda1.caf */,
-				3020FB6D1E78A10900C7217F /* zelda2.caf */,
+				30753B6C2176157A009647E9 /* addThreadToFavorites.caf */,
+				30753B722176157B009647E9 /* close.caf */,
+				30753B6D2176157A009647E9 /* createPosting.caf */,
+				30753B6E2176157A009647E9 /* editPosting.caf */,
+				30753B6F2176157B009647E9 /* error.caf */,
+				30753B9E21765C55009647E9 /* markAllAsRead.caf */,
+				30753B702176157B009647E9 /* open.caf */,
+				30753B712176157B009647E9 /* reload.caf */,
+				30753B6B2176157A009647E9 /* removeThreadFromFavorites.caf */,
+				30753BA321765F04009647E9 /* tick.caf */,
+				3020FB6E1E78A10900C7217F /* notification.caf */,
 			);
-			path = Sounds;
+			path = Soundeffects;
 			sourceTree = "<group>";
 		};
 		3036F5951E263EE100ABC2CE /* Themes */ = {
@@ -1214,6 +1260,7 @@
 				304E5A471E1EB6790022FE8B /* Network */,
 				305DD85919AB2EFE006514BD /* Views */,
 				3036F5951E263EE100ABC2CE /* Themes */,
+				30753B93217625F2009647E9 /* SoundeffectPlayer */,
 				305E53AB19D4F4C5002B8E50 /* Storyboards */,
 				303974911E16B08D003C8BC9 /* Categories */,
 				305DD81E19A63517006514BD /* Supporting Files */,
@@ -1229,7 +1276,7 @@
 			children = (
 				30DB7F831F8D604A00766501 /* Features */,
 				305DD83519A63517006514BD /* Images.xcassets */,
-				3020FB6F1E78A10F00C7217F /* Sounds */,
+				3020FB6F1E78A10F00C7217F /* Soundeffects */,
 				30827BA81F35CF0C00014769 /* Internationalization */,
 				3057B8AB1FAE055F0046C427 /* Info-plist */,
 				305DD82519A63517006514BD /* mclient-Prefix.pch */,
@@ -1442,6 +1489,15 @@
 				3070D32B207A6BBA00F42BFF /* MCLLicenseViewController.m */,
 			);
 			path = License;
+			sourceTree = "<group>";
+		};
+		30753B93217625F2009647E9 /* SoundeffectPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				3096481C1EA2508600C16379 /* MCLSoundEffectPlayer.h */,
+				3096481D1EA2508600C16379 /* MCLSoundEffectPlayer.m */,
+			);
+			path = SoundeffectPlayer;
 			sourceTree = "<group>";
 		};
 		3081139A20F26B3900DED6B0 /* Error */ = {
@@ -1872,22 +1928,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				305DD83619A63517006514BD /* Images.xcassets in Resources */,
+				30753B902176157B009647E9 /* close.caf in Resources */,
 				3038D58319F65E21005E7D3D /* Localizable.strings in Resources */,
 				30849D201E2BABBD00626331 /* Settings.storyboard in Resources */,
 				301203541E03704500B06FF6 /* MCLMessageListFrameStyleView.xib in Resources */,
 				3012032E1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
-				3020FB701E78BB4400C7217F /* zelda2.caf in Resources */,
 				30EA21041F0EAD210064A0A3 /* Profile.storyboard in Resources */,
 				30C0871B20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */,
 				30DB7F871F8D688800766501 /* features-development.plist in Resources */,
 				30DB7F8A1F8D6A0E00766501 /* features-store.plist in Resources */,
 				30DB7F8B1F8D6A0E00766501 /* features-testing.plist in Resources */,
+				30753B802176157B009647E9 /* editPosting.caf in Resources */,
 				305DD82219A63517006514BD /* InfoPlist.strings in Resources */,
-				3020FB711E78BB4400C7217F /* zelda1.caf in Resources */,
+				30753B7C2176157B009647E9 /* createPosting.caf in Resources */,
+				3020FB711E78BB4400C7217F /* notification.caf in Resources */,
 				3004E5AC1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib in Resources */,
-				3096481B1EA180E500C16379 /* delete.caf in Resources */,
+				30753B782176157B009647E9 /* addThreadToFavorites.caf in Resources */,
+				30753B882176157B009647E9 /* open.caf in Resources */,
+				30753B8C2176157B009647E9 /* reload.caf in Resources */,
+				30753BA521765F04009647E9 /* tick.caf in Resources */,
 				308B81E91F63FC9700C878FB /* MCLDetailViewController.xib in Resources */,
+				30753B842176157B009647E9 /* error.caf in Resources */,
+				30753B742176157B009647E9 /* removeThreadFromFavorites.caf in Resources */,
 				30C9B532205D820700FD3C31 /* MCLNoDataView.xib in Resources */,
+				30753BA021765C55009647E9 /* markAllAsRead.caf in Resources */,
 				30EAE21C1F1C1F770035DFC9 /* ComposeMessage.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1905,22 +1969,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				306FC8721F93A39F001EB7E9 /* Images.xcassets in Resources */,
+				30753B8F2176157B009647E9 /* close.caf in Resources */,
 				306FC8731F93A39F001EB7E9 /* Localizable.strings in Resources */,
 				306FC8741F93A39F001EB7E9 /* Settings.storyboard in Resources */,
 				306FC8751F93A39F001EB7E9 /* MCLMessageListFrameStyleView.xib in Resources */,
 				306FC8761F93A39F001EB7E9 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
-				306FC8771F93A39F001EB7E9 /* zelda2.caf in Resources */,
 				306FC8781F93A39F001EB7E9 /* Profile.storyboard in Resources */,
 				30C0871A20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */,
 				306FC8791F93A39F001EB7E9 /* features-development.plist in Resources */,
 				306FC87A1F93A39F001EB7E9 /* features-store.plist in Resources */,
 				306FC87B1F93A39F001EB7E9 /* features-testing.plist in Resources */,
+				30753B7F2176157B009647E9 /* editPosting.caf in Resources */,
 				306FC87E1F93A39F001EB7E9 /* InfoPlist.strings in Resources */,
-				306FC8801F93A39F001EB7E9 /* zelda1.caf in Resources */,
+				30753B7B2176157B009647E9 /* createPosting.caf in Resources */,
+				306FC8801F93A39F001EB7E9 /* notification.caf in Resources */,
 				306FC8821F93A39F001EB7E9 /* MCLThreadTableViewCell.xib in Resources */,
-				306FC8831F93A39F001EB7E9 /* delete.caf in Resources */,
+				30753B772176157B009647E9 /* addThreadToFavorites.caf in Resources */,
+				30753B872176157B009647E9 /* open.caf in Resources */,
+				30753B8B2176157B009647E9 /* reload.caf in Resources */,
+				30753BA421765F04009647E9 /* tick.caf in Resources */,
 				306FC8841F93A39F001EB7E9 /* MCLDetailViewController.xib in Resources */,
+				30753B832176157B009647E9 /* error.caf in Resources */,
+				30753B732176157B009647E9 /* removeThreadFromFavorites.caf in Resources */,
 				30C9B531205D7FA300FD3C31 /* MCLNoDataView.xib in Resources */,
+				30753B9F21765C55009647E9 /* markAllAsRead.caf in Resources */,
 				306FC8851F93A39F001EB7E9 /* ComposeMessage.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1930,22 +2002,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				3090CB1D1FA7ED1E0085C9AF /* Images.xcassets in Resources */,
+				30753B922176157B009647E9 /* close.caf in Resources */,
 				3090CB1E1FA7ED1E0085C9AF /* Localizable.strings in Resources */,
 				3090CB1F1FA7ED1E0085C9AF /* Settings.storyboard in Resources */,
 				3090CB201FA7ED1E0085C9AF /* MCLMessageListFrameStyleView.xib in Resources */,
 				3090CB211FA7ED1E0085C9AF /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
-				3090CB221FA7ED1E0085C9AF /* zelda2.caf in Resources */,
 				3090CB231FA7ED1E0085C9AF /* Profile.storyboard in Resources */,
 				30C0871D20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */,
 				3090CB241FA7ED1E0085C9AF /* features-development.plist in Resources */,
 				3090CB251FA7ED1E0085C9AF /* features-store.plist in Resources */,
 				3090CB261FA7ED1E0085C9AF /* features-testing.plist in Resources */,
+				30753B822176157B009647E9 /* editPosting.caf in Resources */,
 				3090CB281FA7ED1E0085C9AF /* InfoPlist.strings in Resources */,
-				3090CB291FA7ED1E0085C9AF /* zelda1.caf in Resources */,
+				30753B7E2176157B009647E9 /* createPosting.caf in Resources */,
+				3090CB291FA7ED1E0085C9AF /* notification.caf in Resources */,
 				3090CB2B1FA7ED1E0085C9AF /* MCLThreadTableViewCell.xib in Resources */,
-				3090CB2C1FA7ED1E0085C9AF /* delete.caf in Resources */,
+				30753B7A2176157B009647E9 /* addThreadToFavorites.caf in Resources */,
+				30753B8A2176157B009647E9 /* open.caf in Resources */,
+				30753B8E2176157B009647E9 /* reload.caf in Resources */,
+				30753BA721765F04009647E9 /* tick.caf in Resources */,
 				3090CB2D1FA7ED1E0085C9AF /* MCLDetailViewController.xib in Resources */,
+				30753B862176157B009647E9 /* error.caf in Resources */,
+				30753B762176157B009647E9 /* removeThreadFromFavorites.caf in Resources */,
 				30C9B534205D820800FD3C31 /* MCLNoDataView.xib in Resources */,
+				30753BA221765C55009647E9 /* markAllAsRead.caf in Resources */,
 				3090CB2E1FA7ED1E0085C9AF /* ComposeMessage.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1955,22 +2035,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				3090CB9A1FA89A5C0085C9AF /* Images.xcassets in Resources */,
+				30753B912176157B009647E9 /* close.caf in Resources */,
 				3090CB9B1FA89A5C0085C9AF /* Localizable.strings in Resources */,
 				3090CB9C1FA89A5C0085C9AF /* Settings.storyboard in Resources */,
 				3090CB9D1FA89A5C0085C9AF /* MCLMessageListFrameStyleView.xib in Resources */,
 				3090CB9E1FA89A5C0085C9AF /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
-				3090CB9F1FA89A5C0085C9AF /* zelda2.caf in Resources */,
 				3090CBA01FA89A5C0085C9AF /* Profile.storyboard in Resources */,
 				30C0871C20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */,
 				3090CBA11FA89A5C0085C9AF /* features-development.plist in Resources */,
 				3090CBA21FA89A5C0085C9AF /* features-store.plist in Resources */,
 				3090CBA31FA89A5C0085C9AF /* features-testing.plist in Resources */,
+				30753B812176157B009647E9 /* editPosting.caf in Resources */,
 				3090CBA51FA89A5C0085C9AF /* InfoPlist.strings in Resources */,
-				3090CBA61FA89A5C0085C9AF /* zelda1.caf in Resources */,
+				30753B7D2176157B009647E9 /* createPosting.caf in Resources */,
+				3090CBA61FA89A5C0085C9AF /* notification.caf in Resources */,
 				3090CBA81FA89A5C0085C9AF /* MCLThreadTableViewCell.xib in Resources */,
-				3090CBA91FA89A5C0085C9AF /* delete.caf in Resources */,
+				30753B792176157B009647E9 /* addThreadToFavorites.caf in Resources */,
+				30753B892176157B009647E9 /* open.caf in Resources */,
+				30753B8D2176157B009647E9 /* reload.caf in Resources */,
+				30753BA621765F04009647E9 /* tick.caf in Resources */,
 				3090CBAA1FA89A5C0085C9AF /* MCLDetailViewController.xib in Resources */,
+				30753B852176157B009647E9 /* error.caf in Resources */,
+				30753B752176157B009647E9 /* removeThreadFromFavorites.caf in Resources */,
 				30C9B533205D820700FD3C31 /* MCLNoDataView.xib in Resources */,
+				30753BA121765C55009647E9 /* markAllAsRead.caf in Resources */,
 				3090CBAB1FA89A5C0085C9AF /* ComposeMessage.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2318,7 +2406,7 @@
 				305DD82419A63517006514BD /* main.m in Sources */,
 				3036F59B1E266B3800ABC2CE /* MCLDarkTheme.m in Sources */,
 				301FD9A619C411D400E36A5B /* MCLErrorView.m in Sources */,
-				3096481E1EA2508600C16379 /* MCLSoundeffectPlayer.m in Sources */,
+				3096481E1EA2508600C16379 /* MCLSoundEffectPlayer.m in Sources */,
 				30A9D5E719D4CFFF00070268 /* MCLComposeMessagePreviewViewController.m in Sources */,
 				302381EF1F93580800764FAE /* MCLQuoteMessageRequest.m in Sources */,
 				302381F21F9369E900764FAE /* MCLPreviewMessageRequest.m in Sources */,
@@ -2444,7 +2532,7 @@
 				306FC8221F93A39F001EB7E9 /* main.m in Sources */,
 				306FC8231F93A39F001EB7E9 /* MCLDarkTheme.m in Sources */,
 				306FC8241F93A39F001EB7E9 /* MCLErrorView.m in Sources */,
-				306FC8251F93A39F001EB7E9 /* MCLSoundeffectPlayer.m in Sources */,
+				306FC8251F93A39F001EB7E9 /* MCLSoundEffectPlayer.m in Sources */,
 				306FC8261F93A39F001EB7E9 /* MCLComposeMessagePreviewViewController.m in Sources */,
 				306FC8271F93A39F001EB7E9 /* MCLQuoteMessageRequest.m in Sources */,
 				306FC8281F93A39F001EB7E9 /* MCLPreviewMessageRequest.m in Sources */,
@@ -2556,7 +2644,7 @@
 				3090CACE1FA7ED1E0085C9AF /* main.m in Sources */,
 				3090CACF1FA7ED1E0085C9AF /* MCLDarkTheme.m in Sources */,
 				3090CAD01FA7ED1E0085C9AF /* MCLErrorView.m in Sources */,
-				3090CAD11FA7ED1E0085C9AF /* MCLSoundeffectPlayer.m in Sources */,
+				3090CAD11FA7ED1E0085C9AF /* MCLSoundEffectPlayer.m in Sources */,
 				3090CAD21FA7ED1E0085C9AF /* MCLComposeMessagePreviewViewController.m in Sources */,
 				3090CAD31FA7ED1E0085C9AF /* MCLQuoteMessageRequest.m in Sources */,
 				3090CAD41FA7ED1E0085C9AF /* MCLPreviewMessageRequest.m in Sources */,
@@ -2671,7 +2759,7 @@
 				3090CB4B1FA89A5C0085C9AF /* main.m in Sources */,
 				3090CB4C1FA89A5C0085C9AF /* MCLDarkTheme.m in Sources */,
 				3090CB4D1FA89A5C0085C9AF /* MCLErrorView.m in Sources */,
-				3090CB4E1FA89A5C0085C9AF /* MCLSoundeffectPlayer.m in Sources */,
+				3090CB4E1FA89A5C0085C9AF /* MCLSoundEffectPlayer.m in Sources */,
 				3090CB4F1FA89A5C0085C9AF /* MCLComposeMessagePreviewViewController.m in Sources */,
 				3090CB501FA89A5C0085C9AF /* MCLQuoteMessageRequest.m in Sources */,
 				3090CB511FA89A5C0085C9AF /* MCLPreviewMessageRequest.m in Sources */,

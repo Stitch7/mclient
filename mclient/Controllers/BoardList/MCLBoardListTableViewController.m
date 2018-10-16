@@ -19,6 +19,7 @@
 #import "MCLMessageResponsesRequest.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
+#import "MCLSoundEffectPlayer.h"
 #import "MCLSplitViewController.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLMessageListViewController.h"
@@ -434,6 +435,7 @@
     [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:favoriteCell.index inSection:1]]
                           withRowAnimation:UITableViewRowAnimationLeft];
     [self.tableView reloadData];
+    [self.bag.soundEffectPlayer playRemoveThreadFromFavoritesSound];
     MCLFavoriteThreadToggleRequest *favoriteThreadToggleRequest = [[MCLFavoriteThreadToggleRequest alloc] initWithClient:self.bag.httpClient
                                                                                                                   thread:thread];
     favoriteThreadToggleRequest.forceRemove = YES;

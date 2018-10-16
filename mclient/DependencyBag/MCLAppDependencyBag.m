@@ -19,6 +19,7 @@
 #import "MCLRouter.h"
 #import "MCLLogin.h"
 #import "MCLThemeManager.h"
+#import "MCLSoundEffectPlayer.h"
 #import "MCLFoundationHTTPClient.h"
 #import "MCLNotificationManager.h"
 #import "MCLLaunchViewController.h"
@@ -37,6 +38,7 @@
 @synthesize settings;
 @synthesize notificationManager;
 @synthesize themeManager;
+@synthesize soundEffectPlayer;
 
 #pragma mark - Initializer
 
@@ -65,6 +67,7 @@
     self.settings = [[MCLSettings alloc] initWithUserDefaults:[NSUserDefaults standardUserDefaults]];
     self.notificationManager = [[MCLNotificationManager alloc] initWithBag:self];
     self.themeManager = [[MCLThemeManager alloc] initWithSettings:self.settings];
+    self.soundEffectPlayer = [[MCLSoundEffectPlayer alloc] initWithSettings:self.settings];
 
     [self.themeManager loadTheme];
     [self configureAnalytics];

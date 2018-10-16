@@ -12,6 +12,7 @@
 #import "MCLSettings.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
+#import "MCLSoundEffectPlayer.h"
 #import "MCLLoadingView.h"
 #import "MCLMessageListViewController.h"
 #import "MCLMessage.h"
@@ -129,6 +130,7 @@
         self.lastSliderValue = newValue;
         [self.bag.settings setInteger:(int)newValue forSetting:MCLSettingFontSize];
         [self loadPreviewMessage];
+        [self.bag.soundEffectPlayer playTickSound];
         [self.delegate settingsFontSizeViewController:self fontSizeChanged:newValue];
         float defaultFontSize = DEFAULT_FONT_SIZE;
         self.navigationItem.rightBarButtonItem.enabled = newValue != defaultFontSize;

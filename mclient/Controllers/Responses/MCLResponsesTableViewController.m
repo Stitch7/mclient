@@ -18,6 +18,7 @@
 #import "MCLLoadingViewController.h"
 #import "MCLMessageListViewController.h"
 #import "MCLThemeManager.h"
+#import "MCLSoundEffectPlayer.h"
 #import "MCLMessageListFrameStyleTableViewCell.h"
 #import "MCLBoard.h"
 #import "MCLThread.h"
@@ -140,6 +141,8 @@
 
         [self.loadingViewController.navigationItem.rightBarButtonItem setEnabled:NO];
         [self.loadingViewController refresh];
+
+        [self.bag.soundEffectPlayer playMarkAllAsReadSound];
     }];
 }
 

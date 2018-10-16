@@ -19,6 +19,7 @@
 #import "MCLMarkThreadAsReadRequest.h"
 #import "MCLLogin.h"
 #import "MCLThemeManager.h"
+#import "MCLSoundEffectPlayer.h"
 #import "MCLMessageListViewController.h"
 #import "MCLThreadTableViewCell.h"
 #import "MCLBoard.h"
@@ -246,6 +247,7 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
             }
 
             self.tableView.editing = NO;
+            [self.bag.soundEffectPlayer playMarkAllAsReadSound];
         }];
     };
 
@@ -283,6 +285,12 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
             [threadCell setFavorite:thread.isFavorite];
             [self presentError:error];
             return;
+        }
+
+        if (thread.isFavorite) {
+            [self.bag.soundEffectPlayer playAddThreadToFavoritesSound];
+        } else {
+            [self.bag.soundEffectPlayer playRemoveThreadFromFavoritesSound];
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:MCLFavoritedChangedNotification
                                                             object:self
@@ -338,8 +346,9 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
                                               style:UIAlertActionStyleDefault
-                                            handler:nil]];;
+                                            handler:nil]];
 
+    [self.bag.soundEffectPlayer playCreatePostingSound];
     [self presentViewController:alert animated:YES completion:nil];
 }
 

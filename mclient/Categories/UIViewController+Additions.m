@@ -65,6 +65,19 @@
                                                 [alert dismissViewControllerAnimated:YES completion:nil];
                                             }]];
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+    if ([self respondsToSelector:@selector(bag)]) {
+        id bag = [self performSelector:@selector(bag)];
+        if ([bag respondsToSelector:@selector(soundEffectPlayer)]) {
+            id soundeffectPlayer = [bag performSelector:@selector(soundEffectPlayer)];
+            if ([soundeffectPlayer respondsToSelector:@selector(playErrorSound)]) {
+                [soundeffectPlayer performSelector:@selector(playErrorSound)];
+            }
+        }
+    }
+#pragma clang diagnostic pop
+
     [self presentViewController:alert animated:YES completion:completion];
 }
 

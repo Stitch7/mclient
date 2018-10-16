@@ -12,6 +12,7 @@
 #import "MCLDependencyBag.h"
 #import "MCLFeatures.h"
 #import "MCLRouter.h"
+#import "MCLSoundEffectPlayer.h"
 #import "MCLMServiceErrorView.h"
 #import "MCLInternetConnectionErrorView.h"
 
@@ -60,6 +61,8 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
+    [self.bag.soundEffectPlayer playErrorSound];
 
     [self.view setNeedsLayout];
 }

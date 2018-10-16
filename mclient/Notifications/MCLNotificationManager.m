@@ -72,7 +72,7 @@
     notification.userInfo = response.propertyList;
     notification.alertAction = NSLocalizedString(@"Open", nil);
     notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"Response from %@:\n%@", nil), response.username, response.subject];
-    notification.soundName = @"zelda1.caf";
+    notification.soundName = @"notification.caf";
 
     [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }

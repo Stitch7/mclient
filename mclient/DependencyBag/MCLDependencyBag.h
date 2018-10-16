@@ -12,6 +12,7 @@
 @class MCLNotificationManager;
 @class MCLSettings;
 @class MCLThemeManager;
+@class MCLSoundEffectPlayer;
 @protocol MCLHTTPClient;
 
 @protocol MCLDependencyBag <NSObject>
@@ -22,6 +23,7 @@
 @property (strong, nonatomic) MCLNotificationManager *notificationManager;
 @property (strong, nonatomic) MCLSettings *settings;
 @property (strong, nonatomic) MCLThemeManager *themeManager;
+@property (strong, nonatomic) MCLSoundEffectPlayer *soundEffectPlayer;
 @property (strong, nonatomic) id <MCLHTTPClient> httpClient;
 
 - (void)launchRootWindow:(void (^)(UIWindow *window))windowHandler;

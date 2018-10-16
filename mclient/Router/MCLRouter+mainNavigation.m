@@ -41,7 +41,7 @@
     MCLSettingsViewController *settingsVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLSettingsViewController"];
     settingsVC.bag = self.bag;
 
-    self.modalNavigationController = [[MCLModalNavigationController alloc] initWithRootViewController:settingsVC];
+    self.modalNavigationController = [[MCLModalNavigationController alloc] initWithBag:self.bag rootViewController:settingsVC];
     [self.masterNavigationController presentViewController:self.modalNavigationController animated:YES completion:nil];
 
     return settingsVC;
@@ -60,7 +60,7 @@
                                                                   contentViewController:profileVC];
 
     loadingVC.modalPresentationStyle = UIModalPresentationFormSheet;
-    MCLModalNavigationController *navigationVC = [[MCLModalNavigationController alloc] initWithRootViewController:loadingVC];
+    MCLModalNavigationController *navigationVC = [[MCLModalNavigationController alloc] initWithBag:self.bag rootViewController:loadingVC];
     [self.masterNavigationController presentViewController:navigationVC animated:YES completion:nil];
 
     return profileVC;

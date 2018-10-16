@@ -18,6 +18,7 @@ extern NSString *const MCLSettingTheme;
 extern NSString *const MCLSettingOpenLinksInSafari;
 extern NSString *const MCLSettingClassicQuoteDesign;
 extern NSString *const MCLSettingBackgroundNotifications;
+extern NSString *const MCLSettingSoundeffectsEnabled;
 
 typedef NS_ENUM(NSUInteger, kMCLSettingsThreadView) {
     kMCLSettingsThreadViewWidmann,

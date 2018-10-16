@@ -10,7 +10,7 @@
 
 #import "MCLDependencyBag.h"
 #import "UIViewController+Additions.h"
-#import "MCLSoundeffectPlayer.h"
+#import "MCLSoundEffectPlayer.h"
 #import "MCLKillfileThreadsRequest.h"
 #import "MCLKillfileThreadToggleRequest.h"
 #import "MCLLogin.h"

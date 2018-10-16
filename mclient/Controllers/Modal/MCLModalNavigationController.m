@@ -8,11 +8,14 @@
 
 #import "MCLModalNavigationController.h"
 
+#import "MCLDependencyBag.h"
+#import "MCLSoundEffectPlayer.h"
 #import "MCLModalTransitioningDelegate.h"
 
 
 @interface MCLModalNavigationController ()
 
+@property (strong, nonatomic) id <MCLDependencyBag> bag;
 @property(strong, nonatomic) id<UIViewControllerTransitioningDelegate> transitioningDelegate;
 
 @end
@@ -21,11 +24,12 @@
 
 #pragma mark - Initializers
 
-- (instancetype)initWithRootViewController:(UIViewController *)rootViewController
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag rootViewController:(UIViewController *)rootViewController
 {
     self = [super initWithRootViewController:rootViewController];
     if (!self) return nil;
 
+    self.bag = bag;
     [self configure];
 
     return self;
@@ -52,6 +56,13 @@
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    [self.bag.soundEffectPlayer playOpenSound];
 }
 
 @end
