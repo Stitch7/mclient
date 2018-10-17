@@ -72,7 +72,7 @@
     [self.themeManager loadTheme];
     [self configureAnalytics];
 
-    [IMGSession anonymousSessionWithClientID:kImgurID withDelegate:self];
+    [IMGSession anonymousSessionWithClientID:IMGUR_ID withDelegate:self];
 }
 
 - (void)configureCrashReporter

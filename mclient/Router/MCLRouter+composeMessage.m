@@ -116,7 +116,7 @@
 
 - (SwiftyGiphyHelper *)modalToGiphy
 {
-    SwiftyGiphyHelper *giphyHelper = [[SwiftyGiphyHelper alloc] initWithApiKey:kGiphyKey];
+    SwiftyGiphyHelper *giphyHelper = [[SwiftyGiphyHelper alloc] initWithApiKey:GIPHY_KEY];
     SwiftyGiphyViewController *giphyVC = [giphyHelper makeGiphyViewControllerWithTheme:self.bag.themeManager.currentTheme];
 
     UINavigationController *giphyNavController = [[UINavigationController alloc] initWithRootViewController:giphyVC];
