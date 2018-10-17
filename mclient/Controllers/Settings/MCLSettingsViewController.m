@@ -498,7 +498,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     }
 }
 
-#pragma mark - UITextViewDelegate
+#pragma mark - MCLSettingsFontSizeViewControllerDelegate
 
 - (void)settingsFontSizeViewController:(MCLSettingsFontSizeViewController *)inController fontSizeChanged:(int)fontSize
 {
@@ -625,6 +625,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     if ([segue.identifier isEqualToString:@"PushToSettingsFontSize"]) {
         MCLSettingsFontSizeViewController *fontSizeVC = (MCLSettingsFontSizeViewController *)segue.destinationViewController;
         fontSizeVC.bag = self.bag;
+        fontSizeVC.delegate = self;
     }
 //    else if ([segue.identifier isEqualToString:@"PushToThreadsKillfile"]) {
 //        MCLThreadKillfileViewController *killfileThreadsVC = (MCLThreadKillfileViewController *)segue.destinationViewController;
