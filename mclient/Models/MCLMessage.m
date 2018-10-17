@@ -168,7 +168,8 @@
 {
     NSString *editedHtml = html;
     if (!classicQuoteDesign) {
-        editedHtml = [editedHtml stringByReplacingOccurrencesOfString:@" color=\"#808080\"" withString:@""];
+        editedHtml = [editedHtml stringByReplacingOccurrencesOfString:@" color=\"#808080\"" withString:@""]; // regular message
+        editedHtml = [editedHtml stringByReplacingOccurrencesOfString:@" color=\"808080\"" withString:@""]; // message preview
         editedHtml = [editedHtml stringByReplacingOccurrencesOfString:@"<font>&gt;" withString:@"<font>"];
         editedHtml = [editedHtml stringByReplacingOccurrencesOfString:@"<br>\n&gt;" withString:@"<br>"];
     }
