@@ -192,6 +192,8 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     NSString *password = self.settingsPasswordTextField.text;
 
     if (username.length > 0 && password.length > 0) {
+        CGFloat loginDataStatusLabelFontSize = self.settingsLoginDataStatusLabel.font.pointSize;
+        self.settingsLoginDataStatusLabel.font = [UIFont italicSystemFontOfSize:loginDataStatusLabelFontSize];
         self.settingsLoginDataStatusLabel.textColor = [UIColor darkGrayColor];
         self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Verifying username and password…", nil);
         [self.settingsLoginDataStatusSpinner startAnimating];
@@ -201,7 +203,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 
         [self.bag.login testLoginWithCompletionHandler:^(NSError *error, BOOL success) {
             [self.settingsLoginDataStatusSpinner stopAnimating];
-
+            self.settingsLoginDataStatusLabel.font = [UIFont systemFontOfSize:loginDataStatusLabelFontSize];
             if (success) {
                 self.settingsLoginDataStatusLabel.textColor = [theme successTextColor];
                 self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Login data is valid", nil);
