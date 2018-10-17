@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UIView *topFrame;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topFrameHeightConstraint;
 @property (weak, nonatomic) IBOutlet MCLMessageToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UIView *toolbarBottomBorderView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolbarBottomBorderViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIView *bottomFrame;
 
 @end

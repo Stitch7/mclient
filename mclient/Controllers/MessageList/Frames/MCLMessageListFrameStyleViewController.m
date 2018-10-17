@@ -93,6 +93,9 @@
 
     [self.toolbar addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self
                                                                             action:@selector(handleToolbarDrag:)]];
+
+    self.toolbarBottomBorderViewHeightConstraint.constant = 0.5f;
+    self.toolbarBottomBorderView.backgroundColor = [self.bag.themeManager.currentTheme tableViewSeparatorColor];
 }
 
 - (void)configureTableView
@@ -115,9 +118,10 @@
     [self.topFrame addSubview:self.webView];
 
     UIToolbar *toolbar = self.toolbar;
+    UIView *toolbarBottomBorderView = self.toolbarBottomBorderView;
     WKWebView *webView = self.webView;
-    NSDictionary *views = NSDictionaryOfVariableBindings(toolbar, webView);
-    [self.topFrame addConstraints:@"V:|[webView][toolbar]|" views:views];
+    NSDictionary *views = NSDictionaryOfVariableBindings(toolbar, webView, toolbarBottomBorderView);
+    [self.topFrame addConstraints:@"V:|[webView][toolbar][toolbarBottomBorderView]|" views:views];
     [self.topFrame addConstraints:@"H:|[webView]|" views:views];
 }
 

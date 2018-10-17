@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13147.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,6 +14,8 @@
                 <outlet property="bottomFrame" destination="XZF-bV-lQx" id="QiC-VA-NEr"/>
                 <outlet property="tableView" destination="QZS-hZ-tLG" id="0kv-Yq-ktx"/>
                 <outlet property="toolbar" destination="eR6-AN-hCj" id="EeQ-jG-CsF"/>
+                <outlet property="toolbarBottomBorderView" destination="0b2-kV-3bs" id="hpS-3R-XAF"/>
+                <outlet property="toolbarBottomBorderViewHeightConstraint" destination="oWt-uT-NMb" id="FSR-5r-vq3"/>
                 <outlet property="topFrame" destination="Zr4-KV-EcB" id="sI2-fd-IwW"/>
                 <outlet property="topFrameHeightConstraint" destination="K1Q-0D-Ptx" id="1WP-xe-gh7"/>
                 <outlet property="view" destination="iN0-l3-epB" id="ns4-cU-pRh"/>
@@ -27,8 +29,15 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zr4-KV-EcB">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
                     <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0b2-kV-3bs" userLabel="BottomBorderView">
+                            <rect key="frame" x="0.0" y="399" width="375" height="1"/>
+                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="oWt-uT-NMb"/>
+                            </constraints>
+                        </view>
                         <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eR6-AN-hCj" customClass="MCLMessageToolbar">
-                            <rect key="frame" x="0.0" y="356" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="355" width="375" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="kM4-A5-UKz"/>
                             </constraints>
@@ -36,9 +45,12 @@
                         </toolbar>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="eR6-AN-hCj" secondAttribute="bottom" id="Fph-xf-UM5"/>
+                        <constraint firstItem="0b2-kV-3bs" firstAttribute="leading" secondItem="Zr4-KV-EcB" secondAttribute="leading" id="D3t-i3-2Dm"/>
                         <constraint firstItem="eR6-AN-hCj" firstAttribute="leading" secondItem="Zr4-KV-EcB" secondAttribute="leading" id="GKs-m1-v9k"/>
                         <constraint firstAttribute="height" constant="400" id="K1Q-0D-Ptx"/>
+                        <constraint firstItem="0b2-kV-3bs" firstAttribute="top" secondItem="eR6-AN-hCj" secondAttribute="bottom" id="Q73-SW-TF2"/>
+                        <constraint firstAttribute="bottom" secondItem="0b2-kV-3bs" secondAttribute="bottom" id="R1c-zA-20D"/>
+                        <constraint firstAttribute="trailing" secondItem="0b2-kV-3bs" secondAttribute="trailing" id="wuM-Pa-bLv"/>
                         <constraint firstAttribute="trailing" secondItem="eR6-AN-hCj" secondAttribute="trailing" id="yKm-jT-8OC"/>
                     </constraints>
                 </view>
