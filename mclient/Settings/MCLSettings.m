@@ -128,7 +128,7 @@
 
 - (NSString *)stringForIsSettingActivated:(NSString *)setting
 {
-    return [self isSettingActivated:setting] ? @"YES" : @"NO";
+    return [self isSettingActivated:setting] ? @"true" : @"false";
 }
 
 - (NSString *)stringForIsSettingActivated:(NSString *)setting orDefault:(BOOL)defaultValue
@@ -138,7 +138,7 @@
         isActivated = [self isSettingActivated:setting];
     }
 
-    return isActivated ? @"YES" : @"NO";
+    return isActivated ? @"true" : @"false";
 }
 
 - (BOOL)persist
