@@ -104,6 +104,11 @@
     [self playSoundWithName:@"error"];
 }
 
+- (void)playSwitchSound
+{
+    [self playSoundWithName:@"switch"];
+}
+
 - (void)playTickSound
 {
     [self playSoundWithName:@"tick"];

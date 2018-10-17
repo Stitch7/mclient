@@ -23,6 +23,7 @@
 - (void)playOpenSound;
 - (void)playCloseSound;
 - (void)playErrorSound;
+- (void)playSwitchSound;
 - (void)playTickSound;
 
 @end

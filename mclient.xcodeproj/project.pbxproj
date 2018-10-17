@@ -262,6 +262,10 @@
 		30753BA521765F04009647E9 /* tick.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BA321765F04009647E9 /* tick.caf */; };
 		30753BA621765F04009647E9 /* tick.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BA321765F04009647E9 /* tick.caf */; };
 		30753BA721765F04009647E9 /* tick.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BA321765F04009647E9 /* tick.caf */; };
+		30753BA921774136009647E9 /* switch.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BA821774136009647E9 /* switch.caf */; };
+		30753BAA21774136009647E9 /* switch.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BA821774136009647E9 /* switch.caf */; };
+		30753BAB21774136009647E9 /* switch.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BA821774136009647E9 /* switch.caf */; };
+		30753BAC21774136009647E9 /* switch.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BA821774136009647E9 /* switch.caf */; };
 		307A80821F6411DA00A580FE /* MCLMessageListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 307A80811F6411DA00A580FE /* MCLMessageListLoadingViewController.m */; };
 		307A80F119B8804F001B538D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307A80F019B8804F001B538D /* Security.framework */; };
 		307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D797519B0B3B30096A217 /* MCLReadSymbolView.m */; };
@@ -771,6 +775,7 @@
 		30753B722176157B009647E9 /* close.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = close.caf; sourceTree = "<group>"; };
 		30753B9E21765C55009647E9 /* markAllAsRead.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = markAllAsRead.caf; sourceTree = "<group>"; };
 		30753BA321765F04009647E9 /* tick.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tick.caf; sourceTree = "<group>"; };
+		30753BA821774136009647E9 /* switch.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = switch.caf; sourceTree = "<group>"; };
 		307A80801F6411DA00A580FE /* MCLMessageListLoadingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMessageListLoadingViewController.h; sourceTree = "<group>"; };
 		307A80811F6411DA00A580FE /* MCLMessageListLoadingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListLoadingViewController.m; sourceTree = "<group>"; };
 		307A80F019B8804F001B538D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1104,6 +1109,7 @@
 				30753B702176157B009647E9 /* open.caf */,
 				30753B712176157B009647E9 /* reload.caf */,
 				30753B6B2176157A009647E9 /* removeThreadFromFavorites.caf */,
+				30753BA821774136009647E9 /* switch.caf */,
 				30753BA321765F04009647E9 /* tick.caf */,
 				3020FB6E1E78A10900C7217F /* notification.caf */,
 			);
@@ -1928,6 +1934,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				305DD83619A63517006514BD /* Images.xcassets in Resources */,
+				30753BAA21774136009647E9 /* switch.caf in Resources */,
 				30753B902176157B009647E9 /* close.caf in Resources */,
 				3038D58319F65E21005E7D3D /* Localizable.strings in Resources */,
 				30849D201E2BABBD00626331 /* Settings.storyboard in Resources */,
@@ -1969,6 +1976,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				306FC8721F93A39F001EB7E9 /* Images.xcassets in Resources */,
+				30753BA921774136009647E9 /* switch.caf in Resources */,
 				30753B8F2176157B009647E9 /* close.caf in Resources */,
 				306FC8731F93A39F001EB7E9 /* Localizable.strings in Resources */,
 				306FC8741F93A39F001EB7E9 /* Settings.storyboard in Resources */,
@@ -2002,6 +2010,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3090CB1D1FA7ED1E0085C9AF /* Images.xcassets in Resources */,
+				30753BAC21774136009647E9 /* switch.caf in Resources */,
 				30753B922176157B009647E9 /* close.caf in Resources */,
 				3090CB1E1FA7ED1E0085C9AF /* Localizable.strings in Resources */,
 				3090CB1F1FA7ED1E0085C9AF /* Settings.storyboard in Resources */,
@@ -2035,6 +2044,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3090CB9A1FA89A5C0085C9AF /* Images.xcassets in Resources */,
+				30753BAB21774136009647E9 /* switch.caf in Resources */,
 				30753B912176157B009647E9 /* close.caf in Resources */,
 				3090CB9B1FA89A5C0085C9AF /* Localizable.strings in Resources */,
 				3090CB9C1FA89A5C0085C9AF /* Settings.storyboard in Resources */,

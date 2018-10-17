@@ -549,32 +549,38 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     if (sender.on) {
         [self.bag.notificationManager registerBackgroundNotifications];
     }
+    [self.bag.soundEffectPlayer playSwitchSound];
 }
 
 - (IBAction)settingsSignatureEnabledSwitchValueChangedAction:(UISwitch *)sender
 {
     [self.bag.settings setBool:sender.on forSetting:MCLSettingSignatureEnabled];
     [self signatureTextViewEnabled:sender.on];
+    [self.bag.soundEffectPlayer playSwitchSound];
 }
 
 - (IBAction)jumpToLatestPostEnabledSwitchValueChangedAction:(UISwitch *)sender
 {
     [self.bag.settings setBool:sender.on forSetting:MCLSettingJumpToLatestPost];
+    [self.bag.soundEffectPlayer playSwitchSound];
 }
 
 - (IBAction)openLinksInSafariEnabledSwitchValueChangedAction:(UISwitch *)sender
 {
     [self.bag.settings setBool:sender.on forSetting:MCLSettingOpenLinksInSafari];
+    [self.bag.soundEffectPlayer playSwitchSound];
 }
 
 - (IBAction)classicQuoteDesignEnabledSwitchValueChangedAction:(UISwitch *)sender
 {
     [self.bag.settings setBool:sender.on forSetting:MCLSettingClassicQuoteDesign];
+    [self.bag.soundEffectPlayer playSwitchSound];
 }
 
 - (IBAction)darkModeEnabledSwitchValueChangedAction:(UISwitch *)sender
 {
     [self.bag.settings setBool:sender.on forSetting:MCLSettingDarkModeEnabled];
+    [self.bag.soundEffectPlayer playSwitchSound];
 
     if (sender.on) {
         self.darkModeAutomaticallySwitch.enabled = NO;
@@ -596,6 +602,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 - (IBAction)darkModeAutomaticallySwitchValueChangedAction:(UISwitch *)sender
 {
     [self.bag.settings setBool:sender.on forSetting:MCLSettingDarkModeAutomatically];
+    [self.bag.soundEffectPlayer playSwitchSound];
 
     if (sender.on) {
         // Trigger dialog asking for location permission
@@ -616,6 +623,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 - (IBAction)soundEffectsEnabledSwitchValueChangedAction:(UISwitch *)sender
 {
     [self.bag.settings setBool:sender.on forSetting:MCLSettingSoundEffectsEnabled];
+    [self.bag.soundEffectPlayer playSwitchSound];
 }
 
 #pragma mark - Navigation
