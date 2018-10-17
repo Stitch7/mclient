@@ -53,7 +53,7 @@ Register at https://www.maniac-forum.de</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                                     <connections>
-                                                        <action selector="settingsUsernameEditingDidEndAction:" destination="ecl-kD-BtA" eventType="editingDidEnd" id="4M9-oj-l1R"/>
+                                                        <action selector="usernameEditingDidEndAction:" destination="ecl-kD-BtA" eventType="editingDidEnd" id="4M9-oj-l1R"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -80,7 +80,7 @@ Register at https://www.maniac-forum.de</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
                                                     <connections>
-                                                        <action selector="settingsPasswordEditingDidEndAction:" destination="ecl-kD-BtA" eventType="editingDidEnd" id="o0A-iC-9G7"/>
+                                                        <action selector="passwordEditingDidEndAction:" destination="ecl-kD-BtA" eventType="editingDidEnd" id="o0A-iC-9G7"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -482,7 +482,7 @@ Register at https://www.maniac-forum.de</string>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fvV-Uo-iqW">
                                                     <rect key="frame" x="305" y="6" width="51" height="31.5"/>
                                                     <connections>
-                                                        <action selector="settingsSignatureEnabledSwitchValueChangedAction:" destination="ecl-kD-BtA" eventType="valueChanged" id="Cch-H1-mFT"/>
+                                                        <action selector="signatureEnabledSwitchValueChangedAction:" destination="ecl-kD-BtA" eventType="valueChanged" id="Cch-H1-mFT"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
@@ -694,7 +694,7 @@ Register at https://www.maniac-forum.de</string>
                     <navigationItem key="navigationItem" title="Settings" id="JAh-L7-Zeh">
                         <barButtonItem key="leftBarButtonItem" image="downButton" id="SR3-29-7UZ">
                             <connections>
-                                <action selector="settingsDoneAction:" destination="ecl-kD-BtA" id="hhD-fD-3Q0"/>
+                                <action selector="doneAction:" destination="ecl-kD-BtA" id="hhD-fD-3Q0"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -705,17 +705,17 @@ Register at https://www.maniac-forum.de</string>
                         <outlet property="classicQuoteDesignSwitch" destination="Tdi-KI-8h8" id="bj9-0B-Hbd"/>
                         <outlet property="darkModeAutomaticallySwitch" destination="9HA-ik-cBI" id="kz4-MV-VZG"/>
                         <outlet property="darkModeEnabledSwitch" destination="JRO-gI-ndV" id="jZj-EJ-lVm"/>
+                        <outlet property="doneButton" destination="SR3-29-7UZ" id="Yeq-ZU-5qf"/>
                         <outlet property="jumpToLatestMessageSwitch" destination="6Sj-nd-z3g" id="zFj-nJ-DtK"/>
+                        <outlet property="loginDataStatusLabel" destination="Kto-1S-ge8" id="RO6-bd-OD0"/>
+                        <outlet property="loginDataStatusSpinner" destination="mal-qT-Fqj" id="rxd-gG-eMo"/>
+                        <outlet property="loginDataStatusTableViewCell" destination="YeI-f5-Y97" id="rg4-Uh-WXa"/>
                         <outlet property="openLinksInSafariSwitch" destination="usG-kx-Uej" id="LYE-qS-RCT"/>
-                        <outlet property="settingsDoneButton" destination="SR3-29-7UZ" id="Yeq-ZU-5qf"/>
-                        <outlet property="settingsLoginDataStatusLabel" destination="Kto-1S-ge8" id="RO6-bd-OD0"/>
-                        <outlet property="settingsLoginDataStatusSpinner" destination="mal-qT-Fqj" id="rxd-gG-eMo"/>
-                        <outlet property="settingsLoginDataStatusTableViewCell" destination="YeI-f5-Y97" id="rg4-Uh-WXa"/>
-                        <outlet property="settingsPasswordTextField" destination="kcH-Od-HC7" id="5DU-ng-v6L"/>
+                        <outlet property="passwordTextField" destination="kcH-Od-HC7" id="5DU-ng-v6L"/>
                         <outlet property="settingsSignatureEnabledSwitch" destination="fvV-Uo-iqW" id="rN7-eJ-LgN"/>
                         <outlet property="settingsSignatureTextView" destination="amr-a4-IvD" id="zTN-8h-jVg"/>
-                        <outlet property="settingsUsernameTextField" destination="TXU-Eo-vnw" id="0hf-qx-cnG"/>
                         <outlet property="soundEffectsEnabledSwitch" destination="fs5-Br-Xi5" id="z6a-3j-nUm"/>
+                        <outlet property="usernameTextField" destination="TXU-Eo-vnw" id="0hf-qx-cnG"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SPg-Ub-HEx" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -38,12 +38,12 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 @property (strong, nonatomic) NSString *lastUsernameTextFieldValue;
 @property (strong, nonatomic) NSString *lastPasswordTextFieldValue;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsDoneButton;
-@property (weak, nonatomic) IBOutlet MCLTextField *settingsUsernameTextField;
-@property (weak, nonatomic) IBOutlet MCLTextField *settingsPasswordTextField;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *settingsLoginDataStatusSpinner;
-@property (weak, nonatomic) IBOutlet UILabel *settingsLoginDataStatusLabel;
-@property (weak, nonatomic) IBOutlet UITableViewCell *settingsLoginDataStatusTableViewCell;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+@property (weak, nonatomic) IBOutlet MCLTextField *usernameTextField;
+@property (weak, nonatomic) IBOutlet MCLTextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loginDataStatusSpinner;
+@property (weak, nonatomic) IBOutlet UILabel *loginDataStatusLabel;
+@property (weak, nonatomic) IBOutlet UITableViewCell *loginDataStatusTableViewCell;
 @property (weak, nonatomic) IBOutlet UISwitch *backgroundNotificationsEnabledSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *settingsSignatureEnabledSwitch;
 @property (weak, nonatomic) IBOutlet MCLTextView *settingsSignatureTextView;
@@ -159,8 +159,8 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     NSString *username = self.bag.login.username;
     NSString *password = self.bag.login.password;
 
-    self.settingsUsernameTextField.text = username;
-    self.settingsPasswordTextField.text = password;
+    self.usernameTextField.text = username;
+    self.passwordTextField.text = password;
     self.lastUsernameTextFieldValue = username;
     self.lastPasswordTextFieldValue = password;
 
@@ -169,61 +169,61 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
                                                                               attributes:placeholderAttrs];
     NSAttributedString *passwordPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Password", nil)
                                                                               attributes:placeholderAttrs];
-    self.settingsUsernameTextField.attributedPlaceholder = usernamePlaceholder;
-    self.settingsPasswordTextField.attributedPlaceholder = passwordPlaceholder;
+    self.usernameTextField.attributedPlaceholder = usernamePlaceholder;
+    self.passwordTextField.attributedPlaceholder = passwordPlaceholder;
 
-    self.settingsPasswordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    self.passwordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
-    self.settingsUsernameTextField.delegate = self;
-    self.settingsPasswordTextField.delegate = self;
+    self.usernameTextField.delegate = self;
+    self.passwordTextField.delegate = self;
     self.loginDataChanged = NO;
 
-    [self.settingsLoginDataStatusTableViewCell setTintColor:[UIColor colorWithRed:75/255.0 green:216/255.0 blue:99/255.0 alpha:1.0]];
-    [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
-    self.settingsLoginDataStatusSpinner.transform = CGAffineTransformMakeScale(0.75, 0.75);
-    self.settingsLoginDataStatusLabel.text = @"";
+    [self.loginDataStatusTableViewCell setTintColor:[UIColor colorWithRed:75/255.0 green:216/255.0 blue:99/255.0 alpha:1.0]];
+    [self.loginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
+    self.loginDataStatusSpinner.transform = CGAffineTransformMakeScale(0.75, 0.75);
+    self.loginDataStatusLabel.text = @"";
     [self testLogin];
 }
 
 - (void)testLogin
 {
     id <MCLTheme> theme = self.themeManager.currentTheme;
-    NSString *username = self.settingsUsernameTextField.text;
-    NSString *password = self.settingsPasswordTextField.text;
+    NSString *username = self.usernameTextField.text;
+    NSString *password = self.passwordTextField.text;
 
     if (username.length > 0 && password.length > 0) {
-        CGFloat loginDataStatusLabelFontSize = self.settingsLoginDataStatusLabel.font.pointSize;
-        self.settingsLoginDataStatusLabel.font = [UIFont italicSystemFontOfSize:loginDataStatusLabelFontSize];
-        self.settingsLoginDataStatusLabel.textColor = [UIColor darkGrayColor];
-        self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Verifying username and password…", nil);
-        [self.settingsLoginDataStatusSpinner startAnimating];
+        CGFloat loginDataStatusLabelFontSize = self.loginDataStatusLabel.font.pointSize;
+        self.loginDataStatusLabel.font = [UIFont italicSystemFontOfSize:loginDataStatusLabelFontSize];
+        self.loginDataStatusLabel.textColor = [UIColor darkGrayColor];
+        self.loginDataStatusLabel.text = NSLocalizedString(@"Verifying username and password…", nil);
+        [self.loginDataStatusSpinner startAnimating];
 
         [self.bag.login updateUsername:username];
         [self.bag.login updatePassword:password];
 
         [self.bag.login testLoginWithCompletionHandler:^(NSError *error, BOOL success) {
-            [self.settingsLoginDataStatusSpinner stopAnimating];
-            self.settingsLoginDataStatusLabel.font = [UIFont systemFontOfSize:loginDataStatusLabelFontSize];
+            [self.loginDataStatusSpinner stopAnimating];
+            self.loginDataStatusLabel.font = [UIFont systemFontOfSize:loginDataStatusLabelFontSize];
             if (success) {
-                self.settingsLoginDataStatusLabel.textColor = [theme successTextColor];
-                self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Login data is valid", nil);
+                self.loginDataStatusLabel.textColor = [theme successTextColor];
+                self.loginDataStatusLabel.text = NSLocalizedString(@"Login data is valid", nil);
                 [self setbackgroundNotificationsEnabledSwitchEnabled:YES];
             } else {
-                self.settingsLoginDataStatusLabel.textColor = [theme warnTextColor];
+                self.loginDataStatusLabel.textColor = [theme warnTextColor];
 
                 if ([error code] == 401) {
-                    self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Login data was entered incorrectly", nil);
+                    self.loginDataStatusLabel.text = NSLocalizedString(@"Login data was entered incorrectly", nil);
                 } else {
-                    self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Error: Could not connect to server", nil);
+                    self.loginDataStatusLabel.text = NSLocalizedString(@"Error: Could not connect to server", nil);
                 }
                 [self setbackgroundNotificationsEnabledSwitchEnabled:NO];
             }
         }];
     } else {
         [self.bag.login logout];
-        [self.settingsLoginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
-        self.settingsLoginDataStatusLabel.textColor = [UIColor darkGrayColor];
-        self.settingsLoginDataStatusLabel.text = NSLocalizedString(@"Please enter username and password", nil);
+        [self.loginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
+        self.loginDataStatusLabel.textColor = [UIColor darkGrayColor];
+        self.loginDataStatusLabel.text = NSLocalizedString(@"Please enter username and password", nil);
     }
 }
 
@@ -232,7 +232,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     // TODO: That's an relict from plain UserDefaults times
     if ([self.bag.settings objectForSetting:MCLSettingSignatureEnabled] == nil) {
         self.settingsSignatureEnabledSwitch.on = YES;
-        [self settingsSignatureEnabledSwitchValueChangedAction:self.settingsSignatureEnabledSwitch];
+        [self signatureEnabledSwitchValueChangedAction:self.settingsSignatureEnabledSwitch];
     } else {
         self.settingsSignatureEnabledSwitch.on = [self.bag.settings isSettingActivated:MCLSettingSignatureEnabled];
     }
@@ -478,14 +478,14 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if (textField == self.settingsUsernameTextField) {
+    if (textField == self.usernameTextField) {
         [textField resignFirstResponder];
-        [self.settingsPasswordTextField becomeFirstResponder];
+        [self.passwordTextField becomeFirstResponder];
     }
 
-    if (textField == self.settingsPasswordTextField) {
+    if (textField == self.passwordTextField) {
         [textField resignFirstResponder];
-        [self.settingsUsernameTextField becomeFirstResponder];
+        [self.usernameTextField becomeFirstResponder];
     }
 
     return NO;
@@ -514,13 +514,13 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     [self.view endEditing:YES];
 }
 
-- (IBAction)settingsDoneAction:(UIBarButtonItem *)sender
+- (IBAction)doneAction:(UIBarButtonItem *)sender
 {
     [self.bag.soundEffectPlayer playCloseSound];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)settingsUsernameEditingDidEndAction:(UITextField *)sender
+- (IBAction)usernameEditingDidEndAction:(UITextField *)sender
 {
     NSString *input = [sender.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
@@ -536,7 +536,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     self.lastUsernameTextFieldValue = input;
 }
 
-- (IBAction)settingsPasswordEditingDidEndAction:(UITextField *)sender
+- (IBAction)passwordEditingDidEndAction:(UITextField *)sender
 {
     if (![sender.text isEqualToString:self.lastPasswordTextFieldValue]) {
         [self testLogin];
@@ -554,7 +554,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     [self.bag.soundEffectPlayer playSwitchSound];
 }
 
-- (IBAction)settingsSignatureEnabledSwitchValueChangedAction:(UISwitch *)sender
+- (IBAction)signatureEnabledSwitchValueChangedAction:(UISwitch *)sender
 {
     [self.bag.settings setBool:sender.on forSetting:MCLSettingSignatureEnabled];
     [self signatureTextViewEnabled:sender.on];
