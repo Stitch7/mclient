@@ -37,7 +37,7 @@
 
 - (void)playSoundWithName:(NSString *)resource
 {
-    if (![self.settings isSettingActivated:MCLSettingSoundeffectsEnabled orDefault:YES]) {
+    if (![self.settings isSettingActivated:MCLSettingSoundEffectsEnabled orDefault:YES]) {
         return;
     }
 

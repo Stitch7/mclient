@@ -100,3 +100,6 @@
 
 /* Class = "UILabel"; text = "Switch Automatically"; ObjectID = "xQm-Bk-cad"; */
 "xQm-Bk-cad.text" = "Automatisch umschalten";
+
+/* Class = "UILabel"; text = "Interface Sounds"; ObjectID = "fyl-R5-VIz"; */
+"fyl-R5-VIz.text" = "Interfacetöne";

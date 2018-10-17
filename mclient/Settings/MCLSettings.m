@@ -120,7 +120,8 @@
              MCLSettingTheme:                   [self numberForSetting:MCLSettingTheme orDefault:0],
              MCLSettingOpenLinksInSafari:       [self stringForIsSettingActivated:MCLSettingOpenLinksInSafari],
              MCLSettingClassicQuoteDesign:      [self stringForIsSettingActivated:MCLSettingClassicQuoteDesign],
-             MCLSettingBackgroundNotifications: [self stringForIsSettingActivated:MCLSettingBackgroundNotifications]};
+             MCLSettingBackgroundNotifications: [self stringForIsSettingActivated:MCLSettingBackgroundNotifications],
+             MCLSettingSoundEffectsEnabled:     [self stringForIsSettingActivated:MCLSettingSoundEffectsEnabled orDefault:YES]};
 }
 
 #pragma mark - Private

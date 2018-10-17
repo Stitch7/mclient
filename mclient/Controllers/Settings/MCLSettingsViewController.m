@@ -52,6 +52,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 @property (weak, nonatomic) IBOutlet UISwitch *classicQuoteDesignSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *darkModeEnabledSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *darkModeAutomaticallySwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *soundEffectsEnabledSwitch;
 
 @end
 
@@ -60,7 +61,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 #define THREADVIEW_SECTION 3;
 #define FONTSIZE_SECTION 4;
 #define IMAGES_SECTION 8;
-#define INFO_SECTION 10;
+#define INFO_SECTION 11;
 
 - (void)awakeFromNib
 {
@@ -81,6 +82,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     [self configureThreadSection];
     [self configureDarkModeSection];
     [self configureImagesSection];
+    [self configureMiscellaneousSection];
     [self configureAboutLabel];
 
 //    if (![self.bag.features isFeatureWithNameEnabled:MCLFeatureKillFileThreads]) {
@@ -238,6 +240,11 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 
     self.settingsSignatureTextView.text = [self.bag.settings objectForSetting:MCLSettingSignatureText
                                                                     orDefault:kSettingsSignatureTextDefault];
+}
+
+- (void)configureMiscellaneousSection
+{
+    self.soundEffectsEnabledSwitch.on = [self.bag.settings isSettingActivated:MCLSettingSoundEffectsEnabled orDefault:YES];
 }
 
 - (void)configureAboutLabel
@@ -604,6 +611,11 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 
     [self.themeManager loadTheme];
     [self.tableView reloadData];
+}
+
+- (IBAction)soundEffectsEnabledSwitchValueChangedAction:(UISwitch *)sender
+{
+    [self.bag.settings setBool:sender.on forSetting:MCLSettingSoundEffectsEnabled];
 }
 
 #pragma mark - Navigation

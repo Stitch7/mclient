@@ -20,4 +20,4 @@ NSString * const MCLSettingTheme = @"theme";
 NSString * const MCLSettingOpenLinksInSafari = @"openLinksInSafari";
 NSString * const MCLSettingClassicQuoteDesign = @"classicQuoteDesign";
 NSString * const MCLSettingBackgroundNotifications = @"backgroundNotifications";
-NSString * const MCLSettingSoundeffectsEnabled = @"soundeffectsEnabled";
+NSString * const MCLSettingSoundEffectsEnabled = @"soundEffectsEnabled";
