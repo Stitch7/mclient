@@ -154,7 +154,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger i = indexPath.row;
     id <MCLTheme> currenTheme = self.bag.themeManager.currentTheme;
     MCLMessage *message = [self messageForIndexPath:indexPath];
     message.board = self.board;
@@ -177,7 +176,7 @@
     cell.messageIndentionView.backgroundColor = cell.backgroundColor;
     [self indentView:cell.indentionConstraint withLevel:message.level];
 
-    cell.messageIndentionImageView.hidden = (i == 0);
+    cell.messageIndentionImageView.hidden = (indexPath.row == 0);
 
     cell.messageSubjectLabel.text = message.subject;
     cell.messageSubjectLabel.textColor = [currenTheme textColor];
@@ -194,7 +193,7 @@
     cell.messageDateLabel.text = [self.dateFormatter stringFromDate:message.date];
     cell.messageDateLabel.textColor = [currenTheme detailTextColor];
 
-    if (i == 0 || message.isRead) {
+    if (indexPath.row == 0 || message.isRead) {
         [cell markRead];
     } else {
         [cell markUnread];

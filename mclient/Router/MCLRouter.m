@@ -143,7 +143,7 @@
     }];
 }
 
-- (void)dismissModalIfPresentedWithCompletionHandler:(void(^)(BOOL dismissed))completionHandler
+- (void)dismissModalIfPresentedWithCompletionHandler:(void (^)(BOOL dismissed))completionHandler
 {
     if ([self.modalNavigationController presentingViewController]) {
         [self.modalNavigationController dismissViewControllerAnimated:YES completion:^{

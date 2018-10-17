@@ -120,7 +120,7 @@
     MCLSendMessageRequest *sendRequest = [[MCLSendMessageRequest alloc] initWithClient:self.bag.httpClient message:self.message];
     [sendRequest loadWithCompletionHandler:^(NSError *error, NSArray *data) {
         if (error) {
-            [self presentError:error witchCompletion:^{
+            [self presentError:error withCompletion:^{
                 self.sendButton.enabled = YES;
             }];
             return;

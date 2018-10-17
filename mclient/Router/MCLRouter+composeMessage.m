@@ -102,15 +102,12 @@
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
     imagePickerController.sourceType = sourceType;
-//    imagePickerController.delegate = self;
     imagePickerController.modalPresentationStyle =
         (sourceType == UIImagePickerControllerSourceTypeCamera) ? UIModalPresentationFullScreen : UIModalPresentationPopover;
 
     UIPopoverPresentationController *presentationController = imagePickerController.popoverPresentationController;
     presentationController.barButtonItem = button;
     presentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-
-//    self.imagePickerController = imagePickerController;
 
     [self.modalNavigationController presentViewController:imagePickerController animated:YES completion:nil];
 

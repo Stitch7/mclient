@@ -40,20 +40,20 @@
 
 - (void)presentError:(NSError *)error
 {
-    [self presentError:error witchCompletion:nil];
+    [self presentError:error withCompletion:nil];
 }
 
-- (void)presentError:(NSError *)error witchCompletion:(void (^)(void))completion
+- (void)presentError:(NSError *)error withCompletion:(void (^)(void))completion
 {
-    [self presentErrorWithMessage:[error localizedDescription] witchCompletion:completion];
+    [self presentErrorWithMessage:[error localizedDescription] withCompletion:completion];
 }
 
 - (void)presentErrorWithMessage:(NSString *)message
 {
-    [self presentErrorWithMessage:message witchCompletion:nil];
+    [self presentErrorWithMessage:message withCompletion:nil];
 }
 
-- (void)presentErrorWithMessage:(NSString *)message witchCompletion:(void (^)(void))completion;
+- (void)presentErrorWithMessage:(NSString *)message withCompletion:(void (^)(void))completion;
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
                                                                    message:message
