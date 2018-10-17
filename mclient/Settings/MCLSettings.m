@@ -116,7 +116,7 @@
              MCLSettingJumpToLatestPost:        [self stringForIsSettingActivated:MCLSettingJumpToLatestPost],
              MCLSettingSignatureEnabled:        [self stringForIsSettingActivated:MCLSettingSignatureEnabled orDefault:YES],
              MCLSettingSignatureText:           [self objectForSetting:MCLSettingSignatureText orDefault:kSettingsSignatureTextDefault],
-             MCLSettingFontSize:                [self numberForSetting:MCLSettingFontSize orDefault:3],
+             MCLSettingFontSize:                [self numberForSetting:MCLSettingFontSize orDefault:kSettingsDefaultFontSize],
              MCLSettingTheme:                   [self numberForSetting:MCLSettingTheme orDefault:0],
              MCLSettingOpenLinksInSafari:       [self stringForIsSettingActivated:MCLSettingOpenLinksInSafari],
              MCLSettingClassicQuoteDesign:      [self stringForIsSettingActivated:MCLSettingClassicQuoteDesign],

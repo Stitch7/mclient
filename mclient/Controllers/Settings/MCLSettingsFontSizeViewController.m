@@ -31,8 +31,6 @@
 
 @implementation MCLSettingsFontSizeViewController
 
-#define DEFAULT_FONT_SIZE 3.0f;
-
 #pragma mark - Initializers
 
 - (void) dealloc
@@ -74,7 +72,7 @@
 
 - (void)configureSlider
 {
-    float defaultFontSize = DEFAULT_FONT_SIZE;
+    float defaultFontSize = [self defaultFontSize];
     float fontSize = (float)[self.bag.settings integerForSetting:MCLSettingFontSize];
     if (!fontSize) {
         fontSize = defaultFontSize;
@@ -118,7 +116,7 @@
 
 - (void)resetButtonPressed:(UIBarButtonItem *)sender
 {
-    self.slider.value = DEFAULT_FONT_SIZE;
+    self.slider.value = [self defaultFontSize];;
     [self sliderValueChanged:self.slider];
 }
 
@@ -132,7 +130,7 @@
         [self loadPreviewMessage];
         [self.bag.soundEffectPlayer playTickSound];
         [self.delegate settingsFontSizeViewController:self fontSizeChanged:newValue];
-        float defaultFontSize = DEFAULT_FONT_SIZE;
+        float defaultFontSize = [self defaultFontSize];
         self.navigationItem.rightBarButtonItem.enabled = newValue != defaultFontSize;
     }
 }
@@ -163,6 +161,11 @@
 }
 
 #pragma mark - Static data
+
+- (float)defaultFontSize
+{
+    return (float)kSettingsDefaultFontSize;
+}
 
 - (NSString *)seamanDiaryPostingText
 {

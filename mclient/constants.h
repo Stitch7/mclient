@@ -15,4 +15,5 @@
 #define kImgurSecret @"309834c415d62245b40d5f58c2e8c1fc8707d0d1"
 #define kGiphyKey @"oNF38H7Hdxy158jFWfwwAhoVDu7ZNNyF"
 
+#define kSettingsDefaultFontSize 3
 #define kSettingsSignatureTextDefault @"gesendet mit m!client für iOS"

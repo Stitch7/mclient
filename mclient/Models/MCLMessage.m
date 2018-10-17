@@ -133,7 +133,7 @@
 - (NSString *)messageHtmlWithTopMargin:(int)topMargin theme:(id <MCLTheme>)theme settings:(MCLSettings *)settings
 {
     NSNumber *imageSetting = [settings objectForSetting:MCLSettingShowImages];
-    NSInteger fontSize = [settings integerForSetting:MCLSettingFontSize];
+    NSInteger fontSize = [settings integerForSetting:MCLSettingFontSize orDefault:kSettingsDefaultFontSize];
     BOOL classicQuoteDesign = [settings isSettingActivated:MCLSettingClassicQuoteDesign];
 
     NSString *messageHtml = @"";
@@ -173,13 +173,9 @@
         editedHtml = [editedHtml stringByReplacingOccurrencesOfString:@"<br>\n&gt;" withString:@"<br>"];
     }
 
-    NSInteger fontSizeValue = fontSize;
-    if (!fontSizeValue) {
-        fontSizeValue = 3;
-    }
-    NSInteger buttonFontSizeValue = fontSizeValue + 9;
-    fontSizeValue = fontSizeValue + 11;
-    NSString *fontSizeStr = [@(fontSizeValue) stringValue];
+    NSInteger buttonFontSizeValue = fontSize + 9;
+    fontSize += 11;
+    NSString *fontSizeStr = [@(fontSize) stringValue];
     NSString *buttonFontSize = [@(buttonFontSizeValue) stringValue];
 
     NSString *textColor = [currentTheme isDark] ? @"fff" : @"000";
