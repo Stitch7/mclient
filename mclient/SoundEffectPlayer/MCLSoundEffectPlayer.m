@@ -104,6 +104,11 @@
     [self playSoundWithName:@"loginFailed"];
 }
 
+- (void)playCopyLinkSound
+{
+    [self playSoundWithName:@"copyLink"];
+}
+
 - (void)playErrorSound
 {
     [self playSoundWithName:@"error"];

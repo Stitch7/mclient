@@ -270,6 +270,10 @@
 		30753BAF21774B03009647E9 /* loginFailed.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BAD21774B02009647E9 /* loginFailed.caf */; };
 		30753BB021774B03009647E9 /* loginFailed.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BAD21774B02009647E9 /* loginFailed.caf */; };
 		30753BB121774B03009647E9 /* loginFailed.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BAD21774B02009647E9 /* loginFailed.caf */; };
+		30753BB321775ADC009647E9 /* copyLink.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BB221775ADC009647E9 /* copyLink.caf */; };
+		30753BB421775ADC009647E9 /* copyLink.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BB221775ADC009647E9 /* copyLink.caf */; };
+		30753BB521775ADC009647E9 /* copyLink.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BB221775ADC009647E9 /* copyLink.caf */; };
+		30753BB621775ADC009647E9 /* copyLink.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BB221775ADC009647E9 /* copyLink.caf */; };
 		307A80821F6411DA00A580FE /* MCLMessageListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 307A80811F6411DA00A580FE /* MCLMessageListLoadingViewController.m */; };
 		307A80F119B8804F001B538D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307A80F019B8804F001B538D /* Security.framework */; };
 		307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D797519B0B3B30096A217 /* MCLReadSymbolView.m */; };
@@ -781,6 +785,7 @@
 		30753BA321765F04009647E9 /* tick.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tick.caf; sourceTree = "<group>"; };
 		30753BA821774136009647E9 /* switch.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = switch.caf; sourceTree = "<group>"; };
 		30753BAD21774B02009647E9 /* loginFailed.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = loginFailed.caf; sourceTree = "<group>"; };
+		30753BB221775ADC009647E9 /* copyLink.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = copyLink.caf; sourceTree = "<group>"; };
 		307A80801F6411DA00A580FE /* MCLMessageListLoadingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMessageListLoadingViewController.h; sourceTree = "<group>"; };
 		307A80811F6411DA00A580FE /* MCLMessageListLoadingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListLoadingViewController.m; sourceTree = "<group>"; };
 		307A80F019B8804F001B538D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1107,6 +1112,7 @@
 			children = (
 				30753B6C2176157A009647E9 /* addThreadToFavorites.caf */,
 				30753B722176157B009647E9 /* close.caf */,
+				30753BB221775ADC009647E9 /* copyLink.caf */,
 				30753B6D2176157A009647E9 /* createPosting.caf */,
 				30753B6E2176157A009647E9 /* editPosting.caf */,
 				30753B6F2176157B009647E9 /* error.caf */,
@@ -1964,6 +1970,7 @@
 				308B81E91F63FC9700C878FB /* MCLDetailViewController.xib in Resources */,
 				30753B842176157B009647E9 /* error.caf in Resources */,
 				30753B742176157B009647E9 /* removeThreadFromFavorites.caf in Resources */,
+				30753BB421775ADC009647E9 /* copyLink.caf in Resources */,
 				30C9B532205D820700FD3C31 /* MCLNoDataView.xib in Resources */,
 				30753BA021765C55009647E9 /* markAllAsRead.caf in Resources */,
 				30EAE21C1F1C1F770035DFC9 /* ComposeMessage.storyboard in Resources */,
@@ -2007,6 +2014,7 @@
 				306FC8841F93A39F001EB7E9 /* MCLDetailViewController.xib in Resources */,
 				30753B832176157B009647E9 /* error.caf in Resources */,
 				30753B732176157B009647E9 /* removeThreadFromFavorites.caf in Resources */,
+				30753BB321775ADC009647E9 /* copyLink.caf in Resources */,
 				30C9B531205D7FA300FD3C31 /* MCLNoDataView.xib in Resources */,
 				30753B9F21765C55009647E9 /* markAllAsRead.caf in Resources */,
 				306FC8851F93A39F001EB7E9 /* ComposeMessage.storyboard in Resources */,
@@ -2042,6 +2050,7 @@
 				3090CB2D1FA7ED1E0085C9AF /* MCLDetailViewController.xib in Resources */,
 				30753B862176157B009647E9 /* error.caf in Resources */,
 				30753B762176157B009647E9 /* removeThreadFromFavorites.caf in Resources */,
+				30753BB621775ADC009647E9 /* copyLink.caf in Resources */,
 				30C9B534205D820800FD3C31 /* MCLNoDataView.xib in Resources */,
 				30753BA221765C55009647E9 /* markAllAsRead.caf in Resources */,
 				3090CB2E1FA7ED1E0085C9AF /* ComposeMessage.storyboard in Resources */,
@@ -2077,6 +2086,7 @@
 				3090CBAA1FA89A5C0085C9AF /* MCLDetailViewController.xib in Resources */,
 				30753B852176157B009647E9 /* error.caf in Resources */,
 				30753B752176157B009647E9 /* removeThreadFromFavorites.caf in Resources */,
+				30753BB521775ADC009647E9 /* copyLink.caf in Resources */,
 				30C9B533205D820700FD3C31 /* MCLNoDataView.xib in Resources */,
 				30753BA121765C55009647E9 /* markAllAsRead.caf in Resources */,
 				3090CBAB1FA89A5C0085C9AF /* ComposeMessage.storyboard in Resources */,

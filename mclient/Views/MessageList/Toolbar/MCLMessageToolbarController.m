@@ -11,6 +11,7 @@
 @import WebKit;
 
 #import "MCLDependencyBag.h"
+#import "MCLSoundEffectPlayer.h"
 #import "MCLNotificationRequest.h"
 #import "MCLUser.h"
 #import "MCLBoard.h"
@@ -88,6 +89,7 @@
                                                }];
     [alert addAction:ok];
 
+    [self.bag.soundEffectPlayer playCopyLinkSound];
     [self.messageListViewController presentViewController:alert animated:YES completion:nil];
 }
 

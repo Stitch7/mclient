@@ -23,6 +23,7 @@
 - (void)playOpenSound;
 - (void)playCloseSound;
 - (void)playLoginFailedSound;
+- (void)playCopyLinkSound;
 - (void)playErrorSound;
 - (void)playSwitchSound;
 - (void)playTickSound;
