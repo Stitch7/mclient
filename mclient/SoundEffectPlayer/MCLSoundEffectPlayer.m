@@ -99,6 +99,11 @@
     [self playSoundWithName:@"close"];
 }
 
+- (void)playLoginFailedSound
+{
+    [self playSoundWithName:@"loginFailed"];
+}
+
 - (void)playErrorSound
 {
     [self playSoundWithName:@"error"];

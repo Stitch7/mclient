@@ -266,6 +266,10 @@
 		30753BAA21774136009647E9 /* switch.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BA821774136009647E9 /* switch.caf */; };
 		30753BAB21774136009647E9 /* switch.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BA821774136009647E9 /* switch.caf */; };
 		30753BAC21774136009647E9 /* switch.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BA821774136009647E9 /* switch.caf */; };
+		30753BAE21774B03009647E9 /* loginFailed.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BAD21774B02009647E9 /* loginFailed.caf */; };
+		30753BAF21774B03009647E9 /* loginFailed.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BAD21774B02009647E9 /* loginFailed.caf */; };
+		30753BB021774B03009647E9 /* loginFailed.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BAD21774B02009647E9 /* loginFailed.caf */; };
+		30753BB121774B03009647E9 /* loginFailed.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BAD21774B02009647E9 /* loginFailed.caf */; };
 		307A80821F6411DA00A580FE /* MCLMessageListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 307A80811F6411DA00A580FE /* MCLMessageListLoadingViewController.m */; };
 		307A80F119B8804F001B538D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307A80F019B8804F001B538D /* Security.framework */; };
 		307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D797519B0B3B30096A217 /* MCLReadSymbolView.m */; };
@@ -776,6 +780,7 @@
 		30753B9E21765C55009647E9 /* markAllAsRead.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = markAllAsRead.caf; sourceTree = "<group>"; };
 		30753BA321765F04009647E9 /* tick.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tick.caf; sourceTree = "<group>"; };
 		30753BA821774136009647E9 /* switch.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = switch.caf; sourceTree = "<group>"; };
+		30753BAD21774B02009647E9 /* loginFailed.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = loginFailed.caf; sourceTree = "<group>"; };
 		307A80801F6411DA00A580FE /* MCLMessageListLoadingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMessageListLoadingViewController.h; sourceTree = "<group>"; };
 		307A80811F6411DA00A580FE /* MCLMessageListLoadingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListLoadingViewController.m; sourceTree = "<group>"; };
 		307A80F019B8804F001B538D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1105,6 +1110,7 @@
 				30753B6D2176157A009647E9 /* createPosting.caf */,
 				30753B6E2176157A009647E9 /* editPosting.caf */,
 				30753B6F2176157B009647E9 /* error.caf */,
+				30753BAD21774B02009647E9 /* loginFailed.caf */,
 				30753B9E21765C55009647E9 /* markAllAsRead.caf */,
 				30753B702176157B009647E9 /* open.caf */,
 				30753B712176157B009647E9 /* reload.caf */,
@@ -1266,7 +1272,7 @@
 				304E5A471E1EB6790022FE8B /* Network */,
 				305DD85919AB2EFE006514BD /* Views */,
 				3036F5951E263EE100ABC2CE /* Themes */,
-				30753B93217625F2009647E9 /* SoundeffectPlayer */,
+				30753B93217625F2009647E9 /* SoundEffectPlayer */,
 				305E53AB19D4F4C5002B8E50 /* Storyboards */,
 				303974911E16B08D003C8BC9 /* Categories */,
 				305DD81E19A63517006514BD /* Supporting Files */,
@@ -1497,13 +1503,13 @@
 			path = License;
 			sourceTree = "<group>";
 		};
-		30753B93217625F2009647E9 /* SoundeffectPlayer */ = {
+		30753B93217625F2009647E9 /* SoundEffectPlayer */ = {
 			isa = PBXGroup;
 			children = (
 				3096481C1EA2508600C16379 /* MCLSoundEffectPlayer.h */,
 				3096481D1EA2508600C16379 /* MCLSoundEffectPlayer.m */,
 			);
-			path = SoundeffectPlayer;
+			path = SoundEffectPlayer;
 			sourceTree = "<group>";
 		};
 		3081139A20F26B3900DED6B0 /* Error */ = {
@@ -1934,6 +1940,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				305DD83619A63517006514BD /* Images.xcassets in Resources */,
+				30753BAF21774B03009647E9 /* loginFailed.caf in Resources */,
 				30753BAA21774136009647E9 /* switch.caf in Resources */,
 				30753B902176157B009647E9 /* close.caf in Resources */,
 				3038D58319F65E21005E7D3D /* Localizable.strings in Resources */,
@@ -1976,6 +1983,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				306FC8721F93A39F001EB7E9 /* Images.xcassets in Resources */,
+				30753BAE21774B03009647E9 /* loginFailed.caf in Resources */,
 				30753BA921774136009647E9 /* switch.caf in Resources */,
 				30753B8F2176157B009647E9 /* close.caf in Resources */,
 				306FC8731F93A39F001EB7E9 /* Localizable.strings in Resources */,
@@ -2010,6 +2018,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3090CB1D1FA7ED1E0085C9AF /* Images.xcassets in Resources */,
+				30753BB121774B03009647E9 /* loginFailed.caf in Resources */,
 				30753BAC21774136009647E9 /* switch.caf in Resources */,
 				30753B922176157B009647E9 /* close.caf in Resources */,
 				3090CB1E1FA7ED1E0085C9AF /* Localizable.strings in Resources */,
@@ -2044,6 +2053,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3090CB9A1FA89A5C0085C9AF /* Images.xcassets in Resources */,
+				30753BB021774B03009647E9 /* loginFailed.caf in Resources */,
 				30753BAB21774136009647E9 /* switch.caf in Resources */,
 				30753B912176157B009647E9 /* close.caf in Resources */,
 				3090CB9B1FA89A5C0085C9AF /* Localizable.strings in Resources */,

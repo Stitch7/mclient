@@ -110,11 +110,10 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 - (void)setbackgroundNotificationsEnabledSwitchEnabled:(BOOL)enabled
 {
     BOOL isRegistered = [self.bag.notificationManager backgroundNotificationsRegistered];
-    if (enabled || isRegistered) {
+    if (enabled && isRegistered) {
         self.backgroundNotificationsEnabledSwitch.enabled = YES;
         self.backgroundNotificationsEnabledSwitch.alpha = 1.0f;
-    }
-    else {
+    } else {
         self.backgroundNotificationsEnabledSwitch.enabled = NO;
         self.backgroundNotificationsEnabledSwitch.alpha = 0.6f;
     }
@@ -213,6 +212,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 
                 if ([error code] == 401) {
                     self.loginDataStatusLabel.text = NSLocalizedString(@"Login data was entered incorrectly", nil);
+                    [self.bag.soundEffectPlayer playLoginFailedSound];
                 } else {
                     self.loginDataStatusLabel.text = NSLocalizedString(@"Error: Could not connect to server", nil);
                 }

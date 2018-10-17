@@ -22,6 +22,7 @@
 - (void)playRemoveThreadFromKillfileSound;
 - (void)playOpenSound;
 - (void)playCloseSound;
+- (void)playLoginFailedSound;
 - (void)playErrorSound;
 - (void)playSwitchSound;
 - (void)playTickSound;
