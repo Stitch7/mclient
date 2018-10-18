@@ -89,16 +89,6 @@
     [self playSoundWithName:@"removeThreadFromKillfile"];
 }
 
-- (void)playOpenSound
-{
-    [self playSoundWithName:@"open"];
-}
-
-- (void)playCloseSound
-{
-    [self playSoundWithName:@"close"];
-}
-
 - (void)playLoginFailedSound
 {
     [self playSoundWithName:@"loginFailed"];

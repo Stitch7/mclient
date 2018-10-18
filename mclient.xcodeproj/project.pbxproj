@@ -242,18 +242,10 @@
 		30753B842176157B009647E9 /* error.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6F2176157B009647E9 /* error.caf */; };
 		30753B852176157B009647E9 /* error.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6F2176157B009647E9 /* error.caf */; };
 		30753B862176157B009647E9 /* error.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B6F2176157B009647E9 /* error.caf */; };
-		30753B872176157B009647E9 /* open.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B702176157B009647E9 /* open.caf */; };
-		30753B882176157B009647E9 /* open.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B702176157B009647E9 /* open.caf */; };
-		30753B892176157B009647E9 /* open.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B702176157B009647E9 /* open.caf */; };
-		30753B8A2176157B009647E9 /* open.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B702176157B009647E9 /* open.caf */; };
 		30753B8B2176157B009647E9 /* reload.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B712176157B009647E9 /* reload.caf */; };
 		30753B8C2176157B009647E9 /* reload.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B712176157B009647E9 /* reload.caf */; };
 		30753B8D2176157B009647E9 /* reload.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B712176157B009647E9 /* reload.caf */; };
 		30753B8E2176157B009647E9 /* reload.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B712176157B009647E9 /* reload.caf */; };
-		30753B8F2176157B009647E9 /* close.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B722176157B009647E9 /* close.caf */; };
-		30753B902176157B009647E9 /* close.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B722176157B009647E9 /* close.caf */; };
-		30753B912176157B009647E9 /* close.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B722176157B009647E9 /* close.caf */; };
-		30753B922176157B009647E9 /* close.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B722176157B009647E9 /* close.caf */; };
 		30753B9F21765C55009647E9 /* markAllAsRead.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B9E21765C55009647E9 /* markAllAsRead.caf */; };
 		30753BA021765C55009647E9 /* markAllAsRead.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B9E21765C55009647E9 /* markAllAsRead.caf */; };
 		30753BA121765C55009647E9 /* markAllAsRead.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753B9E21765C55009647E9 /* markAllAsRead.caf */; };
@@ -778,9 +770,7 @@
 		30753B6D2176157A009647E9 /* createPosting.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = createPosting.caf; sourceTree = "<group>"; };
 		30753B6E2176157A009647E9 /* editPosting.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = editPosting.caf; sourceTree = "<group>"; };
 		30753B6F2176157B009647E9 /* error.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = error.caf; sourceTree = "<group>"; };
-		30753B702176157B009647E9 /* open.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = open.caf; sourceTree = "<group>"; };
 		30753B712176157B009647E9 /* reload.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = reload.caf; sourceTree = "<group>"; };
-		30753B722176157B009647E9 /* close.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = close.caf; sourceTree = "<group>"; };
 		30753B9E21765C55009647E9 /* markAllAsRead.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = markAllAsRead.caf; sourceTree = "<group>"; };
 		30753BA321765F04009647E9 /* tick.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tick.caf; sourceTree = "<group>"; };
 		30753BA821774136009647E9 /* switch.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = switch.caf; sourceTree = "<group>"; };
@@ -1111,14 +1101,12 @@
 			isa = PBXGroup;
 			children = (
 				30753B6C2176157A009647E9 /* addThreadToFavorites.caf */,
-				30753B722176157B009647E9 /* close.caf */,
 				30753BB221775ADC009647E9 /* copyLink.caf */,
 				30753B6D2176157A009647E9 /* createPosting.caf */,
 				30753B6E2176157A009647E9 /* editPosting.caf */,
 				30753B6F2176157B009647E9 /* error.caf */,
 				30753BAD21774B02009647E9 /* loginFailed.caf */,
 				30753B9E21765C55009647E9 /* markAllAsRead.caf */,
-				30753B702176157B009647E9 /* open.caf */,
 				30753B712176157B009647E9 /* reload.caf */,
 				30753B6B2176157A009647E9 /* removeThreadFromFavorites.caf */,
 				30753BA821774136009647E9 /* switch.caf */,
@@ -1948,7 +1936,6 @@
 				305DD83619A63517006514BD /* Images.xcassets in Resources */,
 				30753BAF21774B03009647E9 /* loginFailed.caf in Resources */,
 				30753BAA21774136009647E9 /* switch.caf in Resources */,
-				30753B902176157B009647E9 /* close.caf in Resources */,
 				3038D58319F65E21005E7D3D /* Localizable.strings in Resources */,
 				30849D201E2BABBD00626331 /* Settings.storyboard in Resources */,
 				301203541E03704500B06FF6 /* MCLMessageListFrameStyleView.xib in Resources */,
@@ -1964,7 +1951,6 @@
 				3020FB711E78BB4400C7217F /* notification.caf in Resources */,
 				3004E5AC1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib in Resources */,
 				30753B782176157B009647E9 /* addThreadToFavorites.caf in Resources */,
-				30753B882176157B009647E9 /* open.caf in Resources */,
 				30753B8C2176157B009647E9 /* reload.caf in Resources */,
 				30753BA521765F04009647E9 /* tick.caf in Resources */,
 				308B81E91F63FC9700C878FB /* MCLDetailViewController.xib in Resources */,
@@ -1992,7 +1978,6 @@
 				306FC8721F93A39F001EB7E9 /* Images.xcassets in Resources */,
 				30753BAE21774B03009647E9 /* loginFailed.caf in Resources */,
 				30753BA921774136009647E9 /* switch.caf in Resources */,
-				30753B8F2176157B009647E9 /* close.caf in Resources */,
 				306FC8731F93A39F001EB7E9 /* Localizable.strings in Resources */,
 				306FC8741F93A39F001EB7E9 /* Settings.storyboard in Resources */,
 				306FC8751F93A39F001EB7E9 /* MCLMessageListFrameStyleView.xib in Resources */,
@@ -2008,7 +1993,6 @@
 				306FC8801F93A39F001EB7E9 /* notification.caf in Resources */,
 				306FC8821F93A39F001EB7E9 /* MCLThreadTableViewCell.xib in Resources */,
 				30753B772176157B009647E9 /* addThreadToFavorites.caf in Resources */,
-				30753B872176157B009647E9 /* open.caf in Resources */,
 				30753B8B2176157B009647E9 /* reload.caf in Resources */,
 				30753BA421765F04009647E9 /* tick.caf in Resources */,
 				306FC8841F93A39F001EB7E9 /* MCLDetailViewController.xib in Resources */,
@@ -2028,7 +2012,6 @@
 				3090CB1D1FA7ED1E0085C9AF /* Images.xcassets in Resources */,
 				30753BB121774B03009647E9 /* loginFailed.caf in Resources */,
 				30753BAC21774136009647E9 /* switch.caf in Resources */,
-				30753B922176157B009647E9 /* close.caf in Resources */,
 				3090CB1E1FA7ED1E0085C9AF /* Localizable.strings in Resources */,
 				3090CB1F1FA7ED1E0085C9AF /* Settings.storyboard in Resources */,
 				3090CB201FA7ED1E0085C9AF /* MCLMessageListFrameStyleView.xib in Resources */,
@@ -2044,7 +2027,6 @@
 				3090CB291FA7ED1E0085C9AF /* notification.caf in Resources */,
 				3090CB2B1FA7ED1E0085C9AF /* MCLThreadTableViewCell.xib in Resources */,
 				30753B7A2176157B009647E9 /* addThreadToFavorites.caf in Resources */,
-				30753B8A2176157B009647E9 /* open.caf in Resources */,
 				30753B8E2176157B009647E9 /* reload.caf in Resources */,
 				30753BA721765F04009647E9 /* tick.caf in Resources */,
 				3090CB2D1FA7ED1E0085C9AF /* MCLDetailViewController.xib in Resources */,
@@ -2064,7 +2046,6 @@
 				3090CB9A1FA89A5C0085C9AF /* Images.xcassets in Resources */,
 				30753BB021774B03009647E9 /* loginFailed.caf in Resources */,
 				30753BAB21774136009647E9 /* switch.caf in Resources */,
-				30753B912176157B009647E9 /* close.caf in Resources */,
 				3090CB9B1FA89A5C0085C9AF /* Localizable.strings in Resources */,
 				3090CB9C1FA89A5C0085C9AF /* Settings.storyboard in Resources */,
 				3090CB9D1FA89A5C0085C9AF /* MCLMessageListFrameStyleView.xib in Resources */,
@@ -2080,7 +2061,6 @@
 				3090CBA61FA89A5C0085C9AF /* notification.caf in Resources */,
 				3090CBA81FA89A5C0085C9AF /* MCLThreadTableViewCell.xib in Resources */,
 				30753B792176157B009647E9 /* addThreadToFavorites.caf in Resources */,
-				30753B892176157B009647E9 /* open.caf in Resources */,
 				30753B8D2176157B009647E9 /* reload.caf in Resources */,
 				30753BA621765F04009647E9 /* tick.caf in Resources */,
 				3090CBAA1FA89A5C0085C9AF /* MCLDetailViewController.xib in Resources */,

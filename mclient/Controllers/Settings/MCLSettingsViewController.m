@@ -516,7 +516,6 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 
 - (IBAction)doneAction:(UIBarButtonItem *)sender
 {
-    [self.bag.soundEffectPlayer playCloseSound];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

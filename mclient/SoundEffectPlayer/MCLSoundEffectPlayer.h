@@ -20,8 +20,6 @@
 - (void)playRemoveThreadFromFavoritesSound;
 - (void)playAddThreadToKillfileSound;
 - (void)playRemoveThreadFromKillfileSound;
-- (void)playOpenSound;
-- (void)playCloseSound;
 - (void)playLoginFailedSound;
 - (void)playCopyLinkSound;
 - (void)playErrorSound;
