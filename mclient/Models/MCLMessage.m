@@ -181,7 +181,7 @@
 
     NSString *textColor = [currentTheme isDark] ? @"fff" : @"000";
     NSString *linkColor = [currentTheme cssTintColor];
-    NSString *classicQuoteDesignDisabled = classicQuoteDesign ? @"-DEACTIVED" : @"";
+    NSString *classicQuoteDesignDisabled = classicQuoteDesign ? @"-DEACTIVATED" : @"";
     NSString *quoteColor = [currentTheme cssQuoteColor];
 
     return [NSString stringWithFormat:@""
