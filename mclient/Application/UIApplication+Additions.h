@@ -8,6 +8,8 @@
 
 @interface UIApplication (Additions)
 
+- (NSString *)version;
+- (NSString *)buildNumber;
 - (NSInteger)incrementApplicationIconBadgeNumber;
 - (NSInteger)decrementApplicationIconBadgeNumber;
 

@@ -551,6 +551,10 @@
 		30DB7F8A1F8D6A0E00766501 /* features-store.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F891F8D69D900766501 /* features-store.plist */; };
 		30DB7F8B1F8D6A0E00766501 /* features-testing.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30DB7F881F8D69D900766501 /* features-testing.plist */; };
 		30DBC8A61E285FAC00EF150B /* MCLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DBC8A51E285FAC00EF150B /* MCLTextView.m */; };
+		30DD32072178A8DB00A06355 /* MCLStoreReviewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DD32062178A8DB00A06355 /* MCLStoreReviewManager.m */; };
+		30DD32082178A8DB00A06355 /* MCLStoreReviewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DD32062178A8DB00A06355 /* MCLStoreReviewManager.m */; };
+		30DD32092178A8DB00A06355 /* MCLStoreReviewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DD32062178A8DB00A06355 /* MCLStoreReviewManager.m */; };
+		30DD320A2178A8DB00A06355 /* MCLStoreReviewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DD32062178A8DB00A06355 /* MCLStoreReviewManager.m */; };
 		30DD81761FB452E2007BF235 /* MCLAppDependencyBag.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DD81751FB452E1007BF235 /* MCLAppDependencyBag.m */; };
 		30DD81771FB454AE007BF235 /* MCLAppDependencyBag.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DD81751FB452E1007BF235 /* MCLAppDependencyBag.m */; };
 		30DD81781FB454AF007BF235 /* MCLAppDependencyBag.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DD81751FB452E1007BF235 /* MCLAppDependencyBag.m */; };
@@ -858,6 +862,8 @@
 		30DB7F891F8D69D900766501 /* features-store.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "features-store.plist"; sourceTree = "<group>"; };
 		30DBC8A41E285FAB00EF150B /* MCLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLTextView.h; sourceTree = "<group>"; };
 		30DBC8A51E285FAC00EF150B /* MCLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLTextView.m; sourceTree = "<group>"; };
+		30DD32052178A8DB00A06355 /* MCLStoreReviewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLStoreReviewManager.h; sourceTree = "<group>"; };
+		30DD32062178A8DB00A06355 /* MCLStoreReviewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLStoreReviewManager.m; sourceTree = "<group>"; };
 		30DD81731FB451DF007BF235 /* MCLDependencyBag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLDependencyBag.h; sourceTree = "<group>"; };
 		30DD81741FB452E1007BF235 /* MCLAppDependencyBag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLAppDependencyBag.h; sourceTree = "<group>"; };
 		30DD81751FB452E1007BF235 /* MCLAppDependencyBag.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLAppDependencyBag.m; sourceTree = "<group>"; };
@@ -1267,6 +1273,7 @@
 				305DD85919AB2EFE006514BD /* Views */,
 				3036F5951E263EE100ABC2CE /* Themes */,
 				30753B93217625F2009647E9 /* SoundEffectPlayer */,
+				30DD320B2178A8E000A06355 /* StoreReview */,
 				305E53AB19D4F4C5002B8E50 /* Storyboards */,
 				303974911E16B08D003C8BC9 /* Categories */,
 				305DD81E19A63517006514BD /* Supporting Files */,
@@ -1699,6 +1706,15 @@
 				30DB7F891F8D69D900766501 /* features-store.plist */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		30DD320B2178A8E000A06355 /* StoreReview */ = {
+			isa = PBXGroup;
+			children = (
+				30DD32052178A8DB00A06355 /* MCLStoreReviewManager.h */,
+				30DD32062178A8DB00A06355 /* MCLStoreReviewManager.m */,
+			);
+			path = StoreReview;
 			sourceTree = "<group>";
 		};
 		30DD81721FB451C5007BF235 /* DependencyBag */ = {
@@ -2475,6 +2491,7 @@
 				30C04CEC20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */,
 				30BD47621E97097300DBB27B /* UIViewController+Additions.m in Sources */,
 				302382011F937CBD00764FAE /* MCLKillfileThreadsRequest.m in Sources */,
+				30DD32082178A8DB00A06355 /* MCLStoreReviewManager.m in Sources */,
 				305DE8101F2E46DD00EC34AE /* MCLMessageToolbar.m in Sources */,
 				304373441FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */,
 				3070D326207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
@@ -2598,6 +2615,7 @@
 				30C04CEB20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */,
 				306FC8541F93A39F001EB7E9 /* MCLMessageListLoadingViewController.m in Sources */,
 				306FC8551F93A39F001EB7E9 /* MCLMessageRequest.m in Sources */,
+				30DD32072178A8DB00A06355 /* MCLStoreReviewManager.m in Sources */,
 				306FC8561F93A39F001EB7E9 /* UIViewController+Additions.m in Sources */,
 				304373431FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */,
 				3070D325207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
@@ -2713,6 +2731,7 @@
 				30C04CEE20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */,
 				3090CB011FA7ED1E0085C9AF /* UIViewController+Additions.m in Sources */,
 				3090CB021FA7ED1E0085C9AF /* MCLKillfileThreadsRequest.m in Sources */,
+				30DD320A2178A8DB00A06355 /* MCLStoreReviewManager.m in Sources */,
 				3090CB031FA7ED1E0085C9AF /* MCLMessageToolbar.m in Sources */,
 				304373461FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */,
 				3070D328207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
@@ -2828,6 +2847,7 @@
 				30C04CED20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */,
 				3090CB7E1FA89A5C0085C9AF /* UIViewController+Additions.m in Sources */,
 				3090CB7F1FA89A5C0085C9AF /* MCLKillfileThreadsRequest.m in Sources */,
+				30DD32092178A8DB00A06355 /* MCLStoreReviewManager.m in Sources */,
 				3090CB801FA89A5C0085C9AF /* MCLMessageToolbar.m in Sources */,
 				304373451FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */,
 				3070D327207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,

@@ -22,6 +22,7 @@
 #import "MCLSoundEffectPlayer.h"
 #import "MCLFoundationHTTPClient.h"
 #import "MCLNotificationManager.h"
+#import "MCLStoreReviewManager.h"
 #import "MCLLaunchViewController.h"
 #import "MCLBoardListTableViewController.h"
 
@@ -38,6 +39,7 @@
 @synthesize settings;
 @synthesize notificationManager;
 @synthesize themeManager;
+@synthesize storeReviewManager;
 @synthesize soundEffectPlayer;
 
 #pragma mark - Initializer
@@ -67,6 +69,7 @@
     self.settings = [[MCLSettings alloc] initWithUserDefaults:[NSUserDefaults standardUserDefaults]];
     self.notificationManager = [[MCLNotificationManager alloc] initWithBag:self];
     self.themeManager = [[MCLThemeManager alloc] initWithSettings:self.settings];
+    self.storeReviewManager = [[MCLStoreReviewManager alloc] initWithSettings:self.settings];
     self.soundEffectPlayer = [[MCLSoundEffectPlayer alloc] initWithSettings:self.settings];
 
     [self.themeManager loadTheme];

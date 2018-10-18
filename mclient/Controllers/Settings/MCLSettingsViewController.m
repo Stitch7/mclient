@@ -11,6 +11,7 @@
 @import SafariServices;
 
 #import "utils.h"
+#import "UIApplication+Additions.h"
 #import "MCLDependencyBag.h"
 #import "MCLFeatures.h"
 #import "MCLSettings.h"
@@ -256,14 +257,11 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     aboutLabel.textColor = [UIColor darkGrayColor];
 
     NSString *aboutText = @"Version %@ (%@)\nCopyright © 2014-%@ Christopher Reitz aka Stitch";
+    UIApplication *app = [UIApplication sharedApplication];
     NSDateFormatter *yearFormatter = [[NSDateFormatter alloc] init];
     [yearFormatter setDateFormat:@"yyyy"];
     NSString *yearString = [yearFormatter stringFromDate:[NSDate date]];
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    aboutLabel.text = [NSString stringWithFormat:aboutText,
-                       [infoDictionary objectForKey:@"CFBundleShortVersionString"],
-                       [infoDictionary objectForKey:@"CFBundleVersion"],
-                       yearString];
+    aboutLabel.text = [NSString stringWithFormat:aboutText, [app version], [app buildNumber], yearString];
 
     self.tableView.tableFooterView = aboutLabel;
     [aboutLabel setNeedsLayout];

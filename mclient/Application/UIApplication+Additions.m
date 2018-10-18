@@ -10,6 +10,16 @@
 
 @implementation UIApplication (Additions)
 
+- (NSString *)version
+{
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+}
+
+- (NSString *)buildNumber
+{
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+}
+
 - (NSInteger)incrementApplicationIconBadgeNumber
 {
     if (self.applicationIconBadgeNumber < 0) {

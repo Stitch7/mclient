@@ -6,6 +6,9 @@
 //  See LICENSE file in the project root for full license information.
 //
 
+
+extern NSString *const MCLSettingNumberOfTimesLaunched;
+extern NSString *const MCLSettingLastAppVersion;
 extern NSString *const MCLSettingDarkModeEnabled;
 extern NSString *const MCLSettingDarkModeAutomatically;
 extern NSString *const MCLSettingShowImages;

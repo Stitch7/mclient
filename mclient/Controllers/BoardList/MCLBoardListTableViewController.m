@@ -19,6 +19,7 @@
 #import "MCLMessageResponsesRequest.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
+#import "MCLStoreReviewManager.h"
 #import "MCLSoundEffectPlayer.h"
 #import "MCLSplitViewController.h"
 #import "MCLThreadListTableViewController.h"
@@ -119,6 +120,10 @@
     }
 
     self.alreadyAppeared = YES;
+
+    if ([self.bag.features isFeatureWithNameEnabled:MCLFeatureStoreReview]) {
+        [self.bag.storeReviewManager promptForReviewIfAppropriate];
+    }
 }
 
 - (void)didReceiveMemoryWarning

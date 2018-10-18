@@ -109,7 +109,9 @@
 
 - (NSDictionary *)dictionaryWithAllSettings
 {
-    return @{MCLSettingDarkModeEnabled:         [self stringForIsSettingActivated:MCLSettingDarkModeEnabled],
+    return @{MCLSettingNumberOfTimesLaunched:   [self numberForSetting:MCLSettingNumberOfTimesLaunched orDefault:0],
+             MCLSettingLastAppVersion:          [self objectForSetting:MCLSettingLastAppVersion orDefault:@""],
+             MCLSettingDarkModeEnabled:         [self stringForIsSettingActivated:MCLSettingDarkModeEnabled],
              MCLSettingDarkModeAutomatically:   [self stringForIsSettingActivated:MCLSettingDarkModeAutomatically],
              MCLSettingShowImages:              [self numberForSetting:MCLSettingShowImages],
              MCLSettingThreadView:              [self numberForSetting:MCLSettingThreadView],

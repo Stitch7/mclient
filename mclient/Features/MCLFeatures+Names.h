@@ -7,6 +7,7 @@
 //
 
 extern NSString *const MCLFeatureCrashReporter;
+extern NSString *const MCLFeatureStoreReview;
 extern NSString *const MCLFeatureKillFileThreads;
 extern NSString *const MCLFeatureFullSearch;
 extern NSString *const MCLFeaturePrivateMessages;

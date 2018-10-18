@@ -8,6 +8,8 @@
 
 #import "MCLSettings+Keys.h"
 
+NSString * const MCLSettingNumberOfTimesLaunched = @"numberOfTimesLaunched";
+NSString * const MCLSettingLastAppVersion = @"lastAppVersion";
 NSString * const MCLSettingDarkModeEnabled = @"darkModeEnabled";
 NSString * const MCLSettingDarkModeAutomatically = @"darkModeAutomatically";
 NSString * const MCLSettingShowImages = @"showImages";

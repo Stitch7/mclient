@@ -13,6 +13,7 @@
 @class MCLSettings;
 @class MCLThemeManager;
 @class MCLSoundEffectPlayer;
+@class MCLStoreReviewManager;
 @protocol MCLHTTPClient;
 
 @protocol MCLDependencyBag <NSObject>
@@ -24,6 +25,7 @@
 @property (strong, nonatomic) MCLSettings *settings;
 @property (strong, nonatomic) MCLThemeManager *themeManager;
 @property (strong, nonatomic) MCLSoundEffectPlayer *soundEffectPlayer;
+@property (strong, nonatomic) MCLStoreReviewManager *storeReviewManager;
 @property (strong, nonatomic) id <MCLHTTPClient> httpClient;
 
 - (void)launchRootWindow:(void (^)(UIWindow *window))windowHandler;

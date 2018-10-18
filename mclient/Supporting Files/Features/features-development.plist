@@ -4,6 +4,8 @@
 <dict>
 	<key>CrashReporter</key>
 	<false/>
+	<key>StoreReview</key>
+	<true/>
 	<key>KillFileThreads</key>
 	<false/>
 	<key>FullSearch</key>
