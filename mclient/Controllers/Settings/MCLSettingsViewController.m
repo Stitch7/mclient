@@ -232,6 +232,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     // TODO: That's an relict from plain UserDefaults times
     if ([self.bag.settings objectForSetting:MCLSettingSignatureEnabled] == nil) {
         self.settingsSignatureEnabledSwitch.on = YES;
+        self.settingsSignatureEnabledSwitch.tag = 1;
         [self signatureEnabledSwitchValueChangedAction:self.settingsSignatureEnabledSwitch];
     } else {
         self.settingsSignatureEnabledSwitch.on = [self.bag.settings isSettingActivated:MCLSettingSignatureEnabled];
@@ -557,7 +558,10 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 {
     [self.bag.settings setBool:sender.on forSetting:MCLSettingSignatureEnabled];
     [self signatureTextViewEnabled:sender.on];
-    [self.bag.soundEffectPlayer playSwitchSound];
+    if (sender.tag == 0) {
+        [self.bag.soundEffectPlayer playSwitchSound];
+    }
+    sender.tag = 0;
 }
 
 - (IBAction)jumpToLatestPostEnabledSwitchValueChangedAction:(UISwitch *)sender
