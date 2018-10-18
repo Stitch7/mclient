@@ -99,9 +99,6 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 
 - (void)configureNotificationsSection
 {
-//    self.backgroundNotificationsEnabledSwitch.on = NO;
-//    self.backgroundNotificationsEnabledSwitch.enabled = NO;
-//    self.backgroundNotificationsEnabledSwitch.alpha = 0.6f;
     BOOL backgroundNotificationsEnabled = [self.bag.notificationManager backgroundNotificationsEnabled];
     self.backgroundNotificationsEnabledSwitch.on = backgroundNotificationsEnabled;
     [self setbackgroundNotificationsEnabledSwitchEnabled:backgroundNotificationsEnabled];
@@ -591,8 +588,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
         self.darkModeAutomaticallySwitch.enabled = NO;
         self.darkModeAutomaticallySwitch.alpha = 0.6f;
         [self.bag.settings setBool:NO forSetting:MCLSettingDarkModeAutomatically];
-    }
-    else {
+    } else {
         self.darkModeAutomaticallySwitch.enabled = YES;
         self.darkModeAutomaticallySwitch.alpha = 1.0f;
     }
