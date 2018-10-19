@@ -11,7 +11,7 @@
 @protocol MCLMessageListWidmannStyleTableViewCellDelegate;
 @protocol MCLDependencyBag;
 
-@class MCLLogin;
+@class MCLLoginManager;
 @class MCLMessage;
 @class MCLReadSymbolView;
 @class MCLMessageToolbar;
@@ -22,7 +22,7 @@ extern NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier;
 
 @property (weak) id<MCLMessageListWidmannStyleTableViewCellDelegate> delegate;
 
-@property (strong, nonatomic) MCLLogin *login;
+@property (strong, nonatomic) MCLLoginManager *loginManager;
 @property (strong, nonatomic) id <MCLDependencyBag> bag;
 @property (strong, nonatomic) MCLMessage *message;
 @property (strong, nonatomic) MCLMessage *nextMessage;

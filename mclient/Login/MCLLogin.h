@@ -6,23 +6,18 @@
 //  See LICENSE file in the project root for full license information.
 //
 
-extern NSString * const MCLLoginStateDidChangeNotification;
-extern NSString * const MCLLoginStateKey;
-extern NSString * const MCLLoginInitialAttemptKey;
-
-@protocol MCLDependencyBag;
+@protocol MCLLoginSecureStore;
 
 @interface MCLLogin : NSObject
 
-@property (assign, readonly) BOOL valid;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *password;
 
-- (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
-- (NSDictionary *)loginData;
+- (instancetype)initWithSecureStore:(id <MCLLoginSecureStore>)secureStore;
+
 - (void)updateUsername:(NSString *)username;
 - (void)updatePassword:(NSString *)password;
-- (void)testLoginWithCompletionHandler:(void (^)(NSError*, BOOL))completionHandler;
-- (void)logout;
+- (BOOL)credentialsAreInvalid;
+- (void)reset;
 
 @end

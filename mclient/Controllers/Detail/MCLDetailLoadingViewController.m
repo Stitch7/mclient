@@ -8,7 +8,7 @@
 
 #import "MCLDetailLoadingViewController.h"
 
-#import "MCLLogin.h"
+#import "MCLLoginManager.h"
 #import "MCLThreadListTableViewController.h"
 
 @implementation MCLDetailLoadingViewController

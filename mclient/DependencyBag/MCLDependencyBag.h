@@ -7,7 +7,7 @@
 //
 
 @class MCLFeatures;
-@class MCLLogin;
+@class MCLLoginManager;
 @class MCLRouter;
 @class MCLNotificationManager;
 @class MCLSettings;
@@ -19,7 +19,7 @@
 @protocol MCLDependencyBag <NSObject>
 
 @property (strong, nonatomic) MCLFeatures *features;
-@property (strong, nonatomic) MCLLogin *login;
+@property (strong, nonatomic) MCLLoginManager *loginManager;
 @property (strong, nonatomic) MCLRouter *router;
 @property (strong, nonatomic) MCLNotificationManager *notificationManager;
 @property (strong, nonatomic) MCLSettings *settings;

@@ -15,7 +15,7 @@
 #import "MCLSettings.h"
 #import "MCLRouter.h"
 #import "MCLMessageRequest.h"
-#import "MCLLogin.h"
+#import "MCLLoginManager.h"
 #import "MCLBoardListTableViewController.h"
 #import "MCLProfileTableViewController.h"
 #import "MCLThemeManager.h"
@@ -87,7 +87,7 @@
 
 - (void)configureToolbar
 {
-    self.toolbar.login = self.bag.login;
+    self.toolbar.loginManager = self.bag.loginManager;
     self.toolbar.messageToolbarDelegate = self.messageToolbarController;
     [self.toolbar deactivateBarButtons];
 
@@ -186,7 +186,7 @@
     cell.messageSubjectLabel.textColor = [currenTheme textColor];
 
     cell.messageUsernameLabel.text = message.username;
-    if ([message.username isEqualToString:self.bag.login.username]) {
+    if ([message.username isEqualToString:self.bag.loginManager.username]) {
         cell.messageUsernameLabel.textColor = [currenTheme ownUsernameTextColor];
     } else if (message.isMod) {
         cell.messageUsernameLabel.textColor = [currenTheme modTextColor];

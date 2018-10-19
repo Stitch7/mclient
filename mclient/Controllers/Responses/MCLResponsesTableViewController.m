@@ -13,7 +13,6 @@
 #import "UIViewController+Additions.h"
 #import "UIView+addConstraints.h"
 #import "MCLRouter+mainNavigation.h"
-#import "MCLLogin.h"
 #import "MCLMarkUnreadResponsesAsReadRequest.h"
 #import "MCLLoadingViewController.h"
 #import "MCLMessageListViewController.h"
@@ -130,7 +129,7 @@
     progressView.mode = MRProgressOverlayViewModeIndeterminateSmallDefault;
     progressView.titleLabelText = NSLocalizedString(@"Loading…", nil);
     MCLMarkUnreadResponsesAsReadRequest *request = [[MCLMarkUnreadResponsesAsReadRequest alloc] initWithClient:self.bag.httpClient
-                                                                                                         login:self.bag.login];
+                                                                                                  loginManager:self.bag.loginManager];
     [request loadWithCompletionHandler:^(NSError *error, NSArray *response) {
         [MRProgressOverlayView dismissOverlayForView:self.view animated:YES];
 

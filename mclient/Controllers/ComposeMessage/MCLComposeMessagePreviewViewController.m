@@ -15,7 +15,6 @@
 #import "MCLSettings.h"
 #import "MCLPreviewMessageRequest.h"
 #import "MCLSendMessageRequest.h"
-#import "MCLLogin.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
 #import "MCLLoadingView.h"

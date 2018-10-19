@@ -9,8 +9,8 @@
 #import "MCLProfileRequest.h"
 
 #import "MCLHTTPClient.h"
-#import "MCLLogin.h"
 #import "MCLUser.h"
+
 
 @interface MCLProfileRequest ()
 

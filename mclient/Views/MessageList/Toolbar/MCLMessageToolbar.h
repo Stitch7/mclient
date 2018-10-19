@@ -9,13 +9,13 @@
 @protocol MCLMessageToolbarDelegate;
 
 @class MCLMessage;
-@class MCLLogin;
+@class MCLLoginManager;
 @class MCLMessageListWidmannStyleTableViewCell;
 
 @interface MCLMessageToolbar : UIToolbar
 
 @property (weak) id<MCLMessageToolbarDelegate> messageToolbarDelegate;
-@property (strong, nonatomic) MCLLogin *login;
+@property (strong, nonatomic) MCLLoginManager *loginManager;
 @property (strong, nonatomic) MCLMessage *message;
 @property (strong, nonatomic) MCLMessage *nextMessage;
 

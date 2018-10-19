@@ -580,6 +580,10 @@
 		30EE8B7C1FC1E481008417F6 /* MCLErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EE8B791FC1E480008417F6 /* MCLErrorViewController.m */; };
 		30EE8B7D1FC1E481008417F6 /* MCLErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EE8B791FC1E480008417F6 /* MCLErrorViewController.m */; };
 		30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */; };
+		30FF041C2178DDBB00056E04 /* MCLLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30FF041B2178DDBB00056E04 /* MCLLoginManager.m */; };
+		30FF041D2178DDBB00056E04 /* MCLLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30FF041B2178DDBB00056E04 /* MCLLoginManager.m */; };
+		30FF041E2178DDBB00056E04 /* MCLLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30FF041B2178DDBB00056E04 /* MCLLoginManager.m */; };
+		30FF041F2178DDBB00056E04 /* MCLLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30FF041B2178DDBB00056E04 /* MCLLoginManager.m */; };
 		839E66741FFE6CF700E16A90 /* libPods-mclient-dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 839E66751FFE6CF700E16A90 /* libPods-mclient-dev.a */; };
 		9EE211CB7E8449C1FBA6DA94 /* libPods-mclient-store.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE932B0459D07DA9BDC39CA5 /* libPods-mclient-store.a */; };
 		A1CFD7E72C7BF591AEFE4A90 /* libPods-mclient-beta.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91BFBD8B3A80811FE65B8AA7 /* libPods-mclient-beta.a */; };
@@ -878,6 +882,10 @@
 		30EE8B791FC1E480008417F6 /* MCLErrorViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLErrorViewController.m; sourceTree = "<group>"; };
 		30EFDC0A19D422DE00E3EE31 /* MCLVerifiyLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLVerifiyLoginView.h; sourceTree = "<group>"; };
 		30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLVerifiyLoginView.m; sourceTree = "<group>"; };
+		30FF041A2178DDBB00056E04 /* MCLLoginManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLLoginManager.h; sourceTree = "<group>"; };
+		30FF041B2178DDBB00056E04 /* MCLLoginManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLLoginManager.m; sourceTree = "<group>"; };
+		30FF04202179ADFF00056E04 /* MCLLoginSecureStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLLoginSecureStore.h; sourceTree = "<group>"; };
+		30FF04212179CE8C00056E04 /* VALValet+LoginSecureStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VALValet+LoginSecureStore.h"; sourceTree = "<group>"; };
 		33361BAC6DFDB5FE864E553C /* Pods-mclient-alpha.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mclient-alpha.release.xcconfig"; path = "Pods/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha.release.xcconfig"; sourceTree = "<group>"; };
 		40D0EC0E52259350601550A2 /* Pods-mclient-dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mclient-dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mclient-dev/Pods-mclient-dev.debug.xcconfig"; sourceTree = "<group>"; };
 		528D1F80B0DD88EA74F81824 /* Pods-mclient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mclient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mclient/Pods-mclient.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1165,6 +1173,10 @@
 			children = (
 				30BD475D1E956D9000DBB27B /* MCLLogin.h */,
 				30BD475E1E956D9000DBB27B /* MCLLogin.m */,
+				30FF041A2178DDBB00056E04 /* MCLLoginManager.h */,
+				30FF041B2178DDBB00056E04 /* MCLLoginManager.m */,
+				30FF04202179ADFF00056E04 /* MCLLoginSecureStore.h */,
+				30FF04212179CE8C00056E04 /* VALValet+LoginSecureStore.h */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -2491,6 +2503,7 @@
 				30C04CEC20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */,
 				30BD47621E97097300DBB27B /* UIViewController+Additions.m in Sources */,
 				302382011F937CBD00764FAE /* MCLKillfileThreadsRequest.m in Sources */,
+				30FF041D2178DDBB00056E04 /* MCLLoginManager.m in Sources */,
 				30DD32082178A8DB00A06355 /* MCLStoreReviewManager.m in Sources */,
 				305DE8101F2E46DD00EC34AE /* MCLMessageToolbar.m in Sources */,
 				304373441FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */,
@@ -2615,6 +2628,7 @@
 				30C04CEB20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */,
 				306FC8541F93A39F001EB7E9 /* MCLMessageListLoadingViewController.m in Sources */,
 				306FC8551F93A39F001EB7E9 /* MCLMessageRequest.m in Sources */,
+				30FF041C2178DDBB00056E04 /* MCLLoginManager.m in Sources */,
 				30DD32072178A8DB00A06355 /* MCLStoreReviewManager.m in Sources */,
 				306FC8561F93A39F001EB7E9 /* UIViewController+Additions.m in Sources */,
 				304373431FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */,
@@ -2731,6 +2745,7 @@
 				30C04CEE20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */,
 				3090CB011FA7ED1E0085C9AF /* UIViewController+Additions.m in Sources */,
 				3090CB021FA7ED1E0085C9AF /* MCLKillfileThreadsRequest.m in Sources */,
+				30FF041F2178DDBB00056E04 /* MCLLoginManager.m in Sources */,
 				30DD320A2178A8DB00A06355 /* MCLStoreReviewManager.m in Sources */,
 				3090CB031FA7ED1E0085C9AF /* MCLMessageToolbar.m in Sources */,
 				304373461FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */,
@@ -2847,6 +2862,7 @@
 				30C04CED20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */,
 				3090CB7E1FA89A5C0085C9AF /* UIViewController+Additions.m in Sources */,
 				3090CB7F1FA89A5C0085C9AF /* MCLKillfileThreadsRequest.m in Sources */,
+				30FF041E2178DDBB00056E04 /* MCLLoginManager.m in Sources */,
 				30DD32092178A8DB00A06355 /* MCLStoreReviewManager.m in Sources */,
 				3090CB801FA89A5C0085C9AF /* MCLMessageToolbar.m in Sources */,
 				304373451FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */,

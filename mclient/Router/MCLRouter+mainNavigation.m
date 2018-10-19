@@ -10,7 +10,7 @@
 
 #import "MCLDependencyBag.h"
 #import "MCLSettings.h"
-#import "MCLLogin.h"
+#import "MCLLoginManager.h"
 #import "MCLBoard.h"
 #import "MCLThread.h"
 #import "MCLMessage.h"
@@ -91,7 +91,7 @@
 
     MCLThreadListRequest *threadListRequest = [[MCLThreadListRequest alloc] initWithClient:self.bag.httpClient
                                                                                      board:board
-                                                                                     login:self.bag.login];
+                                                                                     loginManager:self.bag.loginManager];
     MCLLoadingViewController *loadingVC = [[MCLLoadingViewController alloc] initWithBag:self.bag
                                                                                 request:threadListRequest
                                                                   contentViewController:threadListVC];

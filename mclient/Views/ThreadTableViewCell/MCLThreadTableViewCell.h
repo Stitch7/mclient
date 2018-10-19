@@ -9,7 +9,7 @@
 #import "MGSwipeTableCell.h"
 
 @protocol MCLTheme;
-@class MCLLogin;
+@class MCLLoginManager;
 @class MCLReadSymbolView;
 @class MCLBadgeView;
 @class MCLThread;
@@ -19,7 +19,7 @@ extern NSString *const MCLThreadTableViewCellIdentifier;
 @interface MCLThreadTableViewCell : MGSwipeTableCell
 
 @property (assign, nonatomic) NSInteger index;
-@property (strong, nonatomic) MCLLogin *login;
+@property (strong, nonatomic) MCLLoginManager *loginManager;
 @property (strong, nonatomic) MCLThread *thread;
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (assign, nonatomic, getter=isFavorite) BOOL favorite;

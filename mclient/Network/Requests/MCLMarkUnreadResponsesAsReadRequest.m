@@ -9,11 +9,11 @@
 #import "MCLMarkUnreadResponsesAsReadRequest.h"
 
 #import "MCLHTTPClient.h"
-#import "MCLLogin.h"
+#import "MCLLoginManager.h"
 
 @interface MCLMarkUnreadResponsesAsReadRequest ()
 
-@property (strong, nonatomic) MCLLogin *login;
+@property (strong, nonatomic) MCLLoginManager *loginManager;
 
 @end
 
@@ -23,13 +23,13 @@
 
 #pragma mark - Initializers
 
-- (instancetype)initWithClient:(id <MCLHTTPClient>)httpClient login:(MCLLogin *)login
+- (instancetype)initWithClient:(id <MCLHTTPClient>)httpClient loginManager:(MCLLoginManager *)loginManager
 {
     self = [super init];
     if (!self) return nil;
 
     self.httpClient = httpClient;
-    self.login = login;
+    self.loginManager = loginManager;
 
     return self;
 }
@@ -39,7 +39,7 @@
 - (void)loadWithCompletionHandler:(void (^__nonnull)(NSError*, NSArray*))completionHandler
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/user/%@/mark-unread-responses-as-read",
-                           kMServiceBaseURL, [self.login username]];
+                           kMServiceBaseURL, self.loginManager.username];
     [self.httpClient getRequestToUrlString:urlString
                                 needsLogin:YES
                          completionHandler:^(NSError *error, NSDictionary *json) {

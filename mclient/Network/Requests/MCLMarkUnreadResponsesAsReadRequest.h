@@ -9,10 +9,10 @@
 #import "MCLRequest.h"
 
 @protocol MCLHTTPClient;
-@class MCLLogin;
+@class MCLLoginManager;
 
 @interface MCLMarkUnreadResponsesAsReadRequest : NSObject <MCLRequest>
 
-- (instancetype)initWithClient:(id <MCLHTTPClient>)httpClient login:(MCLLogin *)login;
+- (instancetype)initWithClient:(id <MCLHTTPClient>)httpClient loginManager:(MCLLoginManager *)loginManager;
 
 @end

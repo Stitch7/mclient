@@ -13,7 +13,7 @@
 #import "MCLDependencyBag.h"
 #import "UIView+addConstraints.h"
 #import "MCLRouter+mainNavigation.h"
-#import "MCLLogin.h"
+#import "MCLLoginManager.h"
 #import "MCLBoard.h"
 #import "MCLThread.h"
 #import "MCLFavoritesRequest.h"
@@ -120,7 +120,7 @@
 
 - (void)configureNoDataView
 {
-    if (self.bag.login.valid) {
+    if (self.bag.loginManager.isLoginValid) {
         NSDictionary *help = @{MCLNoDataViewHelpTitleKey: NSLocalizedString(@"favorites_help_title", nil),
                                MCLNoDataViewHelpMessageKey: NSLocalizedString(@"favorites_help_message", nil)};
 
@@ -193,7 +193,7 @@
 {
     MCLThreadTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:MCLThreadTableViewCellIdentifier];
     cell.index = indexPath.row;
-    cell.login = self.bag.login;
+    cell.loginManager = self.bag.loginManager;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.currentTheme = self.bag.themeManager.currentTheme;
     cell.thread = self.favorites[indexPath.row];

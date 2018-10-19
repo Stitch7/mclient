@@ -8,25 +8,25 @@
 
 #import "MCLFoundationHTTPClient.h"
 #import "Reachability.h"
-#import "MCLLogin.h"
+#import "MCLLoginManager.h"
 
 
 @interface MCLFoundationHTTPClient ()
 
-@property (strong, nonatomic) MCLLogin *login;
+@property (strong, nonatomic) MCLLoginManager *loginManager;
 
 @end
 
 @implementation MCLFoundationHTTPClient
 
-- (instancetype)initWithLogin:(MCLLogin *)login
+- (instancetype)initWithLoginManager:(MCLLoginManager *)loginManager
 {
     self = [super init];
     if (!self) {
         return nil;
     }
 
-    self.login = login;
+    self.loginManager = loginManager;
 
     return self;
 }
@@ -100,7 +100,7 @@
     [request setValue:@"gzip" forHTTPHeaderField:@"accept-encoding"];
 
     if (needsLogin) {
-        NSDictionary *loginData = [self.login loginData];
+        NSDictionary *loginData = [self.loginManager dictionaryWithLoginData];
         if (loginData) {
             NSString *authValue = [self authValueFromLoginData:loginData];
             [request setValue:authValue forHTTPHeaderField:@"Authorization"];

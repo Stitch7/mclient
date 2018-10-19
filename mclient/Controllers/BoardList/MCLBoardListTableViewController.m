@@ -15,7 +15,7 @@
 #import "MCLFeatures.h"
 #import "MCLFavoriteThreadToggleRequest.h"
 #import "MCLRouter+mainNavigation.h"
-#import "MCLLogin.h"
+#import "MCLLoginManager.h"
 #import "MCLMessageResponsesRequest.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
@@ -60,8 +60,6 @@
     self.alreadyAppeared = NO;
     [self configureNotifications];
     [self configureToolbarButtons];
-
-    self.needsRefreshLoginState = NO;
 
     return self;
 }
@@ -115,7 +113,7 @@
 {
     [super viewDidAppear:animated];
 
-    if (self.alreadyAppeared && self.bag.login.valid) {
+    if (self.alreadyAppeared && self.bag.loginManager.isLoginValid) {
         [[[MCLMessageResponsesRequest alloc] initWithBag:self.bag] loadResponsesWithCompletion:nil];
     }
 
@@ -124,11 +122,6 @@
     if ([self.bag.features isFeatureWithNameEnabled:MCLFeatureStoreReview]) {
         [self.bag.storeReviewManager promptForReviewIfAppropriate];
     }
-}
-
-- (void)didReceiveMemoryWarning
-{
-    
 }
 
 #pragma mark - Configuration
@@ -242,7 +235,7 @@
     switch ([key integerValue]) {
         case MCLBoardListSectionBoards:
             self.boards = [newData copy];
-            if (!self.bag.login.valid) {
+            if (!self.bag.loginManager.isLoginValid) {
                 self.favorites = nil;
             }
             break;
@@ -259,10 +252,10 @@
 
 - (void)updateLoginStatus
 {
-    if (self.bag.login.valid) {
+    if (self.bag.loginManager.isLoginValid) {
         [self updateVerifyLoginViewWithSuccess:YES];
     } else {
-        [self.bag.login testLoginWithCompletionHandler:^(NSError *error, BOOL success) {
+        [self.bag.loginManager performLoginWithCompletionHandler:^(NSError *error, BOOL success) {
             if (error) {
                 [self updateVerifyLoginViewWithSuccess:NO];
                 return;
@@ -377,7 +370,7 @@
 {
     MCLThreadTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:MCLThreadTableViewCellIdentifier];
     cell.index = indexPath.row;
-    cell.login = self.bag.login;
+    cell.loginManager = self.bag.loginManager;
     cell.currentTheme = self.bag.themeManager.currentTheme;
     cell.thread = self.favorites[indexPath.row];
     cell.threadIsFavoriteImageView.hidden = YES;
@@ -503,7 +496,7 @@
 - (void)updateVerifyLoginViewWithSuccess:(BOOL)success
 {
     if (success) {
-        [self.verifyLoginView loginStatusWithUsername:self.bag.login.username];
+        [self.verifyLoginView loginStatusWithUsername:self.bag.loginManager.username];
         [[[MCLMessageResponsesRequest alloc] initWithBag:self.bag] loadResponsesWithCompletion:nil];
         [self.responsesButtonItem setEnabled:YES];
         [self updateResponsesButtonItemBadgeValueFromApplicationIconBadgeNumber];

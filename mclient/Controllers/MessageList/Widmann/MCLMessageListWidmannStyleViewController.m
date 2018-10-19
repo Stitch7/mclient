@@ -14,7 +14,6 @@
 #import "MCLThemeManager.h"
 #import "MCLNotificationManager.h"
 #import "UIView+addConstraints.h"
-#import "MCLLogin.h"
 #import "MCLMessageRequest.h"
 #import "MCLProfileTableViewController.h"
 #import "MCLMessageListWidmannStyleTableViewCell.h"
@@ -172,7 +171,7 @@
     MCLMessageListWidmannStyleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MCLMessageListWidmannStyleTableViewCellIdentifier];
     cell.indexPath = indexPath;
     cell.toolbar.messageToolbarDelegate = self.messageToolbarController;
-    cell.login = self.bag.login;
+    cell.loginManager = self.bag.loginManager;
     cell.bag = self.bag;
     cell.dateFormatter = self.dateFormatter;
     cell.active = isActive;

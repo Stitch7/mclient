@@ -10,7 +10,7 @@
 
 #import "MCLDependencyBag.h"
 #import "MCLHTTPClient.h"
-#import "MCLLogin.h"
+#import "MCLLoginManager.h"
 #import "MCLResponse.h"
 
 NSString * const MCLUnreadResponsesFoundNotification = @"MCLUnreadResponsesFoundNotification";
@@ -112,7 +112,7 @@ NSString * const MCLUnreadResponsesFoundNotification = @"MCLUnreadResponsesFound
 
 - (void)loadResponsesWithCompletion:(void (^)(NSError *error, MCLResponseContainer *responseContainer))completion
 {
-    NSString *username = [self.bag.login username];
+    NSString *username = self.bag.loginManager.username;
     NSString *urlString = [NSString stringWithFormat:@"%@/user/%@/responses", kMServiceBaseURL, username];
     [self.bag.httpClient getRequestToUrlString:urlString
                                 needsLogin:YES
@@ -154,7 +154,7 @@ NSString * const MCLUnreadResponsesFoundNotification = @"MCLUnreadResponsesFound
 
 - (void)loadWithCompletionHandler:(void (^)(NSError *, NSArray *))completion
 {
-    NSString *username = [self.bag.login username];
+    NSString *username = [self.bag.loginManager username];
     NSString *urlString = [NSString stringWithFormat:@"%@/user/%@/responses", kMServiceBaseURL, username];
     [self.bag.httpClient getRequestToUrlString:urlString
                                     needsLogin:YES

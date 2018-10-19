@@ -17,7 +17,7 @@
 #import "MCLFavoriteThreadToggleRequest.h"
 #import "MCLKillfileThreadToggleRequest.h"
 #import "MCLMarkThreadAsReadRequest.h"
-#import "MCLLogin.h"
+#import "MCLLoginManager.h"
 #import "MCLThemeManager.h"
 #import "MCLSoundEffectPlayer.h"
 #import "MCLMessageListViewController.h"
@@ -135,7 +135,7 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 
 - (void)loadingViewController:(MCLLoadingViewController *)loadingViewController configureNavigationItem:(UINavigationItem *)navigationItem
 {
-    if (self.bag.login.valid) {
+    if (self.bag.loginManager.isLoginValid) {
         navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
                                                                                           target:self
                                                                                           action:@selector(composeThreadButtonPressed:)];
@@ -159,7 +159,7 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 {
     MCLThreadTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:MCLThreadTableViewCellIdentifier];
     cell.index = indexPath.row;
-    cell.login = self.bag.login;
+    cell.loginManager = self.bag.loginManager;
     cell.currentTheme = self.bag.themeManager.currentTheme;
     MCLThread *thread = [self isSearching] ? self.searchResults[indexPath.row] : self.threads[indexPath.row];
     cell.thread = thread;
@@ -180,7 +180,7 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
                                               backgroundColor:[self.currentTheme modTextColor]]];
     }
 
-    if (self.bag.login.valid) {
+    if (self.bag.loginManager.isLoginValid) {
         cell.leftButtons = leftButtons;
     }
 

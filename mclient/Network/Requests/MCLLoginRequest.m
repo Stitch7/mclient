@@ -9,13 +9,7 @@
 #import "MCLLoginRequest.h"
 
 #import "MCLHTTPClient.h"
-#import "MCLLogin.h"
 
-@interface MCLLoginRequest ()
-
-@property (strong, nonatomic) MCLLogin *login;
-
-@end
 
 @implementation MCLLoginRequest
 
@@ -23,7 +17,7 @@
 
 #pragma mark - Initializers
 
-- (instancetype)initWithClient:(id <MCLHTTPClient>)httpClient login:(MCLLogin *)login
+- (instancetype)initWithClient:(id <MCLHTTPClient>)httpClient
 {
     self = [super init];
     if (!self) {
@@ -31,7 +25,6 @@
     }
 
     self.httpClient = httpClient;
-    self.login = login;
 
     return self;
 }

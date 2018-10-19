@@ -39,7 +39,7 @@
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag messageListViewController:(MCLMessageListViewController *)messageListViewController
 {
     self = [super init];
-    if (!self) { return nil; }
+    if (!self) return nil;
 
     self.bag = bag;
     self.messageListViewController = messageListViewController;

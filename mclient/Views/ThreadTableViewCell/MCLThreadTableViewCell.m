@@ -14,7 +14,8 @@
 #import "MCLThread.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
-#import "MCLLogin.h"
+#import "MCLLoginManager.h"
+
 
 NSString *const MCLThreadTableViewCellIdentifier = @"ThreadCell";
 
@@ -48,7 +49,7 @@ NSString *const MCLThreadTableViewCellIdentifier = @"ThreadCell";
     self.threadSubjectLabel.text = thread.subject;
 
     self.threadUsernameLabel.text = thread.username;
-    if (self.login.valid && [thread.username isEqualToString:self.login.username]) {
+    if (self.loginManager.isLoginValid && [thread.username isEqualToString:self.loginManager.username]) {
         self.threadUsernameLabel.textColor = [theme ownUsernameTextColor];
     } else if (thread.isMod) {
         self.threadUsernameLabel.textColor = [theme modTextColor];

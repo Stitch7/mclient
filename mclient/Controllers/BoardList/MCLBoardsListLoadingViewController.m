@@ -9,7 +9,7 @@
 #import "MCLBoardsListLoadingViewController.h"
 
 #import "MCLDependencyBag.h"
-#import "MCLLogin.h"
+#import "MCLLoginManager.h"
 #import "MCLBoardListTableViewController.h"
 #import "MCLThreadListTableViewController.h"
 
@@ -34,7 +34,7 @@
     [self startLoading];
 
     // We need to relogin in case when network connection on startup failed
-    [self.bag.login testLoginWithCompletionHandler:^(NSError* error, BOOL success) {
+    [self.bag.loginManager performLoginWithCompletionHandler:^(NSError* error, BOOL success) {
         MCLBoardListTableViewController *boardsListVC = (MCLBoardListTableViewController *)self.contentViewController;
         [boardsListVC updateVerifyLoginViewWithSuccess:success];
 

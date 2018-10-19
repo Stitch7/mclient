@@ -9,10 +9,10 @@
 #import "MCLHTTPClient.h"
 
 
-@class MCLLogin;
+@class MCLLoginManager;
 
 @interface MCLFoundationHTTPClient : NSObject <MCLHTTPClient>
 
-- (instancetype)initWithLogin:(MCLLogin *)login;
+- (instancetype)initWithLoginManager:(MCLLoginManager *)loginManager;
 
 @end

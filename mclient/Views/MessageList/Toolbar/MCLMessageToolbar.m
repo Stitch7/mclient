@@ -9,7 +9,7 @@
 #import "MCLMessageToolbar.h"
 
 #import "MCLMessageToolbarDelegate.h"
-#import "MCLLogin.h"
+#import "MCLLoginManager.h"
 #import "MCLUser.h"
 #import "MCLBoard.h"
 #import "MCLThread.h"
@@ -152,7 +152,7 @@
     self.linkToClipboardButton.enabled = YES;
     self.speakButton.enabled = YES;
 
-    BOOL hideNotificationButton = !self.login.valid || ![self.message.username isEqualToString:self.login.username];
+    BOOL hideNotificationButton = !self.loginManager.isLoginValid || ![self.message.username isEqualToString:self.loginManager.username];
     [self hide:hideNotificationButton barButton:self.notificationButton];
     if (!hideNotificationButton) {
         [self enableNotificationButton:self.message.notification];
@@ -160,12 +160,12 @@
 
     BOOL hideEditButton =
         self.message.thread.isClosed ||
-        !self.login.valid ||
-        ![self.message.username isEqualToString:self.login.username] ||
+        !self.loginManager.isLoginValid ||
+        ![self.message.username isEqualToString:self.loginManager.username] ||
         [self.nextMessage.level compare:self.message.level] == NSOrderedDescending;
     [self hide:hideEditButton barButton:self.editButton];
 
-    BOOL hideReplyButton = !self.login.valid || self.message.thread.isClosed;
+    BOOL hideReplyButton = !self.loginManager.isLoginValid || self.message.thread.isClosed;
     [self hide:hideReplyButton barButton:self.replyButton];
 }
 

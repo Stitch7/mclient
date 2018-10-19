@@ -6,11 +6,11 @@
 //  See LICENSE file in the project root for full license information.
 //
 
-@class MCLLogin;
+@class MCLLoginManager;
 
 @protocol MCLHTTPClient <NSObject>
 
-- (instancetype)initWithLogin:(MCLLogin *)login;
+- (instancetype)initWithLoginManager:(MCLLoginManager *)loginManager;
 
 - (void)getRequestToUrlString:(NSString *)urlString
                    needsLogin:(BOOL)needsLogin

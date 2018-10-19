@@ -21,8 +21,6 @@ typedef NS_ENUM(NSInteger, MCLBoardListSection) {
 
 @interface MCLBoardListTableViewController : UITableViewController <MGSwipeTableCellDelegate, MCLLoadingViewControllerDelegate>
 
-@property (assign, nonatomic) BOOL needsRefreshLoginState;
-
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
 
 - (void)updateVerifyLoginViewWithSuccess:(BOOL)success;

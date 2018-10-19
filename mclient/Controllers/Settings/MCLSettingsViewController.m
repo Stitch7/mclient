@@ -16,7 +16,7 @@
 #import "MCLFeatures.h"
 #import "MCLSettings.h"
 #import "MCLRouter+openURL.h"
-#import "MCLLogin.h"
+#import "MCLLoginManager.h"
 #import "MCLNotificationManager.h"
 #import "MCLThemeManager.h"
 #import "MCLSoundEffectPlayer.h"
@@ -153,8 +153,8 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 
 - (void)configureLoginSection
 {
-    NSString *username = self.bag.login.username;
-    NSString *password = self.bag.login.password;
+    NSString *username = self.bag.loginManager.username;
+    NSString *password = self.bag.loginManager.password;
 
     self.usernameTextField.text = username;
     self.passwordTextField.text = password;
@@ -195,10 +195,10 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
         self.loginDataStatusLabel.text = NSLocalizedString(@"Verifying username and password…", nil);
         [self.loginDataStatusSpinner startAnimating];
 
-        [self.bag.login updateUsername:username];
-        [self.bag.login updatePassword:password];
+        [self.bag.loginManager updateUsername:username];
+        [self.bag.loginManager updatePassword:password];
 
-        [self.bag.login testLoginWithCompletionHandler:^(NSError *error, BOOL success) {
+        [self.bag.loginManager performLoginWithCompletionHandler:^(NSError *error, BOOL success) {
             [self.loginDataStatusSpinner stopAnimating];
             self.loginDataStatusLabel.font = [UIFont systemFontOfSize:loginDataStatusLabelFontSize];
             if (success) {
@@ -218,7 +218,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
             }
         }];
     } else {
-        [self.bag.login logout];
+        [self.bag.loginManager performLogout];
         [self.loginDataStatusTableViewCell setAccessoryType:UITableViewCellAccessoryNone];
         self.loginDataStatusLabel.textColor = [UIColor darkGrayColor];
         self.loginDataStatusLabel.text = NSLocalizedString(@"Please enter username and password", nil);

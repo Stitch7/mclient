@@ -9,10 +9,9 @@
 #import "MCLRequest.h"
 
 @protocol MCLHTTPClient;
-@class MCLLogin;
 
 @interface MCLLoginRequest : NSObject <MCLRequest>
 
-- (instancetype)initWithClient:(id <MCLHTTPClient>)httpClient login:(MCLLogin *)login;
+- (instancetype)initWithClient:(id <MCLHTTPClient>)httpClient;
 
 @end

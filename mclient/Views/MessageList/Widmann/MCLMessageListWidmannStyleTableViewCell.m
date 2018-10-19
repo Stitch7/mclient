@@ -16,7 +16,7 @@
 #import "MCLThemeManager.h"
 #import "MCLTheme.h"
 #import "MCLMessage.h"
-#import "MCLLogin.h"
+#import "MCLLoginManager.h"
 #import "MCLReadSymbolView.h"
 #import "MCLMessageToolbar.h"
 
@@ -161,7 +161,7 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
     self.subjectLabel.textColor = [currentTheme textColor];
 
     self.usernameLabel.text = message.username;
-    if ([message.username isEqualToString:self.toolbar.login.username]) {
+    if ([message.username isEqualToString:self.toolbar.loginManager.username]) {
         self.usernameLabel.textColor = [currentTheme ownUsernameTextColor];
     } else if (message.isMod) {
         self.usernameLabel.textColor = [currentTheme modTextColor];
@@ -184,9 +184,9 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
     self.toolbar.nextMessage = nextMessage;
 }
 
-- (void)setLogin:(MCLLogin *)login
+- (void)setLoginManager:(MCLLoginManager *)loginManager
 {
-    self.toolbar.login = login;
+    self.toolbar.loginManager = loginManager;
 }
 
 - (void)initWebviewWithMessage:(MCLMessage *)message

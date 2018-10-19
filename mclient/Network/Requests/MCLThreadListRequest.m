@@ -9,14 +9,14 @@
 #import "MCLThreadListRequest.h"
 
 #import "MCLHTTPClient.h"
-#import "MCLLogin.h"
+#import "MCLLoginManager.h"
 #import "MCLBoard.h"
 #import "MCLThread.h"
 
 @interface MCLThreadListRequest ()
 
 @property (strong, nonatomic) MCLBoard *board;
-@property (strong, nonatomic) MCLLogin *login;
+@property (strong, nonatomic) MCLLoginManager *loginManager;
 
 @end
 
@@ -26,14 +26,14 @@
 
 #pragma mark - Initializers
 
-- (instancetype)initWithClient:(id <MCLHTTPClient>)httpClient board:(MCLBoard *)board login:(MCLLogin *)login
+- (instancetype)initWithClient:(id <MCLHTTPClient>)httpClient board:(MCLBoard *)board loginManager:(MCLLoginManager *)loginManager
 {
     self = [super init];
     if (!self) return nil;
 
     self.httpClient = httpClient;
     self.board = board;
-    self.login = login;
+    self.loginManager = loginManager;
 
     return self;
 }
@@ -44,7 +44,7 @@
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/board/%@/threads", kMServiceBaseURL, self.board.boardId];
     [self.httpClient getRequestToUrlString:urlString
-                                needsLogin:self.login.valid
+                                needsLogin:self.loginManager.isLoginValid
                          completionHandler:^(NSError *error, NSDictionary *json) {
                              NSMutableArray *favorites = [NSMutableArray array];
                              for (NSDictionary *jsonEntry in json) {

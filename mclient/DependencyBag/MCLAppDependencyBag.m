@@ -11,13 +11,16 @@
 
 #import "MCLAppDependencyBag.h"
 
-#import "ImgurSession.h"
+#import <ImgurSession.h>
+#import <Valet.h>
 
+#import "VALValet+LoginSecureStore.h"
 #import "MCLAppRouterDelegate.h"
 #import "MCLFeatures.h"
 #import "MCLSettings.h"
 #import "MCLRouter.h"
 #import "MCLLogin.h"
+#import "MCLLoginManager.h"
 #import "MCLThemeManager.h"
 #import "MCLSoundEffectPlayer.h"
 #import "MCLFoundationHTTPClient.h"
@@ -33,7 +36,7 @@
 @implementation MCLAppDependencyBag
 
 @synthesize features;
-@synthesize login;
+@synthesize loginManager;
 @synthesize httpClient;
 @synthesize router;
 @synthesize settings;
@@ -62,8 +65,12 @@
 
     [self configureCrashReporter];
 
-    self.login = [[MCLLogin alloc] initWithBag:self];
-    self.httpClient = [[MCLFoundationHTTPClient alloc] initWithLogin:self.login];
+    id <MCLLoginSecureStore> secureStore = [[VALValet alloc] initWithIdentifier:[[NSBundle mainBundle] bundleIdentifier]
+                                                                  accessibility:VALAccessibilityWhenUnlocked];
+    MCLLogin *login = [[MCLLogin alloc] initWithSecureStore:secureStore];
+
+    self.loginManager = [[MCLLoginManager alloc] initWithLogin:login bag:self];
+    self.httpClient = [[MCLFoundationHTTPClient alloc] initWithLoginManager:self.loginManager];
     self.router = [[MCLRouter alloc] initWithBag:self];
     self.router.delegate = [[MCLAppRouterDelegate alloc] initWithBag:self];
     self.settings = [[MCLSettings alloc] initWithUserDefaults:[NSUserDefaults standardUserDefaults]];
@@ -95,7 +102,7 @@
 - (void)configureAnalytics
 {
     [Inapptics letsGoWithAppToken:INAPPTICS_TOKEN crashReportingEnabled:NO];
-    [Inapptics setUserName:self.login.username];
+    [Inapptics setUserName:self.loginManager.username];
     [Inapptics.user set:[self.settings dictionaryWithAllSettings]];
 }
 
@@ -107,7 +114,7 @@
     UIWindow *launchWindow = [self.router makeLaunchWindow];
     windowHandler(launchWindow);
 
-    [self.login testLoginWithCompletionHandler:^(NSError *error, BOOL success) {
+    [self.loginManager performLoginWithCompletionHandler:^(NSError *error, BOOL success) {
         MCLBoardListTableViewController *boardsListVC = (MCLBoardListTableViewController *)self.router.masterViewController.childViewControllers.firstObject;
         if ([boardsListVC isKindOfClass:[MCLBoardListTableViewController class]]) {
             [boardsListVC updateVerifyLoginViewWithSuccess:success];
