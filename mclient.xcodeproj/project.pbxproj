@@ -2112,7 +2112,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-dev/Pods-mclient-dev-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-mclient-dev/Pods-mclient-dev-frameworks.sh",
 				"${PODS_ROOT}/Inapptics/Inapptics.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -2123,7 +2123,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-dev/Pods-mclient-dev-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mclient-dev/Pods-mclient-dev-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		1A347A1B8D4054A3F13D8800 /* [CP] Check Pods Manifest.lock */ = {
@@ -2212,7 +2212,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-dev/Pods-mclient-dev-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-mclient-dev/Pods-mclient-dev-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem.png",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@2x.png",
@@ -2227,7 +2227,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-dev/Pods-mclient-dev-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mclient-dev/Pods-mclient-dev-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3090CB2F1FA7ED1E0085C9AF /* ShellScript */ = {
@@ -2262,7 +2262,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem.png",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@2x.png",
@@ -2277,7 +2277,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7CD1D19C1D2F7C1087B35108 /* [CP] Copy Pods Resources */ = {
@@ -2286,7 +2286,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-store/Pods-mclient-store-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-mclient-store/Pods-mclient-store-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem.png",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@2x.png",
@@ -2301,7 +2301,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-store/Pods-mclient-store-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mclient-store/Pods-mclient-store-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		915089E796B40A81786A6247 /* [CP] Copy Pods Resources */ = {
@@ -2310,7 +2310,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem.png",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@2x.png",
@@ -2325,7 +2325,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ACD4BC4858FF892670D9F05C /* [CP] Embed Pods Frameworks */ = {
@@ -2336,7 +2336,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-store/Pods-mclient-store-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-mclient-store/Pods-mclient-store-frameworks.sh",
 				"${PODS_ROOT}/Inapptics/Inapptics.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -2347,7 +2347,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-store/Pods-mclient-store-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mclient-store/Pods-mclient-store-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BDE502EB68C5CD955DC8D394 /* [CP] Check Pods Manifest.lock */ = {
@@ -2376,7 +2376,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-frameworks.sh",
 				"${PODS_ROOT}/Inapptics/Inapptics.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -2387,7 +2387,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FA52AA84528CE9754F4B9540 /* [CP] Embed Pods Frameworks */ = {
@@ -2398,7 +2398,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-frameworks.sh",
 				"${PODS_ROOT}/Inapptics/Inapptics.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -2409,7 +2409,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
