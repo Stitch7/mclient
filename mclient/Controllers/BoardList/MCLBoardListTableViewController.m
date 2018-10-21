@@ -417,7 +417,8 @@
 {
     MCLThread *thread = [self.favorites objectAtIndex:indexPath.row];
     thread.board = [MCLBoard boardWithId:thread.boardId];
-    [self.bag.router pushToThread:thread];
+    MCLMessageListViewController *messageListVC = [self.bag.router pushToThread:thread];
+    messageListVC.delegate = self;
 }
 
 #pragma mark - MGSwipeTableCellDelegate
@@ -456,8 +457,10 @@
 - (void)messageListViewController:(MCLMessageListViewController *)inController didReadMessageOnThread:(MCLThread *)inThread
 {
     NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;
-    MCLThreadTableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
-    [selectedCell updateBadgeWithThread:inThread andTheme:self.currentTheme];
+    if (selectedIndexPath) {
+        MCLThreadTableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:selectedIndexPath];
+        [selectedCell updateBadgeWithThread:inThread andTheme:self.currentTheme];
+    }
 }
 
 #pragma mark - Actions
