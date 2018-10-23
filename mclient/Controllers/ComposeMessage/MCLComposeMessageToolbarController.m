@@ -269,10 +269,7 @@
 
     [self performBlock:^{
         [self.progressView dismiss:YES completion:^{
-            self.progressView.mode = MRProgressOverlayViewModeDeterminateCircular;
-            self.progressView.titleLabelText = NSLocalizedString(@"Uploading", nil);
-            self.progressView.progress = 0;
-
+            [self configureProgressView];
             if (success) {
                 [self.parentViewController.textView becomeFirstResponder];
             }
