@@ -250,11 +250,14 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
 
     [self.settings setInteger:[theme identifier] forSetting:MCLSettingTheme];
 
+    // Redraw current screen
     NSArray *windows = [UIApplication sharedApplication].windows;
     for (UIWindow *window in windows) {
-        for (UIView *view in window.subviews) {
-            [view removeFromSuperview];
-            [window addSubview:view];
+        if (window.windowLevel == UIWindowLevelNormal) {
+            for (UIView *view in window.subviews) {
+                [view removeFromSuperview];
+                [window addSubview:view];
+            }
         }
     }
 
