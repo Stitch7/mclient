@@ -8,7 +8,7 @@
 
 #import "MCLResponsesTableViewController.h"
 
-#import "MRProgress.h"
+#import <MRProgress.h>
 #import "MCLDependencyBag.h"
 #import "UIViewController+Additions.h"
 #import "UIView+addConstraints.h"

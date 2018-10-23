@@ -10,8 +10,8 @@
 
 @import AVFoundation;
 
-#import "ImgurSession.h"
-#import "MRProgressOverlayView.h"
+#import <ImgurSession.h>
+#import <MRProgressOverlayView.h>
 
 #import "UIViewController+Additions.h"
 #import "MCLDependencyBag.h"
