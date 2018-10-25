@@ -40,7 +40,6 @@
 
 - (void)loadWithCompletionHandler:(void (^__nonnull)(NSError*, NSArray*))completionHandler
 {
-    // TODO: - Remove checks if we are really sure ;)
     assert(self.message.messageId != nil);
     assert(self.message.board.boardId != nil);
     assert(self.message.thread.threadId != nil);
