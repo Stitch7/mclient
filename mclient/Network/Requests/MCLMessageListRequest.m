@@ -43,23 +43,21 @@
     [self.httpClient getRequestToUrlString:urlString
                                 needsLogin:YES
                          completionHandler:^(NSError *error, NSDictionary *data) {
-                             if (error) {
-                                 // TODO: Error handling
-                             }
+                             NSMutableArray *messages;
 
-                             if (!completionHandler) {
-                                 return;
-                             }
-
-                             NSMutableArray *messages = [NSMutableArray array];
-                             for (NSDictionary *json in data) {
-                                 MCLMessage *message = [MCLMessage messageFromJSON:json];
-                                 if (message) {
-                                     [messages addObject:message];
+                             if (!error) {
+                                 messages = [NSMutableArray array];
+                                 for (NSDictionary *json in data) {
+                                     MCLMessage *message = [MCLMessage messageFromJSON:json];
+                                     if (message) {
+                                         [messages addObject:message];
+                                     }
                                  }
                              }
 
-                             completionHandler(error, messages);
+                            if (completionHandler) {
+                                completionHandler(error, messages);
+                            }
                          }];
 }
 
