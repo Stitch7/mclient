@@ -21,6 +21,7 @@
 #import "MCLMessageToolbar.h"
 
 NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannStyleMessageCell";
+NSString *const WebviewMessageHandlerName = @"mclient";
 
 @implementation MCLMessageListWidmannStyleTableViewCell
 
@@ -193,7 +194,7 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
 {
     WKWebViewConfiguration *webViewConfig = [[WKWebViewConfiguration alloc] init];
     webViewConfig.suppressesIncrementalRendering = YES;
-    [webViewConfig.userContentController addScriptMessageHandler:self name:@"mclient"];
+    [webViewConfig.userContentController addScriptMessageHandler:self name:WebviewMessageHandlerName];
 
     self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:webViewConfig];
     self.webView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -227,6 +228,7 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
 
     if (self.webView) {
         [self.webView removeFromSuperview];
+        [self.webView.configuration.userContentController removeScriptMessageHandlerForName:WebviewMessageHandlerName];
         self.webView = nil;
     }
 }
@@ -234,7 +236,6 @@ NSString *const MCLMessageListWidmannStyleTableViewCellIdentifier = @"WidmannSty
 - (void)indentView:(NSLayoutConstraint *)indentionConstraint withLevel:(NSNumber *)level
 {
     int indention = 15;
-
     CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
     CGFloat maxWidth = screenWidth - screenWidth * 0.2;
     CGFloat newVal = 0 + (indention * [level integerValue]);
