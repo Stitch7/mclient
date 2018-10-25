@@ -233,20 +233,19 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 {
     void (^markThreadAsRead)(UITableViewRowAction *action, NSIndexPath *indexPath) = ^(UITableViewRowAction *action, NSIndexPath *indexPath) {
         MCLThread *selectedThread = [self isSearching] ? self.searchResults[indexPath.row] : self.threads[indexPath.row];
-
+        self.tableView.editing = NO;
         [[[MCLMarkThreadAsReadRequest alloc] initWithClient:self.bag.httpClient thread:selectedThread] loadWithCompletionHandler:^(NSError *error, NSArray *data) {
-            if (error) { // TODO: Display error to user
-                NSLog(@"%@ - %@", error, data);
-            } else {
-                MCLThreadTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-                [cell markRead];
-                selectedThread.read = YES;
-                selectedThread.lastMessageRead = YES;
-                selectedThread.messagesRead = selectedThread.messagesCount;
-                [cell updateBadgeWithThread:selectedThread andTheme:self.currentTheme];
+            if (error) {
+                [self presentError:error];
+                return;
             }
 
-            self.tableView.editing = NO;
+            MCLThreadTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            [cell markRead];
+            selectedThread.read = YES;
+            selectedThread.lastMessageRead = YES;
+            selectedThread.messagesRead = selectedThread.messagesCount;
+            [cell updateBadgeWithThread:selectedThread andTheme:self.currentTheme];
             [self.bag.soundEffectPlayer playMarkAllAsReadSound];
         }];
     };
