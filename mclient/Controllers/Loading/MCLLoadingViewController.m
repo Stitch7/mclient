@@ -11,6 +11,7 @@
 #import <AsyncBlockOperation/AsyncBlockOperation.h>
 #import "Reachability.h"
 
+#import "MCLHTTPClient.h"
 #import "MCLDependencyBag.h"
 #import "UIView+addConstraints.h"
 #import "MCLThemeManager.h"
@@ -59,7 +60,6 @@ static NSString *kQueueKeyPath = @"operations";
 
     [self initialize];
 
-    self.contentViewController = contentViewController;
     if ([[contentViewController class] conformsToProtocol:@protocol(MCLLoadingViewControllerDelegate)]) {
         self.delegate = (UIViewController<MCLLoadingViewControllerDelegate> *)contentViewController;
         if ([self.delegate respondsToSelector:@selector(loadingViewController)]) {
@@ -278,7 +278,7 @@ static NSString *kQueueKeyPath = @"operations";
             [request loadWithCompletionHandler:^(NSError *error, NSArray *data) {
                 [self stopLoading];
 
-                if (error || !data) {
+                if ((error && error.code != MCLHTTPErrorCodeInvalidLogin) || !data) {
                     [self showErrorOfType:kMCLErrorTypeGeneral error:error];
                     return;
                 }
@@ -335,7 +335,7 @@ static NSString *kQueueKeyPath = @"operations";
 
 - (void)showErrorOfType:(NSUInteger)type error:(NSError *)error
 {
-    if (self.state == kMCLLoadingStateError || error.code == 401) {
+    if (self.state == kMCLLoadingStateError) {
         return;
     }
 

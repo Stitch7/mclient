@@ -109,8 +109,7 @@
 
     if (body) {
         request.HTTPBody = body;
-    }
-    else if (vars) {
+    } else if (vars) {
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
 
         NSString *requestFields = @"";
@@ -133,15 +132,14 @@
         if (responseError) {
             switch ([responseError code]) {
                 case -1012:
-                    errorCode = @(401);
+                    errorCode = @(MCLHTTPErrorCodeInvalidLogin);
                     break;
 
                 default:
-                    errorCode = @(-1);
+                    errorCode = @(MCLHTTPErrorCodeMServiceConnection);
                     break;
             }
-        }
-        else if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+        } else if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
             NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
             NSError *jsonError;
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&jsonError];
@@ -157,7 +155,7 @@
                     break;
 
                 case 502:
-                    errorCode = @(-1);
+                    errorCode = @(MCLHTTPErrorCodeMServiceConnection);
                     errorMessage = [NSString stringWithFormat:NSLocalizedString([errorCode stringValue], nil), [json objectForKey:@"error"]];
                     break;
 
@@ -198,7 +196,7 @@
 
 - (void)completeWithNoInternetConnectionError:(void (^)(NSError *, NSDictionary *))completion
 {
-    NSNumber *errorCode = @-2;
+    NSNumber *errorCode = @(MCLHTTPErrorCodeNoInternetConnection);
     NSError *error = [NSError errorWithDomain:[[NSBundle mainBundle] bundleIdentifier]
                                          code:[errorCode integerValue]
                                      userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString([errorCode stringValue], nil)}];

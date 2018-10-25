@@ -12,6 +12,7 @@
 
 #import "utils.h"
 #import "UIApplication+Additions.h"
+#import "MCLHTTPClient.h"
 #import "MCLDependencyBag.h"
 #import "MCLFeatures.h"
 #import "MCLSettings.h"
@@ -208,7 +209,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
             } else {
                 self.loginDataStatusLabel.textColor = [theme warnTextColor];
 
-                if ([error code] == 401) {
+                if ([error code] == MCLHTTPErrorCodeInvalidLogin) {
                     self.loginDataStatusLabel.text = NSLocalizedString(@"Login data was entered incorrectly", nil);
                     [self.bag.soundEffectPlayer playLoginFailedSound];
                 } else {

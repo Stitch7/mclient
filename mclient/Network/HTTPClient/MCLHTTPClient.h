@@ -8,6 +8,10 @@
 
 @class MCLLoginManager;
 
+static const NSInteger MCLHTTPErrorCodeNoInternetConnection = -2;
+static const NSInteger MCLHTTPErrorCodeMServiceConnection = -1;
+static const NSInteger MCLHTTPErrorCodeInvalidLogin = 401;
+
 @protocol MCLHTTPClient <NSObject>
 
 - (instancetype)initWithLoginManager:(MCLLoginManager *)loginManager;
