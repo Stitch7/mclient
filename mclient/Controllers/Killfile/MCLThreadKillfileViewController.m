@@ -99,25 +99,8 @@
 {
     [self removeOverlayViews];
 
-    if (error) {
-        [self displayError:error];
-        return;
-    }
-
     self.threads = [threads mutableCopy];
     [self.tableView reloadData];
-}
-
-- (void)displayError:(NSError *)error
-{
-    if (error.code == -2) {
-        [self.view addSubview:[[MCLInternetConnectionErrorView alloc] initWithFrame:self.view.frame]];
-        return;
-    }
-
-    MCLMServiceErrorView *mServiceErrorView = [[MCLMServiceErrorView alloc] initWithFrame:self.view.frame
-                                                                                  andText:[error localizedDescription]];
-    [self.tableView addSubview:mServiceErrorView];
 }
 
 

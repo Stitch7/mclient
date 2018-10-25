@@ -251,7 +251,6 @@
     [self.favorites removeObjectAtIndex:favoriteCell.index];
     [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:favoriteCell.index inSection:0]]
                           withRowAnimation:UITableViewRowAnimationLeft];
-//    [self.tableView reloadData];
     MCLFavoriteThreadToggleRequest *favoriteThreadToggleRequest = [[MCLFavoriteThreadToggleRequest alloc] initWithClient:self.bag.httpClient
                                                                                                                   thread:thread];
     favoriteThreadToggleRequest.forceRemove = YES;

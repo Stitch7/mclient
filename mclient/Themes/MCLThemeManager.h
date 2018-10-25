@@ -24,6 +24,6 @@ typedef NS_ENUM(NSUInteger, kMCLTheme) {
 
 - (void)updateSun;
 - (void)loadTheme;
-- (void)applyTheme: (id <MCLTheme>)theme;
+- (void)applyTheme:(id <MCLTheme>)theme;
 
 @end
