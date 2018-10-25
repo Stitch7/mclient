@@ -19,9 +19,9 @@ PODS:
   - DGActivityIndicatorView (2.1.1)
   - EDSunriseSet (1.0)
   - FLAnimatedImage (1.0.12)
-  - HockeySDK (5.1.2):
-    - HockeySDK/DefaultLib (= 5.1.2)
-  - HockeySDK/DefaultLib (5.1.2)
+  - HockeySDK (5.1.4):
+    - HockeySDK/DefaultLib (= 5.1.4)
+  - HockeySDK/DefaultLib (5.1.4)
   - ImgurSession (1.3):
     - AFNetworking (= 3.1.0)
   - Inapptics (2.0.4)
@@ -73,10 +73,10 @@ DEPENDENCIES:
   - DGActivityIndicatorView
   - EDSunriseSet (from `https://github.com/Tricertops/EDSunriseSet`)
   - HockeySDK
-  - ImgurSession (from `https://github.com/mileswd/ImgurSession`)
+  - ImgurSession (from `https://github.com/Stitch7/ImgurSession`)
   - Inapptics
   - MGSwipeTableCell
-  - MRProgress
+  - MRProgress (from `https://github.com/Stitch7/MRProgress`)
   - SwiftyGiphy (from `https://github.com/Stitch7/SwiftyGiphy`)
   - Valet (~> 2.4.2)
 
@@ -90,7 +90,6 @@ SPEC REPOS:
     - HockeySDK
     - Inapptics
     - MGSwipeTableCell
-    - MRProgress
     - NSTimer-Blocks
     - ObjectMapper
     - SDWebImage
@@ -100,7 +99,9 @@ EXTERNAL SOURCES:
   EDSunriseSet:
     :git: https://github.com/Tricertops/EDSunriseSet
   ImgurSession:
-    :git: https://github.com/mileswd/ImgurSession
+    :git: https://github.com/Stitch7/ImgurSession
+  MRProgress:
+    :git: https://github.com/Stitch7/MRProgress
   SwiftyGiphy:
     :git: https://github.com/Stitch7/SwiftyGiphy
 
@@ -109,8 +110,11 @@ CHECKOUT OPTIONS:
     :commit: 1cd2555087ac73098ea10cb8c029861826197b97
     :git: https://github.com/Tricertops/EDSunriseSet
   ImgurSession:
-    :commit: d4c306545f90b79d58f5422e394258e7009313c7
-    :git: https://github.com/mileswd/ImgurSession
+    :commit: 3086cdec08cabe940a23fd124fe7ae4607add7ac
+    :git: https://github.com/Stitch7/ImgurSession
+  MRProgress:
+    :commit: ca7ce0f2c58592f10e7a90d3258d2c06a9f3e2b0
+    :git: https://github.com/Stitch7/MRProgress
   SwiftyGiphy:
     :commit: db148170922e6f5cfda0f6b52ef99fd3ff0be47f
     :git: https://github.com/Stitch7/SwiftyGiphy
@@ -122,17 +126,17 @@ SPEC CHECKSUMS:
   DGActivityIndicatorView: ff2c76073d79692f724863c8dd38685866a03cb6
   EDSunriseSet: eae541a8f534b0751deb0a618828667a7382cc70
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
-  HockeySDK: 38b7e2726af1ea86ae97ce4b5de33ab0817e3500
+  HockeySDK: 15afe6bc0a5bfe3a531fd73dbf082095f37dac3b
   ImgurSession: e11a605652cfe8aebfb6a9a4ea5b752654f14e2f
   Inapptics: 0957e8ff6d208c8ce0c8f895791b6d85d69cf878
   MGSwipeTableCell: fb20e983988bde2b8d0df29c2d9e1d8ffd10b74a
-  MRProgress: 16de7cc9f347e8846797a770db102a323fe7ef09
+  MRProgress: b0c2bcff94ee700ac2aea810e1f51720c059cbd3
   NSTimer-Blocks: 88faf9aef5f250ead087f3f67ae642517083bf36
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
   SwiftyGiphy: f91fb774668fa491b6659de4b413c470cbafe534
   Valet: 14463ef24fab8fd5809044ecedb61484b799fdd6
 
-PODFILE CHECKSUM: e97201ab615d0f0acc3c02d801df47cbcb546cf8
+PODFILE CHECKSUM: 36f38b5bb0e674ebd45bed9ac945f73b5d1049d2
 
 COCOAPODS: 1.6.0.beta.2
