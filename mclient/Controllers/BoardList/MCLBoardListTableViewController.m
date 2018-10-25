@@ -430,19 +430,20 @@
 
     [favoriteCell hideSwipeAnimated:YES];
 
-    [self.favorites removeObjectAtIndex:favoriteCell.index];
-    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:favoriteCell.index inSection:1]]
-                          withRowAnimation:UITableViewRowAnimationLeft];
-    [self.tableView reloadData];
-    [self.bag.soundEffectPlayer playRemoveThreadFromFavoritesSound];
     MCLFavoriteThreadToggleRequest *favoriteThreadToggleRequest = [[MCLFavoriteThreadToggleRequest alloc] initWithClient:self.bag.httpClient
                                                                                                                   thread:thread];
     favoriteThreadToggleRequest.forceRemove = YES;
     [favoriteThreadToggleRequest loadWithCompletionHandler:^(NSError *error, NSArray *result) {
-        // TODO: - error handling
         if (error) {
+            [self presentError:error];
             return;
         }
+
+        [self.favorites removeObjectAtIndex:favoriteCell.index];
+        [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:favoriteCell.index inSection:MCLBoardListSectionFavorites]]
+                              withRowAnimation:UITableViewRowAnimationLeft];
+        [self.tableView reloadData];
+        [self.bag.soundEffectPlayer playRemoveThreadFromFavoritesSound];
 
         [[NSNotificationCenter defaultCenter] postNotificationName:MCLFavoritedChangedNotification
                                                             object:self
