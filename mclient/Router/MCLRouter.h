@@ -21,8 +21,6 @@
 @property (strong, nonatomic) UINavigationController *masterNavigationController;
 @property (strong, nonatomic) UINavigationController *detailNavigationController;
 @property (strong, nonatomic) UINavigationController *modalNavigationController;
-@property (strong, nonatomic) UIViewController *masterViewController;
-@property (strong, nonatomic) UIViewController *detailViewController;
 
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
 

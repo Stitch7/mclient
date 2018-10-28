@@ -151,15 +151,14 @@
 
     MCLMessageListRequest *messageListRequest = [[MCLMessageListRequest alloc] initWithClient:self.bag.httpClient
                                                                                        thread:thread];
-    self.detailViewController = [[MCLMessageListLoadingViewController alloc] initWithBag:self.bag
-                                                                                 request:messageListRequest
-                                                                   contentViewController:messageListVC];
-    self.detailViewController.navigationItem.titleView = [messageListVC titleLabel];
-
-    if (self.splitViewController.collapsed) {
-        [masterNavigationController pushViewController:self.detailViewController animated:YES];
+    MCLMessageListLoadingViewController *messageListLoadingVC = [[MCLMessageListLoadingViewController alloc] initWithBag:self.bag
+                                                                                                                 request:messageListRequest
+                                                                                                   contentViewController:messageListVC];
+    if (self.splitViewController.isCollapsed) {
+        [masterNavigationController pushViewController:messageListLoadingVC animated:YES];
     } else {
-        [self.detailNavigationController pushViewController:self.detailViewController animated:YES];
+        messageListLoadingVC.navigationItem.titleView = [messageListVC titleLabel];
+        [self.detailNavigationController pushViewController:messageListLoadingVC animated:YES];
     }
 
     return messageListVC;
@@ -184,10 +183,7 @@
     assert(message.thread != nil);
     assert(message.thread.board != nil);
 
-    return [self pushToThread:message.thread
-              forceDetailPush:NO
- onMasterNavigationController:masterNavigationController
-              jumpToMessageId:message.messageId];
+    return [self pushToThread:message.thread forceDetailPush:NO onMasterNavigationController:masterNavigationController jumpToMessageId:message.messageId];
 }
 
 @end

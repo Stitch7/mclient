@@ -33,7 +33,6 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 
 @interface MCLThreadListTableViewController ()
 
-@property (strong, nonatomic) MCLMessageListViewController *detailViewController;
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) UISearchController *searchController;
 @property (strong, nonatomic) NSTimer *searchTimer;
@@ -70,8 +69,6 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
     [super viewDidLoad];
 
     [self configureTableView];
-
-    self.detailViewController.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated

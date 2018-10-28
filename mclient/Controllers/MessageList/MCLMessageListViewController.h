@@ -23,7 +23,7 @@
 @interface MCLMessageListViewController : UIViewController <MCLLoadingViewControllerDelegate, MCLComposeMessageViewControllerDelegate>
 
 @property (strong, nonatomic) id <MCLDependencyBag> bag;
-@property (strong) id <MCLMessageListDelegate> delegate; // strong needed because otherwise delegate gets released on iPad. TODO: check if this is not a memory leak
+@property (weak, nonatomic) id <MCLMessageListDelegate> delegate;
 @property (weak, nonatomic) MCLLoadingViewController *loadingViewController;
 @property (strong, nonatomic) NSMutableArray *messages;
 @property (strong, nonatomic) MCLBoard *board;

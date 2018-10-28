@@ -115,10 +115,6 @@
     windowHandler(launchWindow);
 
     [self.loginManager performLoginWithCompletionHandler:^(NSError *error, BOOL success) {
-        MCLBoardListTableViewController *boardsListVC = (MCLBoardListTableViewController *)self.router.masterViewController.childViewControllers.firstObject;
-        if ([boardsListVC isKindOfClass:[MCLBoardListTableViewController class]]) {
-            [boardsListVC updateVerifyLoginViewWithSuccess:success];
-        }
         [self.router replaceRootWindow:rootWindow];
         windowHandler(rootWindow);
     }];

@@ -52,11 +52,13 @@
     assert(self.delegate != nil);
     
     self.splitViewController = [[MCLSplitViewController alloc] initWithBag:self.bag];
-    self.masterViewController = [self.delegate createMasterViewControllerForRouter:self];
-    self.masterNavigationController = [[UINavigationController alloc] initWithRootViewController:self.masterViewController];
-    self.detailViewController = [self.delegate createDetailViewControllerForRouter:self];
+
+    UIViewController *masterViewController = [self.delegate createMasterViewControllerForRouter:self];
+    self.masterNavigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+
+    UIViewController *detailViewController = [self.delegate createDetailViewControllerForRouter:self];
     self.detailNavigationController = [[MCLDetailNavigationController alloc] initWithBag:self.bag
-                                                                      rootViewController:self.detailViewController];
+                                                                      rootViewController:detailViewController];
 
     NSMutableArray *splitViews = [[NSMutableArray alloc] init];
     [splitViews addObject:self.masterNavigationController];
