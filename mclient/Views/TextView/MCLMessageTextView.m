@@ -161,7 +161,7 @@
         NSString *lowercaseString = [string lowercaseString];
         if ([lowercaseString hasSuffix:@".jpg"] ||
             [lowercaseString hasSuffix:@".gif"] ||
-            [lowercaseString hasSuffix:@""]
+            [lowercaseString hasSuffix:@".png"]
         ) {
             isStringImageUrl = YES;
         }
