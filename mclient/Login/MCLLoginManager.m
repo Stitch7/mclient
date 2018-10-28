@@ -23,7 +23,6 @@ const NSInteger LoginRefreshTreshholdInMinutes = 5;
 
 @property (strong, nonatomic) MCLLogin *login;
 @property (strong, nonatomic) id <MCLDependencyBag> bag;
-@property (strong, nonatomic) NSDate *timeEnteredBackground;
 @property (assign, readwrite) BOOL initialAttempt;
 @property (assign, readwrite) BOOL loginValid;
 
@@ -56,32 +55,14 @@ const NSInteger LoginRefreshTreshholdInMinutes = 5;
 - (void)configureNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidEnterBackground:)
-                                                 name:UIApplicationDidEnterBackgroundNotification
-                                               object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationWillEnterForeground:)
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
 }
 
-- (void)applicationDidEnterBackground:(NSNotification *)notification
-{
-    self.timeEnteredBackground = [[NSDate alloc] init];
-}
-
 - (void)applicationWillEnterForeground:(NSNotification *)notification
 {
-    if (!self.timeEnteredBackground) {
-        return;
-    }
-
-    NSInteger minutesInBackground = [[[NSCalendar currentCalendar] components:NSCalendarUnitMinute
-                                                                     fromDate:self.timeEnteredBackground
-                                                                       toDate:[[NSDate alloc] init]
-                                                                      options:0] minute];
-    if (minutesInBackground >= LoginRefreshTreshholdInMinutes) {
+    if (!self.isLoginValid && !self.login.credentialsAreInvalid) {
         [self performLogin];
     }
 }
