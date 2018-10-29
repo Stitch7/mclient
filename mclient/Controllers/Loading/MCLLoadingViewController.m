@@ -96,6 +96,16 @@ static NSString *kQueueKeyPath = @"operations";
     [self configureNotifications];
 }
 
+- (void)configureNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(themeChanged:)
+                                                 name:MCLThemeChangedNotification
+                                               object:nil];
+}
+
+#pragma mark - Queue observing
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (object == self.queue && [keyPath isEqualToString:kQueueKeyPath] && context == &kQueueOperationsChanged) {
@@ -110,14 +120,6 @@ static NSString *kQueueKeyPath = @"operations";
     }
 }
 
-- (void)configureNotifications
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(themeChanged:)
-                                                 name:MCLThemeChangedNotification
-                                               object:nil];
-}
-
 #pragma mark - UIViewController life cycle
 
 - (void)viewWillAppear:(BOOL)animated
@@ -127,7 +129,7 @@ static NSString *kQueueKeyPath = @"operations";
     [self toggleToolbarVisibility:YES];
 }
 
-#pragma mark - Private
+#pragma mark - UI Setup
 
 - (void)toggleToolbarVisibility:(BOOL)viewControllerIsOnScreen
 {
@@ -218,6 +220,8 @@ static NSString *kQueueKeyPath = @"operations";
     [self updateToolbar];
 }
 
+#pragma mark - Content View Controller
+
 - (void)addContentViewContoller:(UIViewController *)contentViewController
 {
     contentViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
@@ -232,6 +236,8 @@ static NSString *kQueueKeyPath = @"operations";
     [self updateNavigationController];
     [self updateRefreshControl];
 }
+
+#pragma mark - Error View Controller
 
 - (void)addErrorViewControllerWithType:(NSUInteger)type error:(NSError *)error
 {
@@ -253,6 +259,18 @@ static NSString *kQueueKeyPath = @"operations";
     [self.errorViewController didMoveToParentViewController:self];
 }
 
+- (void)showErrorOfType:(NSUInteger)type error:(NSError *)error
+{
+    if (self.state == kMCLLoadingStateError) {
+        return;
+    }
+
+    self.state = kMCLLoadingStateError;
+    [self stopLoading];
+
+    [self addErrorViewControllerWithType:type error:error];
+}
+
 - (void)removeErrorViewController
 {
     [self.errorViewController.view removeFromSuperview];
@@ -265,9 +283,19 @@ static NSString *kQueueKeyPath = @"operations";
     [self load];
 }
 
+- (BOOL)noInternetConnectionAvailable
+{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+
+    return networkStatus == NotReachable;
+}
+
+#pragma mark - Data loading
+
 - (void)load
 {
-    if ([self noNetworkConnectionAvailable]) {
+    if ([self noInternetConnectionAvailable]) {
         [self showErrorOfType:kMCLErrorTypeNoInternetConnection error:nil];
         return;
     }
@@ -339,26 +367,6 @@ static NSString *kQueueKeyPath = @"operations";
 - (void)stopLoading
 {
     [self.loadingView removeFromSuperview];
-}
-
-- (void)showErrorOfType:(NSUInteger)type error:(NSError *)error
-{
-    if (self.state == kMCLLoadingStateError) {
-        return;
-    }
-
-    self.state = kMCLLoadingStateError;
-    [self stopLoading];
-
-    [self addErrorViewControllerWithType:type error:error];
-}
-
-- (BOOL)noNetworkConnectionAvailable
-{
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-
-    return networkStatus == NotReachable;
 }
 
 #pragma mark - Notifications
