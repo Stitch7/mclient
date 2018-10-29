@@ -280,12 +280,15 @@ static NSString *kQueueKeyPath = @"operations";
 
                 if ((error && error.code != MCLHTTPErrorCodeInvalidLogin) || !data) {
                     [self showErrorOfType:kMCLErrorTypeGeneral error:error];
+                    [op complete];
                     return;
                 }
 
-                self.state = kMCLLoadingStateDisplayContent;
+                if (self.state != kMCLLoadingStateDisplayContent) {
+                    [self addContentViewContoller:self.contentViewController];
+                    self.state = kMCLLoadingStateDisplayContent;
+                }
 
-                [self addContentViewContoller:self.contentViewController];
                 if ([self.delegate respondsToSelector:@selector(loadingViewController:hasRefreshedWithData:forKey:)]) {
                     [self.delegate loadingViewController:nil hasRefreshedWithData:data forKey:key];
                 }
@@ -299,6 +302,9 @@ static NSString *kQueueKeyPath = @"operations";
 
 - (void)refresh
 {
+    if ([self.delegate respondsToSelector:@selector(refreshControl)]) {
+        [self.delegate.refreshControl beginRefreshing];
+    }
     [self load];
 }
 
@@ -309,7 +315,9 @@ static NSString *kQueueKeyPath = @"operations";
     }
 
     if ([self.delegate.refreshControl isRefreshing]) {
-        [self.bag.soundEffectPlayer playReloadSound];
+        if (self.state != kMCLLoadingStateError) {
+            [self.bag.soundEffectPlayer playReloadSound];
+        }
         [self.delegate.refreshControl endRefreshing];
     }
 }
