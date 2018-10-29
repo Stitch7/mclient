@@ -3279,7 +3279,7 @@
 					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
 					"INAPPTICS_TOKEN=\\@\\\"$(INAPPTICS_TOKEN)\\\"",
 				);
-				HOCKEYAPP_ID = "";
+				HOCKEYAPP_ID = cadfbd990cdd47cbb509767df3cf32f3;
 				INAPPTICS_TOKEN = 961fed70d08611e8a2b11f53263fef55;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-store-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -3314,7 +3314,7 @@
 					"HOCKEYAPP_ID=\\@\\\"$(HOCKEYAPP_ID)\\\"",
 					"INAPPTICS_TOKEN=\\@\\\"$(INAPPTICS_TOKEN)\\\"",
 				);
-				HOCKEYAPP_ID = "";
+				HOCKEYAPP_ID = cadfbd990cdd47cbb509767df3cf32f3;
 				INAPPTICS_TOKEN = 961fed70d08611e8a2b11f53263fef55;
 				INFOPLIST_FILE = "mclient/Supporting Files/Info-plist/mclient-store-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
