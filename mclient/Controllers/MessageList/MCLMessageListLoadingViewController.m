@@ -35,6 +35,8 @@
 
 - (void)configureNotifications
 {
+    [super configureNotifications];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(threadViewStyleChanged:)
                                                  name:MCLThreadViewStyleChangedNotification

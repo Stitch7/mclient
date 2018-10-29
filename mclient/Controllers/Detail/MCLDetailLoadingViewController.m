@@ -44,6 +44,8 @@
 
 - (void)configureNotifications
 {
+    [super configureNotifications];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(loginStateDidChanged:)
                                                  name:MCLLoginStateDidChangeNotification
