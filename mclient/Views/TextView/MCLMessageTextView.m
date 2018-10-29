@@ -182,19 +182,16 @@
 {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     NSString *pasteboardString = pasteboard.string;
-
-    if ([self isStringUrl:pasteboardString]) {
-        NSString *format = @"[%@]";
-        if ([self isStringImageUrl:pasteboardString]) {
-            format = @"[img:%@]";
-        }
-
-        pasteboard.string = [NSString stringWithFormat:format, pasteboardString];
+    if (!pasteboardString) {
+        return;
     }
 
-    [super paste:sender];
+    if ([self isStringUrl:pasteboardString]) {
+        NSString *format = [self isStringImageUrl:pasteboardString] ? @"[img:%@]" : @"[%@]";
+        pasteboardString = [NSString stringWithFormat:format, pasteboardString];
+    }
 
-    pasteboard.string = pasteboardString;
+    [self insertText:pasteboardString];
 }
 
 - (void)formatSelectionBold:(id)sender
