@@ -102,13 +102,10 @@
     BOOL canPerformAction = [super canPerformAction:action withSender:sender];
 
     if (action == @selector(paste:) ||
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wundeclared-selector"
-        action == @selector(_promptForReplace:) ||
-        action == @selector(_lookup:) ||
-        action == @selector(_share:) ||
-        action == @selector(_define:)
-#pragma clang diagnostic pop
+        action == NSSelectorFromString(@"_promptForReplace:") ||
+        action == NSSelectorFromString(@"_lookup:") ||
+        action == NSSelectorFromString(@"_share:") ||
+        action == NSSelectorFromString(@"_define:")
     ) {
         canPerformAction = canPerformAction && self.menuItemsSubmenuFormatTextActive == NO;
     }
