@@ -259,11 +259,6 @@
     [self showTextViewCaretPosition:textView];
 }
 
-- (void)textViewDidChangeSelection:(UITextView *)textView
-{
-    [self showTextViewCaretPosition:textView];
-}
-
 - (void)showTextViewCaretPosition:(UITextView *)textView
 {
     CGRect caretRect = [textView caretRectForPosition:self.selectedTextRange.end];
