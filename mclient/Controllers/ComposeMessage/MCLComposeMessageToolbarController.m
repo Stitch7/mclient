@@ -225,7 +225,7 @@
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
     NSData *imageData = UIImageJPEGRepresentation(image, 0.7f);
 
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    self.parentViewController.bag.application.networkActivityIndicatorVisible = YES;
 
     [IMGImageRequest uploadImageWithData:imageData
                                    title:self.parentViewController.message.subject
@@ -255,7 +255,7 @@
 
 - (void)dissmissProgressViewWithSuccess:(BOOL)success completionHandler:(void (^)(void))completion
 {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    self.parentViewController.bag.application.networkActivityIndicatorVisible = NO;
 
     if (success) {
         self.progressView.mode = MRProgressOverlayViewModeCheckmark;

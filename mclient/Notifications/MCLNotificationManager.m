@@ -38,7 +38,7 @@
     if ([self backgroundNotificationsEnabled]) {
         [self registerBackgroundNotifications];
     } else {
-        [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
+        [self.bag.application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
     }
 
     return self;
@@ -48,17 +48,16 @@
 
 - (void)registerBackgroundNotifications
 {
-    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    [self.bag.application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
 
     UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
-    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    [self.bag.application registerUserNotificationSettings:settings];
 }
 
 - (BOOL)backgroundNotificationsRegistered
 {
-    UIUserNotificationSettings *userNotificationSettings = [UIApplication sharedApplication].currentUserNotificationSettings;
-    return userNotificationSettings.types != UIUserNotificationTypeNone;
+    return self.bag.application.currentUserNotificationSettings.types != UIUserNotificationTypeNone;
 }
 
 - (BOOL)backgroundNotificationsEnabled
@@ -74,7 +73,7 @@
     notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"Response from %@:\n%@", nil), response.username, response.subject];
     notification.soundName = @"notification.caf";
 
-    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+    [self.bag.application presentLocalNotificationNow:notification];
 }
 
 - (void)notificateAboutNewResponsesWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler

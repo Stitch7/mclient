@@ -35,6 +35,7 @@
 
 @implementation MCLAppDependencyBag
 
+@synthesize application;
 @synthesize features;
 @synthesize loginManager;
 @synthesize httpClient;
@@ -61,6 +62,7 @@
 
 - (void)configure
 {
+    self.application = [UIApplication sharedApplication];
     self.features = [[MCLFeatures alloc] initWithStage:FEATURE_STAGE];
 
     [self configureCrashReporter];

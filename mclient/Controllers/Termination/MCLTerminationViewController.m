@@ -37,7 +37,6 @@
     if (!self) return nil;
 
     self.bag = bag;
-    self.application = [UIApplication sharedApplication];
 
     return self;
 }
@@ -74,12 +73,12 @@
 
 - (IBAction)appStoreButtonPressed:(id)sender
 {
-    [self.application openURL:[NSURL URLWithString:kAppStoreUrl]];
+    [self.bag.application openURL:[NSURL URLWithString:kAppStoreUrl]];
 }
 
 - (IBAction)quitButtonPressed:(id)sender
 {
-    [self.application quit];
+    [self.bag.application quit];
 }
 
 @end

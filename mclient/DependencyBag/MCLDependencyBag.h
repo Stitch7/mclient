@@ -18,6 +18,7 @@
 
 @protocol MCLDependencyBag <NSObject>
 
+@property (strong, nonatomic) UIApplication *application;
 @property (strong, nonatomic) MCLFeatures *features;
 @property (strong, nonatomic) MCLLoginManager *loginManager;
 @property (strong, nonatomic) MCLRouter *router;

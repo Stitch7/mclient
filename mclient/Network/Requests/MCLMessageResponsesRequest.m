@@ -126,7 +126,7 @@ NSString * const MCLUnreadResponsesFoundNotification = @"MCLUnreadResponsesFound
 
                              MCLResponseContainer *responseContainer = [self fetchedData:json];
                              NSInteger numberOfUnreadResponses = [responseContainer numberOfUnreadResponses];
-                             [UIApplication sharedApplication].applicationIconBadgeNumber = numberOfUnreadResponses;
+                             self.bag.application.applicationIconBadgeNumber = numberOfUnreadResponses;
                              NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                                        responseContainer.responses, @"responses",
                                                        [NSNumber numberWithInteger:numberOfUnreadResponses], @"numberOfUnreadResponses", nil];

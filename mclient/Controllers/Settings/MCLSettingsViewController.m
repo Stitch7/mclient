@@ -258,11 +258,10 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
     aboutLabel.textColor = [UIColor darkGrayColor];
 
     NSString *aboutText = @"Version %@ (%@)\nCopyright © 2014-%@ Christopher Reitz aka Stitch";
-    UIApplication *app = [UIApplication sharedApplication];
     NSDateFormatter *yearFormatter = [[NSDateFormatter alloc] init];
     [yearFormatter setDateFormat:@"yyyy"];
     NSString *yearString = [yearFormatter stringFromDate:[NSDate date]];
-    aboutLabel.text = [NSString stringWithFormat:aboutText, [app version], [app buildNumber], yearString];
+    aboutLabel.text = [NSString stringWithFormat:aboutText, [self.bag.application version], [self.bag.application buildNumber], yearString];
 
     self.tableView.tableFooterView = aboutLabel;
     [aboutLabel setNeedsLayout];

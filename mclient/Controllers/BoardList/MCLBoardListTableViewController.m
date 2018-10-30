@@ -149,7 +149,7 @@
 
 - (void)updateResponsesButtonItemBadgeValueFromApplicationIconBadgeNumber
 {
-    self.responsesButtonItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)[UIApplication sharedApplication].applicationIconBadgeNumber];
+    self.responsesButtonItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)self.bag.application.applicationIconBadgeNumber];
 }
 
 - (void)configurePrivateMessagesButton
