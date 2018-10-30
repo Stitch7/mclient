@@ -6,6 +6,7 @@
 //  See LICENSE file in the project root for full license information.
 //
 
+extern NSString *const MCLFeatureTermination;
 extern NSString *const MCLFeatureCrashReporter;
 extern NSString *const MCLFeatureStoreReview;
 extern NSString *const MCLFeatureKillFileThreads;

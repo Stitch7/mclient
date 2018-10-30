@@ -12,5 +12,6 @@
 - (NSString *)buildNumber;
 - (NSInteger)incrementApplicationIconBadgeNumber;
 - (NSInteger)decrementApplicationIconBadgeNumber;
+- (void)quit;
 
 @end

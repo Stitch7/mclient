@@ -39,4 +39,16 @@
     return self.applicationIconBadgeNumber;
 }
 
+- (void)quit
+{
+    // Press home button programmatically
+    [self performSelector:@selector(suspend)];
+
+    // Wait 2 seconds while app is going background
+    [NSThread sleepForTimeInterval:2.0];
+
+    // Exit app when app is in background
+    exit(0);
+}
+
 @end

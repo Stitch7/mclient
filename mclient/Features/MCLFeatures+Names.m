@@ -8,6 +8,7 @@
 
 #import "MCLFeatures+Names.h"
 
+NSString * const MCLFeatureTermination = @"Termination";
 NSString * const MCLFeatureCrashReporter = @"CrashReporter";
 NSString * const MCLFeatureStoreReview = @"StoreReview";
 NSString * const MCLFeatureKillFileThreads = @"KillFileThreads";

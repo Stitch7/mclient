@@ -47,6 +47,14 @@
 		3039748D1E16A1F4003C8BC9 /* MCLMessageListWidmannStyleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3039748C1E16A1F4003C8BC9 /* MCLMessageListWidmannStyleTableViewCell.m */; };
 		303974901E16B083003C8BC9 /* UIView+addConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 3039748F1E16B083003C8BC9 /* UIView+addConstraints.m */; };
 		303C59521F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 303C59511F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.m */; };
+		3042784A2188548B00CD9AF8 /* MCLTerminationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304278482188548B00CD9AF8 /* MCLTerminationViewController.m */; };
+		3042784B2188548B00CD9AF8 /* MCLTerminationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304278482188548B00CD9AF8 /* MCLTerminationViewController.m */; };
+		3042784C2188548B00CD9AF8 /* MCLTerminationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304278482188548B00CD9AF8 /* MCLTerminationViewController.m */; };
+		3042784D2188548B00CD9AF8 /* MCLTerminationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304278482188548B00CD9AF8 /* MCLTerminationViewController.m */; };
+		3042784E2188548B00CD9AF8 /* MCLTerminationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 304278492188548B00CD9AF8 /* MCLTerminationViewController.xib */; };
+		3042784F2188548B00CD9AF8 /* MCLTerminationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 304278492188548B00CD9AF8 /* MCLTerminationViewController.xib */; };
+		304278502188548B00CD9AF8 /* MCLTerminationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 304278492188548B00CD9AF8 /* MCLTerminationViewController.xib */; };
+		304278512188548B00CD9AF8 /* MCLTerminationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 304278492188548B00CD9AF8 /* MCLTerminationViewController.xib */; };
 		304373431FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304373411FF55D05007AF151 /* MCLDetailLoadingViewController.m */; };
 		304373441FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304373411FF55D05007AF151 /* MCLDetailLoadingViewController.m */; };
 		304373451FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304373411FF55D05007AF151 /* MCLDetailLoadingViewController.m */; };
@@ -686,6 +694,9 @@
 		3039748F1E16B083003C8BC9 /* UIView+addConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+addConstraints.m"; sourceTree = "<group>"; };
 		303C59501F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLThreadIdForMessageRequest.h; sourceTree = "<group>"; };
 		303C59511F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLThreadIdForMessageRequest.m; sourceTree = "<group>"; };
+		304278472188548B00CD9AF8 /* MCLTerminationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLTerminationViewController.h; sourceTree = "<group>"; };
+		304278482188548B00CD9AF8 /* MCLTerminationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLTerminationViewController.m; sourceTree = "<group>"; };
+		304278492188548B00CD9AF8 /* MCLTerminationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MCLTerminationViewController.xib; sourceTree = "<group>"; };
 		304373411FF55D05007AF151 /* MCLDetailLoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLDetailLoadingViewController.m; sourceTree = "<group>"; };
 		304373421FF55D06007AF151 /* MCLDetailLoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLDetailLoadingViewController.h; sourceTree = "<group>"; };
 		304D47FD21747CAA00300D42 /* MCLTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLTextField.h; sourceTree = "<group>"; };
@@ -1168,6 +1179,16 @@
 			path = SplitView;
 			sourceTree = "<group>";
 		};
+		304278522188549000CD9AF8 /* Termination */ = {
+			isa = PBXGroup;
+			children = (
+				304278472188548B00CD9AF8 /* MCLTerminationViewController.h */,
+				304278482188548B00CD9AF8 /* MCLTerminationViewController.m */,
+				304278492188548B00CD9AF8 /* MCLTerminationViewController.xib */,
+			);
+			path = Termination;
+			sourceTree = "<group>";
+		};
 		304373401FF51781007AF151 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -1344,6 +1365,7 @@
 				30D6643E1F266F6800E72025 /* Profile */,
 				30D6643F1F266F7100E72025 /* Responses */,
 				30D6643D1F266F5900E72025 /* Settings */,
+				304278522188549000CD9AF8 /* Termination */,
 				30D664411F266F8100E72025 /* ThreadList */,
 			);
 			path = Controllers;
@@ -1969,6 +1991,7 @@
 				301203541E03704500B06FF6 /* MCLMessageListFrameStyleView.xib in Resources */,
 				3012032E1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
 				30EA21041F0EAD210064A0A3 /* Profile.storyboard in Resources */,
+				3042784F2188548B00CD9AF8 /* MCLTerminationViewController.xib in Resources */,
 				30C0871B20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */,
 				30DB7F871F8D688800766501 /* features-development.plist in Resources */,
 				30DB7F8A1F8D6A0E00766501 /* features-store.plist in Resources */,
@@ -2011,6 +2034,7 @@
 				306FC8751F93A39F001EB7E9 /* MCLMessageListFrameStyleView.xib in Resources */,
 				306FC8761F93A39F001EB7E9 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
 				306FC8781F93A39F001EB7E9 /* Profile.storyboard in Resources */,
+				3042784E2188548B00CD9AF8 /* MCLTerminationViewController.xib in Resources */,
 				30C0871A20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */,
 				306FC8791F93A39F001EB7E9 /* features-development.plist in Resources */,
 				306FC87A1F93A39F001EB7E9 /* features-store.plist in Resources */,
@@ -2045,6 +2069,7 @@
 				3090CB201FA7ED1E0085C9AF /* MCLMessageListFrameStyleView.xib in Resources */,
 				3090CB211FA7ED1E0085C9AF /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
 				3090CB231FA7ED1E0085C9AF /* Profile.storyboard in Resources */,
+				304278512188548B00CD9AF8 /* MCLTerminationViewController.xib in Resources */,
 				30C0871D20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */,
 				3090CB241FA7ED1E0085C9AF /* features-development.plist in Resources */,
 				3090CB251FA7ED1E0085C9AF /* features-store.plist in Resources */,
@@ -2079,6 +2104,7 @@
 				3090CB9D1FA89A5C0085C9AF /* MCLMessageListFrameStyleView.xib in Resources */,
 				3090CB9E1FA89A5C0085C9AF /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
 				3090CBA01FA89A5C0085C9AF /* Profile.storyboard in Resources */,
+				304278502188548B00CD9AF8 /* MCLTerminationViewController.xib in Resources */,
 				30C0871C20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */,
 				3090CBA11FA89A5C0085C9AF /* features-development.plist in Resources */,
 				3090CBA21FA89A5C0085C9AF /* features-store.plist in Resources */,
@@ -2467,6 +2493,7 @@
 				305208971F43094D00D3178C /* MCLModalPresentationController.m in Sources */,
 				308346211E9E8E5400C11033 /* MCLThreadKillfileViewController.m in Sources */,
 				30D214611F15561B00C77563 /* MCLSplitViewController.m in Sources */,
+				3042784B2188548B00CD9AF8 /* MCLTerminationViewController.m in Sources */,
 				3070D33A207A948000F42BFF /* MCLLicense.m in Sources */,
 				306EA6E819D5992F00BB4DC8 /* MCLMServiceErrorView.m in Sources */,
 				305DD82819A63517006514BD /* MCLAppDelegate.m in Sources */,
@@ -2592,6 +2619,7 @@
 				306FC8341F93A39F001EB7E9 /* MCLSearchThreadsRequest.m in Sources */,
 				306FC8351F93A39F001EB7E9 /* MCLLogoLabel.m in Sources */,
 				306FC8361F93A39F001EB7E9 /* MCLThreadListRequest.m in Sources */,
+				3042784A2188548B00CD9AF8 /* MCLTerminationViewController.m in Sources */,
 				3070D339207A948000F42BFF /* MCLLicense.m in Sources */,
 				306FC8371F93A39F001EB7E9 /* MCLMessageListRequest.m in Sources */,
 				306FC8381F93A39F001EB7E9 /* MCLModalPresentationController.m in Sources */,
@@ -2709,6 +2737,7 @@
 				3090CAE31FA7ED1E0085C9AF /* MCLModalPresentationController.m in Sources */,
 				3090CAE41FA7ED1E0085C9AF /* MCLThreadKillfileViewController.m in Sources */,
 				3090CAE51FA7ED1E0085C9AF /* MCLSplitViewController.m in Sources */,
+				3042784D2188548B00CD9AF8 /* MCLTerminationViewController.m in Sources */,
 				3070D33C207A948000F42BFF /* MCLLicense.m in Sources */,
 				3090CAE61FA7ED1E0085C9AF /* MCLMServiceErrorView.m in Sources */,
 				3090CAE81FA7ED1E0085C9AF /* MCLAppDelegate.m in Sources */,
@@ -2826,6 +2855,7 @@
 				3090CB601FA89A5C0085C9AF /* MCLModalPresentationController.m in Sources */,
 				3090CB611FA89A5C0085C9AF /* MCLThreadKillfileViewController.m in Sources */,
 				3090CB621FA89A5C0085C9AF /* MCLSplitViewController.m in Sources */,
+				3042784C2188548B00CD9AF8 /* MCLTerminationViewController.m in Sources */,
 				3070D33B207A948000F42BFF /* MCLLicense.m in Sources */,
 				3090CB631FA89A5C0085C9AF /* MCLMServiceErrorView.m in Sources */,
 				3090CB651FA89A5C0085C9AF /* MCLAppDelegate.m in Sources */,

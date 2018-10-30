@@ -13,6 +13,7 @@
 #import "MCLThemeManager.h"
 #import "MCLSplitViewController.h"
 #import "MCLLaunchViewController.h"
+#import "MCLTerminationViewController.h"
 #import "MCLDetailNavigationController.h"
 
 
@@ -117,6 +118,14 @@
     MCLLaunchViewController *launchVC = [[MCLLaunchViewController alloc] initWithLaunchViewController:storyboardLaunchVC];
 
     return [self makeWindowWithViewController:launchVC];
+}
+
+- (UIWindow *)makeTerminationWindow
+{
+    [self configureIfNecessary];
+    MCLTerminationViewController *terminationVC = [[MCLTerminationViewController alloc] initWithBag:self.bag];
+
+    return [self makeWindowWithViewController:terminationVC];
 }
 
 - (UIWindow *)makeRootWindow

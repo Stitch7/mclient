@@ -110,6 +110,12 @@
 
 - (void)launchRootWindow:(void (^)(UIWindow *window))windowHandler
 {
+    if ([self.features isFeatureWithNameEnabled:MCLFeatureTermination]) {
+        UIWindow *terminationWindow = [self.router makeTerminationWindow];
+        windowHandler(terminationWindow);
+        return;
+    }
+
     UIWindow *rootWindow = [self.router makeRootWindow];
     UIWindow *launchWindow = [self.router makeLaunchWindow];
     windowHandler(launchWindow);
