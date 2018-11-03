@@ -159,13 +159,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     id <MCLTheme> currenTheme = self.bag.themeManager.currentTheme;
+    MCLMessageListFrameStyleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MCLMessageListFrameStyleTableViewCellIdentifier
+                                                                                  forIndexPath:indexPath];
+
     MCLMessage *message = [self messageForIndexPath:indexPath];
+    if (!message) {
+        return cell;
+    }
     message.board = self.board;
     message.boardId = self.board.boardId;
     message.thread = self.thread;
-
-    MCLMessageListFrameStyleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MCLMessageListFrameStyleTableViewCellIdentifier
-                                                                                  forIndexPath:indexPath];
 
     [cell setBoardId:self.board.boardId];
     [cell setMessageId:message.messageId];
@@ -237,10 +240,13 @@
 - (MCLMessage *)messageForIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger i = indexPath.row;
+    if (i >= [self.messages count]) {
+        return nil;
+    }
     MCLMessage *message = self.messages[i];
     message.board = self.board;
     message.thread = self.thread;
-    if (indexPath.row < ([self.messages count] - 1)) {
+    if (i < ([self.messages count] - 1)) {
         message.nextMessage = self.messages[i + 1];
     }
 
@@ -252,6 +258,10 @@
     [self.toolbar deactivateBarButtons];
     MCLMessageListFrameStyleTableViewCell *cell = (MCLMessageListFrameStyleTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     MCLMessage *message = [self messageForIndexPath:indexPath];
+
+    if (!message) {
+        return;
+    }
 
     if (message.text) {
         [self loadMessage:message fromCell:cell];
