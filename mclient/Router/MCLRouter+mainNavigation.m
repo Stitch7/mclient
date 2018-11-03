@@ -74,12 +74,7 @@
     MCLLoadingViewController *loadingVC = [[MCLLoadingViewController alloc] initWithBag:self.bag
                                                                                 request:responsesRequest
                                                                   contentViewController:responsesVC];
-
-    if (self.splitViewController.collapsed) {
-        [self.masterNavigationController pushViewController:loadingVC animated:YES];
-    } else {
-        [self.detailNavigationController pushViewController:loadingVC animated:YES];
-    }
+    [self.masterNavigationController pushViewController:loadingVC animated:YES];
 
     return responsesVC;
 }

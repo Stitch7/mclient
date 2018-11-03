@@ -59,7 +59,7 @@
     if (!self) return nil;
 
     self.bag = bag;
-    [self configure];
+    [self initialize];
 
     return self;
 }
@@ -69,7 +69,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)configure
+- (void)initialize
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(themeChanged:)
@@ -86,6 +86,11 @@
     [super viewDidLoad];
 
     [self configureTableView];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [self.tableView reloadData];
 }
 
 - (void)configureTableView
@@ -211,6 +216,9 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     CGFloat x = 10.0f;
+    if (@available(iOS 11.0, *)) {
+        x += self.view.safeAreaInsets.left;
+    }
     CGFloat height = 25.0f;
     CGFloat width = self.tableView.frame.size.width - x;
     NSDictionary *titleDic = [self.responseContainer.sectionTitles objectForKey:[self.responseContainer.sectionKeys objectAtIndex:section]];
