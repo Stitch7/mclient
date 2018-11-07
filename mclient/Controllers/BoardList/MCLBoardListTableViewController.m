@@ -30,6 +30,9 @@
 #import "MCLThreadTableViewCell.h"
 #import "MCLLogoLabel.h"
 #import "MCLVerifiyLoginView.h"
+#import "MCLNoDataInfo.h"
+#import "MCLNoDataView.h"
+#import "MCLNoDataTableViewCell.h"
 
 
 @interface MCLBoardListTableViewController ()
@@ -43,6 +46,7 @@
 @property (strong, nonatomic) BBBadgeBarButtonItem *privateMessagesButtonItem;
 @property (strong, nonatomic) MCLVerifiyLoginView *verifyLoginView;
 @property (assign, nonatomic) BOOL alreadyAppeared;
+@property (assign, nonatomic) BOOL temporarilyDontShowNoFavoritesView;
 
 @end
 
@@ -58,6 +62,7 @@
     self.bag = bag;
     self.currentTheme = self.bag.themeManager.currentTheme;
     self.alreadyAppeared = NO;
+    self.temporarilyDontShowNoFavoritesView = YES;
     [self configureNotifications];
     [self configureToolbarButtons];
 
@@ -107,6 +112,7 @@
     [super viewDidLoad];
 
     [self configureTableView];
+    [self updateVerifyLoginViewWithSuccess:self.bag.loginManager.isLoginValid];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -241,6 +247,7 @@
             break;
 
         case MCLBoardListSectionFavorites:
+            self.temporarilyDontShowNoFavoritesView = NO;
             self.favorites = [newData mutableCopy];
             break;
     }
@@ -248,35 +255,14 @@
     [self.tableView reloadData];
 }
 
-#pragma mark - Login
-
-- (void)updateLoginStatus
-{
-    if (self.bag.loginManager.isLoginValid) {
-        [self updateVerifyLoginViewWithSuccess:YES];
-    } else {
-        [self.bag.loginManager performLoginWithCompletionHandler:^(NSError *error, BOOL success) {
-            if (error) {
-                [self updateVerifyLoginViewWithSuccess:NO];
-                return;
-            }
-        }];
-    }
-}
-
 #pragma mark - UITableViewDataSource
 
 - (BOOL)noDetailVC
 {
-    return !self.splitViewController || self.bag.router.splitViewController.isCollapsed;
-}
+    BOOL splitNotExist = !self.splitViewController;
+    BOOL splitIsCollapsed = self.bag.router.splitViewController.isCollapsed;
 
-- (BOOL)showFavoritesSection
-{
-    BOOL hasFavorites = [self.favorites count] > 0;
-    BOOL show = [self noDetailVC] && hasFavorites;
-
-    return show;
+    return splitNotExist || splitIsCollapsed;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -310,17 +296,17 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    switch (section) {
-        case MCLBoardListSectionBoards:
-            if ([self noDetailVC]) {
+    if ([self noDetailVC]) {
+        switch (section) {
+            case MCLBoardListSectionBoards:
                 return NSLocalizedString(@"BOARDS", nil);
-            }
-            break;
-        case MCLBoardListSectionFavorites:
-            if ([self showFavoritesSection]) {
-                return NSLocalizedString(@"FAVORITES", nil);
-            }
-            break;
+                break;
+            case MCLBoardListSectionFavorites:
+                if ([self.favorites count] > 0) {
+                    return NSLocalizedString(@"FAVORITES", nil);
+                }
+                break;
+        }
     }
 
     return nil;
@@ -338,8 +324,10 @@
             return [[self boards] count];
             break;
         case MCLBoardListSectionFavorites:
-            if ([self showFavoritesSection]) {
-                return [[self favorites] count];
+            if ([self noDetailVC]) {
+                NSUInteger favoritesCount = [[self favorites] count];
+                NSUInteger minNumberOfCells = self.bag.loginManager.isLoginValid && !self.temporarilyDontShowNoFavoritesView ? 1 : 0;
+                return favoritesCount > 0 ? favoritesCount : minNumberOfCells;
             }
             break;
     }
@@ -368,6 +356,14 @@
 
 - (UITableViewCell *)favoriteCellForRowIndexPath:(NSIndexPath *)indexPath
 {
+    if ([self.favorites count] == 0) {
+        MCLNoDataInfo *info = [MCLNoDataInfo infoForNoFavoritesInfo:self.bag.settings];
+        MCLNoDataView *noDataView = [[MCLNoDataView alloc] initWithInfo:info parentViewController:self];
+        MCLNoDataTableViewCell *cell = [[MCLNoDataTableViewCell alloc] initWithNoDataView:noDataView];
+
+        return cell;
+    }
+
     MCLThreadTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:MCLThreadTableViewCellIdentifier];
     cell.index = indexPath.row;
     cell.loginManager = self.bag.loginManager;
@@ -439,9 +435,11 @@
             return;
         }
 
+        self.temporarilyDontShowNoFavoritesView = YES;
         [self.favorites removeObjectAtIndex:favoriteCell.index];
         [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:favoriteCell.index inSection:MCLBoardListSectionFavorites]]
                               withRowAnimation:UITableViewRowAnimationLeft];
+        self.temporarilyDontShowNoFavoritesView = NO;
         [self.tableView reloadData];
         [self.bag.soundEffectPlayer playRemoveThreadFromFavoritesSound];
 

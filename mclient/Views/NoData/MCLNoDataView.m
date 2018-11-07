@@ -9,9 +9,9 @@
 #import "MCLNoDataView.h"
 
 #import "UIView+addConstraints.h"
+#import "MCLNoDataInfo.h"
+#import "MCLNoDataViewPresentingViewController.h"
 
-NSString * const MCLNoDataViewHelpTitleKey = @"helpTitleKey";
-NSString * const MCLNoDataViewHelpMessageKey = @"helpMessageKey";
 
 @interface MCLNoDataView ()
 
@@ -19,9 +19,8 @@ NSString * const MCLNoDataViewHelpMessageKey = @"helpMessageKey";
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UIButton *helpButton;
 
-@property (strong, nonatomic) NSString *messageText;
-@property (strong, nonatomic) NSDictionary *helpDict;
-@property (weak, nonatomic) UIViewController *parentVC;
+@property (strong, nonatomic) MCLNoDataInfo *info;
+@property (weak, nonatomic) id <MCLNoDataViewPresentingViewController> parentVC;
 
 @end
 
@@ -29,13 +28,12 @@ NSString * const MCLNoDataViewHelpMessageKey = @"helpMessageKey";
 
 #pragma mark - Initializers
 
-- (instancetype)initWithMessage:(NSString *)message help:(NSDictionary *)help parentViewController:(UIViewController *)parentVC
+- (instancetype)initWithInfo:(MCLNoDataInfo *)info parentViewController:(id <MCLNoDataViewPresentingViewController>)parentVC
 {
     self = [super initWithFrame:CGRectZero];
     if (!self) return nil;
 
-    self.messageText = message;
-    self.helpDict = help;
+    self.info = info;
     self.parentVC = parentVC;
 
     [self configureSubviews];
@@ -53,29 +51,45 @@ NSString * const MCLNoDataViewHelpMessageKey = @"helpMessageKey";
     self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView constrainEdgesTo:self];
 
-    self.messageLabel.text = self.messageText;
-    self.messageLabel.textColor = [UIColor darkGrayColor];
+    [self.helpButton addTarget:self action:@selector(helpButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
-    if (self.helpDict) {
-        [self.helpButton addTarget:self action:@selector(helpButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    } else {
-        self.helpButton.hidden = YES;
-    }
+    [self updateVisibility];
 }
 
 #pragma mark - Actions
 
 - (void)helpButtonPressed:(UIButton *)sender
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:self.helpDict[MCLNoDataViewHelpTitleKey]
-                                                                   message:self.helpDict[MCLNoDataViewHelpMessageKey]
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:self.info.helpTitle
+                                                                   message:self.info.helpMessage
                                                             preferredStyle:UIAlertControllerStyleAlert];
+
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"noDataView_hide_noDataView", nil)
+                                              style:UIAlertActionStyleDestructive
+                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                [self.info hide];
+                                                [self.parentVC.tableView reloadData];
+                                            }]];
 
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
                                               style:UIAlertActionStyleDefault
                                             handler:nil]];
 
     [self.parentVC presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark - Public
+
+- (void)updateVisibility
+{
+    if (self.info.isHidden) {
+        self.messageLabel.hidden = YES;
+        self.helpButton.hidden = YES;
+    } else {
+        self.messageLabel.text = self.info.messageText;
+        self.messageLabel.textColor = [UIColor darkGrayColor];
+        self.helpButton.hidden = !self.info.hasHelp;
+    }
 }
 
 @end

@@ -6,11 +6,12 @@
 //  See LICENSE file in the project root for full license information.
 //
 
-extern NSString *const MCLNoDataViewHelpTitleKey;
-extern NSString *const MCLNoDataViewHelpMessageKey;
+@class MCLNoDataInfo;
+@protocol MCLNoDataViewPresentingViewController;
 
 @interface MCLNoDataView : UIView
 
-- (instancetype)initWithMessage:(NSString *)message help:(NSDictionary *)help parentViewController:(UIViewController *)parentVC;
+- (instancetype)initWithInfo:(MCLNoDataInfo *)info parentViewController:(id <MCLNoDataViewPresentingViewController>)parentVC;
+- (void)updateVisibility;
 
 @end

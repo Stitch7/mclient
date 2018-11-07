@@ -23,3 +23,4 @@ NSString * const MCLSettingOpenLinksInSafari = @"openLinksInSafari";
 NSString * const MCLSettingClassicQuoteDesign = @"classicQuoteDesign";
 NSString * const MCLSettingBackgroundNotifications = @"backgroundNotifications";
 NSString * const MCLSettingSoundEffectsEnabled = @"soundEffectsEnabled";
+NSString * const MCLSettingHideFavoritesHint = @"hideFavoritesHint";

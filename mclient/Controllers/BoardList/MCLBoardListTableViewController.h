@@ -11,6 +11,7 @@
 #import "MCLLoadingViewControllerDelegate.h"
 #import "MCLSettingsViewController.h"
 #import "MCLMessageListViewController.h"
+#import "MCLNoDataViewPresentingViewController.h"
 
 // Sections
 typedef NS_ENUM(NSInteger, MCLBoardListSection) {
@@ -20,7 +21,7 @@ typedef NS_ENUM(NSInteger, MCLBoardListSection) {
 
 @protocol MCLDependencyBag;
 
-@interface MCLBoardListTableViewController : UITableViewController <MGSwipeTableCellDelegate, MCLLoadingViewControllerDelegate, MCLMessageListDelegate>
+@interface MCLBoardListTableViewController : UITableViewController <MGSwipeTableCellDelegate, MCLLoadingViewControllerDelegate, MCLMessageListDelegate, MCLNoDataViewPresentingViewController>
 
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
 

@@ -27,10 +27,12 @@
 #import "MCLLogoLabel.h"
 #import "MCLThreadTableViewCell.h"
 #import "MCLThreadListTableViewController.h"
+#import "MCLNoDataViewPresentingViewController.h"
+#import "MCLNoDataInfo.h"
 #import "MCLNoDataView.h"
 
 
-@interface MCLDetailViewController () <UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate>
+@interface MCLDetailViewController () <UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate, MCLNoDataViewPresentingViewController>
 
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) MCLNoDataView *noDataView;
@@ -122,18 +124,13 @@
 
 - (void)configureNoDataView
 {
+    MCLNoDataInfo *noDataInfo;
     if (self.bag.loginManager.isLoginValid) {
-        NSDictionary *help = @{MCLNoDataViewHelpTitleKey: NSLocalizedString(@"favorites_help_title", nil),
-                               MCLNoDataViewHelpMessageKey: NSLocalizedString(@"favorites_help_message", nil)};
-
-        self.noDataView = [[MCLNoDataView alloc] initWithMessage:NSLocalizedString(@"NO FAVORITES", nil)
-                                                            help:help
-                                            parentViewController:self];
+        noDataInfo = [MCLNoDataInfo infoForNoFavoritesInfo:self.bag.settings];
     } else {
-        self.noDataView = [[MCLNoDataView alloc] initWithMessage:NSLocalizedString(@"PLEASE LOGIN TO SEE YOUR FAVORITES", nil)
-                                                            help:nil
-                                            parentViewController:self];
+        noDataInfo = [MCLNoDataInfo infoForLoginToSeeFavoritesInfo:self.bag.settings];
     }
+    self.noDataView = [[MCLNoDataView alloc] initWithInfo:noDataInfo parentViewController:self];
 }
 
 - (void)menuButtonPressed
@@ -214,6 +211,7 @@
     NSInteger favoritesCount = [self.favorites count];
 
     if (favoritesCount == 0) {
+        [self.noDataView updateVisibility];
         self.tableView.backgroundView = self.noDataView;
     } else {
         self.tableView.backgroundView = nil;

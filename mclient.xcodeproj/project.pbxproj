@@ -503,6 +503,10 @@
 		3096481E1EA2508600C16379 /* MCLSoundEffectPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3096481D1EA2508600C16379 /* MCLSoundEffectPlayer.m */; };
 		309648211EA4053E00C16379 /* MCLRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 309648201EA4053E00C16379 /* MCLRouter.m */; };
 		309A1EEE1F76646500EE60C2 /* MCLAppRouterDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 309A1EED1F76646500EE60C2 /* MCLAppRouterDelegate.m */; };
+		309C4C2C218D7CB00016624B /* MCLNoDataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 309C4C2B218D7CB00016624B /* MCLNoDataInfo.m */; };
+		309C4C2D218D7CB00016624B /* MCLNoDataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 309C4C2B218D7CB00016624B /* MCLNoDataInfo.m */; };
+		309C4C2E218D7CB00016624B /* MCLNoDataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 309C4C2B218D7CB00016624B /* MCLNoDataInfo.m */; };
+		309C4C2F218D7CB00016624B /* MCLNoDataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 309C4C2B218D7CB00016624B /* MCLNoDataInfo.m */; };
 		30A1BFAD19B4A8D4002439FE /* MCLSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A1BFAC19B4A8D4002439FE /* MCLSettingsViewController.m */; };
 		30A69ABD204920E300904E73 /* MCLEditTextRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A69ABB204920E300904E73 /* MCLEditTextRequest.m */; };
 		30A69ABE204920E300904E73 /* MCLEditTextRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A69ABB204920E300904E73 /* MCLEditTextRequest.m */; };
@@ -588,6 +592,10 @@
 		30EE8B7C1FC1E481008417F6 /* MCLErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EE8B791FC1E480008417F6 /* MCLErrorViewController.m */; };
 		30EE8B7D1FC1E481008417F6 /* MCLErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EE8B791FC1E480008417F6 /* MCLErrorViewController.m */; };
 		30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */; };
+		30FE7A3F218DEAFD00C39DA4 /* MCLNoDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 30FE7A3E218DEAFD00C39DA4 /* MCLNoDataTableViewCell.m */; };
+		30FE7A40218DEAFD00C39DA4 /* MCLNoDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 30FE7A3E218DEAFD00C39DA4 /* MCLNoDataTableViewCell.m */; };
+		30FE7A41218DEAFD00C39DA4 /* MCLNoDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 30FE7A3E218DEAFD00C39DA4 /* MCLNoDataTableViewCell.m */; };
+		30FE7A42218DEAFD00C39DA4 /* MCLNoDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 30FE7A3E218DEAFD00C39DA4 /* MCLNoDataTableViewCell.m */; };
 		30FF041C2178DDBB00056E04 /* MCLLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30FF041B2178DDBB00056E04 /* MCLLoginManager.m */; };
 		30FF041D2178DDBB00056E04 /* MCLLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30FF041B2178DDBB00056E04 /* MCLLoginManager.m */; };
 		30FF041E2178DDBB00056E04 /* MCLLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30FF041B2178DDBB00056E04 /* MCLLoginManager.m */; };
@@ -829,6 +837,8 @@
 		309A1EEB1F765EAC00EE60C2 /* MCLRouterDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLRouterDelegate.h; sourceTree = "<group>"; };
 		309A1EEC1F76646500EE60C2 /* MCLAppRouterDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLAppRouterDelegate.h; sourceTree = "<group>"; };
 		309A1EED1F76646500EE60C2 /* MCLAppRouterDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLAppRouterDelegate.m; sourceTree = "<group>"; };
+		309C4C2A218D7CB00016624B /* MCLNoDataInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLNoDataInfo.h; sourceTree = "<group>"; };
+		309C4C2B218D7CB00016624B /* MCLNoDataInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLNoDataInfo.m; sourceTree = "<group>"; };
 		30A1BFAB19B4A8D4002439FE /* MCLSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLSettingsViewController.h; sourceTree = "<group>"; };
 		30A1BFAC19B4A8D4002439FE /* MCLSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsViewController.m; sourceTree = "<group>"; };
 		30A69ABB204920E300904E73 /* MCLEditTextRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLEditTextRequest.m; sourceTree = "<group>"; };
@@ -893,6 +903,9 @@
 		30EE8B791FC1E480008417F6 /* MCLErrorViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLErrorViewController.m; sourceTree = "<group>"; };
 		30EFDC0A19D422DE00E3EE31 /* MCLVerifiyLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLVerifiyLoginView.h; sourceTree = "<group>"; };
 		30EFDC0B19D422DE00E3EE31 /* MCLVerifiyLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLVerifiyLoginView.m; sourceTree = "<group>"; };
+		30FE7A3C218D91E100C39DA4 /* MCLNoDataViewPresentingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLNoDataViewPresentingViewController.h; sourceTree = "<group>"; };
+		30FE7A3D218DEAFD00C39DA4 /* MCLNoDataTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLNoDataTableViewCell.h; sourceTree = "<group>"; };
+		30FE7A3E218DEAFD00C39DA4 /* MCLNoDataTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLNoDataTableViewCell.m; sourceTree = "<group>"; };
 		30FF041A2178DDBB00056E04 /* MCLLoginManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLLoginManager.h; sourceTree = "<group>"; };
 		30FF041B2178DDBB00056E04 /* MCLLoginManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLLoginManager.m; sourceTree = "<group>"; };
 		30FF04202179ADFF00056E04 /* MCLLoginSecureStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLLoginSecureStore.h; sourceTree = "<group>"; };
@@ -1624,9 +1637,14 @@
 		30C9B52F205AAB8E00FD3C31 /* NoData */ = {
 			isa = PBXGroup;
 			children = (
+				309C4C2A218D7CB00016624B /* MCLNoDataInfo.h */,
+				309C4C2B218D7CB00016624B /* MCLNoDataInfo.m */,
 				30C9B529205AAB8600FD3C31 /* MCLNoDataView.h */,
 				30C9B52A205AAB8600FD3C31 /* MCLNoDataView.m */,
 				30C9B530205D7FA300FD3C31 /* MCLNoDataView.xib */,
+				30FE7A3C218D91E100C39DA4 /* MCLNoDataViewPresentingViewController.h */,
+				30FE7A3D218DEAFD00C39DA4 /* MCLNoDataTableViewCell.h */,
+				30FE7A3E218DEAFD00C39DA4 /* MCLNoDataTableViewCell.m */,
 			);
 			path = NoData;
 			sourceTree = "<group>";
@@ -2468,6 +2486,7 @@
 				30DD817D1FB7B3DC007BF235 /* MCLMarkUnreadResponsesAsReadRequest.m in Sources */,
 				30C04CDE20EA49F700A1D92F /* MCLComposeMessageToolbarController.m in Sources */,
 				305DD82419A63517006514BD /* main.m in Sources */,
+				30FE7A40218DEAFD00C39DA4 /* MCLNoDataTableViewCell.m in Sources */,
 				3036F59B1E266B3800ABC2CE /* MCLDarkTheme.m in Sources */,
 				301FD9A619C411D400E36A5B /* MCLErrorView.m in Sources */,
 				3096481E1EA2508600C16379 /* MCLSoundEffectPlayer.m in Sources */,
@@ -2550,6 +2569,7 @@
 				3027A7F11E9D780E00EC89EB /* MCLFavoritesRequest.m in Sources */,
 				306386771E643F1D004822ED /* MCLResponse.m in Sources */,
 				30C813831FBA6AE80044A656 /* MCLSettings+Keys.m in Sources */,
+				309C4C2D218D7CB00016624B /* MCLNoDataInfo.m in Sources */,
 				305DD83119A63517006514BD /* MCLBoardListTableViewController.m in Sources */,
 				30DB7F7E1F8D5CFC00766501 /* MCLFeatures.m in Sources */,
 				3003BE0A1F9389B300103F4B /* MCLFoundationHTTPClient.m in Sources */,
@@ -2594,6 +2614,7 @@
 				306FC81F1F93A39F001EB7E9 /* MCLMessage.m in Sources */,
 				30C04CDD20EA49F700A1D92F /* MCLComposeMessageToolbarController.m in Sources */,
 				30104AFC1FA4E8980053CECE /* MCLDetailNavigationController.m in Sources */,
+				30FE7A3F218DEAFD00C39DA4 /* MCLNoDataTableViewCell.m in Sources */,
 				306FC8201F93A39F001EB7E9 /* MCLSettingsFontSizeViewController.m in Sources */,
 				306FC8211F93A39F001EB7E9 /* MCLRouter+composeMessage.m in Sources */,
 				306FC8221F93A39F001EB7E9 /* main.m in Sources */,
@@ -2676,6 +2697,7 @@
 				306FC8611F93A39F001EB7E9 /* MCLReadSymbolView.m in Sources */,
 				306FC8621F93A39F001EB7E9 /* MCLFavoritesRequest.m in Sources */,
 				30C813821FBA2A5D0044A656 /* MCLSettings+Keys.m in Sources */,
+				309C4C2C218D7CB00016624B /* MCLNoDataInfo.m in Sources */,
 				306FC8631F93A39F001EB7E9 /* MCLResponse.m in Sources */,
 				306FC8651F93A39F001EB7E9 /* MCLBoardListTableViewController.m in Sources */,
 				306FC8661F93A39F001EB7E9 /* MCLFeatures.m in Sources */,
@@ -2712,6 +2734,7 @@
 				30DD817F1FB7B3DD007BF235 /* MCLMarkUnreadResponsesAsReadRequest.m in Sources */,
 				30C04CE020EA49F700A1D92F /* MCLComposeMessageToolbarController.m in Sources */,
 				3090CACE1FA7ED1E0085C9AF /* main.m in Sources */,
+				30FE7A42218DEAFD00C39DA4 /* MCLNoDataTableViewCell.m in Sources */,
 				3090CACF1FA7ED1E0085C9AF /* MCLDarkTheme.m in Sources */,
 				3090CAD01FA7ED1E0085C9AF /* MCLErrorView.m in Sources */,
 				3090CAD11FA7ED1E0085C9AF /* MCLSoundEffectPlayer.m in Sources */,
@@ -2794,6 +2817,7 @@
 				3090CB0D1FA7ED1E0085C9AF /* MCLFavoritesRequest.m in Sources */,
 				3090CB0E1FA7ED1E0085C9AF /* MCLResponse.m in Sources */,
 				30C813851FBA6AE90044A656 /* MCLSettings+Keys.m in Sources */,
+				309C4C2F218D7CB00016624B /* MCLNoDataInfo.m in Sources */,
 				3090CB101FA7ED1E0085C9AF /* MCLBoardListTableViewController.m in Sources */,
 				3090CB111FA7ED1E0085C9AF /* MCLFeatures.m in Sources */,
 				3090CB121FA7ED1E0085C9AF /* MCLFoundationHTTPClient.m in Sources */,
@@ -2830,6 +2854,7 @@
 				30DD817E1FB7B3DD007BF235 /* MCLMarkUnreadResponsesAsReadRequest.m in Sources */,
 				30C04CDF20EA49F700A1D92F /* MCLComposeMessageToolbarController.m in Sources */,
 				3090CB4B1FA89A5C0085C9AF /* main.m in Sources */,
+				30FE7A41218DEAFD00C39DA4 /* MCLNoDataTableViewCell.m in Sources */,
 				3090CB4C1FA89A5C0085C9AF /* MCLDarkTheme.m in Sources */,
 				3090CB4D1FA89A5C0085C9AF /* MCLErrorView.m in Sources */,
 				3090CB4E1FA89A5C0085C9AF /* MCLSoundEffectPlayer.m in Sources */,
@@ -2912,6 +2937,7 @@
 				3090CB8A1FA89A5C0085C9AF /* MCLFavoritesRequest.m in Sources */,
 				3090CB8B1FA89A5C0085C9AF /* MCLResponse.m in Sources */,
 				30C813841FBA6AE90044A656 /* MCLSettings+Keys.m in Sources */,
+				309C4C2E218D7CB00016624B /* MCLNoDataInfo.m in Sources */,
 				3090CB8D1FA89A5C0085C9AF /* MCLBoardListTableViewController.m in Sources */,
 				3090CB8E1FA89A5C0085C9AF /* MCLFeatures.m in Sources */,
 				3090CB8F1FA89A5C0085C9AF /* MCLFoundationHTTPClient.m in Sources */,
