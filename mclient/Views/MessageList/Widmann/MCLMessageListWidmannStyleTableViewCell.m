@@ -195,6 +195,7 @@ NSString *const WebviewMessageHandlerName = @"mclient";
     WKWebViewConfiguration *webViewConfig = [[WKWebViewConfiguration alloc] init];
     webViewConfig.suppressesIncrementalRendering = YES;
     [webViewConfig.userContentController addScriptMessageHandler:self name:WebviewMessageHandlerName];
+    webViewConfig.dataDetectorTypes = WKDataDetectorTypeLink;
 
     self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:webViewConfig];
     self.webView.translatesAutoresizingMaskIntoConstraints = NO;

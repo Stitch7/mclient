@@ -109,7 +109,9 @@
 
 - (void)configureWebView
 {
-    self.webView = [[WKWebView alloc] init];
+    WKWebViewConfiguration *webViewConfig = [[WKWebViewConfiguration alloc] init];
+    webViewConfig.dataDetectorTypes = WKDataDetectorTypeLink;
+    self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:webViewConfig];
     self.webView.translatesAutoresizingMaskIntoConstraints = NO;
     self.webView.navigationDelegate = self;
     self.webView.scrollView.scrollsToTop = NO;
