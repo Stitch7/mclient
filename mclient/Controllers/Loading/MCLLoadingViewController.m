@@ -134,12 +134,10 @@ static NSString *kQueueKeyPath = @"operations";
 
 - (void)callCompletionHandlerOnce
 {
-    static dispatch_once_t once;
-    dispatch_once(&once, ^{
-        if (self.completionHandler) {
-            self.completionHandler();
-        }
-    });
+    if (self.completionHandler) {
+        self.completionHandler();
+        self.completionHandler = nil;
+    }
 }
 
 #pragma mark - UIViewController life cycle
