@@ -93,14 +93,6 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
     UINib *threadCellNib = [UINib nibWithNibName: @"MCLThreadTableViewCell" bundle: nil];
     [self.tableView registerNib: threadCellNib forCellReuseIdentifier: MCLThreadTableViewCellIdentifier];
 
-    [UIView animateWithDuration:0 animations:^{
-        [self.tableView reloadData];
-    } completion:^(BOOL finished) {
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
-                              atScrollPosition:UITableViewScrollPositionTop
-                                      animated:NO];
-    }];
-
     [self configureSearchResultsController];
 }
 
@@ -121,6 +113,9 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
     UITextField *searchField = [self.searchController.searchBar getSearchField];
     [searchField setBackgroundColor:[self.currentTheme searchFieldBackgroundColor]];
     [searchField setTextColor:[self.currentTheme searchFieldTextColor]];
+
+    // Hide search field behind navigation bar
+    self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height);
 }
 
 #pragma mark - MCLLoadingContentViewControllerDelegate
