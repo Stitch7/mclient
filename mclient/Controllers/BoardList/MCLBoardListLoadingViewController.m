@@ -16,6 +16,18 @@
 
 @implementation MCLBoardListLoadingViewController
 
+#pragma mark - Initializers
+
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag requests:(NSDictionary *)requests contentViewController:(UIViewController *)contentViewController withCompletionHandler:(void (^)(void))completionHandler
+{
+    self = [super initWithBag:bag requests:requests contentViewController:contentViewController withCompletionHandler:completionHandler];
+    if (!self) return nil;
+
+    [self configureNotifications];
+
+    return self;
+}
+
 #pragma mark - UIViewController life cycle
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -46,8 +58,6 @@
 
 - (void)configureNotifications
 {
-    [super configureNotifications];
-
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(loginStateDidChanged:)
                                                  name:MCLLoginStateDidChangeNotification

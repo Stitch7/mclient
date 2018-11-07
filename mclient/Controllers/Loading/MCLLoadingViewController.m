@@ -99,16 +99,6 @@ static NSString *kQueueKeyPath = @"operations";
     [self.queue addObserver:self forKeyPath:kQueueKeyPath options:0 context:&kQueueOperationsChanged];
 
     self.state = kMCLLoadingStateVoid;
-
-    [self configureNotifications];
-}
-
-- (void)configureNotifications
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(themeChanged:)
-                                                 name:MCLThemeChangedNotification
-                                               object:nil];
 }
 
 #pragma mark - Queue observing
@@ -389,13 +379,6 @@ static NSString *kQueueKeyPath = @"operations";
 - (void)stopLoading
 {
     [self.loadingView removeFromSuperview];
-}
-
-#pragma mark - Notifications
-
-- (void)themeChanged:(NSNotification *)notification
-{
-    [self updateRefreshControl];
 }
 
 @end

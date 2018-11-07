@@ -21,7 +21,6 @@
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag requests:(NSDictionary *)requests contentViewController:(UIViewController *)contentViewController;
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag request:(id<MCLRequest>)request contentViewController:(UIViewController *)contentViewController;
 
-- (void)configureNotifications;
 - (void)updateTitle;
 - (void)showErrorOfType:(NSUInteger)type error:(NSError *)error;
 - (void)removeErrorViewController;
