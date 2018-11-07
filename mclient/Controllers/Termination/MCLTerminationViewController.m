@@ -49,6 +49,7 @@
 
     self.view.backgroundColor = [self.bag.themeManager.currentTheme backgroundColor];
     [self configureLabels];
+    [self resetBadgeIcon];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
@@ -67,6 +68,11 @@
     self.signatureLabel.text = NSLocalizedString(@"signature", nil);
     [self.appStoreButton setTitle:NSLocalizedString(@"appStoreButton", nil) forState:UIControlStateNormal];
     [self.quitButton setTitle:NSLocalizedString(@"quitButton", nil) forState:UIControlStateNormal];
+}
+
+- (void)resetBadgeIcon
+{
+    [self.bag.application setApplicationIconBadgeNumber:0];
 }
 
 #pragma mark - Actions
