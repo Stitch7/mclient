@@ -41,7 +41,7 @@
 
 #pragma mark - MCLRouterDelegate
 
-- (UIViewController *)createMasterViewControllerForRouter:(MCLRouter *)router
+- (UIViewController *)createMasterViewControllerForRouter:(MCLRouter *)router withCompletionHandler:(void (^)(void))completionHandler
 {
     MCLBoardListTableViewController *boardsListVC = [[MCLBoardListTableViewController alloc] initWithBag:self.bag];
     MCLBoardListRequest *boardListRequest = [[MCLBoardListRequest alloc] initWithClient:self.bag.httpClient];
@@ -50,7 +50,8 @@
                                @(MCLBoardListSectionFavorites): favoritesRequest};
     MCLBoardsListLoadingViewController *loadingVC = [[MCLBoardsListLoadingViewController alloc] initWithBag:self.bag
                                                                                                    requests:requests
-                                                                                      contentViewController:boardsListVC];
+                                                                                      contentViewController:boardsListVC
+                                                                                      withCompletionHandler:completionHandler];
     return loadingVC;
 }
 

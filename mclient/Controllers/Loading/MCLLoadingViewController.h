@@ -17,6 +17,7 @@
 @property (weak) id<MCLLoadingViewControllerDelegate> delegate;
 @property (strong, nonatomic) UIViewController *contentViewController;
 
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag requests:(NSDictionary *)requests contentViewController:(UIViewController *)contentViewController withCompletionHandler:(void (^)(void))completionHandler;
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag requests:(NSDictionary *)requests contentViewController:(UIViewController *)contentViewController;
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag request:(id<MCLRequest>)request contentViewController:(UIViewController *)contentViewController;
 

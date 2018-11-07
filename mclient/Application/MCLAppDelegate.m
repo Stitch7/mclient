@@ -13,6 +13,12 @@
 #import "MCLNotificationManager.h"
 
 
+@interface MCLAppDelegate ()
+
+@property (strong, nonatomic) id <MCLDependencyBag> bag;
+
+@end
+
 @implementation MCLAppDelegate
 
 #pragma mark - UIApplicationDelegate
@@ -20,7 +26,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.bag = [[MCLAppDependencyBag alloc] init];
-    [self.bag launchRootWindow:^(UIWindow *window) {
+    [self.bag.router launchRootWindow:^(UIWindow *window) {
         self.window = window;
     }];
 

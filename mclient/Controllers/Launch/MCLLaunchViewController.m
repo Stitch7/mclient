@@ -20,7 +20,6 @@ NSInteger const MCLLaunchViewLoadingContainerViewTag = 2;
 
 @property (strong, nonatomic) UIViewController *launchViewController;
 @property (strong, nonatomic) UILabel *logoLabel;
-@property (strong, nonatomic) UIView *loadingContainerView;
 
 @end
 

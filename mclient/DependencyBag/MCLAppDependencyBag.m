@@ -108,24 +108,4 @@
     [Inapptics.user set:[self.settings dictionaryWithAllSettings]];
 }
 
-#pragma mark - Public
-
-- (void)launchRootWindow:(void (^)(UIWindow *window))windowHandler
-{
-    if ([self.features isFeatureWithNameEnabled:MCLFeatureTermination]) {
-        UIWindow *terminationWindow = [self.router makeTerminationWindow];
-        windowHandler(terminationWindow);
-        return;
-    }
-
-    UIWindow *rootWindow = [self.router makeRootWindow];
-    UIWindow *launchWindow = [self.router makeLaunchWindow];
-    windowHandler(launchWindow);
-
-    [self.loginManager performLoginWithCompletionHandler:^(NSError *error, BOOL success) {
-        [self.router replaceRootWindow:rootWindow];
-        windowHandler(rootWindow);
-    }];
-}
-
 @end

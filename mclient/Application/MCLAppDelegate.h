@@ -6,11 +6,8 @@
 //  See LICENSE file in the project root for full license information.
 //
 
-@protocol MCLDependencyBag;
-
 @interface MCLAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) id <MCLDependencyBag> bag;
 
 @end

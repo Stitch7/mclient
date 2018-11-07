@@ -16,7 +16,6 @@
 
 @property (strong, nonatomic) id <MCLDependencyBag> bag;
 @property (strong) id<MCLRouterDelegate> delegate;
-@property (weak, nonatomic) UIWindow *rootWindow;
 @property (strong, nonatomic) MCLSplitViewController *splitViewController;
 @property (strong, nonatomic) UINavigationController *masterNavigationController;
 @property (strong, nonatomic) UINavigationController *detailNavigationController;
@@ -24,10 +23,7 @@
 
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
 
-- (UIWindow *)makeLaunchWindow;
-- (UIWindow *)makeTerminationWindow;
-- (UIWindow *)makeRootWindow;
-- (void)replaceRootWindow:(UIWindow *)newWindow;
+- (void)launchRootWindow:(void (^)(UIWindow *window))windowHandler;
 - (void)dismissModalIfPresentedWithCompletionHandler:(void (^)(BOOL dismissed))completionHandler;
 
 @end

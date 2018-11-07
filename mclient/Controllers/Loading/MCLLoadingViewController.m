@@ -38,6 +38,7 @@ static NSString *kQueueKeyPath = @"operations";
 
 @interface MCLLoadingViewController ()
 
+@property (nonatomic, copy) void (^completionHandler)(void);
 @property (strong, nonatomic) NSOperationQueue *queue;
 @property (assign, nonatomic) NSUInteger state;
 @property (strong, nonatomic) MCLPacmanLoadingView *loadingView;
@@ -49,7 +50,7 @@ static NSString *kQueueKeyPath = @"operations";
 
 #pragma mark - Initializers
 
-- (instancetype)initWithBag:(id <MCLDependencyBag>)bag requests:(NSDictionary *)requests contentViewController:(UIViewController *)contentViewController
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag requests:(NSDictionary *)requests contentViewController:(UIViewController *)contentViewController withCompletionHandler:(void (^)(void))completionHandler
 {
     self = [super init];
     if (!self) return nil;
@@ -57,6 +58,7 @@ static NSString *kQueueKeyPath = @"operations";
     self.bag = bag;
     self.requests = requests;
     self.contentViewController = contentViewController;
+    self.completionHandler = completionHandler;
 
     [self initialize];
 
@@ -73,6 +75,11 @@ static NSString *kQueueKeyPath = @"operations";
     [self load];
 
     return self;
+}
+
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag requests:(NSDictionary *)requests contentViewController:(UIViewController *)contentViewController
+{
+    return [self initWithBag:bag requests:requests contentViewController:contentViewController withCompletionHandler:nil];
 }
 
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag request:(id<MCLRequest>)request contentViewController:(UIViewController *)contentViewController
@@ -109,15 +116,30 @@ static NSString *kQueueKeyPath = @"operations";
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (object == self.queue && [keyPath isEqualToString:kQueueKeyPath] && context == &kQueueOperationsChanged) {
-        if ([self.queue.operations count] == 0) {
-            [self endRefreshing];
+        if ([self.queue.operations count] > 0) {
+            return;
         }
+
+        [self endRefreshing];
+        [self callCompletionHandlerOnce];
     } else {
         [super observeValueForKeyPath:keyPath
                              ofObject:object
                                change:change
                               context:context];
     }
+}
+
+#pragma mark - Completion Handler
+
+- (void)callCompletionHandlerOnce
+{
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        if (self.completionHandler) {
+            self.completionHandler();
+        }
+    });
 }
 
 #pragma mark - UIViewController life cycle
@@ -296,6 +318,7 @@ static NSString *kQueueKeyPath = @"operations";
 - (void)load
 {
     if ([self noInternetConnectionAvailable]) {
+        [self callCompletionHandlerOnce];
         [self showErrorOfType:kMCLErrorTypeNoInternetConnection error:nil];
         return;
     }
@@ -307,6 +330,7 @@ static NSString *kQueueKeyPath = @"operations";
                 [self stopLoading];
 
                 if ((error && error.code != MCLHTTPErrorCodeInvalidLogin) || !data) {
+                    [self callCompletionHandlerOnce];
                     [self showErrorOfType:kMCLErrorTypeGeneral error:error];
                     [op complete];
                     return;

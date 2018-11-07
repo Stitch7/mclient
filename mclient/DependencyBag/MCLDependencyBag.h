@@ -29,6 +29,4 @@
 @property (strong, nonatomic) MCLStoreReviewManager *storeReviewManager;
 @property (strong, nonatomic) id <MCLHTTPClient> httpClient;
 
-- (void)launchRootWindow:(void (^)(UIWindow *window))windowHandler;
-
 @end

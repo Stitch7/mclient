@@ -10,6 +10,8 @@
 
 #import "MCLDependencyBag.h"
 #import "MCLRouterDelegate.h"
+#import "MCLFeatures.h"
+#import "MCLLoginManager.h"
 #import "MCLThemeManager.h"
 #import "MCLSplitViewController.h"
 #import "MCLLaunchViewController.h"
@@ -19,7 +21,9 @@
 
 @interface MCLRouter () <UISplitViewControllerDelegate>
 
-@property (assign, nonatomic) BOOL alreadyConfigured;
+@property (weak, nonatomic) UIWindow *rootWindow;
+@property (strong, nonatomic) UIWindow *launchWindow;
+@property (strong, nonatomic) MCLLaunchViewController *launchViewController;
 
 @end
 
@@ -31,45 +35,10 @@
 {
     self = [super init];
     if (!self) return nil;
-
-    self.alreadyConfigured = NO;
+    
     self.bag = bag;
 
     return self;
-}
-
-#pragma mark - Configuration
-
-- (void)configureIfNecessary
-{
-    if (!self.alreadyConfigured) {
-        [self configure];
-        self.alreadyConfigured = YES;
-    }
-}
-
-- (void)configure
-{
-    assert(self.delegate != nil);
-    
-    self.splitViewController = [[MCLSplitViewController alloc] initWithBag:self.bag];
-
-    UIViewController *masterViewController = [self.delegate createMasterViewControllerForRouter:self];
-    self.masterNavigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
-
-    UIViewController *detailViewController = [self.delegate createDetailViewControllerForRouter:self];
-    self.detailNavigationController = [[MCLDetailNavigationController alloc] initWithBag:self.bag
-                                                                      rootViewController:detailViewController];
-
-    NSMutableArray *splitViews = [[NSMutableArray alloc] init];
-    [splitViews addObject:self.masterNavigationController];
-    [splitViews addObject:self.detailNavigationController];
-    self.splitViewController.viewControllers = splitViews;
-    self.splitViewController.delegate = self;
-    
-    if (!self.splitViewController.isCollapsed) {
-        self.splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
-    }
 }
 
 #pragma mark - UISplitViewControllerDelegate
@@ -94,62 +63,98 @@
     return [self.delegate handleSplitViewSeparatingForRouter:self];
 }
 
-#pragma mark - Private Helper
+#pragma mark - Private
 
 - (UIWindow *)makeWindowWithViewController:(UIViewController *)rootViewController
 {
     UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     window.rootViewController = rootViewController;
-    [window makeKeyAndVisible];
-
-    self.rootWindow = window;
+    window.hidden = NO;
 
     return window;
 }
 
-#pragma mark - Public Methods
-
 - (UIWindow *)makeLaunchWindow
 {
-    [self configureIfNecessary];
-
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil];
     UIViewController *storyboardLaunchVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLLaunchViewController"];
-    MCLLaunchViewController *launchVC = [[MCLLaunchViewController alloc] initWithLaunchViewController:storyboardLaunchVC];
+    self.launchViewController = [[MCLLaunchViewController alloc] initWithLaunchViewController:storyboardLaunchVC];
 
-    return [self makeWindowWithViewController:launchVC];
+    UIWindow *launchWindow = [self makeWindowWithViewController:self.launchViewController];
+    launchWindow.windowLevel = UIWindowLevelNormal + 1.0f;
+
+    return launchWindow;
 }
 
-- (UIWindow *)makeTerminationWindow
+- (void)makeTerminationWindowWithWindowHandler:(void (^)(UIWindow *rootWindow))windowHandler
 {
-    [self configureIfNecessary];
     MCLTerminationViewController *terminationVC = [[MCLTerminationViewController alloc] initWithBag:self.bag];
-
-    return [self makeWindowWithViewController:terminationVC];
+    self.rootWindow = [self makeWindowWithViewController:terminationVC];
+    windowHandler(self.rootWindow);
+    [self.rootWindow makeKeyAndVisible];
 }
 
-- (UIWindow *)makeRootWindow
+- (void)makeRootWindowWithWindowHandler:(void (^)(UIWindow *rootWindow))windowHandler completionHandler:(void (^)(void))completionHandler
 {
-    [self configureIfNecessary];
+    assert(self.delegate != nil);
+
+    self.splitViewController = [[MCLSplitViewController alloc] initWithBag:self.bag];
+
+    UIViewController *masterViewController = [self.delegate createMasterViewControllerForRouter:self withCompletionHandler:completionHandler];
+    self.masterNavigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+
+    UIViewController *detailViewController = [self.delegate createDetailViewControllerForRouter:self];
+    self.detailNavigationController = [[MCLDetailNavigationController alloc] initWithBag:self.bag
+                                                                      rootViewController:detailViewController];
+
+    NSMutableArray *splitViews = [[NSMutableArray alloc] init];
+    [splitViews addObject:self.masterNavigationController];
+    [splitViews addObject:self.detailNavigationController];
+    self.splitViewController.viewControllers = splitViews;
+    self.splitViewController.delegate = self;
+
+    if (!self.splitViewController.isCollapsed) {
+        self.splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+    }
+
     self.rootWindow = [self makeWindowWithViewController:self.splitViewController];
-
-    return self.rootWindow;
+    windowHandler(self.rootWindow);
 }
 
-- (void)replaceRootWindow:(UIWindow *)newWindow
+- (void)removeLaunchWindow
 {
-    UIView *toView = newWindow.rootViewController.view;
-    toView.frame = self.rootWindow.bounds;
-    UIView *snapShotView = [self.rootWindow snapshotViewAfterScreenUpdates:YES];
+    self.launchViewController.loadingContainerView.hidden = YES;
+    
+    UIView *snapShotView = [self.launchWindow snapshotViewAfterScreenUpdates:YES];
+    [self.rootWindow.rootViewController.view addSubview:snapShotView];
+    [self.rootWindow makeKeyAndVisible];
+    self.launchWindow = nil;
 
-    [newWindow.rootViewController.view addSubview:snapShotView];
-    self.rootWindow = newWindow;
-
-    [UIView animateWithDuration:0.3 animations:^{
-        snapShotView.layer.opacity = 0;
-        snapShotView.layer.transform = CATransform3DMakeScale(1.5, 1.5, 1.5);
+    [UIView animateWithDuration:0.3f animations:^{
+        snapShotView.layer.opacity = 0.0f;
+        snapShotView.layer.transform = CATransform3DMakeScale(1.5f, 1.5f, 1.5f);
     } completion:^(BOOL finished) {
         [snapShotView removeFromSuperview];
+    }];
+}
+
+#pragma mark - Public Methods
+
+- (void)launchRootWindow:(void (^)(UIWindow *window))windowHandler
+{
+    if ([self.bag.features isFeatureWithNameEnabled:MCLFeatureTermination]) {
+        [self makeTerminationWindowWithWindowHandler:windowHandler];
+        return;
+    }
+
+    self.launchWindow = [self makeLaunchWindow];
+    windowHandler(self.launchWindow);
+    [self.launchWindow makeKeyAndVisible];
+
+    [self.bag.loginManager performLoginWithCompletionHandler:^(NSError *error, BOOL success) {
+        [self makeRootWindowWithWindowHandler:windowHandler completionHandler:^{
+            [self removeLaunchWindow];
+        }];
     }];
 }
 

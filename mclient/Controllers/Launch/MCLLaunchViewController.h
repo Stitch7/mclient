@@ -10,6 +10,8 @@
 
 @interface MCLLaunchViewController : UIViewController
 
+@property (strong, nonatomic) UIView *loadingContainerView;
+
 - (instancetype)initWithLaunchViewController:(UIViewController *)launchViewController;
 
 @end

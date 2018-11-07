@@ -10,7 +10,7 @@
 
 @protocol MCLRouterDelegate <NSObject>
 
-- (UIViewController *)createMasterViewControllerForRouter:(MCLRouter *)router;
+- (UIViewController *)createMasterViewControllerForRouter:(MCLRouter *)router withCompletionHandler:(void (^)(void))completionHandler;
 - (UIViewController *)createDetailViewControllerForRouter:(MCLRouter *)router;
 - (UIViewController *)handleSplitViewCollapsingForRouter:(MCLRouter *)router;
 - (UIViewController *)handleSplitViewSeparatingForRouter:(MCLRouter *)router;
