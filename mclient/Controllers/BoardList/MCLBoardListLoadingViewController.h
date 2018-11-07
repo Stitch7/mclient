@@ -1,5 +1,5 @@
 //
-//  MCLBoardsListLoadingViewController.h
+//  MCLBoardListLoadingViewController.h
 //  mclient
 //
 //  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
@@ -8,6 +8,6 @@
 
 #import "MCLLoadingViewController.h"
 
-@interface MCLBoardsListLoadingViewController : MCLLoadingViewController
+@interface MCLBoardListLoadingViewController : MCLLoadingViewController
 
 @end

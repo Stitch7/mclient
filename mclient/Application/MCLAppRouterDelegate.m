@@ -10,7 +10,7 @@
 
 #import "MCLDependencyBag.h"
 #import "MCLRouter.h"
-#import "MCLBoardsListLoadingViewController.h"
+#import "MCLBoardListLoadingViewController.h"
 #import "MCLBoardListTableViewController.h"
 #import "MCLDetailLoadingViewController.h"
 #import "MCLDetailViewController.h"
@@ -48,10 +48,10 @@
     MCLFavoritesRequest *favoritesRequest = [[MCLFavoritesRequest alloc] initWithClient:self.bag.httpClient];
     NSDictionary *requests = @{@(MCLBoardListSectionBoards): boardListRequest,
                                @(MCLBoardListSectionFavorites): favoritesRequest};
-    MCLBoardsListLoadingViewController *loadingVC = [[MCLBoardsListLoadingViewController alloc] initWithBag:self.bag
-                                                                                                   requests:requests
-                                                                                      contentViewController:boardsListVC
-                                                                                      withCompletionHandler:completionHandler];
+    MCLBoardListLoadingViewController *loadingVC = [[MCLBoardListLoadingViewController alloc] initWithBag:self.bag
+                                                                                                 requests:requests
+                                                                                    contentViewController:boardsListVC
+                                                                                    withCompletionHandler:completionHandler];
     return loadingVC;
 }
 

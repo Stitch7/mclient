@@ -499,7 +499,7 @@
 		3090CBA81FA89A5C0085C9AF /* MCLThreadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3004E5AB1E0216E1000E0FF3 /* MCLThreadTableViewCell.xib */; };
 		3090CBAA1FA89A5C0085C9AF /* MCLDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 308B81E81F63FC9700C878FB /* MCLDetailViewController.xib */; };
 		3090CBAB1FA89A5C0085C9AF /* ComposeMessage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EAE21B1F1C1E400035DFC9 /* ComposeMessage.storyboard */; };
-		3090CBB61FA8B4DE0085C9AF /* MCLBoardsListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3090CBB51FA8B4DE0085C9AF /* MCLBoardsListLoadingViewController.m */; };
+		3090CBB61FA8B4DE0085C9AF /* MCLBoardListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3090CBB51FA8B4DE0085C9AF /* MCLBoardListLoadingViewController.m */; };
 		3096481E1EA2508600C16379 /* MCLSoundEffectPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3096481D1EA2508600C16379 /* MCLSoundEffectPlayer.m */; };
 		309648211EA4053E00C16379 /* MCLRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 309648201EA4053E00C16379 /* MCLRouter.m */; };
 		309A1EEE1F76646500EE60C2 /* MCLAppRouterDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 309A1EED1F76646500EE60C2 /* MCLAppRouterDelegate.m */; };
@@ -580,9 +580,9 @@
 		30DD81801FB7B441007BF235 /* MCLDetailNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30104AFB1FA4E8980053CECE /* MCLDetailNavigationController.m */; };
 		30DD81811FB7B442007BF235 /* MCLDetailNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30104AFB1FA4E8980053CECE /* MCLDetailNavigationController.m */; };
 		30DD81821FB7B442007BF235 /* MCLDetailNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30104AFB1FA4E8980053CECE /* MCLDetailNavigationController.m */; };
-		30DD81831FB7B499007BF235 /* MCLBoardsListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3090CBB51FA8B4DE0085C9AF /* MCLBoardsListLoadingViewController.m */; };
-		30DD81841FB7B49A007BF235 /* MCLBoardsListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3090CBB51FA8B4DE0085C9AF /* MCLBoardsListLoadingViewController.m */; };
-		30DD81851FB7B49A007BF235 /* MCLBoardsListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3090CBB51FA8B4DE0085C9AF /* MCLBoardsListLoadingViewController.m */; };
+		30DD81831FB7B499007BF235 /* MCLBoardListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3090CBB51FA8B4DE0085C9AF /* MCLBoardListLoadingViewController.m */; };
+		30DD81841FB7B49A007BF235 /* MCLBoardListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3090CBB51FA8B4DE0085C9AF /* MCLBoardListLoadingViewController.m */; };
+		30DD81851FB7B49A007BF235 /* MCLBoardListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3090CBB51FA8B4DE0085C9AF /* MCLBoardListLoadingViewController.m */; };
 		30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */; };
 		30EA21041F0EAD210064A0A3 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EA21031F0EAD210064A0A3 /* Profile.storyboard */; };
 		30EA21091F0EDE160064A0A3 /* MCLUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EA21081F0EDE160064A0A3 /* MCLUser.m */; };
@@ -828,8 +828,8 @@
 		3090CB361FA7ED1E0085C9AF /* mclient-beta-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "mclient-beta-Info.plist"; path = "/Users/cre/Work/mclient/mclient/Supporting Files/Info-plist/mclient-beta-Info.plist"; sourceTree = "<absolute>"; };
 		3090CBB21FA89A5C0085C9AF /* mclient-beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mclient-beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3090CBB31FA89A5C0085C9AF /* mclient-alpha-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "mclient-alpha-Info.plist"; path = "/Users/cre/Work/mclient/mclient/Supporting Files/Info-plist/mclient-alpha-Info.plist"; sourceTree = "<absolute>"; };
-		3090CBB41FA8B4DE0085C9AF /* MCLBoardsListLoadingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLBoardsListLoadingViewController.h; sourceTree = "<group>"; };
-		3090CBB51FA8B4DE0085C9AF /* MCLBoardsListLoadingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLBoardsListLoadingViewController.m; sourceTree = "<group>"; };
+		3090CBB41FA8B4DE0085C9AF /* MCLBoardListLoadingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLBoardListLoadingViewController.h; sourceTree = "<group>"; };
+		3090CBB51FA8B4DE0085C9AF /* MCLBoardListLoadingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLBoardListLoadingViewController.m; sourceTree = "<group>"; };
 		3096481C1EA2508600C16379 /* MCLSoundEffectPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLSoundEffectPlayer.h; sourceTree = "<group>"; };
 		3096481D1EA2508600C16379 /* MCLSoundEffectPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLSoundEffectPlayer.m; sourceTree = "<group>"; };
 		3096481F1EA4053E00C16379 /* MCLRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLRouter.h; sourceTree = "<group>"; };
@@ -1744,8 +1744,8 @@
 			children = (
 				305DD82F19A63517006514BD /* MCLBoardListTableViewController.h */,
 				305DD83019A63517006514BD /* MCLBoardListTableViewController.m */,
-				3090CBB41FA8B4DE0085C9AF /* MCLBoardsListLoadingViewController.h */,
-				3090CBB51FA8B4DE0085C9AF /* MCLBoardsListLoadingViewController.m */,
+				3090CBB41FA8B4DE0085C9AF /* MCLBoardListLoadingViewController.h */,
+				3090CBB51FA8B4DE0085C9AF /* MCLBoardListLoadingViewController.m */,
 			);
 			path = BoardList;
 			sourceTree = "<group>";
@@ -2532,7 +2532,7 @@
 				305DD85D19AB300F006514BD /* MCLBoard.m in Sources */,
 				3020FB6B1E746D4400C7217F /* MCLNotificationManager.m in Sources */,
 				30DD817A1FB7B386007BF235 /* MCLFeatures+Names.m in Sources */,
-				30DD81831FB7B499007BF235 /* MCLBoardsListLoadingViewController.m in Sources */,
+				30DD81831FB7B499007BF235 /* MCLBoardListLoadingViewController.m in Sources */,
 				30A69ABE204920E300904E73 /* MCLEditTextRequest.m in Sources */,
 				305E54A91F2A65B8004002E6 /* MCLPacmanLoadingView.m in Sources */,
 				301FD9A319C32FC600E36A5B /* MCLLoadingView.m in Sources */,
@@ -2592,7 +2592,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				306FC8111F93A39F001EB7E9 /* MCLBadgeView.m in Sources */,
-				3090CBB61FA8B4DE0085C9AF /* MCLBoardsListLoadingViewController.m in Sources */,
+				3090CBB61FA8B4DE0085C9AF /* MCLBoardListLoadingViewController.m in Sources */,
 				30C0871520E50A5A00503CE5 /* MCLLaunchViewController.m in Sources */,
 				3070D32C207A6BBA00F42BFF /* MCLLicenseViewController.m in Sources */,
 				306FC8121F93A39F001EB7E9 /* MCLModalTransitionAnimator.m in Sources */,
@@ -2780,7 +2780,7 @@
 				3090CAF41FA7ED1E0085C9AF /* MCLBoard.m in Sources */,
 				3090CAF51FA7ED1E0085C9AF /* MCLNotificationManager.m in Sources */,
 				30DD817C1FB7B387007BF235 /* MCLFeatures+Names.m in Sources */,
-				30DD81851FB7B49A007BF235 /* MCLBoardsListLoadingViewController.m in Sources */,
+				30DD81851FB7B49A007BF235 /* MCLBoardListLoadingViewController.m in Sources */,
 				30A69AC0204920E300904E73 /* MCLEditTextRequest.m in Sources */,
 				3090CAF61FA7ED1E0085C9AF /* MCLPacmanLoadingView.m in Sources */,
 				3090CAF71FA7ED1E0085C9AF /* MCLLoadingView.m in Sources */,
@@ -2900,7 +2900,7 @@
 				3090CB711FA89A5C0085C9AF /* MCLBoard.m in Sources */,
 				3090CB721FA89A5C0085C9AF /* MCLNotificationManager.m in Sources */,
 				30DD817B1FB7B387007BF235 /* MCLFeatures+Names.m in Sources */,
-				30DD81841FB7B49A007BF235 /* MCLBoardsListLoadingViewController.m in Sources */,
+				30DD81841FB7B49A007BF235 /* MCLBoardListLoadingViewController.m in Sources */,
 				30A69ABF204920E300904E73 /* MCLEditTextRequest.m in Sources */,
 				3090CB731FA89A5C0085C9AF /* MCLPacmanLoadingView.m in Sources */,
 				3090CB741FA89A5C0085C9AF /* MCLLoadingView.m in Sources */,
