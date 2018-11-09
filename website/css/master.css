@@ -1,0 +1,40 @@
+* {
+    font-family: "Helvetica Neue", "proxima-nova", sans-serif;
+    color: #d7d7d8;
+}
+
+body {
+    background: #323233;
+    color: #d7d7d8;
+    font-size: 1.1em;
+}
+
+main {
+    width: 780px;
+    margin: 30px auto;
+    padding: 50px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: #4a4a4d;
+}
+
+h1 {
+    padding-top: 15px;
+    font-size: 1.5em;
+}
+
+ul {
+    padding: 10px 0 0 20px;
+}
+
+li {
+    padding-top: 2px;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+a:hover {
+    text-decoration: underline;
+}
