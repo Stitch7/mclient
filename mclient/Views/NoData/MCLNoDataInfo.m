@@ -38,12 +38,12 @@
     return self;
 }
 
-- (instancetype)initWithSettings:(MCLSettings *)settings messageText:(NSString *)messageText
+- (instancetype)initWithMessageText:(NSString *)messageText
 {
     self = [super init];
     if (!self) return nil;
 
-    self.settings = settings;
+    self.settings = nil;
     self.messageText = messageText;
     self.help = NO;
     self.helpTitle = nil;
@@ -53,9 +53,9 @@
     return self;
 }
 
-+ (MCLNoDataInfo *)infoForLoginToSeeFavoritesInfo:(MCLSettings *)settings
++ (MCLNoDataInfo *)infoForLoginToSeeFavoritesInfo
 {
-    return [[self alloc] initWithSettings:settings messageText:NSLocalizedString(@"PLEASE LOGIN TO SEE YOUR FAVORITES", nil)];
+    return [[self alloc] initWithMessageText:NSLocalizedString(@"PLEASE LOGIN TO SEE YOUR FAVORITES", nil)];
 }
 
 + (MCLNoDataInfo *)infoForNoFavoritesInfo:(MCLSettings *)settings
@@ -67,6 +67,11 @@
                                   hideKey:MCLSettingHideFavoritesHint];
 }
 
++ (MCLNoDataInfo *)infoForNoSearchResultsInfo
+{
+    return [[self alloc] initWithMessageText:NSLocalizedString(@"NO RESULTS", nil)];
+}
+
 - (BOOL)isHidden
 {
     return self.hideKey ? [self.settings isSettingActivated:self.hideKey] : NO;
@@ -74,6 +79,10 @@
 
 - (void)hide
 {
+    if (!self.settings) {
+        return;
+    }
+
     [self.settings setBool:YES forSetting:self.hideKey];
 }
 

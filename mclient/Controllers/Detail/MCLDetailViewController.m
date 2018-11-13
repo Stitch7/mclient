@@ -128,7 +128,7 @@
     if (self.bag.loginManager.isLoginValid) {
         noDataInfo = [MCLNoDataInfo infoForNoFavoritesInfo:self.bag.settings];
     } else {
-        noDataInfo = [MCLNoDataInfo infoForLoginToSeeFavoritesInfo:self.bag.settings];
+        noDataInfo = [MCLNoDataInfo infoForLoginToSeeFavoritesInfo];
     }
     self.noDataView = [[MCLNoDataView alloc] initWithInfo:noDataInfo parentViewController:self];
 }

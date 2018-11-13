@@ -13,6 +13,7 @@
 @class MCLMessage;
 @class MCLUser;
 @class MCLSettingsViewController;
+@class MCLSearchTableViewController;
 @class MCLResponsesTableViewController;
 @class MCLProfileTableViewController;
 @class MCLThreadListTableViewController;
@@ -22,6 +23,7 @@
 
 - (MCLSettingsViewController *)modalToSettings;
 - (MCLProfileTableViewController *)modalToProfileFromUser:(MCLUser *)user;
+- (MCLSearchTableViewController *)pushToSearchWithBoards:(NSArray<MCLBoard *>*)boards;
 - (MCLResponsesTableViewController *)pushToResponses;
 - (MCLThreadListTableViewController *)pushToThreadListFromBoard:(MCLBoard *)board;
 - (MCLMessageListViewController *)pushToThread:(MCLThread *)thread;

@@ -101,7 +101,7 @@
 - (void)configureTableView
 {
     UINib *messageCellNib = [UINib nibWithNibName: @"MCLMessageListFrameStyleTableViewCell" bundle: nil];
-    [self.tableView registerNib: messageCellNib forCellReuseIdentifier:MCLMessageListFrameStyleTableViewCellIdentifier];
+    [self.tableView registerNib:messageCellNib forCellReuseIdentifier:MCLMessageListFrameStyleTableViewCellIdentifier];
 
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension;

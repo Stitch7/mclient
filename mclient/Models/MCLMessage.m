@@ -113,6 +113,37 @@
     return message;
 }
 
++ (MCLMessage *)messageFromSearchResultJSON:(NSDictionary *)json
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+    [dateFormatter setLocale:enUSPOSIXLocale];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+
+    NSNumber *boardId = [json objectForKey:@"boardId"];
+    NSNumber *threadId = [json objectForKey:@"threadId"];
+    NSNumber *messageId = [json objectForKey:@"messageId"];
+    NSString *username = [json objectForKey:@"username"];
+    NSString *subject = [json objectForKey:@"subject"];
+    NSDate *date = [dateFormatter dateFromString:[json objectForKey:@"date"]];
+
+    MCLMessage *message = [MCLMessage messageWithId:messageId
+                                               read:YES
+                                              level:0
+                                                mod:NO
+                                           username:username
+                                            subject:subject
+                                               date:date];
+
+    message.boardId = boardId;
+    message.board = [MCLBoard boardWithId:boardId];
+    message.thread = [MCLThread threadWithId:threadId subject:subject];
+    message.thread.board = message.board;
+
+    return message;
+}
+
+
 - (void)updateFromMessageTextJSON:(NSDictionary *)json
 {
     self.userId = [json objectForKey:@"userId"];

@@ -63,6 +63,7 @@ typedef NS_ENUM(NSUInteger, kMCLComposeType) {
 + (MCLMessage *)messageFromResponse:(MCLResponse *)response;
 
 + (MCLMessage *)messageFromJSON:(NSDictionary *)json;
++ (MCLMessage *)messageFromSearchResultJSON:(NSDictionary *)json;
 
 - (void)updateFromMessageTextJSON:(NSDictionary *)json;
 

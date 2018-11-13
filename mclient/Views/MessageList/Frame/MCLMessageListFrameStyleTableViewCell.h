@@ -6,12 +6,14 @@
 //  See LICENSE file in the project root for full license information.
 //
 
+@class MCLMessage;
 @class MCLReadSymbolView;
 
 extern NSString *const MCLMessageListFrameStyleTableViewCellIdentifier;
 
 @interface MCLMessageListFrameStyleTableViewCell : UITableViewCell
 
+@property (strong, nonatomic) MCLMessage *message;
 @property (strong, nonatomic) NSNumber *boardId;
 @property (strong, nonatomic) NSNumber *messageId;
 @property (strong, nonatomic) NSString *messageText;

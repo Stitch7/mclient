@@ -211,6 +211,7 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
 
     [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLBoardListTableViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
     [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLDetailViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
+    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLSearchTableViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
     [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLResponsesTableViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
     [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLSettingsViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
     [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLThreadListTableViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];

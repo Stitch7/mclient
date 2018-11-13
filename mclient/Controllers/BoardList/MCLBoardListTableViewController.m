@@ -9,8 +9,8 @@
 #import "MCLBoardListTableViewController.h"
 
 #import "BBBadgeBarButtonItem.h"
-#import "UIViewController+Additions.h"
 #import "UIView+addConstraints.h"
+#import "UIViewController+Additions.h"
 #import "MCLDependencyBag.h"
 #import "MCLFeatures.h"
 #import "MCLFavoriteThreadToggleRequest.h"
@@ -222,7 +222,7 @@
         navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"searchButton"]
                                                                             style:UIBarButtonItemStylePlain
                                                                            target:self
-                                                                           action:@selector(settingsButtonPressed:)];
+                                                                           action:@selector(searchButtonPressed:)];
     } else { // Needed to center the title label when FeatureToggle is off :-|
         navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"placeholderBarItem"]
                                                                             style:UIBarButtonItemStylePlain
@@ -463,6 +463,11 @@
 }
 
 #pragma mark - Actions
+
+- (void)searchButtonPressed:(UIBarButtonItem *)sender
+{
+    [self.bag.router pushToSearchWithBoards:self.boards];
+}
 
 - (void)settingsButtonPressed:(UIBarButtonItem *)sender
 {

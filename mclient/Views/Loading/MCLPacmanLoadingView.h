@@ -10,12 +10,8 @@
 
 @interface MCLPacmanLoadingView : UIView
 
-@property(strong, nonatomic) UIView *container;
-@property(strong, nonatomic) UILabel *label;
-@property(strong, nonatomic) UIActivityIndicatorView *spinner;
+@property(strong, nonatomic) UIView *spinner;
 
 - (instancetype)initWithTheme:(id <MCLTheme>)theme;
-
-- (void)configureSubviews;
 
 @end

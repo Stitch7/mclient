@@ -11,7 +11,7 @@
 	<key>KillFileThreads</key>
 	<false/>
 	<key>FullSearch</key>
-	<false/>
+	<true/>
 	<key>PrivateMessages</key>
 	<false/>
 	<key>Tetris</key>

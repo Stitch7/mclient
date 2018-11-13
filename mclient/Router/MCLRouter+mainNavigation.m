@@ -19,6 +19,7 @@
 #import "MCLDetailViewController.h"
 #import "MCLModalNavigationController.h"
 #import "MCLSettingsViewController.h"
+#import "MCLSearchTableViewController.h"
 #import "MCLResponsesTableViewController.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLLoadingViewController.h"
@@ -64,6 +65,15 @@
     [self.masterNavigationController presentViewController:navigationVC animated:YES completion:nil];
 
     return profileVC;
+}
+
+- (MCLSearchTableViewController *)pushToSearchWithBoards:(NSArray<MCLBoard *>*)boards
+{
+    MCLSearchTableViewController *searchTableVC = [[MCLSearchTableViewController alloc] initWithBag:self.bag boards:boards];
+
+    [self.masterNavigationController pushViewController:searchTableVC animated:YES];
+
+    return searchTableVC;
 }
 
 - (MCLResponsesTableViewController *)pushToResponses

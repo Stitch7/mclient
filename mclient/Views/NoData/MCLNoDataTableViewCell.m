@@ -43,7 +43,7 @@ NSString *const MCLNoDataTableViewCellIdentifier = @"NoDataCell";
     [noDataView constrainEdgesTo:self];
 }
 
--(void)addSubview:(UIView *)view
+- (void)addSubview:(UIView *)view
 {
     // Remove border / separator
     // The separator has a height of 0.5pt on a retina display and 1pt on non-retina.

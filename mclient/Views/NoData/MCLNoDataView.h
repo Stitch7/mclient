@@ -12,6 +12,8 @@
 @interface MCLNoDataView : UIView
 
 - (instancetype)initWithInfo:(MCLNoDataInfo *)info parentViewController:(id <MCLNoDataViewPresentingViewController>)parentVC;
+- (instancetype)initWithInfo:(MCLNoDataInfo *)info;
+
 - (void)updateVisibility;
 
 @end

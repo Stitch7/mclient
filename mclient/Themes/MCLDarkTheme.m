@@ -108,6 +108,11 @@
     return self.flatRedColor;
 }
 
+- (UIColor *)placeholderTextColor
+{
+    return [UIColor colorWithRed:0.49 green:0.49 blue:0.50 alpha:1.0];
+}
+
 - (UIColor *)successTextColor
 {
     return [UIColor colorWithRed:0.30 green:0.85 blue:0.39 alpha:1.0];

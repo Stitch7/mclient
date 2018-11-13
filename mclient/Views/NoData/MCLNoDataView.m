@@ -41,6 +41,19 @@
     return self;
 }
 
+- (instancetype)initWithInfo:(MCLNoDataInfo *)info
+{
+    self = [super initWithFrame:CGRectZero];
+    if (!self) return nil;
+
+    self.info = info;
+    self.parentVC = nil;
+
+    [self configureSubviews];
+
+    return self;
+}
+
 #pragma mark - Configuration
 
 - (void)configureSubviews

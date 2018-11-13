@@ -18,6 +18,11 @@ NSString *const MCLMessageListFrameStyleTableViewCellIdentifier = @"FrameStyleMe
     [super setSelected:selected animated:animated];
 }
 
+- (void)setMessage:(MCLMessage *)message
+{
+    
+}
+
 - (void)markRead
 {
     self.readSymbolView.hidden = YES;

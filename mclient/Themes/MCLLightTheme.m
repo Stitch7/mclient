@@ -94,6 +94,11 @@
     return [UIColor redColor];
 }
 
+- (UIColor *)placeholderTextColor
+{
+    return [UIColor colorWithRed:0.64 green:0.64 blue:0.66 alpha:1.0];
+}
+
 - (UIColor *)successTextColor
 {
     return [UIColor colorWithRed:0.30 green:0.85 blue:0.39 alpha:1.0];
@@ -172,7 +177,7 @@
 
 - (UIColor *)searchFieldTextColor
 {
-    return [UIColor colorWithRed:0.56 green:0.56 blue:0.58 alpha:1.0];
+    return [UIColor blackColor];
 }
 
 - (UIColor *)tableViewCellBackgroundColor
