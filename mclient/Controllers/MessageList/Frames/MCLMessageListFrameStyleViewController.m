@@ -110,7 +110,9 @@
 - (void)configureWebView
 {
     WKWebViewConfiguration *webViewConfig = [[WKWebViewConfiguration alloc] init];
-    webViewConfig.dataDetectorTypes = WKDataDetectorTypeLink;
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.0")) {
+        webViewConfig.dataDetectorTypes = WKDataDetectorTypeLink;
+    }
     self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:webViewConfig];
     self.webView.translatesAutoresizingMaskIntoConstraints = NO;
     self.webView.navigationDelegate = self;
@@ -255,6 +257,16 @@
     return message;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewAutomaticDimension;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewAutomaticDimension;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.toolbar deactivateBarButtons];
@@ -304,7 +316,11 @@
 - (void)loadMessage:(MCLMessage *)message fromCell:(MCLMessageListFrameStyleTableViewCell *)cell
 {
     cell.messageText = message.text;
-    NSString *messageText = [message messageHtmlWithTopMargin:15
+    int topMargin = 15;
+    if (SYSTEM_VERSION_LESS_THAN(@"10.0")) {
+        topMargin += 70;
+    }
+    NSString *messageText = [message messageHtmlWithTopMargin:topMargin
                                                         theme:self.bag.themeManager.currentTheme
                                                      settings:self.bag.settings];
     [self.webView loadHTMLString:messageText baseURL:nil];
