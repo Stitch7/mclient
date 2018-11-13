@@ -480,6 +480,7 @@
 {
     BOOL success = [[notification.userInfo objectForKey:MCLLoginStateKey] boolValue];
     [self updateVerifyLoginViewWithSuccess:success];
+    self.temporarilyDontShowNoFavoritesView = YES;
 }
 
 - (void)themeChanged:(NSNotification *)notification
