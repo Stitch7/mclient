@@ -63,6 +63,10 @@
 		303ED228219C1D3A00AB2EAE /* MCLPickerTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 303ED226219C1D3A00AB2EAE /* MCLPickerTextField.m */; };
 		303ED229219C1D3A00AB2EAE /* MCLPickerTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 303ED226219C1D3A00AB2EAE /* MCLPickerTextField.m */; };
 		303ED22A219C1D3A00AB2EAE /* MCLPickerTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 303ED226219C1D3A00AB2EAE /* MCLPickerTextField.m */; };
+		303ED22D219E9C6100AB2EAE /* NSURL+isValidWebURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 303ED22C219E9C6100AB2EAE /* NSURL+isValidWebURL.m */; };
+		303ED22E219E9C6100AB2EAE /* NSURL+isValidWebURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 303ED22C219E9C6100AB2EAE /* NSURL+isValidWebURL.m */; };
+		303ED22F219E9C6100AB2EAE /* NSURL+isValidWebURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 303ED22C219E9C6100AB2EAE /* NSURL+isValidWebURL.m */; };
+		303ED230219E9C6100AB2EAE /* NSURL+isValidWebURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 303ED22C219E9C6100AB2EAE /* NSURL+isValidWebURL.m */; };
 		3042784A2188548B00CD9AF8 /* MCLTerminationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304278482188548B00CD9AF8 /* MCLTerminationViewController.m */; };
 		3042784B2188548B00CD9AF8 /* MCLTerminationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304278482188548B00CD9AF8 /* MCLTerminationViewController.m */; };
 		3042784C2188548B00CD9AF8 /* MCLTerminationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304278482188548B00CD9AF8 /* MCLTerminationViewController.m */; };
@@ -738,6 +742,8 @@
 		303ED220219AB05900AB2EAE /* MCLLoadingTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLLoadingTableViewCell.m; sourceTree = "<group>"; };
 		303ED225219C1D3A00AB2EAE /* MCLPickerTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLPickerTextField.h; sourceTree = "<group>"; };
 		303ED226219C1D3A00AB2EAE /* MCLPickerTextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLPickerTextField.m; sourceTree = "<group>"; };
+		303ED22B219E9C6100AB2EAE /* NSURL+isValidWebURL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURL+isValidWebURL.h"; sourceTree = "<group>"; };
+		303ED22C219E9C6100AB2EAE /* NSURL+isValidWebURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURL+isValidWebURL.m"; sourceTree = "<group>"; };
 		304278472188548B00CD9AF8 /* MCLTerminationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLTerminationViewController.h; sourceTree = "<group>"; };
 		304278482188548B00CD9AF8 /* MCLTerminationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLTerminationViewController.m; sourceTree = "<group>"; };
 		304278492188548B00CD9AF8 /* MCLTerminationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MCLTerminationViewController.xib; sourceTree = "<group>"; };
@@ -1223,6 +1229,8 @@
 				30BD47611E97097300DBB27B /* UIViewController+Additions.m */,
 				30543084215D1D64008F29C0 /* UISearchBar+getSearchField.h */,
 				30543085215D1D64008F29C0 /* UISearchBar+getSearchField.m */,
+				303ED22B219E9C6100AB2EAE /* NSURL+isValidWebURL.h */,
+				303ED22C219E9C6100AB2EAE /* NSURL+isValidWebURL.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2551,6 +2559,7 @@
 				3039748D1E16A1F4003C8BC9 /* MCLMessageListWidmannStyleTableViewCell.m in Sources */,
 				30AC60F61F3F89E7000A6639 /* MCLMessageTextViewToolbar.m in Sources */,
 				30948753219934F200C528A1 /* MCLSearchRequest.m in Sources */,
+				303ED22E219E9C6100AB2EAE /* NSURL+isValidWebURL.m in Sources */,
 				306169461E98F76300DBD96F /* MCLBoardListRequest.m in Sources */,
 				308EC3D819CC4DE800A0869F /* MCLMessageListViewController.m in Sources */,
 				3086428919D2D6CE0027F932 /* MCLMessageTextView.m in Sources */,
@@ -2685,6 +2694,7 @@
 				30DD81761FB452E2007BF235 /* MCLAppDependencyBag.m in Sources */,
 				306FC8161F93A39F001EB7E9 /* MCLRouter.m in Sources */,
 				30948752219934F200C528A1 /* MCLSearchRequest.m in Sources */,
+				303ED22D219E9C6100AB2EAE /* NSURL+isValidWebURL.m in Sources */,
 				306FC8171F93A39F001EB7E9 /* MCLMessageListWidmannStyleTableViewCell.m in Sources */,
 				306FC8181F93A39F001EB7E9 /* MCLMessageTextViewToolbar.m in Sources */,
 				306FC8191F93A39F001EB7E9 /* MCLBoardListRequest.m in Sources */,
@@ -2811,6 +2821,7 @@
 				3090CAC31FA7ED1E0085C9AF /* MCLMessageListWidmannStyleTableViewCell.m in Sources */,
 				3090CAC41FA7ED1E0085C9AF /* MCLMessageTextViewToolbar.m in Sources */,
 				30948755219934F200C528A1 /* MCLSearchRequest.m in Sources */,
+				303ED230219E9C6100AB2EAE /* NSURL+isValidWebURL.m in Sources */,
 				3090CAC51FA7ED1E0085C9AF /* MCLBoardListRequest.m in Sources */,
 				3090CAC61FA7ED1E0085C9AF /* MCLMessageListViewController.m in Sources */,
 				3090CAC71FA7ED1E0085C9AF /* MCLMessageTextView.m in Sources */,
@@ -2937,6 +2948,7 @@
 				3090CB401FA89A5C0085C9AF /* MCLMessageListWidmannStyleTableViewCell.m in Sources */,
 				3090CB411FA89A5C0085C9AF /* MCLMessageTextViewToolbar.m in Sources */,
 				30948754219934F200C528A1 /* MCLSearchRequest.m in Sources */,
+				303ED22F219E9C6100AB2EAE /* NSURL+isValidWebURL.m in Sources */,
 				3090CB421FA89A5C0085C9AF /* MCLBoardListRequest.m in Sources */,
 				3090CB431FA89A5C0085C9AF /* MCLMessageListViewController.m in Sources */,
 				3090CB441FA89A5C0085C9AF /* MCLMessageTextView.m in Sources */,

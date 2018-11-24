@@ -8,6 +8,8 @@
 
 @import SafariServices;
 
+#import "UIViewController+Additions.h"
+#import "NSURL+isValidWebURL.h"
 #import "MCLDependencyBag.h"
 #import "MCLRouter+openURL.h"
 #import "MCLRouter+mainNavigation.h"
@@ -19,6 +21,7 @@
 #import "MCLThread.h"
 #import "MCLBoard.h"
 
+
 @implementation MCLRouter (openURL)
 
 - (MCLMessageListViewController *)pushToURL:(NSURL *)destinationURL
@@ -28,6 +31,12 @@
 
 - (MCLMessageListViewController *)pushToURL:(NSURL *)destinationURL fromPresentingViewController:(UIViewController *)presentingViewController
 {
+    if (![destinationURL isValidWebURL]) {
+        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"invalid_web_url", nil), destinationURL.absoluteString];
+        [presentingViewController presentErrorWithMessage:message];
+        return nil;
+    }
+
     MCLMessageListViewController *messageListViewController = nil;
     if ([self isManiacURL:destinationURL]) {
         messageListViewController = [self pushToMessageFromUrl:destinationURL];
@@ -131,7 +140,7 @@
     return nil; // TODO: - how we deal with that?
 }
 
-// TODO: Ugly here, at least namimg...
+// TODO: Ugly here, at least naming...
 - (NSString *)valueForKey:(NSString *)key fromQueryItems:(NSArray *)queryItems
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name=%@", key];
