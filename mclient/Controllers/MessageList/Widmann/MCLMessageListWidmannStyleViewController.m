@@ -170,7 +170,6 @@
 
     MCLMessageListWidmannStyleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MCLMessageListWidmannStyleTableViewCellIdentifier];
     cell.indexPath = indexPath;
-    cell.toolbar.messageToolbarDelegate = self.messageToolbarController;
     cell.loginManager = self.bag.loginManager;
     cell.bag = self.bag;
     cell.dateFormatter = self.dateFormatter;
@@ -265,6 +264,8 @@
 
 - (void)putMessage:(MCLMessage *)message toCell:(MCLMessageListWidmannStyleTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    self.messageToolbarController.toolbar = cell.toolbar;
+    cell.toolbar.messageToolbarDelegate = self.messageToolbarController;
     message.nextMessage = [self nextMessageForIndexPath:indexPath];
     [cell initWebviewWithMessage:message];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];

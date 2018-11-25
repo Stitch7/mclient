@@ -89,6 +89,7 @@
 {
     self.toolbar.loginManager = self.bag.loginManager;
     self.toolbar.messageToolbarDelegate = self.messageToolbarController;
+    self.messageToolbarController.toolbar = self.toolbar;
     [self.toolbar deactivateBarButtons];
 
     [self.toolbar addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self
@@ -237,8 +238,11 @@
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
-    NSNumber *messageId = self.jumpToMessageId ? self.jumpToMessageId : self.thread.lastMessageId;
-    [self selectMessageWithId:messageId];
+    if (self.selectAfterScroll) {
+        NSNumber *messageId = self.jumpToMessageId ? self.jumpToMessageId : self.thread.lastMessageId;
+        [self selectMessageWithId:messageId];
+        self.selectAfterScroll = NO;
+    }
 }
 
 - (MCLMessage *)messageForIndexPath:(NSIndexPath *)indexPath

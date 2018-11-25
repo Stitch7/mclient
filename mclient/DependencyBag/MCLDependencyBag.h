@@ -12,6 +12,7 @@
 @class MCLNotificationManager;
 @class MCLSettings;
 @class MCLThemeManager;
+@class MCLKeyboardShortcutManager;
 @class MCLSoundEffectPlayer;
 @class MCLStoreReviewManager;
 @protocol MCLHTTPClient;
@@ -25,6 +26,7 @@
 @property (strong, nonatomic) MCLNotificationManager *notificationManager;
 @property (strong, nonatomic) MCLSettings *settings;
 @property (strong, nonatomic) MCLThemeManager *themeManager;
+@property (strong, nonatomic) MCLKeyboardShortcutManager *keyboardShortcutManager;
 @property (strong, nonatomic) MCLSoundEffectPlayer *soundEffectPlayer;
 @property (strong, nonatomic) MCLStoreReviewManager *storeReviewManager;
 @property (strong, nonatomic) id <MCLHTTPClient> httpClient;

@@ -22,6 +22,7 @@
 #import "MCLLogin.h"
 #import "MCLLoginManager.h"
 #import "MCLThemeManager.h"
+#import "MCLKeyboardShortcutManager.h"
 #import "MCLSoundEffectPlayer.h"
 #import "MCLFoundationHTTPClient.h"
 #import "MCLNotificationManager.h"
@@ -43,6 +44,7 @@
 @synthesize settings;
 @synthesize notificationManager;
 @synthesize themeManager;
+@synthesize keyboardShortcutManager;
 @synthesize storeReviewManager;
 @synthesize soundEffectPlayer;
 
@@ -78,6 +80,7 @@
     self.settings = [[MCLSettings alloc] initWithUserDefaults:[NSUserDefaults standardUserDefaults]];
     self.notificationManager = [[MCLNotificationManager alloc] initWithBag:self];
     self.themeManager = [[MCLThemeManager alloc] initWithSettings:self.settings];
+    self.keyboardShortcutManager = [[MCLKeyboardShortcutManager alloc] initWithBag:self];
     self.storeReviewManager = [[MCLStoreReviewManager alloc] initWithSettings:self.settings];
     self.soundEffectPlayer = [[MCLSoundEffectPlayer alloc] initWithSettings:self.settings];
 

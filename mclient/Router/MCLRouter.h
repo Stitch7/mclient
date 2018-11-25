@@ -24,6 +24,7 @@
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
 
 - (void)launchRootWindow:(void (^)(UIWindow *window))windowHandler;
+- (BOOL)modalIsPresented;
 - (void)dismissModalIfPresentedWithCompletionHandler:(void (^)(BOOL dismissed))completionHandler;
 
 @end

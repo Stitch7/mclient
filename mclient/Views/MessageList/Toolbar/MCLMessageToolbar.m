@@ -152,20 +152,16 @@
     self.linkToClipboardButton.enabled = YES;
     self.speakButton.enabled = YES;
 
-    BOOL hideNotificationButton = !self.loginManager.isLoginValid || ![self.message.username isEqualToString:self.loginManager.username];
+    BOOL hideNotificationButton = ![self notificationButtonIsVisible];
     [self hide:hideNotificationButton barButton:self.notificationButton];
     if (!hideNotificationButton) {
         [self enableNotificationButton:self.message.notification];
     }
 
-    BOOL hideEditButton =
-        self.message.thread.isClosed ||
-        !self.loginManager.isLoginValid ||
-        ![self.message.username isEqualToString:self.loginManager.username] ||
-        [self.nextMessage.level compare:self.message.level] == NSOrderedDescending;
+    BOOL hideEditButton = ![self editButtonIsVisible];
     [self hide:hideEditButton barButton:self.editButton];
 
-    BOOL hideReplyButton = !self.loginManager.isLoginValid || self.message.thread.isClosed;
+    BOOL hideReplyButton = ![self replyButtonIsVisible];
     [self hide:hideReplyButton barButton:self.replyButton];
 }
 
@@ -180,6 +176,25 @@
         self.notificationButton.tag = 0;
         self.notificationButton.image = [UIImage imageNamed:@"notificationButtonDisabled"];
     }
+}
+
+- (BOOL)notificationButtonIsVisible
+{
+    return self.loginManager.isLoginValid && [self.message.username isEqualToString:self.loginManager.username];
+}
+
+- (BOOL)editButtonIsVisible
+{
+    return
+        !self.message.thread.isClosed &&
+        self.loginManager.isLoginValid &&
+        [self.message.username isEqualToString:self.loginManager.username] &&
+        [self.nextMessage.level compare:self.message.level] != NSOrderedDescending;
+}
+
+- (BOOL)replyButtonIsVisible
+{
+    return self.loginManager.isLoginValid && !self.message.thread.isClosed;
 }
 
 #pragma mark - Helper

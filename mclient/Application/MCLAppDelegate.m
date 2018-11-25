@@ -11,6 +11,7 @@
 #import "MCLAppDependencyBag.h"
 #import "MCLThemeManager.h"
 #import "MCLNotificationManager.h"
+#import "MCLKeyboardShortcutManager.h"
 
 
 @interface MCLAppDelegate ()
@@ -46,6 +47,13 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     [self.bag.notificationManager handleReceivedNotification:notification];
+}
+
+#pragma mark - UIResponder
+
+- (UIResponder *)nextResponder
+{
+    return self.bag.keyboardShortcutManager;
 }
 
 @end

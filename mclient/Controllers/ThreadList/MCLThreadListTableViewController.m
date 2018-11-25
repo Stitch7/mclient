@@ -19,6 +19,7 @@
 #import "MCLMarkThreadAsReadRequest.h"
 #import "MCLLoginManager.h"
 #import "MCLThemeManager.h"
+#import "MCLKeyboardShortcutManager.h"
 #import "MCLSoundEffectPlayer.h"
 #import "MCLMessageListViewController.h"
 #import "MCLThreadTableViewCell.h"
@@ -67,6 +68,8 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.bag.keyboardShortcutManager.threadsKeyboardShortcutsDelegate = self;
 
     [self configureTableView];
 }
@@ -431,6 +434,40 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
             [self.tableView reloadData];
         }
     }];
+}
+
+
+#pragma mark - ThreadsKeyboardShortcutsDelegate
+
+- (void)keyboardShortcutComposeThreadPressed
+{
+    [self composeThreadButtonPressed:nil];
+}
+
+- (void)keyboardShortcutSelectPreviousThreadPressed
+{
+    NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;
+    if (selectedIndexPath && selectedIndexPath.row > 0) {
+        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:selectedIndexPath.row - 1 inSection:0];
+        [self.tableView selectRowAtIndexPath:nextIndexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+        [self tableView:self.tableView didSelectRowAtIndexPath:nextIndexPath];
+    }
+}
+
+- (void)keyboardShortcutSelectNextThreadPressed
+{
+    NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;
+    if (selectedIndexPath) {
+        if (selectedIndexPath.row < ([self.threads count] - 1)) {
+            NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:selectedIndexPath.row + 1 inSection:0];
+            [self.tableView selectRowAtIndexPath:nextIndexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+            [self tableView:self.tableView didSelectRowAtIndexPath:nextIndexPath];
+        }
+    } else { // Select first
+        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView selectRowAtIndexPath:nextIndexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+        [self tableView:self.tableView didSelectRowAtIndexPath:nextIndexPath];
+    }
 }
 
 #pragma mark - Actions

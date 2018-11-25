@@ -158,9 +158,14 @@
     }];
 }
 
+- (BOOL)modalIsPresented
+{
+    return [self.modalNavigationController presentingViewController] || [self.masterNavigationController presentingViewController];
+}
+
 - (void)dismissModalIfPresentedWithCompletionHandler:(void (^)(BOOL dismissed))completionHandler
 {
-    if ([self.modalNavigationController presentingViewController]) {
+    if ([self modalIsPresented]) {
         [self.modalNavigationController dismissViewControllerAnimated:YES completion:^{
             if (completionHandler) {
                 completionHandler(YES);

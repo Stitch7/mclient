@@ -11,6 +11,7 @@
 #import "MCLLoadingViewControllerDelegate.h"
 #import "MCLComposeMessageViewController.h"
 #import "MCLMessageListViewController.h"
+#import "MCLThreadsKeyboardShortcutsDelegate.h"
 
 extern NSString * const MCLFavoritedChangedNotification;
 
@@ -18,7 +19,7 @@ extern NSString * const MCLFavoritedChangedNotification;
 
 @class MCLBoard;
 
-@interface MCLThreadListTableViewController : UITableViewController <MGSwipeTableCellDelegate, MCLLoadingViewControllerDelegate, MCLComposeMessageViewControllerDelegate, MCLMessageListDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
+@interface MCLThreadListTableViewController : UITableViewController <MGSwipeTableCellDelegate, MCLLoadingViewControllerDelegate, MCLComposeMessageViewControllerDelegate, MCLMessageListDelegate, MCLThreadsKeyboardShortcutsDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
 @property (strong, nonatomic) id <MCLDependencyBag> bag;
 @property (strong, nonatomic) MCLBoard *board;

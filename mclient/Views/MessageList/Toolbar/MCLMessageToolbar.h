@@ -30,5 +30,15 @@
 - (void)deactivateBarButtons;
 - (void)updateBarButtonsWithMessage:(MCLMessage *)message;
 - (void)updateBarButtons;
+- (BOOL)notificationButtonIsVisible;
+- (BOOL)editButtonIsVisible;
+- (BOOL)replyButtonIsVisible;
+
+- (void)openProfileAction:(UIBarButtonItem *)sender;
+- (void)copyLinkAction:(UIBarButtonItem *)sender;
+- (void)speakAction:(UIBarButtonItem *)sender;
+- (void)notificationAction:(UIBarButtonItem *)sender;
+- (void)editAction:(UIBarButtonItem *)sender;
+- (void)replyAction:(UIBarButtonItem *)sender;
 
 @end

@@ -615,6 +615,10 @@
 		30DD81831FB7B499007BF235 /* MCLBoardListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3090CBB51FA8B4DE0085C9AF /* MCLBoardListLoadingViewController.m */; };
 		30DD81841FB7B49A007BF235 /* MCLBoardListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3090CBB51FA8B4DE0085C9AF /* MCLBoardListLoadingViewController.m */; };
 		30DD81851FB7B49A007BF235 /* MCLBoardListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3090CBB51FA8B4DE0085C9AF /* MCLBoardListLoadingViewController.m */; };
+		30E017DF21A55C5100434C55 /* MCLKeyboardShortcutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E017DE21A55C5100434C55 /* MCLKeyboardShortcutManager.m */; };
+		30E017E021A55C5100434C55 /* MCLKeyboardShortcutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E017DE21A55C5100434C55 /* MCLKeyboardShortcutManager.m */; };
+		30E017E121A55C5100434C55 /* MCLKeyboardShortcutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E017DE21A55C5100434C55 /* MCLKeyboardShortcutManager.m */; };
+		30E017E221A55C5100434C55 /* MCLKeyboardShortcutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E017DE21A55C5100434C55 /* MCLKeyboardShortcutManager.m */; };
 		30E8B89919B3CBF40067DD1F /* MCLComposeMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */; };
 		30EA21041F0EAD210064A0A3 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30EA21031F0EAD210064A0A3 /* Profile.storyboard */; };
 		30EA21091F0EDE160064A0A3 /* MCLUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EA21081F0EDE160064A0A3 /* MCLUser.m */; };
@@ -940,6 +944,10 @@
 		30DD81731FB451DF007BF235 /* MCLDependencyBag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLDependencyBag.h; sourceTree = "<group>"; };
 		30DD81741FB452E1007BF235 /* MCLAppDependencyBag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLAppDependencyBag.h; sourceTree = "<group>"; };
 		30DD81751FB452E1007BF235 /* MCLAppDependencyBag.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLAppDependencyBag.m; sourceTree = "<group>"; };
+		30E017DB21A554BF00434C55 /* MCLMessageKeyboardShortcutsDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMessageKeyboardShortcutsDelegate.h; sourceTree = "<group>"; };
+		30E017DC21A554D800434C55 /* MCLThreadsKeyboardShortcutsDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLThreadsKeyboardShortcutsDelegate.h; sourceTree = "<group>"; };
+		30E017DD21A55C5100434C55 /* MCLKeyboardShortcutManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLKeyboardShortcutManager.h; sourceTree = "<group>"; };
+		30E017DE21A55C5100434C55 /* MCLKeyboardShortcutManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLKeyboardShortcutManager.m; sourceTree = "<group>"; };
 		30E88C851F1FE44900EDB446 /* MCLFeatures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLFeatures.h; sourceTree = "<group>"; };
 		30E8B89719B3CBF40067DD1F /* MCLComposeMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLComposeMessageViewController.h; sourceTree = "<group>"; };
 		30E8B89819B3CBF40067DD1F /* MCLComposeMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLComposeMessageViewController.m; sourceTree = "<group>"; };
@@ -1383,6 +1391,7 @@
 				304E5A471E1EB6790022FE8B /* Network */,
 				305DD85919AB2EFE006514BD /* Views */,
 				3036F5951E263EE100ABC2CE /* Themes */,
+				30E017E321A55C5800434C55 /* KeyboardShortcut */,
 				30753B93217625F2009647E9 /* SoundEffectPlayer */,
 				30DD320B2178A8E000A06355 /* StoreReview */,
 				305E53AB19D4F4C5002B8E50 /* Storyboards */,
@@ -1857,6 +1866,17 @@
 				30DD81751FB452E1007BF235 /* MCLAppDependencyBag.m */,
 			);
 			path = DependencyBag;
+			sourceTree = "<group>";
+		};
+		30E017E321A55C5800434C55 /* KeyboardShortcut */ = {
+			isa = PBXGroup;
+			children = (
+				30E017DD21A55C5100434C55 /* MCLKeyboardShortcutManager.h */,
+				30E017DE21A55C5100434C55 /* MCLKeyboardShortcutManager.m */,
+				30E017DB21A554BF00434C55 /* MCLMessageKeyboardShortcutsDelegate.h */,
+				30E017DC21A554D800434C55 /* MCLThreadsKeyboardShortcutsDelegate.h */,
+			);
+			path = KeyboardShortcut;
 			sourceTree = "<group>";
 		};
 		30E217691F268D9A0030FC9A /* Loading */ = {
@@ -2629,6 +2649,7 @@
 				302D19E61F2CEE8600E2FC2B /* MCLLoginRequest.m in Sources */,
 				30A1BFAD19B4A8D4002439FE /* MCLSettingsViewController.m in Sources */,
 				30EA21091F0EDE160064A0A3 /* MCLUser.m in Sources */,
+				30E017E021A55C5100434C55 /* MCLKeyboardShortcutManager.m in Sources */,
 				30D2CD991F63E89B00FF35EB /* MCLDetailViewController.m in Sources */,
 				305E54AE1F2CCD37004002E6 /* MCLLoadingViewController.m in Sources */,
 				3036F59E1E26798E00ABC2CE /* MCLLightTheme.m in Sources */,
@@ -2764,6 +2785,7 @@
 				306FC84B1F93A39F001EB7E9 /* MCLPacmanLoadingView.m in Sources */,
 				306FC84C1F93A39F001EB7E9 /* MCLLoadingView.m in Sources */,
 				306FC84D1F93A39F001EB7E9 /* MCLLoginRequest.m in Sources */,
+				30E017DF21A55C5100434C55 /* MCLKeyboardShortcutManager.m in Sources */,
 				306FC84E1F93A39F001EB7E9 /* MCLSettingsViewController.m in Sources */,
 				306FC84F1F93A39F001EB7E9 /* MCLUser.m in Sources */,
 				306FC8501F93A39F001EB7E9 /* MCLDetailViewController.m in Sources */,
@@ -2891,6 +2913,7 @@
 				3090CAF81FA7ED1E0085C9AF /* MCLLoginRequest.m in Sources */,
 				3090CAF91FA7ED1E0085C9AF /* MCLSettingsViewController.m in Sources */,
 				3090CAFA1FA7ED1E0085C9AF /* MCLUser.m in Sources */,
+				30E017E221A55C5100434C55 /* MCLKeyboardShortcutManager.m in Sources */,
 				3090CAFB1FA7ED1E0085C9AF /* MCLDetailViewController.m in Sources */,
 				3090CAFC1FA7ED1E0085C9AF /* MCLLoadingViewController.m in Sources */,
 				3090CAFD1FA7ED1E0085C9AF /* MCLLightTheme.m in Sources */,
@@ -3018,6 +3041,7 @@
 				3090CB751FA89A5C0085C9AF /* MCLLoginRequest.m in Sources */,
 				3090CB761FA89A5C0085C9AF /* MCLSettingsViewController.m in Sources */,
 				3090CB771FA89A5C0085C9AF /* MCLUser.m in Sources */,
+				30E017E121A55C5100434C55 /* MCLKeyboardShortcutManager.m in Sources */,
 				3090CB781FA89A5C0085C9AF /* MCLDetailViewController.m in Sources */,
 				3090CB791FA89A5C0085C9AF /* MCLLoadingViewController.m in Sources */,
 				3090CB7A1FA89A5C0085C9AF /* MCLLightTheme.m in Sources */,

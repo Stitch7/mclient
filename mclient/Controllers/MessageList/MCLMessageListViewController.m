@@ -15,6 +15,7 @@
 #import "MCLRouter+mainNavigation.h"
 #import "MCLRouter+openURL.h"
 #import "MCLThemeManager.h"
+#import "MCLKeyboardShortcutManager.h"
 #import "MCLSoundEffectPlayer.h"
 #import "MCLUser.h"
 #import "MCLBoard.h"
@@ -49,6 +50,7 @@
 
 - (void)initialize
 {
+    self.selectAfterScroll = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(themeChanged:)
                                                  name:MCLThemeChangedNotification
@@ -75,6 +77,7 @@
 {
     [super viewDidLoad];
 
+    self.bag.keyboardShortcutManager.messageKeyboardShortcutsDelegate = self;
     self.messageToolbarController = [[MCLMessageToolbarController alloc] initWithBag:self.bag messageListViewController:self];
 
     [self themeChanged:nil];
@@ -162,6 +165,7 @@
         [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
             if (self.jumpToMessageId == message.messageId) {
                 NSIndexPath *jumpToMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
+                self.selectAfterScroll = YES;
                 [self.tableView scrollToRowAtIndexPath:jumpToMessageIndexPath
                                       atScrollPosition:UITableViewScrollPositionTop
                                               animated:YES];
@@ -177,6 +181,7 @@
         [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
             if (self.thread.lastMessageId == message.messageId) {
                 NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
+                self.selectAfterScroll = YES;
                 [self.tableView scrollToRowAtIndexPath:latestMessageIndexPath
                                       atScrollPosition:UITableViewScrollPositionTop
                                               animated:YES];
@@ -221,6 +226,67 @@
                                             handler:nil]];;
 
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark - MCLMessageKeyboardShortcutsDelegate
+
+- (BOOL)aMessageIsSelected
+{
+    return self.tableView.indexPathForSelectedRow != nil;
+}
+
+- (void)keyboardShortcutSelectNextMessagePressed
+{
+    NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;
+    if (selectedIndexPath && selectedIndexPath.row < ([self.messages count] - 1)) {
+        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:selectedIndexPath.row + 1 inSection:0];
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
+        [self.tableView.delegate tableView:self.tableView didDeselectRowAtIndexPath:selectedIndexPath];
+        [self.tableView selectRowAtIndexPath:nextIndexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+        [self tableView:self.tableView didSelectRowAtIndexPath:nextIndexPath];
+    }
+}
+
+- (void)keyboardShortcutSelectPreviousMessagePressed
+{
+    NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;
+    if (selectedIndexPath && selectedIndexPath.row > 0) {
+        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:selectedIndexPath.row - 1 inSection:0];
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
+        [self.tableView.delegate tableView:self.tableView didDeselectRowAtIndexPath:selectedIndexPath];
+        [self.tableView selectRowAtIndexPath:nextIndexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+        [self tableView:self.tableView didSelectRowAtIndexPath:nextIndexPath];
+    }
+}
+
+- (void)keyboardShortcutOpenProfilePressed
+{
+    [self.messageToolbarController.toolbar openProfileAction:nil];
+}
+
+- (void)keyboardShortcutCopyLinkPressed
+{
+    [self.messageToolbarController.toolbar copyLinkAction:nil];
+}
+
+- (BOOL)selectedMessageIsEditable
+{
+    return [self.messageToolbarController.toolbar editButtonIsVisible];
+}
+
+- (void)keyboardShortcutComposeEditPressed
+{
+    [self.messageToolbarController.toolbar editAction:nil];
+}
+
+- (BOOL)selectedMessageIsOpenForReply
+{
+    return [self.messageToolbarController.toolbar replyButtonIsVisible];
+}
+
+- (void)keyboardShortcutComposeReplyPressed
+{
+    [self.messageToolbarController.toolbar replyAction:nil];
 }
 
 #pragma mark - Abstract methods

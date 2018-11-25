@@ -19,6 +19,7 @@
 #import "MCLMessageResponsesRequest.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
+#import "MCLKeyboardShortcutManager.h"
 #import "MCLStoreReviewManager.h"
 #import "MCLSoundEffectPlayer.h"
 #import "MCLSplitViewController.h"
@@ -241,6 +242,7 @@
     switch ([key integerValue]) {
         case MCLBoardListSectionBoards:
             self.boards = [newData copy];
+            self.bag.keyboardShortcutManager.boards = self.boards;
             if (!self.bag.loginManager.isLoginValid) {
                 self.favorites = nil;
             }

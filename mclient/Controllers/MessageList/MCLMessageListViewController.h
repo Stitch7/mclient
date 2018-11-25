@@ -9,6 +9,7 @@
 #import "MCLLoadingViewControllerDelegate.h"
 #import "MCLComposeMessageViewControllerDelegate.h"
 #import "MCLMessageToolbarDelegate.h"
+#import "MCLMessageKeyboardShortcutsDelegate.h"
 #import "MCLRouter+composeMessage.h"
 #import "MCLTheme.h"
 
@@ -20,7 +21,7 @@
 @class MCLThread;
 @class MCLMessageToolbarController;
 
-@interface MCLMessageListViewController : UIViewController <MCLLoadingViewControllerDelegate, MCLComposeMessageViewControllerDelegate>
+@interface MCLMessageListViewController : UIViewController <MCLLoadingViewControllerDelegate, MCLComposeMessageViewControllerDelegate, MCLMessageKeyboardShortcutsDelegate>
 
 @property (strong, nonatomic) id <MCLDependencyBag> bag;
 @property (weak, nonatomic) id <MCLMessageListDelegate> delegate;
@@ -35,6 +36,7 @@
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
 @property (strong, nonatomic) MCLMessageToolbarController *messageToolbarController;
+@property (assign, nonatomic) BOOL selectAfterScroll;
 
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
 

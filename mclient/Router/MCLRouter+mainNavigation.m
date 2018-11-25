@@ -61,8 +61,8 @@
                                                                   contentViewController:profileVC];
 
     loadingVC.modalPresentationStyle = UIModalPresentationFormSheet;
-    MCLModalNavigationController *navigationVC = [[MCLModalNavigationController alloc] initWithRootViewController:loadingVC];
-    [self.masterNavigationController presentViewController:navigationVC animated:YES completion:nil];
+    self.modalNavigationController = [[MCLModalNavigationController alloc] initWithRootViewController:loadingVC];
+    [self.masterNavigationController presentViewController:self.modalNavigationController animated:YES completion:nil];
 
     return profileVC;
 }
@@ -101,7 +101,21 @@
                                                                                 request:threadListRequest
                                                                   contentViewController:threadListVC];
     loadingVC.title = board.name;
-    [self.masterNavigationController pushViewController:loadingVC animated:YES];
+
+    BOOL replace = NO;
+    MCLLoadingViewController *currentVC = (MCLLoadingViewController *)[[self.masterNavigationController viewControllers] lastObject];
+    if (currentVC && [currentVC.contentViewController isKindOfClass:[MCLThreadListTableViewController class]]) {
+        replace = YES;
+    }
+
+    if (replace) {
+        NSMutableArray *newViewControllers = [[self.masterNavigationController viewControllers] mutableCopy];
+        [newViewControllers removeLastObject];
+        [newViewControllers addObject:loadingVC];
+        [self.masterNavigationController setViewControllers:newViewControllers];
+    } else {
+        [self.masterNavigationController pushViewController:loadingVC animated:YES];
+    }
 
     return threadListVC;
 }
