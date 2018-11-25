@@ -10,6 +10,7 @@
 
 #import "UIApplication+Additions.h"
 #import "MCLDependencyBag.h"
+#import "MCLRouter+openURL.h"
 #import "MCLThemeManager.h"
 #import "MCLTheme.h"
 
@@ -79,7 +80,7 @@
 
 - (IBAction)appStoreButtonPressed:(id)sender
 {
-    [self.bag.application openURL:[NSURL URLWithString:kAppStoreUrl]];
+    [self.bag.router openLinkInSafari:[NSURL URLWithString:kAppStoreUrl]];
 }
 
 - (IBAction)quitButtonPressed:(id)sender

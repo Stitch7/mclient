@@ -39,6 +39,11 @@
     return self.applicationIconBadgeNumber;
 }
 
+- (BOOL)isYoutubeAppInstalled
+{
+    return [self canOpenURL:[NSURL URLWithString:@"youtube://"]];
+}
+
 - (void)quit
 {
     // Press home button programmatically

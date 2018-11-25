@@ -25,6 +25,7 @@
     if (!self) return nil;
 
     self.userDefaults = userDefaults;
+    [self configureDefaultSettings];
 
     return self;
 }
@@ -121,12 +122,24 @@
              MCLSettingFontSize:                [self numberForSetting:MCLSettingFontSize orDefault:kSettingsDefaultFontSize],
              MCLSettingTheme:                   [self numberForSetting:MCLSettingTheme orDefault:0],
              MCLSettingOpenLinksInSafari:       [self stringForIsSettingActivated:MCLSettingOpenLinksInSafari],
+             MCLSettingEmbedYoutubeVideos:            [self stringForIsSettingActivated:MCLSettingEmbedYoutubeVideos],
              MCLSettingClassicQuoteDesign:      [self stringForIsSettingActivated:MCLSettingClassicQuoteDesign],
              MCLSettingBackgroundNotifications: [self stringForIsSettingActivated:MCLSettingBackgroundNotifications],
              MCLSettingSoundEffectsEnabled:     [self stringForIsSettingActivated:MCLSettingSoundEffectsEnabled orDefault:YES]};
 }
 
 #pragma mark - Private
+
+- (void)configureDefaultSettings
+{
+    if ([self objectForSetting:MCLSettingEmbedYoutubeVideos] == nil) {
+        [self setBool:YES forSetting:MCLSettingEmbedYoutubeVideos];
+    }
+
+    // TODO: configure others
+
+    [self persist];
+}
 
 - (NSString *)stringForIsSettingActivated:(NSString *)setting
 {

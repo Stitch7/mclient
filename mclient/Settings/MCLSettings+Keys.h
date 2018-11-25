@@ -20,6 +20,7 @@ extern NSString *const MCLSettingFontSize;
 extern NSString *const MCLSettingTheme;
 extern NSString *const MCLSettingOpenLinksInSafari;
 extern NSString *const MCLSettingClassicQuoteDesign;
+extern NSString *const MCLSettingEmbedYoutubeVideos;
 extern NSString *const MCLSettingBackgroundNotifications;
 extern NSString *const MCLSettingSoundEffectsEnabled;
 extern NSString *const MCLSettingHideFavoritesHint;

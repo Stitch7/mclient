@@ -51,6 +51,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 @property (weak, nonatomic) IBOutlet MCLTextView *settingsSignatureTextView;
 @property (weak, nonatomic) IBOutlet UISwitch *jumpToLatestMessageSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *openLinksInSafariSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *embedYoutubeVideosSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *classicQuoteDesignSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *darkModeEnabledSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *darkModeAutomaticallySwitch;
@@ -62,8 +63,8 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 
 #define THREADVIEW_SECTION 3;
 #define FONTSIZE_SECTION 4;
-#define IMAGES_SECTION 8;
-#define INFO_SECTION 11;
+#define IMAGES_SECTION 9;
+#define INFO_SECTION 12;
 
 - (void)awakeFromNib
 {
@@ -149,6 +150,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
                                                 orDefault:@(kMCLSettingsThreadViewWidmann)];
     self.jumpToLatestMessageSwitch.on = [self.bag.settings isSettingActivated:MCLSettingJumpToLatestPost];
     self.openLinksInSafariSwitch.on = [self.bag.settings isSettingActivated:MCLSettingOpenLinksInSafari];
+    self.embedYoutubeVideosSwitch.on = [self.bag.settings isSettingActivated:MCLSettingEmbedYoutubeVideos];
     self.classicQuoteDesignSwitch.on = [self.bag.settings isSettingActivated:MCLSettingClassicQuoteDesign];
 }
 
@@ -568,6 +570,12 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 - (IBAction)openLinksInSafariEnabledSwitchValueChangedAction:(UISwitch *)sender
 {
     [self.bag.settings setBool:sender.on forSetting:MCLSettingOpenLinksInSafari];
+    [self.bag.soundEffectPlayer playSwitchSound];
+}
+
+- (IBAction)embedYoutubeVideosEnabledSwitchValueChangedAction:(UISwitch *)sender
+{
+    [self.bag.settings setBool:sender.on forSetting:MCLSettingEmbedYoutubeVideos];
     [self.bag.soundEffectPlayer playSwitchSound];
 }
 

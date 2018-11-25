@@ -325,6 +325,7 @@
         topMargin += 70;
     }
     NSString *messageText = [message messageHtmlWithTopMargin:topMargin
+                                                        width:cell.contentView.bounds.size.width
                                                         theme:self.bag.themeManager.currentTheme
                                                      settings:self.bag.settings];
     [self.webView loadHTMLString:messageText baseURL:nil];

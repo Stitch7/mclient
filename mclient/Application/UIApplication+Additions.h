@@ -12,6 +12,7 @@
 - (NSString *)buildNumber;
 - (NSInteger)incrementApplicationIconBadgeNumber;
 - (NSInteger)decrementApplicationIconBadgeNumber;
+- (BOOL)isYoutubeAppInstalled;
 - (void)quit;
 
 @end

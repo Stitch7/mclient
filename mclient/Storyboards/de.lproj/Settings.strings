@@ -86,6 +86,9 @@
 /* Class = "UILabel"; text = "Open Links in Safari"; ObjectID = "hll-o3-la6"; */
 "hll-o3-la6.text" = "Links in Safari öffnen";
 
+/* Class = "UILabel"; text = "Embed YouTube Videos"; ObjectID = "Pgb-D7-SOr"; */
+"Pgb-D7-SOr.text" = "YouTube Videos einbetten";
+
 /* Class = "UILabel"; text = "Signature enabled"; ObjectID = "itk-zT-27W"; */
 "itk-zT-27W.text" = "Signatur aktiviert";
 

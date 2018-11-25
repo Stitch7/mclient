@@ -16,5 +16,6 @@
 - (MCLMessageListViewController *)pushToURL:(NSURL *)destinationURL;
 - (MCLMessageListViewController *)pushToURL:(NSURL *)destinationURL fromPresentingViewController:(UIViewController *)presentingViewController;
 - (SFSafariViewController *)openRawManiacForumURL:(NSURL *)destinationURL fromPresentingViewController:(UIViewController *)presentingViewController;
+- (void)openLinkInSafari:(NSURL *)url;
 
 @end

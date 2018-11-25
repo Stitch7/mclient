@@ -102,9 +102,10 @@
     }
 
     MCLMessage *previewMessage = [[MCLMessage alloc] init];
-    previewMessage.textHtml = [[data firstObject] objectForKey:messageTextKey];
+    previewMessage.textHtml = [NSString stringWithFormat:@"<div id=\"content\">%@</div>", [[data firstObject] objectForKey:messageTextKey]];
     previewMessage.textHtmlWithImages = previewMessage.textHtml;
     self.previewText = [previewMessage messageHtmlWithTopMargin:20
+                                                          width:self.view.bounds.size.width
                                                           theme:[self.bag.themeManager currentTheme]
                                                        settings:self.bag.settings];
     [self.webView loadHTMLString:self.previewText baseURL:nil];

@@ -13,5 +13,6 @@ NSString * const MCLFeatureCrashReporter = @"CrashReporter";
 NSString * const MCLFeatureStoreReview = @"StoreReview";
 NSString * const MCLFeatureKillFileThreads = @"KillFileThreads";
 NSString * const MCLFeatureFullSearch = @"FullSearch";
+NSString * const MCLFeatureEmbedYoutube = @"EmbedYoutube";
 NSString * const MCLFeaturePrivateMessages = @"PrivateMessages";
 NSString * const MCLFeatureTetris = @"Tetris";

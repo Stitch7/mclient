@@ -218,6 +218,7 @@ NSString *const WebviewMessageHandlerName = @"mclient";
     [self.webView setNavigationDelegate:self.delegate];
 
     NSString *messageHtml = [message messageHtmlWithTopMargin:0
+                                                        width:self.contentView.bounds.size.width
                                                         theme:self.bag.themeManager.currentTheme
                                                      settings:self.bag.settings];
     [self.webView loadHTMLString:messageHtml baseURL:nil];

@@ -161,11 +161,14 @@
     }
 }
 
-- (NSString *)messageHtmlWithTopMargin:(int)topMargin theme:(id <MCLTheme>)theme settings:(MCLSettings *)settings
+- (NSString *)messageHtmlWithTopMargin:(int)topMargin width:(CGFloat)width theme:(id <MCLTheme>)theme settings:(MCLSettings *)settings
 {
+    int leftRightMargin = 20;
+    CGFloat youtubeFameWidth = width - leftRightMargin * 2;
     NSNumber *imageSetting = [settings objectForSetting:MCLSettingShowImages];
     NSInteger fontSize = [settings integerForSetting:MCLSettingFontSize orDefault:kSettingsDefaultFontSize];
     BOOL classicQuoteDesign = [settings isSettingActivated:MCLSettingClassicQuoteDesign];
+    BOOL embedYoutube = [settings isSettingActivated:MCLSettingEmbedYoutubeVideos];
 
     NSString *messageHtml = @"";
     switch ([imageSetting integerValue]) {
@@ -188,14 +191,24 @@
 
     return [self messageHtmlSkeletonForHtml:messageHtml
                                   topMargin:topMargin
+                            leftRightMargin:leftRightMargin
+                          youtubeFrameWidth:youtubeFameWidth
                                    fontSize:fontSize
                          classicQuoteDesign:classicQuoteDesign
+                               embedYoutube:embedYoutube
                                       theme:theme];
 }
 
 # pragma mark - Private Methods
 
-- (NSString *)messageHtmlSkeletonForHtml:(NSString *)html topMargin:(int)topMargin fontSize:(NSInteger)fontSize classicQuoteDesign:(BOOL)classicQuoteDesign theme:(id <MCLTheme>)currentTheme
+- (NSString *)messageHtmlSkeletonForHtml:(NSString *)html
+                               topMargin:(int)topMargin
+                         leftRightMargin:(int)leftRightMargin
+                       youtubeFrameWidth:(int)youtubeFrameWidth
+                                fontSize:(NSInteger)fontSize
+                      classicQuoteDesign:(BOOL)classicQuoteDesign
+                            embedYoutube:(BOOL)embedYoutube
+                                   theme:(id <MCLTheme>)currentTheme
 {
     NSString *editedHtml = html;
     if (!classicQuoteDesign) {
@@ -213,6 +226,7 @@
     NSString *textColor = [currentTheme isDark] ? @"fff" : @"000";
     NSString *linkColor = [currentTheme cssTintColor];
     NSString *classicQuoteDesignDisabled = classicQuoteDesign ? @"-DEACTIVATED" : @"";
+    NSString *embedYoutubeEnabled = embedYoutube ? @"true" : @"false";
     NSString *quoteColor = [currentTheme cssQuoteColor];
 
     return [NSString stringWithFormat:@""
@@ -220,14 +234,49 @@
             "<head>"
             "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no\"/>"
             "<script type=\"text/javascript\">"
-            "    function spoiler(obj) {"
+            "    spoiler = (obj) => {"
             "        if (obj.nextSibling.style.display === 'none') {"
             "            obj.nextSibling.style.display = 'inline';"
             "        } else {"
             "            obj.nextSibling.style.display = 'none';"
             "        }"
             "        window.webkit.messageHandlers.mclient.postMessage({\"message\":\"content-changed\"});"
-            "    }"
+            "    };"
+            " "
+            "    transformYoutubeLinks = (text) => {"
+            "        const self = this;"
+            "        let resultHtml = text;"
+            " "
+            "        parseYoutubeURL = (url) => {"
+            "            const regExp = \"^(?:https?:)?//[^/]*(?:youtube(?:-nocookie)?\\.com|youtu\\.be).*[=/]([-\\\\w]{11})(?:\\\\?|=|&|$)\";"
+            "            const match = url.match(regExp);"
+            "            return match ? match[1] : false;"
+            "        };"
+            " "
+            "        startTimeFromYoutubeURL = (url) => {"
+            "            const urlParams = new URLSearchParams(url);"
+            "            const startParam = urlParams.get('start') || urlParams.get('t') || '0s';"
+            "            return startParam.replace('s', '');"
+            "        };"
+            " "
+            "        createYoutubeEmbed = (id, startTime) => {"
+            "            const width = %i;" // youtubeFrameWidth
+            "            const height = width * 0.5625;"
+            "            return '<iframe width=\"' + width + '\" height=\"' + height + '\" src=\"https://www.youtube.com/embed/' + id + '?start=' + startTime + '\" frameborder=\"0\" allowfullscreen></iframe>';"
+            "        };"
+            " "
+            "        for (const link of document.getElementsByTagName('a')) {"
+            "            if (link.parentElement.tagName === 'FONT') {"
+            "               continue;"
+            "            }"
+            "            const youtubeID = self.parseYoutubeURL(link.href);"
+            "            if (youtubeID) {"
+            "                const startTime = self.startTimeFromYoutubeURL(link.href);"
+            "                resultHtml = resultHtml.replace(link.outerHTML, self.createYoutubeEmbed(youtubeID, startTime) + '<br>' + link.outerHTML + '<br>');"
+            "            }"
+            "        }"
+            "        return resultHtml;"
+            "    };"
             "</script>"
             "<style>"
             "    * {"
@@ -236,7 +285,7 @@
             "        -webkit-text-size-adjust: none;"
             "    }"
             "    body {"
-            "        margin: %ipx 20px 10px 20px;" // topMargin
+            "        margin: %ipx %ipx 10px %ipx;" // topMargin, leftRightMargin, leftRightMargin
             "        padding: 0px;"
             "        background-color: transparent;"
             "        color: #%@;" // textColor
@@ -268,8 +317,30 @@
             "</style>"
             "</head>"
             "<body>%@</body>" // editedHtml
+            "<script type=\"text/javascript\">"
+            "   if (%@) {" // embedYoutubeEnabled
+            "       const content = document.getElementById('content');"
+            "       const newContentInnerHTML = transformYoutubeLinks(content.innerHTML);"
+            "       if (content.innerHTML !== newContentInnerHTML) {"
+            "           content.innerHTML = newContentInnerHTML;"
+            "           window.webkit.messageHandlers.mclient.postMessage({\"message\":\"content-changed\"});"
+            "       }"
+            "   }"
+            "</script>"
             "</html>",
-            fontSizeStr, topMargin, textColor, linkColor, classicQuoteDesignDisabled, quoteColor, quoteColor, buttonFontSize, editedHtml];
+            youtubeFrameWidth,
+            fontSizeStr,
+            topMargin,
+            leftRightMargin,
+            leftRightMargin,
+            textColor,
+            linkColor,
+            classicQuoteDesignDisabled,
+            quoteColor,
+            quoteColor,
+            buttonFontSize,
+            editedHtml,
+            embedYoutubeEnabled];
 }
 
 - (NSString *)actionTitle

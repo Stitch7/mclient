@@ -21,6 +21,7 @@ NSString * const MCLSettingFontSize = @"fontSize";
 NSString * const MCLSettingTheme = @"theme";
 NSString * const MCLSettingOpenLinksInSafari = @"openLinksInSafari";
 NSString * const MCLSettingClassicQuoteDesign = @"classicQuoteDesign";
+NSString * const MCLSettingEmbedYoutubeVideos = @"embedYoutubeVideos";
 NSString * const MCLSettingBackgroundNotifications = @"backgroundNotifications";
 NSString * const MCLSettingSoundEffectsEnabled = @"soundEffectsEnabled";
 NSString * const MCLSettingHideFavoritesHint = @"hideFavoritesHint";

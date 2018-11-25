@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hWg-ib-K7d">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hWg-ib-K7d">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -365,10 +365,43 @@ Register at https://www.maniac-forum.de</string>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="pPQ-jD-eKb">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Kgv-nZ-LkK">
+                                        <rect key="frame" x="0.0" y="950" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Kgv-nZ-LkK" id="8SB-9x-Yqa">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Embed YouTube Videos" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pgb-D7-SOr">
+                                                    <rect key="frame" x="16" y="11.5" width="284" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BT5-jB-DMm">
+                                                    <rect key="frame" x="305" y="6.5" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="embedYoutubeVideosEnabledSwitchValueChangedAction:" destination="ecl-kD-BtA" eventType="valueChanged" id="osk-F9-VZV"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="BT5-jB-DMm" firstAttribute="centerY" secondItem="8SB-9x-Yqa" secondAttribute="centerY" id="GSO-qD-qer"/>
+                                                <constraint firstItem="BT5-jB-DMm" firstAttribute="leading" secondItem="Pgb-D7-SOr" secondAttribute="trailing" constant="5" id="K7G-Vj-n1Y"/>
+                                                <constraint firstItem="Pgb-D7-SOr" firstAttribute="centerY" secondItem="8SB-9x-Yqa" secondAttribute="centerY" id="Zzz-gL-Knk"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="BT5-jB-DMm" secondAttribute="trailing" constant="5" id="qSV-Hb-Oup"/>
+                                                <constraint firstItem="Pgb-D7-SOr" firstAttribute="leading" secondItem="8SB-9x-Yqa" secondAttribute="leadingMargin" id="vTN-Dn-YBi"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection id="9Gc-Wn-M37">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="RIg-Wt-wdm">
-                                        <rect key="frame" x="0.0" y="950" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1014" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RIg-Wt-wdm" id="ls5-YR-uel">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -401,7 +434,7 @@ Register at https://www.maniac-forum.de</string>
                             <tableViewSection headerTitle="SHOW IMAGES" id="dxZ-Ml-7OB">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="A9x-a9-9zf">
-                                        <rect key="frame" x="0.0" y="1042" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1106" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="A9x-a9-9zf" id="MO8-os-mCM">
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="43.5"/>
@@ -422,7 +455,7 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="RRF-by-2V6">
-                                        <rect key="frame" x="0.0" y="1086" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1150" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RRF-by-2V6" id="1yg-t3-vqi">
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="43.5"/>
@@ -443,7 +476,7 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="M0z-CT-3OR">
-                                        <rect key="frame" x="0.0" y="1130" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1194" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M0z-CT-3OR" id="tMp-UC-PtB">
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="43.5"/>
@@ -468,7 +501,7 @@ Register at https://www.maniac-forum.de</string>
                             <tableViewSection headerTitle="SIGNATURE" id="tY9-Fn-E9G">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5YV-zo-Yvu">
-                                        <rect key="frame" x="0.0" y="1222" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1286" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5YV-zo-Yvu" id="Xeh-yv-fMc">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -497,7 +530,7 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="72" id="fFY-7R-rKU">
-                                        <rect key="frame" x="0.0" y="1266" width="375" height="72"/>
+                                        <rect key="frame" x="0.0" y="1330" width="375" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fFY-7R-rKU" id="3ID-op-sJ9">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="71.5"/>
@@ -525,7 +558,7 @@ Register at https://www.maniac-forum.de</string>
                             <tableViewSection headerTitle="MISCELLANEOUS" id="eeI-u4-p1g">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="NFN-3H-n94">
-                                        <rect key="frame" x="0.0" y="1386" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1450" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NFN-3H-n94" id="LO2-1n-o1C">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -558,7 +591,7 @@ Register at https://www.maniac-forum.de</string>
                             <tableViewSection headerTitle="INFORMATION" id="Bbz-uB-lDT">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="aFP-0s-wth">
-                                        <rect key="frame" x="0.0" y="1478" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1542" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aFP-0s-wth" id="VUK-UL-gu8">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -579,7 +612,7 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="VRC-Fz-Ueo">
-                                        <rect key="frame" x="0.0" y="1522" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1586" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VRC-Fz-Ueo" id="LQC-K4-ZCU">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -600,7 +633,7 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="qEr-rv-Ygw">
-                                        <rect key="frame" x="0.0" y="1566" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1630" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qEr-rv-Ygw" id="bqy-Di-hQJ">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -621,7 +654,7 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="SiT-oA-PKf">
-                                        <rect key="frame" x="0.0" y="1610" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1674" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SiT-oA-PKf" id="dpn-2q-9bC">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -642,7 +675,7 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="99z-hE-4O5">
-                                        <rect key="frame" x="0.0" y="1654" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1718" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="99z-hE-4O5" id="DMq-qr-EkQ">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -663,7 +696,7 @@ Register at https://www.maniac-forum.de</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="W73-TY-poE">
-                                        <rect key="frame" x="0.0" y="1698" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1762" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="W73-TY-poE" id="eqM-Fb-AFp">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -706,6 +739,7 @@ Register at https://www.maniac-forum.de</string>
                         <outlet property="darkModeAutomaticallySwitch" destination="9HA-ik-cBI" id="kz4-MV-VZG"/>
                         <outlet property="darkModeEnabledSwitch" destination="JRO-gI-ndV" id="jZj-EJ-lVm"/>
                         <outlet property="doneButton" destination="SR3-29-7UZ" id="Yeq-ZU-5qf"/>
+                        <outlet property="embedYoutubeVideosSwitch" destination="BT5-jB-DMm" id="LGh-CP-rPy"/>
                         <outlet property="jumpToLatestMessageSwitch" destination="6Sj-nd-z3g" id="zFj-nJ-DtK"/>
                         <outlet property="loginDataStatusLabel" destination="Kto-1S-ge8" id="RO6-bd-OD0"/>
                         <outlet property="loginDataStatusSpinner" destination="mal-qT-Fqj" id="rxd-gG-eMo"/>

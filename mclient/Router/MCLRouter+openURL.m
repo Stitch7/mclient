@@ -8,6 +8,7 @@
 
 @import SafariServices;
 
+#import "UIApplication+Additions.h"
 #import "UIViewController+Additions.h"
 #import "NSURL+isValidWebURL.h"
 #import "MCLDependencyBag.h"
@@ -58,7 +59,7 @@
         safariVC = [[SFSafariViewController alloc] initWithURL:destinationURL entersReaderIfAvailable:YES];
         safariVC.automaticallyAdjustsScrollViewInsets = NO;
     } else { // Fallback for iOS9
-        [UIApplication.sharedApplication openURL:destinationURL];
+        [self openLinkInSafari:destinationURL];
         return nil;
     }
     [safariVC setModalPresentationStyle:UIModalPresentationCustom];
@@ -75,11 +76,21 @@
 {
     return [url.host hasSuffix:@"maniac-forum.de"];
 }
+
+- (BOOL)isYoutubeURL:(NSURL *)url
+{
+    return [url.host hasSuffix:@"youtube.com"] || [url.host hasSuffix:@"youtube-nocookie.com"] || [url.host hasSuffix:@"youtu.be"];
+}
  
 - (SFSafariViewController *)openLink:(NSURL *)url fromPresentingViewController:(UIViewController *)presentingViewController
 {
     if ([self.bag.settings isSettingActivated:MCLSettingOpenLinksInSafari]) {
-        [UIApplication.sharedApplication openURL:url];
+        [self openLinkInSafari:url];
+        return nil;
+    }
+
+    if ([self isYoutubeURL:url] && [self.bag.application isYoutubeAppInstalled]) {
+        [self openLinkInSafari:url];
         return nil;
     }
 
@@ -95,9 +106,14 @@
 
         return safariVC;
     } else {
-        [UIApplication.sharedApplication openURL:url];
+        [self openLinkInSafari:url];
         return nil;
     }
+}
+
+- (void)openLinkInSafari:(NSURL *)url
+{
+    [self.bag.application openURL:url];
 }
 
 - (MCLMessageListViewController *)pushToMessageFromUrl:(NSURL *)url

@@ -141,6 +141,7 @@
     previewMessage.textHtml = [self seamanDiaryPostingText];
     previewMessage.textHtmlWithImages = previewMessage.textHtml;
     NSString *previewText = [previewMessage messageHtmlWithTopMargin:55
+                                                               width:self.view.bounds.size.width
                                                                theme:self.bag.themeManager.currentTheme
                                                              settings:self.bag.settings];
     [self.webView loadHTMLString:previewText baseURL:nil];
