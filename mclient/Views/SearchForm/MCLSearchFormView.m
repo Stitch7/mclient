@@ -23,9 +23,7 @@
 
 @property (strong, nonatomic) id <MCLDependencyBag> bag;
 @property (strong, nonatomic) UIPickerView *boardPickerView;
-@property (strong, nonatomic) UIPickerView *daysPickerView;
 @property (strong, nonatomic) NSArray<MCLBoard *> *boards;
-@property (strong, nonatomic) NSArray<NSString *> *days;
 
 @end
 
@@ -44,7 +42,6 @@
     [extendedBoards addObject:[MCLBoard boardWithId:@-1 name:NSLocalizedString(@"search_all_boards", nil)]];
     [extendedBoards addObjectsFromArray:boards];
     self.boards = extendedBoards;
-    self.days = @[@"30", @"90", @"180", @"356", @"0"];
 
     [self configureSubviews];
 
@@ -68,7 +65,6 @@
     self.phraseTextField.delegate = self;
     self.usernameTextField.delegate = self;
     self.boardTextField.delegate = self;
-    self.daysTextField.delegate = self;
 
     self.phraseTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"search_phrase", nil)
                                                                                  attributes:@{NSForegroundColorAttributeName:[currentTheme placeholderTextColor]}];
@@ -89,21 +85,11 @@
     self.boardTextField.backgroundColor = [currentTheme searchFieldBackgroundColor];
     self.boardTextField.textColor = [currentTheme searchFieldTextColor];
 
-    self.daysTextField.text = [self daysLabelWithKey:0];
-    self.daysTextField.backgroundColor = [currentTheme searchFieldBackgroundColor];
-    self.daysTextField.textColor = [currentTheme searchFieldTextColor];
-
     self.boardPickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
     self.boardPickerView.delegate = self;
     self.boardPickerView.dataSource = self;
     self.boardPickerView.showsSelectionIndicator = YES;
     self.boardTextField.inputView = self.boardPickerView;
-
-    self.daysPickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
-    self.daysPickerView.delegate = self;
-    self.daysPickerView.dataSource = self;
-    self.daysPickerView.showsSelectionIndicator = YES;
-    self.daysTextField.inputView = self.daysPickerView;
 
     self.searchInBodySwitch.on = NO;
 
@@ -124,7 +110,7 @@
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender
 {
-    if (self.boardTextField.isFirstResponder || self.daysTextField.isFirstResponder) {
+    if (self.boardTextField.isFirstResponder) {
         return NO;
     }
 
@@ -133,7 +119,7 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (textField == self.boardTextField || textField == self.daysTextField) {
+    if (textField == self.boardTextField) {
         return NO;
     }
 
@@ -156,9 +142,6 @@
 {
     if (pickerView == self.boardPickerView) {
         return [self.boards[row] name];
-    } else if (pickerView == self.daysPickerView) {
-        NSString *localizeKey = [NSString stringWithFormat:@"search_days_%@", self.days[row]];
-        return NSLocalizedString(localizeKey, nil);
     }
 
     return nil;
@@ -169,9 +152,6 @@
     if (pickerView == self.boardPickerView) {
         self.boardTextField.text = [self.boards[row] name];
         self.boardTextField.tag = row;
-    } else if (pickerView == self.daysPickerView) {
-        self.daysTextField.text = [self daysLabelWithKey:row];
-        self.daysTextField.tag = row;
     }
 }
 
@@ -186,20 +166,9 @@
 {
     if (pickerView == self.boardPickerView) {
         return [self.boards count];
-    } else if (pickerView == self.daysPickerView) {
-        return [self.days count];
     }
 
     return 0;
-}
-
-- (NSString *)daysLabelWithKey:(NSInteger)key
-{
-    if (key == [self.days count] - 1) {
-        return NSLocalizedString(@"search_days_0", nil);
-    }
-
-    return [NSString stringWithFormat:NSLocalizedString(@"search_days", nil), self.days[key]];
 }
 
 #pragma mark - Actions
@@ -222,12 +191,10 @@
         NSString *phrase = [self.phraseTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         NSString *username = [self.usernameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         NSNumber *board = [self.boards[self.boardTextField.tag] boardId];
-        NSNumber *days = [NSNumber numberWithInteger:[self.days[self.daysTextField.tag] integerValue]];
         MCLSearchQuery *searchQuery = [MCLSearchQuery searchQueryWithPhrase:phrase
                                                                searchInBody:self.searchInBodySwitch.on
                                                                    username:username
-                                                                      board:board
-                                                                       days:days];
+                                                                      board:board];
         [self.delegate searchFormView:self firedWithSearchQuery:searchQuery];
     }
 }
@@ -259,9 +226,9 @@
 
 - (void)resetErrorFromTextField:(UITextField *)textField
 {
-    textField.layer.borderWidth = self.daysTextField.layer.borderWidth;
-    textField.layer.cornerRadius = self.daysTextField.layer.cornerRadius;
-    textField.layer.borderColor = self.daysTextField.layer.borderColor;
+    textField.layer.borderWidth = self.boardTextField.layer.borderWidth;
+    textField.layer.cornerRadius = self.boardTextField.layer.cornerRadius;
+    textField.layer.borderColor = self.boardTextField.layer.borderColor;
 }
 
 @end

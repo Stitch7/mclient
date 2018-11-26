@@ -12,9 +12,8 @@
 @property (assign, nonatomic, readonly) BOOL searchInBody;
 @property (strong, nonatomic, readonly) NSString *username;
 @property (strong, nonatomic, readonly) NSNumber *board;
-@property (strong, nonatomic, readonly) NSNumber *days;
 @property (strong, nonatomic, readonly) NSDictionary *dictionary;
 
-+ (MCLSearchQuery *)searchQueryWithPhrase:(NSString *)phrase searchInBody:(BOOL)searchInBody username:(NSString *)username board:(NSNumber *)board days:(NSNumber *)days;
++ (MCLSearchQuery *)searchQueryWithPhrase:(NSString *)phrase searchInBody:(BOOL)searchInBody username:(NSString *)username board:(NSNumber *)board;
 
 @end

@@ -23,7 +23,6 @@
 @property (weak, nonatomic) IBOutlet MCLPickerTextField *boardTextField;
 @property (weak, nonatomic) IBOutlet UILabel *searchInBodyLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *searchInBodySwitch;
-@property (weak, nonatomic) IBOutlet MCLPickerTextField *daysTextField;
 @property (weak, nonatomic) IBOutlet UIButton *searchButton;
 
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag boards:(NSArray<MCLBoard *>*)boards;
