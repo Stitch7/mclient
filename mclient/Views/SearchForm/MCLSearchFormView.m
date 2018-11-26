@@ -207,10 +207,6 @@
         return YES;
     }
 
-    NSError *error = [NSError errorWithDomain:[[NSBundle mainBundle] bundleIdentifier] code:1
-                                     userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"search_form_error", nil)}];
-    [self.delegate searchFormView:self firedWithError:error];
-
     [self markTextFieldAsError:self.phraseTextField];
     [self markTextFieldAsError:self.usernameTextField];
 
