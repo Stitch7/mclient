@@ -160,7 +160,10 @@
 
 - (BOOL)modalIsPresented
 {
-    return [self.modalNavigationController presentingViewController] || [self.masterNavigationController presentingViewController];
+    BOOL modalIsPresented = [self.modalNavigationController presentingViewController] != nil;
+    BOOL masterIsPresented = [self.masterNavigationController presentingViewController] != nil;
+
+    return modalIsPresented || masterIsPresented;
 }
 
 - (void)dismissModalIfPresentedWithCompletionHandler:(void (^)(BOOL dismissed))completionHandler

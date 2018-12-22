@@ -76,8 +76,8 @@ NSString * const MCLKeyboardShortcutComposeReply = @"composeReply";
     if (!_allKeyCommands) {
         _allKeyCommands = @{
             MCLKeyboardShortcutDismissDialog:
-                [UIKeyCommand keyCommandWithInput:UIKeyInputEscape
-                                    modifierFlags:kNilOptions
+                [UIKeyCommand keyCommandWithInput:@"w"
+                                    modifierFlags:UIKeyModifierCommand
                                            action:@selector(dismissDialog:)
                              discoverabilityTitle:NSLocalizedString(@"keyboardShortcutDismissDialog", nil)],
 
