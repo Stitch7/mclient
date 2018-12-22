@@ -14,6 +14,8 @@
 	<true/>
 	<key>PrivateMessages</key>
 	<false/>
+	<key>TabbedSettings</key>
+	<false/>
 	<key>Tetris</key>
 	<true/>
 </dict>

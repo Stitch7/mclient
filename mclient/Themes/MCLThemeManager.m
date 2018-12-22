@@ -218,6 +218,11 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
     [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLMessageListViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
     [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLProfileTableViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
 
+    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLSettingsTabLoginViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
+    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLSettingsTabUIViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
+    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLSettingsTabThreadViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
+    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLSettingsTabInfoViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
+
     [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UITableViewCell class]]] setTextColor:[theme textColor]];
 
     [[MCLLoadingView appearance] setBackgroundColor:[theme backgroundColor]];

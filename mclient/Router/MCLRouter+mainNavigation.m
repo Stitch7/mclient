@@ -9,6 +9,7 @@
 #import "MCLRouter+mainNavigation.h"
 
 #import "MCLDependencyBag.h"
+#import "MCLFeatures.h"
 #import "MCLSettings.h"
 #import "MCLLoginManager.h"
 #import "MCLBoard.h"
@@ -19,6 +20,7 @@
 #import "MCLDetailViewController.h"
 #import "MCLModalNavigationController.h"
 #import "MCLSettingsViewController.h"
+#import "MCLTabbedSettingsModallNavigationControllerViewController.h"
 #import "MCLSearchTableViewController.h"
 #import "MCLResponsesTableViewController.h"
 #import "MCLThreadListTableViewController.h"
@@ -38,6 +40,17 @@
 
 - (MCLSettingsViewController *)modalToSettings
 {
+    if ([self.bag.features isFeatureWithNameEnabled:MCLFeatureTabbedSettings]) {
+        UIStoryboard *tabbedStoryboard = [UIStoryboard storyboardWithName:@"TabbedSettings" bundle:nil];
+        UITabBarController *tabbedSettingsVC = [tabbedStoryboard instantiateViewControllerWithIdentifier:@"MCLSettingsTabBarController"];
+        tabbedSettingsVC.modalPresentationStyle = UIModalPresentationFormSheet;
+
+        self.modalNavigationController = [[MCLTabbedSettingsModallNavigationControllerViewController alloc] initWithRootViewController:tabbedSettingsVC];
+        [self.masterNavigationController presentViewController:self.modalNavigationController animated:YES completion:nil];
+
+        return [[MCLSettingsViewController alloc] init]; // To avoid warning, change return type when feature flag get's removed
+    }
+
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
     MCLSettingsViewController *settingsVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLSettingsViewController"];
     settingsVC.bag = self.bag;

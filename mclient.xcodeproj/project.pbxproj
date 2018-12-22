@@ -313,6 +313,38 @@
 		3081139720F115D300DED6B0 /* MCLRouter+Tetromino.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3081139520F115D300DED6B0 /* MCLRouter+Tetromino.swift */; };
 		3081139820F115D300DED6B0 /* MCLRouter+Tetromino.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3081139520F115D300DED6B0 /* MCLRouter+Tetromino.swift */; };
 		3081139920F115D300DED6B0 /* MCLRouter+Tetromino.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3081139520F115D300DED6B0 /* MCLRouter+Tetromino.swift */; };
+		3082365121B5D48D00D235E3 /* TabbedSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3082365021B5D48D00D235E3 /* TabbedSettings.storyboard */; };
+		3082365221B5D48D00D235E3 /* TabbedSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3082365021B5D48D00D235E3 /* TabbedSettings.storyboard */; };
+		3082365321B5D48D00D235E3 /* TabbedSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3082365021B5D48D00D235E3 /* TabbedSettings.storyboard */; };
+		3082365421B5D48D00D235E3 /* TabbedSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3082365021B5D48D00D235E3 /* TabbedSettings.storyboard */; };
+		3082365821B5DE9F00D235E3 /* MCLTabbedSettingsModallNavigationControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082365721B5DE9F00D235E3 /* MCLTabbedSettingsModallNavigationControllerViewController.m */; };
+		3082365921B5DE9F00D235E3 /* MCLTabbedSettingsModallNavigationControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082365721B5DE9F00D235E3 /* MCLTabbedSettingsModallNavigationControllerViewController.m */; };
+		3082365A21B5DE9F00D235E3 /* MCLTabbedSettingsModallNavigationControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082365721B5DE9F00D235E3 /* MCLTabbedSettingsModallNavigationControllerViewController.m */; };
+		3082365B21B5DE9F00D235E3 /* MCLTabbedSettingsModallNavigationControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082365721B5DE9F00D235E3 /* MCLTabbedSettingsModallNavigationControllerViewController.m */; };
+		3082365E21B5E24E00D235E3 /* MCLSettingsTabLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082365D21B5E24E00D235E3 /* MCLSettingsTabLoginViewController.m */; };
+		3082365F21B5E24E00D235E3 /* MCLSettingsTabLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082365D21B5E24E00D235E3 /* MCLSettingsTabLoginViewController.m */; };
+		3082366021B5E24E00D235E3 /* MCLSettingsTabLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082365D21B5E24E00D235E3 /* MCLSettingsTabLoginViewController.m */; };
+		3082366121B5E24E00D235E3 /* MCLSettingsTabLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082365D21B5E24E00D235E3 /* MCLSettingsTabLoginViewController.m */; };
+		3082366421B5E26500D235E3 /* MCLSettingsTabInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082366321B5E26500D235E3 /* MCLSettingsTabInfoViewController.m */; };
+		3082366521B5E26500D235E3 /* MCLSettingsTabInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082366321B5E26500D235E3 /* MCLSettingsTabInfoViewController.m */; };
+		3082366621B5E26500D235E3 /* MCLSettingsTabInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082366321B5E26500D235E3 /* MCLSettingsTabInfoViewController.m */; };
+		3082366721B5E26500D235E3 /* MCLSettingsTabInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082366321B5E26500D235E3 /* MCLSettingsTabInfoViewController.m */; };
+		3082366A21B5E27200D235E3 /* MCLSettingsTabUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082366921B5E27200D235E3 /* MCLSettingsTabUIViewController.m */; };
+		3082366B21B5E27200D235E3 /* MCLSettingsTabUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082366921B5E27200D235E3 /* MCLSettingsTabUIViewController.m */; };
+		3082366C21B5E27200D235E3 /* MCLSettingsTabUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082366921B5E27200D235E3 /* MCLSettingsTabUIViewController.m */; };
+		3082366D21B5E27200D235E3 /* MCLSettingsTabUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082366921B5E27200D235E3 /* MCLSettingsTabUIViewController.m */; };
+		3082367021B5E27F00D235E3 /* MCLSettingsTabThreadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082366F21B5E27F00D235E3 /* MCLSettingsTabThreadViewController.m */; };
+		3082367121B5E27F00D235E3 /* MCLSettingsTabThreadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082366F21B5E27F00D235E3 /* MCLSettingsTabThreadViewController.m */; };
+		3082367221B5E27F00D235E3 /* MCLSettingsTabThreadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082366F21B5E27F00D235E3 /* MCLSettingsTabThreadViewController.m */; };
+		3082367321B5E27F00D235E3 /* MCLSettingsTabThreadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082366F21B5E27F00D235E3 /* MCLSettingsTabThreadViewController.m */; };
+		3082367621B5E96A00D235E3 /* MCLSettingsTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082367521B5E96A00D235E3 /* MCLSettingsTabBarController.m */; };
+		3082367721B5E96A00D235E3 /* MCLSettingsTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082367521B5E96A00D235E3 /* MCLSettingsTabBarController.m */; };
+		3082367821B5E96A00D235E3 /* MCLSettingsTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082367521B5E96A00D235E3 /* MCLSettingsTabBarController.m */; };
+		3082367921B5E96A00D235E3 /* MCLSettingsTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082367521B5E96A00D235E3 /* MCLSettingsTabBarController.m */; };
+		3082367C21B5F7FC00D235E3 /* MCLSettingsTabComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082367B21B5F7FC00D235E3 /* MCLSettingsTabComposeViewController.m */; };
+		3082367D21B5F7FC00D235E3 /* MCLSettingsTabComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082367B21B5F7FC00D235E3 /* MCLSettingsTabComposeViewController.m */; };
+		3082367E21B5F7FC00D235E3 /* MCLSettingsTabComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082367B21B5F7FC00D235E3 /* MCLSettingsTabComposeViewController.m */; };
+		3082367F21B5F7FC00D235E3 /* MCLSettingsTabComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3082367B21B5F7FC00D235E3 /* MCLSettingsTabComposeViewController.m */; };
 		30827BAA1F3A3D3900014769 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30827BA91F3A3D3900014769 /* SafariServices.framework */; };
 		308346211E9E8E5400C11033 /* MCLThreadKillfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 308346201E9E8E5300C11033 /* MCLThreadKillfileViewController.m */; };
 		30849D1C1E2AA40900626331 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30849D1B1E2AA40900626331 /* CoreLocation.framework */; };
@@ -869,6 +901,21 @@
 		3081130A20F0A78300DED6B0 /* MCLQuote.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLQuote.h; sourceTree = "<group>"; };
 		3081130B20F0A78300DED6B0 /* MCLQuote.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLQuote.m; sourceTree = "<group>"; };
 		3081139520F115D300DED6B0 /* MCLRouter+Tetromino.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MCLRouter+Tetromino.swift"; sourceTree = "<group>"; };
+		3082365021B5D48D00D235E3 /* TabbedSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TabbedSettings.storyboard; sourceTree = "<group>"; };
+		3082365621B5DE9F00D235E3 /* MCLTabbedSettingsModallNavigationControllerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLTabbedSettingsModallNavigationControllerViewController.h; sourceTree = "<group>"; };
+		3082365721B5DE9F00D235E3 /* MCLTabbedSettingsModallNavigationControllerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLTabbedSettingsModallNavigationControllerViewController.m; sourceTree = "<group>"; };
+		3082365C21B5E24E00D235E3 /* MCLSettingsTabLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLSettingsTabLoginViewController.h; sourceTree = "<group>"; };
+		3082365D21B5E24E00D235E3 /* MCLSettingsTabLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsTabLoginViewController.m; sourceTree = "<group>"; };
+		3082366221B5E26500D235E3 /* MCLSettingsTabInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLSettingsTabInfoViewController.h; sourceTree = "<group>"; };
+		3082366321B5E26500D235E3 /* MCLSettingsTabInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsTabInfoViewController.m; sourceTree = "<group>"; };
+		3082366821B5E27200D235E3 /* MCLSettingsTabUIViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLSettingsTabUIViewController.h; sourceTree = "<group>"; };
+		3082366921B5E27200D235E3 /* MCLSettingsTabUIViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsTabUIViewController.m; sourceTree = "<group>"; };
+		3082366E21B5E27F00D235E3 /* MCLSettingsTabThreadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLSettingsTabThreadViewController.h; sourceTree = "<group>"; };
+		3082366F21B5E27F00D235E3 /* MCLSettingsTabThreadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsTabThreadViewController.m; sourceTree = "<group>"; };
+		3082367421B5E96A00D235E3 /* MCLSettingsTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLSettingsTabBarController.h; sourceTree = "<group>"; };
+		3082367521B5E96A00D235E3 /* MCLSettingsTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsTabBarController.m; sourceTree = "<group>"; };
+		3082367A21B5F7FC00D235E3 /* MCLSettingsTabComposeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLSettingsTabComposeViewController.h; sourceTree = "<group>"; };
+		3082367B21B5F7FC00D235E3 /* MCLSettingsTabComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLSettingsTabComposeViewController.m; sourceTree = "<group>"; };
 		30827BA91F3A3D3900014769 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		3083461F1E9E8E5300C11033 /* MCLThreadKillfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLThreadKillfileViewController.h; sourceTree = "<group>"; };
 		308346201E9E8E5300C11033 /* MCLThreadKillfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLThreadKillfileViewController.m; sourceTree = "<group>"; };
@@ -1576,6 +1623,7 @@
 				30C0871920E50C3000503CE5 /* LaunchScreen.storyboard */,
 				30EA21031F0EAD210064A0A3 /* Profile.storyboard */,
 				30849D221E2BABBD00626331 /* Settings.storyboard */,
+				3082365021B5D48D00D235E3 /* TabbedSettings.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -1663,6 +1711,27 @@
 				30EE8B791FC1E480008417F6 /* MCLErrorViewController.m */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		3082365521B5DE8200D235E3 /* Tabbed */ = {
+			isa = PBXGroup;
+			children = (
+				3082367421B5E96A00D235E3 /* MCLSettingsTabBarController.h */,
+				3082367521B5E96A00D235E3 /* MCLSettingsTabBarController.m */,
+				3082367A21B5F7FC00D235E3 /* MCLSettingsTabComposeViewController.h */,
+				3082367B21B5F7FC00D235E3 /* MCLSettingsTabComposeViewController.m */,
+				3082366221B5E26500D235E3 /* MCLSettingsTabInfoViewController.h */,
+				3082366321B5E26500D235E3 /* MCLSettingsTabInfoViewController.m */,
+				3082365C21B5E24E00D235E3 /* MCLSettingsTabLoginViewController.h */,
+				3082365D21B5E24E00D235E3 /* MCLSettingsTabLoginViewController.m */,
+				3082366E21B5E27F00D235E3 /* MCLSettingsTabThreadViewController.h */,
+				3082366F21B5E27F00D235E3 /* MCLSettingsTabThreadViewController.m */,
+				3082366821B5E27200D235E3 /* MCLSettingsTabUIViewController.h */,
+				3082366921B5E27200D235E3 /* MCLSettingsTabUIViewController.m */,
+				3082365621B5DE9F00D235E3 /* MCLTabbedSettingsModallNavigationControllerViewController.h */,
+				3082365721B5DE9F00D235E3 /* MCLTabbedSettingsModallNavigationControllerViewController.m */,
+			);
+			path = Tabbed;
 			sourceTree = "<group>";
 		};
 		30827BA81F35CF0C00014769 /* Internationalization */ = {
@@ -1799,6 +1868,7 @@
 		30D6643D1F266F5900E72025 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				3082365521B5DE8200D235E3 /* Tabbed */,
 				30D82AF11E2A42F700898963 /* MCLSettingsFontSizeViewController.h */,
 				30D82AF21E2A42F700898963 /* MCLSettingsFontSizeViewController.m */,
 				30A1BFAB19B4A8D4002439FE /* MCLSettingsViewController.h */,
@@ -2124,6 +2194,7 @@
 				30849D201E2BABBD00626331 /* Settings.storyboard in Resources */,
 				301203541E03704500B06FF6 /* MCLMessageListFrameStyleView.xib in Resources */,
 				3012032E1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
+				3082365221B5D48D00D235E3 /* TabbedSettings.storyboard in Resources */,
 				30EA21041F0EAD210064A0A3 /* Profile.storyboard in Resources */,
 				3042784F2188548B00CD9AF8 /* MCLTerminationViewController.xib in Resources */,
 				30C0871B20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */,
@@ -2168,6 +2239,7 @@
 				306FC8741F93A39F001EB7E9 /* Settings.storyboard in Resources */,
 				306FC8751F93A39F001EB7E9 /* MCLMessageListFrameStyleView.xib in Resources */,
 				306FC8761F93A39F001EB7E9 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
+				3082365121B5D48D00D235E3 /* TabbedSettings.storyboard in Resources */,
 				306FC8781F93A39F001EB7E9 /* Profile.storyboard in Resources */,
 				3042784E2188548B00CD9AF8 /* MCLTerminationViewController.xib in Resources */,
 				30C0871A20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */,
@@ -2204,6 +2276,7 @@
 				3090CB1F1FA7ED1E0085C9AF /* Settings.storyboard in Resources */,
 				3090CB201FA7ED1E0085C9AF /* MCLMessageListFrameStyleView.xib in Resources */,
 				3090CB211FA7ED1E0085C9AF /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
+				3082365421B5D48D00D235E3 /* TabbedSettings.storyboard in Resources */,
 				3090CB231FA7ED1E0085C9AF /* Profile.storyboard in Resources */,
 				304278512188548B00CD9AF8 /* MCLTerminationViewController.xib in Resources */,
 				30C0871D20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */,
@@ -2240,6 +2313,7 @@
 				3090CB9C1FA89A5C0085C9AF /* Settings.storyboard in Resources */,
 				3090CB9D1FA89A5C0085C9AF /* MCLMessageListFrameStyleView.xib in Resources */,
 				3090CB9E1FA89A5C0085C9AF /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
+				3082365321B5D48D00D235E3 /* TabbedSettings.storyboard in Resources */,
 				3090CBA01FA89A5C0085C9AF /* Profile.storyboard in Resources */,
 				304278502188548B00CD9AF8 /* MCLTerminationViewController.xib in Resources */,
 				30C0871C20E50C3000503CE5 /* LaunchScreen.storyboard in Resources */,
@@ -2598,6 +2672,7 @@
 				303ED22E219E9C6100AB2EAE /* NSURL+isValidWebURL.m in Sources */,
 				306169461E98F76300DBD96F /* MCLBoardListRequest.m in Sources */,
 				308EC3D819CC4DE800A0869F /* MCLMessageListViewController.m in Sources */,
+				3082367D21B5F7FC00D235E3 /* MCLSettingsTabComposeViewController.m in Sources */,
 				3086428919D2D6CE0027F932 /* MCLMessageTextView.m in Sources */,
 				301E24B619BB02EB00943EC6 /* MCLProfileTableViewController.m in Sources */,
 				30DBC8A61E285FAC00EF150B /* MCLTextView.m in Sources */,
@@ -2641,9 +2716,11 @@
 				306EA6E819D5992F00BB4DC8 /* MCLMServiceErrorView.m in Sources */,
 				305DD82819A63517006514BD /* MCLAppDelegate.m in Sources */,
 				3039748A1E1694C8003C8BC9 /* MCLMessageListWidmannStyleViewController.m in Sources */,
+				3082367121B5E27F00D235E3 /* MCLSettingsTabThreadViewController.m in Sources */,
 				302381EC1F9352FF00764FAE /* MCLMarkThreadAsReadRequest.m in Sources */,
 				305DE81B1F2F476500EC34AE /* MCLMessageToolbarController.m in Sources */,
 				30543087215D1D64008F29C0 /* UISearchBar+getSearchField.m in Sources */,
+				3082365921B5DE9F00D235E3 /* MCLTabbedSettingsModallNavigationControllerViewController.m in Sources */,
 				301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */,
 				303C59521F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.m in Sources */,
 				305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */,
@@ -2672,6 +2749,8 @@
 				3036F59E1E26798E00ABC2CE /* MCLLightTheme.m in Sources */,
 				303974901E16B083003C8BC9 /* UIView+addConstraints.m in Sources */,
 				307A80821F6411DA00A580FE /* MCLMessageListLoadingViewController.m in Sources */,
+				3082367721B5E96A00D235E3 /* MCLSettingsTabBarController.m in Sources */,
+				3082365F21B5E24E00D235E3 /* MCLSettingsTabLoginViewController.m in Sources */,
 				3081130D20F0A78300DED6B0 /* MCLQuote.m in Sources */,
 				302D19EC1F2E218C00E2FC2B /* MCLMessageRequest.m in Sources */,
 				30C04CEC20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */,
@@ -2681,10 +2760,12 @@
 				30DD32082178A8DB00A06355 /* MCLStoreReviewManager.m in Sources */,
 				305DE8101F2E46DD00EC34AE /* MCLMessageToolbar.m in Sources */,
 				304373441FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */,
+				3082366B21B5E27200D235E3 /* MCLSettingsTabUIViewController.m in Sources */,
 				3070D326207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
 				305DE8181F2E608200EC34AE /* MCLRouter+mainNavigation.m in Sources */,
 				30EFDC0C19D422DE00E3EE31 /* MCLVerifiyLoginView.m in Sources */,
 				3081139720F115D300DED6B0 /* MCLRouter+Tetromino.swift in Sources */,
+				3082366521B5E26500D235E3 /* MCLSettingsTabInfoViewController.m in Sources */,
 				306DFF9820C3FC98002B5C18 /* Reachability.m in Sources */,
 				30BD475F1E956D9000DBB27B /* MCLLogin.m in Sources */,
 				306888D61F27D7C100B0D915 /* MCLRouter+openURL.m in Sources */,
@@ -2736,6 +2817,7 @@
 				303ED22D219E9C6100AB2EAE /* NSURL+isValidWebURL.m in Sources */,
 				306FC8171F93A39F001EB7E9 /* MCLMessageListWidmannStyleTableViewCell.m in Sources */,
 				306FC8181F93A39F001EB7E9 /* MCLMessageTextViewToolbar.m in Sources */,
+				3082367C21B5F7FC00D235E3 /* MCLSettingsTabComposeViewController.m in Sources */,
 				306FC8191F93A39F001EB7E9 /* MCLBoardListRequest.m in Sources */,
 				306FC81A1F93A39F001EB7E9 /* MCLMessageListViewController.m in Sources */,
 				306FC81B1F93A39F001EB7E9 /* MCLMessageTextView.m in Sources */,
@@ -2779,9 +2861,11 @@
 				306FC8371F93A39F001EB7E9 /* MCLMessageListRequest.m in Sources */,
 				306FC8381F93A39F001EB7E9 /* MCLModalPresentationController.m in Sources */,
 				306FC8391F93A39F001EB7E9 /* MCLThreadKillfileViewController.m in Sources */,
+				3082367021B5E27F00D235E3 /* MCLSettingsTabThreadViewController.m in Sources */,
 				306FC83A1F93A39F001EB7E9 /* MCLSplitViewController.m in Sources */,
 				306FC83B1F93A39F001EB7E9 /* MCLMServiceErrorView.m in Sources */,
 				30543086215D1D64008F29C0 /* UISearchBar+getSearchField.m in Sources */,
+				3082365821B5DE9F00D235E3 /* MCLTabbedSettingsModallNavigationControllerViewController.m in Sources */,
 				306FC83D1F93A39F001EB7E9 /* MCLAppDelegate.m in Sources */,
 				306FC83E1F93A39F001EB7E9 /* MCLMessageListWidmannStyleViewController.m in Sources */,
 				306FC8401F93A39F001EB7E9 /* MCLMarkThreadAsReadRequest.m in Sources */,
@@ -2810,6 +2894,8 @@
 				306FC8501F93A39F001EB7E9 /* MCLDetailViewController.m in Sources */,
 				306FC8511F93A39F001EB7E9 /* MCLLoadingViewController.m in Sources */,
 				306FC8521F93A39F001EB7E9 /* MCLLightTheme.m in Sources */,
+				3082367621B5E96A00D235E3 /* MCLSettingsTabBarController.m in Sources */,
+				3082365E21B5E24E00D235E3 /* MCLSettingsTabLoginViewController.m in Sources */,
 				3081130C20F0A78300DED6B0 /* MCLQuote.m in Sources */,
 				306FC8531F93A39F001EB7E9 /* UIView+addConstraints.m in Sources */,
 				30C04CEB20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */,
@@ -2819,10 +2905,12 @@
 				30DD32072178A8DB00A06355 /* MCLStoreReviewManager.m in Sources */,
 				306FC8561F93A39F001EB7E9 /* UIViewController+Additions.m in Sources */,
 				304373431FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */,
+				3082366A21B5E27200D235E3 /* MCLSettingsTabUIViewController.m in Sources */,
 				3070D325207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
 				306FC8571F93A39F001EB7E9 /* MCLKillfileThreadsRequest.m in Sources */,
 				306FC8581F93A39F001EB7E9 /* MCLMessageToolbar.m in Sources */,
 				3081139620F115D300DED6B0 /* MCLRouter+Tetromino.swift in Sources */,
+				3082366421B5E26500D235E3 /* MCLSettingsTabInfoViewController.m in Sources */,
 				306DFF9720C3FC98002B5C18 /* Reachability.m in Sources */,
 				306FC8591F93A39F001EB7E9 /* MCLRouter+mainNavigation.m in Sources */,
 				306FC85A1F93A39F001EB7E9 /* MCLVerifiyLoginView.m in Sources */,
@@ -2866,6 +2954,7 @@
 				303ED230219E9C6100AB2EAE /* NSURL+isValidWebURL.m in Sources */,
 				3090CAC51FA7ED1E0085C9AF /* MCLBoardListRequest.m in Sources */,
 				3090CAC61FA7ED1E0085C9AF /* MCLMessageListViewController.m in Sources */,
+				3082367F21B5F7FC00D235E3 /* MCLSettingsTabComposeViewController.m in Sources */,
 				3090CAC71FA7ED1E0085C9AF /* MCLMessageTextView.m in Sources */,
 				3090CAC81FA7ED1E0085C9AF /* MCLProfileTableViewController.m in Sources */,
 				3090CAC91FA7ED1E0085C9AF /* MCLTextView.m in Sources */,
@@ -2909,9 +2998,11 @@
 				3090CAE61FA7ED1E0085C9AF /* MCLMServiceErrorView.m in Sources */,
 				3090CAE81FA7ED1E0085C9AF /* MCLAppDelegate.m in Sources */,
 				3090CAE91FA7ED1E0085C9AF /* MCLMessageListWidmannStyleViewController.m in Sources */,
+				3082367321B5E27F00D235E3 /* MCLSettingsTabThreadViewController.m in Sources */,
 				3090CAEB1FA7ED1E0085C9AF /* MCLMarkThreadAsReadRequest.m in Sources */,
 				3090CAED1FA7ED1E0085C9AF /* MCLMessageToolbarController.m in Sources */,
 				30543089215D1D64008F29C0 /* UISearchBar+getSearchField.m in Sources */,
+				3082365B21B5DE9F00D235E3 /* MCLTabbedSettingsModallNavigationControllerViewController.m in Sources */,
 				3090CAEE1FA7ED1E0085C9AF /* MCLThreadTableViewCell.m in Sources */,
 				3090CAEF1FA7ED1E0085C9AF /* MCLThreadIdForMessageRequest.m in Sources */,
 				3090CAF01FA7ED1E0085C9AF /* MCLThreadListTableViewController.m in Sources */,
@@ -2940,6 +3031,8 @@
 				3090CAFD1FA7ED1E0085C9AF /* MCLLightTheme.m in Sources */,
 				3090CAFE1FA7ED1E0085C9AF /* UIView+addConstraints.m in Sources */,
 				3090CAFF1FA7ED1E0085C9AF /* MCLMessageListLoadingViewController.m in Sources */,
+				3082367921B5E96A00D235E3 /* MCLSettingsTabBarController.m in Sources */,
+				3082366121B5E24E00D235E3 /* MCLSettingsTabLoginViewController.m in Sources */,
 				3081130F20F0A78300DED6B0 /* MCLQuote.m in Sources */,
 				3090CB001FA7ED1E0085C9AF /* MCLMessageRequest.m in Sources */,
 				30C04CEE20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */,
@@ -2949,10 +3042,12 @@
 				30DD320A2178A8DB00A06355 /* MCLStoreReviewManager.m in Sources */,
 				3090CB031FA7ED1E0085C9AF /* MCLMessageToolbar.m in Sources */,
 				304373461FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */,
+				3082366D21B5E27200D235E3 /* MCLSettingsTabUIViewController.m in Sources */,
 				3070D328207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
 				3090CB041FA7ED1E0085C9AF /* MCLRouter+mainNavigation.m in Sources */,
 				3090CB051FA7ED1E0085C9AF /* MCLVerifiyLoginView.m in Sources */,
 				3081139920F115D300DED6B0 /* MCLRouter+Tetromino.swift in Sources */,
+				3082366721B5E26500D235E3 /* MCLSettingsTabInfoViewController.m in Sources */,
 				306DFF9A20C3FC98002B5C18 /* Reachability.m in Sources */,
 				3090CB061FA7ED1E0085C9AF /* MCLLogin.m in Sources */,
 				3090CB071FA7ED1E0085C9AF /* MCLRouter+openURL.m in Sources */,
@@ -2996,6 +3091,7 @@
 				303ED22F219E9C6100AB2EAE /* NSURL+isValidWebURL.m in Sources */,
 				3090CB421FA89A5C0085C9AF /* MCLBoardListRequest.m in Sources */,
 				3090CB431FA89A5C0085C9AF /* MCLMessageListViewController.m in Sources */,
+				3082367E21B5F7FC00D235E3 /* MCLSettingsTabComposeViewController.m in Sources */,
 				3090CB441FA89A5C0085C9AF /* MCLMessageTextView.m in Sources */,
 				3090CB451FA89A5C0085C9AF /* MCLProfileTableViewController.m in Sources */,
 				3090CB461FA89A5C0085C9AF /* MCLTextView.m in Sources */,
@@ -3039,9 +3135,11 @@
 				3090CB631FA89A5C0085C9AF /* MCLMServiceErrorView.m in Sources */,
 				3090CB651FA89A5C0085C9AF /* MCLAppDelegate.m in Sources */,
 				3090CB661FA89A5C0085C9AF /* MCLMessageListWidmannStyleViewController.m in Sources */,
+				3082367221B5E27F00D235E3 /* MCLSettingsTabThreadViewController.m in Sources */,
 				3090CB681FA89A5C0085C9AF /* MCLMarkThreadAsReadRequest.m in Sources */,
 				3090CB6A1FA89A5C0085C9AF /* MCLMessageToolbarController.m in Sources */,
 				30543088215D1D64008F29C0 /* UISearchBar+getSearchField.m in Sources */,
+				3082365A21B5DE9F00D235E3 /* MCLTabbedSettingsModallNavigationControllerViewController.m in Sources */,
 				3090CB6B1FA89A5C0085C9AF /* MCLThreadTableViewCell.m in Sources */,
 				3090CB6C1FA89A5C0085C9AF /* MCLThreadIdForMessageRequest.m in Sources */,
 				3090CB6D1FA89A5C0085C9AF /* MCLThreadListTableViewController.m in Sources */,
@@ -3070,6 +3168,8 @@
 				3090CB7A1FA89A5C0085C9AF /* MCLLightTheme.m in Sources */,
 				3090CB7B1FA89A5C0085C9AF /* UIView+addConstraints.m in Sources */,
 				3090CB7C1FA89A5C0085C9AF /* MCLMessageListLoadingViewController.m in Sources */,
+				3082367821B5E96A00D235E3 /* MCLSettingsTabBarController.m in Sources */,
+				3082366021B5E24E00D235E3 /* MCLSettingsTabLoginViewController.m in Sources */,
 				3081130E20F0A78300DED6B0 /* MCLQuote.m in Sources */,
 				3090CB7D1FA89A5C0085C9AF /* MCLMessageRequest.m in Sources */,
 				30C04CED20EA782600A1D92F /* SwiftyGiphyHelper.swift in Sources */,
@@ -3079,10 +3179,12 @@
 				30DD32092178A8DB00A06355 /* MCLStoreReviewManager.m in Sources */,
 				3090CB801FA89A5C0085C9AF /* MCLMessageToolbar.m in Sources */,
 				304373451FF55D06007AF151 /* MCLDetailLoadingViewController.m in Sources */,
+				3082366C21B5E27200D235E3 /* MCLSettingsTabUIViewController.m in Sources */,
 				3070D327207A60C200F42BFF /* MCLLicenseTableViewController.m in Sources */,
 				3090CB811FA89A5C0085C9AF /* MCLRouter+mainNavigation.m in Sources */,
 				3090CB821FA89A5C0085C9AF /* MCLVerifiyLoginView.m in Sources */,
 				3081139820F115D300DED6B0 /* MCLRouter+Tetromino.swift in Sources */,
+				3082366621B5E26500D235E3 /* MCLSettingsTabInfoViewController.m in Sources */,
 				306DFF9920C3FC98002B5C18 /* Reachability.m in Sources */,
 				3090CB831FA89A5C0085C9AF /* MCLLogin.m in Sources */,
 				3090CB841FA89A5C0085C9AF /* MCLRouter+openURL.m in Sources */,
