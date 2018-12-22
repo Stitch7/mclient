@@ -94,11 +94,13 @@
     self.searchInBodySwitch.on = NO;
 
     self.searchButton.showsTouchWhenHighlighted = YES;
-    self.searchButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.0f];
-    self.searchButton.titleLabel.font = [UIFont systemFontOfSize:15.0f];
+    self.searchButton.titleLabel.font = [UIFont systemFontOfSize:16.0f];
     [self.searchButton setTitleColor:self.tintColor forState:UIControlStateNormal];
     [self.searchButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
-    self.searchButton.contentEdgeInsets = UIEdgeInsetsMake(10, 15, 10, 15);
+    UIImage *searchButtonImage = [[UIImage imageNamed:@"searchButtonSmall"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.searchButton setImage:searchButtonImage forState:UIControlStateNormal];
+    self.searchButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 15.0f, 0.0f, 0.0f);
+    self.searchButton.contentEdgeInsets = UIEdgeInsetsMake(10.0f, 15.0f, 10.0f, 15.0f);
     self.searchButton.layer.borderWidth = 1.0f;
     self.searchButton.layer.cornerRadius = 5.0f;
     self.searchButton.layer.borderColor = self.tintColor.CGColor;
