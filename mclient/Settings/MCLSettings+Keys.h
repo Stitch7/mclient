@@ -7,6 +7,7 @@
 //
 
 
+extern NSString *const MCLSettingInitialReportSend;
 extern NSString *const MCLSettingNumberOfTimesLaunched;
 extern NSString *const MCLSettingLastAppVersion;
 extern NSString *const MCLSettingDarkModeEnabled;

@@ -34,6 +34,8 @@
 #import "MCLNoDataInfo.h"
 #import "MCLNoDataView.h"
 #import "MCLNoDataTableViewCell.h"
+#import "MCLSettings.h"
+#import "MCLSettings+Keys.h"
 
 
 @interface MCLBoardListTableViewController ()
@@ -114,6 +116,10 @@
 
     [self configureTableView];
     [self updateVerifyLoginViewWithSuccess:self.bag.loginManager.isLoginValid];
+
+    if (![self.bag.settings isSettingActivated:MCLSettingInitialReportSend]) {
+        [self.bag.settings reportSettings];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated

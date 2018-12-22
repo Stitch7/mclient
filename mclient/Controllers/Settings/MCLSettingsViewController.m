@@ -514,6 +514,7 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 
 - (IBAction)doneAction:(UIBarButtonItem *)sender
 {
+    [self.bag.settings reportSettingsIfChanged];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

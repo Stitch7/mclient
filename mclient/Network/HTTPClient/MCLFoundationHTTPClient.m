@@ -40,7 +40,7 @@
     [self requestWithHTTPMethod:@"GET"
                     toUrlString:urlString
                        withVars:nil
-                           body:nil
+                           json:nil
                      needsLogin:needsLogin
               completionHandler:completion];
 }
@@ -52,7 +52,21 @@
 {
     [self requestWithHTTPMethod:@"POST"
                     toUrlString:urlString
-                       withVars:vars body:nil
+                       withVars:vars
+                           json:nil
+                     needsLogin:needsLogin
+              completionHandler:completion];
+}
+
+- (void)postRequestToUrlString:(NSString *)urlString
+                      withJSON:(NSDictionary *)json
+                    needsLogin:(BOOL)needsLogin
+             completionHandler:(void (^)(NSError *error, NSDictionary *json))completion
+{
+    [self requestWithHTTPMethod:@"POST"
+                    toUrlString:urlString
+                       withVars:nil
+                           json:json
                      needsLogin:needsLogin
               completionHandler:completion];
 }
@@ -64,7 +78,21 @@
 {
     [self requestWithHTTPMethod:@"PUT"
                     toUrlString:urlString
-                       withVars:vars body:nil
+                       withVars:vars
+                           json:nil
+                     needsLogin:needsLogin
+              completionHandler:completion];
+}
+
+- (void)putRequestToUrlString:(NSString *)urlString
+                     withJSON:(NSDictionary *)json
+                   needsLogin:(BOOL)needsLogin
+            completionHandler:(void (^)(NSError *error, NSDictionary *json))completion
+{
+    [self requestWithHTTPMethod:@"PUT"
+                    toUrlString:urlString
+                       withVars:nil
+                           json:json
                      needsLogin:needsLogin
               completionHandler:completion];
 }
@@ -77,7 +105,7 @@
     [self requestWithHTTPMethod:@"DELETE"
                     toUrlString:urlString
                        withVars:vars
-                           body:nil
+                           json:nil
                      needsLogin:needsLogin
               completionHandler:completion];
 }
@@ -85,7 +113,7 @@
 - (void)requestWithHTTPMethod:(NSString *)httpMethod
                   toUrlString:(NSString *)urlString
                      withVars:(NSDictionary *)vars
-                         body:(NSData *)body
+                         json:(NSDictionary *)json
                    needsLogin:(BOOL)needsLogin
             completionHandler:(void (^)(NSError *error, NSDictionary *json))completion
 {
@@ -107,7 +135,18 @@
         }
     }
 
-    if (body) {
+    if (json) {
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+
+        NSError *jsonError;
+        NSData *body = [NSJSONSerialization dataWithJSONObject:json options:0 error:&jsonError];
+        if (jsonError) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                completion(jsonError, nil);
+            });
+            return;
+        }
         request.HTTPBody = body;
     } else if (vars) {
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];

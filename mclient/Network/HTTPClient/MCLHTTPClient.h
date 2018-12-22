@@ -25,8 +25,18 @@ static const NSInteger MCLHTTPErrorCodeInvalidLogin = 401;
                     needsLogin:(BOOL)needsLogin
              completionHandler:(void (^)(NSError *error, NSDictionary *json))completion;
 
+- (void)postRequestToUrlString:(NSString *)urlString
+                      withJSON:(NSDictionary *)json
+                    needsLogin:(BOOL)needsLogin
+             completionHandler:(void (^)(NSError *error, NSDictionary *json))completion;
+
 - (void)putRequestToUrlString:(NSString *)urlString
                      withVars:(NSDictionary *)vars
+                   needsLogin:(BOOL)needsLogin
+            completionHandler:(void (^)(NSError *error, NSDictionary *json))completion;
+
+- (void)putRequestToUrlString:(NSString *)urlString
+                     withJSON:(NSDictionary *)json
                    needsLogin:(BOOL)needsLogin
             completionHandler:(void (^)(NSError *error, NSDictionary *json))completion;
 

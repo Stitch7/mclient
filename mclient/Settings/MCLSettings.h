@@ -8,9 +8,11 @@
 
 #import "MCLSettings+Keys.h"
 
+@protocol MCLDependencyBag;
+
 @interface MCLSettings : NSObject
 
-- (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults;
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag userDefaults:(NSUserDefaults *)userDefaults;
 
 - (void)setBool:(BOOL)value forSetting:(NSString *)setting;
 - (void)setValue:(id)value forSetting:(NSString *)setting;
@@ -25,5 +27,8 @@
 - (id)objectForSetting:(NSString *)setting orDefault:(id)defaultValue;
 - (void)setObject:(id)object forSetting:(NSString *)setting;
 - (NSDictionary *)dictionaryWithAllSettings;
+- (void)reportSettingsIfChanged;
+
+- (void)reportSettings;
 
 @end

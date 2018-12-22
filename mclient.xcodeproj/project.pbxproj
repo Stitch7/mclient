@@ -296,6 +296,14 @@
 		30753BB621775ADC009647E9 /* copyLink.caf in Resources */ = {isa = PBXBuildFile; fileRef = 30753BB221775ADC009647E9 /* copyLink.caf */; };
 		307A80821F6411DA00A580FE /* MCLMessageListLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 307A80811F6411DA00A580FE /* MCLMessageListLoadingViewController.m */; };
 		307A80F119B8804F001B538D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307A80F019B8804F001B538D /* Security.framework */; };
+		307BEAA221AECD6F0068FDE0 /* MCLSendSettingsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 307BEAA121AECD6F0068FDE0 /* MCLSendSettingsRequest.m */; };
+		307BEAA321AECD6F0068FDE0 /* MCLSendSettingsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 307BEAA121AECD6F0068FDE0 /* MCLSendSettingsRequest.m */; };
+		307BEAA421AECD6F0068FDE0 /* MCLSendSettingsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 307BEAA121AECD6F0068FDE0 /* MCLSendSettingsRequest.m */; };
+		307BEAA521AECD6F0068FDE0 /* MCLSendSettingsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 307BEAA121AECD6F0068FDE0 /* MCLSendSettingsRequest.m */; };
+		307BEAA821AF25F10068FDE0 /* UIDevice+deviceName.m in Sources */ = {isa = PBXBuildFile; fileRef = 307BEAA721AF25F10068FDE0 /* UIDevice+deviceName.m */; };
+		307BEAA921AF25F10068FDE0 /* UIDevice+deviceName.m in Sources */ = {isa = PBXBuildFile; fileRef = 307BEAA721AF25F10068FDE0 /* UIDevice+deviceName.m */; };
+		307BEAAA21AF25F10068FDE0 /* UIDevice+deviceName.m in Sources */ = {isa = PBXBuildFile; fileRef = 307BEAA721AF25F10068FDE0 /* UIDevice+deviceName.m */; };
+		307BEAAB21AF25F10068FDE0 /* UIDevice+deviceName.m in Sources */ = {isa = PBXBuildFile; fileRef = 307BEAA721AF25F10068FDE0 /* UIDevice+deviceName.m */; };
 		307D797619B0B3B30096A217 /* MCLReadSymbolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D797519B0B3B30096A217 /* MCLReadSymbolView.m */; };
 		3081130C20F0A78300DED6B0 /* MCLQuote.m in Sources */ = {isa = PBXBuildFile; fileRef = 3081130B20F0A78300DED6B0 /* MCLQuote.m */; };
 		3081130D20F0A78300DED6B0 /* MCLQuote.m in Sources */ = {isa = PBXBuildFile; fileRef = 3081130B20F0A78300DED6B0 /* MCLQuote.m */; };
@@ -852,6 +860,10 @@
 		307A80801F6411DA00A580FE /* MCLMessageListLoadingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLMessageListLoadingViewController.h; sourceTree = "<group>"; };
 		307A80811F6411DA00A580FE /* MCLMessageListLoadingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListLoadingViewController.m; sourceTree = "<group>"; };
 		307A80F019B8804F001B538D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		307BEAA021AECD6E0068FDE0 /* MCLSendSettingsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLSendSettingsRequest.h; sourceTree = "<group>"; };
+		307BEAA121AECD6F0068FDE0 /* MCLSendSettingsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLSendSettingsRequest.m; sourceTree = "<group>"; };
+		307BEAA621AF25F00068FDE0 /* UIDevice+deviceName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIDevice+deviceName.h"; sourceTree = "<group>"; };
+		307BEAA721AF25F10068FDE0 /* UIDevice+deviceName.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+deviceName.m"; sourceTree = "<group>"; };
 		307D797419B0B3B30096A217 /* MCLReadSymbolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLReadSymbolView.h; sourceTree = "<group>"; };
 		307D797519B0B3B30096A217 /* MCLReadSymbolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLReadSymbolView.m; sourceTree = "<group>"; };
 		3081130A20F0A78300DED6B0 /* MCLQuote.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCLQuote.h; sourceTree = "<group>"; };
@@ -1065,7 +1077,6 @@
 		3006EF8E1F2670750054F27F /* Requests */ = {
 			isa = PBXGroup;
 			children = (
-				30D664381F22747300E72025 /* MCLRequest.h */,
 				306169441E98F76300DBD96F /* MCLBoardListRequest.h */,
 				306169451E98F76300DBD96F /* MCLBoardListRequest.m */,
 				30A69ABC204920E300904E73 /* MCLEditTextRequest.h */,
@@ -1100,16 +1111,19 @@
 				302D19E81F2D017300E2FC2B /* MCLProfileRequest.m */,
 				302381ED1F93580800764FAE /* MCLQuoteMessageRequest.h */,
 				302381EE1F93580800764FAE /* MCLQuoteMessageRequest.m */,
+				30D664381F22747300E72025 /* MCLRequest.h */,
 				30948751219934F200C528A1 /* MCLSearchRequest.h */,
 				30948750219934F100C528A1 /* MCLSearchRequest.m */,
 				302381F31F936DCD00764FAE /* MCLSearchThreadsRequest.h */,
 				302381F41F936DCD00764FAE /* MCLSearchThreadsRequest.m */,
+				30B049E520D6325700B74AF7 /* MCLSendMessageRequest.h */,
+				30B049E620D6325700B74AF7 /* MCLSendMessageRequest.m */,
+				307BEAA021AECD6E0068FDE0 /* MCLSendSettingsRequest.h */,
+				307BEAA121AECD6F0068FDE0 /* MCLSendSettingsRequest.m */,
 				303C59501F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.h */,
 				303C59511F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.m */,
 				3006EF941F267A270054F27F /* MCLThreadListRequest.h */,
 				3006EF951F267A270054F27F /* MCLThreadListRequest.m */,
-				30B049E520D6325700B74AF7 /* MCLSendMessageRequest.h */,
-				30B049E620D6325700B74AF7 /* MCLSendMessageRequest.m */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -1239,6 +1253,8 @@
 				30543085215D1D64008F29C0 /* UISearchBar+getSearchField.m */,
 				303ED22B219E9C6100AB2EAE /* NSURL+isValidWebURL.h */,
 				303ED22C219E9C6100AB2EAE /* NSURL+isValidWebURL.m */,
+				307BEAA621AF25F00068FDE0 /* UIDevice+deviceName.h */,
+				307BEAA721AF25F10068FDE0 /* UIDevice+deviceName.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2631,6 +2647,7 @@
 				301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */,
 				303C59521F6EBFE900CD8B2B /* MCLThreadIdForMessageRequest.m in Sources */,
 				305DD85719AB2A7C006514BD /* MCLThreadListTableViewController.m in Sources */,
+				307BEAA921AF25F10068FDE0 /* UIDevice+deviceName.m in Sources */,
 				30B049E820D6325700B74AF7 /* MCLSendMessageRequest.m in Sources */,
 				3070D31F207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */,
 				302381F81F9373C400764FAE /* MCLNotificationStatusRequest.m in Sources */,
@@ -2680,6 +2697,7 @@
 				3027A7F11E9D780E00EC89EB /* MCLFavoritesRequest.m in Sources */,
 				306386771E643F1D004822ED /* MCLResponse.m in Sources */,
 				30C813831FBA6AE80044A656 /* MCLSettings+Keys.m in Sources */,
+				307BEAA321AECD6F0068FDE0 /* MCLSendSettingsRequest.m in Sources */,
 				309C4C2D218D7CB00016624B /* MCLNoDataInfo.m in Sources */,
 				305DD83119A63517006514BD /* MCLBoardListTableViewController.m in Sources */,
 				30DB7F7E1F8D5CFC00766501 /* MCLFeatures.m in Sources */,
@@ -2767,6 +2785,7 @@
 				306FC83D1F93A39F001EB7E9 /* MCLAppDelegate.m in Sources */,
 				306FC83E1F93A39F001EB7E9 /* MCLMessageListWidmannStyleViewController.m in Sources */,
 				306FC8401F93A39F001EB7E9 /* MCLMarkThreadAsReadRequest.m in Sources */,
+				307BEAA821AF25F10068FDE0 /* UIDevice+deviceName.m in Sources */,
 				30B049E720D6325700B74AF7 /* MCLSendMessageRequest.m in Sources */,
 				3070D31E207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */,
 				306FC8421F93A39F001EB7E9 /* MCLMessageToolbarController.m in Sources */,
@@ -2816,6 +2835,7 @@
 				306FC8611F93A39F001EB7E9 /* MCLReadSymbolView.m in Sources */,
 				306FC8621F93A39F001EB7E9 /* MCLFavoritesRequest.m in Sources */,
 				30C813821FBA2A5D0044A656 /* MCLSettings+Keys.m in Sources */,
+				307BEAA221AECD6F0068FDE0 /* MCLSendSettingsRequest.m in Sources */,
 				309C4C2C218D7CB00016624B /* MCLNoDataInfo.m in Sources */,
 				306FC8631F93A39F001EB7E9 /* MCLResponse.m in Sources */,
 				306FC8651F93A39F001EB7E9 /* MCLBoardListTableViewController.m in Sources */,
@@ -2895,6 +2915,7 @@
 				3090CAEE1FA7ED1E0085C9AF /* MCLThreadTableViewCell.m in Sources */,
 				3090CAEF1FA7ED1E0085C9AF /* MCLThreadIdForMessageRequest.m in Sources */,
 				3090CAF01FA7ED1E0085C9AF /* MCLThreadListTableViewController.m in Sources */,
+				307BEAAB21AF25F10068FDE0 /* UIDevice+deviceName.m in Sources */,
 				30B049EA20D6325700B74AF7 /* MCLSendMessageRequest.m in Sources */,
 				3070D321207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */,
 				3090CAF11FA7ED1E0085C9AF /* MCLNotificationStatusRequest.m in Sources */,
@@ -2944,6 +2965,7 @@
 				3090CB0D1FA7ED1E0085C9AF /* MCLFavoritesRequest.m in Sources */,
 				3090CB0E1FA7ED1E0085C9AF /* MCLResponse.m in Sources */,
 				30C813851FBA6AE90044A656 /* MCLSettings+Keys.m in Sources */,
+				307BEAA521AECD6F0068FDE0 /* MCLSendSettingsRequest.m in Sources */,
 				309C4C2F218D7CB00016624B /* MCLNoDataInfo.m in Sources */,
 				3090CB101FA7ED1E0085C9AF /* MCLBoardListTableViewController.m in Sources */,
 				3090CB111FA7ED1E0085C9AF /* MCLFeatures.m in Sources */,
@@ -3023,6 +3045,7 @@
 				3090CB6B1FA89A5C0085C9AF /* MCLThreadTableViewCell.m in Sources */,
 				3090CB6C1FA89A5C0085C9AF /* MCLThreadIdForMessageRequest.m in Sources */,
 				3090CB6D1FA89A5C0085C9AF /* MCLThreadListTableViewController.m in Sources */,
+				307BEAAA21AF25F10068FDE0 /* UIDevice+deviceName.m in Sources */,
 				30B049E920D6325700B74AF7 /* MCLSendMessageRequest.m in Sources */,
 				3070D320207968E500F42BFF /* MCLMultilineTitleLabel.m in Sources */,
 				3090CB6E1FA89A5C0085C9AF /* MCLNotificationStatusRequest.m in Sources */,
@@ -3072,6 +3095,7 @@
 				3090CB8A1FA89A5C0085C9AF /* MCLFavoritesRequest.m in Sources */,
 				3090CB8B1FA89A5C0085C9AF /* MCLResponse.m in Sources */,
 				30C813841FBA6AE90044A656 /* MCLSettings+Keys.m in Sources */,
+				307BEAA421AECD6F0068FDE0 /* MCLSendSettingsRequest.m in Sources */,
 				309C4C2E218D7CB00016624B /* MCLNoDataInfo.m in Sources */,
 				3090CB8D1FA89A5C0085C9AF /* MCLBoardListTableViewController.m in Sources */,
 				3090CB8E1FA89A5C0085C9AF /* MCLFeatures.m in Sources */,

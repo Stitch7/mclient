@@ -77,7 +77,7 @@
     self.httpClient = [[MCLFoundationHTTPClient alloc] initWithLoginManager:self.loginManager];
     self.router = [[MCLRouter alloc] initWithBag:self];
     self.router.delegate = [[MCLAppRouterDelegate alloc] initWithBag:self];
-    self.settings = [[MCLSettings alloc] initWithUserDefaults:[NSUserDefaults standardUserDefaults]];
+    self.settings = [[MCLSettings alloc] initWithBag:self userDefaults:[NSUserDefaults standardUserDefaults]];
     self.notificationManager = [[MCLNotificationManager alloc] initWithBag:self];
     self.themeManager = [[MCLThemeManager alloc] initWithSettings:self.settings];
     self.keyboardShortcutManager = [[MCLKeyboardShortcutManager alloc] initWithBag:self];

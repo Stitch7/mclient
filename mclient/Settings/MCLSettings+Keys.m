@@ -8,6 +8,7 @@
 
 #import "MCLSettings+Keys.h"
 
+NSString * const MCLSettingInitialReportSend = @"initialReportSend";
 NSString * const MCLSettingNumberOfTimesLaunched = @"numberOfTimesLaunched";
 NSString * const MCLSettingLastAppVersion = @"lastAppVersion";
 NSString * const MCLSettingDarkModeEnabled = @"darkModeEnabled";
