@@ -27,6 +27,8 @@ NSString *const MCLMessageListFrameStyleTableViewCellIdentifier = @"FrameStyleMe
 {
     self.readSymbolView.hidden = YES;
     self.messageSubjectLabel.font = [UIFont systemFontOfSize:15.0f];
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
 }
 
 - (void)markUnread

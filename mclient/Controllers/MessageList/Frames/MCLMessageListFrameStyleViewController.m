@@ -306,6 +306,13 @@
             if (lastMessageId && [message.messageId isEqualToNumber:lastMessageId]) {
                 self.thread.lastMessageRead = YES;
             }
+
+            // Workaround to fix read status on cell not updating after scrolling (jump to latest post + keyboard shortcuts)
+            [UIView animateWithDuration:0 animations:^{
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            } completion:^(BOOL finished) {
+                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+            }];
         }
         [self.delegate messageListViewController:self didReadMessageOnThread:self.thread];
         [self loadMessage:message fromCell:cell];
