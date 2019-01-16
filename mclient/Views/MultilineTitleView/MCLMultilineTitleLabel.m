@@ -63,6 +63,7 @@
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, title.length)];
     self.attributedText = attributedString;
 
+    [self sizeToFit];
     [self themeChanged:nil];
 }
 
