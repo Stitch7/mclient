@@ -18,7 +18,7 @@
 @property (strong, nonatomic) UIView *refreshControlBackgroundView;
 
 - (NSString *)loadingViewControllerRequestsTitleString:(MCLLoadingViewController *)loadingViewController;
-- (UILabel *)loadingViewControllerRequestsTitleLabel:(MCLLoadingViewController *)loadingViewController;
+- (UIView *)loadingViewControllerRequestsTitleView:(MCLLoadingViewController *)loadingViewController;
 - (NSArray<__kindof UIBarButtonItem *> *)loadingViewControllerRequestsToolbarItems:(MCLLoadingViewController *)loadingViewController;
 - (void)loadingViewController:(MCLLoadingViewController *)loadingViewController configureNavigationItem:(UINavigationItem *)navigationItem;
 - (void)loadingViewControllerStartsRefreshing:(MCLLoadingViewController *)loadingViewController;

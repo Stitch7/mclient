@@ -146,7 +146,7 @@
     return self.title;
 }
 
-- (UILabel *)loadingViewControllerRequestsTitleLabel:(MCLLoadingViewController *)loadingViewController
+- (UIView *)loadingViewControllerRequestsTitleView:(MCLLoadingViewController *)loadingViewController
 {
     return [[MCLLogoLabel alloc] initWithThemeManager:self.bag.themeManager];
 }

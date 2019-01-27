@@ -184,8 +184,8 @@ static NSString *kQueueKeyPath = @"operations";
         self.title = [self.delegate loadingViewControllerRequestsTitleString:nil];
     }
 
-    if ([self.delegate respondsToSelector:@selector(loadingViewControllerRequestsTitleLabel:)]) {
-        self.navigationItem.titleView = [self.delegate loadingViewControllerRequestsTitleLabel:nil];
+    if ([self.delegate respondsToSelector:@selector(loadingViewControllerRequestsTitleView:)]) {
+        self.navigationItem.titleView = [self.delegate loadingViewControllerRequestsTitleView:nil];
     }
 }
 

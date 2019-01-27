@@ -202,7 +202,7 @@
     return NSLocalizedString(@"Boards", nil);
 }
 
-- (UILabel *)loadingViewControllerRequestsTitleLabel:(MCLLoadingViewController *)loadingViewController
+- (UIView *)loadingViewControllerRequestsTitleView:(MCLLoadingViewController *)loadingViewController
 {
     return [self noDetailVC] ? [[MCLLogoLabel alloc] initWithThemeManager:self.bag.themeManager] : nil;
 }

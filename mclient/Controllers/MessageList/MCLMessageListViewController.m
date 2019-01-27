@@ -97,7 +97,7 @@
     return self.thread.subject;
 }
 
-- (UILabel *)loadingViewControllerRequestsTitleLabel:(MCLLoadingViewController *)loadingViewController
+- (UIView *)loadingViewControllerRequestsTitleView:(MCLLoadingViewController *)loadingViewController
 {
     return [self titleLabel];
 }

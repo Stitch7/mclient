@@ -63,7 +63,7 @@
     return self.message.subject;
 }
 
-- (UILabel *)loadingViewControllerRequestsTitleLabel:(MCLLoadingViewController *)loadingViewController
+- (UIView *)loadingViewControllerRequestsTitleView:(MCLLoadingViewController *)loadingViewController
 {
     return [self titleLabel];
 }
