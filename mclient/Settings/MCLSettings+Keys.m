@@ -26,3 +26,4 @@ NSString * const MCLSettingEmbedYoutubeVideos = @"embedYoutubeVideos";
 NSString * const MCLSettingBackgroundNotifications = @"backgroundNotifications";
 NSString * const MCLSettingSoundEffectsEnabled = @"soundEffectsEnabled";
 NSString * const MCLSettingHideFavoritesHint = @"hideFavoritesHint";
+NSString * const MCLSettingSecretFound = @"secretFound";

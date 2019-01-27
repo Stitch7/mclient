@@ -25,6 +25,7 @@ extern NSString *const MCLSettingEmbedYoutubeVideos;
 extern NSString *const MCLSettingBackgroundNotifications;
 extern NSString *const MCLSettingSoundEffectsEnabled;
 extern NSString *const MCLSettingHideFavoritesHint;
+extern NSString *const MCLSettingSecretFound;
 
 typedef NS_ENUM(NSUInteger, kMCLSettingsThreadView) {
     kMCLSettingsThreadViewWidmann,

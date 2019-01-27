@@ -16,6 +16,10 @@
 		301203311E031D7500B06FF6 /* MCLBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 301203301E031D7500B06FF6 /* MCLBadgeView.m */; };
 		301203541E03704500B06FF6 /* MCLMessageListFrameStyleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 301203531E03704500B06FF6 /* MCLMessageListFrameStyleView.xib */; };
 		3012035A1E037DEC00B06FF6 /* MCLMessageListFrameStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 301203591E037DEC00B06FF6 /* MCLMessageListFrameStyleViewController.m */; };
+		301C766521F4BFE000CE7188 /* secret.caf in Resources */ = {isa = PBXBuildFile; fileRef = 301C766421F4BFE000CE7188 /* secret.caf */; };
+		301C766621F4BFE000CE7188 /* secret.caf in Resources */ = {isa = PBXBuildFile; fileRef = 301C766421F4BFE000CE7188 /* secret.caf */; };
+		301C766721F4BFE000CE7188 /* secret.caf in Resources */ = {isa = PBXBuildFile; fileRef = 301C766421F4BFE000CE7188 /* secret.caf */; };
+		301C766821F4BFE000CE7188 /* secret.caf in Resources */ = {isa = PBXBuildFile; fileRef = 301C766421F4BFE000CE7188 /* secret.caf */; };
 		301E24B619BB02EB00943EC6 /* MCLProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 301E24B519BB02EB00943EC6 /* MCLProfileTableViewController.m */; };
 		301FD01219AC794E0028C5C8 /* MCLThreadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD01119AC794E0028C5C8 /* MCLThreadTableViewCell.m */; };
 		301FD9A319C32FC600E36A5B /* MCLLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 301FD9A219C32FC600E36A5B /* MCLLoadingView.m */; };
@@ -712,6 +716,7 @@
 		301203581E037DEC00B06FF6 /* MCLMessageListFrameStyleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLMessageListFrameStyleViewController.h; sourceTree = "<group>"; };
 		301203591E037DEC00B06FF6 /* MCLMessageListFrameStyleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLMessageListFrameStyleViewController.m; sourceTree = "<group>"; };
 		30166C3A206307A700C4F015 /* MCLLoadingViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLLoadingViewControllerDelegate.h; sourceTree = "<group>"; };
+		301C766421F4BFE000CE7188 /* secret.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = secret.caf; sourceTree = "<group>"; };
 		301E24B419BB02EB00943EC6 /* MCLProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLProfileTableViewController.h; sourceTree = "<group>"; };
 		301E24B519BB02EB00943EC6 /* MCLProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLProfileTableViewController.m; sourceTree = "<group>"; };
 		301FD00F19AB73160028C5C8 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
@@ -1264,11 +1269,12 @@
 				30753B6F2176157B009647E9 /* error.caf */,
 				30753BAD21774B02009647E9 /* loginFailed.caf */,
 				30753B9E21765C55009647E9 /* markAllAsRead.caf */,
+				3020FB6E1E78A10900C7217F /* notification.caf */,
 				30753B712176157B009647E9 /* reload.caf */,
 				30753B6B2176157A009647E9 /* removeThreadFromFavorites.caf */,
+				301C766421F4BFE000CE7188 /* secret.caf */,
 				30753BA821774136009647E9 /* switch.caf */,
 				30753BA321765F04009647E9 /* tick.caf */,
-				3020FB6E1E78A10900C7217F /* notification.caf */,
 			);
 			path = Soundeffects;
 			sourceTree = "<group>";
@@ -2191,6 +2197,7 @@
 				30753BAF21774B03009647E9 /* loginFailed.caf in Resources */,
 				30753BAA21774136009647E9 /* switch.caf in Resources */,
 				3038D58319F65E21005E7D3D /* Localizable.strings in Resources */,
+				301C766621F4BFE000CE7188 /* secret.caf in Resources */,
 				30849D201E2BABBD00626331 /* Settings.storyboard in Resources */,
 				301203541E03704500B06FF6 /* MCLMessageListFrameStyleView.xib in Resources */,
 				3012032E1E03027500B06FF6 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
@@ -2236,6 +2243,7 @@
 				30753BAE21774B03009647E9 /* loginFailed.caf in Resources */,
 				30753BA921774136009647E9 /* switch.caf in Resources */,
 				306FC8731F93A39F001EB7E9 /* Localizable.strings in Resources */,
+				301C766521F4BFE000CE7188 /* secret.caf in Resources */,
 				306FC8741F93A39F001EB7E9 /* Settings.storyboard in Resources */,
 				306FC8751F93A39F001EB7E9 /* MCLMessageListFrameStyleView.xib in Resources */,
 				306FC8761F93A39F001EB7E9 /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
@@ -2273,6 +2281,7 @@
 				30753BB121774B03009647E9 /* loginFailed.caf in Resources */,
 				30753BAC21774136009647E9 /* switch.caf in Resources */,
 				3090CB1E1FA7ED1E0085C9AF /* Localizable.strings in Resources */,
+				301C766821F4BFE000CE7188 /* secret.caf in Resources */,
 				3090CB1F1FA7ED1E0085C9AF /* Settings.storyboard in Resources */,
 				3090CB201FA7ED1E0085C9AF /* MCLMessageListFrameStyleView.xib in Resources */,
 				3090CB211FA7ED1E0085C9AF /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
@@ -2310,6 +2319,7 @@
 				30753BB021774B03009647E9 /* loginFailed.caf in Resources */,
 				30753BAB21774136009647E9 /* switch.caf in Resources */,
 				3090CB9B1FA89A5C0085C9AF /* Localizable.strings in Resources */,
+				301C766721F4BFE000CE7188 /* secret.caf in Resources */,
 				3090CB9C1FA89A5C0085C9AF /* Settings.storyboard in Resources */,
 				3090CB9D1FA89A5C0085C9AF /* MCLMessageListFrameStyleView.xib in Resources */,
 				3090CB9E1FA89A5C0085C9AF /* MCLMessageListFrameStyleTableViewCell.xib in Resources */,
@@ -2452,16 +2462,28 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-mclient-dev/Pods-mclient-dev-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
+				"${PODS_ROOT}/LTMorphingLabel/LTMorphingLabel/Particles/Fire.png",
+				"${PODS_ROOT}/LTMorphingLabel/LTMorphingLabel/Particles/Fragment.png",
+				"${PODS_ROOT}/LTMorphingLabel/LTMorphingLabel/Particles/Smoke.png",
+				"${PODS_ROOT}/LTMorphingLabel/LTMorphingLabel/Particles/Sparkle.png",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem.png",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@2x.png",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@3x.png",
+				"${PODS_ROOT}/../../Tetromino/TetrominoTouchKit/TetrominoTouchKit/TetrominoTouch.xcassets",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TetrominoTouchKit/TetrominoTouchKit.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/HockeySDKResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fire.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fragment.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Smoke.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Sparkle.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem@2x.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Assets.car",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TetrominoTouchKit.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2502,16 +2524,28 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-mclient-beta/Pods-mclient-beta-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
+				"${PODS_ROOT}/LTMorphingLabel/LTMorphingLabel/Particles/Fire.png",
+				"${PODS_ROOT}/LTMorphingLabel/LTMorphingLabel/Particles/Fragment.png",
+				"${PODS_ROOT}/LTMorphingLabel/LTMorphingLabel/Particles/Smoke.png",
+				"${PODS_ROOT}/LTMorphingLabel/LTMorphingLabel/Particles/Sparkle.png",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem.png",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@2x.png",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@3x.png",
+				"${PODS_ROOT}/../../Tetromino/TetrominoTouchKit/TetrominoTouchKit/TetrominoTouch.xcassets",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TetrominoTouchKit/TetrominoTouchKit.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/HockeySDKResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fire.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fragment.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Smoke.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Sparkle.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem@2x.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Assets.car",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TetrominoTouchKit.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2526,16 +2560,28 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-mclient-store/Pods-mclient-store-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
+				"${PODS_ROOT}/LTMorphingLabel/LTMorphingLabel/Particles/Fire.png",
+				"${PODS_ROOT}/LTMorphingLabel/LTMorphingLabel/Particles/Fragment.png",
+				"${PODS_ROOT}/LTMorphingLabel/LTMorphingLabel/Particles/Smoke.png",
+				"${PODS_ROOT}/LTMorphingLabel/LTMorphingLabel/Particles/Sparkle.png",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem.png",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@2x.png",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@3x.png",
+				"${PODS_ROOT}/../../Tetromino/TetrominoTouchKit/TetrominoTouchKit/TetrominoTouch.xcassets",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TetrominoTouchKit/TetrominoTouchKit.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/HockeySDKResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fire.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fragment.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Smoke.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Sparkle.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem@2x.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Assets.car",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TetrominoTouchKit.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2550,16 +2596,28 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-mclient-alpha/Pods-mclient-alpha-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
+				"${PODS_ROOT}/LTMorphingLabel/LTMorphingLabel/Particles/Fire.png",
+				"${PODS_ROOT}/LTMorphingLabel/LTMorphingLabel/Particles/Fragment.png",
+				"${PODS_ROOT}/LTMorphingLabel/LTMorphingLabel/Particles/Smoke.png",
+				"${PODS_ROOT}/LTMorphingLabel/LTMorphingLabel/Particles/Sparkle.png",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem.png",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@2x.png",
 				"${PODS_ROOT}/SwiftyGiphy/Assets/GiphyLogoEmblem@3x.png",
+				"${PODS_ROOT}/../../Tetromino/TetrominoTouchKit/TetrominoTouchKit/TetrominoTouch.xcassets",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TetrominoTouchKit/TetrominoTouchKit.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/HockeySDKResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fire.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fragment.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Smoke.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Sparkle.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem@2x.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GiphyLogoEmblem@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Assets.car",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TetrominoTouchKit.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3675,7 +3733,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "06b55ff0-0c09-4094-9f00-8da801391520";
-				PROVISIONING_PROFILE_SPECIFIER = "mclient beta 02/18";
+				PROVISIONING_PROFILE_SPECIFIER = "mclient beta 01/19";
 				STAGE = 1;
 				SWIFT_OBJC_BRIDGING_HEADER = "mclient/Supporting Files/mclient-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -3711,7 +3769,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = re.reitz.mclient.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8b5abd5b-27ab-410c-85fa-49b110eedfbb";
-				PROVISIONING_PROFILE_SPECIFIER = "mclient beta 02/18";
+				PROVISIONING_PROFILE_SPECIFIER = "mclient beta 01/19";
 				STAGE = 1;
 				SWIFT_OBJC_BRIDGING_HEADER = "mclient/Supporting Files/mclient-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;

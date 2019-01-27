@@ -7,4 +7,8 @@
 
 #import "UISearchBar+getSearchField.h"
 #import "MCLRouter.h"
+#import "MCLDependencyBag.h"
+#import "MCLSettings.h"
 #import "MCLTheme.h"
+#import "MCLSoundEffectPlayer.h"
+#import "MCLBoard.h"

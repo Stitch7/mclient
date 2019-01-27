@@ -114,4 +114,9 @@
     [self playSoundWithName:@"tick"];
 }
 
+- (void)playSecretFoundSound
+{
+    [self playSoundWithName:@"secret"];
+}
+
 @end

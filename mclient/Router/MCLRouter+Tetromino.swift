@@ -6,12 +6,16 @@
 //  See LICENSE file in the project root for full license information.
 //
 
-//import TetrominoTouchKit
+import TetrominoTouchKit
 
 public extension MCLRouter {
     @objc @discardableResult public func modalToGame() -> UINavigationController {
-//        let gameVC = TetrominoTouch().makeGameController(bounds: UIScreen.main.bounds)
-        let gameVC = UINavigationController()
+        if !bag.settings.isSettingActivated(MCLSettingSecretFound) {
+            bag.soundEffectPlayer.playSecretFoundSound()
+            bag.settings.setBool(true, forSetting: MCLSettingSecretFound)
+        }
+
+        let gameVC = TetrominoTouchKit().makeGameController()
         masterNavigationController.present(gameVC, animated: true)
 
         return gameVC
