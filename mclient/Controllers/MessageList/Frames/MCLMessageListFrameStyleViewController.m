@@ -350,11 +350,12 @@
 
     if (notification) {
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-        [self.tableView selectRowAtIndexPath:selectedIndexPath
-                                    animated:NO
-                              scrollPosition:UITableViewScrollPositionNone];
-        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
-
+        if (selectedIndexPath) {
+            [self.tableView selectRowAtIndexPath:selectedIndexPath
+                                        animated:NO
+                                  scrollPosition:UITableViewScrollPositionNone];
+            [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+        }
         [self.tableView reloadData];
     }
 }

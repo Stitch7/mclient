@@ -221,7 +221,9 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
     thread.tempRead = YES;
 
     MCLMessageListViewController *messageListVC = [self.bag.router pushToThread:thread];
-    messageListVC.delegate = self;
+    if ([messageListVC isKindOfClass:[MCLMessageListViewController class]]) {
+        messageListVC.delegate = self;
+    }
 }
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath

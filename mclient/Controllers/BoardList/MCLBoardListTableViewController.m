@@ -419,6 +419,10 @@
 
 - (void)pushToFavoriteAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (!self.favorites || [self.favorites count] == 0) {
+        return;
+    }
+
     MCLThread *thread = [self.favorites objectAtIndex:indexPath.row];
     thread.board = [MCLBoard boardWithId:thread.boardId];
     MCLMessageListViewController *messageListVC = [self.bag.router pushToThread:thread];
