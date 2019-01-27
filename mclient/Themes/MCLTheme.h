@@ -18,6 +18,7 @@
 - (UIColor *)detailTextColor;
 - (UIColor *)detailImageColor;
 - (UIColor *)overlayTextColor;
+- (UIColor *)messageBackgroundColor;
 - (UIColor *)usernameTextColor;
 - (UIColor *)ownUsernameTextColor;
 - (UIColor *)modTextColor;
@@ -42,5 +43,6 @@
 - (UIColor *)tableViewCellSelectedBackgroundColor;
 - (UIColor *)badgeViewBackgroundColor;
 - (UIColor *)webViewBackgroundColor;
+- (UIColor *)loadingIndicatorColor;
 
 @end

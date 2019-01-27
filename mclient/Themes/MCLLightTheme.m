@@ -79,6 +79,11 @@
     return [UIColor darkTextColor];
 }
 
+- (UIColor *)messageBackgroundColor
+{
+    return [UIColor groupTableViewBackgroundColor];
+}
+
 - (UIColor *)usernameTextColor
 {
     return [UIColor blackColor];
@@ -187,7 +192,7 @@
 
 - (UIColor *)tableViewCellSelectedBackgroundColor
 {
-    return [UIColor groupTableViewBackgroundColor];
+    return [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1.0];
 }
 
 - (UIColor *)badgeViewBackgroundColor
@@ -200,4 +205,9 @@
     return [UIColor clearColor];
 }
 
+- (UIColor *)loadingIndicatorColor
+{
+    return [UIColor darkTextColor];
+}
+    
 @end

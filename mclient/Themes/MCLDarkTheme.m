@@ -93,6 +93,11 @@
     return self.darkGrayColor;
 }
 
+- (UIColor *)messageBackgroundColor
+{
+    return self.nearlyBlackColor;
+}
+
 - (UIColor *)usernameTextColor
 {
     return self.silverColor;
@@ -211,6 +216,11 @@
 - (UIColor *)webViewBackgroundColor
 {
     return self.nearlyBlackColor;
+}
+
+- (UIColor *)loadingIndicatorColor
+{
+    return [UIColor whiteColor];
 }
 
 @end

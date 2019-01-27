@@ -230,7 +230,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MCLMessageListWidmannStyleTableViewCell *cell = (MCLMessageListWidmannStyleTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    cell.backgroundColor = [self.bag.themeManager.currentTheme tableViewCellSelectedBackgroundColor];
+    cell.backgroundColor = [self.bag.themeManager.currentTheme messageBackgroundColor];
 
     MCLMessage *message = self.messages[indexPath.row];
     message.board = self.board;

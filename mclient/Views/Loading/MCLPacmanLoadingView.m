@@ -37,7 +37,7 @@
 - (void)configureSubviews
 {
     DGActivityIndicatorView *pacmanView = [[DGActivityIndicatorView alloc] initWithType:DGActivityIndicatorAnimationTypeCookieTerminator
-                                                                              tintColor:[self.currentTheme textColor]
+                                                                              tintColor:[self.currentTheme loadingIndicatorColor]
                                                                                    size:32.0f];
     self.backgroundColor = [self.currentTheme backgroundColor];
     pacmanView.translatesAutoresizingMaskIntoConstraints = NO;

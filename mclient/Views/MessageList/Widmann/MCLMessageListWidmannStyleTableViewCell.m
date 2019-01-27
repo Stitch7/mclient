@@ -145,7 +145,7 @@ NSString *const WebviewMessageHandlerName = @"mclient";
     self.indentionImageView.tintColor = [currentTheme tableViewSeparatorColor];
 
     if (self.isActive) {
-        self.backgroundColor = [currentTheme tableViewCellSelectedBackgroundColor];
+        self.backgroundColor = [currentTheme messageBackgroundColor];
         [self initWebviewWithMessage:message];
     } else {
         self.backgroundColor = [currentTheme tableViewCellBackgroundColor];
@@ -154,7 +154,7 @@ NSString *const WebviewMessageHandlerName = @"mclient";
 
     self.toolbar.hidden = !self.isActive;
     self.toolbar.message = message;
-    [self.toolbar setBarTintColor:[currentTheme tableViewCellSelectedBackgroundColor]];
+    [self.toolbar setBarTintColor:[currentTheme messageBackgroundColor]];
 
     self.indentionImageView.hidden = (self.indexPath.row == 0);
 
@@ -202,8 +202,8 @@ NSString *const WebviewMessageHandlerName = @"mclient";
     self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:webViewConfig];
     self.webView.translatesAutoresizingMaskIntoConstraints = NO;
     self.webView.opaque = NO;
-    self.webView.backgroundColor = [self.bag.themeManager.currentTheme tableViewCellSelectedBackgroundColor];
-    self.webView.scrollView.backgroundColor = [self.bag.themeManager.currentTheme tableViewCellSelectedBackgroundColor];
+    self.webView.backgroundColor = [self.bag.themeManager.currentTheme messageBackgroundColor];
+    self.webView.scrollView.backgroundColor = [self.bag.themeManager.currentTheme messageBackgroundColor];
     self.webView.scrollView.scrollEnabled = NO;
     self.webView.scrollView.scrollsToTop = NO;
     for (id subview in self.webView.subviews) {
