@@ -17,7 +17,7 @@ def mclient_pods
   pod 'Inapptics'
   pod 'SwiftyGiphy', :modular_headers => true, :git => 'https://github.com/Stitch7/SwiftyGiphy'
 
-  #pod 'TetrominoTouchKit', :path => "../Tetromino/TetrominoTouchKit"
+  pod 'TetrominoTouchKit', :path => "../Tetromino/TetrominoTouchKit"
 
 end
 

@@ -25,7 +25,8 @@ PODS:
   - ImgurSession (1.3):
     - AFNetworking (= 3.1.0)
   - Inapptics (2.0.4)
-  - MGSwipeTableCell (1.6.7)
+  - LTMorphingLabel (0.6.0)
+  - MGSwipeTableCell (1.6.8)
   - MRProgress (0.8.3):
     - MRProgress/ActivityIndicator (= 0.8.3)
     - MRProgress/Blur (= 0.8.3)
@@ -55,16 +56,22 @@ PODS:
   - MRProgress/Stopable (0.8.3):
     - MRProgress/Helper
   - NSTimer-Blocks (0.0.1)
-  - ObjectMapper (3.3.0)
-  - SDWebImage/Core (4.4.2)
-  - SDWebImage/GIF (4.4.2):
+  - ObjectMapper (3.4.2)
+  - ReachabilitySwift (4.3.0)
+  - SDWebImage/Core (4.4.4)
+  - SDWebImage/GIF (4.4.4):
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
+  - SwiftQueue (2.3.0):
+    - ReachabilitySwift (~> 4.2)
   - SwiftyGiphy (1.1.1):
     - FLAnimatedImage (~> 1.0)
     - NSTimer-Blocks
     - ObjectMapper (~> 3.3)
     - SDWebImage/GIF
+  - TetrominoTouchKit (0.0.1):
+    - LTMorphingLabel
+    - SwiftQueue
   - Valet (2.4.2)
 
 DEPENDENCIES:
@@ -78,6 +85,7 @@ DEPENDENCIES:
   - MGSwipeTableCell
   - MRProgress (from `https://github.com/Stitch7/MRProgress`)
   - SwiftyGiphy (from `https://github.com/Stitch7/SwiftyGiphy`)
+  - TetrominoTouchKit (from `../Tetromino/TetrominoTouchKit`)
   - Valet (~> 2.4.2)
 
 SPEC REPOS:
@@ -89,10 +97,13 @@ SPEC REPOS:
     - FLAnimatedImage
     - HockeySDK
     - Inapptics
+    - LTMorphingLabel
     - MGSwipeTableCell
     - NSTimer-Blocks
     - ObjectMapper
+    - ReachabilitySwift
     - SDWebImage
+    - SwiftQueue
     - Valet
 
 EXTERNAL SOURCES:
@@ -104,6 +115,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/Stitch7/MRProgress
   SwiftyGiphy:
     :git: https://github.com/Stitch7/SwiftyGiphy
+  TetrominoTouchKit:
+    :path: "../Tetromino/TetrominoTouchKit"
 
 CHECKOUT OPTIONS:
   EDSunriseSet:
@@ -129,14 +142,18 @@ SPEC CHECKSUMS:
   HockeySDK: 15afe6bc0a5bfe3a531fd73dbf082095f37dac3b
   ImgurSession: e11a605652cfe8aebfb6a9a4ea5b752654f14e2f
   Inapptics: 0957e8ff6d208c8ce0c8f895791b6d85d69cf878
-  MGSwipeTableCell: fb20e983988bde2b8d0df29c2d9e1d8ffd10b74a
+  LTMorphingLabel: c73ebfef9009c0a098546c29f566024442d1a91e
+  MGSwipeTableCell: dc4eca3212ed38a563b27d6aa7b3c01ce656c1e2
   MRProgress: b0c2bcff94ee700ac2aea810e1f51720c059cbd3
   NSTimer-Blocks: 88faf9aef5f250ead087f3f67ae642517083bf36
-  ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
-  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
+  ObjectMapper: 0d4402610f4e468903ae64629eec4784531e5c51
+  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
+  SDWebImage: c00ec18ab25d10e5ffac109b0f78d1b4341c9691
+  SwiftQueue: 2a2b6efbd40b72e54f93aabf802da38850bccc8d
   SwiftyGiphy: f91fb774668fa491b6659de4b413c470cbafe534
+  TetrominoTouchKit: 2bcc33c48ae8ce72d17e8144780616d08c9b9efc
   Valet: 14463ef24fab8fd5809044ecedb61484b799fdd6
 
-PODFILE CHECKSUM: 36f38b5bb0e674ebd45bed9ac945f73b5d1049d2
+PODFILE CHECKSUM: 8299227504affc9838c61da87175e467f7c991cf
 
 COCOAPODS: 1.6.0.beta.2
