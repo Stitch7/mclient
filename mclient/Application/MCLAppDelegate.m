@@ -41,7 +41,7 @@
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    [self.bag.notificationManager notificateAboutNewResponsesWithCompletionHandler:completionHandler];
+    [self.bag.notificationManager runForNewNotificationsWithCompletionHandler:completionHandler];
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification

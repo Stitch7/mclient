@@ -114,6 +114,11 @@
     [self playSoundWithName:@"tick"];
 }
 
+- (void)playPrivateMessageReceivedSound
+{
+    [self playSoundWithName:@"privateMessageReceived"];
+}
+
 - (void)playSecretFoundSound
 {
     [self playSoundWithName:@"secret"];

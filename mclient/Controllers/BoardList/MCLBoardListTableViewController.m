@@ -15,11 +15,13 @@
 #import "MCLFeatures.h"
 #import "MCLFavoriteThreadToggleRequest.h"
 #import "MCLRouter+mainNavigation.h"
+#import "MCLRouter+privateMessages.h"
 #import "MCLLoginManager.h"
 #import "MCLMessageResponsesRequest.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
 #import "MCLKeyboardShortcutManager.h"
+#import "MCLPrivateMessagesManager.h"
 #import "MCLStoreReviewManager.h"
 #import "MCLSoundEffectPlayer.h"
 #import "MCLSplitViewController.h"
@@ -89,6 +91,11 @@
                            selector:@selector(foundUnreadResponses:)
                                name:MCLUnreadResponsesFoundNotification
                              object:nil];
+
+    [notificationCenter addObserver:self
+                           selector:@selector(privateMessagesChanged:)
+                               name:MCLPrivateMessagesChangedNotification
+                             object:nil];
 }
 
 - (void)dealloc
@@ -125,6 +132,10 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
+    if (self.bag.loginManager.isLoginValid) {
+        [self.bag.privateMessagesManager loadConversations];
+    }
 
     if (self.alreadyAppeared && self.bag.loginManager.isLoginValid) {
         [[[MCLMessageResponsesRequest alloc] initWithBag:self.bag] loadResponsesWithCompletion:nil];
@@ -170,12 +181,12 @@
     UIImage *privateMessagesImage = [[UIImage imageNamed:@"privateMessages"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIButton *privateMessagesButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 50.0f, 50.0f)];
     [privateMessagesButton setImage:privateMessagesImage forState:UIControlStateNormal];
-    [privateMessagesButton addTarget:self action:@selector(responsesButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [privateMessagesButton addTarget:self action:@selector(privateMessagesButtonPressed) forControlEvents:UIControlEventTouchUpInside];
 
     self.privateMessagesButtonItem = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:privateMessagesButton];
     self.privateMessagesButtonItem.badgeOriginX = 0.0f;
     self.privateMessagesButtonItem.badgeOriginY = 8.0f;
-    self.privateMessagesButtonItem.badgeValue = [NSString stringWithFormat:@"%i", 7];
+    self.privateMessagesButtonItem.badgeValue = nil;
     self.privateMessagesButtonItem.shouldHideBadgeAtZero = YES;
     self.privateMessagesButtonItem.badgePadding = 5;
 
@@ -491,6 +502,12 @@
     [self.bag.router pushToResponses];
 }
 
+
+- (void)privateMessagesButtonPressed
+{
+    [self.bag.router pushToPrivateMessages];
+}
+
 #pragma mark - Notifications
 
 - (void)loginStateDidChanged:(NSNotification *)notification
@@ -511,6 +528,11 @@
     self.responsesButtonItem.badgeValue = [[[notification userInfo] objectForKey:@"numberOfUnreadResponses"] stringValue];
 }
 
+
+- (void)privateMessagesChanged:(NSNotification *)notification
+{
+    self.privateMessagesButtonItem.badgeValue = [[[notification userInfo] objectForKey:@"numberOfUnreadMessages"] stringValue];
+}
 #pragma mark - Public
 
 - (void)updateVerifyLoginViewWithSuccess:(BOOL)success
@@ -519,11 +541,13 @@
         [self.verifyLoginView loginStatusWithUsername:self.bag.loginManager.username];
         [[[MCLMessageResponsesRequest alloc] initWithBag:self.bag] loadResponsesWithCompletion:nil];
         [self.responsesButtonItem setEnabled:YES];
+        [self.privateMessagesButtonItem setEnabled:YES];
         [self updateResponsesButtonItemBadgeValueFromApplicationIconBadgeNumber];
     } else {
         [self.verifyLoginView loginStatusNoLogin];
         self.responsesButtonItem.badgeValue = 0;
         [self.responsesButtonItem setEnabled:NO];
+        [self.privateMessagesButtonItem setEnabled:NO];
     }
 }
 

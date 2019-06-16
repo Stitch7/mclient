@@ -25,6 +25,7 @@
 - (void)playErrorSound;
 - (void)playSwitchSound;
 - (void)playTickSound;
+- (void)playPrivateMessageReceivedSound;
 - (void)playSecretFoundSound;
 
 @end

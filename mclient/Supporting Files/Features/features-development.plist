@@ -13,7 +13,7 @@
 	<key>FullSearch</key>
 	<true/>
 	<key>PrivateMessages</key>
-	<false/>
+	<true/>
 	<key>TabbedSettings</key>
 	<false/>
 	<key>Tetris</key>

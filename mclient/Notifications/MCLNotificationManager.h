@@ -8,11 +8,13 @@
 
 @protocol MCLDependencyBag;
 @class MCLNotificationHistory;
+@class MCLPrivateMessageNotificationHistory;
 @class MCLResponse;
 
 @interface MCLNotificationManager : NSObject
 
 @property (strong, nonatomic) MCLNotificationHistory *history;
+@property (strong, nonatomic) MCLPrivateMessageNotificationHistory *privateMessageHistory;
 
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
 
@@ -20,7 +22,7 @@
 - (BOOL)backgroundNotificationsRegistered;
 - (BOOL)backgroundNotificationsEnabled;
 - (void)sendLocalNotificationForResponse:(MCLResponse *)response;
-- (void)notificateAboutNewResponsesWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
+- (void)runForNewNotificationsWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 - (void)handleReceivedNotification:(UILocalNotification *)notification;
 
 @end

@@ -68,7 +68,12 @@
 
 - (void)loadWithCompletionHandler:(void (^__nonnull)(NSError*, NSArray*))completionHandler
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@/user/%@", kMServiceBaseURL, self.user.userId];
+    NSString *urlString;
+    if (self.user.userId) {
+        urlString = [NSString stringWithFormat:@"%@/user/%@", kMServiceBaseURL, self.user.userId];
+    } else {
+        urlString = [NSString stringWithFormat:@"%@/username/%@", kMServiceBaseURL, self.user.username];
+    }
     [self.httpClient getRequestToUrlString:urlString
                                 needsLogin:YES
                          completionHandler:^(NSError *error, NSDictionary *json) {

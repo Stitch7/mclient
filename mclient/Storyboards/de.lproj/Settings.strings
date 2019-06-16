@@ -1,6 +1,6 @@
 
-/* Class = "UITableViewSection"; footerTitle = "Use the systems background fetch capability to get notified about new replies to your postings."; ObjectID = "03w-Ml-MZu"; */
-"03w-Ml-MZu.footerTitle" = "Nutze die Hintergrundaktualisierungs Funktion des Systems um dich über neue Antworten zu deinen Postings benachrichtigen zu lassen.";
+/* Class = "UITableViewSection"; footerTitle = "Use the systems background fetch capability to get notified about new private messages and replies to your postings."; ObjectID = "03w-Ml-MZu"; */
+"03w-Ml-MZu.footerTitle" = "Nutze die Hintergrundaktualisierungs Funktion des Systems um dich über neue Private Nachrichten und Antworten zu deinen Postings benachrichtigen zu lassen.";
 
 /* Class = "UITableViewSection"; headerTitle = "NOTIFICATIONS"; ObjectID = "03w-Ml-MZu"; */
 "03w-Ml-MZu.headerTitle" = "BENACHRICHTIGUNGEN";
