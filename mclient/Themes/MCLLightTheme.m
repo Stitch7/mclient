@@ -126,7 +126,7 @@
 
 - (UIColor *)navigationBarBackgroundColor
 {
-    return [UIColor whiteColor];
+    return nil;
 }
 
 - (UIColor *)navigationBarTextColor
@@ -141,7 +141,7 @@
 
 - (UIColor *)toolbarBackgroundColor
 {
-    return [UIColor whiteColor];
+    return nil;
 }
 
 - (UIColor *)tableViewHeaderTextColor
