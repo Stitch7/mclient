@@ -12,6 +12,9 @@
 
 @class MCLSplitViewController;
 
+@class MCLProfileTableViewController;
+@class MCLUser;
+
 @interface MCLRouter : NSObject
 
 @property (strong, nonatomic) id <MCLDependencyBag> bag;

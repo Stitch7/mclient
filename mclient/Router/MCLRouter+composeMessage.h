@@ -10,8 +10,10 @@
 
 @class MCLBoard;
 @class MCLMessage;
+@class MCLDraft;
 @class MCLComposeMessageViewController;
 @class MCLComposeMessagePreviewViewController;
+@class MCLDraftTableViewController;
 @class SwiftyGiphyHelper;
 
 @interface MCLRouter (composeMessage)
@@ -19,7 +21,10 @@
 - (MCLComposeMessageViewController *)modalToComposeThreadToBoard:(MCLBoard *)board;
 - (MCLComposeMessageViewController *)modalToComposeReplyToMessage:(MCLMessage *)message;
 - (MCLComposeMessageViewController *)modalToEditMessage:(MCLMessage *)message;
+- (MCLComposeMessageViewController *)modalToEditDraft:(MCLDraft *)draft;
 - (MCLComposeMessagePreviewViewController *)pushToPreviewForMessage:(MCLMessage *)message;
+
+- (MCLDraftTableViewController *)pushToDrafts;
 
 - (UIImagePickerController *)modalToImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType fromButton:(UIBarButtonItem *)button;
 

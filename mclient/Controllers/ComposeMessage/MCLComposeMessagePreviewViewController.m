@@ -17,6 +17,8 @@
 #import "MCLSendMessageRequest.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
+#import "MCLDraftManager.h"
+#import "MCLDraft.h"
 #import "MCLLoadingView.h"
 #import "MCLMServiceErrorView.h"
 #import "MCLInternetConnectionErrorView.h"
@@ -43,6 +45,11 @@
 
     id <MCLTheme> currentTheme = self.bag.themeManager.currentTheme;
     self.view.backgroundColor = [currentTheme backgroundColor];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [self.bag.draftManager saveMessageAsDraft:self.message];
 }
 
 #pragma mark - MCLLoadingContentViewControllerDelegate
@@ -120,14 +127,17 @@
     MCLSendMessageRequest *sendRequest = [[MCLSendMessageRequest alloc] initWithClient:self.bag.httpClient message:self.message];
     [sendRequest loadWithCompletionHandler:^(NSError *error, NSArray *data) {
         if (error) {
+            [self.bag.draftManager saveMessageAsDraft:self.message];
             [self presentError:error withCompletion:^{
                 self.sendButton.enabled = YES;
             }];
             return;
         }
 
+        [self.bag.draftManager removeDraftForMessage:self.message];
+
         [self dismissViewControllerAnimated:YES completion:^{
-            [self.delegate message:self.message sentWithType:self.message.type];
+            [self.delegate composeMessageViewController:self sentMessage:self.message];
         }];
     }];
 }

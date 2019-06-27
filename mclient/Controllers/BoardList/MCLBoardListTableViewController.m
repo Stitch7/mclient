@@ -38,6 +38,7 @@
 #import "MCLNoDataTableViewCell.h"
 #import "MCLSettings.h"
 #import "MCLSettings+Keys.h"
+#import "MCLDraftManager.h"
 
 
 @interface MCLBoardListTableViewController ()
@@ -90,6 +91,11 @@
     [notificationCenter addObserver:self
                            selector:@selector(foundUnreadResponses:)
                                name:MCLUnreadResponsesFoundNotification
+                             object:nil];
+
+    [notificationCenter addObserver:self
+                           selector:@selector(draftsChanged:)
+                               name:MCLDraftsChangedNotification
                              object:nil];
 
     [notificationCenter addObserver:self
@@ -215,7 +221,7 @@
 
 - (UIView *)loadingViewControllerRequestsTitleView:(MCLLoadingViewController *)loadingViewController
 {
-    return [self noDetailVC] ? [[MCLLogoLabel alloc] initWithThemeManager:self.bag.themeManager] : nil;
+    return [self noDetailVC] ? [[MCLLogoLabel alloc] initWithBag:self.bag] : nil;
 }
 
 - (NSArray<__kindof UIBarButtonItem *> *)loadingViewControllerRequestsToolbarItems:(MCLLoadingViewController *)loadingViewController
@@ -225,6 +231,7 @@
                                                                                    action:nil];
     UIBarButtonItem *flexibleItem2 = flexibleItem1;
     UIBarButtonItem *verifyLoginViewItem = [[UIBarButtonItem alloc] initWithCustomView:self.verifyLoginView];
+    [self.verifyLoginView addTarget:self action:@selector(verifyLoginViewButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     return [NSArray arrayWithObjects:self.responsesButtonItem,
                                      flexibleItem1,
@@ -502,6 +509,10 @@
     [self.bag.router pushToResponses];
 }
 
+- (void)verifyLoginViewButtonPressed:(id)sender
+{
+    [self.bag.router pushToDrafts];
+}
 
 - (void)privateMessagesButtonPressed
 {
@@ -528,11 +539,16 @@
     self.responsesButtonItem.badgeValue = [[[notification userInfo] objectForKey:@"numberOfUnreadResponses"] stringValue];
 }
 
+- (void)draftsChanged:(NSNotification *)notification
+{
+    [self updateVerifyLoginViewWithSuccess:self.bag.loginManager.isLoginValid];
+}
 
 - (void)privateMessagesChanged:(NSNotification *)notification
 {
     self.privateMessagesButtonItem.badgeValue = [[[notification userInfo] objectForKey:@"numberOfUnreadMessages"] stringValue];
 }
+
 #pragma mark - Public
 
 - (void)updateVerifyLoginViewWithSuccess:(BOOL)success
@@ -543,6 +559,10 @@
         [self.responsesButtonItem setEnabled:YES];
         [self.privateMessagesButtonItem setEnabled:YES];
         [self updateResponsesButtonItemBadgeValueFromApplicationIconBadgeNumber];
+
+        if ([self.bag.features isFeatureWithNameEnabled:MCLFeatureDrafts]) {
+            [self.verifyLoginView setNumberOfDrafts:self.bag.draftManager.count withDelay:2];
+        }
     } else {
         [self.verifyLoginView loginStatusNoLogin];
         self.responsesButtonItem.badgeValue = 0;

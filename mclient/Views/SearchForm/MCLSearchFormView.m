@@ -9,9 +9,9 @@
 #import "MCLSearchFormView.h"
 
 #import "UIView+addConstraints.h"
+#import "MCLDependencyBag.h"
 #import "MCLThemeManager.h"
 #import "MCLSoundEffectPlayer.h"
-#import "MCLDependencyBag.h"
 #import "MCLSearchFormViewDelegate.h"
 #import "MCLSearchQuery.h"
 #import "MCLBoard.h"

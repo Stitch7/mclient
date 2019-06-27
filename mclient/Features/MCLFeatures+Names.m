@@ -14,6 +14,7 @@ NSString * const MCLFeatureStoreReview = @"StoreReview";
 NSString * const MCLFeatureKillFileThreads = @"KillFileThreads";
 NSString * const MCLFeatureFullSearch = @"FullSearch";
 NSString * const MCLFeatureEmbedYoutube = @"EmbedYoutube";
+NSString * const MCLFeatureDrafts = @"Drafts";
 NSString * const MCLFeatureTabbedSettings = @"TabbedSettings";
 NSString * const MCLFeaturePrivateMessages = @"PrivateMessages";
 NSString * const MCLFeatureTetris = @"Tetris";

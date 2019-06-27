@@ -9,7 +9,7 @@
 import TetrominoTouchKit
 
 public extension MCLRouter {
-    @objc @discardableResult public func modalToGame() -> UINavigationController {
+    @objc @discardableResult func modalToGame() -> UINavigationController {
         if !bag.settings.isSettingActivated(MCLSettingSecretFound) {
             bag.soundEffectPlayer.playSecretFoundSound()
             bag.settings.setBool(true, forSetting: MCLSettingSecretFound)

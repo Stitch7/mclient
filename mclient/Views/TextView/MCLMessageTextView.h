@@ -12,6 +12,7 @@
 
 @interface MCLMessageTextView : MCLTextView <UITextViewDelegate>
 
+@property (assign, nonatomic) BOOL changed;
 @property (weak) id<MCLMessageTextViewErrorHandler> errorHandler;
 
 - (void)formatBold;

@@ -12,6 +12,7 @@ extern NSString *const MCLFeatureStoreReview;
 extern NSString *const MCLFeatureKillFileThreads;
 extern NSString *const MCLFeatureFullSearch;
 extern NSString *const MCLFeatureEmbedYoutube;
+extern NSString *const MCLFeatureDrafts;
 extern NSString *const MCLFeatureTabbedSettings;
 extern NSString *const MCLFeaturePrivateMessages;
 extern NSString *const MCLFeatureTetris;

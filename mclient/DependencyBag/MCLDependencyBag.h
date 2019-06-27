@@ -14,6 +14,8 @@
 @class MCLThemeManager;
 @class MCLKeyboardShortcutManager;
 @class MCLSoundEffectPlayer;
+@class MCLDraftManager;
+@class MCLPrivateMessagesManager;
 @class MCLStoreReviewManager;
 @protocol MCLHTTPClient;
 
@@ -28,6 +30,8 @@
 @property (strong, nonatomic) MCLThemeManager *themeManager;
 @property (strong, nonatomic) MCLKeyboardShortcutManager *keyboardShortcutManager;
 @property (strong, nonatomic) MCLSoundEffectPlayer *soundEffectPlayer;
+@property (strong, nonatomic) MCLDraftManager *draftManager;
+@property (strong, nonatomic) MCLPrivateMessagesManager *privateMessagesManager;
 @property (strong, nonatomic) MCLStoreReviewManager *storeReviewManager;
 @property (strong, nonatomic) id <MCLHTTPClient> httpClient;
 

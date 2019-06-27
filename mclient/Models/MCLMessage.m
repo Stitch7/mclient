@@ -12,11 +12,15 @@
 #import "UIColor+Hex.h"
 #import "MCLSettings.h"
 #import "MCLTheme.h"
+#import "MCLDraft.h"
 #import "MCLBoard.h"
 #import "MCLThread.h"
 #import "MCLResponse.h"
 
+
 @implementation MCLMessage
+
+# pragma mark - Initializers
 
 + (MCLMessage *)messageWithId:(NSNumber *)inMessageId
                          read:(BOOL)inRead
@@ -40,7 +44,7 @@
 
 + (MCLMessage *)messagePreviewWithType:(NSUInteger)type
                              messageId:(NSNumber *)inMessageId
-                               boardId:(NSNumber *)inBoardId
+                                 board:(MCLBoard *)inBoard
                               threadId:(NSNumber *)inThreadId
                                subject:(NSString *)inSubject
                                   text:(NSString *)inText
@@ -48,11 +52,11 @@
     MCLMessage *message = [[MCLMessage alloc] init];
     message.type = type;
     message.messageId = inMessageId;
-    message.board = [MCLBoard boardWithId:inBoardId];
+    message.board = inBoard;
     message.thread = [MCLThread threadWithId:inThreadId];
-    message.thread.boardId = inBoardId;
+    message.thread.boardId = inBoard.boardId;
     message.thread.board = message.board;
-    message.boardId = inBoardId;
+    message.boardId = inBoard.boardId;
     message.subject = inSubject;
     message.text = inText;
 
@@ -86,6 +90,26 @@
     return message;
 }
 
++ (MCLMessage *)messageFromDraft:(MCLDraft *)draft
+{
+    if (!draft) { return nil; }
+
+    MCLMessage *message = [[MCLMessage alloc] init];
+    message.isDraft = YES;
+    message.type = draft.type;
+    message.board = [MCLBoard boardWithId:draft.boardId name:draft.boardName];
+    message.thread = [MCLThread threadWithId:draft.threadId
+                                     subject:draft.originalSubject];
+    message.thread.boardId = draft.boardId;
+    message.thread.board = message.board;
+    message.boardId = draft.boardId;
+    message.messageId = draft.messageId;
+    message.subject = draft.subject;
+    message.text = draft.text;
+
+    return message;
+}
+
 + (MCLMessage *)messageFromJSON:(NSDictionary *)json
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -109,6 +133,8 @@
                                            username:username
                                             subject:subject
                                                date:date];
+
+    message.text = [json objectForKey:@"text"];
 
     return message;
 }
@@ -143,6 +169,7 @@
     return message;
 }
 
+# pragma mark - Public Methods
 
 - (void)updateFromMessageTextJSON:(NSDictionary *)json
 {
@@ -159,6 +186,27 @@
     if ([json objectForKey:@"userBlockedYou"] != [NSNull null]) {
         self.userBlockedYou = [[json objectForKey:@"userBlockedYou"] boolValue];
     }
+}
+
+- (NSString *)key
+{
+    return [NSString stringWithFormat:@"%@-%@-%@", self.board.boardId, self.thread.threadId, self.messageId];
+}
+
+- (MCLDraft *)draft
+{
+    MCLDraft *draft = [[MCLDraft alloc] init];
+    draft.type = self.type;
+    draft.boardId = self.boardId;
+    draft.boardName = self.board.name;
+    draft.threadId = self.thread.threadId;
+    draft.messageId = self.messageId;
+    draft.originalSubject = self.prevMessage.subject;
+    draft.subject = self.subject;
+    draft.text = self.text;
+    draft.date = [NSDate new];
+
+    return draft;
 }
 
 - (NSString *)messageHtmlWithTopMargin:(int)topMargin width:(CGFloat)width theme:(id <MCLTheme>)theme settings:(MCLSettings *)settings

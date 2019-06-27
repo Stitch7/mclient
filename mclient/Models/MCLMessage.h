@@ -8,6 +8,7 @@
 
 @protocol MCLTheme;
 
+@class MCLDraft;
 @class MCLBoard;
 @class MCLThread;
 @class MCLResponse;
@@ -23,6 +24,7 @@ typedef NS_ENUM(NSUInteger, kMCLComposeType) {
 
 @property (strong, nonatomic) MCLBoard *board;
 @property (strong, nonatomic) MCLThread *thread;
+@property (strong, nonatomic) MCLMessage *prevMessage;
 @property (strong, nonatomic) MCLMessage *nextMessage;
 
 @property (strong) NSNumber *boardId;
@@ -41,6 +43,7 @@ typedef NS_ENUM(NSUInteger, kMCLComposeType) {
 @property (assign, nonatomic) BOOL userBlockedByYou;
 @property (assign, nonatomic) BOOL userBlockedYou;
 
+@property (assign, nonatomic) BOOL isDraft;
 @property (assign) NSUInteger type;
 
 + (MCLMessage *)messageWithId:(NSNumber *)inMessageId
@@ -53,19 +56,22 @@ typedef NS_ENUM(NSUInteger, kMCLComposeType) {
 
 + (MCLMessage *)messagePreviewWithType:(NSUInteger)type
                              messageId:(NSNumber *)inMessageId
-                               boardId:(NSNumber *)inBoardId
+                                 board:(MCLBoard *)inBoard
                               threadId:(NSNumber *)inThreadId
                                subject:(NSString *)inSubject
                                   text:(NSString *)inText;
 
 + (MCLMessage *)messageNewWithBoard:(MCLBoard *)board;
-
 + (MCLMessage *)messageFromResponse:(MCLResponse *)response;
-
 + (MCLMessage *)messageFromJSON:(NSDictionary *)json;
 + (MCLMessage *)messageFromSearchResultJSON:(NSDictionary *)json;
++ (MCLMessage *)messageFromDraft:(MCLDraft *)draft;
 
 - (void)updateFromMessageTextJSON:(NSDictionary *)json;
+
+- (NSString *)key;
+
+- (MCLDraft *)draft;
 
 - (NSString *)messageHtmlWithTopMargin:(int)topMargin
                                  width:(CGFloat)width

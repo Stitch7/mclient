@@ -12,8 +12,10 @@
 	<false/>
 	<key>FullSearch</key>
 	<true/>
+	<key>Drafts</key>
+	<false/>
 	<key>PrivateMessages</key>
-	<true/>
+	<false/>
 	<key>TabbedSettings</key>
 	<false/>
 	<key>Tetris</key>

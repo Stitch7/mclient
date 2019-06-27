@@ -20,4 +20,14 @@
     return user;
 }
 
++ (MCLUser *)userFromJSON:(NSDictionary *)json
+{
+    MCLUser *user = [[MCLUser alloc] init];
+
+    user.userId = [json objectForKey:@"userId"];
+    user.username = [json objectForKey:@"username"];
+
+    return user;
+}
+
 @end

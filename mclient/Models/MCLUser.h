@@ -12,5 +12,6 @@
 @property (strong) NSString *username;
 
 + (MCLUser *)userWithId:(NSNumber *)inUserId username:(NSString *)inUsername;
++ (MCLUser *)userFromJSON:(NSDictionary *)json;
 
 @end

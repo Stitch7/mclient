@@ -19,16 +19,21 @@
 #import "MCLMarkThreadAsReadRequest.h"
 #import "MCLLoginManager.h"
 #import "MCLThemeManager.h"
+#import "MCLDraftManager.h"
 #import "MCLKeyboardShortcutManager.h"
 #import "MCLSoundEffectPlayer.h"
+#import "MCLSplitViewController.h"
 #import "MCLMessageListViewController.h"
 #import "MCLThreadTableViewCell.h"
 #import "MCLBoard.h"
 #import "MCLThread.h"
 #import "MCLMessage.h"
+#import "MCLDraft.h"
 #import "MCLBadgeView.h"
 #import "MCLSplitViewController.h"
 #import "MCLLoadingViewController.h"
+#import "MCLDraftBarView.h"
+
 
 NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotification";
 
@@ -79,6 +84,15 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
     [super viewWillAppear:animated];
 
     self.currentTheme = self.bag.themeManager.currentTheme;
+    [self.loadingViewController updateToolbar];
+//    [self configureDraftBar];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
+    [self.tableView setEditing:NO animated:NO];
 }
 
 #pragma mark - Configuration
@@ -117,7 +131,11 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
     [searchField setBackgroundColor:[self.currentTheme searchFieldBackgroundColor]];
     [searchField setTextColor:[self.currentTheme searchFieldTextColor]];
 
-    // Hide search field behind navigation bar
+    [self hideSearchFieldBehindNavigationBar];
+}
+
+- (void)hideSearchFieldBehindNavigationBar
+{
     self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height);
 }
 
@@ -141,6 +159,53 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 {
     self.threads = [newData copy];
     [self.tableView reloadData];
+}
+
+- (void)configureDraftBar
+{
+    if (![self.bag.features isFeatureWithNameEnabled:MCLFeatureDrafts]) {
+        return;
+    }
+
+    if (!self.bag.draftManager.current) {
+        return;
+    }
+
+    MCLDraftBarView *draftBarView = [[MCLDraftBarView alloc] initWithBag:self.bag];
+//    UIBarButtonItem *draftItem = [[UIBarButtonItem alloc] initWithCustomView:draftBarView];
+//    self.bag.router.splitViewController.toolbarItems = @[draftItem];
+//
+//    self.bag.router.splitViewController.navigationController.toolbar.hidden = NO;
+//    [self.bag.router.splitViewController.navigationController setToolbarHidden:NO animated:NO];
+
+    draftBarView.translatesAutoresizingMaskIntoConstraints = NO;
+    UIView *splitsView = self.bag.router.splitViewController.view;
+    [splitsView addSubview:draftBarView];
+    [splitsView.bottomAnchor constraintEqualToAnchor:draftBarView.bottomAnchor];
+}
+
+
+- (NSArray<__kindof UIBarButtonItem *> *)loadingViewControllerRequestsToolbarItems:(MCLLoadingViewController *)loadingViewController
+{
+    if (![self.bag.features isFeatureWithNameEnabled:MCLFeatureDrafts]) {
+        return nil;
+    }
+
+    if (!self.bag.draftManager.current) {
+        return nil;
+    }
+
+    MCLDraftBarView *draftBarView = [[MCLDraftBarView alloc] initWithBag:self.bag];
+    UIBarButtonItem *draftItem = [[UIBarButtonItem alloc] initWithCustomView:draftBarView];
+
+    return @[draftItem];
+}
+
+- (void)draftButtonPressed:(id)sender
+{
+    [self.bag.router modalToEditDraft:self.bag.draftManager.current];
+    //    MCLComposeMessageViewController *composeMessageVC = [self.bag.router modalToEditDraft:self.bag.draftManager.current];
+    //    composeMessageVC.delegate = self;
 }
 
 #pragma mark - UITableViewDataSource
@@ -331,7 +396,7 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 
 #pragma mark - MCLComposeMessageViewControllerDelegate
 
-- (void)message:(MCLMessage *)message sentWithType:(NSUInteger)type
+- (void)composeMessageViewController:(MCLComposeMessagePreviewViewController *)composeMessageViewController sentMessage:(MCLMessage *)message
 {
     [self.loadingViewController refresh];
 
@@ -346,6 +411,14 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 
     [self.bag.soundEffectPlayer playCreatePostingSound];
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)composeMessageViewController:(MCLComposeMessageViewController *)composeMessageViewController dismissedWithMessage:(MCLMessage *)message
+{
+    if (message) {
+        [self.loadingViewController updateToolbar];
+//        [self configureDraftBar];
+    }
 }
 
 #pragma mark - MCLMessageListDelegate

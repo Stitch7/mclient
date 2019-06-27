@@ -117,7 +117,9 @@
 
     BOOL replace = NO;
     MCLLoadingViewController *currentVC = (MCLLoadingViewController *)[[self.masterNavigationController viewControllers] lastObject];
-    if (currentVC && [currentVC.contentViewController isKindOfClass:[MCLThreadListTableViewController class]]) {
+    if (currentVC && [currentVC respondsToSelector:NSSelectorFromString(@"contentViewController")] &&
+        [currentVC.contentViewController isKindOfClass:[MCLThreadListTableViewController class]])
+    {
         replace = YES;
     }
 

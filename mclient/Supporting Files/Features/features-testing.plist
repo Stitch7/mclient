@@ -12,6 +12,8 @@
 	<false/>
 	<key>FullSearch</key>
 	<true/>
+	<key>Drafts</key>
+	<false/>
 	<key>PrivateMessages</key>
 	<false/>
 	<key>TabbedSettings</key>

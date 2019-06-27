@@ -46,6 +46,7 @@
 {
     [super configure];
 
+    self.changed = NO;
     self.delegate = self;
     self.textContainer.lineFragmentPadding = 0;
 
@@ -256,6 +257,7 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
+    self.changed = YES;
     [self showTextViewCaretPosition:textView];
 }
 

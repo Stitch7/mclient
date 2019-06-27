@@ -29,7 +29,7 @@ import SwiftyGiphy
 
     // MARK: - Public
 
-    @objc public func makeGiphyViewController(theme: MCLTheme) -> SwiftyGiphyViewController {
+    @objc public func makeGiphyViewController(theme: MCLTheme) -> UIViewController {
         let giphyVC = SwiftyGiphyViewController()
         giphyVC.delegate = self
         giphyVC.view.backgroundColor = theme.backgroundColor()

@@ -10,11 +10,14 @@
 
 #import "UIViewController+Additions.h"
 #import "MCLDependencyBag.h"
+#import "MCLFeatures.h"
 #import "MCLRouter+composeMessage.h"
 #import "MCLSettings.h"
 #import "MCLQuoteMessageRequest.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
+#import "MCLDraftManager.h"
+#import "MCLDraft.h"
 #import "MCLThread.h"
 #import "MCLMessage.h"
 #import "MCLComposeMessageToolbarController.h"
@@ -86,8 +89,9 @@
 {
     [super viewDidLoad];
 
-    [self configureNavigationBar];
+    [self loadDraftIfExists];
 
+    [self configureNavigationBar];
     [self configureSeparatorView];
     [self configureSubjectField];
     [self configureTextField];
@@ -102,6 +106,11 @@
     // Workaround for greyed out preview button after push back (Bug in iOS11)
     self.navigationController.navigationBar.tintAdjustmentMode = UIViewTintAdjustmentModeNormal;
     self.navigationController.navigationBar.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [self saveAsDraftIfEdited];
 }
 
 #pragma mark - Configuration
@@ -154,10 +163,9 @@
 {
     self.textView.themeManager = self.bag.themeManager;
     self.textView.errorHandler = self;
-    if (self.message.type == kMCLComposeTypeEdit) {
+    if (self.message.type == kMCLComposeTypeEdit || self.message.isDraft) {
         self.textView.text = self.message.text;
     }
-
     self.toolbarController = [[MCLComposeMessageToolbarController alloc] initWithParentViewController:self];
     MCLMessageTextViewToolbar *textViewToolbar = [[MCLMessageTextViewToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
     textViewToolbar.messageTextViewToolbarDelegate = self.toolbarController;
@@ -225,12 +233,24 @@
 - (void)downButtonPressed
 {
     [self.view endEditing:YES];
-    [self dismissViewControllerAnimated:YES completion:nil];
+
+    if ([self.bag.features isFeatureWithNameEnabled:MCLFeatureDrafts] && [self wasEdited]) {
+        [self askForDraftAndDismiss];
+    } else {
+        [self dismiss];
+    }
+}
+
+- (void)dismiss
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.delegate composeMessageViewController:self dismissedWithMessage:[self buildMessageWithSignature:YES]];
+    }];
 }
 
 - (void)previewButtonPressed
 {
-    MCLComposeMessagePreviewViewController *previewVC = [self.bag.router pushToPreviewForMessage:[self buildMessage]];
+    MCLComposeMessagePreviewViewController *previewVC = [self.bag.router pushToPreviewForMessage:[self buildMessageWithSignature:YES]];
     previewVC.delegate = self.delegate;
 }
 
@@ -245,27 +265,84 @@
 
  #pragma mark - Private
 
-- (MCLMessage *)buildMessage
+- (BOOL)wasEdited
+{
+    return self.textView.changed;
+}
+
+- (void)loadDraftIfExists
+{
+    if (self.message && self.message.type == kMCLComposeTypeEdit) {
+        return;
+    }
+
+    MCLMessage *draftMessage = [self.bag.draftManager draftForMessage:self.message];
+    if (draftMessage) {
+        self.message = draftMessage;
+    }
+}
+
+- (void)askForDraftAndDismiss
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Save as draft?", nil)
+                                                                   message:NSLocalizedString(@"Do you want to keep your message and continue editing later?", nil)
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Save", nil)
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                [self saveAsDraft];
+                                                [self dismiss];
+                                            }]];
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Discard", nil)
+                                              style:UIAlertActionStyleDestructive
+                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                [self dismiss];
+                                            }]];
+
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)saveAsDraftIfEdited
+{
+    if (![self.bag.features isFeatureWithNameEnabled:MCLFeatureDrafts]) {
+        return;
+    }
+
+    if ([self wasEdited]) {
+        [self saveAsDraft];
+    }
+}
+
+- (void)saveAsDraft
+{
+    [self.bag.draftManager saveMessageAsDraft:[self buildMessageWithSignature:NO]];
+}
+
+- (MCLMessage *)buildMessageWithSignature:(BOOL)appendSignature
 {
     NSUInteger type = self.message.type ? self.message.type : kMCLComposeTypeThread;
 
     NSString *messageText = [self.textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if (type == kMCLComposeTypeThread || type == kMCLComposeTypeReply) {
+    if (appendSignature && (type == kMCLComposeTypeThread || type == kMCLComposeTypeReply)) {
         BOOL signatureEnabled = [self.bag.settings isSettingActivated:MCLSettingSignatureEnabled orDefault:YES];
         if (signatureEnabled) {
             NSString *signature = [self.bag.settings objectForSetting:MCLSettingSignatureText
                                                             orDefault:kSettingsSignatureTextDefault];
-            messageText = [messageText stringByAppendingString:@"\n\n"];
-            messageText = [messageText stringByAppendingString:signature];
+            if (![messageText hasSuffix:signature]) {
+                messageText = [messageText stringByAppendingString:@"\n\n"];
+                messageText = [messageText stringByAppendingString:signature];
+            }
         }
     }
 
     MCLMessage *message = [MCLMessage messagePreviewWithType:type
                                                    messageId:self.message.messageId
-                                                     boardId:self.message.boardId
+                                                       board:self.message.board
                                                     threadId:self.message.thread.threadId
                                                      subject:self.subjectTextField.text
                                                         text:messageText];
+    message.prevMessage = self.message;
     return message;
 }
 

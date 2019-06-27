@@ -1,5 +1,5 @@
 //
-//  MCLTitleLabel.m
+//  MCLLogoLabel.m
 //  mclient
 //
 //  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
@@ -8,11 +8,15 @@
 
 #import "MCLLogoLabel.h"
 #import "MCLTheme.h"
+#import "MCLDependencyBag.h"
+#import "MCLFeatures.h"
 #import "MCLThemeManager.h"
+#import "MCLSoundEffectPlayer.h"
+#import "MCLRouter.h"
 
 @interface MCLLogoLabel ()
 
-@property (strong, nonatomic) MCLThemeManager *themeManager;
+@property (strong, nonatomic) id <MCLDependencyBag> bag;
 
 @end
 
@@ -20,12 +24,12 @@
 
 #pragma mark - Initializers
 
-- (instancetype)initWithThemeManager:(MCLThemeManager *)themeManager
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag
 {
     self = [super initWithFrame:CGRectMake(0, 0, 480, 44)];
     if (!self) return nil;
 
-    self.themeManager = themeManager;
+    self.bag = bag;
     [self configureNotifications];
     [self configureLayout];
 
@@ -55,11 +59,33 @@
     self.textAlignment = NSTextAlignmentCenter;
     [self updateTextColorFromTheme];
     self.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+
+    UITapGestureRecognizer *tripleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(trippleTapped:)];
+    tripleTapRecognizer.numberOfTapsRequired = 3;
+    self.userInteractionEnabled = YES;
+    [self addGestureRecognizer:tripleTapRecognizer];
 }
 
 - (void)updateTextColorFromTheme
 {
-    self.textColor = self.themeManager.currentTheme.textColor;
+    self.textColor = self.bag.themeManager.currentTheme.textColor;
+}
+
+- (void)trippleTapped:(id)sender
+{
+    if (![self.bag.features isFeatureWithNameEnabled:MCLFeatureTetris]) {
+        return;
+    }
+
+    [self.bag.soundEffectPlayer playSecretFoundSound];
+//    [self.bag.router modalToGame];
+
+    UIViewController *presentingVC = [UIApplication sharedApplication].windows.firstObject.rootViewController;
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"You've found it" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [presentingVC dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    [presentingVC presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - Notifications

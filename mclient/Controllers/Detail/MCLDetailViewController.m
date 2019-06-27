@@ -148,7 +148,7 @@
 
 - (UIView *)loadingViewControllerRequestsTitleView:(MCLLoadingViewController *)loadingViewController
 {
-    return [[MCLLogoLabel alloc] initWithThemeManager:self.bag.themeManager];
+    return [[MCLLogoLabel alloc] initWithBag:self.bag];
 }
 
 - (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData forKey:(NSNumber *)key

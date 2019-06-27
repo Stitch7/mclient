@@ -11,6 +11,7 @@
 #import <AsyncBlockOperation/AsyncBlockOperation.h>
 
 #import "MCLDependencyBag.h"
+#import "MCLFeatures.h"
 #import "MCLSettings.h"
 #import "MCLNotificationHistory.h"
 #import "MCLPrivateMessageNotificationHistory.h"
@@ -148,7 +149,9 @@ static NSString *kNotificationTypePrivateMessage = @"NotificationTypePrivateMess
 {
     self.completionHandler = completionHandler;
     [self.queue addOperation:[self notificateAboutNewResponsesOperation]];
-    [self.queue addOperation:[self notificateAboutNewPrivateMessagesOperation]];
+    if ([self.bag.features isFeatureWithNameEnabled:MCLFeaturePrivateMessages]) {
+        [self.queue addOperation:[self notificateAboutNewPrivateMessagesOperation]];
+    }
 }
 
 - (AsyncBlockOperation *)notificateAboutNewResponsesOperation

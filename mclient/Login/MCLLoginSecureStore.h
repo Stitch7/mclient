@@ -9,7 +9,7 @@
 @protocol MCLLoginSecureStore <NSObject>
 
 - (nullable NSString *)stringForKey:(nonnull NSString *)key;
-- (void)setString:(nullable NSString *)aString forKey:(NSString *)aKey;
-- (BOOL)removeObjectForKey:(NSString *)key;
+- (void)setString:(nullable NSString *)aString forKey:(NSString * _Nonnull)aKey;
+- (BOOL)removeObjectForKey:(NSString * _Nonnull)key;
 
 @end

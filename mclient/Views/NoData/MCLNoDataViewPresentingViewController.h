@@ -8,8 +8,8 @@
 
 @protocol MCLNoDataViewPresentingViewController <NSObject>
 
-@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) UITableView * _Nullable tableView;
 
-- (void)presentViewController:(UIViewController *)viewControllerToPresent animated: (BOOL)flag completion:(void (^ __nullable)(void))completion;
+- (void)presentViewController:(UIViewController *_Nonnull)viewControllerToPresent animated: (BOOL)flag completion:(void (^ __nullable)(void))completion;
 
 @end

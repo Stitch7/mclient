@@ -26,6 +26,8 @@
 #import "MCLSoundEffectPlayer.h"
 #import "MCLFoundationHTTPClient.h"
 #import "MCLNotificationManager.h"
+#import "MCLDraftManager.h"
+#import "MCLPrivateMessagesManager.h"
 #import "MCLStoreReviewManager.h"
 #import "MCLLaunchViewController.h"
 #import "MCLBoardListTableViewController.h"
@@ -45,6 +47,8 @@
 @synthesize notificationManager;
 @synthesize themeManager;
 @synthesize keyboardShortcutManager;
+@synthesize draftManager;
+@synthesize privateMessagesManager;
 @synthesize storeReviewManager;
 @synthesize soundEffectPlayer;
 
@@ -81,6 +85,8 @@
     self.notificationManager = [[MCLNotificationManager alloc] initWithBag:self];
     self.themeManager = [[MCLThemeManager alloc] initWithSettings:self.settings];
     self.keyboardShortcutManager = [[MCLKeyboardShortcutManager alloc] initWithBag:self];
+    self.draftManager = [[MCLDraftManager alloc] init];
+    self.privateMessagesManager = [[MCLPrivateMessagesManager alloc] initWithBag:self];
     self.storeReviewManager = [[MCLStoreReviewManager alloc] initWithSettings:self.settings];
     self.soundEffectPlayer = [[MCLSoundEffectPlayer alloc] initWithSettings:self.settings];
 

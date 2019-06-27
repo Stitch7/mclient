@@ -11,21 +11,26 @@
 #import "MCLMessageListViewController.h"
 
 #import "MCLDependencyBag.h"
+#import "MCLFeatures.h"
 #import "MCLSettings.h"
 #import "MCLRouter+mainNavigation.h"
 #import "MCLRouter+openURL.h"
 #import "MCLThemeManager.h"
+#import "MCLDraftManager.h"
 #import "MCLKeyboardShortcutManager.h"
 #import "MCLSoundEffectPlayer.h"
 #import "MCLUser.h"
 #import "MCLBoard.h"
 #import "MCLThread.h"
+#import "MCLDraft.h"
 #import "MCLMessage.h"
 #import "MCLMessageToolbarController.h"
 #import "MCLMessageToolbar.h"
+#import "MCLComposeMessageViewController.h"
 #import "MCLSplitViewController.h"
 #import "MCLLoadingViewController.h"
 #import "MCLMultilineTitleLabel.h"
+#import "MCLDraftBarView.h"
 
 
 @implementation MCLMessageListViewController
@@ -123,6 +128,28 @@
     }];
 }
 
+- (NSArray<__kindof UIBarButtonItem *> *)loadingViewControllerRequestsToolbarItems:(MCLLoadingViewController *)loadingViewController
+{
+    if (![self.bag.features isFeatureWithNameEnabled:MCLFeatureDrafts]) {
+        return nil;
+    }
+
+    if (!self.bag.draftManager.current) {
+        return nil;
+    }
+
+    MCLDraftBarView *draftBarView = [[MCLDraftBarView alloc] initWithBag:self.bag];
+    UIBarButtonItem *draftItem = [[UIBarButtonItem alloc] initWithCustomView:draftBarView];
+
+    return @[draftItem];
+}
+
+- (void)draftButtonPressed:(id)sender
+{
+    MCLComposeMessageViewController *composeMessageVC = [self.bag.router modalToEditDraft:self.bag.draftManager.current];
+    composeMessageVC.delegate = self;
+}
+
 - (void)backButtonPressed:(UIBarButtonItem *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -204,12 +231,12 @@
 
 #pragma mark - MCLComposeMessageViewControllerDelegate
 
-- (void)message:(MCLMessage *)message sentWithType:(NSUInteger)type
+- (void)composeMessageViewController:(MCLComposeMessagePreviewViewController *)composeMessageViewController sentMessage:(MCLMessage *)message
 {
     [self.loadingViewController refresh];
 
     NSString *alertMessage;
-    if (type == kMCLComposeTypeEdit) {
+    if (message.type == kMCLComposeTypeEdit) {
         alertMessage = [NSString stringWithFormat:NSLocalizedString(@"Your message \"%@\" was changed", nil), message.subject];
         [self.bag.soundEffectPlayer playEditPostingSound];
     } else {
@@ -223,9 +250,16 @@
 
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
                                               style:UIAlertActionStyleDefault
-                                            handler:nil]];;
+                                            handler:nil]];
 
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)composeMessageViewController:(MCLComposeMessageViewController *)composeMessageViewController dismissedWithMessage:(MCLMessage *)message
+{
+    if (message) {
+        [self.loadingViewController updateToolbar];
+    }
 }
 
 #pragma mark - MCLMessageKeyboardShortcutsDelegate

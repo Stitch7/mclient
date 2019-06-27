@@ -99,7 +99,6 @@
     [self.navigationController setToolbarHidden:YES animated:NO];
 }
 
-
 - (void)configureTableView
 {
     UINib *messageCellNib = [UINib nibWithNibName:@"MCLMessageListFrameStyleTableViewCell" bundle: nil];
