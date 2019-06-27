@@ -23,6 +23,7 @@ extern NSString *const MCLSettingOpenLinksInSafari;
 extern NSString *const MCLSettingClassicQuoteDesign;
 extern NSString *const MCLSettingEmbedYoutubeVideos;
 extern NSString *const MCLSettingBackgroundNotifications;
+extern NSString *const MCLSettingBackgroundNotificationsRegistered;
 extern NSString *const MCLSettingSoundEffectsEnabled;
 extern NSString *const MCLSettingHideFavoritesHint;
 extern NSString *const MCLSettingSecretFound;

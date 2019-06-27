@@ -156,6 +156,10 @@
         [self setBool:YES forSetting:MCLSettingEmbedYoutubeVideos];
     }
 
+    if ([self objectForSetting:MCLSettingBackgroundNotificationsRegistered] == nil) {
+        [self setBool:NO forSetting:MCLSettingBackgroundNotificationsRegistered];
+    }
+
     // TODO: configure others
 
     [self persist];
@@ -163,7 +167,6 @@
 
 - (NSNumber *)jsonForIsSettingActivated:(NSString *)setting
 {
-//    return [self isSettingActivated:setting] ? @"true" : @"false";
     return [self isSettingActivated:setting] ? @YES : @NO;
 }
 

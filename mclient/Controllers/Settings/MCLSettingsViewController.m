@@ -109,8 +109,10 @@ NSString * const MCLThreadViewStyleChangedNotification = @"ThreadViewStyleChange
 
 - (void)setbackgroundNotificationsEnabledSwitchEnabled:(BOOL)enabled
 {
+    BOOL loginValid = self.bag.loginManager.loginValid;
+    BOOL wasAlreadyRegistered = [self.bag.settings isSettingActivated:MCLSettingBackgroundNotificationsRegistered];
     BOOL isRegistered = [self.bag.notificationManager backgroundNotificationsRegistered];
-    if (enabled && isRegistered) {
+    if (loginValid && (enabled || !wasAlreadyRegistered || isRegistered)) {
         self.backgroundNotificationsEnabledSwitch.enabled = YES;
         self.backgroundNotificationsEnabledSwitch.alpha = 1.0f;
     } else {
