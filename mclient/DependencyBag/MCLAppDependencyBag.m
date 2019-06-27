@@ -7,7 +7,6 @@
 //
 
 @import HockeySDK;
-@import Inapptics;
 
 #import "MCLAppDependencyBag.h"
 
@@ -112,9 +111,7 @@
 
 - (void)configureAnalytics
 {
-    [Inapptics letsGoWithAppToken:INAPPTICS_TOKEN crashReportingEnabled:NO];
-    [Inapptics setUserName:self.loginManager.username];
-    [Inapptics.user set:[self.settings dictionaryWithAllSettings]];
+    
 }
 
 @end

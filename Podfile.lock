@@ -24,7 +24,6 @@ PODS:
   - HockeySDK/DefaultLib (5.1.4)
   - ImgurSession (1.3):
     - AFNetworking (= 3.1.0)
-  - Inapptics (2.0.4)
   - LTMorphingLabel (0.6.0)
   - MGSwipeTableCell (1.6.8)
   - MRProgress (0.8.3):
@@ -81,7 +80,6 @@ DEPENDENCIES:
   - EDSunriseSet (from `https://github.com/Tricertops/EDSunriseSet`)
   - HockeySDK
   - ImgurSession (from `https://github.com/Stitch7/ImgurSession`)
-  - Inapptics
   - MGSwipeTableCell
   - MRProgress (from `https://github.com/Stitch7/MRProgress`)
   - SwiftyGiphy (from `https://github.com/Stitch7/SwiftyGiphy`)
@@ -96,7 +94,6 @@ SPEC REPOS:
     - DGActivityIndicatorView
     - FLAnimatedImage
     - HockeySDK
-    - Inapptics
     - LTMorphingLabel
     - MGSwipeTableCell
     - NSTimer-Blocks
@@ -141,7 +138,6 @@ SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   HockeySDK: 15afe6bc0a5bfe3a531fd73dbf082095f37dac3b
   ImgurSession: e11a605652cfe8aebfb6a9a4ea5b752654f14e2f
-  Inapptics: 0957e8ff6d208c8ce0c8f895791b6d85d69cf878
   LTMorphingLabel: c73ebfef9009c0a098546c29f566024442d1a91e
   MGSwipeTableCell: dc4eca3212ed38a563b27d6aa7b3c01ce656c1e2
   MRProgress: b0c2bcff94ee700ac2aea810e1f51720c059cbd3
