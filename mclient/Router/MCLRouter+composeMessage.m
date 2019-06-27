@@ -15,7 +15,6 @@
 #import "MCLBoard.h"
 #import "MCLMessage.h"
 #import "MCLThread.h"
-#import "MCLEditTextRequest.h"
 #import "MCLPreviewMessageRequest.h"
 #import "MCLModalNavigationController.h"
 #import "MCLLoadingViewController.h"
@@ -71,11 +70,7 @@
     editMessageVC.message = message;
     self.modalNavigationController = [[MCLModalNavigationController alloc] initWithRootViewController:editMessageVC];
 
-    MCLEditTextRequest *request = [[MCLEditTextRequest alloc] initWithClient:self.bag.httpClient message:message];
-    [request loadWithCompletionHandler:^(NSError *error, NSArray *data) {
-        editMessageVC.message.text = [[data firstObject] objectForKey:@"editText"];
-        [self.masterNavigationController presentViewController:self.modalNavigationController animated:YES completion:nil];
-    }];
+    [self.masterNavigationController presentViewController:self.modalNavigationController animated:YES completion:nil];
 
     return editMessageVC;
 }
