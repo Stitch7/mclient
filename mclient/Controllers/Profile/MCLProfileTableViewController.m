@@ -11,11 +11,18 @@
 #import "MCLDependencyBag.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
+#import "MCLRouter+privateMessages.h"
 #import "MCLUser.h"
+#import "MCLPrivateMessageConversation.h"
+#import "MCLLoadingViewController.h"
+
+
+static NSString *MCLProfileCellIdentifier = @"ProfileCell";
 
 @interface MCLProfileTableViewController ()
 
-@property (strong, nonatomic) UIImage *profileImage;
+@property (strong, nonatomic) NSMutableArray *profileKeys;
+@property (strong, nonatomic) NSMutableDictionary *profileData;
 
 @end
 
@@ -23,18 +30,20 @@
 
 #pragma mark - Initializers
 
+- (instancetype)init
+{
+    self = [super initWithStyle:UITableViewStyleGrouped];
+    if (!self) return nil;
+
+    [self configureNotifications];
+    [self configureTableView];
+
+    return self;
+}
+
 - (void) dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-#pragma mark - ViewController life cycle
-
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-
-    [self configureNotifications];
 }
 
 #pragma mark - Configuration
@@ -45,6 +54,36 @@
                                              selector:@selector(themeChanged:)
                                                  name:MCLThemeChangedNotification
                                                object:nil];
+}
+
+- (void)configureTableView
+{
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:MCLProfileCellIdentifier];
+}
+
+- (void)configureHeaderView
+{
+    UIView *headerView = [[UIView alloc] init];
+    UIImageView *profileImageView = [[UIImageView alloc] init];
+
+    profileImageView = [[UserAvatarImageView alloc] initWithFrame:CGRectMake(0, 0, 120, 120) user:self.user];
+    profileImageView.contentMode = UIViewContentModeTopLeft;
+    [headerView addSubview:profileImageView];
+    self.tableView.tableHeaderView = headerView;
+
+    CGFloat padding = 20;
+
+    CGFloat height = [profileImageView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + padding;
+
+    // Update the header's frame and set it again
+    CGRect headerFrame = profileImageView.frame;
+    headerFrame.size = CGSizeMake(profileImageView.bounds.size.width, height);
+    headerView.frame = headerFrame;
+
+    CGRect profileImageFrame = profileImageView.frame;
+    profileImageFrame.origin = CGPointMake(padding, padding);
+    profileImageView.frame = profileImageFrame;
+    self.tableView.tableHeaderView = headerView;
 }
 
 #pragma mark - MCLLoadingContentViewControllerDelegate
@@ -61,94 +100,83 @@
                                                                         style:UIBarButtonItemStylePlain
                                                                        target:self
                                                                        action:@selector(doneButtonPressed:)];
+
+    if (self.loadingViewController.state == kMCLLoadingStateLoading) {
+        if ([self.user.username isEqualToString:self.bag.loginManager.username]) {
+            navigationItem.rightBarButtonItem = self.editButtonItem;
+        } else if (self.showPrivateMessagesButton) {
+            navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"privateMessages"]
+                                                                                 style:UIBarButtonItemStylePlain
+                                                                                target:self
+                                                                                action:@selector(privateMessagesButtonPressed:)];
+        } else {
+            navigationItem.rightBarButtonItem = nil;
+        }
+    }
 }
 
 - (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData forKey:(NSNumber *)key
 {
-    self.profileKeys = [newData.firstObject copy];
-    self.profileData = [newData.lastObject copy];
+    self.profileKeys = [newData.firstObject mutableCopy];
+    self.profileData = [newData.lastObject mutableCopy];
+    [self.profileData removeObjectForKey:@"picture"];
+    __block NSUInteger profileKeyIndex;
+    [self.profileKeys enumerateObjectsUsingBlock:^(NSString *key, NSUInteger i, BOOL *stop) {
+        if ([key isEqualToString:@"picture"]) {
+            profileKeyIndex = i;
+            *stop = YES;
+        }
+    }];
+    [self.profileKeys removeObjectAtIndex:profileKeyIndex];
+    [self configureHeaderView];
     [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [self.profileKeys count];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.profileData count];
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *key = self.profileKeys[indexPath.row];
-    static NSString *cellIdentifier = @"ProfileCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-
-    if ([key isEqualToString:@"picture"]) {
-        [cell.textLabel setHidden:YES];
-        [cell.detailTextLabel setHidden:YES];
-
-        if (self.profileImage) {
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:self.profileImage];
-            [imageView.layer setBorderColor:[[self.bag.themeManager.currentTheme tableViewSeparatorColor] CGColor]];
-            [imageView.layer setBorderWidth:0.5f];
-
-            CGRect imageViewFrame = imageView.frame;
-            imageViewFrame.origin = CGPointMake(16.0f, 5.0f);
-            imageView.frame = imageViewFrame;
-
-            [cell.contentView addSubview:imageView];
-        }
-    } else {
-        [cell.textLabel setHidden:NO];
-        [cell.detailTextLabel setHidden:NO];
-
-        cell.textLabel.text = [NSLocalizedString(key, nil) stringByAppendingString:@":"];
-
-        cell.detailTextLabel.textColor = [self.bag.themeManager.currentTheme detailTextColor];
-
-        NSString *detailText = [self.profileData objectForKey:key];
-        cell.detailTextLabel.text = detailText.length ? detailText : @"-";
-
-        for (id subview in cell.contentView.subviews) {
-            if ([[subview class] isSubclassOfClass: [UIImageView class]]) {
-                [subview removeFromSuperview];
-            }
-        }
-    }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MCLProfileCellIdentifier forIndexPath:indexPath];
+    NSString *text = [self.profileData objectForKey:self.profileKeys[indexPath.section]];
+    cell.textLabel.text = text.length ? text : @"-";
+    cell.textLabel.numberOfLines = 0;
+    cell.textLabel.textColor = [self.bag.themeManager.currentTheme textColor];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     return cell;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return NSLocalizedString(self.profileKeys[section], nil);
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height;
-    NSString *key = self.profileKeys[indexPath.row];
-    if ([key isEqualToString:@"picture"]) {
-        if (!self.profileImage && [self.profileData objectForKey:@"picture"]) {
-            NSString *imageURLString = [self.profileData objectForKey:key];
-            if (imageURLString.length) {
-                NSURL *imageURL = [NSURL URLWithString:imageURLString];
-                self.profileImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
-            }
-        }
-
-        height = self.profileImage ? self.profileImage.size.height + 10 : 0;
-    } else {
-        NSString *cellText = [self.profileData objectForKey:key];
-        CGFloat labelHeight = [cellText boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 30, MAXFLOAT)
-                                                     options:NSStringDrawingUsesLineFragmentOrigin
-                                                  attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14.0]}
-                                                     context:nil].size.height;
-        height = labelHeight + 30;
-    }
-
-    return height;
+    return UITableViewAutomaticDimension;
 }
 
 #pragma mark - Actions
 
 - (void)doneButtonPressed:(UIBarButtonItem *)sender
 {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)privateMessagesButtonPressed:(UIBarButtonItem *)sender
+{
+    MCLPrivateMessageConversation *conversation = [self.bag.privateMessagesManager conversationForUser:self.user];
+    [self.bag.router pushToPrivateMessagesConversation:conversation];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

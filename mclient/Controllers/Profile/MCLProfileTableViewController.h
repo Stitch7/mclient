@@ -15,8 +15,7 @@
 
 @property (strong, nonatomic) id <MCLDependencyBag> bag;
 @property (strong, nonatomic) MCLUser *user;
-
-@property (strong, nonatomic) NSMutableDictionary *profileData;
-@property (strong, nonatomic) NSArray *profileKeys;
+@property (weak, nonatomic) MCLLoadingViewController *loadingViewController;
+@property (assign, nonatomic) BOOL showPrivateMessagesButton;
 
 @end

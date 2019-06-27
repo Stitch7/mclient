@@ -63,10 +63,10 @@
 
 - (MCLProfileTableViewController *)modalToProfileFromUser:(MCLUser *)user
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Profile" bundle:nil];
-    MCLProfileTableViewController *profileVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLProfileTableViewController"];
+    MCLProfileTableViewController *profileVC = [[MCLProfileTableViewController alloc] init];
     profileVC.bag = self.bag;
     profileVC.user = user;
+    profileVC.showPrivateMessagesButton = [self.bag.features isFeatureWithNameEnabled:MCLFeaturePrivateMessages];
 
     MCLProfileRequest *profileRequest = [[MCLProfileRequest alloc] initWithClient:self.bag.httpClient user:user];
     MCLLoadingViewController *loadingVC = [[MCLLoadingViewController alloc] initWithBag:self.bag
