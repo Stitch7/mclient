@@ -32,7 +32,7 @@
 #import "MCLThread.h"
 #import "MCLThreadTableViewCell.h"
 #import "MCLLogoLabel.h"
-#import "MCLVerifiyLoginView.h"
+#import "MCLVerifyLoginView.h"
 #import "MCLNoDataInfo.h"
 #import "MCLNoDataView.h"
 #import "MCLNoDataTableViewCell.h"
@@ -49,7 +49,7 @@
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) BBBadgeBarButtonItem *responsesButtonItem;
 @property (strong, nonatomic) BBBadgeBarButtonItem *privateMessagesButtonItem;
-@property (strong, nonatomic) MCLVerifiyLoginView *verifyLoginView;
+@property (strong, nonatomic) MCLVerifyLoginView *verifyLoginView;
 @property (assign, nonatomic) BOOL alreadyAppeared;
 @property (assign, nonatomic) BOOL temporarilyDontShowNoFavoritesView;
 
@@ -105,10 +105,10 @@
 
 #pragma mark - Lazy Properties
 
-- (MCLVerifiyLoginView *)verifyLoginView
+- (MCLVerifyLoginView *)verifyLoginView
 {
     if (!_verifyLoginView) {
-        MCLVerifiyLoginView *verifyLoginView = [[MCLVerifiyLoginView alloc] initWithThemeManager:self.bag.themeManager];
+        MCLVerifyLoginView *verifyLoginView = [[MCLVerifyLoginView alloc] initWithThemeManager:self.bag.themeManager];
         _verifyLoginView = verifyLoginView;
     }
 
