@@ -190,8 +190,13 @@
 
     cell.messageIndentionImageView.hidden = (indexPath.row == 0);
 
-    cell.messageSubjectLabel.text = message.subject;
-    cell.messageSubjectLabel.textColor = [currenTheme textColor];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.hyphenationFactor = 1.0f;
+    NSDictionary<NSAttributedStringKey, id> *subjectParagraphAttributes = @{ NSParagraphStyleAttributeName: paragraphStyle,
+                                                                             NSForegroundColorAttributeName: [currenTheme textColor] };
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:message.subject
+                                                                                         attributes:subjectParagraphAttributes];
+    cell.messageSubjectLabel.attributedText = attributedString;
 
     cell.messageUsernameLabel.text = message.username;
     if ([message.username isEqualToString:self.bag.loginManager.username]) {
@@ -216,8 +221,12 @@
 
 - (void)indentView:(NSLayoutConstraint *)indentionConstraint withLevel:(NSNumber *)level
 {
-    int indention = 10;
-    indentionConstraint.constant = 0 + (indention * [level integerValue]);
+    int indention = 15;
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    CGFloat maxWidth = screenWidth - screenWidth * 0.2;
+    CGFloat newVal = 0 + (indention * [level integerValue]);
+
+    indentionConstraint.constant = newVal > maxWidth ? maxWidth : newVal;
 }
 
 #pragma mark - UITableViewDelegate

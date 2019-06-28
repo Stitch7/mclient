@@ -161,7 +161,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSIndexPath *selectedIndexPath = [tableView indexPathForSelectedRow];
-    BOOL isActive = selectedIndexPath ? indexPath.row == selectedIndexPath.row : false;
+    BOOL isActive = selectedIndexPath ? indexPath.row == selectedIndexPath.row : NO;
 
     MCLMessage *message = self.messages[indexPath.row];
     message.board = self.board;

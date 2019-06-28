@@ -51,6 +51,7 @@ NSString *const WebviewMessageHandlerName = @"mclient";
     UILabel *subjectLabel = [[UILabel alloc] init];
     subjectLabel.translatesAutoresizingMaskIntoConstraints = NO;
     subjectLabel.numberOfLines = 0;
+    subjectLabel.lineBreakMode = NSLineBreakByCharWrapping;
     subjectLabel.font = [UIFont systemFontOfSize:15.0f];
 
     UILabel *usernameLabel = [[UILabel alloc] init];
@@ -158,8 +159,13 @@ NSString *const WebviewMessageHandlerName = @"mclient";
 
     self.indentionImageView.hidden = (self.indexPath.row == 0);
 
-    self.subjectLabel.text = message.subject;
-    self.subjectLabel.textColor = [currentTheme textColor];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.hyphenationFactor = 1.0f;
+    NSDictionary<NSAttributedStringKey, id> *subjectParagraphAttributes = @{ NSParagraphStyleAttributeName: paragraphStyle,
+                                                                             NSForegroundColorAttributeName: [currentTheme textColor] };
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:message.subject
+                                                                                         attributes:subjectParagraphAttributes];
+    self.subjectLabel.attributedText = attributedString;
 
     self.usernameLabel.text = message.username;
     if ([message.username isEqualToString:self.toolbar.loginManager.username]) {
