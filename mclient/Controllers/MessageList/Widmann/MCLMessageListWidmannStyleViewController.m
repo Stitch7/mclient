@@ -117,7 +117,7 @@
         [self tableView:self.tableView didSelectRowAtIndexPath:firstMessageIndexPath];
     }
     // if jump to latest post feature enabled and last message is unread selected latest message
-    else if (jumpToLatestPostSetting && !self.thread.lastMessageIsRead && self.thread.lastMessageId > 0) {
+    else if (jumpToLatestPostSetting && !self.thread.lastMessageIsRead && [self.thread.lastMessageId intValue] > 0) {
         [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
             if (self.thread.lastMessageId == message.messageId) {
                 NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];

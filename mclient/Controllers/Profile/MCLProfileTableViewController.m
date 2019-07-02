@@ -64,9 +64,8 @@ static NSString *MCLProfileCellIdentifier = @"ProfileCell";
 - (void)configureHeaderView
 {
     UIView *headerView = [[UIView alloc] init];
-    UIImageView *profileImageView = [[UIImageView alloc] init];
 
-    profileImageView = [[UserAvatarImageView alloc] initWithFrame:CGRectMake(0, 0, 120, 120) user:self.user];
+    UIImageView *profileImageView = [[UserAvatarImageView alloc] initWithFrame:CGRectMake(0, 0, 120, 120) user:self.user];
     profileImageView.contentMode = UIViewContentModeTopLeft;
     [headerView addSubview:profileImageView];
     self.tableView.tableHeaderView = headerView;

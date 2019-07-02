@@ -36,6 +36,8 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+
     self.maximumPrimaryColumnWidth = 350;
 }
 

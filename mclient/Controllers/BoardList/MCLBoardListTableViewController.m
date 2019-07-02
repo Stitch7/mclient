@@ -368,7 +368,7 @@
         case MCLBoardListSectionFavorites: return [self favoriteCellForRowIndexPath:indexPath]; break;
     }
 
-    return nil;
+    return [[UITableViewCell alloc] init];
 }
 
 - (UITableViewCell *)boardCellForRowIndexPath:(NSIndexPath *)indexPath

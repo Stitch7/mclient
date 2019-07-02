@@ -110,6 +110,8 @@
 
 - (void)didReceiveMemoryWarning
 {
+    [super didReceiveMemoryWarning];
+    
     [self saveAsDraftIfEdited];
 }
 

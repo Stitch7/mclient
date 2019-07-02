@@ -49,6 +49,8 @@
 
 - (void)didReceiveMemoryWarning
 {
+    [super didReceiveMemoryWarning];
+    
     [self.bag.draftManager saveMessageAsDraft:self.message];
 }
 

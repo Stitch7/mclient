@@ -185,7 +185,7 @@
     NSNumber *lastMessageId = self.thread.lastMessageId;
     BOOL firstMessageIsRead = self.thread.isRead;
     BOOL jumpToLatestPost = [self.bag.settings isSettingActivated:MCLSettingJumpToLatestPost];
-    BOOL lastMessageExists = lastMessageId > 0;
+    BOOL lastMessageExists = [lastMessageId intValue] > 0;
     BOOL lastMessageIsNotRead = !self.thread.lastMessageIsRead;
 
     if (self.jumpToMessageId) {
@@ -206,7 +206,7 @@
 
     if (firstMessageIsRead && jumpToLatestPost && lastMessageExists && lastMessageIsNotRead) {
         [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
-            if (self.thread.lastMessageId == message.messageId) {
+            if (lastMessageId == message.messageId) {
                 NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
                 self.selectAfterScroll = YES;
                 [self.tableView scrollToRowAtIndexPath:latestMessageIndexPath
