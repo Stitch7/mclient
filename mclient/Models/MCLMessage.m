@@ -277,7 +277,8 @@
     NSString *embedYoutubeEnabled = embedYoutube ? @"true" : @"false";
     NSString *quoteColor = [currentTheme cssQuoteColor];
 
-    return [NSString stringWithFormat:@""
+    NSString *messageHtml =
+        [NSString stringWithFormat:@""
             "<html>"
             "<head>"
             "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no\"/>"
@@ -302,7 +303,8 @@
             "        };"
             " "
             "        startTimeFromYoutubeURL = (url) => {"
-            "            const urlParams = new URLSearchParams(url);"
+            "            const queryString = url.split('?').pop();"
+            "            const urlParams = new URLSearchParams(queryString);"
             "            const startParam = urlParams.get('start') || urlParams.get('t') || '0s';"
             "            return startParam.replace('s', '');"
             "        };"
@@ -389,6 +391,8 @@
             buttonFontSize,
             editedHtml,
             embedYoutubeEnabled];
+
+    return messageHtml;
 }
 
 - (NSString *)actionTitle
