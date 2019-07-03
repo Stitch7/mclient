@@ -265,8 +265,8 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
     [self.settings setInteger:[theme identifier] forSetting:MCLSettingTheme];
 
     // Redraw current screen
-    NSArray *windows = [UIApplication sharedApplication].windows;
-    for (UIWindow *window in windows) {
+    for (UIWindow *window in [UIApplication sharedApplication].windows) {
+        window.tintColor = [theme tintColor];
         if (window.windowLevel == UIWindowLevelNormal) {
             for (UIView *view in window.subviews) {
                 [view removeFromSuperview];
