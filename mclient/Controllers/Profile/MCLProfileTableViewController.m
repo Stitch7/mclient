@@ -101,9 +101,10 @@ static NSString *MCLProfileCellIdentifier = @"ProfileCell";
                                                                        action:@selector(doneButtonPressed:)];
 
     if (self.loadingViewController.state == kMCLLoadingStateLoading) {
-        if ([self.user.username isEqualToString:self.bag.loginManager.username]) {
-            navigationItem.rightBarButtonItem = self.editButtonItem;
-        } else if (self.showPrivateMessagesButton) {
+//        if ([self.user.username isEqualToString:self.bag.loginManager.username]) {
+//            navigationItem.rightBarButtonItem = self.editButtonItem;
+//        } else
+        if (self.showPrivateMessagesButton) {
             navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"privateMessages"]
                                                                                  style:UIBarButtonItemStylePlain
                                                                                 target:self
