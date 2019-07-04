@@ -483,6 +483,9 @@
 
 #pragma mark - MCLMessageListDelegate
 
+- (void)messageListViewController:(MCLMessageListViewController *)inController didFinishLoadingThread:(MCLThread *)inThread
+{ }
+
 - (void)messageListViewController:(MCLMessageListViewController *)inController didReadMessageOnThread:(MCLThread *)inThread
 {
     NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;

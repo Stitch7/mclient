@@ -48,6 +48,14 @@
 
 #pragma mark - Public
 
+- (void)stopLoading
+{
+    [super stopLoading];
+
+    MCLMessageListViewController *messageListVC = ((MCLMessageListViewController *)self.contentViewController);
+    [messageListVC.delegate messageListViewController:messageListVC didFinishLoadingThread:messageListVC.thread];
+}
+
 - (void)loadThread:(MCLThread *)thread
 {
     assert(thread.board != nil);

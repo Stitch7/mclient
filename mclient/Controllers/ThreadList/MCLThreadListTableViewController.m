@@ -43,6 +43,7 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 @property (strong, nonatomic) UISearchController *searchController;
 @property (strong, nonatomic) NSTimer *searchTimer;
 @property (strong, nonatomic) NSMutableArray *searchResults;
+@property (assign, nonatomic) BOOL isLoadingThread;
 
 @end
 
@@ -57,6 +58,7 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 
     self.bag = bag;
     self.currentTheme = self.bag.themeManager.currentTheme;
+    self.isLoadingThread = NO;
 
     [self configureNotifications];
 
@@ -276,6 +278,11 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
     return UITableViewAutomaticDimension;
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return self.isLoadingThread ? nil : indexPath;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MCLThread *thread = [self isSearching] ? self.searchResults[indexPath.row] : self.threads[indexPath.row];
@@ -285,6 +292,7 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
     thread.board = self.board;
     thread.tempRead = YES;
 
+    self.isLoadingThread = YES;
     MCLMessageListViewController *messageListVC = [self.bag.router pushToThread:thread];
     if ([messageListVC isKindOfClass:[MCLMessageListViewController class]]) {
         messageListVC.delegate = self;
@@ -422,6 +430,11 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 }
 
 #pragma mark - MCLMessageListDelegate
+
+- (void)messageListViewController:(MCLMessageListViewController *)inController didFinishLoadingThread:(MCLThread *)inThread
+{
+    self.isLoadingThread = NO;
+}
 
 - (void)messageListViewController:(MCLMessageListViewController *)inController didReadMessageOnThread:(MCLThread *)inThread
 {

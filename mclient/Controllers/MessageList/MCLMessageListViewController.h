@@ -48,6 +48,7 @@
 
 @protocol MCLMessageListDelegate <NSObject>
 
+- (void)messageListViewController:(MCLMessageListViewController *)inController didFinishLoadingThread:(MCLThread *)inThread;
 - (void)messageListViewController:(MCLMessageListViewController *)inController didReadMessageOnThread:(MCLThread *)inThread;
 
 @end
