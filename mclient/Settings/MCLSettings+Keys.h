@@ -2,11 +2,12 @@
 //  MCLSettings.h
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
 
+extern NSString *const MCLSettingInitialReportSend;
 extern NSString *const MCLSettingNumberOfTimesLaunched;
 extern NSString *const MCLSettingLastAppVersion;
 extern NSString *const MCLSettingDarkModeEnabled;
@@ -20,9 +21,12 @@ extern NSString *const MCLSettingFontSize;
 extern NSString *const MCLSettingTheme;
 extern NSString *const MCLSettingOpenLinksInSafari;
 extern NSString *const MCLSettingClassicQuoteDesign;
+extern NSString *const MCLSettingEmbedYoutubeVideos;
 extern NSString *const MCLSettingBackgroundNotifications;
+extern NSString *const MCLSettingBackgroundNotificationsRegistered;
 extern NSString *const MCLSettingSoundEffectsEnabled;
 extern NSString *const MCLSettingHideFavoritesHint;
+extern NSString *const MCLSettingSecretFound;
 
 typedef NS_ENUM(NSUInteger, kMCLSettingsThreadView) {
     kMCLSettingsThreadViewWidmann,

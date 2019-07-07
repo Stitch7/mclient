@@ -2,7 +2,7 @@
 //  MCLMessageListFrameStyleTableViewCell.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -18,10 +18,17 @@ NSString *const MCLMessageListFrameStyleTableViewCellIdentifier = @"FrameStyleMe
     [super setSelected:selected animated:animated];
 }
 
+- (void)setMessage:(MCLMessage *)message
+{
+    
+}
+
 - (void)markRead
 {
     self.readSymbolView.hidden = YES;
     self.messageSubjectLabel.font = [UIFont systemFontOfSize:15.0f];
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
 }
 
 - (void)markUnread

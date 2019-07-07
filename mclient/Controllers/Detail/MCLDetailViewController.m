@@ -2,7 +2,7 @@
 //  MCLDetailViewController.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -128,7 +128,7 @@
     if (self.bag.loginManager.isLoginValid) {
         noDataInfo = [MCLNoDataInfo infoForNoFavoritesInfo:self.bag.settings];
     } else {
-        noDataInfo = [MCLNoDataInfo infoForLoginToSeeFavoritesInfo:self.bag.settings];
+        noDataInfo = [MCLNoDataInfo infoForLoginToSeeFavoritesInfo];
     }
     self.noDataView = [[MCLNoDataView alloc] initWithInfo:noDataInfo parentViewController:self];
 }
@@ -146,9 +146,9 @@
     return self.title;
 }
 
-- (UILabel *)loadingViewControllerRequestsTitleLabel:(MCLLoadingViewController *)loadingViewController
+- (UIView *)loadingViewControllerRequestsTitleView:(MCLLoadingViewController *)loadingViewController
 {
-    return [[MCLLogoLabel alloc] initWithThemeManager:self.bag.themeManager];
+    return [[MCLLogoLabel alloc] initWithBag:self.bag];
 }
 
 - (void)loadingViewController:(MCLLoadingViewController *)loadingViewController hasRefreshedWithData:(NSArray *)newData forKey:(NSNumber *)key

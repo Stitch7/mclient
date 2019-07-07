@@ -2,7 +2,7 @@
 //  MCLMessageListWidmannStyleViewController.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -117,7 +117,7 @@
         [self tableView:self.tableView didSelectRowAtIndexPath:firstMessageIndexPath];
     }
     // if jump to latest post feature enabled and last message is unread selected latest message
-    else if (jumpToLatestPostSetting && !self.thread.lastMessageIsRead && self.thread.lastMessageId > 0) {
+    else if (jumpToLatestPostSetting && !self.thread.lastMessageIsRead && [self.thread.lastMessageId intValue] > 0) {
         [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
             if (self.thread.lastMessageId == message.messageId) {
                 NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
@@ -161,7 +161,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSIndexPath *selectedIndexPath = [tableView indexPathForSelectedRow];
-    BOOL isActive = selectedIndexPath ? indexPath.row == selectedIndexPath.row : false;
+    BOOL isActive = selectedIndexPath ? indexPath.row == selectedIndexPath.row : NO;
 
     MCLMessage *message = self.messages[indexPath.row];
     message.board = self.board;
@@ -170,7 +170,6 @@
 
     MCLMessageListWidmannStyleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MCLMessageListWidmannStyleTableViewCellIdentifier];
     cell.indexPath = indexPath;
-    cell.toolbar.messageToolbarDelegate = self.messageToolbarController;
     cell.loginManager = self.bag.loginManager;
     cell.bag = self.bag;
     cell.dateFormatter = self.dateFormatter;
@@ -231,7 +230,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MCLMessageListWidmannStyleTableViewCell *cell = (MCLMessageListWidmannStyleTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    cell.backgroundColor = [self.bag.themeManager.currentTheme tableViewCellSelectedBackgroundColor];
+    cell.backgroundColor = [self.bag.themeManager.currentTheme messageBackgroundColor];
 
     MCLMessage *message = self.messages[indexPath.row];
     message.board = self.board;
@@ -265,6 +264,8 @@
 
 - (void)putMessage:(MCLMessage *)message toCell:(MCLMessageListWidmannStyleTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    self.messageToolbarController.toolbar = cell.toolbar;
+    cell.toolbar.messageToolbarDelegate = self.messageToolbarController;
     message.nextMessage = [self nextMessageForIndexPath:indexPath];
     [cell initWebviewWithMessage:message];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];

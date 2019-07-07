@@ -2,7 +2,7 @@
 //  MCLMessageToolbarController.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -10,6 +10,7 @@
 
 @import WebKit;
 
+#import "UIViewController+Additions.h"
 #import "MCLDependencyBag.h"
 #import "MCLSoundEffectPlayer.h"
 #import "MCLNotificationRequest.h"
@@ -18,6 +19,7 @@
 #import "MCLMessage.h"
 #import "MCLRouter+mainNavigation.h"
 #import "MCLRouter+composeMessage.h"
+#import "MCLEditTextRequest.h"
 #import "MCLMessageListViewController.h"
 #import "MCLComposeMessageViewController.h"
 #import "MCLMessageToolbar.h"
@@ -29,6 +31,7 @@
 @property (strong, nonatomic) MCLMessage *message;
 @property (strong, nonatomic) WKWebView *webView;
 @property (strong, nonatomic) AVSpeechSynthesizer *speechSynthesizer;
+@property (assign, nonatomic) BOOL loadingForEdit;
 
 @end
 
@@ -43,6 +46,7 @@
 
     self.bag = bag;
     self.messageListViewController = messageListViewController;
+    self.loadingForEdit = NO;
     [self configure];
 
     return self;
@@ -188,8 +192,23 @@
 
 - (void)messageToolbar:(MCLMessageToolbar *)toolbar requestsToEditMessage:(MCLMessage *)message
 {
-    MCLComposeMessageViewController *composeMessageVC = [self.bag.router modalToEditMessage:message];
-    composeMessageVC.delegate = self.messageListViewController;
+    if (self.loadingForEdit) {
+        return;
+    }
+
+    self.loadingForEdit = YES;
+    MCLEditTextRequest *request = [[MCLEditTextRequest alloc] initWithClient:self.bag.httpClient message:message];
+    [request loadWithCompletionHandler:^(NSError *error, NSArray *data) {
+        self.loadingForEdit = NO;
+        if (error) {
+            [self.bag.router.masterNavigationController presentError:error];
+            return;
+        }
+
+        message.text = [[data firstObject] objectForKey:@"editText"];
+        MCLComposeMessageViewController *composeMessageVC = [self.bag.router modalToEditMessage:message];
+        composeMessageVC.delegate = self.messageListViewController;
+    }];
 }
 
 - (void)messageToolbar:(MCLMessageToolbar *)toolbar requestsToReplyToMessage:(MCLMessage *)message

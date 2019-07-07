@@ -2,7 +2,7 @@
 //  MCLMultilineTitleLabel.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -63,6 +63,7 @@
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, title.length)];
     self.attributedText = attributedString;
 
+    [self sizeToFit];
     [self themeChanged:nil];
 }
 

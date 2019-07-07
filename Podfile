@@ -2,6 +2,8 @@ platform :ios, '9.0'
 inhibit_all_warnings!
 use_modular_headers!
 
+project 'mclient.xcodeproj'
+
 def mclient_pods
   
   pod 'EDSunriseSet', :git => 'https://github.com/Tricertops/EDSunriseSet'
@@ -11,13 +13,15 @@ def mclient_pods
   pod 'DGActivityIndicatorView'
   pod 'AsyncBlockOperation'
   pod 'ImgurSession', :git => 'https://github.com/Stitch7/ImgurSession'
-  #pod 'ImgurSession', :git => 'https://github.com/mileswd/ImgurSession'
   pod 'MRProgress', :git => 'https://github.com/Stitch7/MRProgress'
   pod 'HockeySDK'
-  pod 'Inapptics'
   pod 'SwiftyGiphy', :modular_headers => true, :git => 'https://github.com/Stitch7/SwiftyGiphy'
 
-  #pod 'TetrominoTouchKit', :path => "../Tetromino/TetrominoTouchKit"
+#  pod 'InitialsImageView'
+#  pod 'MessageKit', :modular_headers => false
+#  pod 'MessageInputBar', :modular_headers => false
+
+  pod 'TetrominoTouchKit', :path => "../Tetromino/TetrominoTouchKit"
 
 end
 

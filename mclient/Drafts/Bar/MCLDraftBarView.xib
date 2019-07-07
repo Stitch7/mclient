@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MCLDraftBarView">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="exu-Ea-AJe"/>
+                <outlet property="deleteButton" destination="6Ae-iN-0So" id="qSd-co-qHJ"/>
+                <outlet property="editButton" destination="a59-Hf-0SN" id="16m-Ag-9cF"/>
+                <outlet property="headerLabel" destination="EqX-9R-K3j" id="Wpb-7w-vAa"/>
+                <outlet property="subjectButton" destination="C1j-UM-PpL" id="Z33-hc-n84"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="389" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="HV1-dU-Rdi">
+                    <rect key="frame" x="0.0" y="0.0" width="389" height="44"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="J44-69-Wi5">
+                            <rect key="frame" x="0.0" y="0.0" width="350" height="44"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Rn-Xd-uII">
+                                    <rect key="frame" x="0.0" y="0.0" width="350" height="6"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="6" id="X02-3e-5N2"/>
+                                    </constraints>
+                                </view>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="COc-iQ-4LR">
+                                    <rect key="frame" x="0.0" y="6" width="350" height="12"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a59-Hf-0SN">
+                                            <rect key="frame" x="0.0" y="0.0" width="12" height="12"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="12" id="RbH-td-IgS"/>
+                                                <constraint firstAttribute="width" constant="12" id="lYA-Ki-ZFK"/>
+                                            </constraints>
+                                            <state key="normal" image="editDraft"/>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current draft" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EqX-9R-K3j">
+                                            <rect key="frame" x="18" y="0.0" width="332" height="12"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C1j-UM-PpL">
+                                    <rect key="frame" x="0.0" y="18" width="350" height="26"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                    <state key="normal" title="Button"/>
+                                    <connections>
+                                        <action selector="subjectButtonPressed:" destination="-1" eventType="touchUpInside" id="vmY-Sr-pJa"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ae-iN-0So">
+                            <rect key="frame" x="364" y="9.5" width="25" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="25" id="GvD-Cp-h7z"/>
+                                <constraint firstAttribute="height" constant="25" id="ddo-Zu-buu"/>
+                            </constraints>
+                            <state key="normal" image="deleteDraft"/>
+                            <connections>
+                                <action selector="deleteButtonPressed:" destination="-1" eventType="touchUpInside" id="L4k-kk-zxK"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="HV1-dU-Rdi" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="TYD-n6-gvj"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="HV1-dU-Rdi" secondAttribute="trailing" id="VPb-b8-24W"/>
+                <constraint firstAttribute="bottom" secondItem="HV1-dU-Rdi" secondAttribute="bottom" id="fyK-01-nlU"/>
+                <constraint firstItem="HV1-dU-Rdi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rdt-4o-AgA"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="149.59999999999999" y="-107.0464767616192"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="deleteDraft" width="30" height="30"/>
+        <image name="editDraft" width="18" height="18"/>
+    </resources>
+</document>

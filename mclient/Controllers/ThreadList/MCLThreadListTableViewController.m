@@ -2,7 +2,7 @@
 //  MCLThreadListTableViewController.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -19,15 +19,21 @@
 #import "MCLMarkThreadAsReadRequest.h"
 #import "MCLLoginManager.h"
 #import "MCLThemeManager.h"
+#import "MCLDraftManager.h"
+#import "MCLKeyboardShortcutManager.h"
 #import "MCLSoundEffectPlayer.h"
+#import "MCLSplitViewController.h"
 #import "MCLMessageListViewController.h"
 #import "MCLThreadTableViewCell.h"
 #import "MCLBoard.h"
 #import "MCLThread.h"
 #import "MCLMessage.h"
+#import "MCLDraft.h"
 #import "MCLBadgeView.h"
 #import "MCLSplitViewController.h"
 #import "MCLLoadingViewController.h"
+#import "MCLDraftBarView.h"
+
 
 NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotification";
 
@@ -37,6 +43,7 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 @property (strong, nonatomic) UISearchController *searchController;
 @property (strong, nonatomic) NSTimer *searchTimer;
 @property (strong, nonatomic) NSMutableArray *searchResults;
+@property (assign, nonatomic) BOOL isLoadingThread;
 
 @end
 
@@ -51,6 +58,7 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 
     self.bag = bag;
     self.currentTheme = self.bag.themeManager.currentTheme;
+    self.isLoadingThread = NO;
 
     [self configureNotifications];
 
@@ -68,6 +76,8 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 {
     [super viewDidLoad];
 
+    self.bag.keyboardShortcutManager.threadsKeyboardShortcutsDelegate = self;
+
     [self configureTableView];
 }
 
@@ -76,6 +86,15 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
     [super viewWillAppear:animated];
 
     self.currentTheme = self.bag.themeManager.currentTheme;
+    [self.loadingViewController updateToolbar];
+//    [self configureDraftBar];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
+    [self.tableView setEditing:NO animated:NO];
 }
 
 #pragma mark - Configuration
@@ -114,7 +133,11 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
     [searchField setBackgroundColor:[self.currentTheme searchFieldBackgroundColor]];
     [searchField setTextColor:[self.currentTheme searchFieldTextColor]];
 
-    // Hide search field behind navigation bar
+    [self hideSearchFieldBehindNavigationBar];
+}
+
+- (void)hideSearchFieldBehindNavigationBar
+{
     self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height);
 }
 
@@ -138,6 +161,53 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 {
     self.threads = [newData copy];
     [self.tableView reloadData];
+}
+
+- (void)configureDraftBar
+{
+    if (![self.bag.features isFeatureWithNameEnabled:MCLFeatureDrafts]) {
+        return;
+    }
+
+    if (!self.bag.draftManager.current) {
+        return;
+    }
+
+    MCLDraftBarView *draftBarView = [[MCLDraftBarView alloc] initWithBag:self.bag];
+//    UIBarButtonItem *draftItem = [[UIBarButtonItem alloc] initWithCustomView:draftBarView];
+//    self.bag.router.splitViewController.toolbarItems = @[draftItem];
+//
+//    self.bag.router.splitViewController.navigationController.toolbar.hidden = NO;
+//    [self.bag.router.splitViewController.navigationController setToolbarHidden:NO animated:NO];
+
+    draftBarView.translatesAutoresizingMaskIntoConstraints = NO;
+    UIView *splitsView = self.bag.router.splitViewController.view;
+    [splitsView addSubview:draftBarView];
+    [splitsView.bottomAnchor constraintEqualToAnchor:draftBarView.bottomAnchor];
+}
+
+
+- (NSArray<__kindof UIBarButtonItem *> *)loadingViewControllerRequestsToolbarItems:(MCLLoadingViewController *)loadingViewController
+{
+    if (![self.bag.features isFeatureWithNameEnabled:MCLFeatureDrafts]) {
+        return nil;
+    }
+
+    if (!self.bag.draftManager.current) {
+        return nil;
+    }
+
+    MCLDraftBarView *draftBarView = [[MCLDraftBarView alloc] initWithBag:self.bag];
+    UIBarButtonItem *draftItem = [[UIBarButtonItem alloc] initWithCustomView:draftBarView];
+
+    return @[draftItem];
+}
+
+- (void)draftButtonPressed:(id)sender
+{
+    [self.bag.router modalToEditDraft:self.bag.draftManager.current];
+    //    MCLComposeMessageViewController *composeMessageVC = [self.bag.router modalToEditDraft:self.bag.draftManager.current];
+    //    composeMessageVC.delegate = self;
 }
 
 #pragma mark - UITableViewDataSource
@@ -208,6 +278,11 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
     return UITableViewAutomaticDimension;
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return self.isLoadingThread ? nil : indexPath;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MCLThread *thread = [self isSearching] ? self.searchResults[indexPath.row] : self.threads[indexPath.row];
@@ -217,8 +292,11 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
     thread.board = self.board;
     thread.tempRead = YES;
 
+    self.isLoadingThread = YES;
     MCLMessageListViewController *messageListVC = [self.bag.router pushToThread:thread];
-    messageListVC.delegate = self;
+    if ([messageListVC isKindOfClass:[MCLMessageListViewController class]]) {
+        messageListVC.delegate = self;
+    }
 }
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -326,7 +404,7 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
 
 #pragma mark - MCLComposeMessageViewControllerDelegate
 
-- (void)message:(MCLMessage *)message sentWithType:(NSUInteger)type
+- (void)composeMessageViewController:(MCLComposeMessagePreviewViewController *)composeMessageViewController sentMessage:(MCLMessage *)message
 {
     [self.loadingViewController refresh];
 
@@ -343,7 +421,20 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+- (void)composeMessageViewController:(MCLComposeMessageViewController *)composeMessageViewController dismissedWithMessage:(MCLMessage *)message
+{
+    if (message) {
+        [self.loadingViewController updateToolbar];
+//        [self configureDraftBar];
+    }
+}
+
 #pragma mark - MCLMessageListDelegate
+
+- (void)messageListViewController:(MCLMessageListViewController *)inController didFinishLoadingThread:(MCLThread *)inThread
+{
+    self.isLoadingThread = NO;
+}
 
 - (void)messageListViewController:(MCLMessageListViewController *)inController didReadMessageOnThread:(MCLThread *)inThread
 {
@@ -431,6 +522,40 @@ NSString * const MCLFavoritedChangedNotification = @"MCLFavoritedChangedNotifica
             [self.tableView reloadData];
         }
     }];
+}
+
+
+#pragma mark - ThreadsKeyboardShortcutsDelegate
+
+- (void)keyboardShortcutComposeThreadPressed
+{
+    [self composeThreadButtonPressed:nil];
+}
+
+- (void)keyboardShortcutSelectPreviousThreadPressed
+{
+    NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;
+    if (selectedIndexPath && selectedIndexPath.row > 0) {
+        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:selectedIndexPath.row - 1 inSection:0];
+        [self.tableView selectRowAtIndexPath:nextIndexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+        [self tableView:self.tableView didSelectRowAtIndexPath:nextIndexPath];
+    }
+}
+
+- (void)keyboardShortcutSelectNextThreadPressed
+{
+    NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;
+    if (selectedIndexPath) {
+        if (selectedIndexPath.row < ([self.threads count] - 1)) {
+            NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:selectedIndexPath.row + 1 inSection:0];
+            [self.tableView selectRowAtIndexPath:nextIndexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+            [self tableView:self.tableView didSelectRowAtIndexPath:nextIndexPath];
+        }
+    } else { // Select first
+        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView selectRowAtIndexPath:nextIndexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+        [self tableView:self.tableView didSelectRowAtIndexPath:nextIndexPath];
+    }
 }
 
 #pragma mark - Actions

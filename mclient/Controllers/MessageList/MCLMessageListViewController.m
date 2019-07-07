@@ -2,7 +2,7 @@
 //  MCLMessageListViewController.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -11,20 +11,26 @@
 #import "MCLMessageListViewController.h"
 
 #import "MCLDependencyBag.h"
+#import "MCLFeatures.h"
 #import "MCLSettings.h"
 #import "MCLRouter+mainNavigation.h"
 #import "MCLRouter+openURL.h"
 #import "MCLThemeManager.h"
+#import "MCLDraftManager.h"
+#import "MCLKeyboardShortcutManager.h"
 #import "MCLSoundEffectPlayer.h"
 #import "MCLUser.h"
 #import "MCLBoard.h"
 #import "MCLThread.h"
+#import "MCLDraft.h"
 #import "MCLMessage.h"
 #import "MCLMessageToolbarController.h"
 #import "MCLMessageToolbar.h"
+#import "MCLComposeMessageViewController.h"
 #import "MCLSplitViewController.h"
 #import "MCLLoadingViewController.h"
 #import "MCLMultilineTitleLabel.h"
+#import "MCLDraftBarView.h"
 
 
 @implementation MCLMessageListViewController
@@ -49,6 +55,7 @@
 
 - (void)initialize
 {
+    self.selectAfterScroll = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(themeChanged:)
                                                  name:MCLThemeChangedNotification
@@ -75,6 +82,7 @@
 {
     [super viewDidLoad];
 
+    self.bag.keyboardShortcutManager.messageKeyboardShortcutsDelegate = self;
     self.messageToolbarController = [[MCLMessageToolbarController alloc] initWithBag:self.bag messageListViewController:self];
 
     [self themeChanged:nil];
@@ -94,7 +102,7 @@
     return self.thread.subject;
 }
 
-- (UILabel *)loadingViewControllerRequestsTitleLabel:(MCLLoadingViewController *)loadingViewController
+- (UIView *)loadingViewControllerRequestsTitleView:(MCLLoadingViewController *)loadingViewController
 {
     return [self titleLabel];
 }
@@ -118,6 +126,28 @@
             [self selectInitialMessage];
         }];
     }];
+}
+
+- (NSArray<__kindof UIBarButtonItem *> *)loadingViewControllerRequestsToolbarItems:(MCLLoadingViewController *)loadingViewController
+{
+    if (![self.bag.features isFeatureWithNameEnabled:MCLFeatureDrafts]) {
+        return nil;
+    }
+
+    if (!self.bag.draftManager.current) {
+        return nil;
+    }
+
+    MCLDraftBarView *draftBarView = [[MCLDraftBarView alloc] initWithBag:self.bag];
+    UIBarButtonItem *draftItem = [[UIBarButtonItem alloc] initWithCustomView:draftBarView];
+
+    return @[draftItem];
+}
+
+- (void)draftButtonPressed:(id)sender
+{
+    MCLComposeMessageViewController *composeMessageVC = [self.bag.router modalToEditDraft:self.bag.draftManager.current];
+    composeMessageVC.delegate = self;
 }
 
 - (void)backButtonPressed:(UIBarButtonItem *)sender
@@ -155,13 +185,14 @@
     NSNumber *lastMessageId = self.thread.lastMessageId;
     BOOL firstMessageIsRead = self.thread.isRead;
     BOOL jumpToLatestPost = [self.bag.settings isSettingActivated:MCLSettingJumpToLatestPost];
-    BOOL lastMessageExists = lastMessageId > 0;
+    BOOL lastMessageExists = [lastMessageId intValue] > 0;
     BOOL lastMessageIsNotRead = !self.thread.lastMessageIsRead;
 
     if (self.jumpToMessageId) {
         [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
             if (self.jumpToMessageId == message.messageId) {
                 NSIndexPath *jumpToMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
+                self.selectAfterScroll = YES;
                 [self.tableView scrollToRowAtIndexPath:jumpToMessageIndexPath
                                       atScrollPosition:UITableViewScrollPositionTop
                                               animated:YES];
@@ -175,8 +206,9 @@
 
     if (firstMessageIsRead && jumpToLatestPost && lastMessageExists && lastMessageIsNotRead) {
         [self.messages enumerateObjectsUsingBlock:^(MCLMessage *message, NSUInteger key, BOOL *stop) {
-            if (self.thread.lastMessageId == message.messageId) {
+            if (lastMessageId == message.messageId) {
                 NSIndexPath *latestMessageIndexPath = [NSIndexPath indexPathForRow:key inSection:0];
+                self.selectAfterScroll = YES;
                 [self.tableView scrollToRowAtIndexPath:latestMessageIndexPath
                                       atScrollPosition:UITableViewScrollPositionTop
                                               animated:YES];
@@ -199,12 +231,12 @@
 
 #pragma mark - MCLComposeMessageViewControllerDelegate
 
-- (void)message:(MCLMessage *)message sentWithType:(NSUInteger)type
+- (void)composeMessageViewController:(MCLComposeMessagePreviewViewController *)composeMessageViewController sentMessage:(MCLMessage *)message
 {
     [self.loadingViewController refresh];
 
     NSString *alertMessage;
-    if (type == kMCLComposeTypeEdit) {
+    if (message.type == kMCLComposeTypeEdit) {
         alertMessage = [NSString stringWithFormat:NSLocalizedString(@"Your message \"%@\" was changed", nil), message.subject];
         [self.bag.soundEffectPlayer playEditPostingSound];
     } else {
@@ -218,9 +250,77 @@
 
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
                                               style:UIAlertActionStyleDefault
-                                            handler:nil]];;
+                                            handler:nil]];
 
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)composeMessageViewController:(MCLComposeMessageViewController *)composeMessageViewController dismissedWithMessage:(MCLMessage *)message
+{
+    if (message) {
+        [self.loadingViewController updateToolbar];
+    }
+}
+
+#pragma mark - MCLMessageKeyboardShortcutsDelegate
+
+- (BOOL)aMessageIsSelected
+{
+    return self.tableView.indexPathForSelectedRow != nil;
+}
+
+- (void)keyboardShortcutSelectNextMessagePressed
+{
+    NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;
+    if (selectedIndexPath && selectedIndexPath.row < ([self.messages count] - 1)) {
+        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:selectedIndexPath.row + 1 inSection:0];
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
+        [self.tableView.delegate tableView:self.tableView didDeselectRowAtIndexPath:selectedIndexPath];
+        [self.tableView selectRowAtIndexPath:nextIndexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+        [self tableView:self.tableView didSelectRowAtIndexPath:nextIndexPath];
+    }
+}
+
+- (void)keyboardShortcutSelectPreviousMessagePressed
+{
+    NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;
+    if (selectedIndexPath && selectedIndexPath.row > 0) {
+        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:selectedIndexPath.row - 1 inSection:0];
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
+        [self.tableView.delegate tableView:self.tableView didDeselectRowAtIndexPath:selectedIndexPath];
+        [self.tableView selectRowAtIndexPath:nextIndexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+        [self tableView:self.tableView didSelectRowAtIndexPath:nextIndexPath];
+    }
+}
+
+- (void)keyboardShortcutOpenProfilePressed
+{
+    [self.messageToolbarController.toolbar openProfileAction:nil];
+}
+
+- (void)keyboardShortcutCopyLinkPressed
+{
+    [self.messageToolbarController.toolbar copyLinkAction:nil];
+}
+
+- (BOOL)selectedMessageIsEditable
+{
+    return [self.messageToolbarController.toolbar editButtonIsVisible];
+}
+
+- (void)keyboardShortcutComposeEditPressed
+{
+    [self.messageToolbarController.toolbar editAction:nil];
+}
+
+- (BOOL)selectedMessageIsOpenForReply
+{
+    return [self.messageToolbarController.toolbar replyButtonIsVisible];
+}
+
+- (void)keyboardShortcutComposeReplyPressed
+{
+    [self.messageToolbarController.toolbar replyAction:nil];
 }
 
 #pragma mark - Abstract methods

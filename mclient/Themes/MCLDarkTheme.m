@@ -2,7 +2,7 @@
 //  MCLDarkTheme.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -30,11 +30,11 @@
     if (!self) return nil;
 
     self.flatRedColor = [UIColor colorWithRed:0.95 green:0.26 blue:0.28 alpha:1.0];
-    self.royalBlueColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0];
+    self.royalBlueColor = [UIColor colorWithRed:0.22 green:0.51 blue:0.97 alpha:1.0];
     self.silverColor = [UIColor colorWithRed:0.93 green:0.94 blue:0.95 alpha:1.0];
     self.grayColor = [UIColor colorWithRed:0.20 green:0.20 blue:0.20 alpha:1.0];
     self.darkGrayColor = [UIColor colorWithRed:0.56 green:0.56 blue:0.58 alpha:1.0];
-    self.totalDarkGrayColor = [UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0];
+    self.totalDarkGrayColor = [UIColor colorWithRed:0.11 green:0.11 blue:0.12 alpha:1.0];
     self.notSoTotalDarkGrayColor = [UIColor colorWithRed:0.07 green:0.07 blue:0.07 alpha:1.0];
     self.nearlyBlackColor = [UIColor colorWithRed:0.05 green:0.05 blue:0.05 alpha:1.0];
 
@@ -93,6 +93,11 @@
     return self.darkGrayColor;
 }
 
+- (UIColor *)messageBackgroundColor
+{
+    return self.nearlyBlackColor;
+}
+
 - (UIColor *)usernameTextColor
 {
     return self.silverColor;
@@ -106,6 +111,11 @@
 - (UIColor *)modTextColor
 {
     return self.flatRedColor;
+}
+
+- (UIColor *)placeholderTextColor
+{
+    return [UIColor colorWithRed:0.49 green:0.49 blue:0.50 alpha:1.0];
 }
 
 - (UIColor *)successTextColor
@@ -180,7 +190,7 @@
 
 - (UIColor *)searchFieldBackgroundColor
 {
-    return self.grayColor;
+    return self.totalDarkGrayColor;
 }
 
 - (UIColor *)searchFieldTextColor
@@ -195,7 +205,7 @@
 
 - (UIColor *)tableViewCellSelectedBackgroundColor
 {
-    return self.nearlyBlackColor;
+    return [UIColor colorWithRed:0.23 green:0.23 blue:0.24 alpha:1.0];
 }
 
 - (UIColor *)badgeViewBackgroundColor
@@ -206,6 +216,11 @@
 - (UIColor *)webViewBackgroundColor
 {
     return self.nearlyBlackColor;
+}
+
+- (UIColor *)loadingIndicatorColor
+{
+    return [UIColor whiteColor];
 }
 
 @end

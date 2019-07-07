@@ -2,7 +2,7 @@
 //  MCLRouter.h
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -11,6 +11,9 @@
 @protocol MCLRouterDelegate;
 
 @class MCLSplitViewController;
+
+@class MCLProfileTableViewController;
+@class MCLUser;
 
 @interface MCLRouter : NSObject
 
@@ -24,6 +27,7 @@
 - (instancetype)initWithBag:(id <MCLDependencyBag>)bag;
 
 - (void)launchRootWindow:(void (^)(UIWindow *window))windowHandler;
+- (BOOL)modalIsPresented;
 - (void)dismissModalIfPresentedWithCompletionHandler:(void (^)(BOOL dismissed))completionHandler;
 
 @end

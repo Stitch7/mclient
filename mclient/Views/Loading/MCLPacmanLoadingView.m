@@ -2,7 +2,7 @@
 //  MCLPacmanLoadingView.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -37,7 +37,7 @@
 - (void)configureSubviews
 {
     DGActivityIndicatorView *pacmanView = [[DGActivityIndicatorView alloc] initWithType:DGActivityIndicatorAnimationTypeCookieTerminator
-                                                                              tintColor:[self.currentTheme textColor]
+                                                                              tintColor:[self.currentTheme loadingIndicatorColor]
                                                                                    size:32.0f];
     self.backgroundColor = [self.currentTheme backgroundColor];
     pacmanView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -61,6 +61,8 @@
                                                      attribute:NSLayoutAttributeCenterY
                                                     multiplier:1.0
                                                       constant:0]];
+
+    self.spinner = pacmanView;
 }
 
 @end

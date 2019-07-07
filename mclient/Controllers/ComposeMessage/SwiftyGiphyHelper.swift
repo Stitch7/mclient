@@ -2,7 +2,7 @@
 //  SwiftyGiphyHelper.swift
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -29,7 +29,7 @@ import SwiftyGiphy
 
     // MARK: - Public
 
-    @objc public func makeGiphyViewController(theme: MCLTheme) -> SwiftyGiphyViewController {
+    @objc public func makeGiphyViewController(theme: MCLTheme) -> UIViewController {
         let giphyVC = SwiftyGiphyViewController()
         giphyVC.delegate = self
         giphyVC.view.backgroundColor = theme.backgroundColor()

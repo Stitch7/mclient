@@ -2,7 +2,7 @@
 //  MCLRouter+mainNavigation.h
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -13,6 +13,7 @@
 @class MCLMessage;
 @class MCLUser;
 @class MCLSettingsViewController;
+@class MCLSearchTableViewController;
 @class MCLResponsesTableViewController;
 @class MCLProfileTableViewController;
 @class MCLThreadListTableViewController;
@@ -22,6 +23,7 @@
 
 - (MCLSettingsViewController *)modalToSettings;
 - (MCLProfileTableViewController *)modalToProfileFromUser:(MCLUser *)user;
+- (MCLSearchTableViewController *)pushToSearchWithBoards:(NSArray<MCLBoard *>*)boards;
 - (MCLResponsesTableViewController *)pushToResponses;
 - (MCLThreadListTableViewController *)pushToThreadListFromBoard:(MCLBoard *)board;
 - (MCLMessageListViewController *)pushToThread:(MCLThread *)thread;

@@ -2,7 +2,7 @@
 //  MCLNoDataInfo.h
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -17,10 +17,11 @@
 @property (strong, nonatomic, readonly) NSString *hideKey;
 
 - (instancetype)initWithSettings:(MCLSettings *)settings messageText:(NSString *)messageText helpTitle:(NSString *)helpTitle helpMessage:(NSString *)helpMessage hideKey:(NSString *)hideKey;
-- (instancetype)initWithSettings:(MCLSettings *)settings messageText:(NSString *)messageText;
+- (instancetype)initWithMessageText:(NSString *)messageText;
 
-+ (MCLNoDataInfo *)infoForLoginToSeeFavoritesInfo:(MCLSettings *)settings;
++ (MCLNoDataInfo *)infoForLoginToSeeFavoritesInfo;
 + (MCLNoDataInfo *)infoForNoFavoritesInfo:(MCLSettings *)settings;
++ (MCLNoDataInfo *)infoForNoSearchResultsInfo;
 
 - (BOOL)isHidden;
 - (void)hide;

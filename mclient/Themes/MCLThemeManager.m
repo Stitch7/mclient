@@ -2,7 +2,7 @@
 //  MCLThemeManager.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -23,6 +23,7 @@
 #import "MCLTextField.h"
 #import "MCLBadgeView.h"
 #import "MCLModalOverlayView.h"
+#import "MCLMessageTextViewToolbar.h"
 
 
 NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
@@ -197,6 +198,8 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
 
     [[UIToolbar appearance] setBarTintColor:[theme toolbarBackgroundColor]];
     [[UIToolbar appearance] setTintColor:[theme tintColor]];
+    [[MCLMessageTextViewToolbar appearance] setBarTintColor:[theme backgroundColor]];
+    [[MCLMessageTextViewToolbar appearance] setTintColor:[theme tintColor]];
 
     [[UITableView appearance] setBackgroundColor:[theme tableViewBackgroundColor]];
     [[UITableView appearance] setSeparatorColor:[theme tableViewSeparatorColor]];
@@ -209,13 +212,24 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
     // [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTextColor:[theme searchFieldTextColor]];
     // [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setBackgroundColor:[theme searchFieldBackgroundColor]];
 
-    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLBoardListTableViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
-    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLDetailViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
-    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLResponsesTableViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
-    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLSettingsViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
-    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLThreadListTableViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
-    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLMessageListViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
-    [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(@"MCLProfileTableViewController")]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
+    NSArray *tableViewVCs = @[@"MCLBoardListTableViewController",
+                              @"MCLDetailViewController",
+                              @"MCLSearchTableViewController",
+                              @"MCLResponsesTableViewController",
+                              @"MCLSettingsViewController",
+                              @"MCLThreadListTableViewController",
+                              @"MCLMessageListViewController",
+                              @"MCLProfileTableViewController",
+                              @"MCLDraftTableViewController",
+                              @"MCLSettingsTabLoginViewController",
+                              @"MCLSettingsTabUIViewController",
+                              @"MCLSettingsTabThreadViewController",
+                              @"MCLSettingsTabInfoViewController",
+                              @"MCLPrivateMessagesViewController",
+                              @"MCLUserSearchViewController"];
+    for (NSString *tableViewVC in tableViewVCs) {
+        [[UITableViewCell appearanceWhenContainedInInstancesOfClasses:@[NSClassFromString(tableViewVC)]] setBackgroundColor:[theme tableViewCellBackgroundColor]];
+    }
 
     [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UITableViewCell class]]] setTextColor:[theme textColor]];
 
@@ -251,8 +265,8 @@ NSString * const MCLThemeChangedNotification = @"ThemeChangedNotification";
     [self.settings setInteger:[theme identifier] forSetting:MCLSettingTheme];
 
     // Redraw current screen
-    NSArray *windows = [UIApplication sharedApplication].windows;
-    for (UIWindow *window in windows) {
+    for (UIWindow *window in [UIApplication sharedApplication].windows) {
+        window.tintColor = [theme tintColor];
         if (window.windowLevel == UIWindowLevelNormal) {
             for (UIView *view in window.subviews) {
                 [view removeFromSuperview];

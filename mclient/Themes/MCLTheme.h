@@ -2,7 +2,7 @@
 //  MCLTheme.h
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -18,9 +18,11 @@
 - (UIColor *)detailTextColor;
 - (UIColor *)detailImageColor;
 - (UIColor *)overlayTextColor;
+- (UIColor *)messageBackgroundColor;
 - (UIColor *)usernameTextColor;
 - (UIColor *)ownUsernameTextColor;
 - (UIColor *)modTextColor;
+- (UIColor *)placeholderTextColor;
 - (UIColor *)successTextColor;
 - (UIColor *)warnTextColor;
 - (UIColor *)textViewBackgroundColor;
@@ -41,5 +43,6 @@
 - (UIColor *)tableViewCellSelectedBackgroundColor;
 - (UIColor *)badgeViewBackgroundColor;
 - (UIColor *)webViewBackgroundColor;
+- (UIColor *)loadingIndicatorColor;
 
 @end

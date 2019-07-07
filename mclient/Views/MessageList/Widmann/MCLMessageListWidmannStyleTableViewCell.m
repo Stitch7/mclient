@@ -2,7 +2,7 @@
 //  MCLMessageListWidmannStyleTableViewCell.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -51,6 +51,7 @@ NSString *const WebviewMessageHandlerName = @"mclient";
     UILabel *subjectLabel = [[UILabel alloc] init];
     subjectLabel.translatesAutoresizingMaskIntoConstraints = NO;
     subjectLabel.numberOfLines = 0;
+    subjectLabel.lineBreakMode = NSLineBreakByCharWrapping;
     subjectLabel.font = [UIFont systemFontOfSize:15.0f];
 
     UILabel *usernameLabel = [[UILabel alloc] init];
@@ -145,7 +146,7 @@ NSString *const WebviewMessageHandlerName = @"mclient";
     self.indentionImageView.tintColor = [currentTheme tableViewSeparatorColor];
 
     if (self.isActive) {
-        self.backgroundColor = [currentTheme tableViewCellSelectedBackgroundColor];
+        self.backgroundColor = [currentTheme messageBackgroundColor];
         [self initWebviewWithMessage:message];
     } else {
         self.backgroundColor = [currentTheme tableViewCellBackgroundColor];
@@ -154,12 +155,17 @@ NSString *const WebviewMessageHandlerName = @"mclient";
 
     self.toolbar.hidden = !self.isActive;
     self.toolbar.message = message;
-    [self.toolbar setBarTintColor:[currentTheme tableViewCellSelectedBackgroundColor]];
+    [self.toolbar setBarTintColor:[currentTheme messageBackgroundColor]];
 
     self.indentionImageView.hidden = (self.indexPath.row == 0);
 
-    self.subjectLabel.text = message.subject;
-    self.subjectLabel.textColor = [currentTheme textColor];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.hyphenationFactor = 1.0f;
+    NSDictionary<NSAttributedStringKey, id> *subjectParagraphAttributes = @{ NSParagraphStyleAttributeName: paragraphStyle,
+                                                                             NSForegroundColorAttributeName: [currentTheme textColor] };
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:message.subject
+                                                                                         attributes:subjectParagraphAttributes];
+    self.subjectLabel.attributedText = attributedString;
 
     self.usernameLabel.text = message.username;
     if ([message.username isEqualToString:self.toolbar.loginManager.username]) {
@@ -202,8 +208,8 @@ NSString *const WebviewMessageHandlerName = @"mclient";
     self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:webViewConfig];
     self.webView.translatesAutoresizingMaskIntoConstraints = NO;
     self.webView.opaque = NO;
-    self.webView.backgroundColor = [self.bag.themeManager.currentTheme tableViewCellSelectedBackgroundColor];
-    self.webView.scrollView.backgroundColor = [self.bag.themeManager.currentTheme tableViewCellSelectedBackgroundColor];
+    self.webView.backgroundColor = [self.bag.themeManager.currentTheme messageBackgroundColor];
+    self.webView.scrollView.backgroundColor = [self.bag.themeManager.currentTheme messageBackgroundColor];
     self.webView.scrollView.scrollEnabled = NO;
     self.webView.scrollView.scrollsToTop = NO;
     for (id subview in self.webView.subviews) {
@@ -218,6 +224,7 @@ NSString *const WebviewMessageHandlerName = @"mclient";
     [self.webView setNavigationDelegate:self.delegate];
 
     NSString *messageHtml = [message messageHtmlWithTopMargin:0
+                                                        width:self.contentView.bounds.size.width
                                                         theme:self.bag.themeManager.currentTheme
                                                      settings:self.bag.settings];
     [self.webView loadHTMLString:messageHtml baseURL:nil];

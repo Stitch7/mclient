@@ -2,13 +2,14 @@
 //  MCLRouter+mainNavigation.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
 #import "MCLRouter+mainNavigation.h"
 
 #import "MCLDependencyBag.h"
+#import "MCLFeatures.h"
 #import "MCLSettings.h"
 #import "MCLLoginManager.h"
 #import "MCLBoard.h"
@@ -19,6 +20,8 @@
 #import "MCLDetailViewController.h"
 #import "MCLModalNavigationController.h"
 #import "MCLSettingsViewController.h"
+#import "MCLTabbedSettingsModallNavigationControllerViewController.h"
+#import "MCLSearchTableViewController.h"
 #import "MCLResponsesTableViewController.h"
 #import "MCLThreadListTableViewController.h"
 #import "MCLLoadingViewController.h"
@@ -37,6 +40,17 @@
 
 - (MCLSettingsViewController *)modalToSettings
 {
+    if ([self.bag.features isFeatureWithNameEnabled:MCLFeatureTabbedSettings]) {
+        UIStoryboard *tabbedStoryboard = [UIStoryboard storyboardWithName:@"TabbedSettings" bundle:nil];
+        UITabBarController *tabbedSettingsVC = [tabbedStoryboard instantiateViewControllerWithIdentifier:@"MCLSettingsTabBarController"];
+        tabbedSettingsVC.modalPresentationStyle = UIModalPresentationFormSheet;
+
+        self.modalNavigationController = [[MCLTabbedSettingsModallNavigationControllerViewController alloc] initWithRootViewController:tabbedSettingsVC];
+        [self.masterNavigationController presentViewController:self.modalNavigationController animated:YES completion:nil];
+
+        return [[MCLSettingsViewController alloc] init]; // To avoid warning, change return type when feature flag get's removed
+    }
+
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
     MCLSettingsViewController *settingsVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLSettingsViewController"];
     settingsVC.bag = self.bag;
@@ -49,10 +63,10 @@
 
 - (MCLProfileTableViewController *)modalToProfileFromUser:(MCLUser *)user
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Profile" bundle:nil];
-    MCLProfileTableViewController *profileVC = [storyboard instantiateViewControllerWithIdentifier:@"MCLProfileTableViewController"];
+    MCLProfileTableViewController *profileVC = [[MCLProfileTableViewController alloc] init];
     profileVC.bag = self.bag;
     profileVC.user = user;
+    profileVC.showPrivateMessagesButton = [self.bag.features isFeatureWithNameEnabled:MCLFeaturePrivateMessages];
 
     MCLProfileRequest *profileRequest = [[MCLProfileRequest alloc] initWithClient:self.bag.httpClient user:user];
     MCLLoadingViewController *loadingVC = [[MCLLoadingViewController alloc] initWithBag:self.bag
@@ -60,10 +74,19 @@
                                                                   contentViewController:profileVC];
 
     loadingVC.modalPresentationStyle = UIModalPresentationFormSheet;
-    MCLModalNavigationController *navigationVC = [[MCLModalNavigationController alloc] initWithRootViewController:loadingVC];
-    [self.masterNavigationController presentViewController:navigationVC animated:YES completion:nil];
+    self.modalNavigationController = [[MCLModalNavigationController alloc] initWithRootViewController:loadingVC];
+    [self.masterNavigationController presentViewController:self.modalNavigationController animated:YES completion:nil];
 
     return profileVC;
+}
+
+- (MCLSearchTableViewController *)pushToSearchWithBoards:(NSArray<MCLBoard *>*)boards
+{
+    MCLSearchTableViewController *searchTableVC = [[MCLSearchTableViewController alloc] initWithBag:self.bag boards:boards];
+
+    [self.masterNavigationController pushViewController:searchTableVC animated:YES];
+
+    return searchTableVC;
 }
 
 - (MCLResponsesTableViewController *)pushToResponses
@@ -91,7 +114,23 @@
                                                                                 request:threadListRequest
                                                                   contentViewController:threadListVC];
     loadingVC.title = board.name;
-    [self.masterNavigationController pushViewController:loadingVC animated:YES];
+
+    BOOL replace = NO;
+    MCLLoadingViewController *currentVC = (MCLLoadingViewController *)[[self.masterNavigationController viewControllers] lastObject];
+    if (currentVC && [currentVC respondsToSelector:NSSelectorFromString(@"contentViewController")] &&
+        [currentVC.contentViewController isKindOfClass:[MCLThreadListTableViewController class]])
+    {
+        replace = YES;
+    }
+
+    if (replace) {
+        NSMutableArray *newViewControllers = [[self.masterNavigationController viewControllers] mutableCopy];
+        [newViewControllers removeLastObject];
+        [newViewControllers addObject:loadingVC];
+        [self.masterNavigationController setViewControllers:newViewControllers];
+    } else {
+        [self.masterNavigationController pushViewController:loadingVC animated:YES];
+    }
 
     return threadListVC;
 }

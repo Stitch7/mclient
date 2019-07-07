@@ -2,16 +2,20 @@
 //  MCLRouter+Tetromino.swift
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
-//import TetrominoTouchKit
+import TetrominoTouchKit
 
 public extension MCLRouter {
-    @objc @discardableResult public func modalToGame() -> UINavigationController {
-//        let gameVC = TetrominoTouch().makeGameController(bounds: UIScreen.main.bounds)
-        let gameVC = UINavigationController()
+    @objc @discardableResult func modalToGame() -> UINavigationController {
+        if !bag.settings.isSettingActivated(MCLSettingSecretFound) {
+            bag.soundEffectPlayer.playSecretFoundSound()
+            bag.settings.setBool(true, forSetting: MCLSettingSecretFound)
+        }
+
+        let gameVC = TetrominoTouchKit().makeGameController()
         masterNavigationController.present(gameVC, animated: true)
 
         return gameVC

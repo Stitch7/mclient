@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,8 +22,8 @@
             <rect key="frame" x="0.0" y="0.0" width="374" height="124"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Imj-BD-5GN">
-                    <rect key="frame" x="148" y="51" width="79" height="22"/>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="W0x-Ho-qPO">
+                    <rect key="frame" x="147.5" y="51" width="79" height="22"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fCU-ge-ogM">
                             <rect key="frame" x="0.0" y="0.0" width="42" height="22"/>
@@ -35,20 +35,11 @@
                             <rect key="frame" x="57" y="0.0" width="22" height="22"/>
                         </button>
                     </subviews>
-                    <constraints>
-                        <constraint firstItem="fCU-ge-ogM" firstAttribute="top" secondItem="Imj-BD-5GN" secondAttribute="top" id="9Ur-fm-eIZ"/>
-                        <constraint firstItem="fCU-ge-ogM" firstAttribute="leading" secondItem="Imj-BD-5GN" secondAttribute="leading" id="HCW-XT-1SC"/>
-                        <constraint firstAttribute="bottom" secondItem="fCU-ge-ogM" secondAttribute="bottom" id="R0X-sn-Rgd"/>
-                        <constraint firstItem="dmc-Y2-lrq" firstAttribute="top" secondItem="Imj-BD-5GN" secondAttribute="top" id="YIT-2f-i1z"/>
-                        <constraint firstAttribute="trailing" secondItem="dmc-Y2-lrq" secondAttribute="trailing" id="eWh-c6-HbW"/>
-                        <constraint firstItem="dmc-Y2-lrq" firstAttribute="leading" secondItem="fCU-ge-ogM" secondAttribute="trailing" constant="15" id="kAf-ld-mox"/>
-                        <constraint firstAttribute="bottom" secondItem="dmc-Y2-lrq" secondAttribute="bottom" id="lqH-dk-GKf"/>
-                    </constraints>
-                </view>
+                </stackView>
             </subviews>
             <constraints>
-                <constraint firstItem="Imj-BD-5GN" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="2y0-RV-0wk"/>
-                <constraint firstItem="Imj-BD-5GN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Mj5-ij-3KQ"/>
+                <constraint firstItem="W0x-Ho-qPO" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="ghd-tc-xDz"/>
+                <constraint firstItem="W0x-Ho-qPO" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="mb8-3u-SuZ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

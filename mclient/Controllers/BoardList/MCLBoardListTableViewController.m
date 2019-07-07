@@ -2,23 +2,26 @@
 //  MCLBoardListTableViewController.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
 #import "MCLBoardListTableViewController.h"
 
 #import "BBBadgeBarButtonItem.h"
-#import "UIViewController+Additions.h"
 #import "UIView+addConstraints.h"
+#import "UIViewController+Additions.h"
 #import "MCLDependencyBag.h"
 #import "MCLFeatures.h"
 #import "MCLFavoriteThreadToggleRequest.h"
 #import "MCLRouter+mainNavigation.h"
+#import "MCLRouter+privateMessages.h"
 #import "MCLLoginManager.h"
 #import "MCLMessageResponsesRequest.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
+#import "MCLKeyboardShortcutManager.h"
+#import "MCLPrivateMessagesManager.h"
 #import "MCLStoreReviewManager.h"
 #import "MCLSoundEffectPlayer.h"
 #import "MCLSplitViewController.h"
@@ -29,10 +32,13 @@
 #import "MCLThread.h"
 #import "MCLThreadTableViewCell.h"
 #import "MCLLogoLabel.h"
-#import "MCLVerifiyLoginView.h"
+#import "MCLVerifyLoginView.h"
 #import "MCLNoDataInfo.h"
 #import "MCLNoDataView.h"
 #import "MCLNoDataTableViewCell.h"
+#import "MCLSettings.h"
+#import "MCLSettings+Keys.h"
+#import "MCLDraftManager.h"
 
 
 @interface MCLBoardListTableViewController ()
@@ -44,7 +50,7 @@
 @property (strong, nonatomic) id <MCLTheme> currentTheme;
 @property (strong, nonatomic) BBBadgeBarButtonItem *responsesButtonItem;
 @property (strong, nonatomic) BBBadgeBarButtonItem *privateMessagesButtonItem;
-@property (strong, nonatomic) MCLVerifiyLoginView *verifyLoginView;
+@property (strong, nonatomic) MCLVerifyLoginView *verifyLoginView;
 @property (assign, nonatomic) BOOL alreadyAppeared;
 @property (assign, nonatomic) BOOL temporarilyDontShowNoFavoritesView;
 
@@ -86,6 +92,16 @@
                            selector:@selector(foundUnreadResponses:)
                                name:MCLUnreadResponsesFoundNotification
                              object:nil];
+
+    [notificationCenter addObserver:self
+                           selector:@selector(draftsChanged:)
+                               name:MCLDraftsChangedNotification
+                             object:nil];
+
+    [notificationCenter addObserver:self
+                           selector:@selector(privateMessagesChanged:)
+                               name:MCLPrivateMessagesChangedNotification
+                             object:nil];
 }
 
 - (void)dealloc
@@ -95,10 +111,10 @@
 
 #pragma mark - Lazy Properties
 
-- (MCLVerifiyLoginView *)verifyLoginView
+- (MCLVerifyLoginView *)verifyLoginView
 {
     if (!_verifyLoginView) {
-        MCLVerifiyLoginView *verifyLoginView = [[MCLVerifiyLoginView alloc] initWithThemeManager:self.bag.themeManager];
+        MCLVerifyLoginView *verifyLoginView = [[MCLVerifyLoginView alloc] initWithThemeManager:self.bag.themeManager];
         _verifyLoginView = verifyLoginView;
     }
 
@@ -113,11 +129,19 @@
 
     [self configureTableView];
     [self updateVerifyLoginViewWithSuccess:self.bag.loginManager.isLoginValid];
+
+    if (![self.bag.settings isSettingActivated:MCLSettingInitialReportSend]) {
+        [self.bag.settings reportSettings];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
+    if (self.bag.loginManager.isLoginValid) {
+        [self.bag.privateMessagesManager loadConversations];
+    }
 
     if (self.alreadyAppeared && self.bag.loginManager.isLoginValid) {
         [[[MCLMessageResponsesRequest alloc] initWithBag:self.bag] loadResponsesWithCompletion:nil];
@@ -163,12 +187,12 @@
     UIImage *privateMessagesImage = [[UIImage imageNamed:@"privateMessages"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIButton *privateMessagesButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 50.0f, 50.0f)];
     [privateMessagesButton setImage:privateMessagesImage forState:UIControlStateNormal];
-    [privateMessagesButton addTarget:self action:@selector(responsesButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [privateMessagesButton addTarget:self action:@selector(privateMessagesButtonPressed) forControlEvents:UIControlEventTouchUpInside];
 
     self.privateMessagesButtonItem = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:privateMessagesButton];
     self.privateMessagesButtonItem.badgeOriginX = 0.0f;
     self.privateMessagesButtonItem.badgeOriginY = 8.0f;
-    self.privateMessagesButtonItem.badgeValue = [NSString stringWithFormat:@"%i", 7];
+    self.privateMessagesButtonItem.badgeValue = nil;
     self.privateMessagesButtonItem.shouldHideBadgeAtZero = YES;
     self.privateMessagesButtonItem.badgePadding = 5;
 
@@ -195,9 +219,9 @@
     return NSLocalizedString(@"Boards", nil);
 }
 
-- (UILabel *)loadingViewControllerRequestsTitleLabel:(MCLLoadingViewController *)loadingViewController
+- (UIView *)loadingViewControllerRequestsTitleView:(MCLLoadingViewController *)loadingViewController
 {
-    return [self noDetailVC] ? [[MCLLogoLabel alloc] initWithThemeManager:self.bag.themeManager] : nil;
+    return [self noDetailVC] ? [[MCLLogoLabel alloc] initWithBag:self.bag] : nil;
 }
 
 - (NSArray<__kindof UIBarButtonItem *> *)loadingViewControllerRequestsToolbarItems:(MCLLoadingViewController *)loadingViewController
@@ -207,6 +231,7 @@
                                                                                    action:nil];
     UIBarButtonItem *flexibleItem2 = flexibleItem1;
     UIBarButtonItem *verifyLoginViewItem = [[UIBarButtonItem alloc] initWithCustomView:self.verifyLoginView];
+    [self.verifyLoginView addTarget:self action:@selector(verifyLoginViewButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     return [NSArray arrayWithObjects:self.responsesButtonItem,
                                      flexibleItem1,
@@ -222,7 +247,7 @@
         navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"searchButton"]
                                                                             style:UIBarButtonItemStylePlain
                                                                            target:self
-                                                                           action:@selector(settingsButtonPressed:)];
+                                                                           action:@selector(searchButtonPressed:)];
     } else { // Needed to center the title label when FeatureToggle is off :-|
         navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"placeholderBarItem"]
                                                                             style:UIBarButtonItemStylePlain
@@ -241,6 +266,7 @@
     switch ([key integerValue]) {
         case MCLBoardListSectionBoards:
             self.boards = [newData copy];
+            self.bag.keyboardShortcutManager.boards = self.boards;
             if (!self.bag.loginManager.isLoginValid) {
                 self.favorites = nil;
             }
@@ -342,7 +368,7 @@
         case MCLBoardListSectionFavorites: return [self favoriteCellForRowIndexPath:indexPath]; break;
     }
 
-    return nil;
+    return [[UITableViewCell alloc] init];
 }
 
 - (UITableViewCell *)boardCellForRowIndexPath:(NSIndexPath *)indexPath
@@ -411,6 +437,10 @@
 
 - (void)pushToFavoriteAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (!self.favorites || [self.favorites count] == 0) {
+        return;
+    }
+
     MCLThread *thread = [self.favorites objectAtIndex:indexPath.row];
     thread.board = [MCLBoard boardWithId:thread.boardId];
     MCLMessageListViewController *messageListVC = [self.bag.router pushToThread:thread];
@@ -453,6 +483,9 @@
 
 #pragma mark - MCLMessageListDelegate
 
+- (void)messageListViewController:(MCLMessageListViewController *)inController didFinishLoadingThread:(MCLThread *)inThread
+{ }
+
 - (void)messageListViewController:(MCLMessageListViewController *)inController didReadMessageOnThread:(MCLThread *)inThread
 {
     NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;
@@ -464,6 +497,11 @@
 
 #pragma mark - Actions
 
+- (void)searchButtonPressed:(UIBarButtonItem *)sender
+{
+    [self.bag.router pushToSearchWithBoards:self.boards];
+}
+
 - (void)settingsButtonPressed:(UIBarButtonItem *)sender
 {
     [self.bag.router modalToSettings];
@@ -472,6 +510,16 @@
 - (void)responsesButtonPressed
 {
     [self.bag.router pushToResponses];
+}
+
+- (void)verifyLoginViewButtonPressed:(id)sender
+{
+    [self.bag.router pushToDrafts];
+}
+
+- (void)privateMessagesButtonPressed
+{
+    [self.bag.router pushToPrivateMessages];
 }
 
 #pragma mark - Notifications
@@ -494,6 +542,16 @@
     self.responsesButtonItem.badgeValue = [[[notification userInfo] objectForKey:@"numberOfUnreadResponses"] stringValue];
 }
 
+- (void)draftsChanged:(NSNotification *)notification
+{
+    [self updateVerifyLoginViewWithSuccess:self.bag.loginManager.isLoginValid];
+}
+
+- (void)privateMessagesChanged:(NSNotification *)notification
+{
+    self.privateMessagesButtonItem.badgeValue = [[[notification userInfo] objectForKey:@"numberOfUnreadMessages"] stringValue];
+}
+
 #pragma mark - Public
 
 - (void)updateVerifyLoginViewWithSuccess:(BOOL)success
@@ -502,11 +560,17 @@
         [self.verifyLoginView loginStatusWithUsername:self.bag.loginManager.username];
         [[[MCLMessageResponsesRequest alloc] initWithBag:self.bag] loadResponsesWithCompletion:nil];
         [self.responsesButtonItem setEnabled:YES];
+        [self.privateMessagesButtonItem setEnabled:YES];
         [self updateResponsesButtonItemBadgeValueFromApplicationIconBadgeNumber];
+
+        if ([self.bag.features isFeatureWithNameEnabled:MCLFeatureDrafts]) {
+            [self.verifyLoginView setNumberOfDrafts:self.bag.draftManager.count withDelay:2];
+        }
     } else {
         [self.verifyLoginView loginStatusNoLogin];
         self.responsesButtonItem.badgeValue = 0;
         [self.responsesButtonItem setEnabled:NO];
+        [self.privateMessagesButtonItem setEnabled:NO];
     }
 }
 

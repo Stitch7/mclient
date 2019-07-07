@@ -2,7 +2,7 @@
 //  MCLMessageListFrameStyleViewController.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -89,6 +89,7 @@
 {
     self.toolbar.loginManager = self.bag.loginManager;
     self.toolbar.messageToolbarDelegate = self.messageToolbarController;
+    self.messageToolbarController.toolbar = self.toolbar;
     [self.toolbar deactivateBarButtons];
 
     [self.toolbar addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self
@@ -101,7 +102,7 @@
 - (void)configureTableView
 {
     UINib *messageCellNib = [UINib nibWithNibName: @"MCLMessageListFrameStyleTableViewCell" bundle: nil];
-    [self.tableView registerNib: messageCellNib forCellReuseIdentifier:MCLMessageListFrameStyleTableViewCellIdentifier];
+    [self.tableView registerNib:messageCellNib forCellReuseIdentifier:MCLMessageListFrameStyleTableViewCellIdentifier];
 
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension;
@@ -189,8 +190,13 @@
 
     cell.messageIndentionImageView.hidden = (indexPath.row == 0);
 
-    cell.messageSubjectLabel.text = message.subject;
-    cell.messageSubjectLabel.textColor = [currenTheme textColor];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.hyphenationFactor = 1.0f;
+    NSDictionary<NSAttributedStringKey, id> *subjectParagraphAttributes = @{ NSParagraphStyleAttributeName: paragraphStyle,
+                                                                             NSForegroundColorAttributeName: [currenTheme textColor] };
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:message.subject
+                                                                                         attributes:subjectParagraphAttributes];
+    cell.messageSubjectLabel.attributedText = attributedString;
 
     cell.messageUsernameLabel.text = message.username;
     if ([message.username isEqualToString:self.bag.loginManager.username]) {
@@ -215,8 +221,12 @@
 
 - (void)indentView:(NSLayoutConstraint *)indentionConstraint withLevel:(NSNumber *)level
 {
-    int indention = 10;
-    indentionConstraint.constant = 0 + (indention * [level integerValue]);
+    int indention = 15;
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    CGFloat maxWidth = screenWidth - screenWidth * 0.2;
+    CGFloat newVal = 0 + (indention * [level integerValue]);
+
+    indentionConstraint.constant = newVal > maxWidth ? maxWidth : newVal;
 }
 
 #pragma mark - UITableViewDelegate
@@ -237,8 +247,11 @@
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
-    NSNumber *messageId = self.jumpToMessageId ? self.jumpToMessageId : self.thread.lastMessageId;
-    [self selectMessageWithId:messageId];
+    if (self.selectAfterScroll) {
+        NSNumber *messageId = self.jumpToMessageId ? self.jumpToMessageId : self.thread.lastMessageId;
+        [self selectMessageWithId:messageId];
+        self.selectAfterScroll = NO;
+    }
 }
 
 - (MCLMessage *)messageForIndexPath:(NSIndexPath *)indexPath
@@ -302,6 +315,13 @@
             if (lastMessageId && [message.messageId isEqualToNumber:lastMessageId]) {
                 self.thread.lastMessageRead = YES;
             }
+
+            // Workaround to fix read status on cell not updating after scrolling (jump to latest post + keyboard shortcuts)
+            [UIView animateWithDuration:0 animations:^{
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            } completion:^(BOOL finished) {
+                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+            }];
         }
         [self.delegate messageListViewController:self didReadMessageOnThread:self.thread];
         [self loadMessage:message fromCell:cell];
@@ -321,6 +341,7 @@
         topMargin += 70;
     }
     NSString *messageText = [message messageHtmlWithTopMargin:topMargin
+                                                        width:cell.contentView.bounds.size.width
                                                         theme:self.bag.themeManager.currentTheme
                                                      settings:self.bag.settings];
     [self.webView loadHTMLString:messageText baseURL:nil];
@@ -338,11 +359,12 @@
 
     if (notification) {
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-        [self.tableView selectRowAtIndexPath:selectedIndexPath
-                                    animated:NO
-                              scrollPosition:UITableViewScrollPositionNone];
-        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
-
+        if (selectedIndexPath) {
+            [self.tableView selectRowAtIndexPath:selectedIndexPath
+                                        animated:NO
+                                  scrollPosition:UITableViewScrollPositionNone];
+            [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+        }
         [self.tableView reloadData];
     }
 }

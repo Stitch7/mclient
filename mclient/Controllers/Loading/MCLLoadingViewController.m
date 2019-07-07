@@ -2,7 +2,7 @@
 //  MCLLoadingViewController.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -24,15 +24,6 @@
 #import "MCLInternetConnectionErrorView.h"
 #import "MCLErrorViewController.h"
 
-
-typedef NS_ENUM(NSUInteger, kMCLLoadingState) {
-    kMCLLoadingStateVoid,
-    kMCLLoadingStateLoading,
-    kMCLLoadingStateError,
-    kMCLLoadingStateNoNetworkConnection,
-    kMCLLoadingStateDisplayContent
-};
-
 static NSString *kQueueOperationsChanged = @"kQueueOperationsChanged";
 static NSString *kQueueKeyPath = @"operations";
 
@@ -40,7 +31,6 @@ static NSString *kQueueKeyPath = @"operations";
 
 @property (nonatomic, copy) void (^completionHandler)(void);
 @property (strong, nonatomic) NSOperationQueue *queue;
-@property (assign, nonatomic) NSUInteger state;
 @property (strong, nonatomic) MCLPacmanLoadingView *loadingView;
 @property (strong, nonatomic) MCLErrorViewController *errorViewController;
 
@@ -143,6 +133,9 @@ static NSString *kQueueKeyPath = @"operations";
 
 - (void)toggleToolbarVisibility:(BOOL)viewControllerIsOnScreen
 {
+//    if (self.state == kMCLLoadingStateDisplayContent) {
+//        [self updateToolbar];
+//    }
     BOOL toolbarIsHidden = !self.toolbarItems || !viewControllerIsOnScreen;
     [self.navigationController setToolbarHidden:toolbarIsHidden animated:NO];
 }
@@ -165,7 +158,7 @@ static NSString *kQueueKeyPath = @"operations";
     }
 
     if ([self.delegate respondsToSelector:@selector(loadingViewControllerRequestsToolbarItems:)]) {
-        self.toolbarItems = [self.delegate loadingViewControllerRequestsToolbarItems:nil];
+        self.toolbarItems = [self.delegate loadingViewControllerRequestsToolbarItems:self];
         BOOL viewControllerIsOnScreen = self.viewIfLoaded.window != nil;
         [self toggleToolbarVisibility:viewControllerIsOnScreen];
     } else {
@@ -184,8 +177,8 @@ static NSString *kQueueKeyPath = @"operations";
         self.title = [self.delegate loadingViewControllerRequestsTitleString:nil];
     }
 
-    if ([self.delegate respondsToSelector:@selector(loadingViewControllerRequestsTitleLabel:)]) {
-        self.navigationItem.titleView = [self.delegate loadingViewControllerRequestsTitleLabel:nil];
+    if ([self.delegate respondsToSelector:@selector(loadingViewControllerRequestsTitleView:)]) {
+        self.navigationItem.titleView = [self.delegate loadingViewControllerRequestsTitleView:self];
     }
 }
 

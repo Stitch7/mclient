@@ -2,7 +2,7 @@
 //  MCLLightTheme.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -79,6 +79,11 @@
     return [UIColor darkTextColor];
 }
 
+- (UIColor *)messageBackgroundColor
+{
+    return [UIColor groupTableViewBackgroundColor];
+}
+
 - (UIColor *)usernameTextColor
 {
     return [UIColor blackColor];
@@ -92,6 +97,11 @@
 - (UIColor *)modTextColor
 {
     return [UIColor redColor];
+}
+
+- (UIColor *)placeholderTextColor
+{
+    return [UIColor colorWithRed:0.64 green:0.64 blue:0.66 alpha:1.0];
 }
 
 - (UIColor *)successTextColor
@@ -116,7 +126,7 @@
 
 - (UIColor *)navigationBarBackgroundColor
 {
-    return [UIColor whiteColor];
+    return nil;
 }
 
 - (UIColor *)navigationBarTextColor
@@ -131,7 +141,7 @@
 
 - (UIColor *)toolbarBackgroundColor
 {
-    return [UIColor whiteColor];
+    return nil;
 }
 
 - (UIColor *)tableViewHeaderTextColor
@@ -172,7 +182,7 @@
 
 - (UIColor *)searchFieldTextColor
 {
-    return [UIColor colorWithRed:0.56 green:0.56 blue:0.58 alpha:1.0];
+    return [UIColor blackColor];
 }
 
 - (UIColor *)tableViewCellBackgroundColor
@@ -182,7 +192,7 @@
 
 - (UIColor *)tableViewCellSelectedBackgroundColor
 {
-    return [UIColor groupTableViewBackgroundColor];
+    return [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1.0];
 }
 
 - (UIColor *)badgeViewBackgroundColor
@@ -195,4 +205,9 @@
     return [UIColor clearColor];
 }
 
+- (UIColor *)loadingIndicatorColor
+{
+    return [UIColor darkTextColor];
+}
+    
 @end

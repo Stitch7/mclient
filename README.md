@@ -3,9 +3,11 @@ m!client
 
 ![Icon](images/AppIcon.png "m!client")
 
-iOS client for the [Man!ac Forum](https://www.maniac-forum.de/forum/pxmboard.php), the oldest german speaking videogame community.
+[![Download on the App Store](https://img.shields.io/itunes/v/939557993.svg)](https://itunes.apple.com/us/app/m!client/id939557993?mt=8)
+![language](https://img.shields.io/badge/language-Obj--C-blue.svg)
+[![license](http://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-[![Download on the AppStore](images/AppStoreBadge.png)](https://itunes.apple.com/us/app/m!client/id939557993?mt=8)
+iOS client for the [Man!ac Forum](https://www.maniac-forum.de/forum/pxmboard.php), the oldest german speaking videogame community.
 
 # Screenshots
 

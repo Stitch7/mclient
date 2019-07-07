@@ -2,7 +2,7 @@
 //  MCLPreviewMessageViewController.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -17,6 +17,8 @@
 #import "MCLSendMessageRequest.h"
 #import "MCLTheme.h"
 #import "MCLThemeManager.h"
+#import "MCLDraftManager.h"
+#import "MCLDraft.h"
 #import "MCLLoadingView.h"
 #import "MCLMServiceErrorView.h"
 #import "MCLInternetConnectionErrorView.h"
@@ -45,6 +47,13 @@
     self.view.backgroundColor = [currentTheme backgroundColor];
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    
+    [self.bag.draftManager saveMessageAsDraft:self.message];
+}
+
 #pragma mark - MCLLoadingContentViewControllerDelegate
 
 - (void)loadingViewController:(MCLLoadingViewController *)loadingViewController configureNavigationItem:(UINavigationItem *)navigationItem
@@ -63,7 +72,7 @@
     return self.message.subject;
 }
 
-- (UILabel *)loadingViewControllerRequestsTitleLabel:(MCLLoadingViewController *)loadingViewController
+- (UIView *)loadingViewControllerRequestsTitleView:(MCLLoadingViewController *)loadingViewController
 {
     return [self titleLabel];
 }
@@ -102,9 +111,10 @@
     }
 
     MCLMessage *previewMessage = [[MCLMessage alloc] init];
-    previewMessage.textHtml = [[data firstObject] objectForKey:messageTextKey];
+    previewMessage.textHtml = [NSString stringWithFormat:@"<div id=\"content\">%@</div>", [[data firstObject] objectForKey:messageTextKey]];
     previewMessage.textHtmlWithImages = previewMessage.textHtml;
     self.previewText = [previewMessage messageHtmlWithTopMargin:20
+                                                          width:self.view.bounds.size.width
                                                           theme:[self.bag.themeManager currentTheme]
                                                        settings:self.bag.settings];
     [self.webView loadHTMLString:self.previewText baseURL:nil];
@@ -119,14 +129,17 @@
     MCLSendMessageRequest *sendRequest = [[MCLSendMessageRequest alloc] initWithClient:self.bag.httpClient message:self.message];
     [sendRequest loadWithCompletionHandler:^(NSError *error, NSArray *data) {
         if (error) {
+            [self.bag.draftManager saveMessageAsDraft:self.message];
             [self presentError:error withCompletion:^{
                 self.sendButton.enabled = YES;
             }];
             return;
         }
 
+        [self.bag.draftManager removeDraftForMessage:self.message];
+
         [self dismissViewControllerAnimated:YES completion:^{
-            [self.delegate message:self.message sentWithType:self.message.type];
+            [self.delegate composeMessageViewController:self sentMessage:self.message];
         }];
     }];
 }

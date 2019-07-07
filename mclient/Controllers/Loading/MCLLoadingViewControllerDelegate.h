@@ -2,7 +2,7 @@
 //  MCLLoadingViewControllerDelegate.h
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -18,7 +18,7 @@
 @property (strong, nonatomic) UIView *refreshControlBackgroundView;
 
 - (NSString *)loadingViewControllerRequestsTitleString:(MCLLoadingViewController *)loadingViewController;
-- (UILabel *)loadingViewControllerRequestsTitleLabel:(MCLLoadingViewController *)loadingViewController;
+- (UIView *)loadingViewControllerRequestsTitleView:(MCLLoadingViewController *)loadingViewController;
 - (NSArray<__kindof UIBarButtonItem *> *)loadingViewControllerRequestsToolbarItems:(MCLLoadingViewController *)loadingViewController;
 - (void)loadingViewController:(MCLLoadingViewController *)loadingViewController configureNavigationItem:(UINavigationItem *)navigationItem;
 - (void)loadingViewControllerStartsRefreshing:(MCLLoadingViewController *)loadingViewController;

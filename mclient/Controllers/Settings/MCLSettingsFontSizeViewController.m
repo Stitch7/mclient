@@ -2,7 +2,7 @@
 //  MCLSettingsFontSizeViewController.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -141,6 +141,7 @@
     previewMessage.textHtml = [self seamanDiaryPostingText];
     previewMessage.textHtmlWithImages = previewMessage.textHtml;
     NSString *previewText = [previewMessage messageHtmlWithTopMargin:55
+                                                               width:self.view.bounds.size.width
                                                                theme:self.bag.themeManager.currentTheme
                                                              settings:self.bag.settings];
     [self.webView loadHTMLString:previewText baseURL:nil];

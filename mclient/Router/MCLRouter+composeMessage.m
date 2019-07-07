@@ -2,25 +2,24 @@
 //  MCLRouter+composeMessage.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
 #import "MCLRouter+composeMessage.h"
 
-@import SwiftyGiphy;
-
 #import "MCLDependencyBag.h"
 #import "MCLThemeManager.h"
 #import "MCLBoard.h"
 #import "MCLMessage.h"
+#import "MCLDraft.h"
 #import "MCLThread.h"
-#import "MCLEditTextRequest.h"
 #import "MCLPreviewMessageRequest.h"
 #import "MCLModalNavigationController.h"
 #import "MCLLoadingViewController.h"
 #import "MCLComposeMessageViewController.h"
 #import "MCLComposeMessagePreviewViewController.h"
+#import "MCLDraftTableViewController.h"
 
 
 @implementation MCLRouter (composeMessage)
@@ -71,13 +70,22 @@
     editMessageVC.message = message;
     self.modalNavigationController = [[MCLModalNavigationController alloc] initWithRootViewController:editMessageVC];
 
-    MCLEditTextRequest *request = [[MCLEditTextRequest alloc] initWithClient:self.bag.httpClient message:message];
-    [request loadWithCompletionHandler:^(NSError *error, NSArray *data) {
-        editMessageVC.message.text = [[data firstObject] objectForKey:@"editText"];
-        [self.masterNavigationController presentViewController:self.modalNavigationController animated:YES completion:nil];
-    }];
+    [self.masterNavigationController presentViewController:self.modalNavigationController animated:YES completion:nil];
 
     return editMessageVC;
+}
+
+- (MCLComposeMessageViewController *)modalToEditDraft:(MCLDraft *)draft
+{
+    MCLMessage *message = [MCLMessage messageFromDraft:draft];
+    MCLComposeMessageViewController *composeMessageVC;
+    if (draft.type == kMCLComposeTypeThread) {
+        composeMessageVC = [self.bag.router modalToComposeThreadToBoard:message.board];
+    } else {
+        composeMessageVC = [self.bag.router modalToComposeReplyToMessage:message];
+    }
+
+    return composeMessageVC;
 }
 
 - (MCLComposeMessagePreviewViewController *)pushToPreviewForMessage:(MCLMessage *)message
@@ -95,6 +103,15 @@
     [self.modalNavigationController pushViewController:loadingVC animated:YES];
 
     return previewMessageVC;
+}
+
+- (MCLDraftTableViewController *)pushToDrafts
+{
+
+    MCLDraftTableViewController *draftsVC = [[MCLDraftTableViewController alloc] initWithBag:self.bag];
+    [self.masterNavigationController pushViewController:draftsVC animated:YES];
+
+    return draftsVC;
 }
 
 - (UIImagePickerController *)modalToImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType fromButton:(UIBarButtonItem *)button
@@ -117,7 +134,7 @@
 - (SwiftyGiphyHelper *)modalToGiphy
 {
     SwiftyGiphyHelper *giphyHelper = [[SwiftyGiphyHelper alloc] initWithApiKey:GIPHY_KEY];
-    SwiftyGiphyViewController *giphyVC = [giphyHelper makeGiphyViewControllerWithTheme:self.bag.themeManager.currentTheme];
+    UIViewController *giphyVC = [giphyHelper makeGiphyViewControllerWithTheme:self.bag.themeManager.currentTheme];
 
     UINavigationController *giphyNavController = [[UINavigationController alloc] initWithRootViewController:giphyVC];
     [self.modalNavigationController presentViewController:giphyNavController animated:YES completion:nil];

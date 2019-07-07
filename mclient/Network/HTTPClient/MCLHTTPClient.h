@@ -2,7 +2,7 @@
 //  MCLHTTPClient.h
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -25,8 +25,18 @@ static const NSInteger MCLHTTPErrorCodeInvalidLogin = 401;
                     needsLogin:(BOOL)needsLogin
              completionHandler:(void (^)(NSError *error, NSDictionary *json))completion;
 
+- (void)postRequestToUrlString:(NSString *)urlString
+                      withJSON:(NSDictionary *)json
+                    needsLogin:(BOOL)needsLogin
+             completionHandler:(void (^)(NSError *error, NSDictionary *json))completion;
+
 - (void)putRequestToUrlString:(NSString *)urlString
                      withVars:(NSDictionary *)vars
+                   needsLogin:(BOOL)needsLogin
+            completionHandler:(void (^)(NSError *error, NSDictionary *json))completion;
+
+- (void)putRequestToUrlString:(NSString *)urlString
+                     withJSON:(NSDictionary *)json
                    needsLogin:(BOOL)needsLogin
             completionHandler:(void (^)(NSError *error, NSDictionary *json))completion;
 

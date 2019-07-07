@@ -2,7 +2,7 @@
 //  MCLMessageToolbar.h
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
@@ -14,7 +14,7 @@
 
 @interface MCLMessageToolbar : UIToolbar
 
-@property (weak) id<MCLMessageToolbarDelegate> messageToolbarDelegate;
+@property (strong) id<MCLMessageToolbarDelegate> messageToolbarDelegate; // TODO: weak?
 @property (strong, nonatomic) MCLLoginManager *loginManager;
 @property (strong, nonatomic) MCLMessage *message;
 @property (strong, nonatomic) MCLMessage *nextMessage;
@@ -30,5 +30,15 @@
 - (void)deactivateBarButtons;
 - (void)updateBarButtonsWithMessage:(MCLMessage *)message;
 - (void)updateBarButtons;
+- (BOOL)notificationButtonIsVisible;
+- (BOOL)editButtonIsVisible;
+- (BOOL)replyButtonIsVisible;
+
+- (void)openProfileAction:(UIBarButtonItem *)sender;
+- (void)copyLinkAction:(UIBarButtonItem *)sender;
+- (void)speakAction:(UIBarButtonItem *)sender;
+- (void)notificationAction:(UIBarButtonItem *)sender;
+- (void)editAction:(UIBarButtonItem *)sender;
+- (void)replyAction:(UIBarButtonItem *)sender;
 
 @end

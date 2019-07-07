@@ -2,16 +2,26 @@
 //  MCLSettings.m
 //  mclient
 //
-//  Copyright © 2014 - 2018 Christopher Reitz. Licensed under the MIT license.
+//  Copyright © 2014 - 2019 Christopher Reitz. Licensed under the MIT license.
 //  See LICENSE file in the project root for full license information.
 //
 
 #import "MCLSettings.h"
+#import "MCLSettings+Keys.h"
+
+#import "TargetConditionals.h"
+
+#import "UIDevice+deviceName.h"
+#import "MCLDependencyBag.h"
+#import "MCLLoginManager.h"
+#import "MCLSendSettingsRequest.h"
 
 
 @interface MCLSettings()
 
+@property (strong, nonatomic) id <MCLDependencyBag> bag;
 @property (strong, nonatomic) NSUserDefaults *userDefaults;
+@property (assign, nonatomic, getter=wereChanged) BOOL changed;
 
 @end
 
@@ -19,12 +29,15 @@
 
 #pragma mark - Initializer
 
-- (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults
+- (instancetype)initWithBag:(id <MCLDependencyBag>)bag userDefaults:(NSUserDefaults *)userDefaults
 {
     self = [super init];
     if (!self) return nil;
 
+    self.bag = bag;
     self.userDefaults = userDefaults;
+    self.changed = NO;
+    [self configureDefaultSettings];
 
     return self;
 }
@@ -109,43 +122,91 @@
 
 - (NSDictionary *)dictionaryWithAllSettings
 {
-    return @{MCLSettingNumberOfTimesLaunched:   [self numberForSetting:MCLSettingNumberOfTimesLaunched orDefault:0],
+    return @{@"deviceName":                     [[UIDevice currentDevice] deviceName],
+             MCLSettingNumberOfTimesLaunched:   [self numberForSetting:MCLSettingNumberOfTimesLaunched orDefault:0],
              MCLSettingLastAppVersion:          [self objectForSetting:MCLSettingLastAppVersion orDefault:@""],
-             MCLSettingDarkModeEnabled:         [self stringForIsSettingActivated:MCLSettingDarkModeEnabled],
-             MCLSettingDarkModeAutomatically:   [self stringForIsSettingActivated:MCLSettingDarkModeAutomatically],
+             MCLSettingDarkModeEnabled:         [self jsonForIsSettingActivated:MCLSettingDarkModeEnabled],
+             MCLSettingDarkModeAutomatically:   [self jsonForIsSettingActivated:MCLSettingDarkModeAutomatically],
              MCLSettingShowImages:              [self numberForSetting:MCLSettingShowImages],
              MCLSettingThreadView:              [self numberForSetting:MCLSettingThreadView],
-             MCLSettingJumpToLatestPost:        [self stringForIsSettingActivated:MCLSettingJumpToLatestPost],
-             MCLSettingSignatureEnabled:        [self stringForIsSettingActivated:MCLSettingSignatureEnabled orDefault:YES],
+             MCLSettingJumpToLatestPost:        [self jsonForIsSettingActivated:MCLSettingJumpToLatestPost],
+             MCLSettingSignatureEnabled:        [self jsonForIsSettingActivated:MCLSettingSignatureEnabled orDefault:YES],
              MCLSettingSignatureText:           [self objectForSetting:MCLSettingSignatureText orDefault:kSettingsSignatureTextDefault],
              MCLSettingFontSize:                [self numberForSetting:MCLSettingFontSize orDefault:kSettingsDefaultFontSize],
              MCLSettingTheme:                   [self numberForSetting:MCLSettingTheme orDefault:0],
-             MCLSettingOpenLinksInSafari:       [self stringForIsSettingActivated:MCLSettingOpenLinksInSafari],
-             MCLSettingClassicQuoteDesign:      [self stringForIsSettingActivated:MCLSettingClassicQuoteDesign],
-             MCLSettingBackgroundNotifications: [self stringForIsSettingActivated:MCLSettingBackgroundNotifications],
-             MCLSettingSoundEffectsEnabled:     [self stringForIsSettingActivated:MCLSettingSoundEffectsEnabled orDefault:YES]};
+             MCLSettingOpenLinksInSafari:       [self jsonForIsSettingActivated:MCLSettingOpenLinksInSafari],
+             MCLSettingEmbedYoutubeVideos:      [self jsonForIsSettingActivated:MCLSettingEmbedYoutubeVideos],
+             MCLSettingClassicQuoteDesign:      [self jsonForIsSettingActivated:MCLSettingClassicQuoteDesign],
+             MCLSettingBackgroundNotifications: [self jsonForIsSettingActivated:MCLSettingBackgroundNotifications],
+             MCLSettingSoundEffectsEnabled:     [self jsonForIsSettingActivated:MCLSettingSoundEffectsEnabled orDefault:YES]};
+}
+
+- (void)reportSettingsIfChanged
+{
+    if (self.wereChanged) {
+        [self reportSettings];
+    }
 }
 
 #pragma mark - Private
 
-- (NSString *)stringForIsSettingActivated:(NSString *)setting
+- (void)configureDefaultSettings
 {
-    return [self isSettingActivated:setting] ? @"true" : @"false";
+    if ([self objectForSetting:MCLSettingEmbedYoutubeVideos] == nil) {
+        [self setBool:YES forSetting:MCLSettingEmbedYoutubeVideos];
+    }
+
+    if ([self objectForSetting:MCLSettingBackgroundNotificationsRegistered] == nil) {
+        [self setBool:NO forSetting:MCLSettingBackgroundNotificationsRegistered];
+    }
+
+    // TODO: configure others
+
+    [self persist];
 }
 
-- (NSString *)stringForIsSettingActivated:(NSString *)setting orDefault:(BOOL)defaultValue
+- (NSNumber *)jsonForIsSettingActivated:(NSString *)setting
+{
+    return [self isSettingActivated:setting] ? @YES : @NO;
+}
+
+- (NSNumber *)jsonForIsSettingActivated:(NSString *)setting orDefault:(BOOL)defaultValue
 {
     BOOL isActivated = defaultValue;
     if ([self objectForSetting:setting]) {
         isActivated = [self isSettingActivated:setting];
     }
 
-    return isActivated ? @"true" : @"false";
+    return isActivated ? @YES : @NO;
 }
 
 - (BOOL)persist
 {
+    self.changed = YES;
     return [self.userDefaults synchronize];
+}
+
+- (void)reportSettings
+{
+#if TARGET_OS_SIMULATOR
+    return;
+#else
+    if (!self.bag.loginManager.isLoginValid) {
+        return;
+    }
+
+    NSString *uuid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    MCLSendSettingsRequest *request = [[MCLSendSettingsRequest alloc] initWithClient:self.bag.httpClient
+                                                                                uuid:uuid
+                                                                            settings:self];
+    [request loadWithCompletionHandler:^(NSError *error, NSArray *response) {
+        if (error) {
+            return;
+        }
+        [self setBool:YES forSetting:MCLSettingInitialReportSend];
+        self.changed = NO;
+    }];
+#endif
 }
 
 @end
