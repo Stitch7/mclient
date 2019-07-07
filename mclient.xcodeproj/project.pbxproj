@@ -2954,7 +2954,7 @@
 					};
 					306FC80E1F93A39F001EB7E9 = {
 						DevelopmentTeam = J8XDHCNJQA;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {

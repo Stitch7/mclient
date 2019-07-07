@@ -19,13 +19,12 @@ lane :alpha do
   hockey(
     api_token: "850b28e704a14aa993df89cb7f7020ad",
     release_type: "2",
-    notes_type: "0",
+    notes_type: "1",
     notes: "
-      # Changelog 
-      * Huhu 
-      * Fix
-      * Glitch
-    "
+Changelog
+==================
+* Fix: Problem beim laden von Threads am iPad und auf den Plus/Max Phones im Querformat behoben.
+"
   )
 
 end
@@ -46,11 +45,42 @@ lane :beta do
   hockey(
     api_token: "850b28e704a14aa993df89cb7f7020ad",
     release_type: "0",
-    notes_type: "0",
+    notes_type: "1",
     notes: "
-      * Links auf andere Postings öffnen jetzt auch direkt das Posting und nicht nur den dazugehörigen Thread.      
-      * Vorschau Button beim schreiben eine neuen Posts ist jetzt nicht mehr ausgegraut wenn man aus der Vorschau wieder zurück navigiert (war ein iOS11 Bug, Workaround implementiert)
-    "
+Changelog
+==================
+* Fix: Problem beim laden von Threads am iPad und auf den Plus/Max Phones im Querformat behoben.
+"
   )
+
+end
+
+lane :beta2 do
+
+  cocoapods
+  cert
+  sigh
+
+  # build settings
+  gym(
+    scheme: "mclient",
+    export_method: "ad-hoc"
+  )
+
+  upload_to_testflight(
+    username: "christopher@reitz.re",
+    app_identifier: "re.reitz.mclient",
+    itc_provider: "J8XDHCNJQA" # pass a specific value to the iTMSTransporter -itc_provider option
+  )
+
+  # # upload to HockeyApp
+  # hockey(
+  #   api_token: "850b28e704a14aa993df89cb7f7020ad",
+  #   release_type: "1",
+  #   notes_type: "0",
+  #   notes: "
+
+  #   "
+  # )
 
 end

@@ -14,7 +14,7 @@
 
 @interface MCLMessageToolbar : UIToolbar
 
-@property (weak) id<MCLMessageToolbarDelegate> messageToolbarDelegate;
+@property (strong) id<MCLMessageToolbarDelegate> messageToolbarDelegate; // TODO: weak?
 @property (strong, nonatomic) MCLLoginManager *loginManager;
 @property (strong, nonatomic) MCLMessage *message;
 @property (strong, nonatomic) MCLMessage *nextMessage;
